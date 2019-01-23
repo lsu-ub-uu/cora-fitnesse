@@ -30,7 +30,7 @@ Basic layout of testNews
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | recordType | {"name":"recordType","children":[{"name":"abstract","value":"false"},{"name":"recordInfo","children":[{"name":"id","value":"testNews"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"userSuppliedId","value":"true"},{"name":"groupOfRecordType","value":"metadata","repeatId":"0"},{"name":"public","value":"no"}]} | | CREATED |
+| $adminAuthToken | recordType | {"name":"recordType","children":[{"name":"abstract","value":"false"},{"name":"recordInfo","children":[{"name":"id","value":"testNews"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"userSuppliedId","value":"true"},{"name":"groupOfRecordType","value":"metadata","repeatId":"0"},{"name":"public","value":"false"}]} | | CREATED |
 
 *!
 !***> Create metadataTextVariable testNewsTitleTextVar, testNewsSubTitleTextVar, testNewsHeadingTextVar
@@ -408,8 +408,8 @@ A search is defining a list of recordTypes to search in, and a performed search 
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | recordType | {"name":"recordType","children":[{"name":"abstract","value":"false"},{"name":"recordInfo","children":[{"name":"id","value":"testArticle"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"userSuppliedId","value":"true"},{"name":"groupOfRecordType","value":"metadata","repeatId":"0"},{"name":"public","value":"no"}]} | | CREATED |
-| $adminAuthToken | recordType | {"name":"recordType","children":[{"name":"abstract","value":"false"},{"name":"recordInfo","children":[{"name":"id","value":"testStudentThesis"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"userSuppliedId","value":"true"},{"name":"groupOfRecordType","value":"metadata","repeatId":"0"},{"name":"public","value":"no"}]} | | CREATED |
+| $adminAuthToken | recordType | {"name":"recordType","children":[{"name":"abstract","value":"false"},{"name":"recordInfo","children":[{"name":"id","value":"testArticle"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"userSuppliedId","value":"true"},{"name":"groupOfRecordType","value":"metadata","repeatId":"0"},{"name":"public","value":"false"}]} | | CREATED |
+| $adminAuthToken | recordType | {"name":"recordType","children":[{"name":"abstract","value":"false"},{"name":"recordInfo","children":[{"name":"id","value":"testStudentThesis"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"userSuppliedId","value":"true"},{"name":"groupOfRecordType","value":"metadata","repeatId":"0"},{"name":"public","value":"false"}]} | | CREATED |
 
 *!
 !***> Create metadataTextVariable testTitleTextVar

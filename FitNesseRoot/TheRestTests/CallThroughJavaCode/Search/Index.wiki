@@ -11,7 +11,7 @@ Test
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | recordType | {"name":"recordType","children":[{"name":"abstract","value":"false"},{"name":"recordInfo","children":[{"name":"id","value":"testNews"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"userSuppliedId","value":"true"},{"name":"groupOfRecordType","value":"metadata","repeatId":"0"},{"name":"public","value":"no"}]} | | CREATED |
+| $adminAuthToken | recordType | {"name":"recordType","children":[{"name":"abstract","value":"false"},{"name":"recordInfo","children":[{"name":"id","value":"testNews"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"userSuppliedId","value":"true"},{"name":"groupOfRecordType","value":"metadata","repeatId":"0"},{"name":"public","value":"false"}]} | | CREATED |
 
 *!
 !***> Create metadataTextVariable testNewsTitleTextVar
