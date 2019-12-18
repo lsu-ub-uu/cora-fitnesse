@@ -171,7 +171,7 @@ Delete and update to ensure that incoming links are deleted and updated correctl
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | bush | bush2 | {"children":[{"children":[{"name":"id","value":"bush2"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"bush"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2017-10-01 00:00:00.0"}],"name":"recordInfo"}],"name":"bush"} | | OK |
+| $adminAuthToken | bush | bush2 | {"children":[{"children":[{"name":"id","value":"bush2"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"bush"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"}],"name":"recordInfo"}],"name":"bush"} | | OK |
 
 *!
 !***> Read incomingLinks for tree1 (should no longer be pointed to from bush3 or bush2)
@@ -328,7 +328,7 @@ Create metadata needed for link test.
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | testBook | book1 | {"name":"book","children":[{"name":"recordInfo","children":[{"name":"id","value":"book1"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testBook"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2017-10-01 00:00:00.0"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"bookTitle","value":"Harry Potter"},{"name":"relatedPerson","children":[{"name":"linkedRecordType","value":"testPerson"},{"name":"linkedRecordId","value":"person1"}],"attributes":{"testType":"author"}},{"name":"relatedPerson","children":[{"name":"linkedRecordType","value":"testPerson"},{"name":"linkedRecordId","value":"person3"}],"attributes":{"testType":"illustrator"}}]} | =~/"name":"linkedRecordId","value":"person1"/ | OK |
+| $adminAuthToken | testBook | book1 | {"name":"book","children":[{"name":"recordInfo","children":[{"name":"id","value":"book1"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testBook"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"bookTitle","value":"Harry Potter"},{"name":"relatedPerson","children":[{"name":"linkedRecordType","value":"testPerson"},{"name":"linkedRecordId","value":"person1"}],"attributes":{"testType":"author"}},{"name":"relatedPerson","children":[{"name":"linkedRecordType","value":"testPerson"},{"name":"linkedRecordId","value":"person3"}],"attributes":{"testType":"illustrator"}}]} | =~/"name":"linkedRecordId","value":"person1"/ | OK |
 
 *!
 !2 Clean up created data

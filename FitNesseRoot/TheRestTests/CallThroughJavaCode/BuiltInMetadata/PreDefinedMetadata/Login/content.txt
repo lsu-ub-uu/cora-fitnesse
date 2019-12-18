@@ -114,7 +114,7 @@
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | loginWebRedirect | testwr | {"name":"login","children":[{"name":"recordInfo","children":[{"name":"id","value":"testwr"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"loginWebRedirect"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2017-10-01 00:00:00.0"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"loginName","value":"Test web"},{"name":"url","value":"someOtherUrl/something"}],"attributes":{"type":"webRedirect"}} | =~/"name":"url","value":"someOtherUrl/something"/ | OK |
+| $adminAuthToken | loginWebRedirect | testwr | {"name":"login","children":[{"name":"recordInfo","children":[{"name":"id","value":"testwr"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"loginWebRedirect"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"loginName","value":"Test web"},{"name":"url","value":"someOtherUrl/something"}],"attributes":{"type":"webRedirect"}} | =~/"name":"url","value":"someOtherUrl/something"/ | OK |
 
 *!
 !***> Delete created loginWebRedirect
@@ -143,7 +143,7 @@
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | loginToken | testToken | {"name":"login","children":[{"name":"recordInfo","children":[{"name":"id","value":"testToken"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"loginToken"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2017-10-01 00:00:00.0"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"loginName","value":"Test token"},{"name":"url","value":"someOtherUrl/something"}],"attributes":{"type":"token"}} | | OK |
+| $adminAuthToken | loginToken | testToken | {"name":"login","children":[{"name":"recordInfo","children":[{"name":"id","value":"testToken"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"loginToken"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"loginName","value":"Test token"},{"name":"url","value":"someOtherUrl/something"}],"attributes":{"type":"token"}} | | OK |
 
 *!
 !***> Delete created loginToken

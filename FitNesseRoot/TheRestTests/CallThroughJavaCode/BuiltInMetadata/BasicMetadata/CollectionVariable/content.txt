@@ -80,7 +80,7 @@ ItemCollections
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | yesNoUnknown | myYesNoUnknown | {"children":[{"children":[{"name":"id","value":"myYesNoUnknown"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"yesNoUnknown"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2017-10-01 00:00:00.0"}],"name":"recordInfo"},{"name":"testWithThreeItems","repeatId":"1","value":"no"}],"name":"yesNoUnknown"} | | OK |
+| $adminAuthToken | yesNoUnknown | myYesNoUnknown | {"children":[{"children":[{"name":"id","value":"myYesNoUnknown"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"yesNoUnknown"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"}],"name":"recordInfo"},{"name":"testWithThreeItems","repeatId":"1","value":"no"}],"name":"yesNoUnknown"} | | OK |
 
 *!
 !***> Try to create data of recordType yesNoUnknown (this should fail as the data is incorrect)
