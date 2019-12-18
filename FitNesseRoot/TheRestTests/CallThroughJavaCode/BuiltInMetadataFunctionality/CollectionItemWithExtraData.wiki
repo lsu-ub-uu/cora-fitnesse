@@ -92,7 +92,7 @@ The new collectionItemRecordType must contain a metadataGroup with nameInData "e
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | testPlace | place1 | {"name":"testPlace","children":[{"name":"recordInfo","children":[{"name":"id","value":"place1"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testPlace"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2018-05-15 16:56:56.341"}]},{"name":"testCollection","value":"testItem"}]} | | OK |
+| $adminAuthToken | testPlace | place1 | {"name":"testPlace","children":[{"name":"recordInfo","children":[{"name":"id","value":"place1"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testPlace"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2018-05-15T16:56:56.341000Z"}]},{"name":"testCollection","value":"testItem"}]} | | OK |
 
 *!
 !2 Failing tests
