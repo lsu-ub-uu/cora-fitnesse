@@ -52,8 +52,7 @@ Test
 !2 Clean up created data
 !***> Clean up created data
 
-!| comment |
-| RecordEndpointFixture |
+!| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | textSystemOne | myAuthText | | OK |
 
