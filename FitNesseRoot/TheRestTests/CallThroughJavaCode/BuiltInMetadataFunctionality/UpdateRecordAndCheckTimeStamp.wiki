@@ -2,6 +2,7 @@
 Test
 ---
 !contents -R2 -g -p -f -h
+!1 Update record type and check that timestamp is correct format
 | import |
 | se.uu.ub.cora.fitnesseintegration |
 
@@ -11,7 +12,7 @@ Create record type myRecordType
 | authToken | type | json | testCreateRecord? | getStatusType? |
 | $adminAuthToken | recordType | {"name":"recordType","children":[{"name":"abstract","value":"false"},{"name":"recordInfo","children":[{"name":"id","value":"myRecordType"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"userSuppliedId","value":"false"},{"name":"groupOfRecordType","value":"typeOfResource","repeatId":"0"},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"myRecordTypeGroup"}]},{"name":"newMetadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"myRecordTypeNewGroup"}]},{"name":"presentationViewId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"myRecordTypeOutputPGroup"}]},{"name":"presentationFormId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"myRecordTypePGroup"}]},{"name":"menuPresentationViewId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"myRecordTypeOutputPGroup"}]},{"name":"listPresentationViewId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"myRecordTypeOutputPGroup"}]},{"name":"autocompletePresentationView","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"myRecordTypePGroup"}]},{"name":"newPresentationFormId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"myRecordTypePGroup"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"someFitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"someFitnesseDefText"}]},{"name":"public","value":"false"}]} | | CREATED |
 
-Update record type myRecordType
+Update record type myRecordType and check that timestamp is correct format
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
