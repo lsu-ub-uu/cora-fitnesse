@@ -152,7 +152,7 @@ These test show that we can get a list of all records that link to a specified r
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadIncomingLinks? | getStatusType? |
-| $adminAuthToken | metadataGroup | coraTextGroup | | OK |
+| $adminAuthToken | metadataGroup | coraTextGroup | =~/"name":"from".*"name":"to"/ | OK |
 
 *!
 !***> Read incomingLinks for bush1, bush2

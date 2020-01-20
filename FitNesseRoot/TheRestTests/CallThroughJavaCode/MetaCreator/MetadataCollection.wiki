@@ -49,7 +49,7 @@ Read collectionVariable and presentationCollectionVars to make sure they do not 
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | metadataItemCollection | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseBookCollection"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"fitnesseBook"},{"name":"collectionItemReferences","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"genericCollectionItem"},{"name":"linkedRecordId","value":"aFitnesseItem"}],"repeatId":"0"}]}],"attributes":{"type":"itemCollection"}} | !-=~/systemone/rest/record/coraText/(defTextId|textId)/-! | CREATED |
+| $adminAuthToken | metadataItemCollection | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseBookCollection"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"fitnesseBook"},{"name":"collectionItemReferences","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"genericCollectionItem"},{"name":"linkedRecordId","value":"aFitnesseItem"}],"repeatId":"0"}]}],"attributes":{"type":"itemCollection"}} | !-=~/systemone/rest/record/coraText/fitnesseBookCollectionText".*-!!-systemone/rest/record/coraText/fitnesseBookCollectionDefText/-! | CREATED |
 
 *!
 Read fitnesseBookCollection to see that links to texts have been added to the metadata
