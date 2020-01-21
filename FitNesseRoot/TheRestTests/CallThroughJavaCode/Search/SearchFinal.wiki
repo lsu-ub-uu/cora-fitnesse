@@ -176,7 +176,7 @@ When a record is deleted it is removed from the index.
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
 | $adminAuthToken | testNews | {"name":"testNews","children":[{"name":"recordInfo","children":[{"name":"id","value":"news1"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"testNewsTitle","value":"En titel"}]} | | CREATED |
-| $adminAuthToken | testNews | {"name":"testNews","children":[{"name":"recordInfo","children":[{"name":"id","value":"news2"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"testNewsTitle","value":"En annan"}]} | | CREATED |
+| $adminAuthToken | testNews | {"name":"testNews","children":[{"name":"recordInfo","children":[{"name":"id","value":"news2"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"testNewsTitle","value":"En annan"},{"name":"testNewsSubTitle","value":"One sub title","repeatId":"0"}]} | | CREATED |
 | $adminAuthToken | testNews | {"name":"testNews","children":[{"name":"recordInfo","children":[{"name":"id","value":"newsSub1"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"testNewsTitle","value":"A title with a sub title"},{"name":"testNewsSubTitle","value":"A sub title","repeatId":"0"},{"name":"testNewsSubTitle","value":"The second sub title","repeatId":"1"}]} | | CREATED |
 | $adminAuthToken | testNews | {"name":"testNews","children":[{"name":"recordInfo","children":[{"name":"id","value":"newsHeading1"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"testNewsTitle","value":"A title with a heading"},{"name":"testNewsSubTitle","value":"One sub title with a heading","repeatId":"0"},{"name":"testNewsSubTitle","value":"One second sub title with a heading","repeatId":"1"},{"name":"testNewsSectionGroup","children":[{"name":"testNewsHeading","value":"A news heading"}],"repeatId":"0"}]} | | CREATED |
 | $adminAuthToken | testNews | {"name":"testNews","children":[{"name":"recordInfo","children":[{"name":"id","value":"newsContent"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"testNewsTitle","value":"A title with a sub title"},{"name":"testNewsContent","value":"These are some very important news from the past week"}]} | | CREATED |
@@ -208,6 +208,13 @@ Search for different values indexed from repeating data (same record, two differ
 | authToken | searchId | json | testSearchRecord? | getStatusType? |
 | $adminAuthToken | testNewsExtendedSearch | {"name":"searchNewsExtended","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"testNewsSubTitleSearchTerm","value":"\"A sub title\""}]}]}]} | =~/"name":"id","value":"newsSub1".*"totalNo":"1","containDataOfType":"mix"/ | OK |
 | $adminAuthToken | testNewsExtendedSearch | {"name":"searchNewsExtended","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"testNewsSubTitleSearchTerm","value":"\"The second sub title\""}]}]}]} | =~/"name":"id","value":"newsSub1".*"totalNo":"1","containDataOfType":"mix"/ | OK |
+
+*!
+!***> A search searching for title AND subTitle
+
+!| RecordEndpointFixture |
+| authToken | searchId | json | testSearchRecord? | getStatusType? |
+| $adminAuthToken | testNewsExtendedSearch | {"name":"searchNewsExtended","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"testNewsTitleSearchTerm","value":"En*"},{"name":"testNewsSubTitleSearchTerm","value":"*sub title"}]}]}]} | =~/"toNo":"1"/ | OK |
 
 *!
 Search in value indexed as text
