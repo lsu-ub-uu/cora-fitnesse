@@ -13,6 +13,15 @@
 | $adminAuthToken | metadataGroup | workOrderNewGroup | =~/"name":"linkedRecordId","value":"workOrderRecordTypeLink".*"name":"linkedRecordId","value":"workOrderRecordIdTextVar".*"name":"linkedRecordId","value":"workOrderTypeCollectionVar"/ | OK |
 
 *!
+!***> Read textVariables (workOrderRecordIdTextVar)
+
+Test that recordId of record handled in workorder can be anything. Needed as recordId can be "1" from database tables, and is normally out of our control.
+
+!| RecordEndpointFixture |
+| authToken | type | id | testReadRecord? | getStatusType? |
+| $adminAuthToken | metadataTextVariable | workOrderRecordIdTextVar | =~/"name":"regEx","value":"\.\+"/ | OK |
+
+*!
 !2 Test with new workOrder
 !***> Create text to use as metadata in workOrder
 
