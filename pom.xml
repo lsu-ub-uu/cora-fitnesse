@@ -73,6 +73,7 @@
 					<include>TheRestTests/</include>
 					<include>properties</include>
 					<include>properties.xml</include>
+					<include>_root.wiki</include>
 				</includes>
 				<excludes>
 					<exclude>**/*.zip</exclude>
