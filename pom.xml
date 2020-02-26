@@ -72,6 +72,7 @@
 					<include>RestFixtureInstallTest/</include>
 					<include>TheRestTests/</include>
 					<include>properties</include>
+					<include>properties.xml</include>
 				</includes>
 				<excludes>
 					<exclude>**/*.zip</exclude>
