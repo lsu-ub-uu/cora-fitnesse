@@ -65,15 +65,14 @@ Vi skapar data av den nya typen, som användaren fitnesseadmin. Det ska gå bra,
 
 !| RecordEndpointFixture |
 | authToken | type | id | children | testReadRecord? | testReadCheckContain? | getStatusType? |
-| $userAuthToken | testWorkout | cirkelfys | {"children":[{"name":"recordInfo"}, {"name":"workoutName"}]} | | OK | OK |
+| $userAuthToken | testWorkout | cirkelfys | {"children":[{"name":"recordInfo"}, {"name":"workoutName"},{"name":"numOfParticipants"},{"name":"instructorName"}]} | | OK | OK |
 
 *!
 !***> Läs posten cirkelfys och se att posten INTE innehåller de barn som fitnesseUser inte har rätt att läsa
 
-!| comment |
-| RecordEndpointFixture |
+!| RecordEndpointFixture |
 | authToken | type | id | children | testReadRecord? | testReadCheckContain? | getStatusType? |
-| $userAuthToken | testWorkout | cirkelfys | {"children":[{"name":"instructorId"},{"name":"numOfParticipants"},{"name":"instructorName"},{"name":"popularity"}]} | | Child with nameInData instructorId is missing. Child with nameInData numOfParticipants is missing. Child with nameInData instructorName is missing. Child with nameInData popularity is missing. | OK |
+| $userAuthToken | testWorkout | cirkelfys | {"children":[{"name":"instructorId"},{"name":"popularity"}]} | | Child with nameInData instructorId is missing. Child with nameInData popularity is missing. | OK |
 
 *!
 !***> Läs posten cirkelfys som fitnesse admin och se att posten innehåller de barn som fitnesseAdmin har rätt att läsa
