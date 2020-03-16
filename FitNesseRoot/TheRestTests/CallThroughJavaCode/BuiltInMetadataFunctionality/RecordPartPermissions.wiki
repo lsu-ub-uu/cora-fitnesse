@@ -64,23 +64,22 @@ Vi skapar data av den nya typen, som användaren fitnesseadmin. Det ska gå bra,
 
 !| RecordEndpointFixture |
 | authToken | type | id | children | testReadRecord? | testReadCheckContain? | getStatusType? |
-| $userAuthToken | testWorkout | cirkelfys | {"children":[{"textVariable":"workoutName"}]} | | OK | OK |
+| $userAuthToken | testWorkout | cirkelfys | {"children":[{"name":"recordInfo"}, {"name":"workoutName"}]} | | OK | OK |
 
 *!
 !***> Läs posten cirkelfys och se att posten INTE innehåller de barn som fitnesseUser inte har rätt att läsa
 
 !| comment |
 | RecordEndpointFixture |
-| authToken | type | id | testReadRecord? | doesNotContain? | getStatusType? |
-| $userAuthToken | testWorkout | cirkelfys | | {"doesNotContain":[{"group":"instructorName"},{"textVariable":"numOfParticipants"},{"textVariable":"instructorId"},{"group":"instructorName"}]} | OK |
+| authToken | type | id | children | testReadRecord? | testReadCheckContain? | getStatusType? |
+| $userAuthToken | testWorkout | cirkelfys | {"children":[{"name":"instructorId"},{"name":"numOfParticipants"},{"name":"instructorName"},{"name":"popularity"}]} | | Child with nameInData instructorId is missing. Child with nameInData numOfParticipants is missing. Child with nameInData instructorName is missing. Child with nameInData popularity is missing. | OK |
 
 *!
-!***> Create textVariable freeText
+!***> Läs posten cirkelfys som fitnesse admin och se att posten innehåller de barn som fitnesseAdmin har rätt att läsa
 
-!| comment |
-| RecordEndpointFixture |
-| authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | metadataTextVariable | {"name":"metadata","attributes":{"type":"textVariable"},"children":[{"name":"recordInfo","children":[{"name":"id","value":"freeTextVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"nameInData","value":"freeText"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}],"name":"defTextId"},{"name":"regEx","value":"^[a-zA-Z]+$"}]} | | CREATED |
+!| RecordEndpointFixture |
+| authToken | type | id | children | testReadRecord? | testReadCheckContain? | getStatusType? |
+| $adminAuthToken | testWorkout | cirkelfys | {"children":[{"name":"workoutName"},{"name":"instructorId"},{"name":"numOfParticipants"},{"name":"instructorName"},{"name":"popularity"}]} | | OK | OK |
 
 *!
 !***> Create !-MetadataGroups-!, one parent and three children
