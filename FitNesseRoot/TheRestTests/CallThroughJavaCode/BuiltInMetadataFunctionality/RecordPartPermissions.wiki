@@ -50,7 +50,7 @@ Vi skapar data av den nya typen, som användaren fitnesseadmin. Det ska gå bra,
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | testWorkout | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"0"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"45"},{"name":"instructorId","value":"3564"},{"name":"instructorName","children":[{"name":"firstName","value":"Anna"},{"name":"lastName","value":"Ledare"}]},{"name":"popularity","children":[{"name":"rating","value":"4"}]}]} | | CREATED |
+| $adminAuthToken | testWorkout | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"45"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"45"},{"name":"instructorId","value":"3564"},{"name":"instructorName","children":[{"name":"firstName","value":"Anna"},{"name":"lastName","value":"Ledare"}]},{"name":"popularity","children":[{"name":"rating","value":"4"}]}]} | | CREATED |
 
 *!
 !***> Uppdatera en regel som fitnesseUser har så användaren får rätt att läsa posttypen, men inte barnen
@@ -83,6 +83,38 @@ Vi skapar data av den nya typen, som användaren fitnesseadmin. Det ska gå bra,
 
 *!
 !2 Skriv
+Vi uppdaterar en post först med den användare om får uppdatera alla fält. Vi läser den sen och ser att datat är uppdaterat. Därefter försöker vi uppdatera posten med den användaren som INTE har rätt att uppdatera alla fält, för att sedan läsa
+
+posten igen och se att fälten INTE är uppdaterade.
+
+!***> Uppdatera en testWorkout-posten som fitnesseAdmin
+
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? | getStatusType? |
+| $adminAuthToken | testWorkout | cirkelfys | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"1"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"30"},{"name":"instructorId","value":"6666"},{"name":"instructorName","children":[{"name":"firstName","value":"Emma"},{"name":"lastName","value":"Instruktör"}]},{"name":"popularity","children":[{"name":"rating","value":"8"}]}]} | | OK |
+
+*!
+!***> Läs posten cirkelfys och se att posten innehåller uppdaterade värden för alla fält
+
+!| RecordEndpointFixture |
+| authToken | type | id | children | testReadRecord? | testReadCheckContainWithValues? | getStatusType? |
+| $adminAuthToken | testWorkout | cirkelfys | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"30"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Instruktör"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"8"}]}]} | | OK | OK |
+
+*!
+!***> Uppdatera en testWorkout-posten som fitnesseUser, vilken inte har rätt att uppdatera alla fält
+
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? | getStatusType? |
+| $userAuthToken | testWorkout | cirkelfys | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"1"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"3000"},{"name":"instructorId","value":"123456"},{"name":"instructorName","children":[{"name":"firstName","value":"Rut-Emma"},{"name":"lastName","value":"Projektledare"}]},{"name":"popularity","children":[{"name":"rating","value":"0"}]}]} | | OK |
+
+*!
+!***> Läs posten cirkelfys och se att posten INTE innehåller uppdaterade värden för alla fält
+
+!| RecordEndpointFixture |
+| authToken | type | id | children | testReadRecord? | testReadCheckContainWithValues? | getStatusType? |
+| $adminAuthToken | testWorkout | cirkelfys | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"30"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Instruktör"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"8"}]}]} | | Child with nameInData instructorId does not have the correct value. Child with nameInData numOfParticipants does not have the correct value. Child with nameInData firstName does not have the correct value. Child with nameInData lastName does not have the correct value. Child with nameInData rating does not have the correct value. | OK |
+
+*!
 !2 Clean up created data
 !***> Återställ regel everything
 
