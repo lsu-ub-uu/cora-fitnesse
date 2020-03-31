@@ -63,23 +63,23 @@ Vi skapar data av den nya typen, som användaren fitnesseadmin. Det ska gå bra,
 !2 Läs
 !***> Läs posten cirkelfys och se att posten innehåller de barn som fitnesseUser har rätt att läsa
 
-!| RecordEndpointFixture |
-| authToken | type | id | children | testReadRecord? | testReadCheckContain? | getStatusType? |
-| $userAuthToken | testWorkout | cirkelfys | {"children":[{"name":"recordInfo"}, {"name":"workoutName"},{"name":"numOfParticipants"},{"name":"instructorName"}]} | | OK | OK |
+!| ComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContain? |
+| $userAuthToken | testWorkout | cirkelfys | {"children":[{"name":"recordInfo"}, {"name":"workoutName"},{"name":"numOfParticipants"},{"name":"instructorName"}]} | | OK |
 
 *!
 !***> Läs posten cirkelfys och se att posten INTE innehåller de barn som fitnesseUser inte har rätt att läsa
 
-!| RecordEndpointFixture |
-| authToken | type | id | children | testReadRecord? | testReadCheckContain? | getStatusType? |
-| $userAuthToken | testWorkout | cirkelfys | {"children":[{"name":"instructorId"},{"name":"popularity"}]} | | Child with nameInData popularity is missing. | OK |
+!| ComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContain? |
+| $userAuthToken | testWorkout | cirkelfys | {"children":[{"name":"instructorId"},{"name":"popularity"}]} | | Child with nameInData popularity is missing. |
 
 *!
 !***> Läs posten cirkelfys som fitnesse admin och se att posten innehåller de barn som fitnesseAdmin har rätt att läsa
 
-!| RecordEndpointFixture |
-| authToken | type | id | children | testReadRecord? | testReadCheckContain? | getStatusType? |
-| $adminAuthToken | testWorkout | cirkelfys | {"children":[{"name":"workoutName"},{"name":"instructorId"},{"name":"numOfParticipants"},{"name":"instructorName"},{"name":"popularity"}]} | | OK | OK |
+!| ComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContain? |
+| $adminAuthToken | testWorkout | cirkelfys | {"children":[{"name":"workoutName"},{"name":"instructorId"},{"name":"numOfParticipants"},{"name":"instructorName"},{"name":"popularity"}]} | | OK |
 
 *!
 !2 Skriv
@@ -96,9 +96,9 @@ posten igen och se att fälten INTE är uppdaterade.
 *!
 !***> Läs posten cirkelfys och se att posten innehåller uppdaterade värden för alla fält
 
-!| RecordEndpointFixture |
-| authToken | type | id | children | testReadRecord? | testReadCheckContainWithValues? | getStatusType? |
-| $adminAuthToken | testWorkout | cirkelfys | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"30"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Instruktör"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"8"}]}]} | | OK | OK |
+!| ComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
+| $adminAuthToken | testWorkout | cirkelfys | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"30"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Instruktör"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"8"}]}]} | | OK |
 
 *!
 !***> Uppdatera en testWorkout-posten som fitnesseUser, vilken inte har rätt att uppdatera alla fält
@@ -114,10 +114,10 @@ I andra raden anger vi de gamla värdena i children-kolumnen, de som fitnesseAdm
 
 !***> Läs posten cirkelfys och se att posten INTE innehåller uppdaterade värden för alla fält
 
-!| RecordEndpointFixture |
-| authToken | type | id | children | testReadRecord? | testReadCheckContainWithValues? | getStatusType? |
-| $adminAuthToken | testWorkout | cirkelfys | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"123456"},{"type":"atomic","name":"numOfParticipants","value":"3000"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Rut-Emma"},{"type":"atomic","name":"lastName","value":"Projektledare"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"0"}]}]} | | Child with nameInData instructorId does not have the correct value. Child with nameInData numOfParticipants does not have the correct value. Child with nameInData firstName does not have the correct value. Child with nameInData lastName does not have the correct value. Child with nameInData rating does not have the correct value. | OK |
-| $adminAuthToken | testWorkout | cirkelfys | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"30"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Instruktör"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"8"}]}]} | | OK | OK |
+!| ComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
+| $adminAuthToken | testWorkout | cirkelfys | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"123456"},{"type":"atomic","name":"numOfParticipants","value":"3000"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Rut-Emma"},{"type":"atomic","name":"lastName","value":"Projektledare"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"0"}]}]} | | Child with nameInData instructorId does not have the correct value. Child with nameInData numOfParticipants does not have the correct value. Child with nameInData firstName does not have the correct value. Child with nameInData lastName does not have the correct value. Child with nameInData rating does not have the correct value. |
+| $adminAuthToken | testWorkout | cirkelfys | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"30"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Instruktör"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"8"}]}]} | | OK |
 
 *!
 !2 Skriv - bara skrivbegränsning
@@ -137,9 +137,9 @@ I andra raden anger vi de gamla värdena i children-kolumnen, de som fitnesseAdm
 *!
 !***> Läs posten cirkelfys och se att posten INTE innehåller uppdaterade värden för alla fält
 
-!| RecordEndpointFixture |
-| authToken | type | id | children | testReadRecord? | testReadCheckContainWithValues? | getStatusType? |
-| $adminAuthToken | testWorkout | cirkelfys | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"666"},{"type":"atomic","name":"numOfParticipants","value":"99999"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Ingen"},{"type":"atomic","name":"lastName","value":"LedareAlls"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"-9"}]}]} | | Child with nameInData instructorId does not have the correct value. Child with nameInData numOfParticipants does not have the correct value. Child with nameInData firstName does not have the correct value. Child with nameInData lastName does not have the correct value. Child with nameInData rating does not have the correct value. | OK |
+!| ComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
+| $adminAuthToken | testWorkout | cirkelfys | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"666"},{"type":"atomic","name":"numOfParticipants","value":"99999"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Ingen"},{"type":"atomic","name":"lastName","value":"LedareAlls"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"-9"}]}]} | | Child with nameInData instructorId does not have the correct value. Child with nameInData numOfParticipants does not have the correct value. Child with nameInData firstName does not have the correct value. Child with nameInData lastName does not have the correct value. Child with nameInData rating does not have the correct value. |
 
 *!
 !2 Lista poster
