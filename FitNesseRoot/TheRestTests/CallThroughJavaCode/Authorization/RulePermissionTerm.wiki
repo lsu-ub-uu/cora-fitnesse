@@ -59,6 +59,23 @@ If persmission terms are used in metadata for a record type, the user must have 
 | $adminAuthToken | permissionRule | everything | {"name":"permissionRule","children":[{"name":"recordInfo","children":[{"name":"id","value":"everything"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRule"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"systemOneUser"},{"name":"linkedRecordId","value":"12345"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.*","repeatId":"0"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.*","repeatId":"0"}],"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"},{"name":"permissionTermRulePart","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectPermissionTerm"},{"name":"linkedRecordId","value":"testPublishedStatusPermissionTerm"}]},{"name":"value","value":"system.published","repeatId":"0"},{"name":"value","value":"system.notPublished","repeatId":"1"}],"repeatId":"0"}]} | | OK |
 
 *!
+!3 Create metadata for testStudentThesis search
+!***> Create a metadataGroup(testStudentThesisSearchIncludePartGroup, testStudentThesisSearchIncludeGroup, testStudentThesisSearchGroup)
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | metadataGroup | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testStudentThesisSearchIncludePartGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"includePart"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"searchRecordIdTextVar"}]}],"repeatId":"0"}]}, {"name":"excludePGroupCreation","value":"true"}],"attributes":{"type":"group"}} | | CREATED |
+| $adminAuthToken | metadataGroup | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testStudentThesisSearchIncludeGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"nameInData","value":"include"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"testStudentThesisSearchIncludePartGroup"}]}],"repeatId":"0"}]}, {"name":"excludePGroupCreation","value":"true"}],"attributes":{"type":"group"}} | | CREATED |
+| $adminAuthToken | metadataGroup | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testStudentThesisSearchGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"nameInData","value":"searchStudentThesisExtended"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"testStudentThesisSearchIncludeGroup"}]}],"repeatId":"0"}]}, {"name":"excludePGroupCreation","value":"true"}],"attributes":{"type":"group"}} | | CREATED |
+
+*!
+!***> Create data of recordType search
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | search | {"name":"search","children":[{"name":"recordInfo","children":[{"name":"id","value":"testStudentThesisExtendedSearch"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"testStudentThesisSearchGroup"}]},{"name":"presentationId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"testStudentThesisPGroup"}]},{"name":"recordTypeToSearchIn","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testStudentThesis"}],"repeatId":"0"},{"name":"searchGroup","value":"autocomplete"}]} | | CREATED |
+
+*!
 !3 Create testStudentThesis
 !***> Create data for a testStudentThesis
 
@@ -74,7 +91,14 @@ If persmission terms are used in metadata for a record type, the user must have 
 | $adminAuthToken | permissionRule | nothing | {"name":"permissionRule","children":[{"name":"recordInfo","children":[{"name":"id","value":"nothing"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRule"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"systemOneUser"},{"name":"linkedRecordId","value":"12345"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.*","repeatId":"0"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.testStudentThesis","repeatId":"0"}],"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"},{"name":"permissionTermRulePart","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectPermissionTerm"},{"name":"linkedRecordId","value":"testPublishedStatusPermissionTerm"}]},{"name":"value","value":"system.published","repeatId":"0"}],"repeatId":"0"}]} | | OK |
 
 *!
-!3 Try to create, update and delete when user has no access to data
+!3 Try to read, create, update, delete and list when user has no access to data
+!***> Try to read data as fitnesseUser. This should not be allowed
+
+!| RecordEndpointFixture |
+| authToken | type | id | testReadRecord? | getStatusType? |
+| $userAuthToken | testStudentThesis | studentThesis1 | | FORBIDDEN |
+
+*!
 !***> Try to create studentThesis2 as fitnesseUser. This should not be allowed  since data is not compliant with the users permissions
 
 !| RecordEndpointFixture |
@@ -87,6 +111,20 @@ If persmission terms are used in metadata for a record type, the user must have 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
 | $userAuthToken | testStudentThesis | studentThesis1 | {"name":"testStudentThesis","children":[{"name":"recordInfo","children":[{"name":"id","value":"studentThesis1"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testStudentThesis"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"systemOneUser"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2018-04-11T08:56:47.811000Z"}]},{"name":"testTitle","value":"En titel"},{"name":"publishedStatus","value":"notPublished"}]} | | FORBIDDEN |
+
+*!
+!***> List recordType testStudentThesis.  This should not be allowed
+
+!| RecordEndpointFixture |
+| authToken | type | json | testReadRecordList? | getStatusType? |
+| $adminAuthToken | testStudentThesis | {"name":"filter","children":[]} | | FORBIDDEN |
+
+*!
+!***> Search for testStudentThesis. There should be no results
+
+!| RecordEndpointFixture |
+| authToken | searchId | json | testSearchRecord? | getStatusType? |
+| $userAuthToken | testStudentThesisExtendedSearch | {"name":"searchStudentThesisExtended","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"recordIdSearchTerm","value":"studentThesis1"}]}]}]} | {"dataList":{"fromNo":"1","data":[],"totalNo":"1","containDataOfType":"mix","toNo":"0"}} | OK |
 
 *!
 !***> Try to delete data as fitnesseUser. This should not be allowed
@@ -109,6 +147,27 @@ If persmission terms are used in metadata for a record type, the user must have 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
 | $adminAuthToken | testStudentThesis | studentThesis1 | {"name":"testStudentThesis","children":[{"name":"recordInfo","children":[{"name":"id","value":"studentThesis1"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testStudentThesis"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"systemOneUser"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2018-04-11T08:56:47.811000Z"}]},{"name":"testTitle","value":"En titel"},{"name":"publishedStatus","value":"published"}]} | | OK |
+
+*!
+!***> Try to read data as fitnesseUser. This should now be allowed since data was changed to comply with the users permissions
+
+!| RecordEndpointFixture |
+| authToken | type | id | testReadRecord? | getStatusType? |
+| $userAuthToken | testStudentThesis | studentThesis1 | | OK |
+
+*!
+!***> List recordType testStudentThesis.  This should now be allowed since data was changed to comply with the users permissions
+
+!| RecordEndpointFixture |
+| authToken | type | json | testReadRecordList? | getStatusType? |
+| $adminAuthToken | testStudentThesis | {"name":"filter","children":[]} | | OK |
+
+*!
+!***> Search for testStudentThesis.
+
+!| RecordEndpointFixture |
+| authToken | searchId | json | testSearchRecord? | getStatusType? |
+| $userAuthToken | testStudentThesisExtendedSearch | {"name":"searchStudentThesisExtended","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"recordIdSearchTerm","value":"studentThesis1"}]}]}]} | =~/"toNo":"1"/ | OK |
 
 *!
 !***> Update studentThesis1 as fitnesseUser. This should now be allowed since data was changed to comply with the users permissions
@@ -151,6 +210,10 @@ If persmission terms are used in metadata for a record type, the user must have 
 
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | search | testStudentThesisExtendedSearch | | OK |
+| $adminAuthToken | metadataGroup | testStudentThesisSearchGroup | | OK |
+| $adminAuthToken | metadataGroup | testStudentThesisSearchIncludeGroup | | OK |
+| $adminAuthToken | metadataGroup | testStudentThesisSearchIncludePartGroup | | OK |
 | $adminAuthToken | search | testStudentThesisSearch | | OK |
 | $adminAuthToken | recordType | testStudentThesis | | OK |
 | $adminAuthToken | presentationGroup | testStudentThesisPGroup | | OK |
