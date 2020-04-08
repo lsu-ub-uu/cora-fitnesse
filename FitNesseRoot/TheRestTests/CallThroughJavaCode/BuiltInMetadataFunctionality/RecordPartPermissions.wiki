@@ -129,7 +129,7 @@ I children-kolumnen i första raden anger vi de värden som vi försökte uppdat
 
 I andra raden anger vi de gamla värdena i children-kolumnen, de som fitnesseAdmin uppdaterade till tidigare. Där förväntar vi oss svaret OK.
 
-!***> Läs posten cirkelfys och se att posten INTE innehåller uppdaterade värden för alla fälttestWorkoutSearchGroup
+!***> Läs posten cirkelfys och se att posten INTE innehåller uppdaterade värden för alla fält
 
 !| ComparerFixture |
 | authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
@@ -172,18 +172,35 @@ Om man inte har rätt att skriva delar av en post så ska det vara möjligt att 
 !2 Lista poster
 Om man listar poster så ska varje post i listan bara innehålla det data som användaren har rätt att läsa
 
-!***> Load list of testWorkouts to use in tests
+!***> Lists testWorkouts och lagra resultatet för att användas i test nedan
 
 !| ComparerFixture |
 | authToken | type | testReadRecordListAndStoreRecords? |
 | $adminAuthToken | testWorkout | |
 
 *!
-!***> Check children in list
+!***> Kontrollera barnen i den tidigare upplästa listan
 
 !| ComparerFixture |
 | type | children | listIndexToCompareTo | testReadFromListCheckContain? |
-| testWorkout | {"children":[{"name":"instructorId"},{"name":"popularity"}]} | 0 | Child with nameInData popularity is missing. testWorkoutSearchIncludePartGroup |
+| testWorkout | {"children":[{"name":"instructorId"},{"name":"popularity"}]} | 0 | Child with nameInData popularity is missing.  |
+
+*!
+!2 Sök poster
+När man söker efter poster ska varje post i resultatet bara innehålla det data som användaren har rätt att läsa
+
+!***> Sök efter testWorkouts och lagra resultatet för att användas i test nedan
+
+!| ComparerFixture |
+| authToken | searchId | json | testSearchAndStoreRecords? |
+| $adminAuthToken | testWorkoutExtendedSearch | {"name":"searchTestWorkoutExtended","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"recordIdSearchTerm","value":"**"}]}]}]} | |
+
+*!
+!***> Kontrollera barnen i resultatet av den tidigare gjorda sökningen
+
+!| ComparerFixture |
+| type | children | listIndexToCompareTo | testReadFromListCheckContain? |
+| testWorkout | {"children":[{"name":"instructorId"},{"name":"popularity"}]} | 0 | Child with nameInData popularity is missing.  |
 
 *!
 !2 Clean up created data
