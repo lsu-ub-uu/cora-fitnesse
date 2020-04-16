@@ -113,11 +113,11 @@ If persmission terms are used in metadata for a record type, the user must have 
 | $userAuthToken | testStudentThesis | studentThesis1 | {"name":"testStudentThesis","children":[{"name":"recordInfo","children":[{"name":"id","value":"studentThesis1"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testStudentThesis"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"systemOneUser"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2018-04-11T08:56:47.811000Z"}]},{"name":"testTitle","value":"En titel"},{"name":"publishedStatus","value":"notPublished"}]} | | FORBIDDEN |
 
 *!
-!***> List recordType testStudentThesis.  This should not be allowed
+!***> List recordType testStudentThesis. There should be no results
 
 !| RecordEndpointFixture |
 | authToken | type | json | testReadRecordList? | getStatusType? |
-| $adminAuthToken | testStudentThesis | {"name":"filter","children":[]} | | FORBIDDEN |
+| $userAuthToken | testStudentThesis | {"name":"filter","children":[]} | {"dataList":{"fromNo":"0","data":[],"totalNo":"1","containDataOfType":"testStudentThesis","toNo":"0"}} | OK |
 
 *!
 !***> Search for testStudentThesis. There should be no results
