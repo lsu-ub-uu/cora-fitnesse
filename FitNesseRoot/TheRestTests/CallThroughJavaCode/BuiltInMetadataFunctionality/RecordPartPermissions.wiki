@@ -183,16 +183,14 @@ När man söker efter poster ska varje post i resultatet bara innehålla det dat
 
 !***> Sök efter testWorkouts och lagra resultatet för att användas i test nedan
 
-!| Comment |
-| ComparerFixture |
+!| ComparerFixture |
 | authToken | searchId | json | testSearchAndStoreRecords? |
-| $adminAuthToken | testWorkoutExtendedSearch | {"name":"searchTestWorkoutExtended","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"recordIdSearchTerm","value":"**"}]}]}]} | |
+| $userAuthToken | testWorkoutExtendedSearch | {"name":"searchTestWorkoutExtended","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"recordIdSearchTerm","value":"**"}]}]}]} | |
 
 *!
 !***> Kontrollera barnen i resultatet av den tidigare gjorda sökningen
 
-!| Comment |
-| ComparerFixture |
+!| ComparerFixture |
 | type | children | listIndexToCompareTo | testReadFromListCheckContain? |
 | testWorkout | {"children":[{"name":"instructorId"},{"name":"popularity"}]} | 0 | Child with nameInData popularity is missing. |
 
