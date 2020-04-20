@@ -3,27 +3,56 @@
 | se.uu.ub.cora.fitnesseintegration |
 
 !1 !-AppTokenVerifierTest-!
-A test that checks that we can use newly created appTokens to authenticate.
+A test that checks that we can create and use an appToken to authenticate a user.
 
-!***> Use authToken for fitnesseAdmin
+This test is done through a few steps, using the fitnesseUser user:
 
-!| script | RecordEndpointFixture |
-| setAuthToken | $adminAuthToken |
+ * Create a new appToken, automatically linked to the logged in user creating the appToken record.
+ * Log out, the current login (remove the current authToken for fitnesseUser)
+ * Use the new appToken to get a new authToken for fitnesseUser
+ * Test data handling with new authToken, to show that it is valid for and linked to the fitnesseUser who created it.
+ * Cleanup test data
+
+It is not yet decided or setup (in metadata) who should be allowed to create appTokens, so we add that functionality temporarily to fitnesseUser here.
+
+!***> Setup metadata to allow fitnesseUser to create an appToken
+
+Create a new rule, updateMySelfRule, to allow fitnesseUser to update users
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | permissionRule | {"name":"permissionRule","children":[{"name":"recordInfo","children":[{"name":"id","value":"updateMySelfRule"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.systemOneUser","repeatId":"0"}],"attributes":{"type":"recordType"}},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.update","repeatId":"0"},{"name":"permissionRulePartValue","value":"system.read","repeatId":"1"}],"attributes":{"type":"action"}},{"name":"activeStatus","value":"active"}]} | | CREATED |
+
+Update permissionRole, textAdmin, adding new rule updateMySelfRule and existing rule appTokenCreate
+
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? | getStatusType? |
+| $adminAuthToken | permissionRole | fitnesseTextAdmin | {"name":"permissionRole","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseTextAdmin"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"systemOneUser"},{"name":"linkedRecordId","value":"12345"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"systemOneUser"},{"name":"linkedRecordId","value":"12345"}]},{"name":"tsUpdated","value":"2017-11-01 17:51:52.0"}],"repeatId":"0"}]},{"name":"permissionRuleLink","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"textAdmin"}],"repeatId":"0"},{"name":"permissionRuleLink","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"nothing"}],"repeatId":"1"},{"name":"permissionRuleLink","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"updateMySelfRule"}],"repeatId":"2"},{"name":"permissionRuleLink","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"appTokenCreate"}],"repeatId":"3"},{"name":"activeStatus","value":"active"}]} | | OK |
 
 *!
-!2 Get a new authToken using appToken
+!2 Create a new appToken for fitnesseUser
+When a user creates a new appToken record, with a note (to remember what the appToken was creted for) is an randomized apptoken string added to the record on the server, and a link is created from the user to the new appToken record. The appToken record is returned to the user with the new apptoken string in it. This is the only time it is possible for a user to read the appToken, as the user does not have read access to appTokens. We store the apptoken string value in the parameter "newAppToken" to use later in this test.
+
 !***> Create appToken
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? | getToken? |
-| $adminAuthToken | appToken | {"name":"appToken","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"note","value":"My device"}]} | | CREATED | $createdId= | $appToken= |
+| $userAuthToken | appToken | {"name":"appToken","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"note","value":"My device"}]} | | CREATED | $createdId= | $newAppToken= |
 
 *!
 !***> Read data for user to see that it is linked to the new appToken
 
 !| RecordEndpointFixture |
 | type | id | testReadRecord? | getStatusType? |
-| systemOneUser | 131313 | =~/"name":"linkedRecordId",\s*"value":"$createdId"/ | OK |
+| systemOneUser | 121212 | =~/"name":"linkedRecordId",\s*"value":"$createdId"/ | OK |
+
+*!
+!2 Get a new authToken using for the new appToken
+!***> Login fitnessUser using new appToken
+
+!| AppTokenEndpointFixture |
+| userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
+| 121212 | $newAppToken | | $newUserAuthToken= | CREATED |
 
 *!
 !2 Test with new texts to show that we can use our authToken and be our user
@@ -32,6 +61,7 @@ A test that checks that we can use newly created appTokens to authenticate.
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
 | $userAuthToken | textSystemOne | {"name":"text","children":[{"name":"recordInfo","children":[{"name":"id","value":"myAuthText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"textPart","attributes":{"type":"default","lang":"sv"} ,"children":[{"name":"text","value":"Min svenska text"}]}]} | =~/"name":"linkedRecordId",\s*"value":"121212"/ | CREATED |
+| $newUserAuthToken | textSystemOne | {"name":"text","children":[{"name":"recordInfo","children":[{"name":"id","value":"myAppTokenTestText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"textPart","attributes":{"type":"default","lang":"sv"} ,"children":[{"name":"text","value":"Min text för att testa en ny appToken"}]}]} | =~/"name":"linkedRecordId",\s*"value":"121212"/ | CREATED |
 
 *!
 !***> Logout
@@ -61,10 +91,19 @@ Update user, fitnesse to be as it was before testing
 *!
 !2 Clean up created data
 !***> Clean up created data
+Reset, fitnesseTextAdmin
 
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? | getStatusType? |
+| $adminAuthToken | permissionRole | fitnesseTextAdmin | {"children":[{"children":[{"name":"id","value":"fitnesseTextAdmin"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}],"name":"recordInfo"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"textAdmin"}],"name":"permissionRuleLink"},{"repeatId":"1","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"nothing"}],"name":"permissionRuleLink"},{"name":"activeStatus","value":"active"}],"name":"permissionRole"} | | OK |
+
+Remove created records
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | textSystemOne | myAuthText | | OK |
+| $adminAuthToken | textSystemOne | myAppTokenTestText | | OK |
 | $adminAuthToken | appToken | $createdId | | OK |
+| $adminAuthToken | permissionRule | updateMySelfRule | | OK |
+
 
 *!

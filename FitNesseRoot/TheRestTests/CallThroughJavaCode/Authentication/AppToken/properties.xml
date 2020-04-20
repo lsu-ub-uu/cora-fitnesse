@@ -2,7 +2,7 @@
 <properties>
     <Edit/>
     <Files/>
-    <Help>A test that checks that we can use newly created appTokens to authenticate</Help>
+    <Help>A test that checks that we can create and use an appToken to authenticate a user</Help>
     <Properties/>
     <RecentChanges/>
     <Refactor/>
