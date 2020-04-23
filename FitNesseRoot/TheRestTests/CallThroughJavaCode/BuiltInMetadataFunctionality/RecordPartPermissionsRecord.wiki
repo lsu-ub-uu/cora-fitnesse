@@ -116,7 +116,7 @@ Vi uppdaterar en post först som fitnesseUser och sedan fitnesseAdmin, och ser a
 
 *!
 !2 Lista poster
-Om man listar poster så ska varje post i listan bara innehålla det data som användaren har rätt att läsa
+När man listar poster så ska varje post i listan bara innehålla de rättigheter som användaren har
 
 !***> Lista testWorkout som fitnessUser och lagra resultatet för att användas i test nedan
 
@@ -154,42 +154,41 @@ Om man listar poster så ska varje post i listan bara innehålla det data som an
 
 *!
 !2 Sök poster
-När man söker efter poster ska varje post i resultatet bara innehålla det data som användaren har rätt att läsa
+När man söker efter poster så ska varje post i resultatet bara innehålla de rättigheter som användaren har
 
-!***> Sök efter testWorkouts och lagra resultatet för att användas i test nedan
+!***> Sök efter testWorkouts som fitnesseUser och lagra resultatet för att användas i test nedan
 
-!| ChildComparerFixture |
+!| PermissionComparerFixture |
 | authToken | searchId | json | testSearchAndStoreRecords? |
 | $userAuthToken | testWorkoutExtendedSearch | {"name":"searchTestWorkoutExtended","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"recordIdSearchTerm","value":"**"}]}]}]} | |
 
 *!
-!***> Kontrollera barnen i resultatet av den tidigare gjorda sökningen
+!***> Kontrollera att posten i sökresultatet innehåller korrekt läs- och skrivrättigheter
 
-!| ChildComparerFixture |
-| type | children | listIndexToCompareTo | testReadFromListCheckContain? |
-| testWorkout | {"children":[{"name":"instructorId"},{"name":"popularity"}]} | 0 | Child with nameInData popularity is missing. |
-
-*!
-!2 Skriv - bara skrivbegränsning
-!***> Uppdatera metadatagruppen så att barnen bara har skrivbegränsningar
-
-!| RecordEndpointFixture |
-| authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | metadataGroup | testWorkoutGroup | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testWorkoutGroup"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadataGroup"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2019-09-10T08:52:03.098000Z"}]},{"name":"nameInData","value":"workout"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"recordInfoGroup"}]}],"repeatId":"5"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testWorkoutNameTextVar"}]}],"repeatId":"0"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testInstructorIdTextVar"}]},{"name":"recordPartConstraint","value":"write"}],"repeatId":"1"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testNumOfParticipantsTextVar"}]},{"name":"recordPartConstraint","value":"write"}],"repeatId":"2"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"testInstructorNameGroup"}]},{"name":"recordPartConstraint","value":"write"}],"repeatId":"3"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"testPopularityGroup"}]},{"name":"recordPartConstraint","value":"write"}],"repeatId":"4"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleDefText"}]},{"name":"excludePGroupCreation","value":"true"}],"attributes":{"type":"group"}} | | OK |
+!| PermissionComparerFixture |
+| type | permissions | listIndexToCompareTo | testReadFromListCheckPermissions? |
+| testWorkout | {"read":["instructorId"]} | 0 | OK |
 
 *!
-!***> Uppdatera en testWorkout-posten som fitnesseUser, vilken inte har rätt att uppdatera alla fält
+!***> Kontrollera att posten i sökresultatet INTE innehåller de läs- och skrivrättigheter som fitnesseUser saknar
 
-!| RecordEndpointFixture |
-| authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $userAuthToken | testWorkout | cirkelfys | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"1"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"99999"},{"name":"instructorId","value":"666"},{"name":"instructorName","children":[{"name":"firstName","value":"Ingen"},{"name":"lastName","value":"LedareAlls"}]},{"name":"popularity","children":[{"name":"rating","value":"-9"}]}]} | | OK |
+!| PermissionComparerFixture |
+| type | permissions | listIndexToCompareTo | testReadFromListCheckPermissions? |
+| testWorkout | {"read":["instructorName","popularity","numOfParticipants"],"write":["instructorName","popularity","numOfParticipants","instructorId"]} | 0 | Read permission instructorName is missing. Read permission popularity is missing. Read permission numOfParticipants is missing. Write permission instructorName is missing. Write permission popularity is missing. Write permission numOfParticipants is missing. Write permission instructorId is missing. |
 
 *!
-!***> Läs posten cirkelfys och se att posten INTE innehåller uppdaterade värden för alla fält
+!***> Sök efter testWorkouts som fitnesseAdmin och lagra resultatet för att användas i test nedan
 
-!| ChildComparerFixture |
-| authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
-| $adminAuthToken | testWorkout | cirkelfys | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"666"},{"type":"atomic","name":"numOfParticipants","value":"99999"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Ingen"},{"type":"atomic","name":"lastName","value":"LedareAlls"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"-9"}]}]} | | Child with nameInData instructorId does not have the correct value. Child with nameInData numOfParticipants does not have the correct value. Child with nameInData firstName does not have the correct value. Child with nameInData lastName does not have the correct value. Child with nameInData rating does not have the correct value. |
+!| PermissionComparerFixture |
+| authToken | searchId | json | testSearchAndStoreRecords? |
+| $adminAuthToken | testWorkoutExtendedSearch | {"name":"searchTestWorkoutExtended","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"recordIdSearchTerm","value":"**"}]}]}]} | |
+
+*!
+!***> Kontrollera att posten i sökresultatet innehåller korrekt läs- och skrivrättigheter
+
+!| PermissionComparerFixture |
+| type | permissions | listIndexToCompareTo | testReadFromListCheckPermissions? |
+| testWorkout | {"read":["instructorName","popularity","numOfParticipants","instructorId"],"write":["instructorName","popularity","numOfParticipants","instructorId"]} | 0 | OK |
 
 *!
 !2 Clean up created data
