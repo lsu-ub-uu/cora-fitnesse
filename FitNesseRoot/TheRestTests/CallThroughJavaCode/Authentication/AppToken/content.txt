@@ -35,6 +35,8 @@ When a user creates a new appToken record, with a note (to remember what the app
 
 !***> Create appToken
 
+The only thing a user normally enters for a new appToken record is "note", a not that is used to remind the user what application the appToken was created for. Here we just use "My device" as an example.
+
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? | getToken? |
 | $userAuthToken | appToken | {"name":"appToken","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"note","value":"My device"}]} | | CREATED | $createdId= | $newAppToken= |
@@ -91,6 +93,7 @@ Update user, fitnesse to be as it was before testing
 *!
 !2 Clean up created data
 !***> Clean up created data
+
 Reset, fitnesseTextAdmin
 
 !| RecordEndpointFixture |
@@ -98,12 +101,12 @@ Reset, fitnesseTextAdmin
 | $adminAuthToken | permissionRole | fitnesseTextAdmin | {"children":[{"children":[{"name":"id","value":"fitnesseTextAdmin"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}],"name":"recordInfo"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"textAdmin"}],"name":"permissionRuleLink"},{"repeatId":"1","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"nothing"}],"name":"permissionRuleLink"},{"name":"activeStatus","value":"active"}],"name":"permissionRole"} | | OK |
 
 Remove created records
+
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | textSystemOne | myAuthText | | OK |
 | $adminAuthToken | textSystemOne | myAppTokenTestText | | OK |
 | $adminAuthToken | appToken | $createdId | | OK |
 | $adminAuthToken | permissionRule | updateMySelfRule | | OK |
-
 
 *!
