@@ -1,0 +1,88 @@
+---
+Test
+---
+!contents -R2 -g -p -f -h
+| import |
+| se.uu.ub.cora.fitnesseintegration |
+
+!1 Test av incoming links
+En post har t.ex alltid en länk till den posttyp som posten är en instans av. För metadatat i sig finns det ofta en mängd länkar, en metadatagrupp har länkar till sina metadatabarn, en posttyp har länkar till metadatagrupper och presentationer, presentationer har länkar till de metadata de presenterar o.s.v. !-
+-!Andra typer av länkningar kan vara en länk till en författare av en bok, eller en plats där materialet har tillkommit.
+
+När man skapar eller uppdaterar en post så plockas länkarna till andra poster ut och sparas separat. De används sedan bland annat för att se till att det inte går att ta bort en post som har andra poster som pekar mot den. Till exempel, om det finns instanser av posttypen bike, så ska det inte vara möjligt att ta bort själva posttypen.
+
+!2 Skapa metadata
+Vi börjar med att skapa metadata för en ny posttyp, bike.
+
+!***> Skapa textvariabler som ska användas i i posttypen bike
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | metadataTextVariable | {"name":"metadata","attributes":{"type":"textVariable"},"children":[{"name":"recordInfo","children":[{"name":"id","value":"someTextVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"nameInData","value":"someText"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}],"name":"defTextId"},{"name":"regEx","value":"^[r]{4}$"}]} | | CREATED |
+| $adminAuthToken | metadataTextVariable | {"name":"metadata","attributes":{"type":"textVariable"},"children":[{"name":"recordInfo","children":[{"name":"id","value":"someOtherTextVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"nameInData","value":"someOtherText"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}],"name":"defTextId"},{"name":"regEx","value":"^[r]{4}$"}]} | | CREATED |
+
+*!
+!***> Skapa metadatagrupper att använda i posttypen
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | metadataGroup | {"name":"metadata","attributes":{"type":"group"},"children":[{"name":"recordInfo","children":[{"name":"id","value":"someSubGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}]},{"name":"nameInData","value":"someSubGroup"},{"name":"excludePGroupCreation","value":"true"},{"name":"childReferences","children":[{"name":"childReference","repeatId":"1","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"someTextVar"}]},{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"}]},{"name":"childReference","repeatId":"2","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"someOtherTextVar"}]},{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"}]}]}]} | | CREATED |
+| $adminAuthToken | metadataGroup | {"name":"metadata","attributes":{"type":"group"},"children":[{"name":"recordInfo","children":[{"name":"id","value":"bikeNewGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}]},{"name":"nameInData","value":"bike"},{"name":"excludePGroupCreation","value":"true"},{"name":"childReferences","children":[{"name":"childReference","repeatId":"1","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"recordInfoNewGroup"}]},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}]},{"name":"childReference","repeatId":"2","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"someSubGroup"}]},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}]}]}]} | | CREATED |
+| $adminAuthToken | metadataGroup | {"name":"metadata","attributes":{"type":"group"},"children":[{"name":"recordInfo","children":[{"name":"id","value":"bikeGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}]},{"name":"nameInData","value":"bike"},{"name":"excludePGroupCreation","value":"true"},{"name":"childReferences","children":[{"name":"childReference","repeatId":"1","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"recordInfoGroup"}]},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}]},{"name":"childReference","repeatId":"3","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"someSubGroup"}]},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}]}]}]} | | CREATED |
+
+*!
+!***> Skapa en posttyp (bike)
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | recordType | {"name":"recordType","children":[{"name":"recordInfo","children":[{"name":"id","value":"bike"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"bikeGroup"}]},{"name":"abstract","value":"false"},{"name":"presentationViewId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"someFitnesseViewPGroup"}]},{"name":"presentationFormId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"someFitnesseFormPGroup"}]},{"name":"newMetadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"bikeNewGroup"}]},{"name":"newPresentationFormId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"someFitnesseFormNewPGroup"}]},{"name":"menuPresentationViewId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"someFitnesseMenuPGroup"}]},{"name":"listPresentationViewId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"someFitnesseListPGroup"}]},{"name":"autocompletePresentationView","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"someFitnesseListPGroup"}]},{"name":"userSuppliedId","value":"true"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someFitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someFitnesseDefText"}]},{"name":"search","children":[{"name":"linkedRecordType","value":"search"},{"name":"linkedRecordId","value":"recordTypeSearch"}]},{"name":"groupOfRecordType","value":"metadata","repeatId":"0"},{"name":"public","value":"false"}]} | | CREATED |
+
+*!
+!2 Skapa en instans av posstypen bike
+!***> Skapa en instans av bike
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | bike | {"name":"bike","children":[{"name":"recordInfo","children":[{"name":"id","value":"monark"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"someSubGroup","children":[{"name":"someText","value":"rrrr"}]}]} | | CREATED |
+
+*!
+!2 Läs länkar för posttypen
+När man har skapat en post så ska posttypen ha "incoming links" från den skapade posten. Det betyder att man inte kan ta bort posttypen bike, så länge det finns instanser av den.
+
+!***> Läs incoming links för posstypen bike
+
+!| RecordEndpointFixture |
+| authToken | type | id | testReadIncomingLinks? | getStatusType? |
+| $adminAuthToken | recordType | bike | =~/"name":"linkedRecordType","value":"bike".*"name":"linkedRecordId","value":"monark"/ | OK |
+
+*!
+!2 Ta bort skapat data
+!***> Ta bort skapat data
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | bike | monark | | OK |
+| $adminAuthToken | search | bikeSearch | | OK |
+| $adminAuthToken | recordType | bike | | OK |
+| $adminAuthToken | presentationGroup | someFitnesseMenuPGroup | | OK |
+| $adminAuthToken | presentationGroup | someFitnesseListPGroup | | OK |
+| $adminAuthToken | presentationGroup | someFitnesseFormPGroup | | OK |
+| $adminAuthToken | presentationGroup | someFitnesseFormNewPGroup | | OK |
+| $adminAuthToken | presentationGroup | someFitnesseViewPGroup | | OK |
+| $adminAuthToken | metadataGroup | bikeNewGroup | | OK |
+| $adminAuthToken | metadataGroup | bikeGroup | | OK |
+| $adminAuthToken | metadataGroup | someSubGroup | | OK |
+| $adminAuthToken | presentationVar | somePVar | | OK |
+| $adminAuthToken | presentationVar | someOutputPVar | | OK |
+| $adminAuthToken | presentationVar | someOtherPVar | | OK |
+| $adminAuthToken | presentationVar | someOtherOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | someTextVar | | OK |
+| $adminAuthToken | metadataTextVariable | someOtherTextVar | | OK |
+| $adminAuthToken | coraText | someFitnesseText | | OK |
+| $adminAuthToken | coraText | someFitnesseDefText | | OK |
+| $adminAuthToken | coraText | someTestText | | OK |
+| $adminAuthToken | coraText | someTestDefText | | OK |
+| $adminAuthToken | coraText | bikeSearchText | | OK |
+| $adminAuthToken | coraText | bikeSearchDefText | | OK |
+
+*!
