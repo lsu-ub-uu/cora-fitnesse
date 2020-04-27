@@ -10,14 +10,14 @@ Test
 !2 Record part permissions
 Det ska vara möjligt att i en post, för ett barn på översta nivån, säga  att barnet kräver läs- och/eller skrivrättighet. När en post returneras  från servern ska den bara innehålla de barn som användaren har rätt att läsa. Vid uppdatering ska endast de barn
 som användaren har rätt att skriva uppdateras. 
-I ett  tidigare steg (en inkluderad sida) har vi skapat metadata för att kunna  skapa, läsa, uppdatera, lista och söka efter poster av typen  testWorkout. I testerna nedan så visar vi på olika sätt att posten  bara innehåller de barn som den
+I ett  tidigare steg (en inkluderad sida) har vi skapat metadata för att kunna  skapa, läsa, uppdatera, lista och söka efter poster av typen  testWorkout. I testerna nedan så visar vi på olika sätt att posten  bara innehåller de barn som den
 aktuella användaren har, och att användaren bara får uppdatera värden för de barn som de har skrivrättighet för.
 
 !***> Skapa en instans av posttypen workout, som vi skapat metadata för
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | testWorkout | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"45"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"45"},{"name":"instructorId","value":"3564"},{"name":"instructorName","children":[{"name":"firstName","value":"Anna"},{"name":"lastName","value":"Ledare"}]},{"name":"popularity","children":[{"name":"rating","value":"4"}]}]} | | CREATED |
+| $adminAuthToken | testWorkout | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"45"},{"name":"instructorId","value":"3564"},{"name":"instructorName","children":[{"name":"firstName","value":"Anna"},{"name":"lastName","value":"Ledare"}]},{"name":"popularity","children":[{"name":"rating","value":"4"}]}]} | | CREATED |
 
 *!
 !2 Läs
@@ -182,6 +182,7 @@ När man söker efter poster ska varje post i resultatet bara innehålla det dat
 | $adminAuthToken | recordType | testWorkout | | OK |
 | $adminAuthToken | presentationGroup | testWorkoutGroupPGroup | | OK |
 | $adminAuthToken | metadataGroup | testWorkoutGroup | | OK |
+| $adminAuthToken | metadataGroup | testWorkoutNewGroup | | OK |
 | $adminAuthToken | presentationVar | testWorkoutNamePVar | | OK |
 | $adminAuthToken | presentationVar | testWorkoutNameOutputPVar | | OK |
 | $adminAuthToken | metadataTextVariable | testWorkoutNameTextVar | | OK |
