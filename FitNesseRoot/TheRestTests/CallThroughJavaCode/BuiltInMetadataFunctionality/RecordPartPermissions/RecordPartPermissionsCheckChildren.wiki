@@ -93,7 +93,7 @@ Om man inte har rätt att skriva delar av en post så ska det vara möjligt att 
 !2 Lista poster
 Om man listar poster så ska varje post i listan bara innehålla det data som användaren har rätt att läsa
 
-!***> Lists testWorkouts och lagra resultatet för att användas i test nedan, admin
+!***> Lista testWorkouts och lagra resultatet för att användas i test nedan, admin
 
 !| ChildComparerFixture |
 | authToken | type | testReadRecordListAndStoreRecords? |

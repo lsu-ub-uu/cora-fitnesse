@@ -151,6 +151,7 @@ När man söker efter poster så ska varje post i resultatet bara innehålla de 
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | testWorkout | cirkelfys | | OK |
+| $adminAuthToken | testWorkout | hit | | OK |
 | $adminAuthToken | search | testWorkoutSearch | | OK |
 | $adminAuthToken | search | testWorkoutExtendedSearch | | OK |
 | $adminAuthToken | metadataGroup | testWorkoutSearchGroup | | OK |
