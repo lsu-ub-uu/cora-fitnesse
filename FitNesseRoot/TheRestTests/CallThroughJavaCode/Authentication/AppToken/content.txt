@@ -33,11 +33,11 @@ Update permissionRole, textAdmin, adding new rule updateMySelfRule and existing 
 
 *!
 !2 Create a new appToken for fitnesseUser
-When a user creates a new appToken record, with a note (to remember what the appToken was creted for) is an randomized apptoken string added to the record on the server, and a link is created from the user to the new appToken record. The appToken record is returned to the user with the new apptoken string in it. This is the only time it is possible for a user to read the appToken, as no user have read access to appTokens. We store the apptoken string value in the parameter "newAppToken" to use later in this test.
+When a user creates a new appToken record, with a note (to remember what the appToken was created for) is an randomized appToken string added to the record on the server, and a link is created from the user to the new appToken record. The appToken record is returned to the user with the new appToken string in it. This is the only time it is possible for a user to read the appToken, as no user have read access to appTokens. We store the appToken string value in the parameter "newAppToken" to use later in this test.
 
 !***> Create appToken
 
-The only thing a user normally enters for a new appToken record is "note", a not that is used to remind the user what application the appToken was created for. Here we just use "My device" as an example.
+The only thing a user normally enters for a new appToken record is "note", a note that is used to remind the user what application the appToken was created for. Here we just use "My device" as an example.
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? | getToken? |
@@ -125,7 +125,6 @@ Remove created records
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | textSystemOne | myAuthText | | OK |
 | $adminAuthToken | textSystemOne | myAppTokenTestText | | OK |
-
 
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
