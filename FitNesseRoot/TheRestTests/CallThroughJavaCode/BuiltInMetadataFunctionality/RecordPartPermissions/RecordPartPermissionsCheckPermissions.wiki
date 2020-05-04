@@ -47,8 +47,7 @@ Vi uppdaterar en post först som fitnesseUser och sedan fitnesseAdmin, och ser a
 
 !***> Uppdatera posten och se att posten INTE innehåller de rättigheter som fitnesseUser inte har
 
-!| comment |
-| PermissionComparerFixture |
+!| PermissionComparerFixture |
 | authToken | type | id | json | permissions | testUpdateAndStoreRecord? | testCheckPermissions? |
 | $userAuthToken | testWorkout | cirkelfys | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"1"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"instructorName","children":[{"name":"firstName","value":"Rut-Emma"},{"name":"lastName","value":"Projektledare"}]},{"name":"popularity","children":[{"name":"rating","value":"0"}]}]} | {"read":["instructorName","popularity","numOfParticipants"]} | | Read permission instructorName is missing. Read permission popularity is missing. Read permission numOfParticipants is missing. |
 
