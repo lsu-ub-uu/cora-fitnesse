@@ -9,15 +9,26 @@ Test
 Record part permission makes it possible to set up read and write restrictions on parts of a record. It is only possible to add these restrictions to direct children of the top level dataGroup in the record.
 
 !2 Prepare metadata for testing
-Metadata is created in order to be able to test record part permission test cases. A new recordType, testWorkout,  is created that has record part restrictions on the following children to the top level dataGroup:
+Metadata is created in order to be able to test record part permission test cases. A new recordType, testWorkout,  is created that has record part restrictions on the listed children to the top level dataGroup.
 
- * testInstructorIdTextVar (readWrite) with nameInData: instructorId
- * testNumOfParticipantsTextVar (write) with nameInData: numOfParticipants
- * testInstructorNameGroup (write) with nameInData: instructorName
- * testPopularityGroup (readWrite) with nameInData: popularity
+Restrictions are set as follows:
 
-!***> Create needed metadataTextVariables and metadataGroups
+ * noRestrictions on workoutName
+ * readWrite on instructorId
+ * write on numOfParticipants
+ * write on instructorName
+ * readWrite on popularity
 
+Permissions are given as follows:
+
+ * fitnesseAdmin has read and write on all restricted record parts
+ * fitnesseUser has
+   * read on instructorId
+   * write on numOfParticipants
+
+!***> Create needed metadata
+
+!3 Create needed metadataTextVariables and metadataGroups
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
 | $adminAuthToken | metadataTextVariable | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testWorkoutNameTextVar"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"workoutName"},{"name":"regEx","value":".*"},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleDefText"}]}],"attributes":{"type":"textVariable"}} | | CREATED |
@@ -29,19 +40,15 @@ Metadata is created in order to be able to test record part permission test case
 | $adminAuthToken | metadataTextVariable | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testRatingTextVar"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"rating"},{"name":"regEx","value":".*"},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleDefText"}]}],"attributes":{"type":"textVariable"}} | | CREATED |
 | $adminAuthToken | metadataGroup | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testPopularityGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"popularity"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testRatingTextVar"}]}],"repeatId":"0"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleDefText"}]},{"name":"excludePGroupCreation","value":"true"}],"attributes":{"type":"group"}} | | CREATED |
 
-*!
-Add the created metadataChildren to a top level dataGroup and use that in a new recordType, record part restrictions are added when adding the children to the top level dataGroup. There are two types of constraints, write and readWrite. A child marked with a write constraint can be read by anybody, but only written (created / updated), by a user with permission. However a child marked with readWrite can only be read and therefor written by a user with permission, a user is not allowed to write information it can not read.
+Add the created metadataChildren to a top level dataGroup and use that in a new recordType, record part restrictions are added when adding the children to the top level dataGroup. There are two types of constraints, write and readWrite. A child marked with a write constraint can be read by anybody, but only written (created / updated), by a user with permission. However a child marked with readWrite can only be read and therefor written by a user with permission, a user is not allowed to write parts of a record it can not read.
 
-!***> Create a top level dataGroup and a new recordType where it is used
-
+!3 Create a top level dataGroup and a new recordType where it is used
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | metadataGroup | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testWorkoutGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"workout"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"recordInfoGroup"}]}],"repeatId":"5"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testWorkoutNameTextVar"}]}],"repeatId":"0"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testInstructorIdTextVar"}]},{"name":"recordPartConstraint","value":"readWrite"}],"repeatId":"1"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testNumOfParticipantsTextVar"}]},{"name":"recordPartConstraint","value":"write"}],"repeatId":"2"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"testInstructorNameGroup"}]},{"name":"recordPartConstraint","value":"write"}],"repeatId":"3"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"testPopularityGroup"}]},{"name":"recordPartConstraint","value":"readWrite"}],"repeatId":"4"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleDefText"}]},{"name":"excludePGroupCreation","value":"true"}],"attributes":{"type":"group"}} | | CREATED |
+| $adminAuthToken | metadataGroup | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testWorkoutGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"workout"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"recordInfoGroup"}]}],"repeatId":"5"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testWorkoutNameTextVar"}]}],"repeatId":"0"},{"name":"childReference","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testInstructorIdTextVar"}]},{"name":"recordPartConstraint","value":"readWrite"}],"repeatId":"1"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testNumOfParticipantsTextVar"}]},{"name":"recordPartConstraint","value":"write"}],"repeatId":"2"},{"name":"childReference","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"testInstructorNameGroup"}]},{"name":"recordPartConstraint","value":"write"}],"repeatId":"3"},{"name":"childReference","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"testPopularityGroup"}]},{"name":"recordPartConstraint","value":"readWrite"}],"repeatId":"4"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleDefText"}]},{"name":"excludePGroupCreation","value":"true"}],"attributes":{"type":"group"}} | | CREATED |
 | $adminAuthToken | recordType | {"name":"recordType","children":[{"name":"abstract","value":"false"},{"name":"recordInfo","children":[{"name":"id","value":"testWorkout"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"userSuppliedId","value":"true"},{"name":"groupOfRecordType","value":"other","repeatId":"0"},{"name":"public","value":"false"},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"testWorkoutGroup"}]},{"name":"newMetadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"testWorkoutGroup"}]},{"name":"presentationViewId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"testWorkoutGroupPGroup"}]},{"name":"presentationFormId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"testWorkoutGroupPGroup"}]},{"name":"newPresentationFormId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"testWorkoutGroupPGroup"}]},{"name":"menuPresentationViewId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"testWorkoutGroupPGroup"}]},{"name":"listPresentationViewId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"testWorkoutGroupPGroup"}]},{"name":"autocompletePresentationView","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"testWorkoutGroupPGroup"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleDefText"}]}]} | | CREATED |
 
-*!
-!***> Setup metadata to allow fitnesseAdmin to handle the new recordType, including read and write permissions for the restricted record parts
-
+!3 Setup metadata to allow fitnesseAdmin to handle the new recordType, including read and write permissions for the restricted record parts
 Create a new rule, everythingForTestWorkoutRule, to allow fitnesseAdmin to do everything with recordType testWorkout
 
 !| RecordEndpointFixture |
@@ -56,14 +63,12 @@ Update permissionRole, everything, adding new rule everythingForTestWorkoutRule
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
 | $adminAuthToken | permissionRole | everything | {"name":"permissionRole","children":[{"name":"recordInfo","children":[{"name":"id","value":"everything"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"systemOneUser"},{"name":"linkedRecordId","value":"12345"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"systemOneUser"},{"name":"linkedRecordId","value":"12345"}]},{"name":"tsUpdated","value":"2017-11-01T17:51:52.000000Z"}],"repeatId":"0"}]},{"name":"permissionRuleLink","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"everything"}],"repeatId":"0"},{"name":"activeStatus","value":"active"},{"name":"permissionRuleLink","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"everythingForTestWorkoutRule"}],"repeatId":"1"}]} | | OK |
 
-*!
-!***> Setup metadata to allow fitnesseUser to handle the new recordType, including read permission on the restricted record part instructorId
-
+!3 Setup metadata to allow fitnesseUser to handle the new recordType, including read permission on the restricted record part instructorId
 Create a new rule, limitedForTestWorkoutRule, to allow fitnesseUser limited access to recordType testWorkout
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | permissionRule | {"name":"permissionRule","children":[{"name":"recordInfo","children":[{"name":"id","value":"limitedForTestWorkoutRule"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.CREATE","repeatId":"0"},{"name":"permissionRulePartValue","value":"system.READ","repeatId":"1"},{"name":"permissionRulePartValue","value":"system.UPDATE","repeatId":"2"},{"name":"permissionRulePartValue","value":"system.SEARCH","repeatId":"3"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.testWorkout","repeatId":"0"}],"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"},{"name":"readPermissions","children":[{"name":"readPermission","value":"testWorkout.instructorId","repeatId":"0"}]}]} | | CREATED |
+| $adminAuthToken | permissionRule | {"name":"permissionRule","children":[{"name":"recordInfo","children":[{"name":"id","value":"limitedForTestWorkoutRule"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.create","repeatId":"0"},{"name":"permissionRulePartValue","value":"system.read","repeatId":"1"},{"name":"permissionRulePartValue","value":"system.update","repeatId":"2"},{"name":"permissionRulePartValue","value":"system.search","repeatId":"3"},{"name":"permissionRulePartValue","value":"system.list","repeatId":"4"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.testWorkout","repeatId":"0"}],"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"},{"name":"readPermissions","children":[{"name":"readPermission","value":"testWorkout.instructorId","repeatId":"0"}]}]} | | CREATED |
 
 '''Here we update a role (fitnesseTextAdmin) that fitnesseUser already has, instead of creating a new role, as we have different instances of in memory storage, between where the users roles are created and where the login system reads them.'''
 
@@ -73,41 +78,119 @@ Update permissionRole, textAdmin, adding new rule limitedForTestWorkoutRule
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
 | $adminAuthToken | permissionRole | fitnesseTextAdmin | {"name":"permissionRole","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseTextAdmin"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"systemOneUser"},{"name":"linkedRecordId","value":"12345"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"systemOneUser"},{"name":"linkedRecordId","value":"12345"}]},{"name":"tsUpdated","value":"2017-11-01 17:51:52.0"}],"repeatId":"0"}]},{"name":"permissionRuleLink","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"textAdmin"}],"repeatId":"0"},{"name":"permissionRuleLink","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"nothing"}],"repeatId":"1"},{"name":"permissionRuleLink","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"limitedForTestWorkoutRule"}],"repeatId":"2"},{"name":"activeStatus","value":"active"}]} | | OK |
 
-*!
 Create metadata needed to search for testWorkout records, a definition of a search
 
-!***> Create a metadataGroup(testWorkoutSearchIncludePartGroup, testWorkoutSearchIncludeGroup, testWorkoutSearchGroup)
-
+!3 Create a metadataGroup(testWorkoutSearchIncludePartGroup, testWorkoutSearchIncludeGroup, testWorkoutSearchGroup)
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
 | $adminAuthToken | metadataGroup | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testWorkoutSearchIncludePartGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"includePart"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"searchRecordIdTextVar"}]}],"repeatId":"0"}]},{"name":"excludePGroupCreation","value":"true"}],"attributes":{"type":"group"}} | | CREATED |
 | $adminAuthToken | metadataGroup | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testWorkoutSearchIncludeGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"nameInData","value":"include"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"testWorkoutSearchIncludePartGroup"}]}],"repeatId":"0"}]},{"name":"excludePGroupCreation","value":"true"}],"attributes":{"type":"group"}} | | CREATED |
 | $adminAuthToken | metadataGroup | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testWorkoutSearchGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"nameInData","value":"searchTestWorkoutExtended"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"testWorkoutSearchIncludeGroup"}]}],"repeatId":"0"}]},{"name":"excludePGroupCreation","value":"true"}],"attributes":{"type":"group"}} | | CREATED |
 
-*!
-!***> Create data of recordType search
-
+!3 Create data of recordType search
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
 | $adminAuthToken | search | {"name":"search","children":[{"name":"recordInfo","children":[{"name":"id","value":"testWorkoutExtendedSearch"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"testWorkoutSearchGroup"}]},{"name":"presentationId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"testWorkoutGroupPGroup"}]},{"name":"recordTypeToSearchIn","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}],"repeatId":"0"},{"name":"searchGroup","value":"autocomplete"}]} | | CREATED |
 
 *!
 !2 Create
-Vi skapar data av den nya typen, som användaren fitnesseAdmin. Det ska gå bra, eftersom fitnesseAdmin har alla rättigheter om krävs
+There are a few different cases for create that can happen, when there are write restrictions:
 
-!***> Skapa en instans av posttypen workout, som vi skapat metadata för
+ * Case 1: A user (fitnesseAdmin) has write permission on all restricted data, create as normal
+ * A user (fitnesseUser) has write permission on som but not all restricted data, there are three subcases
+   * Case 2: Only recordParts that the user has write permissions for is sent to create, create as normal
+   * Case 3: Data for recordParts that the user does not have write permission for is sent to create. The write protected parts that the user does not have write permission for should not be added to the new record, all other data should be added and the record created.
+   * Case 4: A recordPart that the user does not have write permission for is mandatory (must be present), whether the user sends data for the restricted parts or not does not matter, the end result should be that the record is missing the mandatory restricted data parts and record creation should fail with an error
+
+Case 1: A user (fitnesseAdmin) has write permission on all restricted data, create as normal
+
+!***> Case 1
+
+Create a new testWorkout record as fitnesseAdmin, adding unrestricted and all restricted data parts
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | testWorkout | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"45"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"45"},{"name":"instructorId","value":"3564"},{"name":"instructorName","children":[{"name":"firstName","value":"Anna"},{"name":"lastName","value":"Ledare"}]},{"name":"popularity","children":[{"name":"rating","value":"4"}]}]} | | CREATED |
+| $adminAuthToken | testWorkout | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys1"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"45"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"45"},{"name":"instructorId","value":"3564"},{"name":"instructorName","children":[{"name":"firstName","value":"Anna"},{"name":"lastName","value":"Ledare"}]},{"name":"popularity","children":[{"name":"rating","value":"4"}]}]} | | CREATED |
+
+Make sure all data parts are in the created record, unrestricted (workoutName) and restricted (instructorId, numOfParticipants, instructorName, popularity)
+
+!| ComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContain? |
+| $adminAuthToken | testWorkout | cirkelfys1 | {"children":[{"name":"workoutName"},{"name":"instructorId"},{"name":"numOfParticipants"},{"name":"instructorName"},{"name":"popularity"}]} | | OK |
+
+*!
+Case 2: Only recordParts that the user has write permissions for is sent to create, create as normal
+
+!***> Case 2
+
+Create a new testWorkout record as fitnesseUser, adding restricted part numOfParticipants, that it has write permission for, making sure it is in the created record
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $userAuthToken | testWorkout | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys2"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"45"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"45"}]} | | CREATED |
+
+Make sure all added data parts are in the created record, unrestricted (workoutName) and restricted (numOfParticipants)
+
+!| ComparerFixture |
+| |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContain? |
+| $adminAuthToken | testWorkout | cirkelfys2 | {"children":[{"name":"workoutName"},{"name":"numOfParticipants"}]} | | OK |
+
+*!
+Case 3: Data for recordParts that the user does not have write permission is sent to create, the write protected parts that the user does not have write permission for should not be added to the new record, all other data should be added and the record created
+
+!***> Case 3
+
+Create a new testWorkout record as fitnesseUser, adding restricted part numOfParticipants and instructorId, that it has write permission for, making sure it is in the created record
+
+no write for instructorId should not be in record
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $userAuthToken | testWorkout | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys3"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"45"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"45"},{"name":"instructorId","value":"3564"},{"name":"instructorName","children":[{"name":"firstName","value":"Anna"},{"name":"lastName","value":"Ledare"}]},{"name":"popularity","children":[{"name":"rating","value":"4"}]}]} | | CREATED |
+
+Make sure all added data parts that the user has permission to write, are in the created record, unrestricted (workoutName) and restricted (numOfParticipants)
+
+!| ComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContain? |
+| $adminAuthToken | testWorkout | cirkelfys3 | {"children":[{"name":"workoutName"},{"name":"numOfParticipants"}]} | | OK |
+
+Make sure added data parts that the user does NOT have permission to write,  are NOT present in the created record restricted  (instructorId, instructorName)
+
+
+!| ComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContain? |
+| $adminAuthToken | testWorkout | cirkelfys3 | {"children":[{"name":"instructorId"},{"name":"instructorName"},{"name":"popularity"}]} | | Child with nameInData instructorId is missing.Child with nameInData instructorName is missing.Child with nameInData popularity is missing. |
+
+*!
+Case 4: A recordPart that the user does not have write permission for is mandatory (must be present), whether the user sends data for the restricted parts or not does not matter,  the end result should be that the record is missing the mandatory  restricted data parts and record creation should fail with an error
+
+!***> Case 4
+
+Create a new testWorkout record as fitnesseUser, adding restricted part numOfParticipants and instructorId, that it has write permission for, making sure it is in the created record
+
+!| Comment |
+| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $userAuthToken | testWorkout | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"45"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"45"},{"name":"instructorId","value":"3564"},{"name":"instructorName","children":[{"name":"firstName","value":"Anna"},{"name":"lastName","value":"Ledare"}]},{"name":"popularity","children":[{"name":"rating","value":"4"}]}]} | | CREATED |
+
+tr
+
+!| ComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContain? |
+| $adminAuthToken | testWorkout | cirkelfys | {"children":[{"name":"workoutName"},{"name":"instructorId"},{"name":"numOfParticipants"},{"name":"instructorName"},{"name":"popularity"}]} | | OK |
 
 *!
 !2 Read
 !***> Läs posten cirkelfys och se att posten innehåller de barn som fitnesseUser har rätt att läsa
 
+!| RecordEndpointFixture |
+| authToken | type | id | testReadRecord? | getStatusType? |
+| $userAuthToken | testWorkout | cirkelfys | | OK |
+
 !| ComparerFixture |
 | authToken | type | id | children | testReadAndStoreRecord? | testCheckContain? |
-| $userAuthToken | testWorkout | cirkelfys | {"children":[{"name":"recordInfo"}, {"name":"workoutName"},{"name":"numOfParticipants"},{"name":"instructorName"}]} | | OK |
+| $userAuthToken | testWorkout | cirkelfys | {"children":[{"name":"recordInfo"},{"name":"workoutName"},{"name":"numOfParticipants"},{"name":"instructorName"}]} | | OK |
 
 *!
 !***> Läs posten cirkelfys och se att posten INTE innehåller de barn som fitnesseUser inte har rätt att läsa
@@ -281,6 +364,10 @@ När man söker efter poster ska varje post i resultatet bara innehålla det dat
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | testWorkout | cirkelfys | | OK |
+| $adminAuthToken | testWorkout | cirkelfys1 | | OK |
+| $adminAuthToken | testWorkout | cirkelfys2 | | OK |
+| $adminAuthToken | testWorkout | cirkelfys3 | | OK |
+| $adminAuthToken | testWorkout | cirkelfys4 | | OK |
 | $adminAuthToken | search | testWorkoutSearch | | OK |
 | $adminAuthToken | search | testWorkoutExtendedSearch | | OK |
 | $adminAuthToken | metadataGroup | testWorkoutSearchGroup | | OK |
