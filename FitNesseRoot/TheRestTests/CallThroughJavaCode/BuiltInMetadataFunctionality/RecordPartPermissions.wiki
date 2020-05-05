@@ -99,7 +99,7 @@ There are a few different cases for create that can happen, when there are write
  * Case 1: A user (fitnesseAdmin) has write permission on all restricted data, create as normal
  * A user (fitnesseUser) has write permission on som but not all restricted data, there are three subcases
    * Case 2: Only recordParts that the user has write permissions for is sent to create, create as normal
-   * Case 3: Data for recordParts that the user does not have write permission for is sent to create. The write protected parts that the user does not have write permission for should not be added to the new record, all other data should be added and the record created.
+   * Case 3: Data for recordParts that the user does not have write permission for is sent to create. The write protected parts that the user does not have write permission for, should not be added to the new record, all other data should be added and the record created.
    * Case 4: A recordPart that the user does not have write permission for is mandatory (must be present), whether the user sends data for the restricted parts or not does not matter, the end result should be that the record is missing the mandatory restricted data parts and record creation should fail with an error
 
 Case 1: A user (fitnesseAdmin) has write permission on all restricted data, create as normal
@@ -132,12 +132,11 @@ Create a new testWorkout record as fitnesseUser, adding restricted part numOfPar
 Make sure all added data parts are in the created record, unrestricted (workoutName) and restricted (numOfParticipants)
 
 !| ComparerFixture |
-| |
 | authToken | type | id | children | testReadAndStoreRecord? | testCheckContain? |
 | $adminAuthToken | testWorkout | cirkelfys2 | {"children":[{"name":"workoutName"},{"name":"numOfParticipants"}]} | | OK |
 
 *!
-Case 3: Data for recordParts that the user does not have write permission is sent to create, the write protected parts that the user does not have write permission for should not be added to the new record, all other data should be added and the record created
+Case 3: Data for recordParts that the user does not have write  permission for is sent to create. The write protected parts that the  user does not have write permission for, should not be added to the new  record, all other data should be added and the record created.
 
 !***> Case 3
 
@@ -156,7 +155,6 @@ Make sure all added data parts that the user has permission to write, are in the
 | $adminAuthToken | testWorkout | cirkelfys3 | {"children":[{"name":"workoutName"},{"name":"numOfParticipants"}]} | | OK |
 
 Make sure added data parts that the user does NOT have permission to write,  are NOT present in the created record restricted  (instructorId, instructorName)
-
 
 !| ComparerFixture |
 | authToken | type | id | children | testReadAndStoreRecord? | testCheckContain? |
