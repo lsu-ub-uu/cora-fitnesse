@@ -1,0 +1,31 @@
+!2 List
+Om man listar poster så ska varje post i listan bara innehålla det data som användaren har rätt att läsa
+
+!***> Lists testWorkouts och lagra resultatet för att användas i test nedan, admin
+
+!| ComparerFixture |
+| authToken | type | testReadRecordListAndStoreRecords? |
+| $adminAuthToken | testWorkout | |
+
+*!
+!***> Kontrollera barnen i den tidigare upplästa listan, admin
+
+!| ComparerFixture |
+| type | children | listIndexToCompareTo | testReadFromListCheckContain? |
+| testWorkout | {"children":[{"name":"instructorId"},{"name":"popularity"}]} | 0 | OK |
+
+*!
+!***> Lists testWorkouts och lagra resultatet för att användas i test nedan, user
+
+!| ComparerFixture |
+| authToken | type | testReadRecordListAndStoreRecords? |
+| $userAuthToken | testWorkout | |
+
+*!
+!***> Kontrollera barnen i den tidigare upplästa listan, user
+
+!| ComparerFixture |
+| type | children | listIndexToCompareTo | testReadFromListCheckContain? |
+| testWorkout | {"children":[{"name":"instructorId"},{"name":"popularity"}]} | 0 | Child with nameInData popularity is missing. |
+
+*!

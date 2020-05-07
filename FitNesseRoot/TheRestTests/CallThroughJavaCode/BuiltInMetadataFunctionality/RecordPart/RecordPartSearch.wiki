@@ -1,0 +1,19 @@
+!2 Sök poster
+När man söker efter poster ska varje post i resultatet bara innehålla det data som användaren har rätt att läsa
+
+!***> Sök efter testWorkouts och lagra resultatet för att användas i test nedan
+
+!| Comment |
+| ComparerFixture |
+| authToken | searchId | json | testSearchAndStoreRecords? |
+| $adminAuthToken | testWorkoutExtendedSearch | {"name":"searchTestWorkoutExtended","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"recordIdSearchTerm","value":"**"}]}]}]} | |
+
+*!
+!***> Kontrollera barnen i resultatet av den tidigare gjorda sökningen
+
+!| Comment |
+| ComparerFixture |
+| type | children | listIndexToCompareTo | testReadFromListCheckContain? |
+| testWorkout | {"children":[{"name":"instructorId"},{"name":"popularity"}]} | 0 | Child with nameInData popularity is missing. |
+
+*!

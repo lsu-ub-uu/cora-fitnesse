@@ -1,0 +1,18 @@
+---
+Test
+---
+| import |
+| se.uu.ub.cora.fitnesseintegration |
+
+!1 Record part permissions
+Record part permission makes it possible to set up read and write restrictions on parts of a record. It is only possible to add these restrictions to direct children of the top level dataGroup in the record.
+
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartMetadata
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartCreate
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartRead
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartUpdate
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartList
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartSearch
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartCleanup
+
+

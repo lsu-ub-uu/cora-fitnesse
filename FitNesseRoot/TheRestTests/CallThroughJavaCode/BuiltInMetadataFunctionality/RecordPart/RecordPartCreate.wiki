@@ -1,0 +1,71 @@
+!2 Create
+There are a few different cases for create that can happen, when there are write restrictions:
+
+ * '''Case 1''': A user (fitnesseAdmin) has write permission on all restricted data, create as normal
+ * A user (fitnesseUser) has write permission on som but not all restricted data, there are three subcases
+   * '''Case 2''': Only recordParts that the user has write permissions for is sent to create, create as normal
+   * '''Case 3''': Data for recordParts that the user does not have write permission for is sent to create. The write protected parts that the user does not have write permission for, should not be added to the new record, all other data should be added and the record created.
+   * '''Case 4''': A recordPart that the user does not have write permission for is mandatory (must be present), whether the user sends data for the restricted parts or not does not matter, the end result should be that the record is missing the mandatory restricted data parts and record creation should fail with an error
+
+!***> Case 1
+
+Create a new testWorkout record as fitnesseAdmin, adding unrestricted and all restricted data parts
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | testWorkout | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys1"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"45"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"45"},{"name":"instructorId","value":"3564"},{"name":"instructorName","children":[{"name":"firstName","value":"Anna"},{"name":"lastName","value":"Ledare"}]},{"name":"popularity","children":[{"name":"rating","value":"4"}]}]} | | CREATED |
+
+Make sure all data parts are in the created record, unrestricted (workoutName) and restricted (instructorId, numOfParticipants, instructorName, popularity)
+
+!| ComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContain? |
+| $adminAuthToken | testWorkout | cirkelfys1 | {"children":[{"name":"workoutName"},{"name":"instructorId"},{"name":"numOfParticipants"},{"name":"instructorName"},{"name":"popularity"}]} | | OK |
+
+*!
+!***> Case 2
+
+Create a new testWorkout record as fitnesseUser, adding restricted part numOfParticipants, that it has write permission for, making sure it is in the created record
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $userAuthToken | testWorkout | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys2"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"45"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"45"}]} | | CREATED |
+
+Make sure all added data parts are in the created record, unrestricted (workoutName) and restricted (numOfParticipants)
+
+!| ComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContain? |
+| $adminAuthToken | testWorkout | cirkelfys2 | {"children":[{"name":"workoutName"},{"name":"numOfParticipants"}]} | | OK |
+
+*!
+!***> Case 3
+
+Create a new testWorkout record as fitnesseUser, adding restricted part numOfParticipants and instructorId, that it has write permission for, making sure it is in the created record
+
+no write for instructorId should not be in record
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $userAuthToken | testWorkout | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys3"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"45"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"45"},{"name":"instructorId","value":"3564"},{"name":"instructorName","children":[{"name":"firstName","value":"Anna"},{"name":"lastName","value":"Ledare"}]},{"name":"popularity","children":[{"name":"rating","value":"4"}]}]} | | CREATED |
+
+Make sure all added data parts that the user has permission to write, are in the created record, unrestricted (workoutName) and restricted (numOfParticipants)
+
+!| ComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContain? |
+| $adminAuthToken | testWorkout | cirkelfys3 | {"children":[{"name":"workoutName"},{"name":"numOfParticipants"}]} | | OK |
+
+Make sure added data parts that the user does NOT have permission to write,  are NOT present in the created record restricted  (instructorId, instructorName)
+
+!| ComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContain? |
+| $adminAuthToken | testWorkout | cirkelfys3 | {"children":[{"name":"instructorId"},{"name":"instructorName"},{"name":"popularity"}]} | | Child with nameInData instructorId is missing. Child with nameInData instructorName is missing. Child with nameInData popularity is missing. |
+
+*!
+!***> Case 4
+!include -seamless <RecordPart.RecordPartRemoveWritePermissionOnNumOfParticipants
+Create a new testWorkout record as fitnesseUser, adding restricted part numOfParticipants and instructorId, that it has write permission for, making sure it is in the created record
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $userAuthToken | testWorkout | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"45"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"instructorId","value":"3564"},{"name":"instructorName","children":[{"name":"firstName","value":"Anna"},{"name":"lastName","value":"Ledare"}]},{"name":"popularity","children":[{"name":"rating","value":"4"}]}]} |Data is not valid: [Did not find enough data children with referenceId: testNumOfParticipantsTextVar(with nameInData:numOfParticipants.]| BAD_REQUEST |
+!include -seamless <RecordPart.RecordPartReturnWritePermissionOnNumOfParticipants
+*!
