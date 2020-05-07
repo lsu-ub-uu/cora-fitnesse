@@ -1,2 +1,2 @@
-!1 Test suite X
+!1 Test suite BuiltInMetadataFunctionality
 !contents -R2 -g -p -f -h

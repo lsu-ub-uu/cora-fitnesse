@@ -34,11 +34,9 @@
 
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | testWorkout | cirkelfys | | OK |
 | $adminAuthToken | testWorkout | cirkelfys1 | | OK |
 | $adminAuthToken | testWorkout | cirkelfys2 | | OK |
 | $adminAuthToken | testWorkout | cirkelfys3 | | OK |
-| $adminAuthToken | testWorkout | cirkelfys4 | | OK |
 | $adminAuthToken | search | testWorkoutSearch | | OK |
 | $adminAuthToken | search | testWorkoutExtendedSearch | | OK |
 | $adminAuthToken | metadataGroup | testWorkoutSearchGroup | | OK |
