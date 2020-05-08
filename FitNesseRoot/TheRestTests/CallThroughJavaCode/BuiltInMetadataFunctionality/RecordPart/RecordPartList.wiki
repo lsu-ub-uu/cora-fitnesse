@@ -6,34 +6,40 @@ There are a few different cases for list that can happen, when there are write r
    * '''Validation 2.1''': Validate that the record parts that the user has read  permissions for is present in the record
    * '''Validation 2.2''': Validate that the record parts that the user does NOT have read  permissions for is NOT present in the record
 
-Om man listar poster så ska varje post i listan bara innehålla det data som användaren har rätt att läsa
-
 !***> Case 1
 
-Prepare test. List testWorkoust and save it in order to use it in the next step.
+Prepare test. List testWorkout records and save them internaly in order to use it in the next step.
 
 !| ComparerFixture |
 | authToken | type | testReadRecordListAndStoreRecords? |
 | $adminAuthToken | testWorkout | |
 
-Kontrollera barnen i den tidigare upplästa listan, admin
-
+Validate all restricted record parts are present
 !| ComparerFixture |
 | type | children | listIndexToCompareTo | testReadFromListCheckContain? |
 | testWorkout | {"children":[{"name":"workoutName"},{"name":"instructorId"},{"name":"numOfParticipants"},{"name":"instructorName"},{"name":"popularity"}]} | 0 | OK |
-
 *!
-!***> Lists testWorkouts och lagra resultatet för att användas i test nedan, user
+!***> Case 2, Validation 2.1
+
+Prepare test. List testWorkout records and save them internaly in order to use it in the next step.
 
 !| ComparerFixture |
 | authToken | type | testReadRecordListAndStoreRecords? |
 | $userAuthToken | testWorkout | |
 
+!| ComparerFixture |
+| type | children | listIndexToCompareTo | testReadFromListCheckContain? |
+| testWorkout | {"children":[{"name":"recordInfo"},{"name":"workoutName"},{"name":"instructorId"},{"name":"numOfParticipants"},{"name":"instructorName"}]} | 0 | OK |
 *!
-!***> Kontrollera barnen i den tidigare upplästa listan, user
+!***> Case 2, Validation 2.2
+
+Prepare test. List testWorkout records and save them internaly in order to use it in the next step.
+
+!| ComparerFixture |
+| authToken | type | testReadRecordListAndStoreRecords? |
+| $userAuthToken | testWorkout | |
 
 !| ComparerFixture |
 | type | children | listIndexToCompareTo | testReadFromListCheckContain? |
-| testWorkout | {"children":[{"name":"instructorId"},{"name":"popularity"}]} | 0 | Child with nameInData popularity is missing. |
-
+| testWorkout | {"children":[{"name":"popularity"}]}  | 0 |  Child with nameInData popularity is missing. |
 *!

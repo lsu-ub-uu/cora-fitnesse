@@ -4,8 +4,30 @@ Test
 | import |
 | se.uu.ub.cora.fitnesseintegration |
 
-!1 Record part permissions
-Record part permission makes it possible to set up read and write restrictions on parts of a record. It is only possible to add these restrictions to direct children of the top level dataGroup in the record.
+!1 Record part
+Record part permission makes it possible to set up read and write restrictions on parts of a record. It is only possible to add the restrictions directly to children of the top level dataGroup in the record.
+
+!2 Restrictions
+Restrictions are set in metadata as a relation between the top level data group, in a record, and the first level children. There are two types of restrictions, read and write. A read restriction prevents data from leaving the server and a write restriction prevents data from beeing updated on the server.
+
+A set read restriction implies a write restriction on the same record part, because a user is not allowed to change information that it can not see.
+
+!2 Permissions
+'''Work in progress....'''
+
+Data sent to the server for create and update, gets its write record part permissions from rules with matching  actions. What data the user is allowed to change is based on record part write permissions for the rules that have the corresponding create or update action.
+
+When data is returned to the user is record part read permissions collected from rules that have the READ action, and data is redacted for the record parts that the user does not have read access to.
+
+In the returned record are lists with read and create actions returned to the user, these lists are based on rules that have READ and UPDATE action respectively. Rules with UPDATE action is used as the only possible action to change data is update.
+
+Write permissions for create, -- write about it, think how to get them to the server (new issue?)
+
+'''...work in progress.'''
+
+Permissions are given in rules, later connected to users through roles. There are two types of permissions, read and write. A read permission gives the user permission to read, read restricted record parts, from the server and a write permission gives the user permission to update write restricted record parts on the server.
+
+A given write permission implies a read permission on the same record part, because a user must be able to read the information it is allowed to change.
 
 !include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartMetadata
 !include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartCreate
@@ -14,5 +36,3 @@ Record part permission makes it possible to set up read and write restrictions o
 !include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartList
 !include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartSearch
 !include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartCleanup
-
-

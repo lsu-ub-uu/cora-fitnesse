@@ -17,13 +17,13 @@ There are a few different cases for read that can happen, when there are read re
 
 !| ComparerFixture |
 | authToken | type | id | children | testReadAndStoreRecord? | testCheckContain? |
-| $userAuthToken | testWorkout | cirkelfys1 | {"children":[{"name":"recordInfo"},{"name":"workoutName"},{"name":"numOfParticipants"},{"name":"instructorName"}]} | | OK |
+| $userAuthToken | testWorkout | cirkelfys1 | {"children":[{"name":"recordInfo"},{"name":"workoutName"},{"name":"instructorId"},{"name":"numOfParticipants"},{"name":"instructorName"}]} | | OK |
 
 *!
 !***> Case 2, Validation 2.2
 
 !| ComparerFixture |
 | authToken | type | id | children | testReadAndStoreRecord? | testCheckContain? |
-| $userAuthToken | testWorkout | cirkelfys1 | {"children":[{"name":"instructorId"},{"name":"popularity"}]} | | Child with nameInData popularity is missing. |
+| $userAuthToken | testWorkout | cirkelfys1 | {"children":[{"name":"popularity"}]} | | Child with nameInData popularity is missing. |
 
 *!

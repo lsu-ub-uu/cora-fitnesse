@@ -1,19 +1,52 @@
-!2 Sök poster
-När man söker efter poster ska varje post i resultatet bara innehålla det data som användaren har rätt att läsa
+!2 Search
+There are a few different cases for search that can happen, when there are read restrictions:
 
-!***> Sök efter testWorkouts och lagra resultatet för att användas i test nedan
+ * '''Case 1''': A user (fitnesseAdmin) has read permission on all  restricted data, read as normal validate that all restricted parts are  in the record
+ * '''Case 2''': A user (fitnesseUser) has read permission on some but not all restricted data, there are two validations to make
+   * '''Validation 2.1''': Validate that the record parts that the user has read  permissions for is present in the record
+   * '''Validation 2.2''': Validate that the record parts that the user does NOT have read  permissions for is NOT present in the record
 
-!| Comment |
-| ComparerFixture |
+!***> Case 1
+
+Prepare test. List testWorkout records and save them internaly in order to use it in the next step.
+
+!
+
+!| ComparerFixture |
 | authToken | searchId | json | testSearchAndStoreRecords? |
 | $adminAuthToken | testWorkoutExtendedSearch | {"name":"searchTestWorkoutExtended","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"recordIdSearchTerm","value":"**"}]}]}]} | |
 
-*!
-!***> Kontrollera barnen i resultatet av den tidigare gjorda sökningen
+Validate all restricted record parts are present
 
-!| Comment |
-| ComparerFixture |
+!| ComparerFixture |
 | type | children | listIndexToCompareTo | testReadFromListCheckContain? |
-| testWorkout | {"children":[{"name":"instructorId"},{"name":"popularity"}]} | 0 | Child with nameInData popularity is missing. |
+| testWorkout | {"children":[{"name":"workoutName"},{"name":"instructorId"},{"name":"numOfParticipants"},{"name":"instructorName"},{"name":"popularity"}]} | 0 | OK |
+
+*!
+!***> Case 2, Validation 2.1
+
+Prepare test. List testWorkout records and save them internaly in order to use it in the next step.
+
+!| ComparerFixture |
+| authToken | searchId | json | testSearchAndStoreRecords? |
+| $userAuthToken | testWorkoutExtendedSearch | {"name":"searchTestWorkoutExtended","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"recordIdSearchTerm","value":"**"}]}]}]} | |
+
+!| ComparerFixture |
+| type | children | listIndexToCompareTo | testReadFromListCheckContain? |
+| testWorkout | {"children":[{"name":"recordInfo"},{"name":"workoutName"},{"name":"instructorId"},{"name":"numOfParticipants"},{"name":"instructorName"}]} | 0 | OK |
+
+*!
+!***> Case 2, Validation 2.2
+
+Prepare test. List testWorkout records and save them internaly in order to use it in the next step.
+
+!
+!| ComparerFixture |
+| authToken | searchId | json | testSearchAndStoreRecords? |
+| $userAuthToken | testWorkoutExtendedSearch | {"name":"searchTestWorkoutExtended","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"recordIdSearchTerm","value":"**"}]}]}]} | |
+
+!| ComparerFixture |
+| type | children | listIndexToCompareTo | testReadFromListCheckContain? |
+| testWorkout | {"children":[{"name":"popularity"}]} | 0 | Child with nameInData popularity is missing. |
 
 *!

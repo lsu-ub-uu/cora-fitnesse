@@ -69,3 +69,11 @@ Create a new testWorkout record as fitnesseUser, adding restricted part numOfPar
 | $userAuthToken | testWorkout | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"45"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"instructorId","value":"3564"},{"name":"instructorName","children":[{"name":"firstName","value":"Anna"},{"name":"lastName","value":"Ledare"}]},{"name":"popularity","children":[{"name":"rating","value":"4"}]}]} |Data is not valid: [Did not find enough data children with referenceId: testNumOfParticipantsTextVar(with nameInData:numOfParticipants.]| BAD_REQUEST |
 !include -seamless <RecordPart.RecordPartReturnWritePermissionOnNumOfParticipants
 *!
+!***> Clean up no longer needed cirkelfys2 and cirkelfys3
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | testWorkout | cirkelfys2 | | OK |
+| $adminAuthToken | testWorkout | cirkelfys3 | | OK |
+
+*!

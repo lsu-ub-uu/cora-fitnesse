@@ -1,15 +1,15 @@
 ---
 Static
 ---
-!2 Prepare metadata for testing
+!2 Metadata used in this test
 Metadata is created in order to be able to test record part permission test cases. A new recordType, testWorkout,  is created that has record part restrictions on the listed children to the top level dataGroup.
 
 Restrictions are set as follows:
 
- * organisation(group)
+ * workout(group)
    * recordInfo(group, 1-1, '''noRestrictions''')
    * workOutName(textVar, 1-1, '''noRestrictions''')
-   * instructorId(textVar, 0-1, '''readWrite''')
+   * instructorId(textVar, 0-1,''' readWrite''')
    * numOfParticipants(textVar, 1-1, '''write''')
    * instructorName(group, 0-1, '''write''')
      * firstName(textVar, 1-1)
@@ -21,8 +21,8 @@ Permissions are given as follows:
 
  * fitnesseAdmin has read and write on all restricted record parts
  * fitnesseUser has
-   * read on instructorId
-   * write on numOfParticipants
+   * '''read''' on instructorId
+   * '''readWrite''' on numOfParticipants
 
 !***> Create needed metadata
 
@@ -51,7 +51,7 @@ Create a new rule, everythingForTestWorkoutRule, to allow fitnesseAdmin to do ev
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | permissionRule | {"name":"permissionRule","children":[{"name":"recordInfo","children":[{"name":"id","value":"everythingForTestWorkoutRule"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.*","repeatId":"0"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.testWorkout","repeatId":"0"}],"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"},{"name":"readPermissions","children":[{"name":"readPermission","value":"testWorkout.instructorId","repeatId":"0"},{"name":"readPermission","value":"testWorkout.numOfParticipants","repeatId":"1"},{"name":"readPermission","value":"testWorkout.popularity","repeatId":"2"}]},{"name":"writePermissions","children":[{"name":"writePermission","value":"testWorkout.instructorId","repeatId":"0"},{"name":"writePermission","value":"testWorkout.numOfParticipants","repeatId":"1"},{"name":"writePermission","value":"testWorkout.popularity","repeatId":"2"},{"name":"writePermission","value":"testWorkout.instructorName","repeatId":"3"}]}]} | | CREATED |
+| $adminAuthToken | permissionRule | {"name":"permissionRule","children":[{"name":"recordInfo","children":[{"name":"id","value":"everythingForTestWorkoutRule"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.*","repeatId":"0"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.testWorkout","repeatId":"0"}],"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"},{"name":"writePermissions","children":[{"name":"writePermission","value":"testWorkout.instructorId","repeatId":"0"},{"name":"writePermission","value":"testWorkout.numOfParticipants","repeatId":"1"},{"name":"writePermission","value":"testWorkout.popularity","repeatId":"2"},{"name":"writePermission","value":"testWorkout.instructorName","repeatId":"3"}]}]} | | CREATED |
 
 '''Here we update a role (fitnesseTextAdmin) that fitnesseUser already has, instead of creating a new role, as we have different instances of in memory storage, between where the users roles are created and where the login system reads them.'''
 
