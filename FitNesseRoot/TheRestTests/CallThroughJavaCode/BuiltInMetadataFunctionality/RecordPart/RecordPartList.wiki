@@ -15,9 +15,11 @@ Prepare test. List testWorkout records and save them internaly in order to use i
 | $adminAuthToken | testWorkout | |
 
 Validate all restricted record parts are present
+
 !| ComparerFixture |
-| type | children | listIndexToCompareTo | testReadFromListCheckContain? |
-| testWorkout | {"children":[{"name":"workoutName"},{"name":"instructorId"},{"name":"numOfParticipants"},{"name":"instructorName"},{"name":"popularity"}]} | 0 | OK |
+| type | children | listIndexToCompareTo | testReadFromListCheckContainWithValues? |
+| testWorkout | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"10"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Kula"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"8"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | 0 | OK |
+
 *!
 !***> Case 2, Validation 2.1
 
@@ -28,8 +30,9 @@ Prepare test. List testWorkout records and save them internaly in order to use i
 | $userAuthToken | testWorkout | |
 
 !| ComparerFixture |
-| type | children | listIndexToCompareTo | testReadFromListCheckContain? |
-| testWorkout | {"children":[{"name":"recordInfo"},{"name":"workoutName"},{"name":"instructorId"},{"name":"numOfParticipants"},{"name":"instructorName"}]} | 0 | OK |
+| type | children | listIndexToCompareTo | testReadFromListCheckContainWithValues? |
+| testWorkout | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"10"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Kula"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | 0 | OK |
+
 *!
 !***> Case 2, Validation 2.2
 
@@ -41,5 +44,6 @@ Prepare test. List testWorkout records and save them internaly in order to use i
 
 !| ComparerFixture |
 | type | children | listIndexToCompareTo | testReadFromListCheckContain? |
-| testWorkout | {"children":[{"name":"popularity"}]}  | 0 |  Child with nameInData popularity is missing. |
+| testWorkout | {"children":[{"name":"popularity"}]} | 0 | Child with nameInData popularity is missing. |
+
 *!

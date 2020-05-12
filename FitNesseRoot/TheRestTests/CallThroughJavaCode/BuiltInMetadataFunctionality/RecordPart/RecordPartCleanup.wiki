@@ -34,7 +34,6 @@ Clean up created data
 | $adminAuthToken | recordType | testWorkout | | OK |
 | $adminAuthToken | presentationGroup | testWorkoutGroupPGroup | | OK |
 | $adminAuthToken | metadataGroup | testWorkoutGroup | | OK |
-| $adminAuthToken | presentationGroup | testWorkoutNewGroupPGroup | | OK |
 | $adminAuthToken | metadataGroup | testWorkoutNewGroup | | OK |
 | $adminAuthToken | presentationVar | testWorkoutNamePVar | | OK |
 | $adminAuthToken | presentationVar | testWorkoutNameOutputPVar | | OK |

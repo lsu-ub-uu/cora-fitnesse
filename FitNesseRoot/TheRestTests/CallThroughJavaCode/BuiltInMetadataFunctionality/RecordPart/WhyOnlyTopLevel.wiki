@@ -7,7 +7,7 @@ If we have a simple top level dataGroup as follows:
      * child1.1 (1-1, readRestriction)
      * child1.2 (1-1, noRestriction)
 
-The server has data as follows, when a user, without read permission requests, the data will the children in italics (child 1.1) be redacted before the user gets the data:
+The server has data as follows, when a user, without read permission requests the data, will the children in italics (child 1.1) be redacted before the user gets the data:
 
  * topLevel
    * child1 (repeatId=a)
@@ -25,7 +25,7 @@ When the user returns the data to the server  will of course children 1.1 not be
    * child1 (repeatId=c)
      * child1.2 (value=c)
 
-The problem is that children on level 1 are not guaranteed to be in the  same order or even containing the same data in the version the user  sends back, so the server might merge redacted information back into the  wrong child. If the server merges the data it had from the begining would the result could be:
+The problem is that children on level 1 are not guaranteed to be in the  same order or even containing the same data in the version the user  sends back, so the server might merge redacted information back into the  wrong child. If the server merges the data it had from the beginning could the result be:
 
  * topLevel
    * child1 (repeatId=b)
