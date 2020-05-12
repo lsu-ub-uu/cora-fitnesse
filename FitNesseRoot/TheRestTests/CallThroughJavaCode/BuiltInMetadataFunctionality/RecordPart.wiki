@@ -3,6 +3,7 @@ Test
 ---
 | import |
 | se.uu.ub.cora.fitnesseintegration |
+| se.uu.ub.cora.fitnesseintegration.compare |
 
 !1 Record part
 Record parts makes it possible to set up read and write restrictions on parts of a record. It is only possible to add the restrictions directly to children of the top level dataGroup in the record.

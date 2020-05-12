@@ -1,0 +1,186 @@
+---
+Test
+---
+!include -c <RecordPartPermissions.RecordPartPermissionsSetUp
+!contents -R2 -g -p -f -h
+| import |
+| se.uu.ub.cora.fitnesseintegration |
+| se.uu.ub.cora.fitnesseintegration.compare |
+
+!2 Record part permissions
+Det ska vara möjligt att i en post, för ett barn på översta nivån, säga att barnet kräver läs- och/eller skrivrättighet. När en post returneras från servern ska den innehålla en del som talar om vilka eventuella läs- och/eller skrivrättigheter den aktuella
+användaren har.
+I ett tidigare steg (en inkluderad sida) har vi skapat metadata för att kunna skapa, läsa, uppdatera, lista och söka efter poster av typen testWorkout. I testerna nedan så visar vi på olika sätt att posten innehåller de läs-/och skrivrättigheter som den
+aktuella användaren har.
+
+!2 Skapa
+Vi skapar data av den nya typen, först som användaren  fitnesseUser och sedan som användare  fitnesseAdmin, och kontrollerar att svaret innehållet rätt rättigheter.
+
+!***> Skapa en instans av posttypen testWorkout, som vi skapat metadata för. Kontrollera att posten innehåller läs- och skrivrättigheter
+
+!| PermissionComparerFixture |
+| authToken | type | json | permissions | testCreateAndStoreRecord? | testCheckPermissions? |
+| $userAuthToken | testWorkout | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"hit"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"workoutName","value":"HIT"}]} | {"read":["instructorId"]} | | OK |
+| $adminAuthToken | testWorkout | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"45"},{"name":"instructorId","value":"3564"},{"name":"instructorName","children":[{"name":"firstName","value":"Anna"},{"name":"lastName","value":"Ledare"}]},{"name":"popularity","children":[{"name":"rating","value":"4"}]}]} | {"read":["instructorName","popularity","numOfParticipants","instructorId"],"write":["instructorName","popularity","numOfParticipants","instructorId"]} | | OK |
+
+*!
+!2 Läs
+Vi läser den nyss skapade posten, både som fitnesseUser och fitnesseAdmin, och ser att posten innehåller korrekt läs- och skrivrättigheter.
+
+!***> Läs posten cirkelfys och se att posten INTE innehåller de rättigheter som fitnesseUser inte har
+
+!| PermissionComparerFixture |
+| authToken | type | id | permissions | testReadAndStoreRecord? | testCheckPermissions? |
+| $userAuthToken | testWorkout | cirkelfys | {"read":["instructorName","popularity","numOfParticipants"]} | | Read permission instructorName is missing. Read permission popularity is missing. Read permission numOfParticipants is missing. |
+
+*!
+!***> Läs posten cirkelfys först som fitnesseUser och sen som fitnesseAdmin och se att posten innehåller korrekt läs- och skrivrättigheter
+
+!| PermissionComparerFixture |
+| authToken | type | id | permissions | testReadAndStoreRecord? | testCheckPermissions? |
+| $userAuthToken | testWorkout | cirkelfys | {"read":["instructorId"]} | | OK |
+| $adminAuthToken | testWorkout | cirkelfys | {"read":["instructorName","popularity","numOfParticipants","instructorId"],"write":["instructorName","popularity","numOfParticipants","instructorId"]} | | OK |
+
+*!
+!2 Uppdatera
+Vi uppdaterar en post först som fitnesseUser och sedan fitnesseAdmin, och ser att posten innehåller korrekt läs- och skrivrättigheter.
+
+!***> Uppdatera posten och se att posten INTE innehåller de rättigheter som fitnesseUser inte har
+
+!| PermissionComparerFixture |
+| authToken | type | id | json | permissions | testUpdateAndStoreRecord? | testCheckPermissions? |
+| $userAuthToken | testWorkout | cirkelfys | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"1"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"instructorName","children":[{"name":"firstName","value":"Rut-Emma"},{"name":"lastName","value":"Projektledare"}]},{"name":"popularity","children":[{"name":"rating","value":"0"}]}]} | {"read":["instructorName","popularity","numOfParticipants"]} | | Read permission instructorName is missing. Read permission popularity is missing. Read permission numOfParticipants is missing. |
+
+*!
+!***> Uppdatera posten cirkelfys först som fitnesseUser och sen som fitnesseAdmin och se att posten innehåller korrekt läs- och skrivrättigheter
+
+!| PermissionComparerFixture |
+| authToken | type | id | json | permissions | testUpdateAndStoreRecord? | testCheckPermissions? |
+| $adminAuthToken | testWorkout | cirkelfys | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"1"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"30"},{"name":"instructorId","value":"6666"},{"name":"instructorName","children":[{"name":"firstName","value":"Emma"},{"name":"lastName","value":"Instruktör"}]},{"name":"popularity","children":[{"name":"rating","value":"8"}]}]} | {"read":["instructorName","popularity","numOfParticipants","instructorId"],"write":["instructorName","popularity","numOfParticipants","instructorId"]} | | OK |
+| $userAuthToken | testWorkout | cirkelfys | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"1"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"instructorName","children":[{"name":"firstName","value":"Rut-Emma"},{"name":"lastName","value":"Projektledare"}]},{"name":"popularity","children":[{"name":"rating","value":"0"}]}]} | {"read":["instructorId"]} | | OK |
+
+*!
+!2 Lista poster
+När man listar poster så ska varje post i listan bara innehålla de rättigheter som användaren har
+
+!***> Lista testWorkout som fitnessUser och lagra resultatet för att användas i test nedan
+
+!| PermissionComparerFixture |
+| authToken | type | testReadRecordListAndStoreRecords? |
+| $userAuthToken | testWorkout | |
+
+*!
+!***> Kontrollera att posten i den upplästa listan innehåller korrekt läs- och skrivrättigheter
+
+!| PermissionComparerFixture |
+| type | permissions | listIndexToCompareTo | testReadFromListCheckPermissions? |
+| testWorkout | {"read":["instructorId"]} | 0 | OK |
+
+*!
+!***> Kontrollera att posten i den upplästa listan INTE innehåller de läs- och skrivrättigheter som fitnesseUser saknar
+
+!| PermissionComparerFixture |
+| type | permissions | listIndexToCompareTo | testReadFromListCheckPermissions? |
+| testWorkout | {"read":["instructorName","popularity","numOfParticipants"],"write":["instructorName","popularity","numOfParticipants","instructorId"]} | 0 | Read permission instructorName is missing. Read permission popularity is missing. Read permission numOfParticipants is missing. Write permission instructorName is missing. Write permission popularity is missing. Write permission numOfParticipants is missing. Write permission instructorId is missing. |
+
+*!
+!***> Lista testWorkouts som fitnesseAdmin och lagra resultatet för att användas i test nedan
+
+!| PermissionComparerFixture |
+| authToken | type | testReadRecordListAndStoreRecords? |
+| $adminAuthToken | testWorkout | |
+
+*!
+!***> Kontrollera att posten i den uplästa listan innehåller korrekt läs- och skrivrättigheter
+
+!| PermissionComparerFixture |
+| type | permissions | listIndexToCompareTo | testReadFromListCheckPermissions? |
+| testWorkout | {"read":["instructorName","popularity","numOfParticipants","instructorId"],"write":["instructorName","popularity","numOfParticipants","instructorId"]} | 0 | OK |
+
+*!
+!2 Sök poster
+När man söker efter poster så ska varje post i resultatet bara innehålla de rättigheter som användaren har
+
+!***> Sök efter testWorkouts som fitnesseUser och lagra resultatet för att användas i test nedan
+
+!| PermissionComparerFixture |
+| authToken | searchId | json | testSearchAndStoreRecords? |
+| $userAuthToken | testWorkoutExtendedSearch | {"name":"searchTestWorkoutExtended","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"recordIdSearchTerm","value":"**"}]}]}]} | |
+
+*!
+!***> Kontrollera att posten i sökresultatet innehåller korrekt läs- och skrivrättigheter
+
+!| PermissionComparerFixture |
+| type | permissions | listIndexToCompareTo | testReadFromListCheckPermissions? |
+| testWorkout | {"read":["instructorId"]} | 0 | OK |
+
+*!
+!***> Kontrollera att posten i sökresultatet INTE innehåller de läs- och skrivrättigheter som fitnesseUser saknar
+
+!| PermissionComparerFixture |
+| type | permissions | listIndexToCompareTo | testReadFromListCheckPermissions? |
+| testWorkout | {"read":["instructorName","popularity","numOfParticipants"],"write":["instructorName","popularity","numOfParticipants","instructorId"]} | 0 | Read permission instructorName is missing. Read permission popularity is missing. Read permission numOfParticipants is missing. Write permission instructorName is missing. Write permission popularity is missing. Write permission numOfParticipants is missing. Write permission instructorId is missing. |
+
+*!
+!***> Sök efter testWorkouts som fitnesseAdmin och lagra resultatet för att användas i test nedan
+
+!| PermissionComparerFixture |
+| authToken | searchId | json | testSearchAndStoreRecords? |
+| $adminAuthToken | testWorkoutExtendedSearch | {"name":"searchTestWorkoutExtended","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"recordIdSearchTerm","value":"**"}]}]}]} | |
+
+*!
+!***> Kontrollera att posten i sökresultatet innehåller korrekt läs- och skrivrättigheter
+
+!| PermissionComparerFixture |
+| type | permissions | listIndexToCompareTo | testReadFromListCheckPermissions? |
+| testWorkout | {"read":["instructorName","popularity","numOfParticipants","instructorId"],"write":["instructorName","popularity","numOfParticipants","instructorId"]} | 0 | OK |
+
+*!
+!2 Clean up created data
+!***> Återställ regel everything
+
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? | getStatusType? |
+| $adminAuthToken | permissionRule | everything | {"name":"permissionRule","children":[{"name":"recordInfo","children":[{"name":"id","value":"everything"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRule"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"systemOneUser"},{"name":"linkedRecordId","value":"12345"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"systemOneUser"},{"name":"linkedRecordId","value":"12345"}]},{"name":"tsUpdated","value":"2017-11-01T17:53:01.000000Z"}],"repeatId":"0"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2020-02-20T14:02:28.618994Z"}],"repeatId":"1"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2020-02-20T14:02:34.442936Z"}],"repeatId":"2"}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.*","repeatId":"0"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.*","repeatId":"0"}],"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"}]} | | OK |
+| $adminAuthToken | permissionRule | textAdmin | {"name":"permissionRule","children":[{"name":"recordInfo","children":[{"name":"id","value":"textAdmin"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRule"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"systemOneUser"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2017-11-01T17:53:01.000000Z"}],"repeatId":"0"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2020-02-20T14:24:05.497330Z"}],"repeatId":"1"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2020-02-20T14:24:09.597702Z"}],"repeatId":"2"}]},{"name":"permissionRulePart","children":testWorkoutSearchIncludePartGroup[{"name":"permissionRulePartValue","value":"system.*","repeatId":"0"},{"name":"permissionRulePartValue","value":"system.search","repeatId":"1"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.text","repeatId":"0"},{"name":"permissionRulePartValue","value":"system.textSystemOne","repeatId":"1"},{"name":"permissionRulePartValue","value":"system.coraText","repeatId":"2"}],"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"}]} | | |
+
+*!
+!***> Clean up created data
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | testWorkout | cirkelfys | | OK |
+| $adminAuthToken | testWorkout | hit | | OK |
+| $adminAuthToken | search | testWorkoutSearch | | OK |
+| $adminAuthToken | search | testWorkoutExtendedSearch | | OK |
+| $adminAuthToken | metadataGroup | testWorkoutSearchGroup | | OK |
+| $adminAuthToken | metadataGroup | testWorkoutSearchIncludeGroup | | OK |
+| $adminAuthToken | metadataGroup | testWorkoutSearchIncludePartGroup | | OK |
+| $adminAuthToken | recordType | testWorkout | | OK |
+| $adminAuthToken | presentationGroup | testWorkoutGroupPGroup | | OK |
+| $adminAuthToken | metadataGroup | testWorkoutGroup | | OK |
+| $adminAuthToken | metadataGroup | testWorkoutNewGroup | | OK |
+| $adminAuthToken | presentationVar | testWorkoutNamePVar | | OK |
+| $adminAuthToken | presentationVar | testWorkoutNameOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testWorkoutNameTextVar | | OK |
+| $adminAuthToken | presentationVar | testInstructorIdPVar | | OK |
+| $adminAuthToken | presentationVar | testInstructorIdOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testInstructorIdTextVar | | OK |
+| $adminAuthToken | presentationVar | testNumOfParticipantsPVar | | OK |
+| $adminAuthToken | presentationVar | testNumOfParticipantsOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testNumOfParticipantsTextVar | | OK |
+| $adminAuthToken | metadataGroup | testInstructorNameGroup | | OK |
+| $adminAuthToken | presentationVar | testInstructorFirstNamePVar | | OK |
+| $adminAuthToken | presentationVar | testInstructorFirstNameOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testInstructorFirstNameTextVar | | OK |
+| $adminAuthToken | presentationVar | testInstructorLastNamePVar | | OK |
+| $adminAuthToken | presentationVar | testInstructorLastNameOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testInstructorLastNameTextVar | | OK |
+| $adminAuthToken | metadataGroup | testPopularityGroup | | OK |
+| $adminAuthToken | presentationVar | testRatingPVar | | OK |
+| $adminAuthToken | presentationVar | testRatingOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testRatingTextVar | | OK |
+| $adminAuthToken | coraText | fitnesseExampleText | | OK |
+| $adminAuthToken | coraText | fitnesseExampleDefText | | OK |
+
+*!

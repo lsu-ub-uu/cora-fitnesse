@@ -17,7 +17,7 @@ Create a new testWorkout record as fitnesseAdmin, adding unrestricted and all re
 
 Make sure all data parts are in the created record, unrestricted (workoutName) and restricted (instructorId, numOfParticipants, instructorName, popularity)
 
-!| ComparerFixture |
+!| ChildComparerFixture |
 | authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
 | $adminAuthToken | testWorkout | cirkelfys1 | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"3564"},{"type":"atomic","name":"numOfParticipants","value":"45"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Anna"},{"type":"atomic","name":"lastName","value":"Ledare"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"4"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | | OK |
 
@@ -32,7 +32,7 @@ Create a new testWorkout record as fitnesseUser, adding restricted part numOfPar
 
 Make sure all added data parts are in the created record, unrestricted (workoutName) and restricted (numOfParticipants)
 
-!| ComparerFixture |
+!| ChildComparerFixture |
 | authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
 | $adminAuthToken | testWorkout | cirkelfys2 | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"numOfParticipants","value":"45"},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | | OK |
 
@@ -49,13 +49,13 @@ no write for instructorId should not be in record
 
 Make sure all added data parts that the user has permission to write, are in the created record, unrestricted (workoutName) and restricted (numOfParticipants)
 
-!| ComparerFixture |
+!| ChildComparerFixture |
 | authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
 | $adminAuthToken | testWorkout | cirkelfys3 | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"numOfParticipants","value":"45"},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | | OK |
 
 Make sure added data parts that the user does NOT have permission to write,  are NOT present in the created record restricted  (instructorId, instructorName)
 
-!| ComparerFixture |
+!| ChildComparerFixture |
 | authToken | type | id | children | testReadAndStoreRecord? | testCheckContain? |
 | $adminAuthToken | testWorkout | cirkelfys3 | {"children":[{"name":"instructorId"},{"name":"instructorName"},{"name":"popularity"}]} | | Child with nameInData instructorId is missing. Child with nameInData instructorName is missing. Child with nameInData popularity is missing. |
 
