@@ -1,0 +1,29 @@
+!2 Read
+There are a few different cases for read that can happen, when there are read restrictions:
+
+ * '''Case 1''': A user (fitnesseAdmin) has read permission on all restricted data, read as normal validate that all restricted parts are in the record
+ * '''Case 2''': A user (fitnesseUser) has read permission on som but not all restricted data, there are two validations to make
+   * '''Validation 2.1''': Validate that the recordParts that the user has read  permissions for is present in the record
+   * '''Validation 2.2''': Validate that the recordParts that the user does NOT have read  permissions for is NOT present in the record
+
+!***> Case 1
+
+!| ChildComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
+| $adminAuthToken | testWorkout | cirkelfys1 | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"3564"},{"type":"atomic","name":"numOfParticipants","value":"45"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Anna"},{"type":"atomic","name":"lastName","value":"Ledare"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"4"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | | OK |
+
+*!
+!***> Case 2, Validation 2.1
+
+!| ChildComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
+| $userAuthToken | testWorkout | cirkelfys1 | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"3564"},{"type":"atomic","name":"numOfParticipants","value":"45"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Anna"},{"type":"atomic","name":"lastName","value":"Ledare"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]}  | | OK |
+
+*!
+!***> Case 2, Validation 2.2
+
+!| ChildComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContain? |
+| $userAuthToken | testWorkout | cirkelfys1 | {"children":[{"name":"popularity"}]} | | Child with nameInData popularity is missing. |
+
+*!

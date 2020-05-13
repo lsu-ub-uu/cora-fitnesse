@@ -1,0 +1,53 @@
+!2 Search
+There are a few different cases for search that can happen, when there are read restrictions:
+
+ * '''Case 1''': A user (fitnesseAdmin) has read permission on all  restricted data, read as normal validate that all restricted parts are  in the record
+ * '''Case 2''': A user (fitnesseUser) has read permission on some but not all restricted data, there are two validations to make
+   * '''Validation 2.1''': Validate that the record parts that the user has read  permissions for is present in the record
+   * '''Validation 2.2''': Validate that the record parts that the user does NOT have read  permissions for is NOT present in the record
+
+!***> Case 1
+
+Prepare test. List testWorkout records and save them internaly in order to use it in the next step.
+
+!
+
+!| ChildComparerFixture |
+| authToken | searchId | json | testSearchAndStoreRecords? |
+| $adminAuthToken | testWorkoutExtendedSearch | {"name":"searchTestWorkoutExtended","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"recordIdSearchTerm","value":"**"}]}]}]} | |
+
+Validate all restricted record parts are present
+
+!| ChildComparerFixture |
+| type | children | listIndexToCompareTo | testReadFromListCheckContainWithValues? |
+| testWorkout | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"10"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Kula"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"8"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | 0 | OK |
+
+*!
+!***> Case 2, Validation 2.1
+
+Prepare test. List testWorkout records and save them internaly in order to use it in the next step.
+
+!| ChildComparerFixture |
+| authToken | searchId | json | testSearchAndStoreRecords? |
+| $userAuthToken | testWorkoutExtendedSearch | {"name":"searchTestWorkoutExtended","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"recordIdSearchTerm","value":"**"}]}]}]} | |
+
+!| ChildComparerFixture |
+| type | children | listIndexToCompareTo | testReadFromListCheckContainWithValues? |
+| testWorkout | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"10"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Kula"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | 0 | OK |
+
+*!
+!***> Case 2, Validation 2.2
+
+Prepare test. List testWorkout records and save them internaly in order to use it in the next step.
+
+!
+
+!| ChildComparerFixture |
+| authToken | searchId | json | testSearchAndStoreRecords? |
+| $userAuthToken | testWorkoutExtendedSearch | {"name":"searchTestWorkoutExtended","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"recordIdSearchTerm","value":"**"}]}]}]} | |
+
+!| ChildComparerFixture |
+| type | children | listIndexToCompareTo | testReadFromListCheckContain? |
+| testWorkout | {"children":[{"name":"popularity"}]} | 0 | Child with nameInData popularity is missing. |
+
+*!

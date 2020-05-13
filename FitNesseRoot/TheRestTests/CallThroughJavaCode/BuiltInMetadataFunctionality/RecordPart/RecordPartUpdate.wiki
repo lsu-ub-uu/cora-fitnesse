@@ -1,0 +1,149 @@
+!2 Update
+There are a few different cases for update that can happen, when there are write restrictions:
+
+ * '''Case 1''': A user (fitnesseAdmin) has write permission on all restricted data, update all restricted record parts
+ * A user (fitnesseUser) has write permission on some but not all restricted data, there are 3 subcases
+   * '''Case 2''': A user only sends the record parts that it has write permissions for. Update the sent parts leaving the unsent parts, that the user does not have write access for, unchanged.
+   * '''Case 3''': A user only sends the record parts that it has write permissions for and one of the record parts not sent is mandatory. Update the sent parts leaving the unsent parts, that the user does not have write access for, unchanged. No validation error should be thrown.
+   * '''Case 4''': A user sends both record parts that it does NOT have write permissions for and part that it does. Update the sent parts that the user has permissions for, leaving the parts that the user does not have write permissions for unchanged.
+   * '''Case 5''': A user does not send a mandatory record part that it has write permissions for. The update should fail with a validation error, as we are missing mandatory data in the update.
+
+!***> Case 1
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $adminAuthToken | testWorkout | cirkelfys1 | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys1"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"1"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"30"},{"name":"instructorId","value":"6666"},{"name":"instructorName","children":[{"name":"firstName","value":"Emma"},{"name":"lastName","value":"Kula"}]},{"name":"popularity","children":[{"name":"rating","value":"8"}]},{"name":"city","value":"Uppsala"},{"name":"country","value":"Sweden"}]} | | OK |
+
+Validate the '''response''' returned on the update call contains the expected record parts.
+
+!| ChildComparerFixture |
+| children | testCheckContainWithValues? |
+| {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"30"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Kula"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"8"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | OK |
+
+Validate by reading the stored record again. Make sure all data parts are in the update record.
+
+!| ChildComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
+| $adminAuthToken | testWorkout | cirkelfys1 | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"30"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Kula"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"8"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | | OK |
+
+*!
+!***> Case 2
+
+!| ChildComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
+| $adminAuthToken | testWorkout | cirkelfys1 | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"30"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Kula"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"8"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | | OK |
+
+Try to change noOfParticipants=25, workoutName=cyckel
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $userAuthToken | testWorkout | cirkelfys1 | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys1"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"1"}]},{"name":"workoutName","value":"cyckel"},{"name":"numOfParticipants","value":"25"}]} | | OK |
+
+Validate the '''response''' returned on the update call contains the expected record parts.
+
+!| ChildComparerFixture |
+| children | testCheckContainWithValues? |
+| {"children":[{"type":"atomic","name":"workoutName","value":"cyckel"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"25"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Kula"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | OK |
+
+Validate the '''response''' returned on the update call does not contain popularity record part.
+
+!| ChildComparerFixture |
+| children | testCheckContain? |
+| {"children":[{"name":"popularity"}]}| Child with nameInData popularity is missing. |
+
+Validate by reading the stored record again. Make sure all data parts are in the updated record. Validate that noOfParticipants=25 and workoutName=cyckel, and others are not changed
+
+!| ChildComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
+| $adminAuthToken | testWorkout | cirkelfys1 | {"children":[{"type":"atomic","name":"workoutName","value":"cyckel"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"25"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Kula"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"8"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | | OK |
+
+*!
+!***> Case 3
+
+!| ChildComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
+| $adminAuthToken | testWorkout | cirkelfys1 | {"children":[{"type":"atomic","name":"workoutName","value":"cyckel"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"25"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Kula"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"8"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | | OK |
+
+!include -seamless <RecordPart.RecordPartRemoveWritePermissionOnNumOfParticipants
+Try to update workoutName=atom, and others are not changed
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $userAuthToken | testWorkout | cirkelfys1 | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys1"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"1"}]},{"name":"workoutName","value":"atom"},{"name":"instructorName","children":[{"name":"firstName","value":"Rut-Emma"},{"name":"lastName","value":"Projektledare"}]},{"name":"popularity","children":[{"name":"rating","value":"0"}]}]} | | OK |
+
+Validate the '''response''' returned on the update call contains the expected record parts.
+
+!| ChildComparerFixture |
+| children | testCheckContainWithValues? |
+| {"children":[{"type":"atomic","name":"workoutName","value":"atom"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"25"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Kula"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | OK |
+
+Validate the '''response''' returned on the update call does not contain popularity record part.
+
+!| ChildComparerFixture |
+| children | testCheckContain? |
+| {"children":[{"name":"popularity"}]}| Child with nameInData popularity is missing. |
+
+Validate by reading the stored record again. Make sure all data parts are in the updated record.
+
+!| ChildComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
+| $adminAuthToken | testWorkout | cirkelfys1 | {"children":[{"type":"atomic","name":"workoutName","value":"atom"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"25"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Kula"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"8"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | | OK |
+
+!include -seamless <RecordPart.RecordPartReturnWritePermissionOnNumOfParticipants
+*!
+!***> Case 4
+
+!| ChildComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
+| $adminAuthToken | testWorkout | cirkelfys1 | {"children":[{"type":"atomic","name":"workoutName","value":"atom"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"25"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Kula"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"8"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | | OK |
+
+Try to change noOfParticipants=10, firstName=Rut-Emma, lastName=Projektledare, rating(popularity)=0, instructorId=123456, workoutname=cirkelfys
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $userAuthToken | testWorkout | cirkelfys1 | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys1"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"1"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"10"},{"name":"instructorId","value":"123456"},{"name":"instructorName","children":[{"name":"firstName","value":"Rut-Emma"},{"name":"lastName","value":"Projektledare"}]},{"name":"popularity","children":[{"name":"rating","value":"0"}]},{"name":"city","value":"Berlin"},{"name":"country","value":"Germany"}]} | | OK |
+
+Validate the '''response''' returned on the update call contains the expected record parts.
+
+!| ChildComparerFixture |
+| children | testCheckContainWithValues? |
+| {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"10"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Kula"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | OK |
+
+Validate the '''response''' returned on the update call does not contain popularity record part.
+
+!| ChildComparerFixture |
+| children | testCheckContain? |
+| {"children":[{"name":"popularity"}]}| Child with nameInData popularity is missing. |
+
+Validate by reading the stored record again. Make sure all data parts are in the updated record. Validate that noOfParticipants is changed to 10 and workoutname=cirkelfys, and other restricted values are not changed.
+
+!| ChildComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
+| $adminAuthToken | testWorkout | cirkelfys1 | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"10"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Kula"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"8"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | | OK |
+
+*!
+!***> Case 5
+
+!| ChildComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
+| $adminAuthToken | testWorkout | cirkelfys1 | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"10"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Kula"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"8"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | | OK |
+
+Try to change firstName=Rut-Emma, lastName=Projektledare, rating(popularity)=0, instructorId=123456, workoutname=cirkelfys, Validation error should be thrown, numOfParticipants missing.
+
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? | getStatusType? |
+| $userAuthToken | testWorkout | cirkelfys1 | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys1"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"1"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"instructorId","value":"123456"},{"name":"instructorName","children":[{"name":"firstName","value":"Rut-Emma"},{"name":"lastName","value":"Projektledare"}]},{"name":"popularity","children":[{"name":"rating","value":"0"}]}]} | Data is not valid: [Did not find enough data children with referenceId: testNumOfParticipantsTextVar(with nameInData:numOfParticipants.] | BAD_REQUEST |
+
+Validate the '''response''' returned on the update call contains the expected record parts.
+
+!| ChildComparerFixture |
+| children | testCheckContainWithValues? |
+| {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"10"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Kula"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"8"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | OK |
+
+Validate that nothing is changed on the stored record.
+
+!| ChildComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
+| $adminAuthToken | testWorkout | cirkelfys1 | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"10"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Kula"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"8"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | | OK |
+
+*!
