@@ -36,9 +36,9 @@ We need to create the attribute, and then create a group that uses the attribute
 | $adminAuthToken | testWorkout | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"45"},{"name":"instructorId","value":"3564"},{"name":"instructorName","children":[{"name":"firstName","value":"Anna"},{"name":"lastName","value":"Ledare"}]},{"name":"popularity","children":[{"name":"rating","value":"4"}]}]} | | CREATED |
 
 *!
-Fitnesse user does not have permission to write instructor name, but alternative name (which has the same nameInData but also an attribute) has no constratints and should therefore be allowed to be updated.
+Fitnesse user does not have permission to write instructor name, but alternative name (which has the same nameInData but also an attribute) has no constraints and should therefore be allowed to be updated.
 
-!***> Update the record and add data for the new child, with attributes.
+!***> Update the record and add data for the new child, with attributes for alternative name.
 
 !| ChildComparerFixture |
 | authToken | type | id | json | children | testUpdateAndStoreRecord? | testCheckContainWithValues? |
@@ -48,6 +48,13 @@ Fitnesse user does not have permission to write instructor name, but alternative
 Also check that the user is not allowed to update the instructor name with no attribute
 
 !***> Try to update the instructor name (without attributes). This should not be allowed
+
+!| ChildComparerFixture |
+| authToken | type | id | json | children | testUpdateAndStoreRecord? | testCheckContainWithValues? |
+| $userAuthToken | testWorkout | cirkelfys | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"1"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"instructorName","children":[{"name":"firstName","value":"Rut-Emma"},{"name":"lastName","value":"Projektledare"}]},{"name":"popularity","children":[{"name":"rating","value":"0"}]},{"name":"instructorName","children":[{"name":"firstName","value":"AnnaAnna"},{"name":"lastName","value":"Instructor"}],"attributes":{"nameType":"alternative"}}]} | {"children":[{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Rut-Emma"},{"type":"atomic","name":"lastName","value":"Projektledare"}]}]} | | Child with nameInData firstName does not have the correct value. Child with nameInData lastName does not have the correct value. |
+
+*!
+!***> Update the record and add data for the new child, with attributes for instructor name. This should not be ok since Fitnesse user has no permissions.
 
 !| ChildComparerFixture |
 | authToken | type | id | json | children | testUpdateAndStoreRecord? | testCheckContainWithValues? |

@@ -9,10 +9,10 @@ Static
 !2 Record part permissions
 Det ska vara möjligt i en post att för ett barn på översta nivån säga att den kräver läs- och/eller skrivrättighet.
 
-!2 Skapa metadata
-Vi skapar ett antal instanser av metadata som ska användas som barn i en metadatagrupp.
+!2 Create metadata
+Create metadata to use as children in another metadata group.
 
-!***> Skapa metadatatextvariabler och metadatagrupper
+!***> Create metadata text variables and metadata groups
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
