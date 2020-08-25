@@ -1,0 +1,53 @@
+!2 Write
+!3 Write constraints for metadata with attributes
+TODO:
+
+skapa 2 metadatagrupper med samma nameInData, men med olika attribut. Lägg till dem i en posttyp - ny eller använda befintlig?
+
+Skapa data innan constratints
+
+Lägg till constratints på den ena gruppen, lägg inte till till permissions
+
+Uppdatera posten med ändrat data för den grupp som inte har constraints. 
+
+Se att data är ändrat (vilket det inte kommer att vara nu)
+
+!***> Case 1
+
+!| ChildComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
+| $adminAuthToken | testWorkout | cirkelfys1 | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"3564"},{"type":"atomic","name":"numOfParticipants","value":"45"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Anna"},{"type":"atomic","name":"lastName","value":"Ledare"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"4"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | | OK |
+
+*!
+!***> Case 2, Validation 2.1
+
+!| ChildComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
+| $userAuthToken | testWorkout | cirkelfys1 | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"3564"},{"type":"atomic","name":"numOfParticipants","value":"45"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Anna"},{"type":"atomic","name":"lastName","value":"Ledare"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | | OK |
+
+User has read permissions on instructorId and inherits read permission from its write permission numOfParticipants.
+
+!| PermissionComparerFixture |
+| authToken | type | id | permissions | testReadAndStoreRecord? | testCheckPermissions? |
+| $userAuthToken | testWorkout | cirkelfys1 | {"read":["instructorId","numOfParticipants"]} | | OK |
+
+Write permission city does not imply a read permission because it is not a create action
+
+!| PermissionComparerFixture |
+| authToken | type | id | permissions | testReadAndStoreRecord? | testCheckPermissions? |
+| $userAuthToken | testWorkout | cirkelfys1 | {"read":["city"]} | | Read permission city is missing. |
+
+*!
+!***> Case 2, Validation 2.2
+
+!| ChildComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContain? |
+| $userAuthToken | testWorkout | cirkelfys1 | {"children":[{"name":"popularity"}]} | | Child with nameInData popularity is missing. |
+
+Following "recordInfo", "workOutName", "instructorName", "popularity", "city", "country" are not included on the read permissions.
+
+!| PermissionComparerFixture |
+| authToken | type | id | permissions | testReadAndStoreRecord? | testCheckPermissions? |
+| $userAuthToken | testWorkout | cirkelfys1 | {"read":["recordInfo", "workOutName", "instructorName", "popularity", "city", "country"  ]} | | Read permission recordInfo is missing. Read permission workOutName is missing. Read permission instructorName is missing. Read permission popularity is missing. Read permission city is missing. Read permission country is missing. |
+
+*!
