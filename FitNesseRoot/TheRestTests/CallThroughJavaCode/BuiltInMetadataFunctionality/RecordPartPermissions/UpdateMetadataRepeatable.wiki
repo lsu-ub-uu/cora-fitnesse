@@ -1,0 +1,92 @@
+---
+Test
+---
+!include -c <RecordPartPermissions.RecordPartPermissionsSetUp
+!contents -R2 -g -p -f -h
+| import |
+| se.uu.ub.cora.fitnesseintegration |
+| se.uu.ub.cora.fitnesseintegration.compare |
+
+!2 Update when metadata changes from non repeatable to repeatable
+If a child with constraints is non repeatable and than is changed to repeatable, this should be handled when a child without repeatId replaces a child with repeatId. This happens when a user without permissions updates a record.
+
+!3 Create data needed
+!***> Create an instance of testWorkout
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | testWorkout | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"45"},{"name":"instructorId","value":"3564"},{"name":"instructorName","children":[{"name":"firstName","value":"Anna"},{"name":"lastName","value":"Ledare"}]},{"name":"popularity","children":[{"name":"rating","value":"4"}]}]} | | CREATED |
+
+*!
+Change instructor name to be repeatable
+
+!***> Update top level group testWorkoutGroup, change to repeatable child
+
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? | getStatusType? |
+| $adminAuthToken | metadataGroup | testWorkoutGroup | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testWorkoutGroup"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadataGroup"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"systemOneUser"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"systemOneUser"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2017-11-01T17:46:48.000000Z"}],"repeatId":"0"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"workout"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"recordInfoGroup"}]}],"repeatId":"5"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testWorkoutNameTextVar"}]}],"repeatId":"0"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testInstructorIdTextVar"}]},{"name":"recordPartConstraint","value":"readWrite"}],"repeatId":"1"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testNumOfParticipantsTextVar"}]},{"name":"recordPartConstraint","value":"write"}],"repeatId":"2"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"2"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"testInstructorNameGroup"}]},{"name":"recordPartConstraint","value":"write"}],"repeatId":"3"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"testPopularityGroup"}]},{"name":"recordPartConstraint","value":"readWrite"}],"repeatId":"4"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleDefText"}]},{"name":"excludePGroupCreation","value":"true"}],"attributes":{"type":"group"}} | | OK |
+
+*!
+Fitnesse user does not have permission to write instructor name, so the data will be replaced by previous data
+
+!***> Try to update the instructor name. This should not be allowed, and data should be replaced with data from previously stored record
+
+!| ChildComparerFixture |
+| authToken | type | id | json | children | testUpdateAndStoreRecord? | testCheckContainWithValues? |
+| $userAuthToken | testWorkout | cirkelfys | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"1"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"instructorName","children":[{"name":"firstName","value":"Rut-Emma"},{"name":"lastName","value":"Projektledare"}]},{"name":"popularity","children":[{"name":"rating","value":"0"}]}]} | {"children":[{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Rut-Emma"},{"type":"atomic","name":"lastName","value":"Projektledare"}]}]} | | Child with nameInData firstName does not have the correct value. Child with nameInData lastName does not have the correct value. |
+
+*!
+!2 Clean up created data
+!***> Reset top level group testWorkoutGroup, remove added child group
+
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? | getStatusType? |
+| $adminAuthToken | metadataGroup | testWorkoutGroup | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testWorkoutGroup"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadataGroup"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"systemOneUser"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"systemOneUser"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2017-11-01T17:46:48.000000Z"}],"repeatId":"0"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"workout"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"recordInfoGroup"}]}],"repeatId":"5"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testWorkoutNameTextVar"}]}],"repeatId":"0"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testInstructorIdTextVar"}]},{"name":"recordPartConstraint","value":"readWrite"}],"repeatId":"1"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testNumOfParticipantsTextVar"}]},{"name":"recordPartConstraint","value":"write"}],"repeatId":"2"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"testInstructorNameGroup"}]},{"name":"recordPartConstraint","value":"write"}],"repeatId":"3"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"testPopularityGroup"}]},{"name":"recordPartConstraint","value":"readWrite"}],"repeatId":"4"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleDefText"}]},{"name":"excludePGroupCreation","value":"true"}],"attributes":{"type":"group"}} | | OK |
+
+*!
+!***> Clean up created data
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | testWorkout | cirkelfys | | OK |
+| $adminAuthToken | search | testWorkoutSearch | | OK |
+| $adminAuthToken | search | testWorkoutExtendedSearch | | OK |
+| $adminAuthToken | metadataGroup | testWorkoutSearchGroup | | OK |
+| $adminAuthToken | metadataGroup | testWorkoutSearchIncludeGroup | | OK |
+| $adminAuthToken | metadataGroup | testWorkoutSearchIncludePartGroup | | OK |
+| $adminAuthToken | recordType | testWorkout | | OK |
+| $adminAuthToken | presentationGroup | testWorkoutGroupPGroup | | OK |
+| $adminAuthToken | metadataGroup | testWorkoutGroup | | OK |
+| $adminAuthToken | metadataGroup | testWorkoutNewGroup | | OK |
+| $adminAuthToken | presentationVar | testWorkoutNamePVar | | OK |
+| $adminAuthToken | presentationVar | testWorkoutNameOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testWorkoutNameTextVar | | OK |
+| $adminAuthToken | presentationVar | testInstructorIdPVar | | OK |
+| $adminAuthToken | presentationVar | testInstructorIdOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testInstructorIdTextVar | | OK |
+| $adminAuthToken | presentationVar | testNumOfParticipantsPVar | | OK |
+| $adminAuthToken | presentationVar | testNumOfParticipantsOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testNumOfParticipantsTextVar | | OK |
+| $adminAuthToken | metadataGroup | testInstructorNameGroup | | OK |
+| $adminAuthToken | metadataGroup | testInstructorAlternativeNameGroup | | OK |
+| $adminAuthToken | presentationVar | testInstructorFirstNamePVar | | OK |
+| $adminAuthToken | presentationVar | testInstructorFirstNameOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testInstructorFirstNameTextVar | | OK |
+| $adminAuthToken | presentationVar | testInstructorLastNamePVar | | OK |
+| $adminAuthToken | presentationVar | testInstructorLastNameOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testInstructorLastNameTextVar | | OK |
+| $adminAuthToken | metadataGroup | testPopularityGroup | | OK |
+| $adminAuthToken | presentationVar | testRatingPVar | | OK |
+| $adminAuthToken | presentationVar | testRatingOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testRatingTextVar | | OK |
+| $adminAuthToken | presentationCollectionVar | instructorNameTypePCollVar | | OK |
+| $adminAuthToken | presentationCollectionVar | instructorNameTypeOutputPCollVar | | OK |
+| $adminAuthToken | presentationCollectionVar | instructorNameTypeAlternativePCollVar | | OK |
+| $adminAuthToken | presentationCollectionVar | instructorNameTypeAlternativeOutputPCollVar | | OK |
+| $adminAuthToken | metadataCollectionVariable | instructorNameTypeCollectionVar | | OK |
+| $adminAuthToken | metadataCollectionVariable | instructorNameTypeAlternativeCollectionVar | | OK |
+| $adminAuthToken | metadataItemCollection | instructorNameTypeCollection | | OK |
+| $adminAuthToken | coraText | fitnesseExampleText | | OK |
+| $adminAuthToken | coraText | fitnesseExampleDefText | | OK |
+
+*!
