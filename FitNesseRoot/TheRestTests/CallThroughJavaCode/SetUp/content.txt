@@ -11,7 +11,7 @@
 | setHttpHandlerFactoryClassName | se.uu.ub.cora.httphandler.HttpHandlerFactoryImp |
 | setJsonToDataFactoryClassName | se.uu.ub.cora.clientdata.converter.jsontojava.JsonToDataConverterFactoryImp |
 | setChildComparerUsingClassName | se.uu.ub.cora.fitnesseintegration.ChildComparerImp |
-| setPermissionComparerFactoryUsingClassName | se.uu.ub.cora.fitnesseintegration.compare.PermissionComparerFactoryImp |
+| setComparerFactoryUsingClassName | se.uu.ub.cora.fitnesseintegration.compare.ComparerFactoryImp |
 
 !2 Login
 !***> Login for admin
