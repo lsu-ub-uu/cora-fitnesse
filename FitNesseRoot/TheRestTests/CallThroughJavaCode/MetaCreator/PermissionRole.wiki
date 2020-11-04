@@ -1,0 +1,61 @@
+---
+Test
+---
+!contents -R2 -g -p -f -h
+| import |
+| se.uu.ub.cora.fitnesseintegration |
+
+!1 Testing metacompleter and creator for permissionRole
+If text ids are not provided when creating a permissionRole, the text ids are added and the texts are created in storage if they do not already exist.
+
+Read texts to make sure they do not exist
+
+!***> Read fitnesseTestPermissionRoleText and fitnesseTestPermissionRoleDefText
+
+!| RecordEndpointFixture |
+| id | type | testReadRecord? | getStatusType? |
+| fitnesseTestPermissionRoleText | coraText | | NOT_FOUND |
+| fitnesseTestPermissionRoleDefText | coraText | | NOT_FOUND |
+
+*!
+!2 
+!2 Create a new permissionRole
+!***> Create a new permissionRole (fitnesseTestPermissionRole)
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | permissionRole | {"name":"permissionRole","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseTestPermissionRole"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"permissionRuleLink","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"nothing"}],"repeatId":"0"},{"name":"activeStatus","value":"inactive"}]} | | CREATED |
+
+*!
+Read fitnesseTestPermissionRole to see that links to texts have been added to the role
+
+!***> Read fitnesseTestPermissionRole
+
+!| RecordEndpointFixture |
+| id | type | testReadRecord? | getStatusType? |
+| fitnesseTestPermissionRole | permissionRole | =~/"name":"id","value":"fitnesseTestPermissionRole"/ | OK |
+
+*!
+Read texts again to see that they have been created
+
+!***> Read fitnesseTestPermissionRoleText and fitnesseTestPermissionRoleDefText
+
+!| RecordEndpointFixture |
+| id | type | testReadRecord? | getStatusType? |
+| fitnesseTestPermissionRoleText | coraText | | OK |
+| fitnesseTestPermissionRoleDefText | coraText | | OK |
+
+
+*!
+!1 Reset testdata
+Remove data created for this test
+
+!***> Delete created permissionRole and texts
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | permissionRole | fitnesseTestPermissionRole | | OK |
+| $adminAuthToken | coraText | fitnesseTestPermissionRoleText | | OK |
+| $adminAuthToken | coraText | fitnesseTestPermissionRoleDefText | | OK |
+
+*!
