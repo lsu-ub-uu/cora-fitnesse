@@ -77,7 +77,7 @@ A test that first reads all predefined metadata needed to be able to create perm
 | metadataTextVariable | permissionRulePartValueTextVar | 1 | X |
 
 *!
-!3 Read metadataGroups for persmissionRule and permissionRole
+!3 Read metadataGroups for permissionRule and permissionRole
 !***> Load permissionRuleNewGroup to use in tests
 
 !| RecordEndpointFixture |
@@ -89,7 +89,7 @@ A test that first reads all predefined metadata needed to be able to create perm
 
 !| MetadataLinkFixture |
 | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? |
-| metadataGroup | recordInfoNewGroup | 1 | 1 |
+| metadataGroup | recordInfoNewPermissionRuleGroup | 1 | 1 |
 | metadataGroup | permissionRulePartActionGroup | 1 | 1 |
 | metadataGroup | permissionRulePartRecordTypeGroup | 1 | 1 |
 | metadataGroup | permissionTermRulePartGroup | 0 | X |
@@ -122,7 +122,7 @@ A test that first reads all predefined metadata needed to be able to create perm
 
 !| MetadataLinkFixture |
 | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? |
-| metadataGroup | recordInfoNewGroup | 1 | 1 |
+| metadataGroup | recordInfoNewPermissionRoleGroup | 1 | 1 |
 | metadataRecordLink | permissionRuleLink | 1 | X |
 | metadataCollectionVariable | activeStatusCollectionVar | 1 | 1 |
 
