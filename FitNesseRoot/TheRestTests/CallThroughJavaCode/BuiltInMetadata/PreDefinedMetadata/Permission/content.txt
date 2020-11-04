@@ -6,7 +6,7 @@
 A test that first reads all predefined metadata needed to be able to create permission rules and roles, and then tests adding and updating rules and roles.
 
 !2 Read predefined metadata to make sure it is correct
-!3 Read metadataGroups for persmissionRuleParts
+!3 Read metadataGroups for permissionRuleParts
 !***> Load permissionRulePartGroup to use in tests
 
 !| RecordEndpointFixture |
@@ -182,7 +182,7 @@ A test that first reads all predefined metadata needed to be able to create perm
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | permissionRule | myPermissionRule | {"name":"permissionRule","children":[{"name":"recordInfo","children":[{"name":"id","value":"myPermissionRule"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRule"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.read","repeatId":"0"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.book","repeatId":"0"}],"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"}]} | | OK |
+| $adminAuthToken | permissionRule | myPermissionRule | {"name":"permissionRule","children":[{"name":"recordInfo","children":[{"name":"id","value":"myPermissionRule"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRule"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.read","repeatId":"0"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.book","repeatId":"0"}],"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"myPermissionRuleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"myPermissionRuleDefText"}]}]} | | OK |
 
 *!
 !***> List data(permissionRule)
@@ -211,7 +211,7 @@ A test that first reads all predefined metadata needed to be able to create perm
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | permissionRole | myPermissionRole | {"name":"permissionRole","children":[{"name":"recordInfo","children":[{"name":"id","value":"myPermissionRole"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"permissionRuleLink","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"myPermissionRule"}],"repeatId":"0"},{"name":"activeStatus","value":"inactive"}]} | =~/"name":"activeStatus","value":"inactive"/ | OK |
+| $adminAuthToken | permissionRole | myPermissionRole | {"name":"permissionRole","children":[{"name":"recordInfo","children":[{"name":"id","value":"myPermissionRole"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"permissionRuleLink","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"myPermissionRule"}],"repeatId":"0"},{"name":"activeStatus","value":"inactive"},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"myPermissionRoleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"myPermissionRoleDefText"}]}]} | =~/"name":"activeStatus","value":"inactive"/ | OK |
 
 *!
 !***> List data(permissionRole)
