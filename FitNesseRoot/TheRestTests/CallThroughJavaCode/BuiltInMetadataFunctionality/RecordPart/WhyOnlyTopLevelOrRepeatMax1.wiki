@@ -1,6 +1,6 @@
-This is an example that shows why it is hard/impossible to solve merge problems at the server if we were to allow for restrictions below the top level dataGroup.
+This is an example that shows why it is hard/impossible to solve merge problems at the server if we were to allow for restrictions below the top level dataGroup or where there is not an unbroken chain of repeatMax = 1.
 
-If we have a simple top level dataGroup as follows:
+If we have a simple top level metadataGroup as follows:
 
  * topLevel
    * child1 (dataGroup, 2-2)
