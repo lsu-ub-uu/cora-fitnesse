@@ -1,0 +1,11 @@
+---
+Help: Create a record according to variables
+---
+!***> Create record, for recordType ${recordType}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? |
+| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} |
+
+!define expectedAnswer {}
+*!

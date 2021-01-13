@@ -1,0 +1,6 @@
+---
+Help: Store a record from a list to FitNesse for later checks
+---
+!| ComparerFixture |
+| authToken | type |idToStore| testReadRecordListAndStoreRecordById? |
+| ${currentAuthToken} | ${recordType} |${recordId} |${expectedListResult}|

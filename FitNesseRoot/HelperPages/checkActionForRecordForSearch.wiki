@@ -1,0 +1,3 @@
+!| ActionComparerFixture |
+| authToken | type | searchId | json | actions | listIndexToCompareTo | testSearchAndStoreRecords? | testCheckActionsFromList? |
+| ${currentAuthToken} | ${currentRecordType} | publicOrganisationSearch | {"name":"search","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"recordIdSearchTerm","value":"${currentId}"}]}]}]} | {"actions":["read","update", "delete", "index", "read_incoming_links"]} | 0 | | ${expectedPermissionResult} |

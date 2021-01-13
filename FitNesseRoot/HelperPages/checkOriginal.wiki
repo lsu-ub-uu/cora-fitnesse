@@ -1,0 +1,5 @@
+---
+Help: Compare data, check permissions
+---
+!include -seamless .TheRestTests.CallThroughJavaCode.HelperPages.compareOriginalRecord
+!include -seamless .TheRestTests.CallThroughJavaCode.HelperPages.recordPermissions

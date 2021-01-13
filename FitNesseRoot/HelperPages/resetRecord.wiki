@@ -1,0 +1,11 @@
+---
+Help: Reset a record according to variables
+Static
+---
+!***> Reset record ${recordId}
+
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? | getStatusType? |
+| $adminAuthToken | ${recordType} | ${recordId} | ${originalData} | | OK |
+
+*!

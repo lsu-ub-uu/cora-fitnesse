@@ -1,3 +1,6 @@
+---
+Static
+---
 !2 Create
 There are a few different cases for create that can happen, when there are write restrictions:
 
@@ -6,8 +9,22 @@ There are a few different cases for create that can happen, when there are write
    * '''Case 2''': Only recordParts that the user has write permissions for is sent to create, create as normal
    * '''Case 3''': Data for recordParts that the user does not have write permission for is sent to create. The write protected parts that the user does not have write permission for, should not be added to the new record, all other data should be added and the record created.
    * '''Case 4''': A recordPart that the user does not have write permission for is mandatory (must be present), whether the user sends data for the restricted parts or not does not matter, the end result should be that the record is missing the mandatory restricted data parts and record creation should fail with an error
+!define currentAuthToken {$adminAuthToken}
 
 !***> Case 1
+*************
+!-Uppdatera en rootOrganisation från domän UU, som en systemAdmin och se att alla fält är uppdaterade utom domain som inte får ändras.-!
+
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {}
+!include -seamless .HelperPages.createRecord
+!define expectedCompareResult {Child with nameInData domain does not have the correct value.}
+!define expectedActionResult {Action delete is missing. Action read_incoming_links is missing.}
+!define expectedPermissionResult {Write permission domain is missing.}
+!include -seamless .TheRestTests.CallThroughJavaCode.HelperPages.checkReadCheckReset
+*************
+
 
 Create a new testWorkout record as fitnesseAdmin, adding unrestricted and all restricted data parts
 

@@ -1,0 +1,10 @@
+---
+Help: Read a record
+---
+!***> Read record ${recordType} ${recordId}
+
+!| ChildComparerFixture |
+| authToken | type | id | testReadAndStoreRecord? |
+| ${currentAuthToken} | ${recordType} | ${recordId} | |
+
+*!

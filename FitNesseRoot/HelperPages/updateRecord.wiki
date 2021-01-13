@@ -1,0 +1,11 @@
+---
+Help: Update a record according to variables
+---
+!***> Update record ${recordId}
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| ${currentAuthToken} | ${recordType} | ${recordId} | ${updateData} | ${expectedAnswer} | ${expectedUpdateResult} |
+
+!define expectedAnswer {}
+*!
