@@ -6,14 +6,36 @@ Metadata is created in order to be able to test record part permission test case
 
 Restrictions are set as follows:
 
+!style_red[
+''(Before constratins applied in different levels)''
+
+ * ''workout(group)''
+   * ''recordInfo(group, 1-1, '''noRestrictions''')''
+   * ''workOutName(textVar, 1-1, '''noRestrictions''')''
+   * ''instructorId(textVar, 0-1,''' readWrite''')''
+   * ''numOfParticipants(textVar, 1-1, '''write''')''
+   * ''instructorName(group, 0-1, '''write''')''
+     * ''firstName(textVar, 1-1)''
+     * ''lastName(textVar, 1-1)''
+   * ''popularity(group, 0-1, '''readWrite''')''
+     * ''rating(textVar, 1-1)''
+   * ''city(textVar, 1-1, '''write''')''
+   * ''country(textVar, 1-1, '''noRestriction on create, write on update''')''
+
+]
+
+(After constratins applied in different levels)
+
  * workout(group)
    * recordInfo(group, 1-1, '''noRestrictions''')
    * workOutName(textVar, 1-1, '''noRestrictions''')
    * instructorId(textVar, 0-1,''' readWrite''')
    * numOfParticipants(textVar, 1-1, '''write''')
    * instructorName(group, 0-1, '''write''')
-     * firstName(textVar, 1-1)
-     * lastName(textVar, 1-1)
+     * firstName(textVar, 1-1, '''write''')
+     * lastName(textVar, 1-1, '''readWrite''')
+     * nickName(textVar, 0-1,, '''noRestrictions'''))
+     * personNumber(textVar, 1-1, '''readWrite''')
    * popularity(group, 0-1, '''readWrite''')
      * rating(textVar, 1-1)
    * city(textVar, 1-1, '''write''')
@@ -21,11 +43,25 @@ Restrictions are set as follows:
 
 Permissions are given as follows:
 
+!style_red[
+''(Before constratins applied in different levels)''
+
+ * ''fitnesseAdmin has read and write on all restricted record parts''
+ * ''fitnesseUser has''
+   * '''''read''' on instructorId''
+   * '''''readWrite''' on numOfParticipants''
+   * '''''readWrite''' on city on create only (not update)''
+]
+
+(After constratins applied in different levels)
+
  * fitnesseAdmin has read and write on all restricted record parts
  * fitnesseUser has
    * '''read''' on instructorId
    * '''readWrite''' on numOfParticipants
    * '''readWrite''' on city on create only (not update)
+   * '''read''' on firstName
+   * '''write''' on lastName
 
 !***> Create needed metadata
 
@@ -37,9 +73,11 @@ Permissions are given as follows:
 | $adminAuthToken | metadataTextVariable | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testNumOfParticipantsTextVar"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"numOfParticipants"},{"name":"regEx","value":".*"},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleDefText"}]}],"attributes":{"type":"textVariable"}} | | CREATED |
 | $adminAuthToken | metadataTextVariable | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testInstructorFirstNameTextVar"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"firstName"},{"name":"regEx","value":".*"},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleDefText"}]}],"attributes":{"type":"textVariable"}} | | CREATED |
 | $adminAuthToken | metadataTextVariable | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testInstructorLastNameTextVar"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"lastName"},{"name":"regEx","value":".*"},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleDefText"}]}],"attributes":{"type":"textVariable"}} | | CREATED |
+| $adminAuthToken | metadataTextVariable | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testNickNameTextVar"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"nickName"},{"name":"regEx","value":".*"},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleDefText"}]}],"attributes":{"type":"textVariable"}} | | CREATED |
+| $adminAuthToken | metadataTextVariable | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testPersonNumberTextVar"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"personNumber"},{"name":"regEx","value":".*"},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleDefText"}]}],"attributes":{"type":"textVariable"}} | | CREATED |
 | $adminAuthToken | metadataTextVariable | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testCityTextVar"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"city"},{"name":"regEx","value":".*"},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleDefText"}]}],"attributes":{"type":"textVariable"}} | | CREATED |
 | $adminAuthToken | metadataTextVariable | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testCountryTextVar"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"country"},{"name":"regEx","value":".*"},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleDefText"}]}],"attributes":{"type":"textVariable"}} | | CREATED |
-| $adminAuthToken | metadataGroup | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testInstructorNameGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"instructorName"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testInstructorFirstNameTextVar"}]}],"repeatId":"0"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testInstructorLastNameTextVar"}]}],"repeatId":"1"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleDefText"}]},{"name":"excludePGroupCreation","value":"true"}],"attributes":{"type":"group"}} | | CREATED |
+| $adminAuthToken | metadataGroup | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testInstructorNameGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"instructorName"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testInstructorFirstNameTextVar"}]},{"name":"recordPartConstraint","value":"write"}],"repeatId":"0"},{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testInstructorLastNameTextVar"}]},{"name":"recordPartConstraint","value":"readWrite"}],"repeatId":"1"},{"name":"childReference","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testNickNameTextVar"}]}],"repeatId":"2"},{"name":"childReference","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testPersonNumberTextVar"}]},{"name":"recordPartConstraint","value":"readWrite"}],"repeatId":"3"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleDefText"}]},{"name":"excludePGroupCreation","value":"true"}],"attributes":{"type":"group"}} | | CREATED |
 | $adminAuthToken | metadataTextVariable | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testRatingTextVar"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"rating"},{"name":"regEx","value":".*"},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleDefText"}]}],"attributes":{"type":"textVariable"}} | | CREATED |
 | $adminAuthToken | metadataGroup | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"testPopularityGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"popularity"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"testRatingTextVar"}]}],"repeatId":"0"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseExampleDefText"}]},{"name":"excludePGroupCreation","value":"true"}],"attributes":{"type":"group"}} | | CREATED |
 
@@ -73,7 +111,7 @@ Create a new rule, limitedForTestWorkoutRule, to allow fitnesseUser limited acce
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
 | $adminAuthToken | permissionRule | {"name":"permissionRule","children":[{"name":"recordInfo","children":[{"name":"id","value":"limitedForTestWorkoutCreateRule"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.create","repeatId":"0"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.testWorkout","repeatId":"0"}],"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"},{"name":"readPermissions","children":[{"name":"readPermission","value":"testWorkout.instructorId","repeatId":"0"}]},{"name":"writePermissions","children":[{"name":"writePermission","value":"testWorkout.numOfParticipants","repeatId":"1"},{"name":"writePermission","value":"testWorkout.city","repeatId":"2"}]}]} | | CREATED |
-| $adminAuthToken | permissionRule | {"name":"permissionRule","children":[{"name":"recordInfo","children":[{"name":"id","value":"limitedForTestWorkoutRule"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.read","repeatId":"1"},{"name":"permissionRulePartValue","value":"system.update","repeatId":"2"},{"name":"permissionRulePartValue","value":"system.search","repeatId":"3"},{"name":"permissionRulePartValue","value":"system.list","repeatId":"4"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.testWorkout","repeatId":"0"}],"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"},{"name":"readPermissions","children":[{"name":"readPermission","value":"testWorkout.instructorId","repeatId":"0"}]},{"name":"writePermissions","children":[{"name":"writePermission","value":"testWorkout.numOfParticipants","repeatId":"1"}]}]} | | CREATED |
+| $adminAuthToken | permissionRule | {"name":"permissionRule","children":[{"name":"recordInfo","children":[{"name":"id","value":"limitedForTestWorkoutRule"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.read","repeatId":"1"},{"name":"permissionRulePartValue","value":"system.update","repeatId":"2"},{"name":"permissionRulePartValue","value":"system.search","repeatId":"3"},{"name":"permissionRulePartValue","value":"system.list","repeatId":"4"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.testWorkout","repeatId":"0"}],"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"},{"name":"readPermissions","children":[{"name":"readPermission","value":"testWorkout.instructorId","repeatId":"0"},{"name":"readPermission","value":"testWorkout.firstName","repeatId":"1"}]},{"name":"writePermissions","children":[{"name":"writePermission","value":"testWorkout.numOfParticipants","repeatId":"0"},{"name":"readPermission","value":"testWorkout.lastName","repeatId":"1"}]}]} | | CREATED |
 
 '''Here we update a role (fitnesseTextAdmin) that fitnesseUser already has, instead of creating a new role, as we have different instances of in memory storage, between where the users roles are created and where the login system reads them.'''
 

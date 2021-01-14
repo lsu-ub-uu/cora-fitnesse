@@ -6,18 +6,19 @@ Test
 | se.uu.ub.cora.fitnesseintegration.compare |
 
 !1 Record part
-Record parts makes it possible to set up read and write restrictions on parts of a record. Restrictions can only be added to the children of the records top level  dataGroup, or to children of any subGroup that has an unbroken chain of  repeatMax = 1, up to the top level group. Data sent from the server, collects read restrictions from the  recordTypes  metadataGroup linked through metadataId. A user gets its  record part read permissions from rules with the READ action. Record  parts that the user does not have read permission for are redacted  before the data is returned to the user. All ways a user can get data  from the server is checked for read permissions and data possibly  redacted, this include data for the obvious read cases: read, search and list, but also for data returned from actions that create or update data such as:  create and update. The use of the same restrictions and rules to  calculate what data to possibly redact is done to get a consistent and  easy way to know what restrictions and rules are in play for data  returned to users.
+Record parts makes it possible to set up read and write restrictions on parts of a record. Restrictions can be added to all the children. However it is not allowed to add restrictions on children of any group that has repeatMax != 1. 
+Data sent from the server, collects read restrictions from the  recordTypes  metadataGroup linked through metadataId. A user gets its  record part read permissions from rules with the READ action. Record  parts that the user does not have read permission for are redacted  before the data is returned to the user. All ways a user can get data  from the server is checked for read permissions and data possibly  redacted, this include data for the obvious read cases: read, search and list, but also for data returned from actions that create or update data such as:  create and update. The use of the same restrictions and rules to  calculate what data to possibly redact is done to get a consistent and  easy way to know what restrictions and rules are in play for data  returned to users.
 
-Data sent to the server for create and update actions,  collects write restrictions from the recordTypes metadataGroup linked through newMetadataId and metadataId respectively. A user gets its write record part permissions for create, from rules with CREATE action, and update from rules matching   UPDATE action. Record parts that the user does not have write permission for is removed from the data before it is further handled by the system. If the action is update and the previous version, stored on the server, had data for the removed record parts, is the stored record parts merged back into the record before it is updated.
+Data sent to the server for create and update actions, collects write restrictions from the recordTypes metadataGroup linked through newMetadataId and metadataId respectively. A user gets its write record part permissions for create, from rules with CREATE action, and update from rules matching   UPDATE action. Record parts that the user does not have write permission for is removed from the data before it is further handled by the system. If the action is update and the previous version, stored on the server, had data for the removed record parts, is the stored record parts merged back into the record before it is updated.
 
 The record returned to the user also contains lists with read and write permissions, that the user currently has for the returned record,  these lists are based on rules that have READ and UPDATE action  respectively. These returned lists are intended to be used by clients to know how to handle record parts for the returned record.
 
-!***> Why restrictions on top level and unbroken chain of repeatMax = 1 only
+!***> Why restrictions are only allowed on groups with repeatMax = 1
 
 !include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.WhyOnlyTopLevelOrRepeatMax1
 *!
 !2 Restrictions
-Restrictions are set in metadata as a relation between the top level data group, in a record, and the first level children. There are two types of restrictions, read and write. A read restriction prevents data from leaving the server and a write restriction prevents data from beeing updated on the server.
+There are two types of restrictions, read and write. A read restriction prevents data from leaving the server and a write restriction prevents data from beeing updated on the server.
 
 A set read restriction implies a write restriction on the same record part, because a user is not allowed to change information that it can not see.
 
