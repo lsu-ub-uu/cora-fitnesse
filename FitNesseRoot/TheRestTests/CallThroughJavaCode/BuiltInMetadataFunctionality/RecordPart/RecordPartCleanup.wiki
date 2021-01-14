@@ -51,6 +51,12 @@ Clean up created data
 | $adminAuthToken | presentationVar | testInstructorLastNamePVar | | OK |
 | $adminAuthToken | presentationVar | testInstructorLastNameOutputPVar | | OK |
 | $adminAuthToken | metadataTextVariable | testInstructorLastNameTextVar | | OK |
+| $adminAuthToken | presentationVar | testNickNameTextVarPVar | | OK |
+| $adminAuthToken | presentationVar | testNickNameTextVarOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testNickNameTextVar | | OK |
+| $adminAuthToken | presentationVar | testPersonNumberTextVarPVar | | OK |
+| $adminAuthToken | presentationVar | testPersonNumberTextVarOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testPersonNumberTextVar | | OK |
 | $adminAuthToken | presentationVar | testCityPVar | | OK |
 | $adminAuthToken | presentationVar | testCityOutputPVar | | OK |
 | $adminAuthToken | metadataTextVariable | testCityTextVar | | OK |
