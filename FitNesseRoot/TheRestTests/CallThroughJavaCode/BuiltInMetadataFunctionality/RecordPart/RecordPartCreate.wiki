@@ -13,16 +13,15 @@ There are a few different cases for create that can happen, when there are write
 
 !***> Case 1
 *************
-!-Uppdatera en rootOrganisation från domän UU, som en systemAdmin och se att alla fält är uppdaterade utom domain som inte får ändras.-!
+!-Create a new testWorkout record as fitnesseAdmin, adding unrestricted and all restricted data parts-!
 
 !include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
 !define expectedCreateResult {CREATED}
 !define expectedAnswer {}
-!include -seamless .HelperPages.createRecord
-!define expectedCompareResult {Child with nameInData domain does not have the correct value.}
-!define expectedActionResult {Action delete is missing. Action read_incoming_links is missing.}
-!define expectedPermissionResult {Write permission domain is missing.}
-!include -seamless .TheRestTests.CallThroughJavaCode.HelperPages.checkReadCheckReset
+!define expectedCompareResult {OK}
+!define expectedActionResult {Action read_incoming_links is missing.}
+!define expectedPermissionResult {OK}
+!include -seamless .HelperPages.createCheckReadCheck
 *************
 
 

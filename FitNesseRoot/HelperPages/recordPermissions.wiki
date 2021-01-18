@@ -9,6 +9,6 @@ Help: Check permissions for a record
 
 !| PermissionComparerFixture |
 | permissions | testCheckPermissions? |
-| {"read":[],"write":[]} | ${expectedPermissionResult} |
+| ${recordPermissions} | ${expectedPermissionResult} |
 
 *!
