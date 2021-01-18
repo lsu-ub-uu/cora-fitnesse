@@ -44,6 +44,16 @@ Clean up created data
 | $adminAuthToken | presentationVar | testNumOfParticipantsPVar | | OK |
 | $adminAuthToken | presentationVar | testNumOfParticipantsOutputPVar | | OK |
 | $adminAuthToken | metadataTextVariable | testNumOfParticipantsTextVar | | OK |
+| $adminAuthToken | metadataGroup | testExercisesGroup | | OK |
+| $adminAuthToken | presentationVar | testNumOfExercisesPVar | | OK |
+| $adminAuthToken | presentationVar | testNumOfExercisesOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testNumOfExercisesTextVar | | OK |
+| $adminAuthToken | presentationVar | testLapsPVar | | OK |
+| $adminAuthToken | presentationVar | testLapsOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testLapsTextVar | | OK |
+| $adminAuthToken | presentationVar | testDurationPVar | | OK |
+| $adminAuthToken | presentationVar | testDurationOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testDurationTextVar | | OK |
 | $adminAuthToken | metadataGroup | testInstructorNameGroup | | OK |
 | $adminAuthToken | presentationVar | testInstructorFirstNamePVar | | OK |
 | $adminAuthToken | presentationVar | testInstructorFirstNameOutputPVar | | OK |
@@ -67,6 +77,12 @@ Clean up created data
 | $adminAuthToken | presentationVar | testRatingPVar | | OK |
 | $adminAuthToken | presentationVar | testRatingOutputPVar | | OK |
 | $adminAuthToken | metadataTextVariable | testRatingTextVar | | OK |
+| $adminAuthToken | presentationVar | testRatingDatePVar | | OK |
+| $adminAuthToken | presentationVar | testRatingDateOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testRatingDateTextVar | | OK |
+| $adminAuthToken | presentationVar | testVoteCountPVar | | OK |
+| $adminAuthToken | presentationVar | testVoteCountOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testVoteCountTextVar | | OK |
 | $adminAuthToken | coraText | fitnesseExampleText | | OK |
 | $adminAuthToken | coraText | fitnesseExampleDefText | | OK |
 

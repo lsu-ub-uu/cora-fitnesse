@@ -9,10 +9,9 @@ There are a few different cases for create that can happen, when there are write
    * '''Case 2''': Only recordParts that the user has write permissions for is sent to create, create as normal
    * '''Case 3''': Data for recordParts that the user does not have write permission for is sent to create. The write protected parts that the user does not have write permission for, should not be added to the new record, all other data should be added and the record created.
    * '''Case 4''': A recordPart that the user does not have write permission for is mandatory (must be present), whether the user sends data for the restricted parts or not does not matter, the end result should be that the record is missing the mandatory restricted data parts and record creation should fail with an error
-!define currentAuthToken {$adminAuthToken}
 
 !***> Case 1
-*************
+!define currentAuthToken {$adminAuthToken}
 !-Create a new testWorkout record as fitnesseAdmin, adding unrestricted and all restricted data parts-!
 
 !include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
@@ -22,30 +21,21 @@ There are a few different cases for create that can happen, when there are write
 !define expectedActionResult {Action read_incoming_links is missing.}
 !define expectedPermissionResult {OK}
 !include -seamless .HelperPages.createCheckReadCheck
-*************
-
-
-Create a new testWorkout record as fitnesseAdmin, adding unrestricted and all restricted data parts
-
-!| ChildComparerFixture |
-| authToken | type | json | testCreateAndStoreRecord? | getStatusType? |
-| $adminAuthToken | testWorkout | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys1"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"45"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"45"},{"name":"instructorId","value":"3564"},{"name":"instructorName","children":[{"name":"firstName","value":"Anna"},{"name":"lastName","value":"Ledare"}]},{"name":"popularity","children":[{"name":"rating","value":"4"}]},{"name":"city","value":"Uppsala"},{"name":"country","value":"Sweden"}]} | | CREATED |
-
-Validate the '''response''' returned on the create call contains the expected record parts.
-
-!| ChildComparerFixture |
-| children | testCheckContainWithValues? |
-| {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"3564"},{"type":"atomic","name":"numOfParticipants","value":"45"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Anna"},{"type":"atomic","name":"lastName","value":"Ledare"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"4"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | OK |
-
-Validate by reading the stored record again. Make sure all data parts are in the created record, unrestricted (workoutName) and restricted (instructorId, numOfParticipants, instructorName, popularity, city and country)
-
-!| ChildComparerFixture |
-| authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
-| $adminAuthToken | testWorkout | cirkelfys1 | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"3564"},{"type":"atomic","name":"numOfParticipants","value":"45"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Anna"},{"type":"atomic","name":"lastName","value":"Ledare"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"4"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | | OK |
 
 *!
 !***> Case 2
+***************************
+!define currentAuthToken {$userAuthToken}
+!-Create a new testWorkout record as fitnesseUser, adding restricted part numOfParticipants, that it has write permission for, making sure it is in the created record-!
 
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys2
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {}
+!define expectedCompareResult {OK}
+!define expectedActionResult {Action delete is missing. Action index is missing. Action read_incoming_links is missing.}
+!define expectedPermissionResult {Read permission personNumber is missing. Read permission popularity is missing. Write permission instructorId is missing. Write permission instructorName is missing. Write permission firstName is missing. Write permission personNumber is missing. Write permission popularity is missing. Write permission city is missing. Write permission country is missing.}
+!include -seamless .HelperPages.createCheckReadCheck
+***************************
 Create a new testWorkout record as fitnesseUser, adding restricted part numOfParticipants, that it has write permission for, making sure it is in the created record
 
 !| ChildComparerFixture |
@@ -66,7 +56,6 @@ Validate by reading the stored record again. Make sure all added data parts are 
 
 *!
 !***> Case 3
-
 Create a new testWorkout record as fitnesseUser, adding restricted part numOfParticipants and instructorId, that it has write permission for, making sure it is in the created record
 
 no write for instructorId should not be in record
