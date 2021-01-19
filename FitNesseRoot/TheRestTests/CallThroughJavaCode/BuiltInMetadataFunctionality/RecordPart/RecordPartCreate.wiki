@@ -8,7 +8,8 @@ There are a few different cases for create that can happen, when there are write
  * A user (fitnesseUser) has write permission on som but not all restricted data, there are three subcases
    * '''Case 2''': Only recordParts that the user has write permissions for is sent to create, create as normal
    * '''Case 3''': Data for recordParts that the user does not have write permission for is sent to create. The write protected parts that the user does not have write permission for, should not be added to the new record, all other data should be added and the record created.
-   * '''Case 4''': A recordPart that the user does not have write permission for is mandatory (must be present), whether the user sends data for the restricted parts or not does not matter, the end result should be that the record is missing the mandatory restricted data parts and record creation should fail with an error
+   * '''Case 4a''': Top level, A recordPart that the user does not have write permission for is mandatory (must be present), whether the user sends data for the restricted parts or not does not matter, the end result should be that the record is missing the mandatory restricted data parts and record creation should fail with an error
+   * '''Case 4b''': Below top level, A recordPart that the user does not have write permission for is mandatory (must be present), whether the user sends data for the restricted parts or not does not matter, the end result should be that the record is missing the mandatory restricted data parts and record creation should fail with an error
 
 !***> Case 1
 !define currentAuthToken {$adminAuthToken}
