@@ -33,7 +33,7 @@ There are a few different cases for create that can happen, when there are write
 !define expectedCreateResult {CREATED}
 !define expectedAnswer {}
 !define expectedCompareResult {OK}
-!define expectedActionResult {Action read_incoming_links is missing.}
+!define expectedActionResult {Action delete is missing. Action index is missing. Action read_incoming_links is missing.}
 !define expectedPermissionResult {OK}
 !include -seamless .HelperPages.createCheckReadCheck
 *!
@@ -50,10 +50,10 @@ There are a few different cases for create that can happen, when there are write
 *!
 !***> Clean up no longer needed cirkelfys2 and cirkelfys3
 
-!| RecordEndpointFixture |
-| authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | testWorkout | cirkelfys2 | | OK |
-| $adminAuthToken | testWorkout | cirkelfys3 | | OK |
+#!| RecordEndpointFixture |
+#| authToken | type | id | testDeleteRecord? | getStatusType? |
+#| $adminAuthToken | testWorkout | cirkelfys2 | | OK |
+#| $adminAuthToken | testWorkout | cirkelfys3 | | OK |
 
 *!
 !***> Case 4a

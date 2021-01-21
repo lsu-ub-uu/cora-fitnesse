@@ -22,6 +22,16 @@ There are a few different cases for read that can happen, when there are read re
 !***> Case 2, Validation 2.1
 
 *****************************
+!define currentAuthToken {$userAuthToken}
+
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
+
+!define expectedAnswer {}
+!define expectedCompareResult {OK}
+!define expectedActionResult {Action delete is missing. Action index is missing. Action read_incoming_links is missing.}
+!define expectedPermissionResult {OK}
+
+!include -seamless .HelperPages.readCheck
 
 *****************************
 
