@@ -24,10 +24,9 @@ There are a few different cases for create that can happen, when there are write
 !define expectedPermissionResult {OK}
 !include -seamless .HelperPages.createCheckReadCheck
 *!
-
 !***> Case 2
-!define currentAuthToken {$userAuthToken}
 
+!define currentAuthToken {$userAuthToken}
 !-Create a new testWorkout record as fitnesseUser, the record will contain only parts that the user has write permissions for.-!
 
 !include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys2
@@ -50,19 +49,40 @@ There are a few different cases for create that can happen, when there are write
 !define expectedPermissionResult {OK}
 !include -seamless .HelperPages.createCheckReadCheck
 *!
+!***> Clean up no longer needed cirkelfys2 and cirkelfys3
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | testWorkout | cirkelfys2 | | OK |
+| $adminAuthToken | testWorkout | cirkelfys3 | | OK |
+
+*!
 !***> Case 4a
 
 !-Remove the permission on popularity1-!
-!include -seamless <RecordPart.RecordPartRemoveWritePermissionOnPopularity
 
+!include -seamless <RecordPart.RecordPartRemoveWritePermissionOnPopularity
 !-Try to create a new testWorkout record with fitnesseUser. The data used will be the same as Cirkelfys2. Note that popularity1 is sent but we do not have permissions to write on that part.-!
 
 !include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys2
-
 !define expectedCreateResult {BAD_REQUEST}
 !define expectedAnswer {Data is not valid: [Did not find enough data children with referenceId: testPopularity1Group(with nameInData:popularity1.]}
+!define expectedPermissionResult {popularity1}
+
 !include -seamless .HelperPages.createRecord
-
-!include -seamless <RecordPart.RecordPartReturnWritePermissionOnPopularity
+!include -seamless <RecordPart.RecordPartRestoreWritePermissionLimitedForTestWorkoutCreateRule
 *!
+!***> Case 4b
 
+!-Remove the permission on firstName1_1-!
+
+!include -seamless <RecordPart.RecordPartRemoveWritePermissionOnFirstName1_1
+!-Try to create a new testWorkout record with fitnesseUser. The data used will be the same as Cirkelfys2. Note that popularity1 is sent but we do not have permissions to write on that part.-!
+
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys2
+!define expectedCreateResult {BAD_REQUEST}
+!define expectedAnswer {Data is not valid: [Did not find enough data children with referenceId: testInstructorName1Group(with nameInData:firstName1_1.]}
+!define expectedPermissionResult {firstName1_1}
+!include -seamless .HelperPages.createRecord
+!include -seamless <RecordPart.RecordPartRestoreWritePermissionLimitedForTestWorkoutCreateRule
+*!
