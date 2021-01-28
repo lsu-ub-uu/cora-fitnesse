@@ -11,6 +11,21 @@ There are a few different cases for update that can happen, when there are write
 
 !***> Case 1
 
+*******************************
+
+!define currentAuthToken {$adminAuthToken}
+!-Create a new testWorkout record as fitnesseAdmin, adding unrestricted and all restricted data parts-!
+
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {}
+!define expectedCompareResult {OK}
+!define expectedActionResult {Action read_incoming_links is missing.}
+!define expectedPermissionResult {OK}
+!include -seamless .HelperPages.updateCheckReadCheck
+
+*******************************
+
 !| ChildComparerFixture |
 | authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
 | $adminAuthToken | testWorkout | cirkelfys1 | {"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys1"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"tsCreated","value":"2018-08-29T14:27:20.307000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:27:20.307000Z"}],"repeatId":"1"}]},{"name":"workoutName","value":"cirkelfys"},{"name":"numOfParticipants","value":"30"},{"name":"instructorId","value":"6666"},{"name":"instructorName","children":[{"name":"firstName","value":"Emma"},{"name":"lastName","value":"Kula"}]},{"name":"popularity","children":[{"name":"rating","value":"8"}]},{"name":"city","value":"Uppsala"},{"name":"country","value":"Sweden"}]} | | OK |

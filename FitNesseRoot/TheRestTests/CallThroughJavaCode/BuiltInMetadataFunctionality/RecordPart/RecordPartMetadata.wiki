@@ -6,26 +6,6 @@ Metadata is created in order to be able to test record part permission test case
 
 Restrictions are set as follows:
 
-!style_red[
-''(Before constratins applied in different levels)''
-
- * ''workout(group)''
-   * ''recordInfo(group, 1-1, '''noRestrictions''')''
-   * ''workOutName(textVar, 1-1, '''noRestrictions''')''
-   * ''instructorId(textVar, 0-1,''' readWrite''')''
-   * ''numOfParticipants(textVar, 1-1, '''write''')''
-   * ''instructorName(group, 0-1, '''write''')''
-     * ''firstName(textVar, 1-1)''
-     * ''lastName(textVar, 1-1)''
-   * ''popularity(group, 0-1, '''readWrite''')''
-     * ''rating(textVar, 1-1)''
-   * ''city(textVar, 1-1, '''write''')''
-   * ''country(textVar, 1-1, '''noRestriction on create, write on update''')''
-
-]
-
-(After constratins applied in different levels)
-
  * workout(group)
    * recordInfo(group, 1-1, '''noRestrictions''')
    * workoutName1(textVar, 1-1, '''noRestrictions''')
@@ -79,27 +59,16 @@ Restrictions are set as follows:
 
 Permissions are given as follows:
 
-!style_red[
-''(Before constratins applied in different levels)''
-
- * ''fitnesseAdmin has read and write on all restricted record parts''
- * ''fitnesseUser has''
-   * '''''read''' on instructorId''
-   * '''''readWrite''' on numOfParticipants''
-   * '''''readWrite''' on city on create only (not update)''
-
-]
-
-(After constratins applied in different levels)
-
  * fitnesseAdmin has read and write on all restricted record parts
  * fitnesseUser has (
-   * '''read''' on instructorId2, duration1_2, lastName1_2,voteCount1_2, popularity2,
+   * '''read''' on instructorId2, duration1_2, lastName1_2,voteCount1_2, popularity2, voteCount2_1, voteCount2_2, lastName2_1, lastName2_2
    * '''readWrite''' on numOfParticipants1, instructorId1, laps1_1, duration1_1, instructorName1, firstName1_1, lastName1_1, popularity1, ratingDate1_1, voteCount1_1
-
+   
+!style_red[Not yet implemented
  * fitnesseUser has but should not have effect, here to test that they do not (
-   * '''read''' on
-   * '''readWrite''' on
+   * '''read''' on ratingDate3_1, voteCount3_2, 
+   * '''readWrite''' on voteCount3_1, voteCount2_1, ratingDate2_1, firstName2_1, lastName2_1
+]
 
 !***> Create needed metadata
 
@@ -184,8 +153,8 @@ Create a new rule, limitedForTestWorkoutRule, to allow fitnesseUser limited acce
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | permissionRule | {"name":"permissionRule","children":[{"name":"recordInfo","children":[{"name":"id","value":"limitedForTestWorkoutCreateRule"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.create","repeatId":"0"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.testWorkout","repeatId":"0"}],"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"},{"name":"readPermissions","children":[{"name":"readPermission","value":"testWorkout.instructorId2","repeatId":"0"},{"name":"readPermission","value":"testWorkout.duration1_2","repeatId":"1"},{"name":"readPermission","value":"testWorkout.lastName1_2","repeatId":"2"},{"name":"readPermission","value":"testWorkout.voteCount1_2","repeatId":"3"},{"name":"readPermission","value":"testWorkout.popularity2","repeatId":"4"}]},{"name":"writePermissions","children":[{"name":"writePermission","value":"testWorkout.numOfParticipants1","repeatId":"0"},{"name":"writePermission","value":"testWorkout.instructorId1","repeatId":"2"},{"name":"writePermission","value":"testWorkout.laps1_1","repeatId":"5"},{"name":"writePermission","value":"testWorkout.duration1_1","repeatId":"7"},{"name":"writePermission","value":"testWorkout.instructorName1","repeatId":"10"},{"name":"writePermission","value":"testWorkout.firstName1_1","repeatId":"11"},{"name":"writePermission","value":"testWorkout.lastName1_1","repeatId":"13"},{"name":"writePermission","value":"testWorkout.popularity1","repeatId":"22"},{"name":"writePermission","value":"testWorkout.ratingDate1_1","repeatId":"24"},{"name":"writePermission","value":"testWorkout.voteCount1_1","repeatId":"26"}]}]} | | CREATED |
-| $adminAuthToken | permissionRule | {"name":"permissionRule","children":[{"name":"recordInfo","children":[{"name":"id","value":"limitedForTestWorkoutRule"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.read","repeatId":"1"},{"name":"permissionRulePartValue","value":"system.update","repeatId":"2"},{"name":"permissionRulePartValue","value":"system.search","repeatId":"3"},{"name":"permissionRulePartValue","value":"system.list","repeatId":"4"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.testWorkout","repeatId":"0"}],"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"},{"name":"readPermissions","children":[{"name":"readPermission","value":"testWorkout.instructorId2","repeatId":"0"},{"name":"readPermission","value":"testWorkout.duration1_2","repeatId":"1"},{"name":"readPermission","value":"testWorkout.lastName1_2","repeatId":"2"},{"name":"readPermission","value":"testWorkout.voteCount1_2","repeatId":"3"},{"name":"readPermission","value":"testWorkout.popularity2","repeatId":"4"}]},{"name":"writePermissions","children":[{"name":"writePermission","value":"testWorkout.numOfParticipants1","repeatId":"0"},{"name":"writePermission","value":"testWorkout.instructorId1","repeatId":"2"},{"name":"writePermission","value":"testWorkout.laps1_1","repeatId":"5"},{"name":"writePermission","value":"testWorkout.duration1_1","repeatId":"7"},{"name":"writePermission","value":"testWorkout.instructorName1","repeatId":"10"},{"name":"writePermission","value":"testWorkout.firstName1_1","repeatId":"11"},{"name":"writePermission","value":"testWorkout.lastName1_1","repeatId":"13"},{"name":"writePermission","value":"testWorkout.popularity1","repeatId":"22"},{"name":"writePermission","value":"testWorkout.ratingDate1_1","repeatId":"24"},{"name":"writePermission","value":"testWorkout.voteCount1_1","repeatId":"26"}]}]} | | CREATED |
+| $adminAuthToken | permissionRule | {"name":"permissionRule","children":[{"name":"recordInfo","children":[{"name":"id","value":"limitedForTestWorkoutCreateRule"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.create","repeatId":"0"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.testWorkout","repeatId":"0"}],"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"},{"name":"readPermissions","children":[{"name":"readPermission","value":"testWorkout.instructorId2","repeatId":"0"},{"name":"readPermission","value":"testWorkout.duration1_2","repeatId":"1"},{"name":"readPermission","value":"testWorkout.lastName1_2","repeatId":"2"},{"name":"readPermission","value":"testWorkout.voteCount1_2","repeatId":"3"},{"name":"readPermission","value":"testWorkout.lastName2_1","repeatId":"4"},{"name":"readPermission","value":"testWorkout.lastName2_2","repeatId":"5"},{"name":"readPermission","value":"testWorkout.popularity2","repeatId":"6"},{"name":"readPermission","value":"testWorkout.voteCount2_1","repeatId":"7"},{"name":"readPermission","value":"testWorkout.voteCount2_2","repeatId":"8"}]},{"name":"writePermissions","children":[{"name":"writePermission","value":"testWorkout.numOfParticipants1","repeatId":"0"},{"name":"writePermission","value":"testWorkout.instructorId1","repeatId":"1"},{"name":"writePermission","value":"testWorkout.laps1_1","repeatId":"2"},{"name":"writePermission","value":"testWorkout.duration1_1","repeatId":"3"},{"name":"writePermission","value":"testWorkout.instructorName1","repeatId":"4"},{"name":"writePermission","value":"testWorkout.firstName1_1","repeatId":"5"},{"name":"writePermission","value":"testWorkout.lastName1_1","repeatId":"6"},{"name":"writePermission","value":"testWorkout.popularity1","repeatId":"7"},{"name":"writePermission","value":"testWorkout.ratingDate1_1","repeatId":"8"},{"name":"writePermission","value":"testWorkout.voteCount1_1","repeatId":"9"}]}]} | | CREATED |
+| $adminAuthToken | permissionRule | {"name":"permissionRule","children":[{"name":"recordInfo","children":[{"name":"id","value":"limitedForTestWorkoutRule"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.read","repeatId":"1"},{"name":"permissionRulePartValue","value":"system.update","repeatId":"2"},{"name":"permissionRulePartValue","value":"system.search","repeatId":"3"},{"name":"permissionRulePartValue","value":"system.list","repeatId":"4"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.testWorkout","repeatId":"0"}],"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"},{"name":"readPermissions","children":[{"name":"readPermission","value":"testWorkout.instructorId2","repeatId":"0"},{"name":"readPermission","value":"testWorkout.duration1_2","repeatId":"1"},{"name":"readPermission","value":"testWorkout.lastName1_2","repeatId":"2"},{"name":"readPermission","value":"testWorkout.voteCount1_2","repeatId":"3"},{"name":"readPermission","value":"testWorkout.lastName2_1","repeatId":"4"},{"name":"readPermission","value":"testWorkout.lastName2_2","repeatId":"5"},{"name":"readPermission","value":"testWorkout.popularity2","repeatId":"6"},{"name":"readPermission","value":"testWorkout.voteCount2_1","repeatId":"7"},{"name":"readPermission","value":"testWorkout.voteCount2_2","repeatId":"8"}]},{"name":"writePermissions","children":[{"name":"writePermission","value":"testWorkout.numOfParticipants1","repeatId":"0"},{"name":"writePermission","value":"testWorkout.instructorId1","repeatId":"1"},{"name":"writePermission","value":"testWorkout.laps1_1","repeatId":"2"},{"name":"writePermission","value":"testWorkout.duration1_1","repeatId":"3"},{"name":"writePermission","value":"testWorkout.instructorName1","repeatId":"4"},{"name":"writePermission","value":"testWorkout.firstName1_1","repeatId":"5"},{"name":"writePermission","value":"testWorkout.lastName1_1","repeatId":"6"},{"name":"writePermission","value":"testWorkout.popularity1","repeatId":"7"},{"name":"writePermission","value":"testWorkout.ratingDate1_1","repeatId":"8"},{"name":"writePermission","value":"testWorkout.voteCount1_1","repeatId":"9"}]}]} | | CREATED |
 
 '''Here we update a role (fitnesseTextAdmin) that fitnesseUser already has, instead of creating a new role, as we have different instances of in memory storage, between where the users roles are created and where the login system reads them.'''
 
