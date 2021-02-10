@@ -1,0 +1,25 @@
+---
+Help: Compare data, check permissions, read record, compare data, reset record
+---
+Update the record
+!include -seamless .HelperPages.updateRecord
+
+Validate the '''response''' returned on the '''update''' call contains the expected record parts.
+!include -seamless .HelperPages.compareRecord
+!include -seamless .HelperPages.recordPermissions
+
+Read the record has been updated correctly, by reading the stored record again.
+!include -seamless .HelperPages.readRecord
+
+Validate the read '''response''' returned on the '''read''' call contains the expected record parts.
+!include -seamless .HelperPages.compareRecord
+!include -seamless .HelperPages.recordPermissions
+
+Read and check data with full permissions to see the record as it is stored.
+!define currentAuthToken {$adminAuthToken}
+!define expectedCompareResult expectedCompleteCompareResult
+!include -seamless .HelperPages.readRecord
+!include -seamless .HelperPages.compareRecord
+
+Reset record to how it is stored before the test.
+!include -seamless .HelperPages.resetRecord
