@@ -2,60 +2,32 @@
 There are a few different cases for list that can happen, when there are write restrictions:
 
  * '''Case 1''': A user (fitnesseAdmin) has read permission on all  restricted data, read as normal validate that all restricted parts are  in the record
- * '''Case 2''': A user (fitnesseUser) has read permission on some but not all restricted data, there are two validations to make
-   * '''Validation 2.1''': Validate that the record parts that the user has read  permissions for is present in the record
-   * '''Validation 2.2''': Validate that the record parts that the user does NOT have read  permissions for is NOT present in the record
+ * '''Case 2''': A user (fitnesseUser) has read permission on some but not all restricted data,  validate that the record parts that the user has read  permissions for is present in the record  and we make sure that the restricted parts that the user does NOT have read permissions for is NOT present in the record
 
 !***> Case 1
 
-Prepare test. List testWorkout records and save them internaly in order to use it in the next step.
+List testWorkout as fitnesseAdmin
+!define currentAuthToken {$adminAuthToken}
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
+!define expectedListResult {=~/^(?=.*"name":"linkedRecordId","value":"testWorkout").*$/}
+!include -seamless .HelperPages.listStoreRecord
 
-!| ChildComparerFixture |
-| authToken | type | testReadRecordListAndStoreRecords? |
-| $adminAuthToken | testWorkout | |
-
-Validate all restricted record parts are present
-
-!| ChildComparerFixture |
-| type | children | listIndexToCompareTo | testReadFromListCheckContainWithValues? |
-| testWorkout | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"10"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Kula"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"8"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | 0 | OK |
-
-*!
-!***> Case 2, Validation 2.1
-
-Prepare test. List testWorkout records and save them internaly in order to use it in the next step.
-
-!| ChildComparerFixture |
-| authToken | type | testReadRecordListAndStoreRecords? |
-| $userAuthToken | testWorkout | |
-
-!| ChildComparerFixture |
-| type | children | listIndexToCompareTo | testReadFromListCheckContainWithValues? |
-| testWorkout | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"6666"},{"type":"atomic","name":"numOfParticipants","value":"10"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Emma"},{"type":"atomic","name":"lastName","value":"Kula"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | 0 | OK |
-
-Check the permissions that should be included on the permissions list.
-
-!| PermissionComparerFixture |
-| type | permissions | listIndexToCompareTo | testReadFromListCheckPermissions? |
-| testWorkout | {"read":["instructorId","numOfParticipants"]} | 0 | OK |
+!define expectedCompareResult {OK}
+!define expectedActionResult {Action read_incoming_links is missing.}
+!define expectedPermissionResult {OK}
+!include -seamless .HelperPages.checkOriginal
 
 *!
-!***> Case 2, Validation 2.2
+!***> Case 2
+List testWorkout as fitnesseUser
+!define currentAuthToken {$userAuthToken}
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
+!define expectedListResult {=~/^(?=.*"name":"linkedRecordId","value":"testWorkout").*$/}
+!include -seamless .HelperPages.listStoreRecord
 
-Prepare test. List testWorkout records and save them internaly in order to use it in the next step.
-
-!| ChildComparerFixture |
-| authToken | type | testReadRecordListAndStoreRecords? |
-| $userAuthToken | testWorkout | |
-
-!| ChildComparerFixture |
-| type | children | listIndexToCompareTo | testReadFromListCheckContain? |
-| testWorkout | {"children":[{"name":"popularity"}]} | 0 | Child with nameInData popularity is missing. |
-
-Check the permissions that should not be included on the permissions list.
-
-!| PermissionComparerFixture |
-| type | permissions | listIndexToCompareTo | testReadFromListCheckPermissions? |
-| testWorkout | {"read":["recordInfo", "workOutName", "instructorName", "popularity", "city", "country"  ]} | 0 | Read permission recordInfo is missing. Read permission workOutName is missing. Read permission instructorName is missing. Read permission popularity is missing. Read permission city is missing. Read permission country is missing. | |
+!define expectedCompareResult {Child with nameInData instructorId3 and type atomic is missing. Child with nameInData duration1_3 and type atomic is missing. Child with nameInData lastName1_3 and type atomic is missing. Child with nameInData lastName2_3 and type atomic is missing. Child with nameInData voteCount1_3 and type atomic is missing. Child with nameInData voteCount2_3 and type atomic is missing. Child with nameInData popularity3 and type group is missing.}
+!define expectedActionResult {Action delete is missing. Action index is missing. Action read_incoming_links is missing.}
+!define expectedPermissionResult {Read permission instructorId3 is missing. Read permission duration1_3 is missing. Read permission lastName1_3 is missing. Read permission lastName2_3 is missing. Read permission voteCount1_3 is missing. Read permission voteCount2_3 is missing. Read permission popularity3 is missing. Read permission voteCount3_1 is missing. Read permission voteCount3_2 is missing. Read permission voteCount3_3 is missing. Write permission numOfParticipants2 is missing. Write permission instructorId2 is missing. Write permission instructorId3 is missing. Write permission laps1_2 is missing. Write permission duration1_2 is missing. Write permission duration1_3 is missing. Write permission firstName1_2 is missing. Write permission lastName1_2 is missing. Write permission lastName1_3 is missing. Write permission instructorName2 is missing. Write permission firstName2_1 is missing. Write permission firstName2_2 is missing. Write permission lastName2_1 is missing. Write permission lastName2_2 is missing. Write permission lastName2_3 is missing. Write permission ratingDate1_2 is missing. Write permission voteCount1_2 is missing. Write permission voteCount1_3 is missing. Write permission popularity2 is missing. Write permission ratingDate2_1 is missing. Write permission ratingDate2_2 is missing. Write permission voteCount2_1 is missing. Write permission voteCount2_2 is missing. Write permission voteCount2_3 is missing. Write permission popularity3 is missing. Write permission ratingDate3_1 is missing. Write permission ratingDate3_2 is missing. Write permission voteCount3_1 is missing. Write permission voteCount3_2 is missing. Write permission voteCount3_3 is missing.}
+!include -seamless .HelperPages.checkOriginal
 
 *!

@@ -1,0 +1,10 @@
+---
+Help: Compare original data for record
+---
+!***> Compare original data for record ${recordType} ${recordId}
+
+!| ChildComparerFixture |
+| children | testCheckContainWithValues? |
+| ${expectedOriginalData} | ${expectedCompareResult} |
+
+*!

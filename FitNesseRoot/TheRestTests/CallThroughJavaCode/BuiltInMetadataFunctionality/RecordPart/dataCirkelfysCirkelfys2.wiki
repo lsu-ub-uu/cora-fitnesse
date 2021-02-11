@@ -1,0 +1,26 @@
+---
+Help: Data for cirkelfys cirkelfys2
+---
+!***> Data for cirkelfys cirkelfys2
+
+!define recordType {testWorkout}
+!define recordId {cirkelfys2}
+!define recordPermissions {!-{"read":["instructorId2","duration1_2","lastName1_2","voteCount1_2","popularity2"],"write":["numOfParticipants1","instructorId1","laps1_1","duration1_1","instructorName1","firstName1_1","lastName1_1","popularity1","ratingDate1_1","voteCount1_1"]}-!}
+
+!define createData {!-{"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys2"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"workoutName1","value":"cirkelfys"},{"name":"numOfParticipants1","value":"45"},{"name":"instructorId1","value":"3561"},{"name":"exercises1","children":[{"name":"numOfExercises1_1","value":"15"},{"name":"laps1_1","value":"5"},{"name":"duration1_1","value":"4h"}]},{"name":"instructorName1","children":[{"name":"nickName1_1","value":"Annela"},{"name":"firstName1_1","value":"Anna"},{"name":"lastName1_1","value":"Ledare"}]},{"name":"popularity1","children":[{"name":"rating1_1","value":"4"},{"name":"ratingDate1_1","value":"2021-01-12"},{"name":"voteCount1_1","value":"434123"}]}]}-!}
+!define expectedCreatedData {!-{"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys2"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"workoutName1","value":"cirkelfys"},{"name":"numOfParticipants1","value":"45"},{"name":"instructorId1","value":"3561"},{"name":"exercises1","children":[{"name":"numOfExercises1_1","value":"15"},{"name":"laps1_1","value":"5"},{"name":"duration1_1","value":"4h"}]},{"name":"instructorName1","children":[{"name":"nickName1_1","value":"Annela"},{"name":"firstName1_1","value":"Anna"},{"name":"lastName1_1","value":"Ledare"}]},{"name":"popularity1","children":[{"name":"rating1_1","value":"4"},{"name":"ratingDate1_1","value":"2021-01-12"},{"name":"voteCount1_1","value":"434123"}]}]}-!}
+
+!define updateData {!--!}
+!define expectedUpdatedData updateData
+
+!define originalData {!--!}
+!define expectedOriginalData originalData
+ 
+!define searchId {publicOrganisationSearch}
+!define searchQueryData {!--!}
+
+# customUpdateData is a json string which can be filled with extra json using the variable customJsonPart
+!define jsonPart customJsonPart
+!define customJsonPart {}
+!define customUpdateData {!--!}
+*!

@@ -6,3 +6,5 @@ TheRestTests
 JsClient
 
 DocumentationPage
+
+HelperPages

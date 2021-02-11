@@ -1,0 +1,9 @@
+---
+Help: Compare data, check permissions, read record, compare data
+---
+Validate everything has been read correctly.
+!include -seamless .HelperPages.readRecord
+!define expectedUpdatedData expectedCreatedData
+Validate the '''response''' returned on the '''read''' call contains the expected record parts.
+!include -seamless .HelperPages.compareRecord
+!include -seamless .HelperPages.recordPermissions

@@ -1,0 +1,6 @@
+---
+Help: Minimal data for cirkelfys cirkelfys1 overwrites updateData 
+---
+!***> Minimal update data for cirkelfys cirkelfys1
+!define updateData {!-{"name":"workout","children":[{"name":"recordInfo","children":[{"name":"id","value":"cirkelfys1"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testWorkout"}],"name":"type"}]},{"name":"workoutName1","value":"cirkelfys2"},{"name":"numOfParticipants1","value":"452"},{"name":"instructorId1","value":"35612"},{"name":"exercises1","children":[{"name":"numOfExercises1_1","value":"152"},{"name":"laps1_1","value":"52"},{"name":"duration1_1","value":"42h"}]},{"name":"instructorName1","children":[{"name":"nickName1_1","value":"Annela2"},{"name":"firstName1_1","value":"Anna2"},{"name":"lastName1_1","value":"Ledare2"}]},{"name":"popularity1","children":[{"name":"rating1_1","value":"42"},{"name":"ratingDate1_1","value":"2021-01-22"},{"name":"voteCount1_1","value":"4341232"}]}]}-!}
+*!

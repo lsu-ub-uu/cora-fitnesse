@@ -1,0 +1,8 @@
+---
+Help: Compare data, check permissions, read record, compare data, reset record
+---
+!include -seamless .HelperPages.createRecord
+!include -seamless .HelperPages.compareRecord
+!include -seamless .HelperPages.recordPermissions
+!include -seamless .HelperPages.readRecord
+!include -seamless .HelperPages.compareRecord

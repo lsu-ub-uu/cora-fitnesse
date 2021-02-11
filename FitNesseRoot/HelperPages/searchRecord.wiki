@@ -1,0 +1,10 @@
+---
+Help: Search a record according to variables
+---
+!***> Search record ${recordType} ${recordId}
+
+!| ChildComparerFixture |
+| authToken | searchId | json | indexToStore | testSearchAndStoreRecords? |
+| ${currentAuthToken} | ${searchId} | ${searchQueryData} | 0 | |
+
+*!

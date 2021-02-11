@@ -3,45 +3,33 @@ There are a few different cases for read that can happen, when there are read re
 
  * '''Case 1''': A user (fitnesseAdmin) has read permission on all restricted data, read as normal validate that all restricted parts are in the record
  * '''Case 2''': A user (fitnesseUser) has read permission on some but not all restricted data, there are two validations to make
-   * '''Validation 2.1''': Validate that the recordParts that the user has read  permissions for is present in the record
-   * '''Validation 2.2''': Validate that the recordParts that the user does NOT have read  permissions for is NOT present in the record
 
 !***> Case 1
+!define currentAuthToken {$adminAuthToken}
 
-!| ChildComparerFixture |
-| authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
-| $adminAuthToken | testWorkout | cirkelfys1 | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"3564"},{"type":"atomic","name":"numOfParticipants","value":"45"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Anna"},{"type":"atomic","name":"lastName","value":"Ledare"}]},{"type":"group","name":"popularity","children":[{"type":"atomic","name":"rating","value":"4"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | | OK |
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {}
+!define expectedCompareResult {OK}
+!define expectedActionResult {Action read_incoming_links is missing.}
+!define expectedPermissionResult {OK}
 
-*!
-!***> Case 2, Validation 2.1
-
-!| ChildComparerFixture |
-| authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
-| $userAuthToken | testWorkout | cirkelfys1 | {"children":[{"type":"atomic","name":"workoutName","value":"cirkelfys"},{"type":"atomic","name":"instructorId","value":"3564"},{"type":"atomic","name":"numOfParticipants","value":"45"},{"type":"group","name":"instructorName","children":[{"type":"atomic","name":"firstName","value":"Anna"},{"type":"atomic","name":"lastName","value":"Ledare"}]},{"type":"atomic","name":"city","value":"Uppsala"},{"type":"atomic","name":"country","value":"Sweden"}]} | | OK |
-
-User has read permissions on instructorId and inherits read permission from its write permission numOfParticipants.
-
-!| PermissionComparerFixture |
-| authToken | type | id | permissions | testReadAndStoreRecord? | testCheckPermissions? |
-| $userAuthToken | testWorkout | cirkelfys1 | {"read":["instructorId","numOfParticipants"]} | | OK |
-
-Write permission city does not imply a read permission because it is not a create action
-
-!| PermissionComparerFixture |
-| authToken | type | id | permissions | testReadAndStoreRecord? | testCheckPermissions? |
-| $userAuthToken | testWorkout | cirkelfys1 | {"read":["city"]} | | Read permission city is missing. |
+!include -seamless .HelperPages.readCheck
 
 *!
-!***> Case 2, Validation 2.2
+!***> Case 2
 
-!| ChildComparerFixture |
-| authToken | type | id | children | testReadAndStoreRecord? | testCheckContain? |
-| $userAuthToken | testWorkout | cirkelfys1 | {"children":[{"name":"popularity"}]} | | Child with nameInData popularity is missing. |
+!define currentAuthToken {$userAuthToken}
 
-Following "recordInfo", "workOutName", "instructorName", "popularity", "city", "country" are not included on the read permissions.
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
 
-!| PermissionComparerFixture |
-| authToken | type | id | permissions | testReadAndStoreRecord? | testCheckPermissions? |
-| $userAuthToken | testWorkout | cirkelfys1 | {"read":["recordInfo", "workOutName", "instructorName", "popularity", "city", "country"  ]} | | Read permission recordInfo is missing. Read permission workOutName is missing. Read permission instructorName is missing. Read permission popularity is missing. Read permission city is missing. Read permission country is missing. |
+!define expectedAnswer {}
+!define expectedCompareResult {Child with nameInData instructorId3 and type atomic is missing. Child with nameInData duration1_3 and type atomic is missing. Child with nameInData lastName1_3 and type atomic is missing. Child with nameInData lastName2_3 and type atomic is missing. Child with nameInData voteCount1_3 and type atomic is missing. Child with nameInData voteCount2_3 and type atomic is missing. Child with nameInData popularity3 and type group is missing.}
+!define expectedActionResult {Action delete is missing. Action index is missing. Action read_incoming_links is missing.}
+!define expectedPermissionResult {Read permission instructorId3 is missing. Read permission duration1_3 is missing. Read permission lastName1_3 is missing. Read permission lastName2_3 is missing. Read permission voteCount1_3 is missing. Read permission voteCount2_3 is missing. Read permission popularity3 is missing. Read permission voteCount3_1 is missing. Read permission voteCount3_2 is missing. Read permission voteCount3_3 is missing. Write permission numOfParticipants2 is missing. Write permission instructorId2 is missing. Write permission instructorId3 is missing. Write permission laps1_2 is missing. Write permission duration1_2 is missing. Write permission duration1_3 is missing. Write permission firstName1_2 is missing. Write permission lastName1_2 is missing. Write permission lastName1_3 is missing. Write permission instructorName2 is missing. Write permission firstName2_1 is missing. Write permission firstName2_2 is missing. Write permission lastName2_1 is missing. Write permission lastName2_2 is missing. Write permission lastName2_3 is missing. Write permission ratingDate1_2 is missing. Write permission voteCount1_2 is missing. Write permission voteCount1_3 is missing. Write permission popularity2 is missing. Write permission ratingDate2_1 is missing. Write permission ratingDate2_2 is missing. Write permission voteCount2_1 is missing. Write permission voteCount2_2 is missing. Write permission voteCount2_3 is missing. Write permission popularity3 is missing. Write permission ratingDate3_1 is missing. Write permission ratingDate3_2 is missing. Write permission voteCount3_1 is missing. Write permission voteCount3_2 is missing. Write permission voteCount3_3 is missing.}
+
+!-The record cirkelfys1 will be read and we will make sure that all the parts that we have permissions will be on it. It will check as well that the parts which do NOT have permissions will not be on the record-!
+
+!include -seamless .HelperPages.readCheck
 
 *!
