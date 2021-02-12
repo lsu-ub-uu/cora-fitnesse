@@ -158,6 +158,22 @@ Update rule for user, to enable the user to created a workOrder
 | $adminAuthToken | testNewsExtendedSearch | {"name":"searchNewsExtended","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"testNewsTitleSearchTerm","value":"En titel"}]}]}]} | =~/"toNo":"1"/ | OK |
 
 *!
+Delete record from index by sending a workOrder
+
+!***> Delete from index by creating a workOrder with type removeFromIndex
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | workOrder | {"name":"workOrder","children":[{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testNews"}]},{"name":"recordId","value":"news1"},{"name":"type","value":"removeFromIndex"}]} | | CREATED | $createdId2= |
+
+*!
+!***> Test searching again, this will result in NO hit, since the data has been removed from index
+
+!| RecordEndpointFixture |
+| authToken | searchId | json | testSearchRecord? | getStatusType? |
+| $adminAuthToken | testNewsExtendedSearch | {"name":"searchNewsExtended","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"testNewsTitleSearchTerm","value":"En titel"}]}]}]} | =~/"toNo":"0"/ | OK |
+
+*!
 !1 Reset testdata
 Reset rule for user
 
