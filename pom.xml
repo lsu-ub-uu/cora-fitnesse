@@ -66,6 +66,7 @@
 				<directory>FitNesseRoot</directory>
 				<filtering>true</filtering>
 				<includes>
+					<include>HelperPages/</include>
 					<include>DocumentationPage/</include>
 					<include>FrontPage/</include>
 					<include>JsClient/</include>
