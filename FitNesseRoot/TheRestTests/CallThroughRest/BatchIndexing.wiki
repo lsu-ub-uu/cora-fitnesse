@@ -36,7 +36,7 @@ Test
 !***> Run a batch index job
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| POST | /rest/record/index/metdataTextVariable | 200 | Content-Length: 0 | no-body |
+| POST | /rest/record/index/metadataTextVariable | 200 | Content-Length: 0 | no-body |
 
 *!
 
