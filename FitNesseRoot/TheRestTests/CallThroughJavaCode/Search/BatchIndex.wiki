@@ -1,0 +1,29 @@
+---
+Suite
+---
+!contents -R2 -g -p -f -h
+!1 Batch index
+
+Batch index is a built in function to index large amounts of data serverside using batches of a few records (10) at a time.
+
+!include -seamless .TheRestTests.CallThroughJavaCode.Search.BatchIndex.RecordType
+
+
+#!include .TheRestTests.CallThroughJavaCode.Search.BatchIndex.RecordPartMetadata
+#!include .TheRestTests.CallThroughJavaCode.Search.BatchIndex.RecordPartCreate
+#!include .TheRestTests.CallThroughJavaCode.Search.BatchIndex.RecordPartRead
+#!include .TheRestTests.CallThroughJavaCode.Search.BatchIndex.RecordPartUpdate
+#!include .TheRestTests.CallThroughJavaCode.Search.BatchIndex.RecordPartList
+#!include .TheRestTests.CallThroughJavaCode.Search.BatchIndex.RecordPartSearch
+#!include .TheRestTests.CallThroughJavaCode.Search.BatchIndex.RecordPartCleanup
+
+#!include -seamless .TheRestTests.CallThroughJavaCode.Search.BatchIndex.RecordType
+#!include -seamless .TheRestTests.CallThroughJavaCode.Search.BatchIndex.Read
+#!include -seamless .TheRestTests.CallThroughJavaCode.Search.BatchIndex.List
+#!include -seamless .TheRestTests.CallThroughJavaCode.Search.BatchIndex.Index
+#!include -seamless .TheRestTests.CallThroughJavaCode.Search.BatchIndex.Search
+#!include -seamless .TheRestTests.CallThroughJavaCode.Search.BatchIndex.Create
+#!include -seamless .TheRestTests.CallThroughJavaCode.Search.BatchIndex.Update
+#!include -seamless .TheRestTests.CallThroughJavaCode.Search.BatchIndex.Delete
+#!include -seamless .TheRestTests.CallThroughJavaCode.Search.BatchIndex.Validate
+#!include -seamless .TheRestTests.CallThroughJavaCode.Search.BatchIndex.IncomingLinks
