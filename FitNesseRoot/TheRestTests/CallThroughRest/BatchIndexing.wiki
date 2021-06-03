@@ -32,11 +32,16 @@ Test
 | restfixture.content.handlers.map | application/vnd.uub.record+json=JSON!-
 -!default=JSON |
 
+
 *!
 !***> Run a batch index job
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| POST | /rest/record/index/metadataTextVariable | 200 | Content-Length: 0 | no-body |
+| POST | /rest/record/index/metadataTextVariable | 200 |!- Access-Control-Allow-Origin : \*
+Content-Type : application/vnd.uub.record\+json
+Content-Length : [\d]+  -!| jsonbody.record == "" |
+
 
 *!
+
 
