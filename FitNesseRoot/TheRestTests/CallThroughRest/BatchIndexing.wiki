@@ -36,8 +36,17 @@ Test
 !***> Run a batch index job
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| POST | /rest/record/index/metadataTextVariable | 200 | !- Access-Control-Allow-Origin : \*
+| POST | /rest/record/index/metadataTextVariable | 201 | !- Access-Control-Allow-Origin : \*
 Content-Type : application/vnd.uub.record\+json
 Content-Length : [\d]+  -! | jsonbody.record.data.name=="indexBatchJob" |
+
+*!
+!***> Run a batch index job with filter
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setBody | {"name":"indexSettings","children":[{"name":"filter","children":[{"name":"fromNo","value":"0"},{"name":"toNo","value":"10"}]}]} |
+| POST | /rest/record/index/metadataTextVariable | 201 | !-Access-Control-Allow-Origin : \*
+Content-Type : application/vnd.uub.record\+json
+Content-Length : [\d]+ -! | jsonbody.record.data.children[4].value=="114" |
 
 *!
