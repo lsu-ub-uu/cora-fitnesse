@@ -1,0 +1,52 @@
+!***> Remove index for recordType ${recordTypeForIndexRemoval} with id ${recordId1} and ${recordId2}
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? | 
+| ${currentAuthToken} | workOrder | {"name":"workOrder","children":[{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"${recordTypeForIndexRemoval}"}]},{"name":"recordId","value":"${recordId1}"},{"name":"type","value":"removeFromIndex"}]} | | CREATED |
+| ${currentAuthToken} | workOrder | {"name":"workOrder","children":[{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"${recordTypeForIndexRemoval}"}]},{"name":"recordId","value":"${recordId2}"},{"name":"type","value":"removeFromIndex"}]} | | CREATED |
+*!
+
+
+!***> Check that there are '''zero''' results for a search for recordId ${recordId1} and ${recordId2} (i.e. that they '''are not''' indexed in solr)
+!| RecordEndpointFixture |
+| authToken | searchId | json | testSearchRecord? | getStatusType? |
+| ${currentAuthToken} | ${searchId} | ${searchQueryData} | =~/"data":\[\],"totalNo":"0"/ | OK |
+*!
+
+
+!***> Create a !-IndexBatchJob-! for recordType ${recordType} and check that the initial number of processed records is zero.
+!| RecordEndpointFixture |
+| authToken | type | json | testBatchIndexing? | getStatusType? | getCreatedId? |
+| ${currentAuthToken} | ${recordType} | ${json} | =~/"numberOfProcessedRecords","value":"0"/ | ${expectedResult} | $createdId =  |
+
+*!
+
+!***> Check that !-IndexBatchJobbet-! plans to index exactly 2 records
+!|ChildComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
+| $adminAuthToken | indexBatchJob | $createdId | {"children":[{"name":"recordTypeToIndex","value":"metadataNumberVariable"},{"name":"status","value":"started"},{"name":"numberOfProcessedRecords","value":"0"},{"name":"totalNumberToIndex","value":"2"},{"children":[{"name":"fromNo","value":"1"},{"name":"toNo","value":"2"}],"name":"filter"}],"name":"indexBatchJob"} | | OK |
+*!
+
+!***> Wait for the !-IndexBatchJobbet-! to finish
+!|RecordEndpointFixture |
+| authToken | type | id | sleepTime | maxNumberOfReads | waitUntilIndexBatchJobIsFinished? | getStatusType? | 
+| $adminAuthToken | indexBatchJob | $createdId | ${sleepTime} | ${maxNumberOfReads} | finished | OK |
+*!
+
+!***> Check that the !-IndexBatchJob-! has indexed exactly 2 records
+!|ChildComparerFixture |
+| authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
+| $adminAuthToken | indexBatchJob | $createdId | {"children":[{"name":"recordTypeToIndex","value":"metadataNumberVariable"},{"name":"status","value":"finished"},{"name":"numberOfProcessedRecords","value":"2"},{"name":"totalNumberToIndex","value":"2"},{"children":[{"name":"fromNo","value":"1"},{"name":"toNo","value":"2"}],"name":"filter"}],"name":"indexBatchJob"} | | OK |
+*!
+
+!***> Check that there are '''two''' results for a search for recordId ${recordId1} and ${recordId2} (i.e. that they '''are''' indexed in solr)
+!| RecordEndpointFixture |
+| authToken | searchId | json | testSearchRecord? | getStatusType? |
+| ${currentAuthToken} | ${searchId} | ${searchQueryData} | =~/"totalNo":"2"/ | OK |
+*!
+
+!***> Delete the !-IndexBatchJob-!
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | indexBatchJob | $createdId | | OK |
+*!
+

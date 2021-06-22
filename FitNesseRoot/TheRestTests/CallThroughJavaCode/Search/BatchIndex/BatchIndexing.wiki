@@ -1,0 +1,28 @@
+---
+Test
+---
+!2 Batch indexing
+
+
+!***> Setup
+
+!define sleepTime {1000}
+!define maxNumberOfReads {5}
+!define json {}
+!define searchId {metadataSearch}
+*!
+
+!define currentAuthToken {$adminAuthToken}
+!define expectedResult {CREATED}
+!define expectedDeleteResult {OK}
+
+
+!define recordType {metadataNumberVariable}
+!3 Posttyp ${recordType}
+!define recordTypeForIndexRemoval {metadataNumberVariable}
+!define recordId1 {fromNoNumberVar}
+!define recordId2 {exampleMetadataNumberVar}
+
+!define searchQueryData {!-{"name":"metadataSearch","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"recordIdSearchTerm","value":"-!${recordId1} ${recordId2}!-"}]}]}]}-!}
+!define json {!-{"name":"indexSettings","children":[{"name":"filter","children":[{"name":"fromNo","value":"1"},{"name":"toNo","value":"2"}]}]}-!}
+!include -seamless .TheRestTests.CallThroughJavaCode.Search.BatchIndex.testBatchIndexing
