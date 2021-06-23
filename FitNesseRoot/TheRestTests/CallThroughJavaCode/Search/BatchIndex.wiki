@@ -9,6 +9,8 @@ Batch index is a built in function to index large amounts of data serverside usi
 !include -seamless .TheRestTests.CallThroughJavaCode.Search.BatchIndex.RecordType
 
 
+!include -seamless .TheRestTests.CallThroughJavaCode.Search.BatchIndex.BatchIndexing
+
 #!include .TheRestTests.CallThroughJavaCode.Search.BatchIndex.RecordPartMetadata
 #!include .TheRestTests.CallThroughJavaCode.Search.BatchIndex.RecordPartCreate
 #!include .TheRestTests.CallThroughJavaCode.Search.BatchIndex.RecordPartRead

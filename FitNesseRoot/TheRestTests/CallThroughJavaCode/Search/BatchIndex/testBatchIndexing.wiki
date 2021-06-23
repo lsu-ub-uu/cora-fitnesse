@@ -20,13 +20,13 @@
 
 *!
 
-!***> Check that !-IndexBatchJobbet-! plans to index exactly 2 records
+!***> Check that !-IndexBatchJob-! plans to index exactly 2 records
 !|ChildComparerFixture |
 | authToken | type | id | children | testReadAndStoreRecord? | testCheckContainWithValues? |
 | $adminAuthToken | indexBatchJob | $createdId | {"children":[{"name":"recordTypeToIndex","value":"metadataNumberVariable"},{"name":"status","value":"started"},{"name":"numberOfProcessedRecords","value":"0"},{"name":"totalNumberToIndex","value":"2"},{"children":[{"name":"fromNo","value":"1"},{"name":"toNo","value":"2"}],"name":"filter"}],"name":"indexBatchJob"} | | OK |
 *!
 
-!***> Wait for the !-IndexBatchJobbet-! to finish
+!***> Wait for the !-IndexBatchJob-! to finish
 !|RecordEndpointFixture |
 | authToken | type | id | sleepTime | maxNumberOfReads | waitUntilIndexBatchJobIsFinished? | getStatusType? | 
 | $adminAuthToken | indexBatchJob | $createdId | ${sleepTime} | ${maxNumberOfReads} | finished | OK |

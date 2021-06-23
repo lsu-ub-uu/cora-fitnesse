@@ -1,0 +1,84 @@
+!2 Test of basic actions
+
+It '''should''' be possible to read, update, remove, index and search an !-IndexBatchJob-!. However, it should '''not''' be possible to create an !-IndexBatchJob-! through the create endpoint.
+Currently, we do not have a search defined for !-IndexBatchJobs-!, which is why it is not possible to correctly test the search nor the indexing of !-IndexBatchJobs-!.
+
+!define recordType {indexBatchJob}
+!define currentAuthToken {$adminAuthToken}
+!define createData {!-{"name":"indexBatchJob","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"recordTypeToIndex","value":"metadataNumberVariable"},{"name":"totalNumberToIndex","value":"2"},{"name":"numberOfProcessedRecords","value":"0"},{"name":"status","value":"started"}]}-!}
+
+!***> Try creating an !-IndexBatchJob-! using the create endpoint [THIS SHOULD FAIL BUT CURRENTLY WE DO NOT PREVENT THE CREATION THROUGH THE CREATE ENDPOINT]
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getCreatedId? | getStatusType? |
+| $adminAuthToken | indexBatchJob | ${createData} | | $createdId = | CREATED |
+*!
+
+!***> Delete the !-IndexBatchJob-!
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | indexBatchJob | $createdId | | OK |
+*!
+
+
+
+
+!***> Setup
+
+!define sleepTime {1000}
+!define maxNumberOfReads {5}
+*!
+
+!define currentAuthToken {$adminAuthToken}
+!define expectedResult {CREATED}
+!define expectedDeleteResult {OK}
+!define expectedCompareResult {OK}
+
+
+!define json {!-{"name":"indexSettings","children":[{"name":"filter","children":[{"name":"fromNo","value":"1"},{"name":"toNo","value":"2"}]}]}-!}
+!define recordType {indexBatchJob}
+
+
+!***> '''Create''' an !-IndexBatchJob-! for recordType metadataNumberVariable.
+!| RecordEndpointFixture |
+| authToken | type | json | testBatchIndexing? | getStatusType? | getCreatedId? |
+| ${currentAuthToken} | metadataNumberVariable | ${json} |  | ${expectedResult} | $createdId =  |
+
+*!
+!define recordId {$createdId}
+
+!***> Wait for the !-IndexBatchJob-! to finish
+!|RecordEndpointFixture |
+| authToken | type | id | sleepTime | maxNumberOfReads | waitUntilIndexBatchJobIsFinished? | getStatusType? | 
+| $adminAuthToken | indexBatchJob | $createdId | ${sleepTime} | ${maxNumberOfReads} | finished | OK |
+*!
+
+!***> '''Read''' the record
+!define expectedUpdatedData {!-{"name":"indexBatchJob","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!${recordId}!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"indexBatchJob"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"filter","children":[{"name":"fromNo","value":"1"},{"name":"toNo","value":"2"}]},{"name":"recordTypeToIndex","value":"metadataNumberVariable"},{"name":"totalNumberToIndex","value":"2"},{"name":"numberOfProcessedRecords","value":"2"},{"name":"status","value":"finished"}]}-!}
+!include -seamless .HelperPages.readRecord
+Validate the '''response''' returned on the '''read''' call contains the expected record parts.
+!include -seamless .HelperPages.compareRecord
+*!
+
+!***> '''Update''' the !-IndexBatchJob-!
+!define updateData {!-{"name":"indexBatchJob","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!${recordId}!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"indexBatchJob"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"filter","children":[{"name":"fromNo","value":"1"},{"name":"toNo","value":"4"}]},{"name":"recordTypeToIndex","value":"metadataTextVariable"},{"name":"totalNumberToIndex","value":"4"},{"name":"numberOfProcessedRecords","value":"0"},{"name":"status","value":"started"}]}-!}
+
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? |  getStatusType? |
+| $adminAuthToken | indexBatchJob | ${recordId} | ${updateData} | |  OK |
+*!
+
+
+!***> Read the record and confirm that the update was successful
+!define expectedUpdatedData {${updateData}}
+!include -seamless .HelperPages.readRecord
+Validate the '''response''' returned on the '''read''' call contains the expected record parts.
+!include -seamless .HelperPages.compareRecord
+*!
+
+!***> '''Delete''' the !-IndexBatchJob-!
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | indexBatchJob | $createdId | | OK |
+*!
+
