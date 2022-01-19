@@ -23,7 +23,8 @@
 !***> Configure !-RestFixture-!
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
-| restfixture.default.headers | Content-Type: application/vnd.uub.record+json!-
+| restfixture.default.headers | Accept:application/vnd.uub.record+json!-
+-!Content-Type:application/vnd.uub.record+json!-
 -!authToken:$adminAuthToken !-
 -! |
 | restfixture.content.handlers.map | application/vnd.uub.record+json=JSON!-
