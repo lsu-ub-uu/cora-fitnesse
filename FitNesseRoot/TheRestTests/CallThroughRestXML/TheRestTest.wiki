@@ -1,0 +1,51 @@
+!contents -R2 -g -p -f -h
+| import |
+| se.uu.ub.cora.fitnesseintegration |
+
+!| script | SystemUrl |
+| setUrl | ${systemUnderTestUrl} |
+| setAppTokenVerifierUrl | ${appTokenVerifierUrl} |
+
+!| script | DependencyProvider |
+| setHttpHandlerFactoryClassName | se.uu.ub.cora.httphandler.HttpHandlerFactoryImp |
+
+!2 Login  - call is made through java code
+!***> Login for admin
+
+!| AppTokenEndpointFixture |
+| userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
+| 131313 | | | $adminAuthToken= | CREATED |
+
+*!
+!| script | AuthTokenHolder |
+| setAdminAuthToken | $adminAuthToken |
+
+!***> Configure !-RestFixture-!
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
+| restfixture.default.headers | Accept:application/vnd.uub.record+xml!-
+-!Content-Type:application/vnd.uub.record+xml!-
+-!authToken:$adminAuthToken|
+| restfixture.content.handlers.map | application/vnd.uub.record+xml=XML!-
+-!default=XML |
+
+*!
+!***> Create Metadata
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><metadata type="group"><recordInfo><id>generatedId</id><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider></recordInfo><nameInData>generatedId</nameInData><excludePGroupCreation>true</excludePGroupCreation><textId><linkedRecordType>text</linkedRecordType><linkedRecordId>someTestText</linkedRecordId></textId><defTextId><linkedRecordType>text</linkedRecordType><linkedRecordId>someTestDefText</linkedRecordId></defTextId><childReferences><childReference repeatId="1"><ref><linkedRecordType>metadata</linkedRecordType><linkedRecordId>recordInfoGroup</linkedRecordId></ref><repeatMin>1</repeatMin><repeatMax>1</repeatMax></childReference><childReference repeatId="2"><ref><linkedRecordType>metadata</linkedRecordType><linkedRecordId>idTextVar</linkedRecordId></ref><repeatMin>1</repeatMin><repeatMax>1</repeatMax></childReference></childReferences></metadata> |
+| POST | /rest/record/metadataGroup | 201 | Content-Type : application/vnd.uub.record\+xml |!-
+-!/record/data/metadata/recordInfo/id[text()='generatedId']!-
+-!/record/actionLinks/read/requestMethod[text()='GET']!-
+-!/record/actionLinks/update/requestMethod[text()='POST']!-
+-! |
+
+*!
+!***> Remove metadata
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| DELETE | /rest/record/metadataGroup/generatedId | 200 | | |
+| DELETE | /rest/record/coraText/someTestText | 200 | | |
+| DELETE | /rest/record/coraText/someTestDefText | 200 | | |
+
+*!

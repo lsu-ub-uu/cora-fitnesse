@@ -1,0 +1,109 @@
+!contents -R2 -g -p -f -h
+This test will create the metadatagroup trainingProgram, containing two fields, id and createdBy. they are both mandatory (min 1, max 1)!--!It will then create a metadatagroup called singleTrainingProgram which must contain one trainingProgram, no less, no more.!-
+-!Then the test will create a recordType which describes a singleTrainingProgram----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Last, we will create a trainingProgram using the metadata groups specified. We can only create a trainingProgram if we provide the mandatory elements.!-
+-!The first test is missing id.!-
+-!The second test is missing the entire trainingProgram child!-
+-!The third test contains everything needed
+
+| import |
+| se.uu.ub.cora.fitnesseintegration |
+
+!| script | SystemUrl |
+| setUrl | ${systemUnderTestUrl} |
+| setAppTokenVerifierUrl | ${appTokenVerifierUrl} |
+
+!| script | DependencyProvider |
+| setHttpHandlerFactoryClassName | se.uu.ub.cora.httphandler.HttpHandlerFactoryImp |
+
+!2 Login  - call is made through java code
+!***> Login for admin
+
+!| AppTokenEndpointFixture |
+| userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
+| 131313 | | | $adminAuthToken= | CREATED |
+
+*!
+!| script | AuthTokenHolder |
+| setAdminAuthToken | $adminAuthToken |
+
+!***> Configure !-RestFixture-!
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
+| restfixture.default.headers | Accept: application/vnd.uub.record+xml!-
+-!Content-Type: application/vnd.uub.record+xml!-
+-! Accept: application/vnd.uub.record+xml!-
+-!authToken:$adminAuthToken |
+| restfixture.content.handlers.map | application/vnd.uub.record+xml=XML |
+| http.client.connection.timeout | 7000 |
+
+*!
+!***> Create Metadata
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setBody | <?xml version="1.0" encoding="UTF-8"?>!-
+-!<metadata type="group">!-
+-!<recordInfo>!-
+-!<id>trainingProgramGroup</id>!-
+-!<dataDivider>!-
+-!<linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider></recordInfo><textId><linkedRecordType>text</linkedRecordType><linkedRecordId>someTestText</linkedRecordId></textId><defTextId><linkedRecordType>text</linkedRecordType><linkedRecordId>someTestDefText</linkedRecordId></defTextId><nameInData>trainingProgram</nameInData><excludePGroupCreation>true</excludePGroupCreation><childReferences><childReference repeatId="1"><ref><linkedRecordType>metadata</linkedRecordType><linkedRecordId>idTextVar</linkedRecordId></ref><repeatMin>1</repeatMin><repeatMax>1</repeatMax></childReference><childReference repeatId="2"><ref><linkedRecordType>metadata</linkedRecordType><linkedRecordId>createdByTextVar</linkedRecordId></ref><repeatMin>1</repeatMin><repeatMax>1</repeatMax></childReference></childReferences></metadata> |
+| POST | /rest/record/metadataGroup | 201 | | /record/data/metadata[@type = 'group'] |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><metadata type="group"><recordInfo><id>singleTrainingProgramNewGroup</id><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider></recordInfo><textId><linkedRecordType>text</linkedRecordType><linkedRecordId>someTestText</linkedRecordId></textId><defTextId><linkedRecordType>text</linkedRecordType><linkedRecordId>someTestDefText</linkedRecordId></defTextId><nameInData>singleTrainingProgram</nameInData><excludePGroupCreation>true</excludePGroupCreation><childReferences><childReference repeatId="3"><ref><linkedRecordType>metadata</linkedRecordType><linkedRecordId>recordInfoNewGroup</linkedRecordId></ref><repeatMin>1</repeatMin><repeatMax>1</repeatMax></childReference><childReference repeatId="1"><ref><linkedRecordType>metadata</linkedRecordType><linkedRecordId>trainingProgramGroup</linkedRecordId></ref><repeatMin>1</repeatMin><repeatMax>1</repeatMax></childReference></childReferences></metadata> |
+| POST | /rest/record/metadataGroup | 201 | | |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><metadata type="group"><recordInfo><id>singleTrainingProgramGroup</id><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider></recordInfo><textId><linkedRecordType>text</linkedRecordType><linkedRecordId>someTestText</linkedRecordId></textId><defTextId><linkedRecordType>text</linkedRecordType><linkedRecordId>someTestDefText</linkedRecordId></defTextId><nameInData>singleTrainingProgram</nameInData><excludePGroupCreation>true</excludePGroupCreation><childReferences><childReference repeatId="1"><ref><linkedRecordType>metadata</linkedRecordType><linkedRecordId>trainingProgramGroup</linkedRecordId></ref><repeatMin>1</repeatMin><repeatMax>1</repeatMax></childReference><childReference repeatId="2"><ref><linkedRecordType>metadata</linkedRecordType><linkedRecordId>recordInfoGroup</linkedRecordId></ref><repeatMin>1</repeatMin><repeatMax>1</repeatMax></childReference></childReferences></metadata> |
+| POST | /rest/record/metadataGroup | 201 | | |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><presentation type="pGroup"><recordInfo><id>someFitnesseViewPGroup</id><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider></recordInfo><presentationOf><linkedRecordType>metadataGroup</linkedRecordType><linkedRecordId>singleTrainingProgramGroup</linkedRecordId></presentationOf><childReferences><childReference repeatId="0"><refGroup repeatId="0"><ref type="presentation"><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>recordInfoOutputPGroup</linkedRecordId></ref></refGroup></childReference></childReferences><mode>output</mode></presentation> |
+| POST | /rest/record/presentationGroup | 201 | | |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><presentation type="pGroup"><recordInfo><id>someFitnesseFormPGroup</id><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider></recordInfo><presentationOf><linkedRecordType>metadataGroup</linkedRecordType><linkedRecordId>singleTrainingProgramGroup</linkedRecordId></presentationOf><childReferences><childReference repeatId="0"><refGroup repeatId="0"><ref type="presentation"><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>recordInfoPGroup</linkedRecordId></ref></refGroup></childReference></childReferences><mode>output</mode></presentation> |
+| POST | /rest/record/presentationGroup | 201 | | |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><presentation type="pGroup"><recordInfo><id>someFitnesseFormNewPGroup</id><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider></recordInfo><presentationOf><linkedRecordType>metadataGroup</linkedRecordType><linkedRecordId>singleTrainingProgramNewGroup</linkedRecordId></presentationOf><childReferences><childReference repeatId="0"><refGroup repeatId="0"><ref type="presentation"><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>recordInfoNewPGroup</linkedRecordId></ref></refGroup></childReference></childReferences><mode>output</mode></presentation> |
+| POST | /rest/record/presentationGroup | 201 | | |
+
+*!
+!***> Create texts needed when creating recordType
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><text><recordInfo><id>someFitnesseText</id><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider></recordInfo><textPart lang="sv" type="default"><text>En text</text></textPart></text> |
+| POST | /rest/record/coraText | 201 | | |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><text><recordInfo><id>someFitnesseDefText</id><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider></recordInfo><textPart lang="sv" type="default"><text>En deftext</text></textPart><textPart lang="en" type="alternative"><text>A defText</text></textPart></text> |
+| POST | /rest/record/coraText | 201 | | |
+
+*!
+!***> Create recordType
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><recordType><recordInfo><id>singleTrainingProgram</id><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider></recordInfo><metadataId><linkedRecordType>metadataGroup</linkedRecordType><linkedRecordId>singleTrainingProgramGroup</linkedRecordId></metadataId><abstract>false</abstract><presentationViewId><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>someFitnesseViewPGroup</linkedRecordId></presentationViewId><presentationFormId><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>someFitnesseFormPGroup</linkedRecordId></presentationFormId><newMetadataId><linkedRecordType>metadataGroup</linkedRecordType><linkedRecordId>singleTrainingProgramNewGroup</linkedRecordId></newMetadataId><newPresentationFormId><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>someFitnesseFormNewPGroup</linkedRecordId></newPresentationFormId><menuPresentationViewId><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>someFitnesseViewPGroup</linkedRecordId></menuPresentationViewId><listPresentationViewId><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>someFitnesseViewPGroup</linkedRecordId></listPresentationViewId><autocompletePresentationView><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>someFitnesseViewPGroup</linkedRecordId></autocompletePresentationView><userSuppliedId>true</userSuppliedId><textId><linkedRecordType>text</linkedRecordType><linkedRecordId>someFitnesseText</linkedRecordId></textId><defTextId><linkedRecordType>text</linkedRecordType><linkedRecordId>someFitnesseDefText</linkedRecordId></defTextId><search><linkedRecordType>search</linkedRecordType><linkedRecordId>recordTypeSearch</linkedRecordId></search><groupOfRecordType repeatId="0">metadata</groupOfRecordType><public>false</public></recordType> |
+| POST | /rest/record/recordType | 201 | | |
+
+*!
+!***> Create data
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><singleTrainingProgram><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider><id>cirkelfys</id></recordInfo><trainingProgram><createdBy>asta_kask</createdBy></trainingProgram></singleTrainingProgram> | Data is missing id inside trainingProgram, should not be possible to create. |
+| POST | /rest/record/singleTrainingProgram | 400 | | |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><singleTrainingProgram><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider><id>cirkelfys</id></recordInfo></singleTrainingProgram> | Data is missing the entire trainingProgram group, should not be possible to create. |
+| POST | /rest/record/singleTrainingProgram | 400 | | |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><singleTrainingProgram><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider><id>cirkelfys</id></recordInfo><trainingProgram><id>x1</id><createdBy>asta_kask</createdBy></trainingProgram></singleTrainingProgram> | Data is correct, should be possible to create. |
+| POST | /rest/record/singleTrainingProgram | 201 | Location:/rest/record/singleTrainingProgram | /record/data/singleTrainingProgram/trainingProgram/id[text()='x1']!-
+-! /record/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'asta_kask'] |
+
+*!
+!***> Remove metadata
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| DELETE | /rest/record/singleTrainingProgram/cirkelfys | 200 | | |
+| DELETE | /rest/record/search/singleTrainingProgramSearch | 200 | | |
+| DELETE | /rest/record/recordType/singleTrainingProgram | 200 | | |
+| DELETE | /rest/record/presentationGroup/someFitnesseFormPGroup | 200 | | |
+| DELETE | /rest/record/presentationGroup/someFitnesseViewPGroup | 200 | | |
+| DELETE | /rest/record/presentationGroup/someFitnesseFormNewPGroup | 200 | | |
+| DELETE | /rest/record/metadataGroup/singleTrainingProgramGroup | 200 | | |
+| DELETE | /rest/record/metadataGroup/singleTrainingProgramNewGroup | 200 | | |
+| DELETE | /rest/record/metadataGroup/trainingProgramGroup | 200 | | |
+| DELETE | /rest/record/coraText/someFitnesseText | 200 | | |
+| DELETE | /rest/record/coraText/someFitnesseDefText | 200 | | |
+| DELETE | /rest/record/coraText/someTestText | 200 | | |
+| DELETE | /rest/record/coraText/someTestDefText | 200 | | |
+
+*!
