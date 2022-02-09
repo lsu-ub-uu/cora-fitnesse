@@ -70,8 +70,7 @@ Create needed metadata
 -!Content-Type: application/vnd.uub.record+xml!-
 -!authToken:$adminAuthToken  |
 | setBody | <?xml version="1.0" encoding="UTF-8"?><metadata type="group"><recordInfo><id>trainingProgramGroup</id><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider></recordInfo><textId><linkedRecordType>text</linkedRecordType><linkedRecordId>someTestText</linkedRecordId></textId><defTextId><linkedRecordType>text</linkedRecordType><linkedRecordId>someTestDefText</linkedRecordId></defTextId><nameInData>trainingProgram</nameInData><excludePGroupCreation>true</excludePGroupCreation><childReferences><childReference repeatId="1"><ref><linkedRecordType>metadata</linkedRecordType><linkedRecordId>idTextVar</linkedRecordId></ref><repeatMin>1</repeatMin><repeatMax>1</repeatMax></childReference><childReference repeatId="2"><ref><linkedRecordType>metadata</linkedRecordType><linkedRecordId>createdByTextVar</linkedRecordId></ref><repeatMin>1</repeatMin><repeatMax>1</repeatMax></childReference></childReferences></metadata> |
-| POST | /rest/record/metadataGroup | 201 |Location : http:\/\/localhost:8080\/systemone\/rest\/record\/metadataGroup\/trainingProgramGroup!-
--!Content-Type: application\/vnd\.uub\.record\+xml | /record/data/metadata[@type = 'group'] |
+| POST | /rest/record/metadataGroup | 201 |Content-Type: application\/vnd\.uub\.record\+xml | /record/data/metadata[@type = 'group'] |
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setBody | <?xml version="1.0" encoding="UTF-8"?>!-
