@@ -127,7 +127,7 @@ If no filter is defined for the recordType, it is not possible to use a filter w
 
 !| RecordEndpointFixture |
 | authToken | type | json | testReadRecordList? | getStatusType? |
-| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"part","children":[{"name":"value","value":"The rock"}],"repeatId":"0"}]} | Data is not valid: [Did not find enough data children with referenceId: testMovieKeyCollectionVar(with nameInData:key.] | BAD_REQUEST |
+| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"part","children":[{"name":"value","value":"The rock"}],"repeatId":"0"}]} | Data is not valid: [Did not find enough data children with referenceId: testMovieKeyCollectionVar(with nameInData:key).] | BAD_REQUEST |
 
 *!
 !1 Reset testdata

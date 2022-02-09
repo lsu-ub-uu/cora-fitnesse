@@ -1,0 +1,9 @@
+| import |
+| se.uu.ub.cora.fitnesseintegration |
+
+!| script | SystemUrl |
+| setUrl | ${systemUnderTestUrl} |
+| setAppTokenVerifierUrl | ${appTokenVerifierUrl} |
+
+!| script | DependencyProvider |
+| setHttpHandlerFactoryClassName | se.uu.ub.cora.httphandler.HttpHandlerFactoryImp |
