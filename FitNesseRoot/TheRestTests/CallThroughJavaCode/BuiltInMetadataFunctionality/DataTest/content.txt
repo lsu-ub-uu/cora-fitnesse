@@ -46,7 +46,7 @@
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | bike | {"name":"bike","children":[{"name":"recordInfo","children":[{"name":"id","value":"skeppshult"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"someSubGroup","children":[]}]} | Data is not valid: [DataGroup someSubGroup should have children, it does not.] | BAD_REQUEST |
+| $adminAuthToken | bike | {"name":"bike","children":[{"name":"recordInfo","children":[{"name":"id","value":"skeppshult"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"someSubGroup","children":[]}]} | Error creating new record for recordType: bike. Data is not valid: [DataGroup someSubGroup should have children, it does not.] | BAD_REQUEST |
 
 *!
 !2 Clean up created data

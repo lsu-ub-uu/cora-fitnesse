@@ -40,6 +40,7 @@ Create needed metadata
  * '''Setup 2:''' Create a metadatagroup called singleTrainingProgram which must contain one trainingProgram, no less, no more.
  * '''Setup 3:''' Create a recordType which describes a singleTrainingProgram.
 
+!***> Setup
 !***> Login for admin
 
 !| AppTokenEndpointFixture |
@@ -148,16 +149,38 @@ Create needed metadata
 | POST | /rest/record/recordType | 201 | | |
 
 *!
+*!
 
-!2 Create data
-Last, we will create a trainingProgram using the metadata groups specified. We can only create a trainingProgram if we provide the mandatory elements.
+!2 Create record
+We will create a trainingProgram using the metadata groups specified. We can only create a trainingProgram if we provide the mandatory elements.
 
- * '''Case 1:''' The first test is missing id.
- * '''Case 2:''' The second test is missing the entire trainingProgram child
- * '''Case 3:''' The third test contains everything needed
+ * '''Case 1:''' Try to create with malformed XML, wrong end tag.
+ * '''Case 2:''' The first test is missing id.
+ * '''Case 3:''' The second test is missing the entire trainingProgram child
+ * '''Case 4:''' Contains everything needed, creates the record
+ * '''Case 5:''' Contains everything needed, creates another record
 
-!***> Create data
-
+!***> Case 1
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeaders | authToken:$adminAuthToken!-
+-!Content-Type: application/vnd.uub.record+xml!-
+-!Accept: application/vnd.uub.record+xml|
+| setBody | <?xml version="1.0" encoding="UTF-8"?>!-
+-!<singleTrainingProgram>!-
+-!<recordInfo>!-
+-!<dataDivider>!-
+-!<linkedRecordType>system</linkedRecordType>!-
+-!<linkedRecordId>cora</linkedRecordId>!-
+-!</dataDivider>!-
+-!<id>cirkelfys</id>!-
+-!</recordInfo>!-
+-!<trainingProgram>!-
+-!<createdBy>asta_kask</createdBy>!-
+-!</trainingProgram>!-
+-!</WRONG_TAG> | Data is missing id inside trainingProgram, should not be possible to create. |
+| POST | /rest/record/singleTrainingProgram | 400 | Content-Type: text\/plain;charset=utf-8| Error creating new record for recordType: singleTrainingProgram. Unable to convert from xml to dataElement due to malformed XML:|
+*!
+!***> Case 2
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
 -!Content-Type: application/vnd.uub.record+xml!-
@@ -174,8 +197,9 @@ Last, we will create a trainingProgram using the metadata groups specified. We c
 -!<trainingProgram>!-
 -!<createdBy>asta_kask</createdBy>!-
 -!</trainingProgram></singleTrainingProgram> | Data is missing id inside trainingProgram, should not be possible to create. |
-| POST | /rest/record/singleTrainingProgram | 400 | Content-Type: text\/plain;charset=UTF-8|  Data is not valid: \[Did not find enough data children with referenceId: idTextVar\(with nameInData:id\).\]|
-
+| POST | /rest/record/singleTrainingProgram | 400 | Content-Type: text\/plain;charset=utf-8| Error creating new record for recordType: singleTrainingProgram. Data is not valid: \[Did not find enough data children with referenceId: idTextVar\(with nameInData:id\).\]|
+*!
+!***> Case 3
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
 -!Content-Type: application/vnd.uub.record+xml!-
@@ -190,8 +214,9 @@ Last, we will create a trainingProgram using the metadata groups specified. We c
 -!<id>cirkelfys</id>!-
 -!</recordInfo>!-
 -!</singleTrainingProgram> | Data is missing the entire trainingProgram group, should not be possible to create. |
-| POST | /rest/record/singleTrainingProgram | 400 | | Data is not valid: \[Did not find enough data children with referenceId: trainingProgramGroup\(with nameInData:trainingProgram\).\] |
-
+| POST | /rest/record/singleTrainingProgram | 400 | |Error creating new record for recordType: singleTrainingProgram. Data is not valid: \[Did not find enough data children with referenceId: trainingProgramGroup\(with nameInData:trainingProgram\).\] |
+*!
+!***> Case 4
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
 -!Content-Type: application/vnd.uub.record+xml!-
@@ -210,9 +235,84 @@ Last, we will create a trainingProgram using the metadata groups specified. We c
 -!<createdBy>asta_kask</createdBy>!-
 -!</trainingProgram>!-
 -!</singleTrainingProgram>| Data is correct, should be possible to create. |
-| POST | /rest/record/singleTrainingProgram | 201 | Location:/rest/record/singleTrainingProgram | /record/data/singleTrainingProgram/trainingProgram/id[text()='x1']!-
+| POST | /rest/record/singleTrainingProgram | 201 | Content-Type: application\/vnd\.uub\.record\+xml!-
+-!Location:/rest/record/singleTrainingProgram/cirkelfys| /record/data/singleTrainingProgram/trainingProgram/id[text()='x1']!-
 -!/record/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'asta_kask'] |
+*!
+!***> Case 5
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeaders | authToken:$adminAuthToken!-
+-!Content-Type: application/vnd.uub.record+xml!-
+-!Accept: application/vnd.uub.record+xml|
+| setBody |<?xml version="1.0" encoding="UTF-8"?>!-
+-!<singleTrainingProgram>!-
+-!<recordInfo>!-
+-!<dataDivider>!-
+-!<linkedRecordType>system</linkedRecordType>!-
+-!<linkedRecordId>cora</linkedRecordId>!-
+-!</dataDivider>!-
+-!<id>spinning</id>!-
+-!</recordInfo>!-
+-!<trainingProgram>!-
+-!<id>anka1</id>!-
+-!<createdBy>kalle_anka</createdBy>!-
+-!</trainingProgram>!-
+-!</singleTrainingProgram>| Data is correct, should be possible to create. |
+| POST | /rest/record/singleTrainingProgram | 201 | Content-Type: application\/vnd\.uub\.record\+xml!-
+-!Location:/rest/record/singleTrainingProgram/spinning| /record/data/singleTrainingProgram/trainingProgram/id[text()='anka1']!-
+-!/record/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'kalle_anka'] |
 
+#-!Content-Type: application/vnd.uub.record+xml!-
+*!
+
+!2 Read record
+We will read a trainingProgram.
+
+ * '''Case 1:''' Tries to read using wrong recordType
+ * '''Case 2:''' Tries to read using wrong recordId
+ * '''Case 3:''' Reads using an existing recordType and recordId
+
+!***> Case 1
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeaders | authToken:$adminAuthToken!-
+-!Accept: application/vnd.uub.record+xml|
+| GET | /rest/record/singleTrainingProgramNOT/cirkelfys | 404 | Content-Type: text\/plain;charset=utf-8| Error reading record with recordType: singleTrainingProgramNOT and recordId: cirkelfys. Not found.|
+*!
+!***> Case 2
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeaders | authToken:$adminAuthToken!-
+-!Accept: application/vnd.uub.record+xml|
+| GET | /rest/record/singleTrainingProgram/cirkelfysNOT | 404 | | Error reading record with recordType: singleTrainingProgram and recordId: cirkelfysNOT. Not found.|
+*!
+!***> Case 3
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeaders | authToken:$adminAuthToken!-
+-!Accept: application/vnd.uub.record+xml|
+| GET | /rest/record/singleTrainingProgram/cirkelfys | 200 | Content-Type: application\/vnd\.uub\.record\+xml| /record/data/singleTrainingProgram/trainingProgram/id[text()='x1']!-
+-!/record/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'asta_kask'] |
+*!
+
+!2 Read record list
+We will read a list of trainingPrograms.
+
+ * '''Case 1:''' Tries to read using wrong recordType
+ * '''Case 2:''' Reads using an existing recordType
+
+!***> Case 1
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeaders | authToken:$adminAuthToken!-
+-!Accept: application/vnd.uub.recordList+xml|
+| GET | /rest/record/singleTrainingProgramNOT/ | 404 | Content-Type: text\/plain;charset=utf-8| Error reading records with recordType: singleTrainingProgramNOT. Not found.|
+*!
+!***> Case 2
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeaders | authToken:$adminAuthToken!-
+-!Accept: application/vnd.uub.recordList+xml|
+| GET | /rest/record/singleTrainingProgram/ | 200 | Content-Type: application\/vnd\.uub\.recordList\+xml| /dataList/containDataOfType[text()='singleTrainingProgram']!-
+-!/dataList/data/record[1]/data/singleTrainingProgram/trainingProgram/id[text()='anka1']!-
+-!/dataList/data/record[1]/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'kalle_anka'] !-
+-!/dataList/data/record[2]/data/singleTrainingProgram/trainingProgram/id[text()='x1']!-
+-!/dataList/data/record[2]/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'asta_kask']|
 *!
 
 !2 Clean up created data
@@ -220,6 +320,7 @@ Last, we will create a trainingProgram using the metadata groups specified. We c
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | DELETE | /rest/record/singleTrainingProgram/cirkelfys | 200 | | |
+| DELETE | /rest/record/singleTrainingProgram/spinning | 200 | | |
 | DELETE | /rest/record/search/singleTrainingProgramSearch | 200 | | |
 | DELETE | /rest/record/recordType/singleTrainingProgram | 200 | | |
 | DELETE | /rest/record/presentationGroup/someFitnesseFormPGroup | 200 | | |

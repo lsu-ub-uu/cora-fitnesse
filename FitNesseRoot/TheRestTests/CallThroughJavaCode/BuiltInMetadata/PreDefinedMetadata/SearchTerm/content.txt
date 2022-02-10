@@ -76,6 +76,6 @@ Try create data of recodType searchTerm. Shuld fail since links are incorrect
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | searchTerm | {"name":"searchTerm","children":[{"name":"recordInfo","children":[{"name":"id","value":"myTestSearchTerm"},{"name":"type","value":"searchTerm"},{"name":"createdBy","value":"141414"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"searchTermType","value":"linkedData"}]} | Data is not valid: [Could not find metadata for child with nameInData: type, Could not find metadata for child with nameInData: createdBy] | BAD_REQUEST |
+| $adminAuthToken | searchTerm | {"name":"searchTerm","children":[{"name":"recordInfo","children":[{"name":"id","value":"myTestSearchTerm"},{"name":"type","value":"searchTerm"},{"name":"createdBy","value":"141414"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"searchTermType","value":"linkedData"}]} | Error creating new record for recordType: searchTerm. Data is not valid: [Could not find metadata for child with nameInData: type, Could not find metadata for child with nameInData: createdBy] | BAD_REQUEST |
 
 *!

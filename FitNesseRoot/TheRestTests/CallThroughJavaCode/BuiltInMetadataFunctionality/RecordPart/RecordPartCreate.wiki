@@ -65,7 +65,7 @@ There are a few different cases for create that can happen, when there are write
 
 !include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys2
 !define expectedCreateResult {BAD_REQUEST}
-!define expectedAnswer {Data is not valid: [Did not find enough data children with referenceId: testPopularity1Group(with nameInData:popularity1).]}
+!define expectedAnswer {Error creating new record for recordType: testWorkout. Data is not valid: [Did not find enough data children with referenceId: testPopularity1Group(with nameInData:popularity1).]}
 !define expectedPermissionResult {popularity1}
 
 !include -seamless .HelperPages.createRecord
@@ -80,7 +80,7 @@ There are a few different cases for create that can happen, when there are write
 
 !include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys2
 !define expectedCreateResult {BAD_REQUEST}
-!define expectedAnswer {Data is not valid: [Did not find enough data children with referenceId: testInstructorFirstName1_1TextVar(with nameInData:firstName1_1).]}
+!define expectedAnswer {Error creating new record for recordType: testWorkout. Data is not valid: [Did not find enough data children with referenceId: testInstructorFirstName1_1TextVar(with nameInData:firstName1_1).]}
 !define expectedPermissionResult {firstName1_1}
 !include -seamless .HelperPages.createRecord
 !include -seamless <RecordPart.RecordPartRestoreWritePermissionLimitedForTestWorkoutCreateRule
