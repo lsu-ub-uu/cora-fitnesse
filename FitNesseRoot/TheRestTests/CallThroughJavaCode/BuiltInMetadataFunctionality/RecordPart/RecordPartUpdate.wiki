@@ -68,7 +68,7 @@ Tested as part of test2, popularity2 is mandatory but fitnesseUser has no write 
 !include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
 !include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1MissingMandatory
 !define expectedUpdateResult {BAD_REQUEST}
-!define expectedAnswer {Data is not valid: [Did not find enough data children with referenceId: testRating1_1TextVar(with nameInData:rating1_1).]}
+!define expectedAnswer {Error updating record with recordType: testWorkout and recordId: cirkelfys1. Data is not valid: [Did not find enough data children with referenceId: testRating1_1TextVar(with nameInData:rating1_1).]}
 
 Update the record
 !include -seamless .HelperPages.updateRecord

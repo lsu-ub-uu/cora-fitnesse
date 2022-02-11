@@ -274,9 +274,9 @@ The searchForm has to be filled out correctly or the search will not be done, bu
 
 !| RecordEndpointFixture |
 | authToken | searchId | json | testSearchRecord? | getStatusType? |
-| $adminAuthToken | aSearchIdThatDoesNotExist | {"name":"search","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"text","value":""}]}]}]} | No record exists with recordId: aSearchIdThatDoesNotExist | NOT_FOUND |
-| $adminAuthToken | aSearchId | | Unable to parse json string | BAD_REQUEST |
-| $adminAuthToken | aSearchId | {"NOTname":"search","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"text","value":""}]}]}]} | Error parsing jsonObject: Group data must contain key: name | BAD_REQUEST |
+| $adminAuthToken | aSearchIdThatDoesNotExist | {"name":"search","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"text","value":""}]}]}]} | Error searching record with searchId: aSearchIdThatDoesNotExist. Not found. | NOT_FOUND |
+| $adminAuthToken | aSearchId | | Error searching record with searchId: aSearchId. Unable to parse json string | BAD_REQUEST |
+| $adminAuthToken | aSearchId | {"NOTname":"search","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"text","value":""}]}]}]} | Error searching record with searchId: aSearchId. Error parsing jsonObject: Group data must contain key: name | BAD_REQUEST |
 | $userAuthToken | testNewsExtendedSearch | {"name":"search","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"text","value":""}]}]}]} | | FORBIDDEN |
 
 *!

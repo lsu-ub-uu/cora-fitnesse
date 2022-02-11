@@ -96,6 +96,6 @@ Try create data of recodType workOrder. Shuld fail since type is missing
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | workOrder | {"name":"workOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"coraText"}]},{"name":"recordId","value":"testForWorkOrderText"}]} | Data is not valid: [Did not find enough data children with referenceId: workOrderTypeCollectionVar(with nameInData:type).] | BAD_REQUEST |
+| $adminAuthToken | workOrder | {"name":"workOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"coraText"}]},{"name":"recordId","value":"testForWorkOrderText"}]} | Error creating new record for recordType: workOrder. Data is not valid: [Did not find enough data children with referenceId: workOrderTypeCollectionVar(with nameInData:type).] | BAD_REQUEST |
 
 *!
