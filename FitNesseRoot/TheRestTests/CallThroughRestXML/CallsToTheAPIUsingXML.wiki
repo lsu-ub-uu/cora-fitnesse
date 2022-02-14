@@ -286,7 +286,7 @@ We will create a trainingProgram using the metadata groups specified. We can onl
 -!<id>cirkelfys</id>!-
 -!</recordInfo>!-
 -!</singleTrainingProgram> | Data is missing the entire trainingProgram group, should not be possible to create. |
-| POST | /rest/record/singleTrainingProgram | 400 | |Error creating new record for recordType: singleTrainingProgram. Data is not valid: \[Did not find enough data children with referenceId: trainingProgramGroup\(with nameInData:trainingProgram\).\] |
+| POST | /rest/record/singleTrainingProgram | 400 | Content-Type: text\/plain;charset=utf-8 |Error creating new record for recordType: singleTrainingProgram. Data is not valid: \[Did not find enough data children with referenceId: trainingProgramGroup\(with nameInData:trainingProgram\).\] |
 *!
 !***> Case 4
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
@@ -354,7 +354,7 @@ We will read a trainingProgram.
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
 -!Accept: application/vnd.uub.record+xml|
-| GET | /rest/record/singleTrainingProgram/cirkelfysNOT | 404 | | Error reading record with recordType: singleTrainingProgram and recordId: cirkelfysNOT. Not found.|
+| GET | /rest/record/singleTrainingProgram/cirkelfysNOT | 404 | Content-Type: text\/plain;charset=utf-8| Error reading record with recordType: singleTrainingProgram and recordId: cirkelfysNOT. Not found.|
 *!
 !***> Case 3
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
@@ -451,7 +451,7 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 -!<id>cirkelfys</id>!-
 -!</recordInfo>!-
 -!</singleTrainingProgram> | Data is missing the entire trainingProgram group, should not be possible to update. |
-| POST | /rest/record/singleTrainingProgram/cirkelfys | 400 | |Error updating record with recordType: singleTrainingProgram and recordId: cirkelfys\. Data is not valid: \[Did not find enough data children with referenceId: trainingProgramGroup\(with nameInData:trainingProgram\)\., Did not find enough data children with referenceId: recordTypeLink\(with nameInData:type\)\.\] |
+| POST | /rest/record/singleTrainingProgram/cirkelfys | 400 | Content-Type: text\/plain;charset=utf-8 |Error updating record with recordType: singleTrainingProgram and recordId: cirkelfys\. Data is not valid: \[Did not find enough data children with referenceId: trainingProgramGroup\(with nameInData:trainingProgram\)\., Did not find enough data children with referenceId: recordTypeLink\(with nameInData:type\)\.\] |
 *!
 !***> Case 4
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
@@ -508,7 +508,7 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 #-!Content-Type: application/vnd.uub.record+xml!-
 *!
 
-!2 SearchRecords
+!2 Search records
  * '''Case 1:''' Try to search with searchId that does not exists.
  * '''Case 2:''' Try to search with wrong searchData.
  * '''Case 3:''' Try to search with malformed searchData.
@@ -535,7 +535,7 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 -!Accept: application/vnd.uub.recordList+xml|
 | GET | /rest/record/searchResult/trainingSearch?searchData=%3C%3Fxml+version%3D%221.0%22+encoding%3D%22UTF-8%22%3F%3E%3CtrainingWRONGSearch%3E%3Cinclude%3E%3CincludePart%3E%3CtrainingIdSearchTerm%3E%2A%2A%3C%2FtrainingIdSearchTerm%3E%3C%2FincludePart%3E%3C%2Finclude%3E%3C%2FtrainingSearch%3E | 400 | Content-Type: text/plain;charset=utf-8 | Error searching record with searchId: trainingSearch. Unable to convert from xml to dataElement due to malformed XML |
 *!
-!***> Case 3
+!***> Case 4
 
 Starting with this search XML
 <?xml version="1.0" encoding="UTF-8"?>
@@ -558,9 +558,12 @@ url encode, use this in the query:
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
 -!Accept: application/vnd.uub.recordList+xml|
-| GET | /rest/record/searchResult/trainingSearch?searchData=%3C%3Fxml+version%3D%221.0%22+encoding%3D%22UTF-8%22%3F%3E%3CtrainingSearch%3E%3Cinclude%3E%3CincludePart%3E%3CtrainingIdSearchTerm%3E%2A%2A%3C%2FtrainingIdSearchTerm%3E%3C%2FincludePart%3E%3C%2Finclude%3E%3C%2FtrainingSearch%3E | 200 | | |
+| GET | /rest/record/searchResult/trainingSearch?searchData=%3C%3Fxml+version%3D%221.0%22+encoding%3D%22UTF-8%22%3F%3E%3CtrainingSearch%3E%3Cinclude%3E%3CincludePart%3E%3CtrainingIdSearchTerm%3E%2A%2A%3C%2FtrainingIdSearchTerm%3E%3C%2FincludePart%3E%3C%2Finclude%3E%3C%2FtrainingSearch%3E | 200 | Content-Type: application\/vnd\.uub\.recordList\+xml | /dataList/totalNo[text()='2']!-
+-!/dataList/data/record[2]/data/singleTrainingProgram/trainingProgram/id[text()='anka12']!-
+-!/dataList/data/record[2]/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'kalle_anka2'] !-
+-!/dataList/data/record[1]/data/singleTrainingProgram/trainingProgram/id[text()='x12']!-
+-!/dataList/data/record[1]/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'asta_kask2']|
 *!
-
 
 
 !2 Clean up created data
