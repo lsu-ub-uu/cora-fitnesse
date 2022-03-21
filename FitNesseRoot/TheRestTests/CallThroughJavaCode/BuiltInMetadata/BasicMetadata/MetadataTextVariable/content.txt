@@ -12,6 +12,14 @@ The metadata for textVariable has been created during system startup, so we shou
 | $adminAuthToken | metadataTextVariable | {"name":"metadata","attributes":{"type":"textVariable"},"children":[{"name":"recordInfo","children":[{"name":"id","value":"pinCodeTextVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"nameInData","value":"pinCode"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}],"name":"defTextId"},{"name":"regEx","value":"^[0-9]{4}$"}]} | metadataTextVariable | CREATED |
 
 *!
+!***> Create textVariable swedishName and englishName, both with attribute
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecordCreatedType? | getStatusType? |
+| $adminAuthToken | metadataTextVariable | {"name":"metadata","attributes":{"type":"textVariable"},"children":[{"name":"recordInfo","children":[{"name":"id","value":"swedishNameTextVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"nameInData","value":"name"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}],"name":"defTextId"},{"name":"regEx","value":".*"},{"name":"attributeReferences","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataCollectionVariable"},{"name":"linkedRecordId","value":"systemLanguageSvCollectionVar"}],"repeatId":"0"}]}]} | metadataTextVariable | CREATED |
+| $adminAuthToken | metadataTextVariable | {"name":"metadata","attributes":{"type":"textVariable"},"children":[{"name":"recordInfo","children":[{"name":"id","value":"englishNameTextVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"nameInData","value":"name"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}],"name":"defTextId"},{"name":"regEx","value":".*"},{"name":"attributeReferences","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataCollectionVariable"},{"name":"linkedRecordId","value":"systemLanguageEnCollectionVar"}],"repeatId":"0"}]}]} | metadataTextVariable | CREATED |
+
+*!
 !***> Try to create textVariable with empty regEx, this should fail
 
 !| RecordEndpointFixture |
@@ -30,8 +38,8 @@ The metadata for textVariable has been created during system startup, so we shou
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | metadataGroup | {"name":"metadata","attributes":{"type":"group"},"children":[{"name":"recordInfo","children":[{"name":"id","value":"lockNewGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}]},{"name":"nameInData","value":"lock"},{"name":"excludePGroupCreation","value":"true"},{"name":"childReferences","children":[{"name":"childReference","repeatId":"1","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"recordInfoNewGroup"}]},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}]},{"name":"childReference","repeatId":"2","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"pinCodeTextVar"}]},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}]}]}]} | | CREATED |
-| $adminAuthToken | metadataGroup | {"name":"metadata","attributes":{"type":"group"},"children":[{"name":"recordInfo","children":[{"name":"id","value":"lockGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}]},{"name":"nameInData","value":"lock"},{"name":"excludePGroupCreation","value":"true"},{"name":"childReferences","children":[{"name":"childReference","repeatId":"1","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"recordInfoGroup"}]},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}]},{"name":"childReference","repeatId":"2","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"pinCodeTextVar"}]},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}]}]}]} | | CREATED |
+| $adminAuthToken | metadataGroup | {"name":"metadata","attributes":{"type":"group"},"children":[{"name":"recordInfo","children":[{"name":"id","value":"lockNewGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}]},{"name":"nameInData","value":"lock"},{"name":"excludePGroupCreation","value":"true"},{"name":"childReferences","children":[{"name":"childReference","repeatId":"1","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"recordInfoNewGroup"}]},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}]},{"name":"childReference","repeatId":"2","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"pinCodeTextVar"}]},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}]},{"name":"childReference","repeatId":"3","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"swedishNameTextVar"}]},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}]},{"name":"childReference","repeatId":"4","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"englishNameTextVar"}]},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}]}]}]} | | CREATED |
+| $adminAuthToken | metadataGroup | {"name":"metadata","attributes":{"type":"group"},"children":[{"name":"recordInfo","children":[{"name":"id","value":"lockGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}]},{"name":"nameInData","value":"lock"},{"name":"excludePGroupCreation","value":"true"},{"name":"childReferences","children":[{"name":"childReference","repeatId":"1","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"recordInfoGroup"}]},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}]},{"name":"childReference","repeatId":"2","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"pinCodeTextVar"}]},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}]},{"name":"childReference","repeatId":"3","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"swedishNameTextVar"}]},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}]},{"name":"childReference","repeatId":"4","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"englishNameTextVar"}]},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}]}]}]} | | CREATED |
 
 *!
 !***> Create texts needed for recordType
@@ -53,7 +61,21 @@ The metadata for textVariable has been created during system startup, so we shou
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecordCreatedType? | getStatusType? |
-| $adminAuthToken | lock | {"name":"lock","children":[{"name":"recordInfo","children":[{"name":"id","value":"lock_1"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"pinCode","value":"0123"}]} | lock | CREATED |
+| $adminAuthToken | lock | {"name":"lock","children":[{"name":"recordInfo","children":[{"name":"id","value":"lock_1"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"pinCode","value":"0123"},{"name":"name","value":"Ett svenskt låsnamn","attributes":{"lang":"sv"}},{"name":"name","value":"An english name of the lock","attributes":{"lang":"en"}}]} | lock | CREATED |
+
+*!
+!***> Read lock
+
+!| RecordEndpointFixture |
+| authToken | type | id | testReadRecord? | getStatusType? |
+| $adminAuthToken | lock | lock_1 | =~/"lang":"sv"/ | OK |
+
+*!
+!***> Update lock data
+
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? | getStatusType? |
+| $adminAuthToken | lock | lock_1 | {"children":[{"children":[{"name":"id","value":"lock_1"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"lock"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2022-03-03T14:08:09.081700Z"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"updatedBy"},{"name":"tsUpdated","value":"2022-03-03T14:08:09.081700Z"}],"name":"updated"}],"name":"recordInfo"},{"name":"pinCode","value":"0123"},{"name":"name","value":"Ett  annat svenskt låsnamn","attributes":{"lang":"sv"}},{"name":"name","value":"Another english name of the  lock","attributes":{"lang":"en"}}],"name":"lock"} | | OK |
 
 *!
 !***> List data(lock)
@@ -91,6 +113,12 @@ The metadata for textVariable has been created during system startup, so we shou
 | $adminAuthToken | presentationVar | pinCodePVar | | OK |
 | $adminAuthToken | presentationVar | pinCodeOutputPVar | | OK |
 | $adminAuthToken | metadataTextVariable | pinCodeTextVar | | OK |
+| $adminAuthToken | presentationVar | swedishNamePVar | | OK |
+| $adminAuthToken | presentationVar | swedishNameOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | swedishNameTextVar | | OK |
+| $adminAuthToken | presentationVar | englishNamePVar | | OK |
+| $adminAuthToken | presentationVar | englishNameOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | englishNameTextVar | | OK |
 | $adminAuthToken | coraText | someFitnesseText | | OK |
 | $adminAuthToken | coraText | someFitnesseDefText | | OK |
 | $adminAuthToken | coraText | someTestText | | OK |
