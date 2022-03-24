@@ -64,7 +64,7 @@ Read search to make sure it does not exist
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | recordType | {"name":"recordType","children":[{"name":"abstract","value":"false"},{"name":"recordInfo","children":[{"name":"id","value":"fitnesseBook"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"userSuppliedId","value":"true"},{"name":"groupOfRecordType","value":"metadata","repeatId":"0"}]} | | CREATED |
+| $adminAuthToken | recordType | {"name":"recordType","children":[{"name":"abstract","value":"false"},{"name":"recordInfo","children":[{"name":"id","value":"fitnesseBook"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"userSuppliedId","value":"true"},{"name":"groupOfRecordType","value":"metadata","repeatId":"0"},{"name":"storeInArchive","value":"false"}]} | | CREATED |
 
 *!
 Read fitnesseBook to see that metadata has been added
@@ -145,7 +145,7 @@ Read presentationGroups again to see that they have been created
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | recordType | {"name":"recordType","children":[{"name":"abstract","value":"false"},{"name":"recordInfo","children":[{"name":"id","value":"fitnesseBook"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"userSuppliedId","value":"true"},{"name":"groupOfRecordType","value":"metadata","repeatId":"0"}]} | | CREATED |
+| $adminAuthToken | recordType | {"name":"recordType","children":[{"name":"abstract","value":"false"},{"name":"recordInfo","children":[{"name":"id","value":"fitnesseBook"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"userSuppliedId","value":"true"},{"name":"groupOfRecordType","value":"metadata","repeatId":"0"},{"name":"storeInArchive","value":"false"}]} | | CREATED |
 
 *!
 Read presentationGroups again to see that they have been created. This time fitnesseBookFormPGroup, fitnesseBookFormNewPGroup and fitnesseBookViewPGroup should also have a reference to presentation variable for the added text variable child
