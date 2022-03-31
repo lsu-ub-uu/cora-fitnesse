@@ -23,7 +23,7 @@
 	<name>Fitnesse</name>
 
 	<properties>
-		<fitnesseintegration.version>3.6.0</fitnesseintegration.version>
+		<fitnesseintegration.version>3.10.0</fitnesseintegration.version>
 		<smartrics-RestFixture.version>4.4</smartrics-RestFixture.version>
 	</properties>
 
