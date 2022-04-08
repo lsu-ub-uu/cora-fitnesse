@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>se.uu.ub.cora</groupId>
 		<artifactId>cora-parent</artifactId>
-		<version>1.4.4</version>
+		<version>2.0.0</version>
 	</parent>
 
 	<artifactId>fitnesse</artifactId>
@@ -23,7 +23,7 @@
 	<name>Fitnesse</name>
 
 	<properties>
-		<fitnesseintegration.version>3.10.0</fitnesseintegration.version>
+		<fitnesseintegration.version>3.12.0</fitnesseintegration.version>
 		<smartrics-RestFixture.version>4.4</smartrics-RestFixture.version>
 	</properties>
 
