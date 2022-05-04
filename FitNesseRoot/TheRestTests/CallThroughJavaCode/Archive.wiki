@@ -1,0 +1,6 @@
+---
+Test
+---
+!| FileTree |
+|path|getTree?|
+|/mnt/depot/cora/sharedArchive/||
