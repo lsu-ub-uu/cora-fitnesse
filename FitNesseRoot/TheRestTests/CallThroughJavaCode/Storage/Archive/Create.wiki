@@ -23,7 +23,7 @@ Static
 
 Show file structure before storing a new record
 !include -seamless .HelperPages.fileTree
-!define createDemoRecord {!--!}
+!define createDemoRecord {!-{"name":"book","children":[{"name":"recordInfo","children":[{"name":"id","value":"demo:1"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"bookTitle","value":"Harry Potter"}]}-!}
 
 !define recordType {demo}
 !define createData createDemoRecord

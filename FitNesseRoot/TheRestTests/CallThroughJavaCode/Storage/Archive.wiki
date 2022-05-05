@@ -39,5 +39,5 @@ As described above, an archive package stored in Alvin on Cora consists of a met
 !4 Fixity Information: a demonstration of authenticity, such as a hash value.
 In practice, this means that a checksum must be set for all files (as now).
 
-!include -seamless .TheRestTests.Storage.Archive.Create
-!include -seamless .TheRestTests.Storage.Archive.Update
+!include -seamless .TheRestTests.CallThroughJavaCode.Storage.Archive.Create
+!include -seamless .TheRestTests.CallThroughJavaCode.Storage.Archive.Update

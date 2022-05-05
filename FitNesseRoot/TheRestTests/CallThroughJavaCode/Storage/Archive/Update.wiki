@@ -1,0 +1,45 @@
+---
+Static
+---
+!2 Update
+ * '''Case 1:''' It must be possible to update an already stored record in the archive
+ 	* Change recordType to storeInArchive (SHOULD BE TESTED SOMEWHERE ELSE)
+#!***> Update storeInArchive for Demo recordType 
+#!include -seamless .HelperPages.defineAdminAuthToken 
+#
+#!define updateDemoRecordType {!-{"name":"recordType","children":[{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"demoGroup"}]},{"name":"abstract","value":"false"},{"name":"recordInfo","children":[{"name":"id","value":"demo"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"recordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2018-08-29T14:09:07.043000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2018-08-29T14:09:07.043000Z"}],"repeatId":"0"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2019-01-21T10:31:58.129000Z"}],"repeatId":"1"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2019-01-23T13:26:06.700000Z"}],"repeatId":"2"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2022-03-24T15:15:27.748031Z"}],"repeatId":"3"}]},{"name":"presentationViewId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"demoOutputPGroup"}]},{"name":"presentationFormId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"demoPGroup"}]},{"name":"newMetadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"demoNewGroup"}]},{"name":"newPresentationFormId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"demoNewPGroup"}]},{"name":"menuPresentationViewId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"demoMenuPGroup"}]},{"name":"listPresentationViewId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"demoListPGroup"}]},{"name":"userSuppliedId","value":"true"},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"demoText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"demoDefText"}]},{"name":"search","children":[{"name":"linkedRecordType","value":"search"},{"name":"linkedRecordId","value":"demoSearch"}]},{"name":"autocompletePresentationView","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"demoAutocompletePGroup"}]},{"name":"groupOfRecordType","value":"other","repeatId":"0"},{"name":"public","value":"false"},{"name":"storeInArchive","value":"true"}]}-!}
+#
+#!define recordType {recordType}
+#!define recordId {demo}
+#!define updateData updateDemoRecordType
+#!define expectedAnswer {}
+#!define expectedUpdateResult {OK}
+#
+#!include -seamless .HelperPages.updateRecord
+#*!
+
+!***> '''Case 1'''
+!define archiveFileSystemPath {/tmp/sharedArchive/}
+!define expectedAnswer {}
+!define expectedCreateResult {OK}
+
+Show file structure before storing a new record
+!include -seamless .HelperPages.fileTree
+#!define createDemoRecord {!--!}
+
+#!define recordType {demo}
+#!define createData createDemoRecord
+
+#!include -seamless .HelperPages.createRecord
+
+!define updateDemoRecord {!-{"name":"book","children":[{"name":"recordInfo","children":[{"name":"id","value":"demo:1"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"demo"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"tsCreated","value":"2022-05-05T14:10:55.155768Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2022-05-05T14:10:55.155768Z"}],"repeatId":"0"}]},{"name":"bookTitle","value":"Harry Potter"},{"name":"keeptHis","value":"3"},{"name":"url","value":"https://www.svt.se/"}]}-!}
+
+!define recordType {demo}
+!define recordId {demo:1}
+!define updateData updateDemoRecord
+
+!include -seamless .HelperPages.updateRecord
+
+Show file structure after storing a new record
+!include -seamless .HelperPages.fileTree
+*!
