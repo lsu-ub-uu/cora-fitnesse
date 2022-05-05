@@ -28,7 +28,7 @@ Show file structure before storing a new record
 !define recordType {demo}
 !define createData createDemoRecord
 !define expectedAnswer {}
-!define expectedCreateResult {OK}
+!define expectedCreateResult {CREATED}
 
 !include -seamless .HelperPages.createRecord
 
