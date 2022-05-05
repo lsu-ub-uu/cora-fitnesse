@@ -1,0 +1,6 @@
+---
+Help: Define AdminAuthToken
+---
+!***> Define AdminAuthToken
+!define currentAuthToken {$adminAuthToken}
+*!

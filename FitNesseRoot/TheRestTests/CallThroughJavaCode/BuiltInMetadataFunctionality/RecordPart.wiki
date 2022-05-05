@@ -27,10 +27,10 @@ Permissions are given in rules, later connected to users through roles. There ar
 
 A given write permission implies a read permission on the same record part, because a user must be able to read the information it is allowed to change.
 
-!include .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartMetadata
-!include .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartCreate
-!include .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartRead
-!include .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartUpdate
-!include .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartList
-!include .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartSearch
-!include .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartCleanup
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartMetadata
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartCreate
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartRead
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartUpdate
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartList
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartSearch
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.RecordPartCleanup

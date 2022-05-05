@@ -1,0 +1,8 @@
+---
+Static
+---
+!2 Update
+
+!define archiveFileSystemPath {/tmp/sharedArchive/}
+
+!include -seamless .HelperPages.fileTree

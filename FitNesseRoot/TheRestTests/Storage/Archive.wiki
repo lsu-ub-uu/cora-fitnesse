@@ -1,0 +1,42 @@
+---
+Test
+---
+!1 Archival Storage (lagring av data – ”arkivet”)
+Today, Fedora version 3.7 is used for this purpose in Alvin. According to plan, AIP (archive package, ie metadata + files) in Alvin on Cora will instead be stored in the latest version of Fedora, 6.0.0.
+Fedora is a robust, modular, open source repository system for the management and dissemination of digital content. It is especially suited for digital libraries and archives, both for access and preservation. It is also used to provide specialized access to very large and complex digital collections of historical and cultural materials as well as scientific data. Fedora has a worldwide installed user base that includes academic and cultural heritage organizations, universities, research institutions, university libraries, national libraries, and government agencies.
+
+In Alvin at Cora, we strive to more refine the archive function for the digital objects in relation to the handling of the regularly changing descriptive metadata (records). This means that the digital files (ie the original files - not the converted formats) are handled in Archival Storage (Fedora) but descriptive metadata will primarily be handled in Data Management (Cora) in terms of search and access, but also saved in the "archive" in the same way as now (but in the Cora format, ie the same format as for Data Mangement in Cora).
+
+An archive package stored in Alvin on Cora thus consists of a metadata record for the object (alvin record) and (where applicable) a list of associated binaries + the binaries themselves.
+
+Alvin relies heavily on links between different posts. Other records that are linked to the object (alvin-record) in Alvin on Cora are not saved in each individual archive package, ie. the information is not stored repeatedly in each archive package but in another place in the archive. A person can e.g. be linked as the author of a number of different records and in such a case the link found in the alvin-record to the corresponding alvin-person-record is the key that links the right person to the right object, just like in Data management, and the authority record for person is handled completely regardless of the records it is linked to.
+
+!4 Example of structure in the archive
+ * records
+ 	* record-1 contains:
+			* cora-metadata.xml (with a link to person-1)
+        * file-1.tif
+        * file-2.tif
+ * persons
+ 	* person-1 contains:
+    * cora-metadata.xml
+ * etc…
+    
+The digital files are described in OAIS as Content Data Objects. The focus of the archive function in Alvin is to ensure that these files are preserved long-term and not manipulated. In order to be compatible with OAIS, these must be combined with a so-called Preservation Description Information (PDI) (OAIS 4.2.1.4.2) which contains four parts, which must therefore be the parts that must be included in an AIP in Alvin at Cora :
+
+!4 Reference Information: a unique and persistent identifier.
+By creating an entry in Alvin, a unique Alvin ID and a URN: NBN are obtained. Both of these identifiers are intended to be persistent and are the link between AIP and its Content Data Object (the files) with the descriptive metadata in Cora. An Alvin ID is normally created according to the pattern system record type: serial number, e.g. alvin-record: 1.
+
+!4 Provenance Information: the history of the archived object.
+AIP stores information about who (user and organization) created the record for the object in Cora together with information about the date and time for this and, if applicable, from where the object was imported. For each file, the corresponding information is specified.
+
+If in the future for some reason, for example, we need to mass convert files to other formats, this must be documented here. In such a case, information about who and when / why the package was updated would be added to this section.
+
+!4 Context Information: relationship to other objects, e.g. the hierarchical structure of a digital archive.
+As described above, an archive package stored in Alvin on Cora consists of a metadata record for the object (alvin-record) and (if applicable) a list of associated binaries. This is also basically how it works now in Alvin.
+
+!4 Fixity Information: a demonstration of authenticity, such as a hash value.
+In practice, this means that a checksum must be set for all files (as now).
+
+!include -seamless .TheRestTests.Storage.Archive.Create
+!include -seamless .TheRestTests.Storage.Archive.Update

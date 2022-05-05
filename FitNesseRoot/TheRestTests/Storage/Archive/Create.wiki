@@ -1,0 +1,26 @@
+---
+Static
+---
+!2 Create
+ * '''Case 1:''' It must be possible to store a new record in the archive
+ 	* Change recordType to storeInArchive (SHOULD BE TESTED SOMEWHERE ELSE)
+
+!include -seamless .HelperPages.defineAdminAuthToken 
+
+!***> '''Case 1'''
+!define archiveFileSystemPath {/tmp/sharedArchive/}
+
+Show file structure before storing a new record
+!include -seamless .HelperPages.fileTree
+
+!define recordType {demo}
+!define createData {SomeData}
+!define expectedAnswer {}
+!define expectedCreateResult {OK}
+
+${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult}
+!include -seamless .HelperPages.createRecord
+
+Show file structure after storing a new record
+!include -seamless .HelperPages.fileTree
+*!
