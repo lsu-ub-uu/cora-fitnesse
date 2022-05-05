@@ -19,7 +19,7 @@ Static
 #*!
 
 !***> '''Case 1'''
-!define archiveFileSystemPath {/tmp/sharedArchive/}
+!define archiveFileSystemPath {/tmp/sharedArchiveReadable/}
 !define expectedAnswer {}
 !define expectedCreateResult {OK}
 
@@ -32,10 +32,10 @@ Show file structure before storing a new record
 
 #!include -seamless .HelperPages.createRecord
 
-!define updateDemoRecord {!-{"name":"book","children":[{"name":"recordInfo","children":[{"name":"id","value":"demo:1"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"demo"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"tsCreated","value":"2022-05-05T14:10:55.155768Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2022-05-05T14:10:55.155768Z"}],"repeatId":"0"}]},{"name":"bookTitle","value":"Harry Potter"},{"name":"keeptHis","value":"3"},{"name":"url","value":"https://www.svt.se/"}]}-!}
+!define updateDemoRecord {!-{"name":"book","children":[{"name":"recordInfo","children":[{"name":"id","value":"demo:$tempDemoId"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"demo"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"tsCreated","value":"2022-05-05T14:10:55.155768Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2022-05-05T14:10:55.155768Z"}],"repeatId":"0"}]},{"name":"bookTitle","value":"Harry Potter"},{"name":"keeptHis","value":"3"},{"name":"url","value":"https://www.svt.se/"}]}-!}
 
 !define recordType {demo}
-!define recordId {demo:1}
+!define recordId {demo:$tempDemoId}
 !define updateData updateDemoRecord
 
 !include -seamless .HelperPages.updateRecord

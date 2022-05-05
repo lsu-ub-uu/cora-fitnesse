@@ -19,14 +19,10 @@ Static
 *!
 
 !***> '''Case 1'''
-!define archiveFileSystemPath {/tmp/sharedArchive/}
+!define archiveFileSystemPath {/tmp/sharedArchiveReadable/}
 
 Show file structure before storing a new record
 !include -seamless .HelperPages.fileTree
-
-!| script | StringSupport |
-|note|skapa ett orcid|
-|$tempDemoId=|dateFormat;|mmssss|
 
 !define createDemoRecord {!-{"name":"book","children":[{"name":"recordInfo","children":[{"name":"id","value":"demo:$tempDemoId"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"bookTitle","value":"Harry Potter"}]}-!}
 
