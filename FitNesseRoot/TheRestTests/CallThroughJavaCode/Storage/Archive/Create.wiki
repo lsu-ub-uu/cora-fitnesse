@@ -20,7 +20,7 @@ Static
 
 !***> '''Case 1'''
 Show file structure before storing a new record
-!include -seamless .HelperPages.fileTree
+!include -seamless .HelperPages.archiveFile
 
 !define createDemoRecord {!-{"name":"book","children":[{"name":"recordInfo","children":[{"name":"id","value":"demo:$tempDemoId"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"bookTitle","value":"Harry Potter"}]}-!}
 
@@ -28,9 +28,14 @@ Show file structure before storing a new record
 !define createData createDemoRecord
 !define expectedAnswer {}
 !define expectedCreateResult {CREATED}
+!define archiveFileName {demo:demo:$tempDemoId}
+!define archiveVersion1 {v1}
+!define archiveVersion2 {v1}
 
 !include -seamless .HelperPages.createRecord
 
+!include -seamless .HelperPages.showFileVersion
+
 Show file structure after storing a new record
-!include -seamless .HelperPages.fileTree
+!include -seamless .HelperPages.archiveFile
 *!

@@ -1,0 +1,10 @@
+---
+Help: Show two versions given a basepath and a file .
+---
+!***> Show two version from a file
+
+!| ArchiveFile |
+|path|fileName|version|getReadFile?|
+|${archiveFileSystemPath}|${archiveFileName}|${archiveVersion1}| |
+|${archiveFileSystemPath}|${archiveFileName}|${archiveVersion2}| |
+*!

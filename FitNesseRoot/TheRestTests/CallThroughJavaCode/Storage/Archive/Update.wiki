@@ -23,7 +23,7 @@ Static
 !define expectedCreateResult {OK}
 
 Show file structure before storing a new record
-!include -seamless .HelperPages.fileTree
+!include -seamless .HelperPages.archiveFile
 #!define createDemoRecord {!--!}
 
 #!define recordType {demo}
@@ -39,6 +39,12 @@ Show file structure before storing a new record
 
 !include -seamless .HelperPages.updateRecord
 
+!define archiveFileName {demo:demo:$tempDemoId}
+!define archiveVersion1 {v1}
+!define archiveVersion2 {v2}
+
+!include -seamless .HelperPages.showFileVersion
+
 Show file structure after storing a new record
-!include -seamless .HelperPages.fileTree
+!include -seamless .HelperPages.archiveFile
 *!
