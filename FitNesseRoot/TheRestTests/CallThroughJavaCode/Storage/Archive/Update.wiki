@@ -19,7 +19,6 @@ Static
 #*!
 
 !***> '''Case 1'''
-!define archiveFileSystemPath {/tmp/sharedArchiveReadable/}
 !define expectedAnswer {}
 !define expectedCreateResult {OK}
 
