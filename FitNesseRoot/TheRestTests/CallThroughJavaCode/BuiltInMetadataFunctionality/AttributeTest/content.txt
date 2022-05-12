@@ -198,5 +198,6 @@
 | $adminAuthToken | coraText | testDefTextItemText | | OK |
 | $adminAuthToken | coraText | someText | | OK |
 | $adminAuthToken | coraText | someDefText | | OK |
-
+| $adminAuthToken | coraText | someTestText | | OK |
+| $adminAuthToken | coraText | someTestDefText | | OK |
 *!
