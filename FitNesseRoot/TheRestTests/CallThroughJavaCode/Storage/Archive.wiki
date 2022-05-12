@@ -2,24 +2,14 @@
 Help: Archive storage for Cora
 Test
 ---
-!1 Archival Storage (lagring av data – ”arkivet”)
+
+!1 Archival Storage
 In Cora, we strive to refine the archive function for the digital objects in relation to the handling of the regularly changing descriptive metadata (records). This means that the digital files (ie the original files - not the converted formats) are handled in Archival Storage (Archive) but descriptive metadata will primarily be handled in Data Management (Storage) in terms of search and access, but also stored in the "archive" for long time preservation, in the Cora format, ie the same format as for Data Mangement.
 
 An archive package stored in Cora thus consists of a metadata record for the object (record) and (where applicable) a list of associated binaries + the binaries themselves.
 
 Cora relies heavily on links between different posts. Other records that are linked to the object (record) in Cora are not saved in each individual archive package, ie. the information is not stored repeatedly in each archive package but in another place in the archive. A person can e.g. be linked as the author of a number of different records and in such a case the link found in the record to the corresponding person-record is the key that links the right person to the right object, just like in Data management, and the authority record for person is handled completely separately regardless of the records it is linked to.
 
-!4 Example of structure in the archive
- * records
- 	* record-1 contains:
-			* cora-metadata.xml (with a link to person-1)
-        * file-1.tif
-        * file-2.tif
- * persons
- 	* person-1 contains:
-    * cora-metadata.xml
- * etc…
-    
 The digital files are described in OAIS as Content Data Objects. The focus of the archive function in Cora is to ensure that these files are preserved long-term and not manipulated. In order to be compatible with OAIS, these must be combined with a so-called Preservation Description Information (PDI) (OAIS 4.2.1.4.2) which contains four parts, which must therefore be the parts that must be included in an AIP in Cora:
 
 !4 Reference Information: a unique and persistent identifier.

@@ -2,6 +2,7 @@
 | se.uu.ub.cora.fitnesseintegration |
 | se.uu.ub.cora.fitnesseintegration.file |
 | se.uu.ub.cora.fitnesseintegration.compare |
+| se.uu.ub.cora.fitnesseintegration.server.compare.fixtures |
 
 !| script | SystemUrl |
 | setUrl | ${systemUnderTestUrl} |
