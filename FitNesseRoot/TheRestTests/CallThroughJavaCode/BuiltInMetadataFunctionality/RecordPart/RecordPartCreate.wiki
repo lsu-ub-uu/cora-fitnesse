@@ -11,6 +11,8 @@ There are a few different cases for create that can happen, when there are write
    * '''Case 4a''': Top level, A recordPart that the user does not have write permission for is mandatory (must be present), whether the user sends data for the restricted parts or not does not matter, the end result should be that the record is missing the mandatory restricted data parts and record creation should fail with an error
    * '''Case 4b''': Below top level, A recordPart that the user does not have write permission for is mandatory (must be present), whether the user sends data for the restricted parts or not does not matter, the end result should be that the record is missing the mandatory restricted data parts and record creation should fail with an error
 
+!style_red[SÄTT VÄRDEN FÖR selectableAttribute]
+
 !***> Case 1
 
 !define currentAuthToken {$adminAuthToken}
