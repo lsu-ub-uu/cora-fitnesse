@@ -33,6 +33,7 @@ A metadataNumberVariable is a metadata variable for entering numbers.
 | $adminAuthToken | metadataTextVariable | warningMaxValueNumberTextVar | 1 | 1 | warningMax |
 | $adminAuthToken | metadataTextVariable | numberOfDecimalsNumberTextVar | 1 | 1 | numberOfDecimals |
 | $adminAuthToken | metadataGroup | recordInfoOldGroup | not found | not found | not found |
+| $adminAuthToken | metadataGroup | attributeReferencesGroup | 0 | 1 | attributeReferences |
 
 *!
 !***> Load metadataNumberVariableGroup to use in tests
@@ -56,5 +57,6 @@ A metadataNumberVariable is a metadata variable for entering numbers.
 | $adminAuthToken | metadataTextVariable | warningMaxValueNumberTextVar | 1 | 1 | warningMax |
 | $adminAuthToken | metadataTextVariable | numberOfDecimalsNumberTextVar | 1 | 1 | numberOfDecimals |
 | $adminAuthToken | metadataGroup | recordInfoOldGroup | not found | not found | not found |
+| $adminAuthToken | metadataGroup | attributeReferencesGroup | 0 | 1 | attributeReferences |
 
 *!
