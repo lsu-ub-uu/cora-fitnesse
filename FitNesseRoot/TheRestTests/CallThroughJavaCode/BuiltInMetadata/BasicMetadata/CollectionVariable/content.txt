@@ -130,6 +130,21 @@ ItemCollections
 | $adminAuthToken | yesNoUnknown | {"name":"yesNoUnknown","children":[{"name":"recordInfo","children":[{"name":"id","value":"myYesNoUnknownAttributes"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"testWithThreeItems","repeatId":"1","value":"yes"},{"name":"testWithThreeItemsAndAttribute","value":"no","attributes":{"lang":"sv"}},{"name":"testWithThreeItemsAndAttribute","value":"unknown","attributes":{"lang":"en"}}]} | | CREATED |
 
 *!
+
+!***> Try to create an attribute with a values that does not exist
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | yesNoUnknown | {"name":"yesNoUnknown","children":[{"name":"recordInfo","children":[{"name":"id","value":"myYesNoUnknownAttributes"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"testWithThreeItems","repeatId":"1","value":"yes"},{"name":"testWithThreeItemsAndAttribute","value":"no","attributes":{"lang":"sv"}},{"name":"testWithThreeItemsAndAttribute","value":"unknown","attributes":{"lang":"nonExistingLanguage"}}]} | Error creating new record for recordType: yesNoUnknown. Data is not valid: [Could not find metadata for child with nameInData: testWithThreeItemsAndAttribute and attributes: lang:nonExistingLanguage] | BAD_REQUEST |
+
+*!
+!***> Try to create an attribute which does not exit
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | yesNoUnknown | {"name":"yesNoUnknown","children":[{"name":"recordInfo","children":[{"name":"id","value":"myYesNoUnknownAttributes"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"testWithThreeItems","repeatId":"1","value":"yes"},{"name":"testWithThreeItemsAndAttribute","value":"no","attributes":{"lang":"sv"}},{"name":"testWithThreeItemsAndAttribute","value":"unknown","attributes":{"nonExistingAttribute":"en"}}]} | Error creating new record for recordType: yesNoUnknown. Data is not valid: [Could not find metadata for child with nameInData: testWithThreeItemsAndAttribute and attributes: nonExistingAttribute:en] | BAD_REQUEST |
+
+*!
 Clean up created data
 
 !***> Clean up created data
