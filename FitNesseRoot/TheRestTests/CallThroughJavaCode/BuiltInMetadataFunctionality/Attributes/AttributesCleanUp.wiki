@@ -44,24 +44,24 @@
 | $adminAuthToken | coraText | firstItemCollectionVarText | | OK |
 | $adminAuthToken | coraText | firstItemCollectionVarDefText | | OK |
 
-#!| RecordEndpointFixture |
-#| authToken | type | id | testDeleteRecord? | getStatusType? |
-#| $adminAuthToken | search | exampleAttributeSearch | | |
-#| $adminAuthToken | recordType | exampleAttribute | | OK |
-#| $adminAuthToken | presentationGroup | exampleAttributeOutputPGroup | | OK |
-#| $adminAuthToken | presentationGroup | exampleAttributePGroup | | OK |
-#| $adminAuthToken | presentationGroup | exampleAttributeNewPGroup | | OK |
-#| $adminAuthToken | presentationGroup | exampleAttributeMenuPGroup | | OK |
-#| $adminAuthToken | presentationGroup | exampleAttributeListPGroup | | OK |
-#| $adminAuthToken | presentationGroup | exampleAttributeAutocompletePGroup | | OK |
-#| $adminAuthToken | metadataGroup | exampleAttributeNewGroup | | OK |
-#| $adminAuthToken | metadataGroup | exampleAttributeGroup | | OK |
-#| $adminAuthToken | coraText | exampleAttributeText | | OK |
-#| $adminAuthToken | coraText | exampleAttributeDefText | | OK |
-#| $adminAuthToken | coraText | exampleAttributeGroupText | | OK |
-#| $adminAuthToken | coraText | exampleAttributeGroupDefText | | OK |
-#| $adminAuthToken | coraText | exampleAttributeNewGroupText | | OK |
-#| $adminAuthToken | coraText | exampleAttributeNewGroupDefText | | OK |
-#| $adminAuthToken | coraText | exampleAttributeSearchText | | OK |
-#| $adminAuthToken | coraText | exampleAttributeSearchDefText | | OK |
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | search | exampleAttributeSearch | | |
+| $adminAuthToken | recordType | exampleAttribute | | OK |
+| $adminAuthToken | presentationGroup | exampleAttributeOutputPGroup | | OK |
+| $adminAuthToken | presentationGroup | exampleAttributePGroup | | OK |
+| $adminAuthToken | presentationGroup | exampleAttributeNewPGroup | | OK |
+| $adminAuthToken | presentationGroup | exampleAttributeMenuPGroup | | OK |
+| $adminAuthToken | presentationGroup | exampleAttributeListPGroup | | OK |
+| $adminAuthToken | presentationGroup | exampleAttributeAutocompletePGroup | | OK |
+| $adminAuthToken | metadataGroup | exampleAttributeNewGroup | | OK |
+| $adminAuthToken | metadataGroup | exampleAttributeGroup | | OK |
+| $adminAuthToken | coraText | exampleAttributeText | | OK |
+| $adminAuthToken | coraText | exampleAttributeDefText | | OK |
+| $adminAuthToken | coraText | exampleAttributeGroupText | | OK |
+| $adminAuthToken | coraText | exampleAttributeGroupDefText | | OK |
+| $adminAuthToken | coraText | exampleAttributeNewGroupText | | OK |
+| $adminAuthToken | coraText | exampleAttributeNewGroupDefText | | OK |
+| $adminAuthToken | coraText | exampleAttributeSearchText | | OK |
+| $adminAuthToken | coraText | exampleAttributeSearchDefText | | OK |
 *!
