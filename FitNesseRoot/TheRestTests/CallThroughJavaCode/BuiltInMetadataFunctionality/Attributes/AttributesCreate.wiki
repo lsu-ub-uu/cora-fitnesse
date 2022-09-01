@@ -1,0 +1,21 @@
+---
+Static
+---
+
+!2 Create
+
+ * '''Case 1''': I must be possible to create a instance of a record that has finalValue attributes.
+
+!***> Case 1
+
+!define currentAuthToken {$adminAuthToken}
+
+
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.Attributes.data.recordWithAttributes1
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {}
+!define expectedCompareResult {OK}
+!define expectedActionResult {}
+!define expectedPermissionResult {OK}
+!include -seamless .HelperPages.createCheckReadCheck
+*!
