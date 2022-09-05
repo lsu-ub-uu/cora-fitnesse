@@ -1,0 +1,27 @@
+---
+Help: Data for example recordWithAttributes1
+---
+!***> Data for example recordWithAttributes1
+
+!define recordType {exampleAttribute}
+!define recordId {exampleAttribute1}
+!define recordPermissions {!-{"read":[],"write":[]}-!}
+
+!define createData {!-{"name":"exampleAttribute","children":[{"name":"recordInfo","children":[{"name":"id","value":"exampleAttribute1"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"textVarOneAttributeFinal","repeatId":"1","value":"Final"},{"name":"textVarOneAttributeChoice","repeatId":"2","value":"Choice","attributes":{}},{"name":"textVarTwoAttributes","repeatId":"3","value":"Both","attributes":{"exampleAttributeFinal":"two"}},{"name":"numberVarOneAttributeChoice","repeatId":"4","value":"1111"},{"name":"exampleOneAttributesLink","repeatId":"5","children":[{"name":"linkedRecordType","value":"demo"},{"name":"linkedRecordId","value":"asdf"}]},{"name":"exampleOneAttributeGroup","repeatId":"6","children":[{"name":"textVarTwoAttributes","repeatId":"0","value":"group","attributes":{"exampleAttributeChoice":"three"}}]},{"name":"collectionVarOneAttributeChoice","repeatId":"7","value":"pink"}]}-!}
+
+!define expectedCreatedData createData
+
+!define updateData {!-{"name":"exampleAttribute","children":[{"name":"recordInfo","children":[{"name":"id","value":"exampleAttribute1"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"exampleAttribute"}]}]},{"name":"textVarOneAttributeFinal","repeatId":"1","value":"Final"},{"name":"textVarOneAttributeChoice","repeatId":"2","value":"Choice","attributes":{}},{"name":"textVarTwoAttributes","repeatId":"3","value":"Both","attributes":{"exampleAttributeFinal":"two"}},{"name":"numberVarOneAttributeChoice","repeatId":"4","value":"1111"},{"name":"exampleOneAttributesLink","repeatId":"5","children":[{"name":"linkedRecordType","value":"demo"},{"name":"linkedRecordId","value":"asdf"}]},{"name":"exampleOneAttributeGroup","repeatId":"6","children":[{"name":"textVarTwoAttributes","repeatId":"0","value":"group","attributes":{"exampleAttributeChoice":"three"}}]},{"name":"collectionVarOneAttributeChoice","repeatId":"7","value":"pink"}]}-!}
+!define expectedUpdatedData updateData
+
+!define originalData {!--!}
+!define expectedOriginalData originalData
+ 
+!define searchId {testWorkoutExtendedSearch}
+!define searchQueryData {!--!}
+
+# customUpdateData is a json string which can be filled with extra json using the variable customJsonPart
+!define jsonPart customJsonPart
+!define customJsonPart {}
+!define customUpdateData {!--!}
+*!

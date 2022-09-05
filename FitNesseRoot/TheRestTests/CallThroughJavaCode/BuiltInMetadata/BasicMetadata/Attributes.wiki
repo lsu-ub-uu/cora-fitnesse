@@ -1,0 +1,14 @@
+---
+Test
+---
+| import |
+| se.uu.ub.cora.fitnesseintegration |
+| se.uu.ub.cora.fitnesseintegration.compare |
+
+!1 Attributes
+!style_blue[Add here some description about attributes.] 
+
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Attributes.AttributesMetadata
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Attributes.AttributesCreate
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Attributes.AttributesUpdate
+!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Attributes.AttributesCleanUp

@@ -46,6 +46,15 @@ Clean up created data
 | $adminAuthToken | presentationVar | testNumOfParticipants2PVar | | OK |
 | $adminAuthToken | presentationVar | testNumOfParticipants2OutputPVar | | OK |
 | $adminAuthToken | metadataTextVariable | testNumOfParticipants2TextVar | | OK |
+| $adminAuthToken | presentationVar | testSelectableAttribute1PVar | | OK |
+| $adminAuthToken | presentationVar | testSelectableAttribute1OutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testSelectableAttribute1TextVar | | OK |
+| $adminAuthToken | presentationVar | testSelectableAttribute2PVar | | OK |
+| $adminAuthToken | presentationVar | testSelectableAttribute2OutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testSelectableAttribute2TextVar | | OK |
+| $adminAuthToken | presentationVar | testSelectableAttribute3PVar | | OK |
+| $adminAuthToken | presentationVar | testSelectableAttribute3OutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testSelectableAttribute3TextVar | | OK |
 | $adminAuthToken | presentationVar | testInstructorId1PVar | | OK |
 | $adminAuthToken | presentationVar | testInstructorId1OutputPVar | | OK |
 | $adminAuthToken | metadataTextVariable | testInstructorId1TextVar | | OK |

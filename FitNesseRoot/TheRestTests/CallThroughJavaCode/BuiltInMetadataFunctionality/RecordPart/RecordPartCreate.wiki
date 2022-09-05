@@ -44,17 +44,9 @@ There are a few different cases for create that can happen, when there are write
 !include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys3
 !define expectedCreateResult {CREATED}
 !define expectedAnswer {}
-!define expectedCompareResult {Did not find a match for child with nameInData numOfParticipants2 and value 42. Did not find a match for child with nameInData instructorId2 and value 3562. Did not find a match for child with nameInData instructorId3 and value 3563. Did not find a match for child with nameInData laps1_2 and value 10. Did not find a match for child with nameInData duration1_2 and value 5h. Did not find a match for child with nameInData duration1_3 and value 6h. Did not find a match for child with nameInData firstName1_2 and value Maria. Did not find a match for child with nameInData lastName1_2 and value Chef. Did not find a match for child with nameInData lastName1_3 and value Boss. Child with nameInData instructorName2 and type group is missing. Did not find a match for child with nameInData ratingDate1_2 and value 2021-01-13. Did not find a match for child with nameInData voteCount1_2 and value 4341223. Did not find a match for child with nameInData voteCount1_3 and value 4341233. Child with nameInData popularity2 and type group is missing. Child with nameInData popularity3 and type group is missing.}
+!define expectedCompareResult {Did not find a match for child with nameInData numOfParticipants2 and value 42. Did not find a match for child with nameInData selectableAttribute2 and value valueTwo and attributes [exampleAttributeChoice:two]. Did not find a match for child with nameInData selectableAttribute3 and value valueThree and attributes [exampleAttributeChoice:three]. Did not find a match for child with nameInData instructorId2 and value 3562. Did not find a match for child with nameInData instructorId3 and value 3563. Did not find a match for child with nameInData laps1_2 and value 10. Did not find a match for child with nameInData duration1_2 and value 5h. Did not find a match for child with nameInData duration1_3 and value 6h. Did not find a match for child with nameInData firstName1_2 and value Maria. Did not find a match for child with nameInData lastName1_2 and value Chef. Did not find a match for child with nameInData lastName1_3 and value Boss. Child with nameInData instructorName2 and type group is missing. Did not find a match for child with nameInData ratingDate1_2 and value 2021-01-13. Did not find a match for child with nameInData voteCount1_2 and value 4341223. Did not find a match for child with nameInData voteCount1_3 and value 4341233. Child with nameInData popularity2 and type group is missing. Child with nameInData popularity3 and type group is missing.}
 !define expectedPermissionResult {OK}
 !include -seamless .HelperPages.createCheckReadCheck
-*!
-!***> Clean up no longer needed cirkelfys2 and cirkelfys3
-
-#!| RecordEndpointFixture |
-#| authToken | type | id | testDeleteRecord? | getStatusType? |
-#| $adminAuthToken | testWorkout | cirkelfys2 | | OK |
-#| $adminAuthToken | testWorkout | cirkelfys3 | | OK |
-
 *!
 !***> Case 4a
 

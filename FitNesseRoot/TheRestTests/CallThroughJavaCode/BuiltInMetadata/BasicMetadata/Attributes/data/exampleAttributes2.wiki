@@ -1,0 +1,27 @@
+---
+Help: Data for example recordWithAttributes1
+---
+!***> Data for example recordWithAttributes1
+
+!define recordType {exampleAttribute}
+!define recordId {exampleAttribute2}
+!define recordPermissions {!-{"read":[],"write":[]}-!}
+
+!define createData {!-{"name":"exampleAttribute","children":[{"name":"recordInfo","children":[{"name":"id","value":"exampleAttribute2"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"textVarOneAttributeFinal","repeatId":"1","value":"Final","attributes":{"exampleAttributeFinal":"ten"}},{"name":"textVarOneAttributeChoice","repeatId":"2","value":"Choice","attributes":{"exampleAttributeChoice":"ten"}},{"name":"textVarTwoAttributes","repeatId":"3","value":"Both","attributes":{"exampleAttributeFinal":"ten","exampleAttributeChoice":"ten"}},{"name":"numberVarOneAttributeChoice","repeatId":"4","value":"1111","attributes":{"exampleAttributeChoice":"ten"}},{"name":"exampleOneAttributesLink","repeatId":"5","children":[{"name":"linkedRecordType","value":"demo"},{"name":"linkedRecordId","value":"asdf"}],"attributes":{"exampleAttributeChoice":"ten"}},{"name":"exampleOneAttributeGroup","repeatId":"6","children":[{"name":"textVarTwoAttributes","repeatId":"0","value":"group","attributes":{"exampleAttributeFinal":"ten","exampleAttributeChoice":"ten"}}],"attributes":{"exampleAttributeChoice":"ten"}},{"name":"collectionVarOneAttributeChoice","repeatId":"7","value":"pink","attributes":{"exampleAttributeChoice":"ten"}}]}-!}
+
+!define expectedCreatedData createData
+
+!define updateData {!-{"name":"exampleAttribute","children":[{"name":"recordInfo","children":[{"name":"id","value":"exampleAttribute2"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"exampleAttribute"}]}]},{"name":"textVarOneAttributeFinal","repeatId":"1","value":"Final","attributes":{"exampleAttributeFinal":"ten"}},{"name":"textVarOneAttributeChoice","repeatId":"2","value":"Choice","attributes":{"exampleAttributeChoice":"ten"}},{"name":"textVarTwoAttributes","repeatId":"3","value":"Both","attributes":{"exampleAttributeFinal":"ten","exampleAttributeChoice":"ten"}},{"name":"numberVarOneAttributeChoice","repeatId":"4","value":"1111","attributes":{"exampleAttributeChoice":"ten"}},{"name":"exampleOneAttributesLink","repeatId":"5","children":[{"name":"linkedRecordType","value":"demo"},{"name":"linkedRecordId","value":"asdf"}],"attributes":{"exampleAttributeChoice":"ten"}},{"name":"exampleOneAttributeGroup","repeatId":"6","children":[{"name":"textVarTwoAttributes","repeatId":"0","value":"group","attributes":{"exampleAttributeFinal":"ten","exampleAttributeChoice":"ten"}}],"attributes":{"exampleAttributeChoice":"ten"}},{"name":"collectionVarOneAttributeChoice","repeatId":"7","value":"pink","attributes":{"exampleAttributeChoice":"ten"}}]}-!}
+!define expectedUpdatedData updateData
+
+!define originalData {!--!}
+!define expectedOriginalData originalData
+ 
+!define searchId {testWorkoutExtendedSearch}
+!define searchQueryData {!--!}
+
+# customUpdateData is a json string which can be filled with extra json using the variable customJsonPart
+!define jsonPart customJsonPart
+!define customJsonPart {}
+!define customUpdateData {!--!}
+*!

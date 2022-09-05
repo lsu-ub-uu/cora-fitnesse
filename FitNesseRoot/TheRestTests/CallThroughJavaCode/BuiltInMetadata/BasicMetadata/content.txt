@@ -1,2 +1,2 @@
 !1 Test suite X
-!contents -R2 -g -p -f -h
+!contents -R1 -g -p -f -h
