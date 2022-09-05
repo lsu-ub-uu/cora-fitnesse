@@ -23,10 +23,10 @@
 	<name>Fitnesse</name>
 
 	<properties>
-		<fitnesseintegration.version>3.15-SNAPSHOT</fitnesseintegration.version>
+		<fitnesseintegration.version>3.17.0</fitnesseintegration.version>
 		<coralog4j.version>2.9.0</coralog4j.version>
-		<basicdata.version>4.1-SNAPSHOT</basicdata.version>
-		<xmlconverter.version>2.1.0</xmlconverter.version>
+		<basicdata.version>4.1.0</basicdata.version>
+		<xmlconverter.version>2.2.0</xmlconverter.version>
 		<smartrics-RestFixture.version>4.4</smartrics-RestFixture.version>
 	</properties>
 
