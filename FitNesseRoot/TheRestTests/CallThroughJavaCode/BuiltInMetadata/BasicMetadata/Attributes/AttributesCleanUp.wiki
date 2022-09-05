@@ -9,6 +9,8 @@
 | $adminAuthToken | presentationGroup | someFitnessePGroup | | OK |
 | $adminAuthToken | metadataGroup | exampleAttributeNewGroup | | OK |
 | $adminAuthToken | metadataGroup | exampleAttributeGroup | | OK |
+| $adminAuthToken | coraText | someFitnesseText | | OK |
+| $adminAuthToken | coraText | someFitnesseDefText | | OK |
 | $adminAuthToken | coraText | exampleAttributeGroupText | | OK |
 | $adminAuthToken | coraText | exampleAttributeGroupDefText | | OK |
 | $adminAuthToken | coraText | exampleAttributeNewGroupText | | OK |
