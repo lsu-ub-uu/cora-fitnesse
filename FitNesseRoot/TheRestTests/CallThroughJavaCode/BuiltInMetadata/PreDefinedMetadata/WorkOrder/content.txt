@@ -50,7 +50,7 @@ WorkOrders are deleted after create, since they only are intended to be used to 
 
 !| RecordEndpointFixture |
 | authToken | type | testReadRecordList? | getStatusType? |
-| $adminAuthToken | workOrder | | NOT_FOUND |
+| $adminAuthToken | workOrder | {"dataList":{"fromNo":"0","data":[],"totalNo":"0","containDataOfType":"workOrder","toNo":"0"}} | OK |
 
 *!
 !***> Create data of recordType workOrder without recordInfo. It is ok, since it is autocreated using extended functionality
