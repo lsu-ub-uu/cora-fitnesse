@@ -107,7 +107,7 @@ An abstract record type (the parent) is used to create a group of record type si
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | plant | {"name":"plant","children":[{"name":"recordInfo","children":[{"name":"id","value":"tree1"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"id","value":"notRealyAnId"}]} | Data creation on abstract recordType:plant is not allowed | METHOD_NOT_ALLOWED |
+| $adminAuthToken | plant | {"name":"plant","children":[{"name":"recordInfo","children":[{"name":"id","value":"tree1"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"id","value":"notRealyAnId"}]} | Data creation on abstract recordType: plant is not allowed | METHOD_NOT_ALLOWED |
 
 *!
 !***> List data(tree, flower, plant)
@@ -131,7 +131,7 @@ An abstract record type (the parent) is used to create a group of record type si
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | plant | flower1 | {"name":"plant","children":[{"name":"recordInfo","children":[{"name":"id","value":"flower1"},{"name":"type","value":"plant"},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"id","value":"theRosee"}]} | | BAD_REQUEST |
+| $adminAuthToken | plant | flower1 | {"name":"plant","children":[{"name":"recordInfo","children":[{"name":"id","value":"flower1"},{"name":"type","value":"plant"},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"id","value":"theRosee"}]} |Update on abstract recordType: plant is not allowed | METHOD_NOT_ALLOWED |
 
 *!
 !***> Read data(tree1, flower1)
