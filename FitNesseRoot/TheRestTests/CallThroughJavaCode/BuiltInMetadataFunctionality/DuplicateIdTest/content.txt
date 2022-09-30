@@ -46,7 +46,7 @@ A user should not be able to create a post with an id that already exists. This 
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | car | {"name":"car","children":[{"name":"recordInfo","children":[{"name":"id","value":"skoda"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"id","value":"aFakeSkoda"}]} | Record with recordId: skoda already exists | CONFLICT |
+| $adminAuthToken | car | {"name":"car","children":[{"name":"recordInfo","children":[{"name":"id","value":"skoda"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"id","value":"aFakeSkoda"}]} | Record with type: car and id: skoda already exists in storage | CONFLICT |
 
 *!
 !***> Delete data on car
