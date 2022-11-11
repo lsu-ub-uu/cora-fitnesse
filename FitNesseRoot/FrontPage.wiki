@@ -1,0 +1,12 @@
+---
+Static
+---
+!1 Acceptance tests and documentation for Cora
+
+CoraTests
+
+JsClient
+
+DocumentationPage
+
+!note FitNesse ${FITNESSE_VERSION}

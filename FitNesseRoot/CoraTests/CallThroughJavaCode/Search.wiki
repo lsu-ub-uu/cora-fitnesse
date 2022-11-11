@@ -1,0 +1,14 @@
+---
+Help: Testing search
+Suite
+---
+!contents -R2 -g -p -f -h
+!1 Search
+Search in Cora needs a few things to work:
+- [[searchTerms][.CoraTests.CallThroughJavaCode.BuiltInMetadata.PreDefinedMetadata.SearchTerm]] defined and linked from metadata that should be indexed by the search system
+- [[search][.CoraTests.CallThroughJavaCode.BuiltInMetadata.PreDefinedMetadata.Search]] defining a search of which searchterms can be searched against a set of recordTypes, and later can be executed by a user
+
+New searches can be defined at any time, as long as they use existing searchTerms 
+
+
+Tests for setting up and running searches can be found [[here.][>SearchFinal]]

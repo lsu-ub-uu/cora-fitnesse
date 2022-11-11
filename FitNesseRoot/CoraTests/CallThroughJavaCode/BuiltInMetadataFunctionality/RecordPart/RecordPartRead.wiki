@@ -7,7 +7,7 @@ There are a few different cases for read that can happen, when there are read re
 !***> Case 1
 !define currentAuthToken {$adminAuthToken}
 
-!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
 !define expectedCreateResult {CREATED}
 !define expectedAnswer {}
 !define expectedCompareResult {OK}
@@ -21,7 +21,7 @@ There are a few different cases for read that can happen, when there are read re
 
 !define currentAuthToken {$userAuthToken}
 
-!include -seamless .TheRestTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
 
 !define expectedAnswer {}
 !define expectedCompareResult {Did not find a match for child with nameInData selectableAttribute3 and value valueThree and attributes [exampleAttributeChoice:three]. Did not find a match for child with nameInData instructorId3 and value 3563. Did not find a match for child with nameInData duration1_3 and value 6h. Did not find a match for child with nameInData lastName1_3 and value Boss. Did not find a match for child with nameInData lastName2_3 and value Boss2. Did not find a match for child with nameInData voteCount1_3 and value 4341233. Did not find a match for child with nameInData voteCount2_3 and value 43412332. Child with nameInData popularity3 and type group is missing.}

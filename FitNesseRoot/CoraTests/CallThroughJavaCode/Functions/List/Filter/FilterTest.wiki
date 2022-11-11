@@ -1,0 +1,79 @@
+---
+Test
+---
+!2 Test listing testMovies before any filter is defined for the recordType
+If no filter is defined for the recordType, it is not possible to use a filter when listing that recordType
+
+!***> List testMovie with filter that matches the created testMovie when no filter exist in recordType
+
+!| RecordEndpointFixture |
+| authToken | type | json | testReadRecordList? | getStatusType? |
+| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"part","children":[{"name":"key","value":"movieTitle"},{"name":"value","value":"The rock"}],"repeatId":"0"}]} | Error reading records with recordType: testMovie. No filter exists for recordType: testMovie | BAD_REQUEST |
+
+*!
+!***> Update recordType testMovie and add filter
+
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? | getStatusType? |
+| $adminAuthToken | recordType | testMovie | {"children":[{"children":[{"name":"id","value":"testMovie"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"recordType"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"children":[{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"updatedBy"},{"name":"tsUpdated","value":"2017-12-14T08:49:09.192000Z"}],"name":"updated"},{"name":"tsCreated","value":"2017-12-14T08:49:09.192000Z"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"testMovieGroup"}],"name":"metadataId"},{"name":"abstract","value":"false"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"testMoviePGroup"}],"name":"presentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"testMoviePGroup"}],"name":"presentationFormId"},{"children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"testMovieNewGroup"}],"name":"newMetadataId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"testMoviePGroup"}],"name":"newPresentationFormId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"testMoviePGroup"}],"name":"menuPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"testMoviePGroup"}],"name":"listPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"testMoviePGroup"}],"name":"autocompletePresentationView"},{"name":"userSuppliedId","value":"true"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someFitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someFitnesseDefText"}],"name":"defTextId"},{"children":[{"name":"linkedRecordType","value":"search"},{"name":"linkedRecordId","value":"recordTypeSearch"}],"name":"search"},{"name":"filter","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"testMovieFilterGroup"}]},{"repeatId":"0","name":"groupOfRecordType","value":"metadata"},{"name":"public","value":"false"},{"name":"storeInArchive","value":"false"}],"name":"recordType"} | | OK |
+
+*!
+
+!2 Test listing testMovies
+!***> List testMovie with filter that matches the created testMovie
+
+!| RecordEndpointFixture |
+| authToken | type | json | testReadRecordList? | getStatusType? |
+| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"part","children":[{"name":"key","value":"movieTitle"},{"name":"value","value":"The rock"}],"repeatId":"0"}]} | =~/"toNo":"1"/ | OK |
+
+*!
+!***> List testMovie with a filter that does not match the created testMovie
+
+!| RecordEndpointFixture |
+| authToken | type | json | testReadRecordList? | getStatusType? |
+| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"part","children":[{"name":"key","value":"movieTitle"},{"name":"value","value":"Another movie"}],"repeatId":"0"}]} | =~/"toNo":"0"/ | OK |
+
+*!
+!***> Update testMovie and set another title
+
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? | getStatusType? |
+| $adminAuthToken | testMovie | someMovie | {"name":"testMovie","children":[{"name":"recordInfo","children":[{"name":"id","value":"someMovie"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testMovie"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"movieTitle","value":"Jumanji"}]} | | OK |
+
+*!
+!***> List testMovie with same filter that matched before. Since the title has been updated it should no longer match
+
+!| RecordEndpointFixture |
+| authToken | type | json | testReadRecordList? | getStatusType? |
+| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"part","children":[{"name":"key","value":"movieTitle"},{"name":"value","value":"The rock"}],"repeatId":"0"}]} | =~/"toNo":"0"/ | OK |
+
+*!
+!***> List testMovie with filter that matches the updated title.
+
+!| RecordEndpointFixture |
+| authToken | type | json | testReadRecordList? | getStatusType? |
+| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"part","children":[{"name":"key","value":"movieTitle"},{"name":"value","value":"Jumanji"}],"repeatId":"0"}]} | =~/"toNo":"1"/ | OK |
+
+*!
+!***> Delete created testMovie
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | testMovie | someMovie | | OK |
+
+*!
+!***> List testMovie again with filter that matches. Since the movie has been deleted, no matches should be found.
+
+!| RecordEndpointFixture |
+| authToken | type | json | testReadRecordList? | getStatusType? |
+| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"part","children":[{"name":"key","value":"movieTitle"},{"name":"value","value":"Jumanji"}],"repeatId":"0"}]} | =~/"toNo":"0"/ | OK |
+
+*!
+!2 Test listing testMovies with a non valid filter
+!***> List testMovie with non valid filter
+
+!| RecordEndpointFixture |
+| authToken | type | json | testReadRecordList? | getStatusType? |
+| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"part","children":[{"name":"value","value":"The rock"}],"repeatId":"0"}]} | Error reading records with recordType: testMovie. Data is not valid: [Did not find enough data children with referenceId: testMovieKeyCollectionVar(with nameInData:key).] | BAD_REQUEST |
+
+*!

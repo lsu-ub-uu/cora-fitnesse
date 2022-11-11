@@ -1,3 +1,7 @@
+---
+Suite
+---
+!***> Setup import and scripts
 | import |
 | se.uu.ub.cora.fitnesseintegration |
 | se.uu.ub.cora.fitnesseintegration.file |
@@ -16,27 +20,5 @@
 | setChildComparerUsingClassName | se.uu.ub.cora.fitnesseintegration.ChildComparerImp |
 | setComparerFactoryUsingClassName | se.uu.ub.cora.fitnesseintegration.compare.ComparerFactoryImp |
 
-!2 Login
-!***> Login for admin
-
-!| AppTokenEndpointFixture |
-| userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
-| 131313 | | | $adminAuthToken= | CREATED |
-
+!define TEST_SYSTEM {slim}
 *!
-!| script | AuthTokenHolder |
-| setAdminAuthToken | $adminAuthToken |
-
-!***> Login for user
-
-!| AppTokenEndpointFixture |
-| userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
-| 121212 | | | $userAuthToken= | CREATED |
-
-*!
-!| script | AuthTokenHolder |
-| setUserAuthToken | $userAuthToken |
-
-!2 Common variables
-!define archiveFileSystemPath {/tmp/sharedArchiveReadable/systemOne}
-

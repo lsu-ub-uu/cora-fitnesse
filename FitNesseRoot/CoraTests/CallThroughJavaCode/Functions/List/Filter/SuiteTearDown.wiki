@@ -1,0 +1,49 @@
+!1 Reset testdata
+Remove data created for this test
+
+!***> Delete created data
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | testMovie | someOldMovie | | OK |
+| $adminAuthToken | search | testMovieSearch | | OK |
+| $adminAuthToken | recordType | testMovie | | OK |
+| $adminAuthToken | presentationGroup | testMovieFilterOutputPGroup | | OK |
+| $adminAuthToken | presentationGroup | testMovieFilterPGroup | | OK |
+| $adminAuthToken | metadataGroup | testMovieFilterGroup | | OK |
+| $adminAuthToken | presentationGroup | testMoviePartOutputPGroup | | OK |
+| $adminAuthToken | presentationGroup | testMoviePartPGroup | | OK |
+| $adminAuthToken | metadataGroup | testMoviePartGroup | | OK |
+| $adminAuthToken | presentationCollectionVar | testMovieKeyPCollVar | | OK |
+| $adminAuthToken | presentationCollectionVar | testMovieKeyOutputPCollVar | | OK |
+| $adminAuthToken | metadataCollectionVariable | testMovieKeyCollectionVar | | OK |
+| $adminAuthToken | metadataItemCollection | testMovieKeyCollection | | OK |
+| $adminAuthToken | genericCollectionItem | testMovieTitleItem | | OK |
+| $adminAuthToken | presentationVar | testMovieValuePVar | | OK |
+| $adminAuthToken | presentationVar | testMovieValueOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testMovieValueTextVar | | OK |
+| $adminAuthToken | presentationGroup | testMoviePGroup | | OK |
+| $adminAuthToken | metadataGroup | testMovieNewGroup | | OK |
+| $adminAuthToken | metadataGroup | testMovieGroup | | OK |
+| $adminAuthToken | presentationVar | testMovieTitlePVar | | OK |
+| $adminAuthToken | presentationVar | testMovieTitleOutputPVar | | OK |
+| $adminAuthToken | metadataTextVariable | testMovieTitleTextVar | | OK |
+| $adminAuthToken | collectStorageTerm | testMovieTitleStorageTerm | | OK |
+| $adminAuthToken | coraText | testMovieNewGroupText | | OK |
+| $adminAuthToken | coraText | testMovieNewGroupDefText | | OK |
+| $adminAuthToken | coraText | testMovieGroupText | | OK |
+| $adminAuthToken | coraText | testMovieGroupDefText | | OK |
+| $adminAuthToken | coraText | someFitnesseText | | OK |
+| $adminAuthToken | coraText | someFitnesseDefText | | OK |
+| $adminAuthToken | coraText | testMovieFilterGroupText | | OK |
+| $adminAuthToken | coraText | testMovieFilterGroupDefText | | OK |
+| $adminAuthToken | coraText | testMoviePartGroupText | | OK |
+| $adminAuthToken | coraText | testMoviePartGroupDefText | | OK |
+| $adminAuthToken | coraText | testMovieKeyCollectionVarText | | OK |
+| $adminAuthToken | coraText | testMovieKeyCollectionVarDefText | | OK |
+| $adminAuthToken | coraText | testMovieKeyCollectionText | | OK |
+| $adminAuthToken | coraText | testMovieKeyCollectionDefText | | OK |
+| $adminAuthToken | coraText | testMovieTitleItemText | | OK |
+| $adminAuthToken | coraText | testMovieTitleItemDefText | | OK |
+
+*!

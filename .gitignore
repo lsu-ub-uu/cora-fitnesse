@@ -6,3 +6,5 @@
 *.iml
 /dependency-reduced-pom.xml
 /test-output/
+/${sys::catalina.base}/
+coraLog4j.log
