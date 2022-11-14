@@ -92,7 +92,7 @@
 					<include>FrontPage/</include>
 					<include>JsClient/</include>
 					<include>RestFixtureInstallTest/</include>
-					<include>TheRestTests/</include>
+					<include>CoraTests/</include>
 					<include>properties</include>
 					<include>properties.xml</include>
 					<include>_root.wiki</include>
