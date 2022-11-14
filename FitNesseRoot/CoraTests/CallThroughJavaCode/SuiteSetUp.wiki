@@ -22,8 +22,4 @@ Suite
 *!
 !| script | AuthTokenHolder |
 | setUserAuthToken | $userAuthToken |
-
-!2 Common variables
-!define archiveFileSystemPath {/tmp/sharedArchiveReadable/systemOne}
-
 *!

@@ -85,21 +85,22 @@
 			<resource>
 				<targetPath>FitNesseRoot</targetPath>
 				<directory>FitNesseRoot</directory>
-<!--				<filtering>true</filtering>-->
-<!--				<includes>-->
-<!--					<include>CoraTests/</include>-->
-<!--					<include>DocumentationPage/</include>-->
-<!--					<include>HelperPages/</include>-->
-<!--					<include>JsClient/</include>-->
-<!--					<include>RestFixtureInstallTest/</include>-->
-<!--					<include>./*.wiki</include>-->
-<!--					<include>properties</include>-->
-<!--					<include>properties.xml</include>-->
+				<filtering>true</filtering>
+				<includes>
+					<include>CoraTests/</include>
+					<include>DocumentationPage/</include>
+					<include>HelperPages/</include>
+					<include>JsClient/</include>
+					<include>RestFixtureInstallTest/</include>
 <!--					<include>_root.wiki</include>-->
-<!--				</includes>-->
-<!--				<excludes>-->
-<!--					<exclude>**/*.zip</exclude>-->
-<!--				</excludes>-->
+					<include>*.wiki</include>
+					<include>properties</include>
+					<include>content.txt</include>
+					<include>properties.xml</include>
+				</includes>
+				<excludes>
+					<exclude>**/*.zip</exclude>
+				</excludes>
 			</resource>
 		</resources>
 		<plugins>

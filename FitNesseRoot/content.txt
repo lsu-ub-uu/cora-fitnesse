@@ -1,3 +1,4 @@
 !contents
 !define ALL_UNCLE_SUITE_SETUPS {true}
 !define TEST_SYSTEM {slim}
+!define archiveFileSystemPath {/tmp/sharedArchiveReadable/systemOne}
