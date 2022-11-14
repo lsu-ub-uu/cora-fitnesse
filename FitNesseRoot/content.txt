@@ -1,4 +1,5 @@
 !contents
 !define ALL_UNCLE_SUITE_SETUPS {true}
 !define TEST_SYSTEM {slim}
+# TODO: Move archiveFileSystemPath more near to Archive Tests
 !define archiveFileSystemPath {/tmp/sharedArchiveReadable/systemOne}
