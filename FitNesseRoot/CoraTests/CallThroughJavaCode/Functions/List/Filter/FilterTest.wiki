@@ -2,13 +2,23 @@
 Test
 ---
 !2 Test listing testMovies before any filter is defined for the recordType
+
+!***> Create data of recordType testMovie
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecordCreatedType? | getStatusType? |
+| $adminAuthToken | testMovie | {"name":"testMovie","children":[{"name":"recordInfo","children":[{"name":"id","value":"someMovie"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"movieTitle","value":"The rock"}]} | testMovie | CREATED |
+| $adminAuthToken | testMovie | {"name":"testMovie","children":[{"name":"recordInfo","children":[{"name":"id","value":"someOldMovie"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"movieTitle","value":"Gone with the wind"}]} | testMovie | CREATED |
+
+*!
+
 If no filter is defined for the recordType, it is not possible to use a filter when listing that recordType
 
 !***> List testMovie with filter that matches the created testMovie when no filter exist in recordType
 
 !| RecordEndpointFixture |
 | authToken | type | json | testReadRecordList? | getStatusType? |
-| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"part","children":[{"name":"key","value":"movieTitle"},{"name":"value","value":"The rock"}],"repeatId":"0"}]} | Error reading records with recordType: testMovie. No filter exists for recordType: testMovie | BAD_REQUEST |
+| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"include","children":[{"name":"part","children":[{"name":"movieTitle","value":"The rock"}],"repeatId":"0"}]}]} | Error reading records with recordType: testMovie. No filter exists for recordType: testMovie | BAD_REQUEST |
 
 *!
 !***> Update recordType testMovie and add filter
@@ -24,14 +34,14 @@ If no filter is defined for the recordType, it is not possible to use a filter w
 
 !| RecordEndpointFixture |
 | authToken | type | json | testReadRecordList? | getStatusType? |
-| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"part","children":[{"name":"key","value":"movieTitle"},{"name":"value","value":"The rock"}],"repeatId":"0"}]} | =~/"toNo":"1"/ | OK |
+| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"include","children":[{"name":"part","children":[{"name":"movieTitle","value":"The rock"}],"repeatId":"0"}]}]} | =~/"toNo":"1"/ | OK |
 
 *!
 !***> List testMovie with a filter that does not match the created testMovie
 
 !| RecordEndpointFixture |
 | authToken | type | json | testReadRecordList? | getStatusType? |
-| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"part","children":[{"name":"key","value":"movieTitle"},{"name":"value","value":"Another movie"}],"repeatId":"0"}]} | =~/"toNo":"0"/ | OK |
+| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"include","children":[{"name":"part","children":[{"name":"movieTitle","value":"Another movie"}],"repeatId":"0"}]}]} | =~/"toNo":"0"/ | OK |
 
 *!
 !***> Update testMovie and set another title
@@ -45,14 +55,14 @@ If no filter is defined for the recordType, it is not possible to use a filter w
 
 !| RecordEndpointFixture |
 | authToken | type | json | testReadRecordList? | getStatusType? |
-| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"part","children":[{"name":"key","value":"movieTitle"},{"name":"value","value":"The rock"}],"repeatId":"0"}]} | =~/"toNo":"0"/ | OK |
+| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"include","children":[{"name":"part","children":[{"name":"movieTitle","value":"The rock"}],"repeatId":"0"}]}]} | =~/"toNo":"0"/ | OK |
 
 *!
 !***> List testMovie with filter that matches the updated title.
 
 !| RecordEndpointFixture |
 | authToken | type | json | testReadRecordList? | getStatusType? |
-| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"part","children":[{"name":"key","value":"movieTitle"},{"name":"value","value":"Jumanji"}],"repeatId":"0"}]} | =~/"toNo":"1"/ | OK |
+| $adminAuthToken | testMovie |{"name":"filter","children":[{"name":"include","children":[{"name":"part","children":[{"name":"movieTitle","value":"Jumanji"}],"repeatId":"0"}]}]}| =~/"toNo":"1"/ | OK |
 
 *!
 !***> Delete created testMovie
@@ -66,7 +76,7 @@ If no filter is defined for the recordType, it is not possible to use a filter w
 
 !| RecordEndpointFixture |
 | authToken | type | json | testReadRecordList? | getStatusType? |
-| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"part","children":[{"name":"key","value":"movieTitle"},{"name":"value","value":"Jumanji"}],"repeatId":"0"}]} | =~/"toNo":"0"/ | OK |
+| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"include","children":[{"name":"part","children":[{"name":"movieTitle","value":"Jumanji"}],"repeatId":"0"}]}]} | =~/"toNo":"0"/ | OK |
 
 *!
 !2 Test listing testMovies with a non valid filter
@@ -74,6 +84,6 @@ If no filter is defined for the recordType, it is not possible to use a filter w
 
 !| RecordEndpointFixture |
 | authToken | type | json | testReadRecordList? | getStatusType? |
-| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"part","children":[{"name":"value","value":"The rock"}],"repeatId":"0"}]} | Error reading records with recordType: testMovie. Data is not valid: [Did not find enough data children with referenceId: testMovieKeyCollectionVar(with nameInData:key).] | BAD_REQUEST |
+| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"include","children":[{"name":"part","children":[{"name":"wrongFilterMovieTitle","value":"The rock"}],"repeatId":"0"}]}]} | Error reading records with recordType: testMovie. Data is not valid: [Did not find enough data children with referenceId: testFilterMovieTitleTextVar(with nameInData:movieTitle)., Could not find metadata for child with nameInData: wrongFilterMovieTitle] | BAD_REQUEST |
 
 *!
