@@ -1,4 +1,4 @@
 ---
-Test
+Static
 ---
 !contents -R2 -g -p -f -h

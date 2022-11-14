@@ -1,5 +1,5 @@
 ---
-Test
+Static
 ---
 !contents -R2 -g -p -f -h
 Add tests for combinations of searches such as:
