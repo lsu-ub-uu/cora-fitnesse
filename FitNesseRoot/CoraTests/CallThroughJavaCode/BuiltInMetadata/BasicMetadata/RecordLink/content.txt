@@ -203,7 +203,7 @@ Creating records with links in dataGroups with attributes
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadIncomingLinks? | getStatusType? |
-| $adminAuthToken | tree | tree2_1 | =~/"totalNo":"2","containDataOfType":"recordToRecordLink"/ | OK |
+| $adminAuthToken | tree | tree2_1 | =~/"totalNo":"1","containDataOfType":"recordToRecordLink"/ | OK |
 
 *!
 !2 Invalid data

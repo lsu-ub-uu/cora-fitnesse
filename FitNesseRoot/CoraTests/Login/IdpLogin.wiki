@@ -22,8 +22,8 @@ Test
 
 !| IdpLoginServletFixture |
 | EPPN | getAuthTokenForEPPN? | getIdFromLogin? | getResponseCode? | getAuthToken? | getValidForNoSeconds? | getDeleteUrl? |
-| fitnesseAdmin@system.cora.uu.se | | | OK | $adminAuthToken= | | |
-| fitnesseUser@system.cora.uu.se | | | OK | $userAuthToken= | | |
+| fitnesseAdmin@system.cora.uu.se | |fitnesseAdmin@system.cora.uu.se | OK | $adminAuthToken= | 600 | http://localhost:8180/apptokenverifier/rest/131313 |
+| fitnesseUser@system.cora.uu.se | |fitnesseUser@system.cora.uu.se | OK | $userAuthToken= | 600 | http://localhost:8180/apptokenverifier/rest/121212 |
 
 *!
 !2 Test with new texts to show that we can use our authToken and be our user
