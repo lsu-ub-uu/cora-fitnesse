@@ -87,6 +87,7 @@
 				<directory>FitNesseRoot</directory>
 				<filtering>true</filtering>
 				<includes>
+					<include>FrontPage/</include>
 					<include>CoraTests/</include>
 					<include>DocumentationPage/</include>
 					<include>HelperPages/</include>
