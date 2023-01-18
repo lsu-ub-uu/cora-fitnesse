@@ -1,0 +1,12 @@
+---
+Test
+---
+| import |
+| se.uu.ub.cora.fitnesseintegration |
+| se.uu.ub.cora.fitnesseintegration.compare |
+
+!1 Validation Type
+!style_green[Someone writes bla bla bla]
+
+!include -seamless .CoraTests.CallThroughJavaCode.RecordTypeTest.ValidationTypeTest.RecordType
+!include -seamless .CoraTests.CallThroughJavaCode.RecordTypeTest.ValidationTypeTest.Create
