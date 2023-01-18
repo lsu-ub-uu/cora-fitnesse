@@ -1,1 +1,23 @@
-!contents -R2 -g -p -f -h
+---
+Static
+---
+!include -seamless .HelperPages.defineAdminAuthToken
+
+!2 Create
+It should be possible to create new validation types
+
+
+ * '''Case 1A:''' It should be possible to create a validationType
+ 
+!***> Fall 1A Det ska gå att uppdatera en person
+
+!include -seamless .CoraTests.CallThroughJavaCode.RecordTypeTest.ValidationTypeTest.data.exampleValidationType1
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {}
+!define expectedCompareResult {OK}
+!define expectedActionResult {}
+!define expectedPermissionResult {OK}
+
+
+!include -seamless .HelperPages.createCheckReadCheck
+*!
