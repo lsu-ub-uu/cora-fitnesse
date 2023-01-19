@@ -10,3 +10,4 @@ Test
 
 !include -seamless .CoraTests.CallThroughJavaCode.RecordTypeTest.ValidationTypeTest.RecordType
 !include -seamless .CoraTests.CallThroughJavaCode.RecordTypeTest.ValidationTypeTest.Create
+!include -seamless .CoraTests.CallThroughJavaCode.RecordTypeTest.ValidationTypeTest.CleanUp

@@ -9,7 +9,7 @@ It should be possible to create new validation types
 
  * '''Case 1A:''' It should be possible to create a validationType
  
-!***> Fall 1A Det ska gå att uppdatera en person
+!***> '''Case 1A:''' It should be possible to create a validationType
 
 !include -seamless .CoraTests.CallThroughJavaCode.RecordTypeTest.ValidationTypeTest.data.exampleValidationType1
 !define expectedCreateResult {CREATED}

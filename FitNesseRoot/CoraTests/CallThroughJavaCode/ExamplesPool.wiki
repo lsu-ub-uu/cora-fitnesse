@@ -1,0 +1,115 @@
+---
+Static
+---
+!***> Create example pool for fitnesse
+It should be possible to create new validation types
+
+
+ * Standard fitnesse text (coraText)
+ * >1 variable of each type
+ * A group for new
+ * A group for read or update
+ * A standard presentation
+ 
+# 
+#!***> Creation of a standard fitnesse new presentationGroup
+#!define currentAuthToken {$adminAuthToken}
+#!define recordType {presentationGroup}
+#!define createData {!-{"name":"presentation","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnessePGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"presentationOf","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"fitnesseGroup"}]},{"name":"childReferences","children":[{"name":"childReference","repeatId":"0","children":[{"name":"textStyle","value":""},{"name":"childStyle","repeatId":"1","value":""},{"name":"refGroup","repeatId":"0","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"presentationVar"},{"name":"linkedRecordId","value":"fitnesseMetadataPVar"}],"attributes":{"type":"presentation"}}]},{"name":"minNumberOfRepeatingToShow","value":""},{"name":"presentationSize","value":""},{"name":"title","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":""}]}]}]},{"name":"mode","value":"input"},{"name":"presentationStyle","value":"frame"},{"name":"presentAs","value":"recordRelation"}],"attributes":{"type":"pGroup"}}-!}
+#!define expectedAnswer {!--!}
+#!define expectedCreateResult {CREATED}
+#
+#!include -seamless .HelperPages.createRecord
+#
+#*!
+# 
+!***> Creation of a standard fitnesse text
+
+!define currentAuthToken {$adminAuthToken}
+!define recordType {coraText}
+!define createData {!-{"name":"text","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseText"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"textPart","children":[{"name":"text","value":"fitnesseText"}],"attributes":{"type":"default","lang":"sv"}},{"name":"textPart","children":[{"name":"text","value":"fitnesseText"}],"attributes":{"type":"alternative","lang":"en"}}]}-!}
+!define expectedAnswer {!--!}
+!define expectedCreateResult {CREATED}
+
+!include -seamless .HelperPages.createRecord
+
+*!
+
+!***> Creation of a standard fitnesse metadataTextVariable
+!define currentAuthToken {$adminAuthToken}
+!define recordType {metadataTextVariable}
+!define createData {!-{"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseMetadataTextVar"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"fitnesseTextVar"},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"regEx","value":".*"}],"attributes":{"type":"textVariable"}}-!}
+!define expectedAnswer {!--!}
+!define expectedCreateResult {CREATED}
+
+!include -seamless .HelperPages.createRecord
+
+*!
+!***> Creation of a standard fitnesse metadataNumberVariable
+!define currentAuthToken {$adminAuthToken}
+!define recordType {metadataNumberVariable}
+!define createData {!-{"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseMetadataNumberVar"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"fitnesseNumberVar"},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"min","value":"0"},{"name":"max","value":"10"},{"name":"warningMin","value":"1"},{"name":"warningMax","value":"9"},{"name":"numberOfDecimals","value":"0"}],"attributes":{"type":"numberVariable"}}-!}
+!define expectedAnswer {!--!}
+!define expectedCreateResult {CREATED}
+
+!include -seamless .HelperPages.createRecord
+
+*!
+!***> Creation of a standard fitnesse genericCollectionItem
+!define currentAuthToken {$adminAuthToken}
+!define recordType {genericCollectionItem}
+!define createData {!-{"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseBlueItem"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"blue"},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]}],"attributes":{"type":"collectionItem"}}-!}
+!define expectedAnswer {!--!}
+!define expectedCreateResult {CREATED}
+
+!include -seamless .HelperPages.createRecord
+
+*!
+!***> Creation of a standard fitnesse metadataItemCollection
+!define currentAuthToken {$adminAuthToken}
+!define recordType {metadataItemCollection}
+!define createData {!-{"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseCollection"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"colour"},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"collectionItemReferences","children":[{"name":"ref","repeatId":"0","children":[{"name":"linkedRecordType","value":"genericCollectionItem"},{"name":"linkedRecordId","value":"fitnesseBlueItem"}]}]}],"attributes":{"type":"itemCollection"}}-!}
+!define expectedAnswer {!--!}
+!define expectedCreateResult {CREATED}
+
+!include -seamless .HelperPages.createRecord
+
+*!
+!style_red[metadataRecordLink point to a Demo recordType. Change to a fitnesse recordType]
+!***> Creation of a standard fitnesse metadataRecordLink
+!define currentAuthToken {$adminAuthToken}
+!define recordType {metadataRecordLink}
+!define createData {!-{"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseLink"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"demo"},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"linkedRecordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"demo"}]}],"attributes":{"type":"recordLink"}}-!}
+!define expectedAnswer {!--!}
+!define expectedCreateResult {CREATED}
+
+!include -seamless .HelperPages.createRecord
+
+*!
+!style_red[fitnesseGroup point to exampleRecordInfoGroup. It must be change to a fitnesse generated group]
+!style_red[Problem when creates a group using jsclient. Jsclient adds {"name":"recordPartConstraint","value":""} to each field, but an error ocurrs: Error creating new record for recordType: metadataGroup. Data is not valid: [Data value: NOT found in collection:recordPartConstraint]
+!***> Creation of a standard fitnesse metadataGroup
+!define currentAuthToken {$adminAuthToken}
+!define recordType {metadataGroup}
+!define createData {!-{"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"test"},{"name":"childReferences","children":[{"name":"childReference","repeatId":"0","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"fitnesseMetadataTextVar"}]}]}]}],"attributes":{"type":"group"}}-!}
+#!define createData {!-{"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"fitnesseExample"},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"childReferences","children":[{"name":"childReference","repeatId":"4","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"exampleRecordInfoGroup"}]},{"name":"recordPartConstraint","value":""}]},{"name":"childReference","repeatId":"0","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"fitnesseMetadataTextVar"}]},{"name":"recordPartConstraint","value":""}]},{"name":"childReference","repeatId":"1","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"X"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataNumberVariable"},{"name":"linkedRecordId","value":"fitnesseMetadataNumberVar"}]},{"name":"recordPartConstraint","value":""}]},{"name":"childReference","repeatId":"2","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataCollectionVariable"},{"name":"linkedRecordId","value":"fitnesseCollectionVar"}]},{"name":"recordPartConstraint","value":""}]},{"name":"childReference","repeatId":"3","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataRecordLink"},{"name":"linkedRecordId","value":"fitnesseLink"}]},{"name":"recordPartConstraint","value":""}]}]},{"name":"excludePGroupCreation","value":"true"}],"attributes":{"type":"group"}}-!}
+!define expectedAnswer {!--!}
+!define expectedCreateResult {CREATED}
+
+!include -seamless .HelperPages.createRecord
+
+*!
+!style_red[fitnesseGroup point to exampleRecordInfoNewGroup. It must be change to a fitnesse generated group]
+!style_red[Problem when creates a group using jsclient. Jsclient adds {"name":"recordPartConstraint","value":""} to each field, but an error ocurrs: Error creating new record for recordType: metadataGroup. Data is not valid: [Data value: NOT found in collection:recordPartConstraint]
+!***> Creation of a standard fitnesse new metadataGroup
+!define currentAuthToken {$adminAuthToken}
+!define recordType {metadataGroup}
+!define createData {!-{"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseNewGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"test"},{"name":"childReferences","children":[{"name":"childReference","repeatId":"0","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"fitnesseMetadataTextVar"}]}]}]}],"attributes":{"type":"group"}}-!}
+#!define createData {!-{"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"fitnesseExample"},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"childReferences","children":[{"name":"childReference","repeatId":"4","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"exampleRecordInfoNewGroup"}]},{"name":"recordPartConstraint","value":""}]},{"name":"childReference","repeatId":"0","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"fitnesseMetadataTextVar"}]},{"name":"recordPartConstraint","value":""}]},{"name":"childReference","repeatId":"1","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"X"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataNumberVariable"},{"name":"linkedRecordId","value":"fitnesseMetadataNumberVar"}]},{"name":"recordPartConstraint","value":""}]},{"name":"childReference","repeatId":"2","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataCollectionVariable"},{"name":"linkedRecordId","value":"fitnesseCollectionVar"}]},{"name":"recordPartConstraint","value":""}]},{"name":"childReference","repeatId":"3","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadataRecordLink"},{"name":"linkedRecordId","value":"fitnesseLink"}]},{"name":"recordPartConstraint","value":""}]}]},{"name":"excludePGroupCreation","value":"true"}],"attributes":{"type":"group"}}-!}
+!define expectedAnswer {!--!}
+!define expectedCreateResult {CREATED}
+
+!include -seamless .HelperPages.createRecord
+
+*!
+*!

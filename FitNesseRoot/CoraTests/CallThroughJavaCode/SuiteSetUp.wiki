@@ -23,3 +23,5 @@ Suite
 !| script | AuthTokenHolder |
 | setUserAuthToken | $userAuthToken |
 *!
+
+!include -seamless .CoraTests.CallThroughJavaCode.ExamplesPool

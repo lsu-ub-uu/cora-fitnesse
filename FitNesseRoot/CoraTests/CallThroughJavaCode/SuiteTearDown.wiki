@@ -1,0 +1,33 @@
+---
+Suite
+---
+!***> Clean up example fitnesse pool
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | presentationGroup | fitnessePGroup | | OK |
+| $adminAuthToken | presentationGroup | fitnesseOutputPGroup | | OK |
+| $adminAuthToken | presentationGroup | fitnesseNewPGroup | | OK |
+| $adminAuthToken | presentationGroup | fitnesseNewOutputPGroup | | OK |
+| $adminAuthToken | presentationVar | fitnesseMetadataPVar | | OK |
+| $adminAuthToken | presentationVar | fitnesseMetadataOutputPVar | | OK |
+| $adminAuthToken | presentationNumberVar | fitnesseMetadataPNumVar | | OK |
+| $adminAuthToken | presentationNumberVar | fitnesseMetadataOutputPNumVar | | OK |
+| $adminAuthToken | presentationRecordLink | fitnessePLink | | OK |
+| $adminAuthToken | presentationRecordLink | fitnesseOutputPLink | | OK |
+| $adminAuthToken | presentationCollectionVar | fitnessePCollVar | | OK |
+| $adminAuthToken | presentationCollectionVar | fitnesseOutputPCollVar | | OK |
+| $adminAuthToken | metadataGroup | fitnesseGroup | | OK |
+| $adminAuthToken | metadataGroup | fitnesseNewGroup | | OK |
+| $adminAuthToken | metadataTextVariable | fitnesseMetadataTextVar | | OK |
+| $adminAuthToken | metadataNumberVariable | fitnesseMetadataNumberVar | | OK |
+| $adminAuthToken | metadataCollectionVariable | fitnesseCollectionVar | | OK |
+| $adminAuthToken | metadataItemCollection | fitnesseCollection | | OK |
+| $adminAuthToken | genericCollectionItem | fitnesseBlueItem | | OK |
+| $adminAuthToken | metadataRecordLink | fitnesseLink | | OK |
+| $adminAuthToken | coraText | fitnesseText | | OK |
+
+ #Not needed presentations because we are using excludePGroupCreation flag
+
+
+*!
