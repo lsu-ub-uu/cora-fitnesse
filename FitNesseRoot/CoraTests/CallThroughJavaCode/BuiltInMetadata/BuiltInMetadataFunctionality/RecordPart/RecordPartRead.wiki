@@ -1,31 +1,35 @@
-!2 Search
-There are a few different cases for search that can happen, when there are read restrictions:
+!2 Read
+There are a few different cases for read that can happen, when there are read restrictions:
 
- * '''Case 1''': A user (fitnesseAdmin) has read permission on all  restricted data, read as normal validate that all restricted parts are  in the record
- * '''Case 2''': A user (fitnesseUser) has read permission on some but not all restricted data,  validate that the record parts that the user has read  permissions for is present in the record  and we make sure that the restricted parts that the user does NOT have read permissions for is NOT present in the record
+ * '''Case 1''': A user (fitnesseAdmin) has read permission on all restricted data, read as normal validate that all restricted parts are in the record
+ * '''Case 2''': A user (fitnesseUser) has read permission on some but not all restricted data, there are two validations to make
 
 !***> Case 1
-
-List testWorkout as fitnesseAdmin
 !define currentAuthToken {$adminAuthToken}
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
-!include -seamless .HelperPages.searchRecord
 
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {}
 !define expectedCompareResult {OK}
 !define expectedActionResult {Action read_incoming_links is missing.}
 !define expectedPermissionResult {OK}
-!include -seamless .HelperPages.checkOriginal
+
+!include -seamless .HelperPages.readCheck
 
 *!
 !***> Case 2
 
-List testWorkout as fitnesseUser
 !define currentAuthToken {$userAuthToken}
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
-!include -seamless .HelperPages.searchRecord
 
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
+
+!define expectedAnswer {}
 !define expectedCompareResult {Did not find a match for child with nameInData selectableAttribute3 and value valueThree and attributes [exampleAttributeChoice:three]. Did not find a match for child with nameInData instructorId3 and value 3563. Did not find a match for child with nameInData duration1_3 and value 6h. Did not find a match for child with nameInData lastName1_3 and value Boss. Did not find a match for child with nameInData lastName2_3 and value Boss2. Did not find a match for child with nameInData voteCount1_3 and value 4341233. Did not find a match for child with nameInData voteCount2_3 and value 43412332. Child with nameInData popularity3 and type group is missing.}
 !define expectedActionResult {Action delete is missing. Action index is missing. Action read_incoming_links is missing.}
 !define expectedPermissionResult {Read permission selectableAttribute3 is missing. Read permission instructorId3 is missing. Read permission duration1_3 is missing. Read permission lastName1_3 is missing. Read permission lastName2_3 is missing. Read permission voteCount1_3 is missing. Read permission voteCount2_3 is missing. Read permission popularity3 is missing. Read permission voteCount3_1 is missing. Read permission voteCount3_2 is missing. Read permission voteCount3_3 is missing. Write permission numOfParticipants2 is missing. Write permission selectableAttribute2 is missing. Write permission selectableAttribute3 is missing. Write permission instructorId2 is missing. Write permission instructorId3 is missing. Write permission laps1_2 is missing. Write permission duration1_2 is missing. Write permission duration1_3 is missing. Write permission firstName1_2 is missing. Write permission lastName1_2 is missing. Write permission lastName1_3 is missing. Write permission instructorName2 is missing. Write permission firstName2_1 is missing. Write permission firstName2_2 is missing. Write permission lastName2_1 is missing. Write permission lastName2_2 is missing. Write permission lastName2_3 is missing. Write permission ratingDate1_2 is missing. Write permission voteCount1_2 is missing. Write permission voteCount1_3 is missing. Write permission popularity2 is missing. Write permission ratingDate2_1 is missing. Write permission ratingDate2_2 is missing. Write permission voteCount2_1 is missing. Write permission voteCount2_2 is missing. Write permission voteCount2_3 is missing. Write permission popularity3 is missing. Write permission ratingDate3_1 is missing. Write permission ratingDate3_2 is missing. Write permission voteCount3_1 is missing. Write permission voteCount3_2 is missing. Write permission voteCount3_3 is missing.}
-!include -seamless .HelperPages.checkOriginal
+
+!-The record cirkelfys1 will be read and we will make sure that all the parts that we have permissions will be on it. It will check as well that the parts which do NOT have permissions will not be on the record-!
+
+!include -seamless .HelperPages.readCheck
+
 *!

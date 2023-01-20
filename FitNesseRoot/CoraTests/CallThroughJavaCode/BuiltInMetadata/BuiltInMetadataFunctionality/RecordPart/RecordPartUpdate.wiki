@@ -14,7 +14,7 @@ There are a few different cases for update that can happen, when there are write
 !define currentAuthToken {$adminAuthToken}
 !-Update a testWorkout record as fitnesseAdmin, adding unrestricted and all restricted data parts-!
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
 !define expectedUpdateResult {OK}
 !define expectedAnswer {}
 !define expectedCompareResult {OK}
@@ -28,9 +28,9 @@ There are a few different cases for update that can happen, when there are write
 
 !-Update a testWorkout record as fitnesseUser, only sending the record parts that it has write permissions for.-!
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1Minimal
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1ExpectedMinimal
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1Minimal
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1ExpectedMinimal
 !define expectedUpdateResult {OK}
 !define expectedAnswer {}
 !define expectedCompareResult {Did not find a match for child with nameInData selectableAttribute3 and value valueThree and attributes [exampleAttributeChoice:three]. Did not find a match for child with nameInData instructorId3 and value 3563. Did not find a match for child with nameInData duration1_3 and value 6h. Did not find a match for child with nameInData lastName1_3 and value Boss. Did not find a match for child with nameInData lastName2_3 and value Boss2. Did not find a match for child with nameInData voteCount1_3 and value 4341233. Did not find a match for child with nameInData voteCount2_3 and value 43412332. Child with nameInData popularity3 and type group is missing.}
@@ -49,8 +49,8 @@ Tested as part of test2, popularity2 is mandatory but fitnesseUser has no write 
 
 !-Update a testWorkout record as fitnesseUser, sending all the record parts both record parts that it does NOT have write permissions for and part that it does. Only parts with permissions are updated-!
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1ExpectedMinimal
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1ExpectedMinimal
 !define expectedUpdateResult {OK}
 !define expectedAnswer {}
 !define expectedCompareResult {Did not find a match for child with nameInData selectableAttribute3 and value valueThree and attributes [exampleAttributeChoice:three]. Did not find a match for child with nameInData instructorId3 and value 3563. Did not find a match for child with nameInData duration1_3 and value 6h. Did not find a match for child with nameInData lastName1_3 and value Boss. Did not find a match for child with nameInData lastName2_3 and value Boss2. Did not find a match for child with nameInData voteCount1_3 and value 4341233. Did not find a match for child with nameInData voteCount2_3 and value 43412332. Child with nameInData popularity3 and type group is missing.}
@@ -65,8 +65,8 @@ Tested as part of test2, popularity2 is mandatory but fitnesseUser has no write 
 
 !- A user does not send a mandatory record part that it has write permissions for. The update should fail with a validation error, as we are missing mandatory data in the update.-!
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1MissingMandatory
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1MissingMandatory
 !define expectedUpdateResult {BAD_REQUEST}
 !define expectedAnswer {Error updating record with recordType: testWorkout and recordId: cirkelfys1. Data is not valid: [Did not find enough data children with referenceId: testRating1_1TextVar(with nameInData:rating1_1).]}
 

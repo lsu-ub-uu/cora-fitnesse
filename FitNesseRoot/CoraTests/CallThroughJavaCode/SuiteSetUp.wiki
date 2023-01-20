@@ -24,4 +24,4 @@ Suite
 | setUserAuthToken | $userAuthToken |
 *!
 
-!include -seamless .CoraTests.CallThroughJavaCode.ExamplesPool
+!include -seamless .CoraTests.CallThroughJavaCode.SuiteSetUp.ExamplesPool

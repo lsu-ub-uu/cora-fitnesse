@@ -11,7 +11,7 @@ It should be possible to create new validation types
  
 !***> '''Case 1A:''' It should be possible to create a validationType
 
-!include -seamless .CoraTests.CallThroughJavaCode.RecordTypeTest.ValidationTypeTest.data.exampleValidationType1
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType.data.exampleValidationType1
 !define expectedCreateResult {CREATED}
 !define expectedAnswer {}
 !define expectedCompareResult {OK}

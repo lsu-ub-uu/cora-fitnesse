@@ -87,7 +87,6 @@ It should be possible to create new validation types
 
 *!
 !style_red[fitnesseGroup point to exampleRecordInfoGroup. It must be change to a fitnesse generated group]
-!style_red[Problem when creates a group using jsclient. Jsclient adds {"name":"recordPartConstraint","value":""} to each field, but an error ocurrs: Error creating new record for recordType: metadataGroup. Data is not valid: [Data value: NOT found in collection:recordPartConstraint]
 !***> Creation of a standard fitnesse metadataGroup
 !define currentAuthToken {$adminAuthToken}
 !define recordType {metadataGroup}
@@ -100,7 +99,6 @@ It should be possible to create new validation types
 
 *!
 !style_red[fitnesseGroup point to exampleRecordInfoNewGroup. It must be change to a fitnesse generated group]
-!style_red[Problem when creates a group using jsclient. Jsclient adds {"name":"recordPartConstraint","value":""} to each field, but an error ocurrs: Error creating new record for recordType: metadataGroup. Data is not valid: [Data value: NOT found in collection:recordPartConstraint]
 !***> Creation of a standard fitnesse new metadataGroup
 !define currentAuthToken {$adminAuthToken}
 !define recordType {metadataGroup}
