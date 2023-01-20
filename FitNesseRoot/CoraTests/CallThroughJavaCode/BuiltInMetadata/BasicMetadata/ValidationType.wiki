@@ -6,8 +6,10 @@ Test
 | se.uu.ub.cora.fitnesseintegration.compare |
 
 !1 Validation Type
+Validation type is used to know how to validate incoming data for a recordType. A validation type links to the recordType it validates data for. For the system to work correctly must each defined recordType have at least one validation type that links to it, but there can be any number of validation types linking to one particular recordType.
 !style_green[Someone writes bla bla bla]
 
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType.RecordType
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType.Create
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType.Update
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType.CleanUp

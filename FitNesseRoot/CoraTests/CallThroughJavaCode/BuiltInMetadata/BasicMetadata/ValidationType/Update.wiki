@@ -3,19 +3,19 @@ Static
 ---
 !include -seamless .HelperPages.defineAdminAuthToken
 
-!2 Create
+!2 Update
 
- * '''Case 1A:''' It should be possible to create a validationType
+ * '''Case 1A:''' It should be possible to update a validationType
  
-!***> '''Case 1A:''' It should be possible to create a validationType
+!***> '''Case 1A:''' It should be possible to update a validationType
 
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType.data.exampleValidationType1
-!define expectedCreateResult {CREATED}
+!define expectedUpdateResult {OK}
 !define expectedAnswer {}
 !define expectedCompareResult {OK}
 !define expectedActionResult {}
 !define expectedPermissionResult {OK}
 
 
-!include -seamless .HelperPages.createCheckReadCheck
+!include -seamless .HelperPages.updateCheckReadCheckReadCheckReset
 *!
