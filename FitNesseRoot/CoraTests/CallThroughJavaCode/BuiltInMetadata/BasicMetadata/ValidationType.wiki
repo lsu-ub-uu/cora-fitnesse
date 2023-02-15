@@ -1,13 +1,41 @@
 ---
 Test
 ---
-| import |
-| se.uu.ub.cora.fitnesseintegration |
-| se.uu.ub.cora.fitnesseintegration.compare |
+|import                                   |
+|se.uu.ub.cora.fitnesseintegration        |
+|se.uu.ub.cora.fitnesseintegration.compare|
 
 !1 Validation Type
-Validation type is used to know how to validate incoming data for a recordType. A validation type links to the recordType it validates data for. For the system to work correctly must each defined recordType have at least one validation type that links to it, but there can be any number of validation types linking to one particular recordType.
-!style_green[Someone writes bla bla bla]
+
+!img http://files/images/validation-type.png 
+
+Validation type is used to know how to validate incoming data for a recordType. A validation type links to the record type it validates data for.
+For the system to work correctly must each defined record type have at least one validation type that links to it, but there can be any number of validation types linking to one particular record type.
+Note that the record type contains all possible combinations of data possible while the validation type restricts/narrows this down to more restricted views of the data via the validation types' metadata group.
+The record type also defines a record that holds the current incoming to be validated (either for a new or updated record).
+Actual validation however is performed by a metadata group that is referenced from the validation type.
+The metadata group contains the different items such as variables that are used for the actual validation, such as:
+
+ * '''regular expressions for text'''
+ * '''min/max values for numbers'''
+
+{{{
+<< Example >>
+
+Record type: fitness media
+
+Where the record type might have two optional fields called: 
+
+- number of pages 
+- running time
+
+There can then be multiple validation types defined for fitness media that narrows down the required attributes based on the fields in the record type such as:
+1. fitness magazine
+2. fitness video
+
+Validation type fitness magazine would have "number of pages" as mandatory while fitness video would have "running time" as required.
+They would be stored as metadata number variables with relevant min and max values.
+}}}
 
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType.RecordType
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType.Create

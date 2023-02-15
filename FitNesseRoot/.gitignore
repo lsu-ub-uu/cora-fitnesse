@@ -2,7 +2,7 @@ updateList
 updateDoNotCopyOverList
 ErrorLogs/*
 FitNesse
-files
+files/testResults
 .svn
 .DS_Store
 desktop.ini
