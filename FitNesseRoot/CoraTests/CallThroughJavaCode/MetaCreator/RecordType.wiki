@@ -73,7 +73,7 @@ Read fitnesseBook to see that metadata has been added
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseBook | recordType | =~/"name":"linkedRecordId","value":"fitnesseBookGroup".*"name":"metadataId".*"name":"linkedRecordId","value":"fitnesseBookNewGroup".*"name":"newMetadataId".*"name":"linkedRecordId","value":"fitnesseBookOutputPGroup".*"name":"presentationViewId".*"name":"linkedRecordId","value":"fitnesseBookPGroup".*"name":"presentationFormId".*"name":"linkedRecordId","value":"fitnesseBookNewPGroup".*"name":"newPresentationFormId".*"name":"linkedRecordId","value":"fitnesseBookMenuPGroup".*"name":"menuPresentationViewId".*"name":"linkedRecordId","value":"fitnesseBookListPGroup".*"name":"listPresentationViewId".*"name":"linkedRecordId","value":"fitnesseBookAutocompletePGroup".*"name":"autocompletePresentationView".*"name":"linkedRecordId","value":"fitnesseBookText".*"name":"textId".*"name":"linkedRecordId","value":"fitnesseBookDefText".*"name":"defTextId"/ | OK |
+| fitnesseBook | recordType | =~/"name":"linkedRecordId","value":"fitnesseBookText".*"name":"textId".*"name":"linkedRecordId","value":"fitnesseBookDefText".*"name":"defTextId".*"name":"linkedRecordId","value":"fitnesseBookGroup".*"name":"metadataId".*"name":"linkedRecordId","value":"fitnesseBookNewGroup".*"name":"newMetadataId".*"name":"linkedRecordId","value":"fitnesseBookOutputPGroup".*"name":"presentationViewId".*"name":"linkedRecordId","value":"fitnesseBookPGroup".*"name":"presentationFormId".*"name":"linkedRecordId","value":"fitnesseBookNewPGroup".*"name":"newPresentationFormId".*"name":"linkedRecordId","value":"fitnesseBookMenuPGroup".*"name":"menuPresentationViewId".*"name":"linkedRecordId","value":"fitnesseBookListPGroup".*"name":"listPresentationViewId".*"name":"linkedRecordId","value":"fitnesseBookAutocompletePGroup".*"name":"autocompletePresentationView"/ | OK |
 
 *!
 Read texts again to see that they have been created
@@ -102,11 +102,11 @@ Read presentationGroups again to see that they have been created
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseBookOutputPGroup | presentationGroup | =~/"name":"linkedRecordId","value":"recordInfoOutputPGroup".*"name":"refGroup".*"name":"mode".*"value":"output"/ | OK |
-| fitnesseBookPGroup | presentationGroup | =~/name":"linkedRecordId","value":"recordInfoPGroup".*"name":"refGroup".*"name":"mode".*"value":"input"/ | OK |
-| fitnesseBookNewPGroup | presentationGroup | =~/"name":"linkedRecordId","value":"recordInfoNewPGroup".*"name":"refGroup".*"name":"mode".*"value":"input"/ | OK |
-| fitnesseBookMenuPGroup | presentationGroup | =~/"name":"linkedRecordId","value":"recordInfoOutputPGroup".*"name":"refGroup".*"name":"mode".*"value":"output"/ | OK |
-| fitnesseBookListPGroup | presentationGroup | =~/"name":"linkedRecordId","value":"recordInfoOutputPGroup".*"name":"refGroup".*"name":"mode".*"value":"output"/ | OK |
+| fitnesseBookOutputPGroup | presentationGroup | =~/"name":"mode".*"value":"output".*"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoOutputPGroup"/ | OK |
+| fitnesseBookPGroup | presentationGroup | =~/"name":"mode".*"value":"input".*"name":"refGroup".*name":"linkedRecordId","value":"recordInfoPGroup"/ | OK |
+| fitnesseBookNewPGroup | presentationGroup | =~/"name":"mode".*"value":"input".*"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoNewPGroup"/ | OK |
+| fitnesseBookMenuPGroup | presentationGroup | =~/"name":"mode".*"value":"output".*"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoOutputPGroup"/ | OK |
+| fitnesseBookListPGroup | presentationGroup | =~/"name":"mode".*"value":"output".*"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoOutputPGroup"/ | OK |
 
 *!
 !2 Delete some data
@@ -154,7 +154,7 @@ Read presentationGroups again to see that they have been created. This time fitn
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseBookOutputPGroup | presentationGroup | =~/"name":"linkedRecordId","value":"recordInfoOutputPGroup".*"name":"refGroup".*"name":"linkedRecordId","value":"someTestOutputPVar".*"name":"refGroup"/ | OK |
+| fitnesseBookOutputPGroup | presentationGroup | =~/"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoOutputPGroup".*"name":"refGroup".*"name":"linkedRecordId","value":"someTestOutputPVar"/ | OK |
 | fitnesseBookPGroup | presentationGroup | =~/name":"linkedRecordId","value":"recordInfoPGroup".*"name":"refGroup".*"name":"linkedRecordId","value":"someTestPVar".*"name":"refGroup"/ | OK |
 | fitnesseBookNewPGroup | presentationGroup | =~/"name":"linkedRecordId","value":"recordInfoNewPGroup".*"name":"refGroup".*"name":"linkedRecordId","value":"someTestPVar".*"name":"refGroup"/ | OK |
 | fitnesseBookMenuPGroup | presentationGroup | =~/"name":"linkedRecordId","value":"recordInfoOutputPGroup".*"name":"refGroup"/ | OK |

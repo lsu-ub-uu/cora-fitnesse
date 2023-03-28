@@ -87,9 +87,9 @@ Read presentationGroups again to see that they have been created
 
 !| PresentationGroupFixture |
 | linkedRecordType | linkedRecordId | numberOfRefs? |
-| presentationGroup | recordInfoOutputPGroup | 1 |
-| presentationVar | fitnesseTestOutputPVar | 1 |
-| presentationCollectionVar | fitnesseBookOutputPCollVar | 1 |
+| presentation | recordInfoOutputPGroup | 1 |
+| presentation | fitnesseTestOutputPVar | 1 |
+| presentation | fitnesseBookOutputPCollVar | 1 |
 
 *!
 !***> Load fitnesseBookPGroup to use in tests
@@ -103,9 +103,9 @@ Read presentationGroups again to see that they have been created
 
 !| PresentationGroupFixture |
 | linkedRecordType | linkedRecordId | numberOfRefs? |
-| presentationGroup | recordInfoPGroup | 1 |
-| presentationVar | fitnesseTestPVar | 1 |
-| presentationCollectionVar | fitnesseBookPCollVar | 1 |
+| presentation | recordInfoPGroup | 1 |
+| presentation | fitnesseTestPVar | 1 |
+| presentation | fitnesseBookPCollVar | 1 |
 
 *!
 !1 Reset testdata
