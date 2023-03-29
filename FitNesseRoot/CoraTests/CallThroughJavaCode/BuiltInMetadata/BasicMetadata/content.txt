@@ -1,2 +1,11 @@
-!1 Test suite X
+!1 Basic metadata
+Basic metadata makes sure that the basic metadata types used to construct recordTypes exists and works as expected.
+
+These tests verifies the following for each basic metadata type:
+ * the recordType exists
+ * the metadataGroups defining new and update exists and contains the needed children
+ * we can create, read, update and delete the record describing our metadata element
+ * the functionality of the building block works. As an example, for a metadataTextVariable would we make sure that you only can use values that correspond to the regular expression, both when creating and updating a record that holds our example metadataTextVariable.
+
+
 !contents -R1 -g -p -f -h

@@ -1,7 +1,0 @@
-!***> Read id
-
-!| RecordEndpointFixture |
-| authToken | id | type | testReadRecord? | getStatusType? |
-| $adminAuthToken | idTextVar | metadataTextVariable | | OK |
-
-*!

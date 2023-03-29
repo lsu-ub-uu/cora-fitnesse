@@ -25,4 +25,4 @@ include and exclude is matched as:
 each part is:
 (key operator value AND key operator value)
 }}}
-!include -seamless .CoraTests.CallThroughJavaCode.Functions.List.Filter.FilterTest
+!include -seamless .CoraTests.CallThroughJavaCode.BuilInMetadata.BuiltInMetadataFunctionality.Filter.FilterTest

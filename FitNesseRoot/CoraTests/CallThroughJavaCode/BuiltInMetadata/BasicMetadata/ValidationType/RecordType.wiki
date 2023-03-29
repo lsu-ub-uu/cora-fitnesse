@@ -1,0 +1,144 @@
+---
+Static
+---
+!2 Metadata
+!3 Fält och begränsningar:
+
+ * validationType (group)
+   * recordInfo (group, 1-1, '''noRestrictions''')
+     * id (textVar, 1-1, '''noRestrictions ''')
+     * type (link, 1-1, '''noRestrictions ''')
+     * createdBy (link, 1-1, '''noRestrictions ''')
+     * dataDivider (link, 1-1, '''noRestrictions ''')
+     * tsCreated (textVar, 1-1, '''noRestrictions ''')
+     * updated(group, 1-X, '''noRestrictions''')
+     * validationType (link, 0-1, '''noRestrictions ''')
+   * textId (link, 0-1, '''noRestrictions ''')
+   * deftextId (link, 0-1, '''noRestrictions ''')  
+   * validatesRecordTypeLink (link, 0-1, '''noRestrictions ''')  
+   * metadataId (link, 1-1, '''noRestrictions ''')
+   * newMetadataId (link, 1-1, '''noRestrictions ''')
+   * presentationViewId (link, 1-1, '''noRestrictions ''')
+   * presentationFormId (link, 1-1, '''noRestrictions ''')
+   * newPresentationFormId (link, 1-1, '''noRestrictions ''')
+   * menuPresentationViewId (link, 1-1, '''noRestrictions ''')
+   * listPresentationViewId (link, 1-1, '''noRestrictions ''')
+   * autocompletePresentationViewLink (link, 0-1, '''noRestrictions ''')
+   * recordTypeFilterPresentationLink (link, 0-1, '''noRestrictions ''')
+ 
+!3 !-RecordType-!
+!style_red[ReordInfo conatins link to permissionUnit THAT IS STRANGE, VERIFY THAT!!]
+!***> Validation Type
+
+!***> Read recordType validationType
+
+!| RecordEndpointFixture |
+| authToken | type | id | testReadRecord? | getStatusType? |
+| $adminAuthToken | recordType | validationType | | OK |
+
+*!
+Read metadataGroup for new validationType and verify it has the correct children
+
+!***> Verify children for validationTypeNewGroup
+
+Read the metadatagroup for later verification
+
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadataGroup | validationTypeNewGroup | |
+
+Verify children
+
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 8 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadataGroup | recordInfoNewGroup | 1 | 1 | recordInfo | noRestrictions |
+| $adminAuthToken | metadataRecordLink | textIdLink | 1 | 1 | textId | noRestrictions |
+| $adminAuthToken | metadataRecordLink | defTextIdLink | 1 | 1 | defTextId | noRestrictions |
+| $adminAuthToken | metadataRecordLink | validatesRecordTypeLink | 1 | 1 | validatesRecordType | noRestrictions |
+| $adminAuthToken | metadataRecordLink | newMetadataIdLink | 1 | 1 | newMetadataId | noRestrictions |
+| $adminAuthToken | metadataRecordLink | metadataIdLink | 1 | 1 | metadataId | noRestrictions |
+| $adminAuthToken | metadataRecordLink | newPresentationFormIdLink | 1 | 1 | newPresentationFormId | noRestrictions |
+| $adminAuthToken | metadataRecordLink | presentationFormIdLink | 1 | 1 | presentationFormId | noRestrictions |
+
+*!
+!***> Verify recordInfoNewGroup
+
+Read recordInfo for new group
+
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadataGroup | recordInfoNewGroup | |
+
+Verify children
+
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 3 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadataTextVariable | idTextVar | 1 | 1 | id | noRestrictions |
+| $adminAuthToken | metadataRecordLink | dataDividerLink | 1 | 1 | dataDivider | noRestrictions |
+| $adminAuthToken | metadataRecordLink | validationTypeLink | 0 | 1 | validationType | noRestrictions |
+
+*!
+
+!***> Verify children for validationTypeGroup
+
+Read the metadatagroup for later verification
+
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadataGroup | validationTypeGroup | |
+
+Verify children
+
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 8 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadataGroup | recordInfoGroup | 1 | 1 | recordInfo | noRestrictions |
+| $adminAuthToken | metadataRecordLink | textIdLink | 1 | 1 | textId | noRestrictions |
+| $adminAuthToken | metadataRecordLink | defTextIdLink | 1 | 1 | defTextId | noRestrictions |
+| $adminAuthToken | metadataRecordLink | validatesRecordTypeLink | 1 | 1 | validatesRecordType | noRestrictions |
+| $adminAuthToken | metadataRecordLink | newMetadataIdLink | 1 | 1 | newMetadataId | noRestrictions |
+| $adminAuthToken | metadataRecordLink | metadataIdLink | 1 | 1 | metadataId | noRestrictions |
+| $adminAuthToken | metadataRecordLink | newPresentationFormIdLink | 1 | 1 | newPresentationFormId | noRestrictions |
+| $adminAuthToken | metadataRecordLink | presentationFormIdLink | 1 | 1 | presentationFormId | noRestrictions |
+
+*!
+!***> Verify recordInfoNewGroup
+
+Read recordInfo for new group
+
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadataGroup | recordInfoGroup | |
+
+Verify children
+
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 8 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadataTextVariable | idTextVar | 1 | 1 | id | noRestrictions |
+| $adminAuthToken | metadataRecordLink | recordTypeLink | 1 | 1 | type | noRestrictions |
+| $adminAuthToken | metadataRecordLink | validationTypeLink | 0 | 1 | validationType | noRestrictions |
+| $adminAuthToken | metadataRecordLink | dataDividerLink | 1 | 1 | dataDivider | noRestrictions |
+| $adminAuthToken | metadataRecordLink | permissionUnitLink | 0 | X | permissionUnit | noRestrictions |
+| $adminAuthToken | metadataRecordLink | createdByLink | 1 | 1 | createdBy | noRestrictions |
+| $adminAuthToken | metadataTextVariable | tsCreatedTextVar | 1 | 1 | tsCreated | noRestrictions |
+| $adminAuthToken | metadataGroup | updatedGroup | 1 | X | updated | noRestrictions |
+*!
+
+*!
+
+
