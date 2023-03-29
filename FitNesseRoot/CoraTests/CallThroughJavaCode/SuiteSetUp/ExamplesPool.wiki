@@ -27,7 +27,7 @@ It should be possible to create new validation types
 
 !define currentAuthToken {$adminAuthToken}
 !define recordType {coraText}
-!define createData {!-{"name":"text","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseText"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"textPart","children":[{"name":"text","value":"fitnesseText"}],"attributes":{"type":"default","lang":"sv"}},{"name":"textPart","children":[{"name":"text","value":"fitnesseText"}],"attributes":{"type":"alternative","lang":"en"}}]}-!}
+!define createData {!- { "name": "text", "children": [ { "name": "recordInfo", "children": [ { "name": "id", "value": "fitnesseText" }, { "name": "dataDivider", "children": [ { "name": "linkedRecordType", "value": "system" }, { "name": "linkedRecordId", "value": "testSystem" } ] }, { "children": [ { "name": "linkedRecordType", "value": "validationType" }, { "name": "linkedRecordId", "value": "metadataTextVariable" } ], "name": "validationType" } ] }, { "name": "textPart", "children": [ { "name": "text", "value": "fitnesseText" } ], "attributes": { "type": "default", "lang": "sv" } }, { "name": "textPart", "children": [ { "name": "text", "value": "fitnesseText" } ], "attributes": { "type": "alternative", "lang": "en" } } ] }  -!}
 !define expectedAnswer {!--!}
 !define expectedCreateResult {CREATED}
 

@@ -62,7 +62,7 @@ If no filter is defined for the recordType, it is not possible to use a filter w
 
 !| RecordEndpointFixture |
 | authToken | type | json | testReadRecordList? | getStatusType? |
-| $adminAuthToken | testMovie |{"name":"filter","children":[{"name":"include","children":[{"name":"part","children":[{"name":"movieTitle","value":"Jumanji"}],"repeatId":"0"}]}]}| =~/"toNo":"1"/ | OK |
+| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"include","children":[{"name":"part","children":[{"name":"movieTitle","value":"Jumanji"}],"repeatId":"0"}]}]}| =~/"toNo":"1"/ | OK |
 
 *!
 !***> Delete created testMovie

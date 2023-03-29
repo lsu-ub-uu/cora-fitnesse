@@ -1,0 +1,138 @@
+---
+Test
+---
+| import |
+| se.uu.ub.cora.fitnesseintegration |
+
+!img http://files/images/record-type.png 
+
+The Record Type is a basic entity  in Cora. Everything in Cora is a record type, including all the metadata types that make up the system, including the record type itself.
+When you create a record type, you define what should apply when instances of that record type are created.
+
+The Record type references the following groups that makes up a majority of the functionality:
+
+ * Metadata groups. These are used to define the individual fields in records instanstiated by the record type such as their data type (number, text, etc) and number of occurrences for the respective fields (if they are mandatory or not). Note that metadata groups can be nested in other groups.
+
+ * Presentation groups. There are a number of presentation groups defined in the record type. They are used to describe how the data in a record is supposed to be presented in different contexts for example during creation of new or updated records and in menus or lists.
+
+To validate a record type, [[a validation type is used][<CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType]].
+
+The Cora system also informs, via action links, what you can do with records instantiated from the record type (based on the rights of the current user). 
+E.g. create, list, update and delete instances/records of the record type.
+
+There are also a number of other attributes on a record type related to batch indexing, searching based on a record type
+
+Finally, something called texts is used to describe the record type in different languages.
+
+Individual instances of the record type that carry actual data are called records.
+
+Below is an example test case describing and validating the different aspects of a record type and related concepts in action.
+
+{{{<< Example >>
+
+We have a record type called trainingClassLeaflet. It is used a foundation to created personalized electronic 
+leaflets for other fitness-related training classes, such as personal training, circuit training, aerobics etc.
+ The leaflets can have different fields depending on what kind of content and training class the leaflet describes.
+ 
+ To validate the different categories of leaflets we can use validation types, for example:
+ 
+ - a personal training leaflet can only have 1 participant
+ - a circuit training leaflet can have between 3 and 10 participants.
+ 
+ The records created from the record type are the personalized instances of the fitness-related leaflets of each type,
+ where each type matches a validation type.
+ }}}
+ 
+ To verify this there are 3 test steps needed:
+ 
+ 1. Creation of record types (with links to metadata and presentation groups for the record type)
+ 2. Creation of validation types (with links to metadata specific for the validation type and a link to the record type being validated)
+ 3. Creation of records which automatically validates the record against the referenced validation type.
+
+
+!5 '''1. Verify that record type itself can be created (with links to metadata and presentation groups)'''
+!***> Creating record type trainingClassLeaflet
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | recordType | {"name":"recordType","children": [{"name": "recordInfo","children": [{"name": "id","value": "trainingClassLeaflet"},{"name": "dataDivider","children": [{"name": "linkedRecordType","value": "system"},{"name": "linkedRecordId","value": "testSystem"}]}]},{"name": "textId","children": [{"name": "linkedRecordType","value": "coraText"},{"name": "linkedRecordId","value": "fitnesseText"}]},{"name": "defTextId","children": [{"name": "linkedRecordType","value": "coraText"},{"name": "linkedRecordId","value": "fitnesseText"}]},{"name": "newMetadataId","children": [{"name": "linkedRecordType","value": "metadataGroup"},{"name": "linkedRecordId","value": "fitnesseNewGroup"}]},{"name": "metadataId","children": [{"name": "linkedRecordType","value": "metadataGroup"},{"name": "linkedRecordId","value": "fitnesseGroup"}]},{"name": "presentationViewId","children": [{"name": "linkedRecordType","value": "presentationGroup"},{"name": "linkedRecordId","value": "fitnessePGroup"}]},{"name": "menuPresentationViewId","children": [{"name": "linkedRecordType","value": "presentationGroup"},{"name": "linkedRecordId","value": "fitnessePGroup"}]},{"name": "newPresentationFormId","children": [{"name": "linkedRecordType","value": "presentationGroup"},{"name": "linkedRecordId","value": "fitnessePGroup"}]},{"name": "presentationFormId","children": [{"name": "linkedRecordType","value": "presentationGroup"},{"name": "linkedRecordId","value": "fitnessePGroup"}]},{"name": "listPresentationViewId","children": [{"name": "linkedRecordType","value": "presentationGroup"},{"name": "linkedRecordId","value": "fitnessePGroup"}]},{"name": "autocompletePresentationView","children": [{"name": "linkedRecordType","value": "presentationGroup"},{"name": "linkedRecordId","value": "fitnessePGroup"}]},{ "name": "public", "value": "true" },{ "name": "userSuppliedId", "value": "false" },{ "name": "storeInArchive", "value": "false" },{ "name": "groupOfRecordType", "repeatId": "0", "value": "metadata"},{ "name": "abstract", "value": "false" }]} | | CREATED |
+
+*!
+
+!5 '''2. Verify that validation types and dependent metadata groups can be created (linking to the record type above)'''
+!***> Create validation type for personal training leaflets, called personalTrainingLeaflet. This refers to the record type above and uses the default metadata group which only contains one text variable. The validation type is intended for messaging for the message to the single participant invited to personal training.
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | validationType | {"name":"validationType", "children":[ { "name":"recordInfo", "children":[ { "name":"id", "value":"personalTrainingLeafletValidation" }, { "name":"dataDivider", "children":[ { "name":"linkedRecordType", "value":"system" }, { "name":"linkedRecordId", "value":"testSystem" } ] } ] }, { "name":"textId", "children":[ { "name":"linkedRecordType", "value":"coraText" }, { "name":"linkedRecordId", "value":"fitnesseText" } ] }, { "name":"defTextId", "children":[ { "name":"linkedRecordType", "value":"coraText" }, { "name":"linkedRecordId", "value":"fitnesseText" } ] }, { "name":"newMetadataId", "children":[ { "name":"linkedRecordType", "value":"metadataGroup" }, { "name":"linkedRecordId", "value":"fitnesseNewGroup" } ] }, { "name":"metadataId", "children":[ { "name":"linkedRecordType", "value":"metadataGroup" }, { "name":"linkedRecordId", "value":"fitnesseGroup" } ] }, { "name":"presentationViewId", "children":[ { "name":"linkedRecordType", "value":"presentationGroup" }, { "name":"linkedRecordId", "value":"fitnessePGroup" } ] }, { "name":"menuPresentationViewId", "children":[ { "name":"linkedRecordType", "value":"presentationGroup" }, { "name":"linkedRecordId", "value":"fitnessePGroup" } ] }, { "name":"newPresentationFormId", "children":[ { "name":"linkedRecordType", "value":"presentationGroup" }, { "name":"linkedRecordId", "value":"fitnessePGroup" } ] }, { "name":"presentationFormId", "children":[ { "name":"linkedRecordType", "value":"presentationGroup" }, { "name":"linkedRecordId", "value":"fitnessePGroup" } ] }, { "name":"listPresentationViewId", "children":[ { "name":"linkedRecordType", "value":"presentationGroup" }, { "name":"linkedRecordId", "value":"fitnessePGroup" } ] }, { "name":"validatesRecordType", "children":[ { "name":"linkedRecordType", "value":"recordType" }, { "name":"linkedRecordId", "value":"trainingClassLeaflet" } ] } ] } | | CREATED |
+
+*!
+!***> Create metadata group and validation type for circuitTrainingLeaflet. The idea with the leaflet is to inform each participant about the class and each other. We need a custom metadata group because the metadata for Circuit training requires at least 3 and max 10 participans rather than the default metadata group which only has 1 participant.
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | metadataGroup | {"name": "metadata", "children": [ { "name": "recordInfo", "children": [ { "name": "id", "value": "circuitTrainingLeafletGroup" }, { "name": "dataDivider", "children": [ { "name": "linkedRecordType", "value": "system" }, { "name": "linkedRecordId", "value": "testSystem" } ] } ] }, { "name": "nameInData", "value": "circuitTrainingLeaflet" }, { "name": "textId", "children": [ { "name": "linkedRecordType", "value": "coraText" }, { "name": "linkedRecordId", "value": "fitnesseText" } ] }, { "name": "defTextId", "children": [ { "name": "linkedRecordType", "value": "coraText" }, { "name": "linkedRecordId", "value": "fitnesseText" } ] }, { "name": "childReferences", "children": [ { "name": "childReference", "repeatId": "4", "children": [ { "name": "repeatMin", "value": "1" }, { "name": "repeatMax", "value": "1" }, { "name": "ref", "children": [ { "name": "linkedRecordType", "value": "metadataGroup" }, { "name": "linkedRecordId", "value": "exampleRecordInfoGroup" } ] } ] }, { "name": "childReference", "repeatId": "0", "children": [ { "name": "repeatMin", "value": "3" }, { "name": "repeatMax", "value": "10" }, { "name": "ref", "children": [ { "name": "linkedRecordType", "value": "metadataTextVariable" }, { "name": "linkedRecordId", "value": "fitnesseMetadataTextVar" } ] } ] }, { "name": "childReference", "repeatId": "1", "children": [ { "name": "repeatMin", "value": "0" }, { "name": "repeatMax", "value": "10" }, { "name": "ref", "children": [ { "name": "linkedRecordType", "value": "metadataNumberVariable" }, { "name": "linkedRecordId", "value": "fitnesseMetadataNumberVar" } ] } ] }, { "name": "childReference", "repeatId": "2", "children": [ { "name": "repeatMin", "value": "0" }, { "name": "repeatMax", "value": "1" }, { "name": "ref", "children": [ { "name": "linkedRecordType", "value": "metadataCollectionVariable" }, { "name": "linkedRecordId", "value": "fitnesseCollectionVar" } ] } ] }, { "name": "childReference", "repeatId": "3", "children": [ { "name": "repeatMin", "value": "0" }, { "name": "repeatMax", "value": "1" }, { "name": "ref", "children": [ { "name": "linkedRecordType", "value": "metadataRecordLink" }, { "name": "linkedRecordId", "value": "fitnesseLink" } ] } ] } ] } ], "attributes": { "type": "group" } } | | CREATED |
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | validationType | {"name":"validationType", "children":[ { "name":"recordInfo", "children":[ { "name":"id", "value":"circuitTrainingLeafletValidation" }, { "name":"dataDivider", "children":[ { "name":"linkedRecordType", "value":"system" }, { "name":"linkedRecordId", "value":"testSystem" } ] } ] }, { "name":"textId", "children":[ { "name":"linkedRecordType", "value":"coraText" }, { "name":"linkedRecordId", "value":"fitnesseText" } ] }, { "name":"defTextId", "children":[ { "name":"linkedRecordType", "value":"coraText" }, { "name":"linkedRecordId", "value":"fitnesseText" } ] }, { "name":"newMetadataId", "children":[ { "name":"linkedRecordType", "value":"metadataGroup" }, { "name":"linkedRecordId", "value":"circuitTrainingLeafletGroup" } ] }, { "name":"metadataId", "children":[ { "name":"linkedRecordType", "value":"metadataGroup" }, { "name":"linkedRecordId", "value":"fitnesseGroup" } ] }, { "name":"presentationViewId", "children":[ { "name":"linkedRecordType", "value":"presentationGroup" }, { "name":"linkedRecordId", "value":"fitnessePGroup" } ] }, { "name":"menuPresentationViewId", "children":[ { "name":"linkedRecordType", "value":"presentationGroup" }, { "name":"linkedRecordId", "value":"fitnessePGroup" } ] }, { "name":"newPresentationFormId", "children":[ { "name":"linkedRecordType", "value":"presentationGroup" }, { "name":"linkedRecordId", "value":"fitnessePGroup" } ] }, { "name":"presentationFormId", "children":[ { "name":"linkedRecordType", "value":"presentationGroup" }, { "name":"linkedRecordId", "value":"fitnessePGroup" } ] }, { "name":"listPresentationViewId", "children":[ { "name":"linkedRecordType", "value":"presentationGroup" }, { "name":"linkedRecordId", "value":"fitnessePGroup" } ] }, { "name":"validatesRecordType", "children":[ { "name":"linkedRecordType", "value":"recordType" }, { "name":"linkedRecordId", "value":"trainingClassLeaflet" } ] } ] } | | CREATED |
+
+*!
+
+!5 '''3. Verify that validation works for both valid and invalid records based on validation type. Validation happens automatically during record creation.'''
+!***> Case 1: Records/instances with '''valid''' data should be successful (note that each record refer to the validation type that validates it since each record type can be validated by different validation types)
+
+!-
+-! Record of personal training type
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | trainingClassLeaflet | {"name": "fitnesseExample", "children": [{ "name": "recordInfo", "children": [ { "name": "dataDivider", "children": [{ "name": "linkedRecordType", "value": "system" }, { "name": "linkedRecordId", "value": "testSystem" } ] }, { "name": "validationType", "children": [ { "name": "linkedRecordType", "value": "validationType" }, { "name": "linkedRecordId", "value": "personalTrainingLeafletValidation" } ] } ] }, { "name": "fitnesseTextVar", "value": "Hello and welcome to personal training John Smith. You will work out Tuesdays and Wednesdays." } ] } | | CREATED |
+
+Record of circuit training type (because it refers to that validation type)
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | trainingClassLeaflet | {"name": "circuitTrainingLeaflet", "children": [{ "name": "recordInfo", "children": [ { "name": "dataDivider", "children": [{ "name": "linkedRecordType", "value": "system" }, { "name": "linkedRecordId", "value": "testSystem" } ] }, { "name": "validationType", "children": [ { "name": "linkedRecordType", "value": "validationType" }, { "name": "linkedRecordId", "value": "circuitTrainingLeafletValidation" } ] } ] }, { "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0144." }, { "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0179." }, { "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0133." } ] } | | CREATED |
+
+*!
+!***> Case 2: Records/instances with '''invalid''' data (note that each record refer to the validation type that validates it since each record type can be validated by different validation types)
+
+Record of circuit training type that is '''invalid''' and only contains two persons instead of the minimum required three.
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | trainingClassLeaflet | {"name": "circuitTrainingLeaflet", "children": [{ "name": "recordInfo", "children": [ { "name": "dataDivider", "children": [{ "name": "linkedRecordType", "value": "system" }, { "name": "linkedRecordId", "value": "testSystem" } ] }, { "name": "validationType", "children": [ { "name": "linkedRecordType", "value": "validationType" }, { "name": "linkedRecordId", "value": "circuitTrainingLeafletValidation" } ] } ] }, { "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0144." }, { "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0179." } ] } | | CREATED |
+
+*!
+!***> Deletion and cleanup
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | presentationGroup | circuitTrainingLeafletPGroup | | OK |
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | presentationGroup | circuitTrainingLeafletOutputPGroup | | OK |
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | validationType | circuitTrainingLeafletValidation | | OK |
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | validationType | personalTrainingLeafletValidation | | OK |
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | search | trainingClassLeafletSearch | | OK |
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | recordType | trainingClassLeaflet | | OK |
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | metadataGroup | circuitTrainingLeafletGroup | | OK |
+
+*!
