@@ -18,7 +18,7 @@ public class JsonTestDataHandlerTests {
         jsonDataManager.collectWikiPagesWithJson();
 
         // Assert
-        assertEquals(jsonDataManager.getWikiPages().size(), 1);
+        assertEquals(jsonDataManager.getWikiPages().size(), 2);
     }
 
 

@@ -1,86 +1,83 @@
 package se.uu.ub.cora.corafitnesse.testdata.management;
 
-import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class WikiLine {
+abstract class WikiLine {
 
-    private final Integer lineNo;
-    private String content;
-    private JSONObject json;
-    private String recordType;
-    private String[] columns;
+    protected static final String FIXTURE_LINE_SEPARATOR = "|";
+
+    protected int lineNo;
+    protected String content;
+    protected JSONObject json;
+    protected String recordType;
+    protected String[] columns;
 
     // use this to know at what position in the line to insert the json again after modifications are done
-    private Integer jsonColumnPosition;
+    protected int jsonColumnPosition;
 
-    public WikiLine(Integer lineNo, String content) {
-        this.lineNo = lineNo;
-        this.content = content;
-    }
+    WikiPage currentPage;
 
-    public Boolean tryParse() {
+    // parse the line here and set a boolean which defaults to true and is called isFixtureTableLine
+    // based on that we can do all operations based on line type and break it out into different private methods etc based on that conditional
+    public static WikiLine tryParse(int lineNo, String content, WikiPage wikiPage) {
         try {
-            String contentTemp = StringUtils.removeStart(content, "|");
-            contentTemp = StringUtils.removeEnd(contentTemp, "|");
-            columns = contentTemp.split("\\|");
-
-            for (String column : columns) {
-                if (isJson(column)) {
-                    return true;
+            if (content.startsWith(FIXTURE_LINE_SEPARATOR)) {
+                FixtureTableWikiLine fixtureTableWikiLine = new FixtureTableWikiLine(lineNo, content);
+                if (fixtureTableWikiLine.tryParse()){
+                    return  fixtureTableWikiLine;
+                }
+            }
+            else {
+                RegularWikiLine regularWikiLine = new RegularWikiLine(lineNo, content, wikiPage);
+                if (regularWikiLine.tryParse()){
+                    regularWikiLine.currentPage = wikiPage;
+                    return regularWikiLine;
                 }
             }
         } catch (Exception exception) {
-            return false;
+            return null;
         }
 
-        return false;
+        return null;
     }
 
-    public void parse() {
-        String contentTemp = StringUtils.removeStart(content, "|");
-        contentTemp = StringUtils.removeEnd(contentTemp, "|");
-        columns = contentTemp.split("\\|");
-
-        for (int i = 0; i < columns.length; i++) {
-            if (isJson(columns[i])) {
-                // usually json data is the 3rd or 4th column on the line
-                this.json = new JSONObject(columns[i]);
-                this.jsonColumnPosition = i;
-                break;
-            }
-
-        }
-
-        // record type is in 2nd column by convention
-        this.recordType = columns[1].trim();
-    }
+    public abstract void joinColumns();
 
     public void insertValidationType(String jsonFragmentTemplate) {
         String jsonFragment = jsonFragmentTemplate.replace("$VT", recordType);
         JSONObject validationType = new JSONObject(jsonFragment);
 
-        JSONArray children = this.json.getJSONArray("children");
+        JSONObject recordInfo = getRecordInfo();
+        recordInfo.getJSONArray("children").put(validationType);
+    }
 
-        // Put validation type into record info
+    protected JSONObject getRecordInfo() {
+        JSONArray children = json.getJSONArray("children");
         for (Object child : children) {
             JSONObject jsonChild = (JSONObject) child;
             if (jsonChild.get("name").equals("recordInfo")) {
-                jsonChild.getJSONArray("children").put(validationType);
+                return jsonChild;
             }
         }
-
+        return null;
     }
 
-    public void joinColumns() {
-        columns[jsonColumnPosition] = " " + json.toString() + " ";
-        content = String.join("|", columns);
-        content = "|" + content + "|";
+    protected boolean containsJsonData(){
+        for (String column : columns) {
+            if (isJson(column)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public Integer getLineNo() {
+    protected boolean isNotCommentedOut(){
+       return !this.content.startsWith("#");
+    }
+
+    public int getLineNo() {
         return lineNo;
     }
 

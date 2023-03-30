@@ -16,23 +16,25 @@ public class WikiPage {
 
     public WikiPage(Path path) {
         this.path = path;
+        readWikiFile(path);
     }
 
     public void processJsonLines() {
+        int lineNo = 0;
+        for (String wikiLineString : wikiLineStrings) {
+            WikiLine wikiLine = WikiLine.tryParse(lineNo, wikiLineString, this);
+            if (wikiLine != null) {
+                wikiLines.add(wikiLine);
+            }
+            lineNo++;
+        }
+    }
+
+    private void readWikiFile(Path path){
         try {
             wikiLineStrings = Files.readAllLines(path);
-            Integer lineNo = 0;
-            for (String wikiLineString : wikiLineStrings) {
-                WikiLine wikiLine = new WikiLine(lineNo, wikiLineString);
-                if (wikiLine.tryParse()) {
-                    wikiLine.parse();
-                    wikiLines.add(wikiLine);
-                }
-                lineNo++;
-            }
-
         } catch (IOException exception) {
-            System.err.println("Error occured when processing json lines: " + exception.getMessage());
+            System.err.println("Error occured when reading wiki file: " + exception.getMessage());
         }
     }
 
@@ -42,6 +44,15 @@ public class WikiPage {
             wikiLine.joinColumns();
         }
 
+    }
+
+    public String findDefineRecordTypeLine(){
+        for (String wikiLineString : wikiLineStrings) {
+            if(wikiLineString.contains("!define recordType")){
+                return wikiLineString;
+            }
+        }
+        return null;
     }
 
     public void writeLines() {
@@ -56,22 +67,17 @@ public class WikiPage {
 
     }
 
-    public Boolean isWikiPage() {
+    public boolean isWikiPage() {
         return path.toString().endsWith(".wiki") || path.toString().endsWith("content.txt");
     }
 
-    public Boolean containsJson() {
-        try {
-            wikiLineStrings = Files.readAllLines(path);
-            Integer lineNo = 0;
-            for (String wikiLineString : wikiLineStrings) {
-                WikiLine wikiLine = new WikiLine(lineNo, wikiLineString);
-                if (wikiLine.tryParse()) {
-                    return true;
-                }
+    public boolean containsJson() {
+        int lineNo = 0;
+        for (String wikiLineString : wikiLineStrings) {
+            WikiLine wikiLine = WikiLine.tryParse(lineNo, wikiLineString, this);
+            if (wikiLine != null) {
+                return true;
             }
-        } catch (IOException exception) {
-            System.err.println("Error occured when processing json lines: " + exception.getMessage());
         }
         return false;
     }
