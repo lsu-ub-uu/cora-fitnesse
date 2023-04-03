@@ -81,13 +81,7 @@ However, when the field "public" in the record type definition for fitnessStuden
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | search | fitnessStudentThesisSearch | | OK |
-
-!| RecordEndpointFixture |
-| authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | validationType | fitnessStudentThesisValidation | | OK |
-
-!| RecordEndpointFixture |
-| authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | recordType | fitnessStudentThesis | | OK |
 
 *!

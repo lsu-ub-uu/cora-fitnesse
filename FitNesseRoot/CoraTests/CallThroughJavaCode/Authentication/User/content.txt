@@ -69,6 +69,6 @@ A test that  reads all predefined metadata needed to be able to create a concret
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | user | fitnessUser | {"name":"systemOneUserNewGroup","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnessUser"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"userId","value":"user123"},{"name":"userFirstname","value":"Some"},{"name":"userLastname","value":"User"},{"name":"userRole","value":"","repeatId":"0"}]} | | METHOD_NOT_ALLOWED |
+| $adminAuthToken | user | fitnessUser | {"children":[{"children":[{"name":"id","value":"fitnessUser"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"user"}],"name":"validationType"}],"name":"recordInfo"},{"name":"userId","value":"user123"},{"name":"userFirstname","value":"Some"},{"name":"userLastname","value":"User"},{"repeatId":"0","name":"userRole","value":""}],"name":"systemOneUserNewGroup"} | | METHOD_NOT_ALLOWED |
 
 *!
