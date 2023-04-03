@@ -42,7 +42,7 @@ public class WikiLineTests {
     // Same as above but with the difference that the record type is defined separately in the beginning of the page
     public void TestParseRegularWikiLineWithExternalRecordType(){
         // Arrange
-        Path wikiPagePath = Paths.get("tooling/src/test/resources/subdir_includes/RegularLinesWithExternalRecordType.wiki");
+        Path wikiPagePath = Paths.get("tooling/src/test/resources/subdir_includes/WithJson/RegularLinesWithExternalRecordType.wiki");
         WikiPage wikiPage = new WikiPage(wikiPagePath);
         WikiLine wikiLine = WikiLine.tryParse(LINE_NO, getRegularWikiLineWithoutInternalRecordType(), wikiPage);
 

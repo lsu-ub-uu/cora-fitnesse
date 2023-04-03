@@ -33,7 +33,7 @@ class RegularWikiLine extends WikiLine {
 
     @Override
     public void joinColumns() {
-        columns[jsonColumnPosition] = json.toString();
+        columns[1] = json.toString();
         content = String.join("{!-", columns);
         content = content + "-!}";
     }
@@ -68,7 +68,7 @@ class RegularWikiLine extends WikiLine {
                 }
             }
         }
-        if(hasExternalRecordType()){
+       else if (hasExternalRecordType()){
             String recordTypeDef = currentPage.findDefineRecordTypeLine().replace("}", "");
             this.recordType = recordTypeDef.replace("!define recordType {","");
         }

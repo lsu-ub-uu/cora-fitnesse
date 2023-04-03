@@ -5,6 +5,9 @@ import org.json.JSONObject;
 
 public class FixtureTableWikiLine extends WikiLine{
 
+    // use this to know at what position in the line to insert the json again after modifications are done
+    private int jsonColumnPosition;
+
     public FixtureTableWikiLine(int lineNo, String content) {
         this.lineNo = lineNo;
         this.content = content;

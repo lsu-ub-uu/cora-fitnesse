@@ -9,7 +9,7 @@ import static org.testng.Assert.assertEquals;
 
 public class WikiPageTests {
 
-    private static final Path wikiPagePath = Paths.get("tooling/src/test/resources/subdir_includes/FixtureTableLines.wiki");
+    private static final Path wikiPagePath = Paths.get("tooling/src/test/resources/subdir_includes/WithJson/FixtureTableLines.wiki");
     @Test
     // Test that wiki page contains correct number of parsed wiki lines
     public void TestProcessWikiPage(){
@@ -20,7 +20,7 @@ public class WikiPageTests {
         wikiPage.processJsonLines();
 
         // Assert
-        assertEquals(wikiPage.getWikiLines().size(), 3);
+        assertEquals(wikiPage.getJsonWikiLines().size(), 3);
     }
 
 }

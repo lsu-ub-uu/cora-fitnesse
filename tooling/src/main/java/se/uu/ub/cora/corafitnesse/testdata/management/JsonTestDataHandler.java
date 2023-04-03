@@ -47,7 +47,7 @@ public class JsonTestDataHandler {
 
     public static String getJsonFragmentForValidationType() {
         return """ 
-                {"children": [{"name": "linkedRecordType","value": "validationType"},{"name": "linkedRecordId","value": "$VT"}],"name": "validationType"}""";
+                {"children": [{"name": "linkedRecordType","value": "validationType"},{"name": "linkedRecordId","value": "$ValidationType"}],"name": "validationType"}""";
 
     }
 

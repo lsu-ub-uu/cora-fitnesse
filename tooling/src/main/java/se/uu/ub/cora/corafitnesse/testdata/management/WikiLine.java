@@ -7,32 +7,26 @@ import org.json.JSONObject;
 abstract class WikiLine {
 
     protected static final String FIXTURE_LINE_SEPARATOR = "|";
+    protected static final String REGULAR_LINE_SEPARATOR = "{!-";
 
     protected int lineNo;
     protected String content;
     protected JSONObject json;
     protected String recordType;
     protected String[] columns;
+    protected WikiPage currentPage;
 
-    // use this to know at what position in the line to insert the json again after modifications are done
-    protected int jsonColumnPosition;
-
-    WikiPage currentPage;
-
-    // parse the line here and set a boolean which defaults to true and is called isFixtureTableLine
-    // based on that we can do all operations based on line type and break it out into different private methods etc based on that conditional
     public static WikiLine tryParse(int lineNo, String content, WikiPage wikiPage) {
         try {
-            if (content.startsWith(FIXTURE_LINE_SEPARATOR)) {
+            if (content.trim().startsWith(FIXTURE_LINE_SEPARATOR)) {
                 FixtureTableWikiLine fixtureTableWikiLine = new FixtureTableWikiLine(lineNo, content);
                 if (fixtureTableWikiLine.tryParse()){
                     return  fixtureTableWikiLine;
                 }
             }
-            else {
+            else if(content.contains(REGULAR_LINE_SEPARATOR)) {
                 RegularWikiLine regularWikiLine = new RegularWikiLine(lineNo, content, wikiPage);
                 if (regularWikiLine.tryParse()){
-                    regularWikiLine.currentPage = wikiPage;
                     return regularWikiLine;
                 }
             }
@@ -46,7 +40,7 @@ abstract class WikiLine {
     public abstract void joinColumns();
 
     public void insertValidationType(String jsonFragmentTemplate) {
-        String jsonFragment = jsonFragmentTemplate.replace("$VT", recordType);
+        String jsonFragment = jsonFragmentTemplate.replace("$ValidationType", recordType);
         JSONObject validationType = new JSONObject(jsonFragment);
 
         JSONObject recordInfo = getRecordInfo();

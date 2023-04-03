@@ -22,9 +22,12 @@ public class WikiPage {
     public void processJsonLines() {
         int lineNo = 0;
         for (String wikiLineString : wikiLineStrings) {
-            WikiLine wikiLine = WikiLine.tryParse(lineNo, wikiLineString, this);
-            if (wikiLine != null) {
-                wikiLines.add(wikiLine);
+            // Exclude lines which already have a validationType
+            if(!wikiLineString.contains("validationType")) {
+                WikiLine wikiLine = WikiLine.tryParse(lineNo, wikiLineString, this);
+                if (wikiLine != null) {
+                    wikiLines.add(wikiLine);
+                }
             }
             lineNo++;
         }
@@ -48,7 +51,7 @@ public class WikiPage {
 
     public String findDefineRecordTypeLine(){
         for (String wikiLineString : wikiLineStrings) {
-            if(wikiLineString.contains("!define recordType")){
+            if( !wikiLineString.startsWith("#") && wikiLineString.contains("!define recordType")){
                 return wikiLineString;
             }
         }
@@ -82,8 +85,12 @@ public class WikiPage {
         return false;
     }
 
-    public List<WikiLine> getWikiLines() {
+    public List<WikiLine> getJsonWikiLines() {
         return wikiLines;
+    }
+
+    public Path getPath(){
+        return path;
     }
 
 }
