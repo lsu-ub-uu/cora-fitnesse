@@ -27,14 +27,14 @@ Test that recordId of record handled in workorder can be anything. Needed as rec
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | coraText | {"name":"text","children":[{"name":"recordInfo","children":[{"name":"id","value":"testForWorkOrderText"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"textPart","children":[{"name":"text","value":"Testtext"}],"attributes":{"type":"default","lang":"sv"}},{"name":"textPart","children":[{"name":"text","value":"Test  text"}],"attributes":{"type":"alternative","lang":"en"}}]} | | CREATED |
+| $adminAuthToken | coraText | {"children":[{"children":[{"name":"id","value":"testForWorkOrderText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Testtext"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"Test  text"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"} | | CREATED |
 
 *!
 !***> Create data of recordType workOrder
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
-| $adminAuthToken | workOrder | {"name":"workOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"coraText"}]},{"name":"recordId","value":"testForWorkOrderText"},{"name":"type","value":"index"}]} | | CREATED | $createdId= |
+| $adminAuthToken | workOrder | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"workOrder"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"coraText"}],"name":"recordType"},{"name":"recordId","value":"testForWorkOrderText"},{"name":"type","value":"index"}],"name":"workOrder"} | | CREATED | $createdId= |
 
 *!
 WorkOrders are deleted after create, since they only are intended to be used to perform a task. Reading and listing workOrders will therefore give no result.
@@ -57,7 +57,7 @@ WorkOrders are deleted after create, since they only are intended to be used to 
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
-| $adminAuthToken | workOrder | {"name":"workOrder","children":[{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"coraText"}]},{"name":"recordId","value":"testForWorkOrderText"},{"name":"type","value":"index"}]} | | CREATED | $createdId2= |
+| $adminAuthToken | workOrder | {"name":"workOrder","children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"workOrder"}],"name":"validationType"}],"name":"recordInfo"},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"coraText"}]},{"name":"recordId","value":"testForWorkOrderText"},{"name":"type","value":"index"}]} | | CREATED | $createdId2= |
 
 *!
 !***> Read workOrder
@@ -71,14 +71,14 @@ WorkOrders are deleted after create, since they only are intended to be used to 
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | coraText | {"name":"text","children":[{"name":"recordInfo","children":[{"name":"id","value":"an:Id_with-okCharactersText"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"textPart","children":[{"name":"text","value":"Testtext"}],"attributes":{"type":"default","lang":"sv"}},{"name":"textPart","children":[{"name":"text","value":"Test  text"}],"attributes":{"type":"alternative","lang":"en"}}]} | | CREATED |
+| $adminAuthToken | coraText | {"children":[{"children":[{"name":"id","value":"an:Id_with-okCharactersText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Testtext"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"Test  text"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"} | | CREATED |
 
 *!
 !***> Create data of recordType workOrder
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
-| $adminAuthToken | workOrder | {"name":"workOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"coraText"}]},{"name":"recordId","value":"an:Id_with-okCharactersText"},{"name":"type","value":"index"}]} | | CREATED | $createdId= |
+| $adminAuthToken | workOrder | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"workOrder"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"coraText"}],"name":"recordType"},{"name":"recordId","value":"an:Id_with-okCharactersText"},{"name":"type","value":"index"}],"name":"workOrder"} | | CREATED | $createdId= |
 
 *!
 !***> Delete created texts
@@ -96,6 +96,6 @@ Try create data of recodType workOrder. Shuld fail since type is missing
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | workOrder | {"name":"workOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"coraText"}]},{"name":"recordId","value":"testForWorkOrderText"}]} | Error creating new record for recordType: workOrder. Data is not valid: [Did not find enough data children with referenceId: workOrderTypeCollectionVar(with nameInData:type).] | BAD_REQUEST |
+| $adminAuthToken | workOrder | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"workOrder"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"coraText"}],"name":"recordType"},{"name":"recordId","value":"testForWorkOrderText"}],"name":"workOrder"} | Error creating new record for recordType: workOrder. Data is not valid: [Did not find enough data children with referenceId: workOrderTypeCollectionVar(with nameInData:type).] | BAD_REQUEST |
 
 *!

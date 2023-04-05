@@ -40,4 +40,5 @@ They would be stored as metadata number variables with relevant min and max valu
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType.RecordType
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType.Create
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType.Update
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType.AutoCreation
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType.CleanUp

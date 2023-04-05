@@ -42,7 +42,7 @@ A test that first reads all predefined metadata needed to be able to add system 
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecordCreatedType? | getStatusType? | getCreatedId? |
-| $adminAuthToken | system | {"name":"system","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesse"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"systemName","value":"cora"}]} | system | CREATED | $createdId= |
+| $adminAuthToken | system | {"children":[{"children":[{"name":"id","value":"fitnesse"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"system"}],"name":"validationType"}],"name":"recordInfo"},{"name":"systemName","value":"cora"}],"name":"system"} | system | CREATED | $createdId= |
 
 *!
 !***> Read system(fitnesse)
@@ -56,7 +56,7 @@ A test that first reads all predefined metadata needed to be able to add system 
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | system | $createdId | {"children":[{"name":"systemName","value":"notCora"},{"children":[{"name":"id","value":"$createdId"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"system"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"}],"name":"recordInfo"}],"name":"system"} | =~/"name":"systemName","value":"notCora"/ | OK |
+| $adminAuthToken | system | $createdId | {"children":[{"name":"systemName","value":"notCora"},{"children":[{"name":"id","value":"$createdId"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"system"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"system"}],"name":"validationType"}],"name":"recordInfo"}],"name":"system"} | =~/"name":"systemName","value":"notCora"/ | OK |
 
 *!
 !2 Clean up created data

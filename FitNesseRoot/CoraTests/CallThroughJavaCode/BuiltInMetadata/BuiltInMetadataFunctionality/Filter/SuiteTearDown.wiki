@@ -7,6 +7,7 @@ Remove data created for this test
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | testMovie | someOldMovie | | OK |
 | $adminAuthToken | search | testMovieSearch | | OK |
+| $adminAuthToken | validationType | testMovie | | OK |
 | $adminAuthToken | recordType | testMovie | | OK |
 | $adminAuthToken | presentationGroup | testMovieFilterOutputPGroup | | OK |
 | $adminAuthToken | presentationGroup | testMovieFilterPGroup | | OK |
