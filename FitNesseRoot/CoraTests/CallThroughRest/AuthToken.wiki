@@ -39,7 +39,7 @@ Test that sending a valid authToken gives additional permissions compared to gue
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeader | Content-Type:application/vnd.uub.record+json!-
 -! |
-| setBody | {"name":"text","children":[{"name":"recordInfo","children":[{"name":"id","value":"authTokenTestingText"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"textPart","children":[{"name":"text","value":"En  text för att testa  authTokens"}],"attributes":{"type":"default","lang":"sv"}}]} |
+| setBody | {"name":"text","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"textSystemOne"}]},{"name":"id","value":"authTokenTestingText"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"textPart","children":[{"name":"text","value":"En  text för att testa  authTokens"}],"attributes":{"type":"default","lang":"sv"}}]} |
 | POST | /rest/record/textSystemOne | 401 | | |
 
 *!
@@ -49,7 +49,7 @@ Test that sending a valid authToken gives additional permissions compared to gue
 | setHeader | Content-Type:application/vnd.uub.record+json !-
 -!authToken:!-invalidToken
 -! |
-| setBody | {"name":"text","children":[{"name":"recordInfo","children":[{"name":"id","value":"authTokenTestingText"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"textPart","children":[{"name":"text","value":"En  text för att testa  authTokens"}],"attributes":{"type":"default","lang":"sv"}}]} |
+| setBody | {"name":"text","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"textSystemOne"}]},{"name":"id","value":"authTokenTestingText"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"textPart","children":[{"name":"text","value":"En  text för att testa  authTokens"}],"attributes":{"type":"default","lang":"sv"}}]} |
 | POST | /rest/record/textSystemOne | 401 | | |
 
 *!
@@ -59,7 +59,7 @@ Test that sending a valid authToken gives additional permissions compared to gue
 | setHeader | Content-Type:application/vnd.uub.record+json !-
 -!authToken:!-fitnesseUserToken-!!-
 -! |
-| setBody | {"name":"system","children":[{"name":"recordInfo","children":[{"name":"id","value":"dummySystem"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"systemName","value":"Dummy"}]} |
+| setBody | {"name":"system","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"system"}]},{"name":"id","value":"dummySystem"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"systemName","value":"Dummy"}]} |
 | POST | /rest/record/system | 401 | | |
 
 *!
@@ -69,7 +69,7 @@ Test that sending a valid authToken gives additional permissions compared to gue
 | setHeader | Content-Type:application/vnd.uub.record+json!-
 -!authToken:$adminAuthToken!-
 -! |
-| setBody | {"name":"text","children":[{"name":"recordInfo","children":[{"name":"id","value":"authTokenTestingText"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"textPart","children":[{"name":"text","value":"En  text för att testa  authTokens"}],"attributes":{"type":"default","lang":"sv"}}]} |
+| setBody | {"name":"text","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"textSystemOne"}]},{"name":"id","value":"authTokenTestingText"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"textPart","children":[{"name":"text","value":"En  text för att testa  authTokens"}],"attributes":{"type":"default","lang":"sv"}}]} |
 | POST | /rest/record/textSystemOne | 201 | | |
 
 *!
