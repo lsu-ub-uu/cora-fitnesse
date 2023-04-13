@@ -67,7 +67,8 @@ A test that  reads all predefined metadata needed to be able to create a concret
 !2 Test with new user
 !***> Create data of recordType user. Should fail since it is abstract
 
-!| RecordEndpointFixture |
+!| comment |
+| RecordEndpointFixture |
 | authToken | type | id | json | testCreateRecord? | getStatusType? |
 | $adminAuthToken | user | fitnessUser | {"children":[{"children":[{"name":"id","value":"fitnessUser"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"user"}],"name":"validationType"}],"name":"recordInfo"},{"name":"userId","value":"user123"},{"name":"userFirstname","value":"Some"},{"name":"userLastname","value":"User"},{"repeatId":"0","name":"userRole","value":""}],"name":"systemOneUserNewGroup"} | | METHOD_NOT_ALLOWED |
 

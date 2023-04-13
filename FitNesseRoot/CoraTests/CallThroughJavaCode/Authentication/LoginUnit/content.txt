@@ -81,7 +81,8 @@ This is needed since loginUnit requires a link to an instance of login an a link
 !2 Test with incorrect data
 !***> Try create data of recodType loginUnit. Should fail since data is missing
 
-!| RecordEndpointFixture |
+!| comment |
+| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
 | $adminAuthToken | login | {"children":[{"children":[{"name":"id","value":"testwr"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"login"}],"name":"validationType"}],"name":"recordInfo"},{"name":"loginName","value":"Test web"},{"name":"url","value":"someUrl/something"}],"name":"login","attributes":{"type":"webRedirect"}} | | METHOD_NOT_ALLOWED |
 

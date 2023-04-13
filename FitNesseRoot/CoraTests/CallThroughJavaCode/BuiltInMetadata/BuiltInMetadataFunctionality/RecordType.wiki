@@ -51,7 +51,7 @@ To verify this there are 3 test steps needed:
 
 
 !5 '''1. Verify that record type itself can be created (with links to metadata and presentation groups)'''
-!***> Creating record type trainingClassLeaflet
+!***> Creating record type '''trainingClassLeaflet'''
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
@@ -60,22 +60,23 @@ To verify this there are 3 test steps needed:
 *!
 
 !5 '''2. Verify that validation types and dependent metadata groups can be created (linking to the record type above)'''
-!***> Create validation type for personal training leaflets, called personalTrainingLeaflet. This refers to the record type above and uses the default metadata group which only contains one text variable. The validation type is intended for messaging for the message to the single participant invited to personal training.
+!***> Create validation type for personal training leaflets, called '''personalTrainingLeaflet'''. This refers to the record type above and uses the default metadata group which only contains one text variable. The validation type is intended for messaging for the message to the single participant invited to personal training.
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
 | $adminAuthToken | validationType | {"name":"validationType","children":[{"name":"recordInfo","children":[{"name":"id","value":"personalTrainingLeafletValidation"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationType"}],"name":"validationType"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"newMetadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"fitnesseNewGroup"}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"fitnesseGroup"}]},{"name":"newPresentationFormId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"recordTypePGroup"}]},{"name":"presentationFormId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"recordTypePGroup"}]},{"name":"validatesRecordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"trainingClassLeaflet"}]}]} | | CREATED |
 
 *!
-!***> Create metadata group and validation type for circuitTrainingLeaflet. The idea with the leaflet is to inform each participant about the class and each other. We need a custom metadata group because the metadata for Circuit training requires at least 3 and max 10 participans rather than the default metadata group which only has 1 participant.
+!***> Create metadata group and validation type for '''circuitTrainingLeaflet'''. The idea with the leaflet is to inform each participant about the class and each other. We need a custom metadata group because the metadata for Circuit training requires at least 3 and max 10 participans rather than the default metadata group which only has 1 participant.
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | metadataGroup | {"children":[{"children":[{"name":"id","value":"circuitTrainingLeafletGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"circuitTrainingLeaflet"},{"children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"repeatId":"4","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"exampleRecordInfoGroup"}],"name":"ref"}],"name":"childReference"},{"repeatId":"0","children":[{"name":"repeatMin","value":"3"},{"name":"repeatMax","value":"10"},{"children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"fitnesseMetadataTextVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"1","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"10"},{"children":[{"name":"linkedRecordType","value":"metadataNumberVariable"},{"name":"linkedRecordId","value":"fitnesseMetadataNumberVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"2","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadataCollectionVariable"},{"name":"linkedRecordId","value":"fitnesseCollectionVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"3","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadataRecordLink"},{"name":"linkedRecordId","value":"fitnesseLink"}],"name":"ref"}],"name":"childReference"}],"name":"childReferences"}],"name":"metadata","attributes":{"type":"group"}} | | CREATED |
+| $adminAuthToken | metadataGroup | {"children":[{"children":[{"name":"id","value":"circuitTrainingLeafletNewGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"circuitTrainingLeaflet"},{"children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"repeatId":"4","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"exampleRecordInfoNewGroup"}],"name":"ref"}],"name":"childReference"},{"repeatId":"0","children":[{"name":"repeatMin","value":"3"},{"name":"repeatMax","value":"10"},{"children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"fitnesseMetadataTextVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"1","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"10"},{"children":[{"name":"linkedRecordType","value":"metadataNumberVariable"},{"name":"linkedRecordId","value":"fitnesseMetadataNumberVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"2","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadataCollectionVariable"},{"name":"linkedRecordId","value":"fitnesseCollectionVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"3","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadataRecordLink"},{"name":"linkedRecordId","value":"fitnesseLink"}],"name":"ref"}],"name":"childReference"}],"name":"childReferences"},{"name":"excludePGroupCreation","value":"true"}],"name":"metadata","attributes":{"type":"group"}} | | CREATED |
+| $adminAuthToken | metadataGroup | {"children":[{"children":[{"name":"id","value":"circuitTrainingLeafletGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"circuitTrainingLeaflet"},{"children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"repeatId":"4","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"exampleRecordInfoGroup"}],"name":"ref"}],"name":"childReference"},{"repeatId":"0","children":[{"name":"repeatMin","value":"3"},{"name":"repeatMax","value":"10"},{"children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"fitnesseMetadataTextVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"1","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"10"},{"children":[{"name":"linkedRecordType","value":"metadataNumberVariable"},{"name":"linkedRecordId","value":"fitnesseMetadataNumberVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"2","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadataCollectionVariable"},{"name":"linkedRecordId","value":"fitnesseCollectionVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"3","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadataRecordLink"},{"name":"linkedRecordId","value":"fitnesseLink"}],"name":"ref"}],"name":"childReference"}],"name":"childReferences"},{"name":"excludePGroupCreation", "value":"true"}],"name":"metadata","attributes":{"type":"group"}} | | CREATED |
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | validationType | {"name":"validationType","children":[{"name":"recordInfo","children":[{"name":"id","value":"circuitTrainingLeafletValidation"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationType"}],"name":"validationType"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"newMetadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"fitnesseNewGroup"}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"circuitTrainingLeafletGroup"}]},{"name":"newPresentationFormId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"presentationFormId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"validatesRecordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"trainingClassLeaflet"}]}]}| | CREATED |
+| $adminAuthToken | validationType | {"name":"validationType","children":[{"name":"recordInfo","children":[{"name":"id","value":"circuitTrainingLeafletValidation"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationType"}],"name":"validationType"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"newMetadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"circuitTrainingLeafletNewGroup"}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"circuitTrainingLeafletGroup"}]},{"name":"newPresentationFormId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"presentationFormId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"validatesRecordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"trainingClassLeaflet"}]}]}| | CREATED |
 
 *!
 
@@ -93,7 +94,7 @@ Record of circuit training type (because it refers to that validation type)
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
-| $adminAuthToken | trainingClassLeaflet | {"name": "circuitTrainingLeaflet", "children": [{ "name": "recordInfo", "children": [ { "name": "dataDivider", "children": [{ "name": "linkedRecordType", "value": "system" }, { "name": "linkedRecordId", "value": "testSystem" } ] }, { "name": "validationType", "children": [ { "name": "linkedRecordType", "value": "validationType" }, { "name": "linkedRecordId", "value": "circuitTrainingLeafletValidation" } ] } ] }, { "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0144." }, { "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0179." }, { "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0133." } ] } | | CREATED | $createdCircuitId= |
+| $adminAuthToken | trainingClassLeaflet | {"name":"circuitTrainingLeaflet","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"circuitTrainingLeafletValidation"}]}]},{"repeatId":"0","name":"fitnesseTextVar","value":"Hello and welcome to circuit training Adam Davis with phone number 202-555-0144."},{"repeatId":"1","name":"fitnesseTextVar","value":"Hello and welcome to circuit training Adam Davis with phone number 202-555-0179."},{"repeatId":"2","name":"fitnesseTextVar","value":"Hello and welcome to circuit training Adam Davis with phone number 202-555-0133."}]}| | CREATED | $createdCircuitId= |
 
 *!
 !***> Case 2: Records/instances with '''invalid''' data (note that each record refer to the validation type that validates it since each record type can be validated by different validation types)
@@ -110,37 +111,12 @@ Record of circuit training type that is '''invalid''' and only contains two pers
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | trainingClassLeaflet | $createdPersonalId | | OK |
-
-!| RecordEndpointFixture |
-| authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | trainingClassLeaflet | createdCircuitId | | OK |
-
-!| RecordEndpointFixture |
-| authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | presentationGroup | circuitTrainingLeafletPGroup | | OK |
-
-!| RecordEndpointFixture |
-| authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | presentationGroup | circuitTrainingLeafletOutputPGroup | | OK |
-
-!| RecordEndpointFixture |
-| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | trainingClassLeaflet | $createdCircuitId | | OK |
 | $adminAuthToken | validationType | circuitTrainingLeafletValidation | | OK |
-
-!| RecordEndpointFixture |
-| authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | validationType | personalTrainingLeafletValidation | | OK |
-
-!| RecordEndpointFixture |
-| authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | search | trainingClassLeafletSearch | | OK |
-
-!| RecordEndpointFixture |
-| authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | recordType | trainingClassLeaflet | | OK |
-
-!| RecordEndpointFixture |
-| authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | metadataGroup | circuitTrainingLeafletGroup | | OK |
+| $adminAuthToken | metadataGroup | circuitTrainingLeafletNewGroup | | OK |
 
 *!
