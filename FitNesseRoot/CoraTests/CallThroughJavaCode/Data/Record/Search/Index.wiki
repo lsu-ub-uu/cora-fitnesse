@@ -128,7 +128,7 @@ Update rule for user, to enable the user to created a workOrder
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
-| $adminAuthToken | workOrder | {"name":"workOrder","children":[{"children":[{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"workOrder"}],"name":"validationType"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"}],"name":"recordInfo"},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testNews"}]},{"name":"recordId","value":"news1"},{"name":"type","value":"index"}]} | | CREATED | $createdId= |
+| $userAuthToken | workOrder | {"name":"workOrder","children":[{"children":[{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"workOrder"}],"name":"validationType"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"}],"name":"recordInfo"},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testNews"}]},{"name":"recordId","value":"news1"},{"name":"type","value":"index"}]} | | CREATED | $createdId= |
 
 *!
 !***> Test searching again, this will result in no hits since the data has not been reindexed
