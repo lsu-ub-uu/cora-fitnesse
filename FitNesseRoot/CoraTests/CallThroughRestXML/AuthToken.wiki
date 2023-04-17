@@ -48,6 +48,10 @@ Test that sending a valid authToken gives additional permissions compared to gue
 -!			<linkedRecordType>system</linkedRecordType>!-
 -!			<linkedRecordId>systemOne</linkedRecordId>!-
 -!		</dataDivider>!-
+-!		<validationType>!-
+-!			<linkedRecordType>validationType</linkedRecordType>!-
+-!			<linkedRecordId>textSystemOne</linkedRecordId>!-
+-!		</validationType>!-
 -!	</recordInfo>!-
 -!	<textPart lang="sv" type="default">!-
 -!		<text>En  text för att testa authTokens</text>!-
@@ -73,6 +77,10 @@ Test that sending a valid authToken gives additional permissions compared to gue
 -!			<linkedRecordType>system</linkedRecordType>!-
 -!			<linkedRecordId>systemOne</linkedRecordId>!-
 -!		</dataDivider>!-
+-!		<validationType>!-
+-!			<linkedRecordType>validationType</linkedRecordType>!-
+-!			<linkedRecordId>textSystemOne</linkedRecordId>!-
+-!		</validationType>!-
 -!	</recordInfo>!-
 -!	<textPart lang="sv" type="default">!-
 -!		<text>En  text för att testa authTokens</text>!-
@@ -98,6 +106,10 @@ Test that sending a valid authToken gives additional permissions compared to gue
 -!			<linkedRecordType>system</linkedRecordType>!-
 -!			<linkedRecordId>systemOne</linkedRecordId>!-
 -!		</dataDivider>!-
+-!		<validationType>!-
+-!			<linkedRecordType>validationType</linkedRecordType>!-
+-!			<linkedRecordId>system</linkedRecordId>!-
+-!		</validationType>!-
 -!	</recordInfo>!-
 -!	<textPart lang="sv" type="default">!-
 -!		<text>En  text för att testa authTokens</text>!-
@@ -123,6 +135,10 @@ Test that sending a valid authToken gives additional permissions compared to gue
 -!			<linkedRecordType>system</linkedRecordType>!-
 -!			<linkedRecordId>systemOne</linkedRecordId>!-
 -!		</dataDivider>!-
+-!		<validationType>!-
+-!			<linkedRecordType>validationType</linkedRecordType>!-
+-!			<linkedRecordId>textSystemOne</linkedRecordId>!-
+-!		</validationType>!-
 -!	</recordInfo>!-
 -!	<textPart lang="sv" type="default">!-
 -!		<text>En  text för att testa authTokens</text>!-

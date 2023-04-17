@@ -38,7 +38,7 @@ Read  presentationRecordLinks to make sure they do not exist
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | metadataRecordLink | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseBookLink"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"fitnesseBook"},{"name":"linkedRecordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadataTextVariable"}]}],"attributes":{"type":"recordLink"}} | | CREATED |
+| $adminAuthToken | metadataRecordLink | {"children":[{"children":[{"name":"id","value":"fitnesseBookLink"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataRecordLink"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"fitnesseBook"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadataTextVariable"}],"name":"linkedRecordType"}],"name":"metadata","attributes":{"type":"recordLink"}} | | CREATED |
 
 *!
 Read fitnesseBookLink to see that links to texts have been added to the metadata

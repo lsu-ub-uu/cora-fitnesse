@@ -100,7 +100,7 @@
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecordCreatedType? | getStatusType? |
-| $adminAuthToken | loginWebRedirect | {"name":"login","children":[{"name":"recordInfo","children":[{"name":"id","value":"testwr"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"loginName","value":"Test web"},{"name":"url","value":"someUrl/something"}],"attributes":{"type":"webRedirect"}} | loginWebRedirect | CREATED |
+| $adminAuthToken | loginWebRedirect | {"children":[{"children":[{"name":"id","value":"testwr"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"loginWebRedirect"}],"name":"validationType"}],"name":"recordInfo"},{"name":"loginName","value":"Test web"},{"name":"url","value":"someUrl/something"}],"name":"login","attributes":{"type":"webRedirect"}} | loginWebRedirect | CREATED |
 
 *!
 !***> Read loginWebRedirect
@@ -114,7 +114,7 @@
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | loginWebRedirect | testwr | {"name":"login","children":[{"name":"recordInfo","children":[{"name":"id","value":"testwr"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"loginWebRedirect"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"loginName","value":"Test web"},{"name":"url","value":"someOtherUrl/something"}],"attributes":{"type":"webRedirect"}} | =~/"name":"url","value":"someOtherUrl/something"/ | OK |
+| $adminAuthToken | loginWebRedirect | testwr | {"children":[{"children":[{"name":"id","value":"testwr"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"loginWebRedirect"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"loginWebRedirect"}],"name":"validationType"}],"name":"recordInfo"},{"name":"loginName","value":"Test web"},{"name":"url","value":"someOtherUrl/something"}],"name":"login","attributes":{"type":"webRedirect"}} | =~/"name":"url","value":"someOtherUrl/something"/ | OK |
 
 *!
 !***> Delete created loginWebRedirect
@@ -129,7 +129,7 @@
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecordCreatedType? | getStatusType? |
-| $adminAuthToken | loginToken | {"name":"login","children":[{"name":"recordInfo","children":[{"name":"id","value":"testToken"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"loginName","value":"Test token"},{"name":"url","value":"someUrl/something"}],"attributes":{"type":"token"}} | loginToken | CREATED |
+| $adminAuthToken | loginToken | {"children":[{"children":[{"name":"id","value":"testToken"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"loginToken"}],"name":"validationType"}],"name":"recordInfo"},{"name":"loginName","value":"Test token"},{"name":"url","value":"someUrl/something"}],"name":"login","attributes":{"type":"token"}} | loginToken | CREATED |
 
 *!
 !***> Read loginToken
@@ -143,7 +143,7 @@
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | loginToken | testToken | {"name":"login","children":[{"name":"recordInfo","children":[{"name":"id","value":"testToken"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"loginToken"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"loginName","value":"Test token"},{"name":"url","value":"someOtherUrl/something"}],"attributes":{"type":"token"}} | | OK |
+| $adminAuthToken | loginToken | testToken | {"children":[{"children":[{"name":"id","value":"testToken"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"loginToken"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"loginToken"}],"name":"validationType"}],"name":"recordInfo"},{"name":"loginName","value":"Test token"},{"name":"url","value":"someOtherUrl/something"}],"name":"login","attributes":{"type":"token"}} | | OK |
 
 *!
 !***> Delete created loginToken
@@ -156,8 +156,9 @@
 !2 Test with incorrect data
 !***> Try create data of recodType login. Shuld fail since login is abstract
 
-!| RecordEndpointFixture |
+!| comment |
+| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | login | {"name":"login","children":[{"name":"recordInfo","children":[{"name":"id","value":"testwr"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"loginName","value":"Test web"},{"name":"url","value":"someUrl/something"}],"attributes":{"type":"webRedirect"}} | | METHOD_NOT_ALLOWED |
+| $adminAuthToken | login | {"children":[{"children":[{"name":"id","value":"testwr"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"login"}],"name":"validationType"}],"name":"recordInfo"},{"name":"loginName","value":"Test web"},{"name":"url","value":"someUrl/something"}],"name":"login","attributes":{"type":"webRedirect"}} | | METHOD_NOT_ALLOWED |
 
 *!

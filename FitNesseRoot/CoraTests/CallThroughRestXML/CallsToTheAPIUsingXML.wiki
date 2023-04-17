@@ -70,7 +70,7 @@ Create needed metadata
 Create collectIndexTerms trainingIdIndexTerm
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | collectIndexTerm | {"name":"collectTerm","children":[{"name":"recordInfo","children":[{"name":"id","value":"trainingIdIndexTerm"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"trainingIdIndexTerm"},{"name":"extraData","children":[{"name":"indexFieldName","value":"trainingId"},{"name":"indexType","value":"indexTypeText"}]}],"attributes":{"type":"index"}} | | CREATED |
+| $adminAuthToken | collectIndexTerm | {"name":"collectTerm","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"collectIndexTerm"}]},{"name":"id","value":"trainingIdIndexTerm"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"trainingIdIndexTerm"},{"name":"extraData","children":[{"name":"indexFieldName","value":"trainingId"},{"name":"indexType","value":"indexTypeText"}]}],"attributes":{"type":"index"}} | | CREATED |
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | Accept: application/vnd.uub.record+xml!-
@@ -83,6 +83,10 @@ Create collectIndexTerms trainingIdIndexTerm
 -!<linkedRecordType>system</linkedRecordType>!-
 -!<linkedRecordId>cora</linkedRecordId>!-
 -!</dataDivider>!-
+-!<validationType>!-
+-!<linkedRecordType>validationType</linkedRecordType>!-
+-!<linkedRecordId>metadataGroup</linkedRecordId>!-
+-!</validationType>!-
 -!</recordInfo>!-
 -!<textId>!-
 -!<linkedRecordType>text</linkedRecordType>!-
@@ -129,6 +133,10 @@ Create collectIndexTerms trainingIdIndexTerm
 -!<linkedRecordType>system</linkedRecordType>!-
 -!<linkedRecordId>cora</linkedRecordId>!-
 -!</dataDivider>!-
+-!<validationType>!-
+-!<linkedRecordType>validationType</linkedRecordType>!-
+-!<linkedRecordId>metadataGroup</linkedRecordId>!-
+-!</validationType>!-
 -!</recordInfo>!-
 -!<textId>!-
 -!<linkedRecordType>text</linkedRecordType>!-
@@ -162,19 +170,19 @@ Create collectIndexTerms trainingIdIndexTerm
 | POST | /rest/record/metadataGroup | 201 | | |
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setBody | <?xml version="1.0" encoding="UTF-8"?><metadata type="group"><recordInfo><id>singleTrainingProgramGroup</id><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider></recordInfo><textId><linkedRecordType>text</linkedRecordType><linkedRecordId>someTestText</linkedRecordId></textId><defTextId><linkedRecordType>text</linkedRecordType><linkedRecordId>someTestDefText</linkedRecordId></defTextId><nameInData>singleTrainingProgram</nameInData><excludePGroupCreation>true</excludePGroupCreation><childReferences><childReference repeatId="1"><ref><linkedRecordType>metadata</linkedRecordType><linkedRecordId>trainingProgramGroup</linkedRecordId></ref><repeatMin>1</repeatMin><repeatMax>1</repeatMax></childReference><childReference repeatId="2"><ref><linkedRecordType>metadata</linkedRecordType><linkedRecordId>recordInfoGroup</linkedRecordId></ref><repeatMin>1</repeatMin><repeatMax>1</repeatMax></childReference></childReferences></metadata> |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><metadata type="group"><recordInfo><id>singleTrainingProgramGroup</id><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>metadataGroup</linkedRecordId></validationType><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider></recordInfo><textId><linkedRecordType>text</linkedRecordType><linkedRecordId>someTestText</linkedRecordId></textId><defTextId><linkedRecordType>text</linkedRecordType><linkedRecordId>someTestDefText</linkedRecordId></defTextId><nameInData>singleTrainingProgram</nameInData><excludePGroupCreation>true</excludePGroupCreation><childReferences><childReference repeatId="1"><ref><linkedRecordType>metadata</linkedRecordType><linkedRecordId>trainingProgramGroup</linkedRecordId></ref><repeatMin>1</repeatMin><repeatMax>1</repeatMax></childReference><childReference repeatId="2"><ref><linkedRecordType>metadata</linkedRecordType><linkedRecordId>recordInfoGroup</linkedRecordId></ref><repeatMin>1</repeatMin><repeatMax>1</repeatMax></childReference></childReferences></metadata> |
 | POST | /rest/record/metadataGroup | 201 | | |
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setBody | <?xml version="1.0" encoding="UTF-8"?><presentation type="pGroup"><recordInfo><id>someFitnesseViewPGroup</id><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider></recordInfo><presentationOf><linkedRecordType>metadataGroup</linkedRecordType><linkedRecordId>singleTrainingProgramGroup</linkedRecordId></presentationOf><childReferences><childReference repeatId="0"><refGroup repeatId="0"><ref type="presentation"><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>recordInfoOutputPGroup</linkedRecordId></ref></refGroup></childReference></childReferences><mode>output</mode></presentation> |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><presentation type="pGroup"><recordInfo><id>someFitnesseViewPGroup</id><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>presentationGroup</linkedRecordId></validationType><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider></recordInfo><presentationOf><linkedRecordType>metadataGroup</linkedRecordType><linkedRecordId>singleTrainingProgramGroup</linkedRecordId></presentationOf><childReferences><childReference repeatId="0"><refGroup repeatId="0"><ref type="presentation"><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>recordInfoOutputPGroup</linkedRecordId></ref></refGroup></childReference></childReferences><mode>output</mode></presentation> |
 | POST | /rest/record/presentationGroup | 201 | | |
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setBody | <?xml version="1.0" encoding="UTF-8"?><presentation type="pGroup"><recordInfo><id>someFitnesseFormPGroup</id><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider></recordInfo><presentationOf><linkedRecordType>metadataGroup</linkedRecordType><linkedRecordId>singleTrainingProgramGroup</linkedRecordId></presentationOf><childReferences><childReference repeatId="0"><refGroup repeatId="0"><ref type="presentation"><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>recordInfoPGroup</linkedRecordId></ref></refGroup></childReference></childReferences><mode>output</mode></presentation> |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><presentation type="pGroup"><recordInfo><id>someFitnesseFormPGroup</id><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>presentationGroup</linkedRecordId></validationType><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider></recordInfo><presentationOf><linkedRecordType>metadataGroup</linkedRecordType><linkedRecordId>singleTrainingProgramGroup</linkedRecordId></presentationOf><childReferences><childReference repeatId="0"><refGroup repeatId="0"><ref type="presentation"><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>recordInfoPGroup</linkedRecordId></ref></refGroup></childReference></childReferences><mode>output</mode></presentation> |
 | POST | /rest/record/presentationGroup | 201 | | |
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setBody | <?xml version="1.0" encoding="UTF-8"?><presentation type="pGroup"><recordInfo><id>someFitnesseFormNewPGroup</id><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider></recordInfo><presentationOf><linkedRecordType>metadataGroup</linkedRecordType><linkedRecordId>singleTrainingProgramNewGroup</linkedRecordId></presentationOf><childReferences><childReference repeatId="0"><refGroup repeatId="0"><ref type="presentation"><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>recordInfoNewPGroup</linkedRecordId></ref></refGroup></childReference></childReferences><mode>output</mode></presentation> |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><presentation type="pGroup"><recordInfo><id>someFitnesseFormNewPGroup</id><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>presentationGroup</linkedRecordId></validationType><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider></recordInfo><presentationOf><linkedRecordType>metadataGroup</linkedRecordType><linkedRecordId>singleTrainingProgramNewGroup</linkedRecordId></presentationOf><childReferences><childReference repeatId="0"><refGroup repeatId="0"><ref type="presentation"><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>recordInfoNewPGroup</linkedRecordId></ref></refGroup></childReference></childReferences><mode>output</mode></presentation> |
 | POST | /rest/record/presentationGroup | 201 | | |
 
 *!
@@ -182,9 +190,9 @@ Create collectIndexTerms trainingIdIndexTerm
 !***> Create texts needed when creating recordType
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setBody | <?xml version="1.0" encoding="UTF-8"?><text><recordInfo><id>someFitnesseText</id><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider></recordInfo><textPart lang="sv" type="default"><text>En text</text></textPart></text> |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><text><recordInfo><id>someFitnesseText</id><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>coraText</linkedRecordId></validationType><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider></recordInfo><textPart lang="sv" type="default"><text>En text</text></textPart></text> |
 | POST | /rest/record/coraText | 201 | | |
-| setBody | <?xml version="1.0" encoding="UTF-8"?><text><recordInfo><id>someFitnesseDefText</id><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider></recordInfo><textPart lang="sv" type="default"><text>En deftext</text></textPart><textPart lang="en" type="alternative"><text>A defText</text></textPart></text> |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><text><recordInfo><id>someFitnesseDefText</id><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>coraText</linkedRecordId></validationType><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider></recordInfo><textPart lang="sv" type="default"><text>En deftext</text></textPart><textPart lang="en" type="alternative"><text>A defText</text></textPart></text> |
 | POST | /rest/record/coraText | 201 | | |
 
 *!
@@ -192,33 +200,41 @@ Create collectIndexTerms trainingIdIndexTerm
 !***> Create recordType
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setBody | <?xml version="1.0" encoding="UTF-8"?><recordType><recordInfo><id>singleTrainingProgram</id><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider></recordInfo><metadataId><linkedRecordType>metadataGroup</linkedRecordType><linkedRecordId>singleTrainingProgramGroup</linkedRecordId></metadataId><abstract>false</abstract><presentationViewId><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>someFitnesseViewPGroup</linkedRecordId></presentationViewId><presentationFormId><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>someFitnesseFormPGroup</linkedRecordId></presentationFormId><newMetadataId><linkedRecordType>metadataGroup</linkedRecordType><linkedRecordId>singleTrainingProgramNewGroup</linkedRecordId></newMetadataId><newPresentationFormId><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>someFitnesseFormNewPGroup</linkedRecordId></newPresentationFormId><menuPresentationViewId><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>someFitnesseViewPGroup</linkedRecordId></menuPresentationViewId><listPresentationViewId><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>someFitnesseViewPGroup</linkedRecordId></listPresentationViewId><autocompletePresentationView><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>someFitnesseViewPGroup</linkedRecordId></autocompletePresentationView><userSuppliedId>true</userSuppliedId><textId><linkedRecordType>text</linkedRecordType><linkedRecordId>someFitnesseText</linkedRecordId></textId><defTextId><linkedRecordType>text</linkedRecordType><linkedRecordId>someFitnesseDefText</linkedRecordId></defTextId><search><linkedRecordType>search</linkedRecordType><linkedRecordId>recordTypeSearch</linkedRecordId></search><groupOfRecordType repeatId="0">metadata</groupOfRecordType><public>false</public><storeInArchive>false</storeInArchive></recordType> |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><recordType><recordInfo><id>singleTrainingProgram</id><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>recordType</linkedRecordId></validationType><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider></recordInfo><metadataId><linkedRecordType>metadataGroup</linkedRecordType><linkedRecordId>singleTrainingProgramGroup</linkedRecordId></metadataId><abstract>false</abstract><presentationViewId><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>someFitnesseViewPGroup</linkedRecordId></presentationViewId><presentationFormId><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>someFitnesseFormPGroup</linkedRecordId></presentationFormId><newMetadataId><linkedRecordType>metadataGroup</linkedRecordType><linkedRecordId>singleTrainingProgramNewGroup</linkedRecordId></newMetadataId><newPresentationFormId><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>someFitnesseFormNewPGroup</linkedRecordId></newPresentationFormId><menuPresentationViewId><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>someFitnesseViewPGroup</linkedRecordId></menuPresentationViewId><listPresentationViewId><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>someFitnesseViewPGroup</linkedRecordId></listPresentationViewId><autocompletePresentationView><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>someFitnesseViewPGroup</linkedRecordId></autocompletePresentationView><userSuppliedId>true</userSuppliedId><textId><linkedRecordType>text</linkedRecordType><linkedRecordId>someFitnesseText</linkedRecordId></textId><defTextId><linkedRecordType>text</linkedRecordType><linkedRecordId>someFitnesseDefText</linkedRecordId></defTextId><search><linkedRecordType>search</linkedRecordType><linkedRecordId>recordTypeSearch</linkedRecordId></search><groupOfRecordType repeatId="0">metadata</groupOfRecordType><public>false</public><storeInArchive>false</storeInArchive></recordType> |
 | POST | /rest/record/recordType | 201 | | |
+
+*!
+
+!***> Create validationType
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><validationType><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider><id>singleTrainingProgramValidationType</id><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>validationType</linkedRecordId></validationType></recordInfo><textId><linkedRecordType>coraText</linkedRecordType><linkedRecordId>someFitnesseText</linkedRecordId></textId><defTextId><linkedRecordType>coraText</linkedRecordType><linkedRecordId>someFitnesseDefText</linkedRecordId></defTextId><newMetadataId><linkedRecordType>metadataGroup</linkedRecordType><linkedRecordId>singleTrainingProgramNewGroup</linkedRecordId></newMetadataId><metadataId><linkedRecordType>metadataGroup</linkedRecordType><linkedRecordId>singleTrainingProgramGroup</linkedRecordId></metadataId><newPresentationFormId><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>someFitnesseFormNewPGroup</linkedRecordId></newPresentationFormId><presentationFormId><linkedRecordType>presentationGroup</linkedRecordType><linkedRecordId>someFitnesseFormPGroup</linkedRecordId></presentationFormId><validatesRecordType><linkedRecordType>recordType</linkedRecordType><linkedRecordId>singleTrainingProgram</linkedRecordId></validatesRecordType></validationType> |
+| POST | /rest/record/validationType | 201 | | |
 
 *!
 
 Create trainingIdSearchTextVar textVariable for search form
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | metadataTextVariable | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"trainingIdSearchTextVar"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"trainingIdSearchTerm"},{"name":"regEx","value":".*"}],"attributes":{"type":"textVariable"}} | | CREATED |
+| $adminAuthToken | metadataTextVariable | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataTextVariable"}]},{"name":"id","value":"trainingIdSearchTextVar"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"trainingIdSearchTerm"},{"name":"regEx","value":".*"}],"attributes":{"type":"textVariable"}} | | CREATED |
 
 Create trainingSearch groups for search form
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | metadataGroup | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"trainingSearchIncludePartGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"includePart"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"trainingIdSearchTextVar"}]}],"repeatId":"0"}]}],"attributes":{"type":"group"}} | | CREATED |
-| $adminAuthToken | metadataGroup | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"trainingSearchIncludeGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"nameInData","value":"include"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"trainingSearchIncludePartGroup"}]}],"repeatId":"0"}]}],"attributes":{"type":"group"}} | | CREATED |
-| $adminAuthToken | metadataGroup | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"trainingSearchGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"nameInData","value":"trainingSearch"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"trainingSearchIncludeGroup"}]}],"repeatId":"0"}]}],"attributes":{"type":"group"}} | | CREATED |
+| $adminAuthToken | metadataGroup | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}]},{"name":"id","value":"trainingSearchIncludePartGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"includePart"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"trainingIdSearchTextVar"}]}],"repeatId":"0"}]}],"attributes":{"type":"group"}} | | CREATED |
+| $adminAuthToken | metadataGroup | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}]},{"name":"id","value":"trainingSearchIncludeGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"nameInData","value":"include"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"trainingSearchIncludePartGroup"}]}],"repeatId":"0"}]}],"attributes":{"type":"group"}} | | CREATED |
+| $adminAuthToken | metadataGroup | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}]},{"name":"id","value":"trainingSearchGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"nameInData","value":"trainingSearch"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"trainingSearchIncludeGroup"}]}],"repeatId":"0"}]}],"attributes":{"type":"group"}} | | CREATED |
 
 create searchTerm
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | searchTerm | {"name":"searchTerm","children":[{"name":"recordInfo","children":[{"name":"id","value":"trainingIdSearchTerm"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"searchTermType","value":"final"},{"name":"indexTerm","children":[{"name":"linkedRecordType","value":"collectIndexTerm"},{"name":"linkedRecordId","value":"trainingIdIndexTerm"}]}]} | | CREATED |
+| $adminAuthToken | searchTerm | {"name":"searchTerm","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"searchTerm"}]},{"name":"id","value":"trainingIdSearchTerm"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"searchTermType","value":"final"},{"name":"indexTerm","children":[{"name":"linkedRecordType","value":"collectIndexTerm"},{"name":"linkedRecordId","value":"trainingIdIndexTerm"}]}]} | | CREATED |
 
 
 Create trainingSearch 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | search | {"name":"search","children":[{"name":"recordInfo","children":[{"name":"id","value":"trainingSearch"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"trainingSearchGroup"}]},{"name":"presentationId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"trainingSearchPGroup"}]},{"name":"recordTypeToSearchIn","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"singleTrainingProgram"}],"repeatId":"0"},{"name":"searchGroup","value":"autocomplete"}]} | | CREATED |
+| $adminAuthToken | search | {"name":"search","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"search"}]},{"name":"id","value":"trainingSearch"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"trainingSearchGroup"}]},{"name":"presentationId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"trainingSearchPGroup"}]},{"name":"recordTypeToSearchIn","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"singleTrainingProgram"}],"repeatId":"0"},{"name":"searchGroup","value":"autocomplete"}]} | | CREATED |
 
 
 *!
@@ -245,6 +261,10 @@ We will create a trainingProgram using the metadata groups specified. We can onl
 -!<linkedRecordId>cora</linkedRecordId>!-
 -!</dataDivider>!-
 -!<id>cirkelfys</id>!-
+-!<validationType>!-
+-!<linkedRecordType>validationType</linkedRecordType>!-
+-!<linkedRecordId>singleTrainingProgramValidationType</linkedRecordId>!-
+-!</validationType>!-
 -!</recordInfo>!-
 -!<trainingProgram>!-
 -!<createdBy>asta_kask</createdBy>!-
@@ -264,6 +284,10 @@ We will create a trainingProgram using the metadata groups specified. We can onl
 -!<linkedRecordType>system</linkedRecordType>!-
 -!<linkedRecordId>cora</linkedRecordId>!-
 -!</dataDivider>!-
+-!<validationType>!-
+-!<linkedRecordType>validationType</linkedRecordType>!-
+-!<linkedRecordId>singleTrainingProgramValidationType</linkedRecordId>!-
+-!</validationType>!-
 -!<id>cirkelfys</id>!-
 -!</recordInfo>!-
 -!<trainingProgram>!-
@@ -283,6 +307,10 @@ We will create a trainingProgram using the metadata groups specified. We can onl
 -!<linkedRecordType>system</linkedRecordType>!-
 -!<linkedRecordId>cora</linkedRecordId>!-
 -!</dataDivider>!-
+-!<validationType>!-
+-!<linkedRecordType>validationType</linkedRecordType>!-
+-!<linkedRecordId>singleTrainingProgramValidationType</linkedRecordId>!-
+-!</validationType>!-
 -!<id>cirkelfys</id>!-
 -!</recordInfo>!-
 -!</singleTrainingProgram> | Data is missing the entire trainingProgram group, should not be possible to create. |
@@ -300,6 +328,10 @@ We will create a trainingProgram using the metadata groups specified. We can onl
 -!<linkedRecordType>system</linkedRecordType>!-
 -!<linkedRecordId>cora</linkedRecordId>!-
 -!</dataDivider>!-
+-!<validationType>!-
+-!<linkedRecordType>validationType</linkedRecordType>!-
+-!<linkedRecordId>singleTrainingProgramValidationType</linkedRecordId>!-
+-!</validationType>!-
 -!<id>cirkelfys</id>!-
 -!</recordInfo>!-
 -!<trainingProgram>!-
@@ -323,6 +355,10 @@ We will create a trainingProgram using the metadata groups specified. We can onl
 -!<linkedRecordType>system</linkedRecordType>!-
 -!<linkedRecordId>cora</linkedRecordId>!-
 -!</dataDivider>!-
+-!<validationType>!-
+-!<linkedRecordType>validationType</linkedRecordType>!-
+-!<linkedRecordId>singleTrainingProgramValidationType</linkedRecordId>!-
+-!</validationType>!-
 -!<id>spinning</id>!-
 -!</recordInfo>!-
 -!<trainingProgram>!-
@@ -409,6 +445,10 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 -!<linkedRecordType>system</linkedRecordType>!-
 -!<linkedRecordId>cora</linkedRecordId>!-
 -!</dataDivider>!-
+-!<validationType>!-
+-!<linkedRecordType>validationType</linkedRecordType>!-
+-!<linkedRecordId>singleTrainingProgramValidationType</linkedRecordId>!-
+-!</validationType>!-
 -!<id>cirkelfys</id>!-
 -!</recordInfo>!-
 -!<trainingProgram>!-
@@ -430,6 +470,10 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 -!<linkedRecordId>cora</linkedRecordId>!-
 -!</dataDivider>!-
 -!<id>cirkelfys</id>!-
+-!<validationType>!-
+-!<linkedRecordType>validationType</linkedRecordType>!-
+-!<linkedRecordId>singleTrainingProgramValidationType</linkedRecordId>!-
+-!</validationType>!-
 -!</recordInfo>!-
 -!<trainingProgram>!-
 -!<createdBy>asta_kask</createdBy>!-
@@ -449,6 +493,10 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 -!<linkedRecordId>cora</linkedRecordId>!-
 -!</dataDivider>!-
 -!<id>cirkelfys</id>!-
+-!<validationType>!-
+-!<linkedRecordType>validationType</linkedRecordType>!-
+-!<linkedRecordId>singleTrainingProgramValidationType</linkedRecordId>!-
+-!</validationType>!-
 -!</recordInfo>!-
 -!</singleTrainingProgram> | Data is missing the entire trainingProgram group, should not be possible to update. |
 | POST | /rest/record/singleTrainingProgram/cirkelfys | 400 | Content-Type: text\/plain;charset=utf-8 |Error updating record with recordType: singleTrainingProgram and recordId: cirkelfys\. Data is not valid: \[Did not find enough data children with referenceId: trainingProgramGroup\(with nameInData:trainingProgram\)\., Did not find enough data children with referenceId: recordTypeLink\(with nameInData:type\)\.\] |
@@ -470,6 +518,10 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 -!<linkedRecordId>singleTrainingProgram</linkedRecordId>!-
 -!</type>!-
 -!<id>cirkelfys</id>!-
+-!<validationType>!-
+-!<linkedRecordType>validationType</linkedRecordType>!-
+-!<linkedRecordId>singleTrainingProgramValidationType</linkedRecordId>!-
+-!</validationType>!-
 -!</recordInfo>!-
 -!<trainingProgram>!-
 -!<id>x12</id>!-
@@ -496,6 +548,10 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 -!<linkedRecordId>singleTrainingProgram</linkedRecordId>!-
 -!</type>!-
 -!<id>spinning</id>!-
+-!<validationType>!-
+-!<linkedRecordType>validationType</linkedRecordType>!-
+-!<linkedRecordId>singleTrainingProgramValidationType</linkedRecordId>!-
+-!</validationType>!-
 -!</recordInfo>!-
 -!<trainingProgram>!-
 -!<id>anka12</id>!-
@@ -587,6 +643,7 @@ url encode, use this in the query:
 | DELETE | /rest/record/presentationVar/trainingIdSearchPVar | 200 | | |
 | DELETE | /rest/record/presentationVar/trainingIdSearchOutputPVar | 200 | | |
 | DELETE | /rest/record/metadataTextVariable/trainingIdSearchTextVar | 200 | | |
+| DELETE | /rest/record/validationType/singleTrainingProgramValidationType | 200 | | |
 | DELETE | /rest/record/recordType/singleTrainingProgram | 200 | | |
 | DELETE | /rest/record/presentationGroup/someFitnesseFormPGroup | 200 | | |
 | DELETE | /rest/record/presentationGroup/someFitnesseViewPGroup | 200 | | |

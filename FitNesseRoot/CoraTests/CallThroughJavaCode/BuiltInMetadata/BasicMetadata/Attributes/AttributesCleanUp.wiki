@@ -5,6 +5,7 @@
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | exampleAttribute | exampleAttribute1 | | OK |
 | $adminAuthToken | search | exampleAttributeSearch | | OK |
+| $adminAuthToken | validationType | exampleAttribute | | OK |
 | $adminAuthToken | recordType | exampleAttribute | | OK |
 | $adminAuthToken | presentationGroup | someFitnessePGroup | | OK |
 | $adminAuthToken | metadataGroup | exampleAttributeNewGroup | | OK |

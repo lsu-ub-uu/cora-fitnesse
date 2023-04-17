@@ -1,0 +1,87 @@
+---
+Test
+---
+!contents -R2 -g -p -f -h
+| import |
+| se.uu.ub.cora.fitnesseintegration |
+
+!3 
+!3 public recordType
+If the record type definition states that it is a public record type, the user should be able to read records of that type, even if no permission to that type has been given to the user.
+
+FitnesseUser does not have permission to read or list instances of record type testStudentThesis.
+
+!4 
+!***> Create recordType and validationType for fitnessStudentThesis
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | recordType | {"children":[{"children":[{"name":"id","value":"fitnessStudentThesis"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"fitnesseNewGroup"}],"name":"newMetadataId"},{"children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"fitnesseGroup"}],"name":"metadataId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"presentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"menuPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"newPresentationFormId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"presentationFormId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"listPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"autocompletePresentationView"},{"name":"public","value":"false"},{"name":"userSuppliedId","value":"false"},{"name":"storeInArchive","value":"false"},{"repeatId":"0","name":"groupOfRecordType","value":"metadata"},{"name":"abstract","value":"false"}],"name":"recordType"} | | CREATED |
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | validationType | {"name":"validationType","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnessStudentThesisValidation"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationType"}],"name":"validationType"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"newMetadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"fitnesseNewGroup"}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"fitnesseGroup"}]},{"name":"newPresentationFormId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"recordTypePGroup"}]},{"name":"presentationFormId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"recordTypePGroup"}]},{"name":"validatesRecordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnessStudentThesis"}]}]} | | CREATED |
+
+
+*!
+!***> Create data (a record) for a fitnessStudentThesis
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | fitnessStudentThesis | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnessStudentThesisValidation"}],"name":"validationType"}],"name":"recordInfo"},{"name":"fitnesseTextVar","value":"This is a very long thesis"}],"name":"fitnesseExample"} | | CREATED | $createdId= |
+
+*!
+!***> Read fitnessStudentThesis as fitnesseUser, who has no permissions to read the recordType fitnessStudentThesis
+
+!| RecordEndpointFixture |
+| authToken | type | id | testReadRecord? | getStatusType? |
+| $userAuthToken | fitnessStudentThesis | $createdId | | FORBIDDEN |
+
+*!
+!***> List fitnessStudentThesis as fitnesseUser, who has no permissions to read the recordType fitnessStudentThesis
+
+!| RecordEndpointFixture |
+| authToken | type | testReadRecordList? | getStatusType? |
+| $userAuthToken | fitnessStudentThesis | | FORBIDDEN |
+
+*!
+However, when the field "public" in the record type definition for fitnessStudentThesis is set to "yes", the fitnesseUser will be able read and list instances.
+
+!***> Update recordType fitnessStudentThesis and set public to true
+
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? | getStatusType? |
+| $adminAuthToken | recordType | fitnessStudentThesis | {"children":[{"children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"fitnesseGroup"}],"name":"metadataId"},{"name":"abstract","value":"false"},{"children":[{"name":"id","value":"fitnessStudentThesis"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"recordType"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"presentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"presentationFormId"},{"children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"fitnesseNewGroup"}],"name":"newMetadataId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"newPresentationFormId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"menuPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"listPresentationViewId"},{"name":"userSuppliedId","value":"false"},{"children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"name":"linkedRecordType","value":"search"},{"name":"linkedRecordId","value":"coraTextSearch"}],"name":"search"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"autocompletePresentationView"},{"repeatId":"0","name":"groupOfRecordType","value":"metadata"},{"name":"public","value":"true"},{"name":"storeInArchive","value":"false"}],"name":"recordType"} | | OK |
+
+*!
+!***> Read fitnessStudentThesis as fitnesseUser. This should now be allowed since the record type is public.
+
+!| RecordEndpointFixture |
+| authToken | type | id | testReadRecord? | getStatusType? |
+| $userAuthToken | fitnessStudentThesis | $createdId | | OK |
+
+*!
+!***> List fitnessStudentThesis as fitnesseUser. This should now be allowed since the record type is public.
+
+!| RecordEndpointFixture |
+| authToken | type | testReadRecordList? | getStatusType? |
+| $userAuthToken | fitnessStudentThesis | | OK |
+
+*!
+!4 Clean up created data/records
+!***> Delete studentThesis
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | fitnessStudentThesis | $createdId | | OK |
+
+*!
+!***> Clean up metadata
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | search | fitnessStudentThesisSearch | | OK |
+| $adminAuthToken | validationType | fitnessStudentThesisValidation | | OK |
+| $adminAuthToken | recordType | fitnessStudentThesis | | OK |
+
+*!

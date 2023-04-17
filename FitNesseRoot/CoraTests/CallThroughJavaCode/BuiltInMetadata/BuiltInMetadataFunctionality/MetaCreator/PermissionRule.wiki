@@ -24,7 +24,7 @@ Read texts to make sure they do not exist
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | permissionRule | {"name":"permissionRule","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseTestPermissionRule"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.DISABLED","repeatId":"0"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","value":"system.DISABLED","repeatId":"0"}],"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"inactive"}]} | | CREATED |
+| $adminAuthToken | permissionRule | {"children":[{"children":[{"name":"id","value":"fitnesseTestPermissionRule"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRule"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"repeatId":"0","name":"permissionRulePartValue","value":"system.DISABLED"}],"name":"permissionRulePart","attributes":{"type":"action"}},{"children":[{"repeatId":"0","name":"permissionRulePartValue","value":"system.DISABLED"}],"name":"permissionRulePart","attributes":{"type":"recordType"}},{"name":"activeStatus","value":"inactive"}],"name":"permissionRule"} | | CREATED |
 
 *!
 Read fitnesseTestPermissionRule to see that links to texts have been added to the role

@@ -1,0 +1,145 @@
+---
+Test
+---
+!contents -R2 -g -p -f -h
+
+| import |
+| se.uu.ub.cora.fitnesseintegration |
+
+!| script | SystemUrl |
+| setUrl | ${systemUnderTestUrl} |
+| setAppTokenVerifierUrl | ${appTokenVerifierUrl} |
+
+!| script | DependencyProvider |
+| setHttpHandlerFactoryClassName | se.uu.ub.cora.httphandler.HttpHandlerFactoryImp |
+
+!2 Login  - call is made through java code
+!***> Login for admin
+
+!| AppTokenEndpointFixture |
+| userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
+| 131313 | | | $adminAuthToken= | CREATED |
+*!
+!| script | AuthTokenHolder |
+| setAdminAuthToken | $adminAuthToken |
+
+!1 Test AuthToken
+Test that sending a valid authToken gives additional permissions compared to guest (no token).
+
+!***> Configure !-RestFixture-!
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
+| restfixture.default.headers | Content-Type: application/vnd.uub.record+xml!-
+-! Accept: application/vnd.uub.record+xml!-
+-!authToken:$adminAuthToken|
+| restfixture.content.handlers.map | application/vnd.uub.record+xml=XML |
+
+*!
+!***> Test create without token, should not be allowed (401)
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeader | Content-Type:application/vnd.uub.record+xml!-
+-! |
+| setBody | <?xml version="1.0" encoding="UTF-8"?>!-
+-!<text>!-
+-!	<recordInfo>!-
+-!		<id>authTokenTestingText</id>!-
+-!		<dataDivider>!-
+-!			<linkedRecordType>system</linkedRecordType>!-
+-!			<linkedRecordId>systemOne</linkedRecordId>!-
+-!		</dataDivider>!-
+-!	</recordInfo>!-
+-!	<textPart lang="sv" type="default">!-
+-!		<text>En  text för att testa authTokens</text>!-
+-!	</textPart>!-
+-!	<textPart lang="en" type="alternative">!-
+-!		<text>A text to test authTokens</text>!-
+-!	</textPart>!-
+-!</text> |
+| POST | /rest/record/textSystemOne | 401 | | |
+
+*!
+!***> Test create without invalid token, should not be allowed (401)
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeader | Content-Type:application/vnd.uub.record+xml !-
+-!authToken:!-invalidToken
+-! |
+| setBody | <?xml version="1.0" encoding="UTF-8"?>!-
+-!<text>!-
+-!	<recordInfo>!-
+-!		<id>authTokenTestingText</id>!-
+-!		<dataDivider>!-
+-!			<linkedRecordType>system</linkedRecordType>!-
+-!			<linkedRecordId>systemOne</linkedRecordId>!-
+-!		</dataDivider>!-
+-!	</recordInfo>!-
+-!	<textPart lang="sv" type="default">!-
+-!		<text>En  text för att testa authTokens</text>!-
+-!	</textPart>!-
+-!	<textPart lang="en" type="alternative">!-
+-!		<text>A text to test authTokens</text>!-
+-!	</textPart>!-
+-!</text> |
+| POST | /rest/record/textSystemOne | 401 | | |
+
+*!
+!***> Test create without invalid token, should not be allowed (403)
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeader | Content-Type:application/vnd.uub.record+xml !-
+-!authToken:!-fitnesseUserToken-!!-
+-! |
+| setBody |  <?xml version="1.0" encoding="UTF-8"?>!-
+-!<text>!-
+-!	<recordInfo>!-
+-!		<id>authTokenTestingText</id>!-
+-!		<dataDivider>!-
+-!			<linkedRecordType>system</linkedRecordType>!-
+-!			<linkedRecordId>systemOne</linkedRecordId>!-
+-!		</dataDivider>!-
+-!	</recordInfo>!-
+-!	<textPart lang="sv" type="default">!-
+-!		<text>En  text för att testa authTokens</text>!-
+-!	</textPart>!-
+-!	<textPart lang="en" type="alternative">!-
+-!		<text>A text to test authTokens</text>!-
+-!	</textPart>!-
+-!</text> |
+| POST | /rest/record/system | 401 | | |
+
+*!
+!***> Test create with token, should  be allowed
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeader | Content-Type:application/vnd.uub.record+xml!-
+-!Accept: application/vnd.uub.record+xml !-
+-!authToken:$adminAuthToken|
+| setBody |  <?xml version="1.0" encoding="UTF-8"?>!-
+-!<text>!-
+-!	<recordInfo>!-
+-!		<id>authTokenTestingText</id>!-
+-!		<dataDivider>!-
+-!			<linkedRecordType>system</linkedRecordType>!-
+-!			<linkedRecordId>systemOne</linkedRecordId>!-
+-!		</dataDivider>!-
+-!	</recordInfo>!-
+-!	<textPart lang="sv" type="default">!-
+-!		<text>En  text för att testa authTokens</text>!-
+-!	</textPart>!-
+-!	<textPart lang="en" type="alternative">!-
+-!		<text>A text to test authTokens</text>!-
+-!	</textPart>!-
+-!</text> |
+| POST | /rest/record/textSystemOne | 201 | | |
+
+*!
+!***> Remove text
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeader | Content-Type:application/vnd.uub.record+xml!-
+-!authToken:$adminAuthToken!-
+-! | | | |
+| DELETE | /rest/record/textSystemOne/authTokenTestingText | 200 | | |
+
+*!
