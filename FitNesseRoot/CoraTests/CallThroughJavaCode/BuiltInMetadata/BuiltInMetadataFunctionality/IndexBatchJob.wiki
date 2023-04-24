@@ -1,0 +1,38 @@
+---
+Test
+---
+!2 !-IndexBatchJob-!
+
+It '''should''' be possible to index records by calling the endpoint for index (xyz/rest/record/index/{type}). 
+
+This entire functionality should be reimplemented using extended functionality for a standard record of the type indexBatchJob. 
+
+Until that reimplementation is done are we using this simple test.
+
+!***> Configure !-RestFixture-!
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
+| restfixture.default.headers | Content-Type: application/vnd.uub.record+json!-
+-! |
+| restfixture.content.handlers.map | application/vnd.uub.record+json=JSON |
+
+*!
+!***> Test start index batch job.
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeader | Content-Type:application/vnd.uub.record+json!-
+-!authToken:$adminAuthToken!-
+-! |
+| POST | /rest/record/index/example | 201 | | |
+| let | recordId | js | response.jsonbody.record.data.children[0].children[2].value |  |
+
+*!
+
+!***> Clean data
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeader | authToken:$adminAuthToken |
+| DELETE | /rest/record/indexBatchJob/$recordId | 200 | | |
+*!
+
+
