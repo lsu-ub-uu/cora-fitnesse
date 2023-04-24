@@ -1,0 +1,14 @@
+---
+Static
+---
+!include -seamless .HelperPages.defineAdminAuthToken
+
+!2 Delete
+
+!***> It should be possible to delete a validationType without incoming links (that is not being used/referenced by records in the system).
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | validationType | exampleValidationType1 | | OK |
+
+*!

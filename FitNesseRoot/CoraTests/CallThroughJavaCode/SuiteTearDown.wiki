@@ -5,6 +5,15 @@ Suite
 
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | validationType | bigCircuitTrainingLeafletValidation | | OK |
+| $adminAuthToken | validationType | circuitTrainingLeafletValidation | | OK |
+| $adminAuthToken | validationType | personalTrainingLeafletValidation | | OK |
+| $adminAuthToken | search | trainingClassLeafletSearch | | OK |
+| $adminAuthToken | recordType | trainingClassLeaflet | | OK |
+| $adminAuthToken | metadataGroup | circuitTrainingLeafletGroup | | OK |
+| $adminAuthToken | metadataGroup | circuitTrainingLeafletNewGroup | | OK |
+| $adminAuthToken | metadataGroup | bigCircuitTrainingLeafletGroup | | OK |
+| $adminAuthToken | metadataGroup | bigCircuitTrainingLeafletNewGroup | | OK |
 | $adminAuthToken | presentationGroup | fitnessePGroup | | OK |
 | $adminAuthToken | presentationGroup | fitnesseOutputPGroup | | OK |
 | $adminAuthToken | presentationGroup | fitnesseNewPGroup | | OK |

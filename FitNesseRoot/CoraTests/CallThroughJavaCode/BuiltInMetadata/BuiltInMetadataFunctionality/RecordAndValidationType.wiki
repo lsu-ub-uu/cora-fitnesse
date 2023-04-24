@@ -1,0 +1,167 @@
+---
+Test
+---
+| import |
+| se.uu.ub.cora.fitnesseintegration |
+
+!img http://files/images/record-type.png
+
+Below are test cases for describing and validating the different aspects of a record type when used together with and as a foundation for validation types and validation.
+The test especially highlights how we can use more than one validation type to validate different categories of records derived and created from the record type.
+
+{{{<< Example >>
+
+We have a record type called trainingClassLeaflet. It is used a foundation to created personalized electronic 
+leaflets for other fitness-related training classes, such as personal training, circuit training, aerobics etc.
+ The leaflets can have different fields depending on what kind of content and training class the leaflet describes.
+ 
+ To validate the different categories of leaflets we can use validation types, for example:
+ 
+ - a personal training leaflet can only have 1 participant
+ - a circuit training leaflet can have between 3 and 10 participants. New members can be added but no members can be removed (since membership is for periods of time).
+ 
+ The records created from the record type are the personalized instances of the fitness-related leaflets of each type,
+ where each type matches a validation type.
+ }}}
+
+# define default variables for use of helper pages
+!define currentAuthToken {$adminAuthToken}
+!define expectedCreateResult {CREATED}
+!define expectedUpdateResult {OK}
+!define expectedCompareResult {OK}
+!define expectedPermissionResult {OK}
+!define expectedAnswer {}
+!define expectedActionResult {}
+!define recordPermissions {!-{"read":[],"write":[]}-!}
+
+!define recordType {trainingClassLeaflet}
+
+
+# example of record creation:
+#!define recordType {circuitTrainingLeafletValidation}
+#!define createData {!- json goes here -!}
+#!include -seamless .HelperPages.createCheckReadCheck
+
+
+!5 Verify that validation works for both different records based on different validation types but the same record type.
+Validation happens automatically during record creation.
+
+
+!4 Test case for personal training leaflet records and related validation type.
+
+!***> Case 1 (for personal training leaflet): New records/instances with valid data of personal training type should be successful and use the metadata group for new records. Note that each record refer to the validation type that validates it since each record type can be validated by different validation types.
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | trainingClassLeaflet | {"name": "fitnesseExample", "children": [{ "name": "recordInfo", "children": [ { "name": "dataDivider", "children": [{ "name": "linkedRecordType", "value": "system" }, { "name": "linkedRecordId", "value": "testSystem" } ] }, { "name": "validationType", "children": [ { "name": "linkedRecordType", "value": "validationType" }, { "name": "linkedRecordId", "value": "personalTrainingLeafletValidation" } ] } ] }, { "name": "fitnesseTextVar", "value": "Hello and welcome to personal training John Smith. You will work out Tuesdays and Wednesdays." } ] } | | CREATED | $createdPersonalId= |
+
+#!define recordType {circuitTrainingLeafletValidation}
+#!define createData {!- json goes here -!}
+#!define expectedCreatedData createData
+#!include -seamless .HelperPages.createCheckReadCheck
+
+*!
+
+
+!4 All other test cases are for circuit training leaflet records and related validation type.
+
+!***> Case 2 (creating new instances/records for circuit training leaflet)
+Case 2a: New records/instances with '''valid''' data of circuit training type.
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | trainingClassLeaflet | {"name":"circuitTrainingLeaflet","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"circuitTrainingLeafletValidation"}]}]},{"repeatId":"0","name":"fitnesseTextVar","value":"Hello and welcome to circuit training Adam Davis with phone number 202-555-0144."},{"repeatId":"1","name":"fitnesseTextVar","value":"Hello and welcome to circuit training Adam Davis with phone number 202-555-0179."},{"repeatId":"2","name":"fitnesseTextVar","value":"Hello and welcome to circuit training Adam Davis with phone number 202-555-0133."}]}| | CREATED | $createdCircuitId= |
+
+
+Case 2b: New records/instances with '''invalid''' data of circuit training type
+
+Record of circuit training type that is '''invalid''' and only contains two persons instead of the minimum required three.
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | trainingClassLeaflet | {"name": "circuitTrainingLeaflet", "children": [{ "name": "recordInfo", "children": [ { "name": "dataDivider", "children": [{ "name": "linkedRecordType", "value": "system" }, { "name": "linkedRecordId", "value": "testSystem" } ] }, { "name": "validationType", "children": [ { "name": "linkedRecordType", "value": "validationType" }, { "name": "linkedRecordId", "value": "circuitTrainingLeafletValidation" } ] } ] }, { "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0144." }, { "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0179." } ] } | | BAD_REQUEST |
+
+*!
+
+
+!***> Case 3: Update to a record should use the metadata group for updated records referenced from the validation type
+
+We have specified this to at least 4 members since in this scenario you are not allowed to opt out of the class and can only add new members.
+
+Case 3a: Updates to a record that does not follow the validation rules of the related metadata group should fail.
+In this case we use three members (instead of the expected, at least four).
+
+!define recordId {$createdCircuitId}
+!define updateData {!- {"name": "circuitTrainingLeaflet", "children": [{"name": "recordInfo", "children": [{"name": "dataDivider", "children": [{"name": "linkedRecordType", "value": "system"}, {"name": "linkedRecordId", "value": "testSystem"}]}, {"name": "validationType", "children": [{"name": "linkedRecordType", "value": "validationType"}, {"name": "linkedRecordId", "value": "circuitTrainingLeafletValidation"}]}]}, {"repeatId": "0", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0144."}, {"repeatId": "1", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training John Miller with phone number 202-555-0179."}, {"repeatId": "2", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Jenny Clinton with phone number 202-555-0133."}]} -!}
+!define expectedUpdateResult {BAD_REQUEST}
+!define expectedAnswer {}
+!include -seamless .HelperPages.updateRecord
+
+
+Case 3b: If the rules for updates to records (matching the update-specific metadata group of the validation type) are followed we should be allowed to perform the update to the system.
+!define recordId {$createdCircuitId}
+!define updateData {!- {"name": "circuitTrainingLeaflet", "children": [{"name": "recordInfo", "children": [{"name": "dataDivider", "children": [{"name": "linkedRecordType", "value": "system"}, {"name": "linkedRecordId", "value": "testSystem"}]}, {"name": "validationType", "children": [{"name": "linkedRecordType", "value": "validationType"}, {"name": "linkedRecordId", "value": "circuitTrainingLeafletValidation"}]}]}, {"repeatId": "0", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0144."}, {"repeatId": "1", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training John Miller with phone number 202-555-0179."}, {"repeatId": "2", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Jenny Clinton with phone number 202-555-0133."}, {"repeatId": "3", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Alisa Jackson with phone number 202-555-0133."}]} -!}
+# !define expectedUpdatedData updateData
+!define expectedUpdateResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.updateRecord
+*!
+
+
+!***> Case 4: Change of validation type
+
+Now we imagine that we something called a big circuit training group (with larger leaflets) that requires at least 12 members (and max 20)
+We want to change one of the records to use this validation type below.
+
+
+Case 4a: Changing to the above validation type while matching the criteria in the same in-flight request (at least 12 members in the group)-
+!define recordId {$createdCircuitId}
+!define updateData {!- {"name": "circuitTrainingLeaflet", "children": [{"name": "recordInfo", "children": [{"name": "dataDivider", "children": [{"name": "linkedRecordType", "value": "system"}, {"name": "linkedRecordId", "value": "testSystem"}]}, {"name": "validationType", "children": [{"name": "linkedRecordType", "value": "validationType"}, {"name": "linkedRecordId", "value": "bigCircuitTrainingLeafletValidation"}]}]}, {"repeatId": "0", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0144."}, {"repeatId": "1", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training John Miller with phone number 202-555-0179."}, {"repeatId": "2", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Jenny Clinton with phone number 202-555-0133."}, {"repeatId": "3", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Alisa Jackson with phone number 202-555-0133."}, {"repeatId": "4", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Joe Smart with phone number 202-555-0133."}, {"repeatId": "5", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Ellis Jamison with phone number 202-555-0133."}, {"repeatId": "6", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davison with phone number 202-555-0144."}, {"repeatId": "7", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training John Hill with phone number 202-555-0179."}, {"repeatId": "8", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Jenny James with phone number 202-555-0133."}, {"repeatId": "9", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Alisa Connor with phone number 202-555-0133."}, {"repeatId": "10", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Joe Hart with phone number 202-555-0133."}, {"repeatId": "11", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Bill Hart with phone number 202-555-0133."}]} -!}
+!define expectedUpdateResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.updateRecord
+
+Case 4b: Changing to this validation type without matching the criteria (not enough members in the group) is expected to fail:
+
+!define recordId {$createdCircuitId}
+!define updateData {!- {"name": "circuitTrainingLeaflet", "children": [{"name": "recordInfo", "children": [{"name": "dataDivider", "children": [{"name": "linkedRecordType", "value": "system"}, {"name": "linkedRecordId", "value": "testSystem"}]}, {"name": "validationType", "children": [{"name": "linkedRecordType", "value": "validationType"}, {"name": "linkedRecordId", "value": "bigCircuitTrainingLeafletValidation"}]}]}, {"repeatId": "0", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0144."}, {"repeatId": "1", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training John Miller with phone number 202-555-0179."}, {"repeatId": "2", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Jenny Clinton with phone number 202-555-0133."}, {"repeatId": "3", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Alisa Jackson with phone number 202-555-0133."}, {"repeatId": "4", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Joe Smart with phone number 202-555-0133."}]} -!}
+!define expectedUpdateResult {BAD_REQUEST}
+!define expectedAnswer {}
+!include -seamless .HelperPages.updateRecord
+
+Case 4c: Changing to validation type that does not exist (edge case) is also expected to fail:
+
+!define recordId {$createdCircuitId}
+!define updateData {!- {"name": "circuitTrainingLeaflet", "children": [{"name": "recordInfo", "children": [{"name": "dataDivider", "children": [{"name": "linkedRecordType", "value": "system"}, {"name": "linkedRecordId", "value": "testSystem"}]}, {"name": "validationType", "children": [{"name": "linkedRecordType", "value": "validationType"}, {"name": "linkedRecordId", "value": "nonExistentValidationType"}]}]}, {"repeatId": "0", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0144."}, {"repeatId": "1", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training John Miller with phone number 202-555-0179."}, {"repeatId": "2", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Jenny Clinton with phone number 202-555-0133."}, {"repeatId": "3", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Alisa Jackson with phone number 202-555-0133."}, {"repeatId": "4", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Joe Smart with phone number 202-555-0133."}]} -!}
+!define expectedUpdateResult {BAD_REQUEST}
+!define expectedAnswer {}
+!include -seamless .HelperPages.updateRecord
+
+*!
+
+
+!***> Case 5: Other edge cases
+
+Case 5a: Create non-conforming metadata group for updated records and try to create a validation type referencing it.
+The expectation is that the creation of the validation type should fail due to not matching the rules of its record type, trainingClassLeaflet.
+
+!define recordType {metadataGroup}
+!define createData {!- {"children":[{"children":[{"name":"id","value":"nonConformingLeafletGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"circuitTrainingLeaflet"},{"children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"repeatId":"4","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"exampleRecordInfoNewGroup"}],"name":"ref"}],"name":"childReference"},{"repeatId":"0","children":[{"name":"repeatMin","value":"12"},{"name":"repeatMax","value":"20"},{"children":[{"name":"linkedRecordType","value":"metadataTextVariable"},{"name":"linkedRecordId","value":"fitnesseMetadataTextVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"1","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"10"},{"children":[{"name":"linkedRecordType","value":"metadataNumberVariable"},{"name":"linkedRecordId","value":"fitnesseMetadataNumberVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"2","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadataCollectionVariable"},{"name":"linkedRecordId","value":"fitnesseCollectionVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"3","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadataRecordLink"},{"name":"linkedRecordId","value":"fitnesseLink"}],"name":"ref"}],"name":"childReference"},{"repeatId":"5","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"10"},{"children":[{"name":"linkedRecordType","value":"metadataNumberVariable"},{"name":"linkedRecordId","value":"fitnesseMetadataNumberVar"}],"name":"ref"}],"name":"childReference"}],"name":"childReferences"},{"name":"excludePGroupCreation","value":"true"}],"name":"metadata","attributes":{"type":"group"}} -!}
+!include -seamless .HelperPages.createRecord
+
+!define recordType {validationType}
+!define expectedCreateResult {BAD_REQUEST}
+!define createData {!- {"name":"validationType","children":[{"name":"recordInfo","children":[{"name":"id","value":"nonConformingLeafletValidation"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationType"}],"name":"validationType"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"newMetadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"bigCircuitTrainingLeafletNewGroup"}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"nonConformingLeafletGroup"}]},{"name":"newPresentationFormId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"presentationFormId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"validatesRecordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"trainingClassLeaflet"}]}]} -!}
+!include -seamless .HelperPages.createRecord
+
+*!
+
+
+!***> Deletion and cleanup
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | trainingClassLeaflet | $createdPersonalId | | OK |
+| $adminAuthToken | trainingClassLeaflet | $createdCircuitId | | OK |
+| $adminAuthToken | validationType | nonConformingLeafletValidation | | OK |
+| $adminAuthToken | metadataGroup | nonConformingLeafletGroup | | OK |
+*!
