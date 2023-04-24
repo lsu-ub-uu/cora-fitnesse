@@ -1,0 +1,170 @@
+---
+Test
+---
+!2 !-IndexBatchJob-!
+
+Det '''ska''' gå att skapa, läsa, uppdatera, radera, indexera och söka ett !-IndexBatchJob-!. Använderen '''borde''' inte skapa ett !-IndexBatchJob-! via create-endpointen, men den behöver ändå ha rättigheter att göra så, för att det annars inte är möjligt att skapa ett !-IndexBatchJob-! via indexRecordList-endpointen.
+I nuläget har vi inget sök definerat för posttypen !-IndexBatchJob-!, vilket är varför vi inte kan test varken sök eller indexering av poster av typen !-IndexBatchJob-!.
+
+!define recordType {indexBatchJob}
+!define createData {!-{"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"indexBatchJob"}],"name":"validationType"}],"name":"recordInfo"},{"name":"recordTypeToIndex","value":"metadataNumberVariable"},{"name":"totalNumberToIndex","value":"2"},{"name":"numberOfProcessedRecords","value":"0"},{"name":"status","value":"started"}],"name":"indexBatchJob"}-!}
+!define updateData {!-{"children":[{"children":[{"name":"id","value":"-!${recordId}!-"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"indexBatchJob"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"indexBatchJob"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"fromNo","value":"1"},{"name":"toNo","value":"4"}],"name":"filter"},{"name":"recordTypeToIndex","value":"metadataTextVariable"},{"name":"totalNumberToIndex","value":"4"},{"name":"numberOfProcessedRecords","value":"0"},{"name":"status","value":"started"}],"name":"indexBatchJob"}-!}
+!define expectedCompareResult {OK}
+
+!define currentAuthToken {$adminAuthToken}
+!***> Det ska gå att '''skapa''' ett !-IndexBatchJob-! genom create-endpointen
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getCreatedId? | getStatusType? |
+| ${currentAuthToken} | indexBatchJob | ${createData} | | $createdId = | CREATED |
+!define recordId {$createdId}
+*!
+
+!***> Det ska gå att '''läsa''' ett !-IndexBatchJob-!
+!define expectedUpdatedData {${createData}}
+!include -seamless .HelperPages.readRecord
+Validate the '''response''' returned on the '''read''' call contains the expected record parts.
+!include -seamless .HelperPages.compareRecord
+*!
+
+!***> Det ska gå att '''uppdatera''' ett !-IndexBatchJob-!
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? |  getStatusType? |
+| ${currentAuthToken} | indexBatchJob | ${recordId} | ${updateData} | |  OK |
+
+
+!***> Läs posten och kolla att uppdateringen gick igenom
+!define expectedUpdatedData {${updateData}}
+!include -seamless .HelperPages.readRecord
+Validate the '''response''' returned on the '''read''' call contains the expected record parts.
+!include -seamless .HelperPages.compareRecord
+*!
+*!
+
+!***> Det ska gå att '''radera''' ett !-IndexBatchJob-!
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| ${currentAuthToken} | indexBatchJob | ${recordId} | | OK |
+*!
+
+
+!3 Roller
+
+!4 !-SystemAdmin-!
+!define currentUserRole {!-SystemAdmin-!}
+!define currentAuthToken {$systemAdminAuthToken}
+!***> ${currentUserRole} '''ska''' kunna '''skapa''' en post av typ !-IndexBatchJob-!
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getCreatedId? | getStatusType? |
+| ${currentAuthToken} | indexBatchJob | ${createData} | | $createdId = | CREATED |
+!define recordId {$createdId}
+*!
+
+!***> ${currentUserRole} '''ska''' kunna '''läsa''' en post av typ !-IndexBatchJob-!
+!define expectedUpdatedData {${createData}}
+!include -seamless .HelperPages.readRecord
+Validate the '''response''' returned on the '''read''' call contains the expected record parts.
+!include -seamless .HelperPages.compareRecord
+*!
+
+!***> ${currentUserRole} '''ska''' kunna '''uppdatera''' en post av typ !-IndexBatchJob-!
+
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? |  getStatusType? |
+| ${currentAuthToken} | indexBatchJob | ${recordId} | ${updateData} | |  OK |
+
+
+!***> Läs posten och kolla att uppdateringen gick igenom
+!define expectedUpdatedData {${updateData}}
+!include -seamless .HelperPages.readRecord
+Validera att '''svaret''' på '''läs'''anropet innehåller det förväntade datat
+!include -seamless .HelperPages.compareRecord
+*!
+*!
+
+!***> ${currentUserRole} '''ska''' kunna '''radera''' en post av typ !-IndexBatchJob-!
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| ${currentAuthToken} | indexBatchJob | ${recordId} | | OK |
+*!
+
+
+!***> Skapa ett !-IndexBatchJob-! för read-, update- och delete-testerna för !-DomainAdmin-! och Guest 
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getCreatedId? | getStatusType? |
+| $adminAuthToken | indexBatchJob | ${createData} | | $createdId = | CREATED |
+!define recordId {$createdId}
+*!
+
+
+!4 !-DomainAdmin-!
+!define currentUserRole {!-DomainAdmin-!}
+!define currentAuthToken {$domainAdminAuthToken}
+!***> ${currentUserRole} '''ska inte''' kunna '''skapa''' en post av typ !-IndexBatchJob-!
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getCreatedId? | getStatusType? |
+| ${currentAuthToken} | indexBatchJob | ${createData} | |  | UNAUTHORIZED |
+*!
+
+!***> ${currentUserRole} '''ska inte''' kunna '''läsa''' en post av typ !-IndexBatchJob-!
+!| RecordEndpointFixture |
+| authToken | type | id | testReadRecord? | getStatusType? |
+| ${currentAuthToken} | indexBatchJob | ${recordId} | | UNAUTHORIZED |
+*!
+
+
+!***> ${currentUserRole} '''ska inte''' kunna '''uppdatera''' en post av typ !-IndexBatchJob-!
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? |  getStatusType? |
+| ${currentAuthToken} | indexBatchJob | ${recordId} | ${updateData} | |  UNAUTHORIZED |
+
+*!
+
+!***> ${currentUserRole} '''ska inte''' kunna '''radera''' en post av typ !-IndexBatchJob-!
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| ${currentAuthToken} | indexBatchJob | ${recordId} | | UNAUTHORIZED |
+*!
+
+
+!4 !-Guest-!
+!define currentUserRole {!-Guest-!}
+!define currentAuthToken {$guestAuthToken}
+!***> ${currentUserRole} '''ska inte''' kunna '''skapa''' en post av typ !-IndexBatchJob-!
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getCreatedId? | getStatusType? |
+| ${currentAuthToken} | indexBatchJob | ${createData} | |  | UNAUTHORIZED |
+*!
+
+!***> ${currentUserRole} '''ska inte''' kunna '''läsa''' en post av typ !-IndexBatchJob-!
+!| RecordEndpointFixture |
+| authToken | type | id | testReadRecord? | getStatusType? |
+| ${currentAuthToken} | indexBatchJob | ${recordId} | | UNAUTHORIZED |
+*!
+
+
+!***> ${currentUserRole} '''ska inte''' kunna '''uppdatera''' en post av typ !-IndexBatchJob-!
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? |  getStatusType? |
+| ${currentAuthToken} | indexBatchJob | ${recordId} | ${updateData} | |  UNAUTHORIZED |
+
+*!
+
+!***> ${currentUserRole} '''ska inte''' kunna '''radera''' en post av typ !-IndexBatchJob-!
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| ${currentAuthToken} | indexBatchJob | ${recordId} | | UNAUTHORIZED |
+*!
+
+
+!***> Radera !-IndexBatchJobbet-! som skapades för att testa read-, update- och delete för !-DomainAdmin-! och Guest 
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | indexBatchJob | ${recordId} | | OK |
+
+*!
+
