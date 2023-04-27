@@ -29,7 +29,7 @@ A test that first reads all predefined metadata needed to be able to add binary 
 !| MetadataLinkFixture |
 | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? |
 | metadataGroup | recordInfoGroup | 1 | 1 |
-| metadataGroup | resourceInfoGroup | 1 | 1 |
+| metadataGroup | resourceInfoGroup | 0 | 1 |
 
 *!
 !3 Generic binary is used when the type of binary material is unknown before upload

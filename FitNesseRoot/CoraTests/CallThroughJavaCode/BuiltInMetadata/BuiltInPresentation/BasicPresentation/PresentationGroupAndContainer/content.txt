@@ -76,7 +76,7 @@ A test that first reads all predefined metadata needed to be able to add present
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadataGroup | presentationGroup | =~/"name":"linkedRecordId","value":"presentationsOfGroup".*"name":"linkedRecordId","value":"presentationOfTextVar".*"name":"linkedRecordId","value":"modeCollectionVar".*"name":"linkedRecordId","value":"repeatCollectionVar".*"name":"linkedRecordId","value":"presentationChildReferencesGroup"/ | OK |
+| $adminAuthToken | metadataGroup | presentationGroup | =~/"name":"linkedRecordId","value":"presentationsOfGroup".*"name":"linkedRecordId","value":"presentationOfMetadataLink".*"name":"linkedRecordId","value":"modeCollectionVar".*"name":"linkedRecordId","value":"repeatCollectionVar".*"name":"linkedRecordId","value":"presentationChildReferencesGroup"/ | OK |
 | $adminAuthToken | metadataGroup | presentationGroupGroup | | OK |
 | $adminAuthToken | metadataGroup | presentationVarGroup | | OK |
 | $adminAuthToken | metadataGroup | presentationContainerGroup | | OK |

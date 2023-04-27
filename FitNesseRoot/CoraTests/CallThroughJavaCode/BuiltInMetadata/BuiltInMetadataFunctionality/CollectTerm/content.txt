@@ -22,7 +22,7 @@ A test that first reads all predefined metadata needed to be able to create coll
 !| MetadataLinkFixture |
 | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? |
 | metadataGroup | recordInfoGroup | 1 | 1 |
-| metadataTextVariable | nameInDataTextVar | 1 | 1 |
+| metadataTextVariable | nameInDataTextVar | 0 | 1 |
 | metadataGroup | collectTermExtraDataGroup | 1 | 1 |
 
 *!
