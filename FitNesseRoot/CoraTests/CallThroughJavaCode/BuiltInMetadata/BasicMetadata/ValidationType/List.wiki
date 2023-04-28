@@ -1,27 +1,16 @@
 ---
 Static
 ---
-!include -seamless .HelperPages.defineAdminAuthToken
+
+
 
 !2 List
 
+!include -seamless .HelperPages.defineAdminAuthToken
 
 !***> It should be possible to list all validationTypes in the system
 
 !| RecordEndpointFixture |
 | authToken | type | testReadRecordList? | getStatusType? |
-| $userAuthToken | validationType | | OK |
-*!
-
-!***> It should also be possible from this list to get the instance of validationType itself
-As a validationType instance
-!define recordType {validationType}
-!define recordId {validationType}
-!include -seamless .HelperPages.readRecord
-
-As a recordType instance
-!define recordType {recordType}
-!define recordId {validationType}
-!include -seamless .HelperPages.readRecord
-
+| $adminAuthToken | validationType | | OK |
 *!

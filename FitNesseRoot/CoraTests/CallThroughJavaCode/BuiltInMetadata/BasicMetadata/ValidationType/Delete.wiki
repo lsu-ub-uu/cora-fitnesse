@@ -12,3 +12,11 @@ Static
 | $adminAuthToken | validationType | exampleValidationType1 | | OK |
 
 *!
+
+!***> It should NOT be possible to delete a validationType with incoming links (that is being used/referenced by records in the system).
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | validationType | validationType | | METHOD_NOT_ALLOWED |
+
+*!
