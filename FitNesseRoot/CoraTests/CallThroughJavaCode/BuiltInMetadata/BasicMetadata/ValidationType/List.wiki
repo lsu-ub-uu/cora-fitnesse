@@ -1,0 +1,16 @@
+---
+Static
+---
+
+
+
+!2 List
+
+!include -seamless .HelperPages.defineAdminAuthToken
+
+!***> It should be possible to list all validationTypes in the system
+
+!| RecordEndpointFixture |
+| authToken | type | testReadRecordList? | getStatusType? |
+| $adminAuthToken | validationType | | OK |
+*!

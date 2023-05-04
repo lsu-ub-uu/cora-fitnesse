@@ -1,0 +1,21 @@
+---
+Static
+---
+
+
+!2 Update
+
+!***> It should be possible to update a recordType
+!include -seamless .HelperPages.defineAdminAuthToken
+
+!define recordType {recordType}
+!define recordId {fitnessStudentThesis}
+
+!define updateData {!- {"children":[{"children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"fitnesseGroup"}],"name":"metadataId"},{"name":"abstract","value":"false"},{"children":[{"name":"id","value":"fitnessStudentThesis"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"recordType"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"presentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"presentationFormId"},{"children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"fitnesseNewGroup"}],"name":"newMetadataId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"newPresentationFormId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"menuPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"listPresentationViewId"},{"name":"userSuppliedId","value":"false"},{"children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"name":"linkedRecordType","value":"search"},{"name":"linkedRecordId","value":"coraTextSearch"}],"name":"search"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"autocompletePresentationView"},{"repeatId":"0","name":"groupOfRecordType","value":"metadata"},{"name":"public","value":"true"},{"name":"storeInArchive","value":"false"}],"name":"recordType"} -!}
+!define expectedUpdatedData updateData
+!define originalData updateData
+!define expectedOriginalData originalData
+!define expectedUpdateResult {OK}
+
+!include -seamless .HelperPages.updateCheckReadCheckReadCheckReset
+*!

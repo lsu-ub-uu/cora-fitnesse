@@ -18,13 +18,8 @@ Static
    * validatesRecordTypeLink (link, 0-1, '''noRestrictions ''')  
    * metadataId (link, 1-1, '''noRestrictions ''')
    * newMetadataId (link, 1-1, '''noRestrictions ''')
-   * presentationViewId (link, 1-1, '''noRestrictions ''')
    * presentationFormId (link, 1-1, '''noRestrictions ''')
    * newPresentationFormId (link, 1-1, '''noRestrictions ''')
-   * menuPresentationViewId (link, 1-1, '''noRestrictions ''')
-   * listPresentationViewId (link, 1-1, '''noRestrictions ''')
-   * autocompletePresentationViewLink (link, 0-1, '''noRestrictions ''')
-   * recordTypeFilterPresentationLink (link, 0-1, '''noRestrictions ''')
  
 !3 !-RecordType-!
 !style_red[ReordInfo conatins link to permissionUnit THAT IS STRANGE, VERIFY THAT!!]

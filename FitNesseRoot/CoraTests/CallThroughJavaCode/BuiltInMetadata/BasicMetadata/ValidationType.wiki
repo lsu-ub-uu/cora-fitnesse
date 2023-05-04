@@ -37,8 +37,11 @@ Validation type fitness magazine would have "number of pages" as mandatory while
 They would be stored as metadata number variables with relevant min and max values.
 }}}
 
+[[A related example where validation types are used to validate the instances/records of a record type][<CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordType]].
+
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType.RecordType
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType.Create
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType.List
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType.Read
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType.Update
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType.AutoCreation
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType.CleanUp
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType.Delete
