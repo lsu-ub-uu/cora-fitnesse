@@ -2,50 +2,50 @@
 
 !| RecordEndpointFixture |
 | type | id | testReadRecordAndStoreJson? |
-| metadataGroup | metadataGroupGroup | |
+| metadata | metadataGroupGroup | |
 
 *!
 !***> Check children in metadataGroupGroup
 
 !| MetadataLinkFixture |
 | authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? |
-| $adminAuthToken | metadataGroup | recordInfoGroup | 1 | 1 | recordInfo |
-| $adminAuthToken | metadataTextVariable | nameInDataTextVar | 1 | 1 | nameInData |
-| $adminAuthToken | metadataRecordLink | textIdLink | 1 | 1 | textId |
-| $adminAuthToken | metadataRecordLink | defTextIdLink | 1 | 1 | defTextId |
-| $adminAuthToken | metadataRecordLink | refParentIdGroupLink | 0 | 1 | refParentId |
-| $adminAuthToken | metadataGroup | attributeReferencesGroup | 0 | 1 | attributeReferences |
-| $adminAuthToken | metadataGroup | childReferencesGroup | 1 | 1 | childReferences |
-| $adminAuthToken | metadataGroup | recordInfoOldGroup | not found | not found | |
+| $adminAuthToken | metadata | recordInfoGroup | 1 | 1 | recordInfo |
+| $adminAuthToken | metadata | nameInDataTextVar | 1 | 1 | nameInData |
+| $adminAuthToken | metadata | textIdLink | 1 | 1 | textId |
+| $adminAuthToken | metadata | defTextIdLink | 1 | 1 | defTextId |
+| $adminAuthToken | metadata | refParentIdGroupLink | 0 | 1 | refParentId |
+| $adminAuthToken | metadata | attributeReferencesGroup | 0 | 1 | attributeReferences |
+| $adminAuthToken | metadata | childReferencesGroup | 1 | 1 | childReferences |
+| $adminAuthToken | metadata | recordInfoOldGroup | not found | not found | |
 
 *!
 !***> Load metadataGroupNew to use in tests
 
 !| RecordEndpointFixture |
 | type | id | testReadRecordAndStoreJson? |
-| metadataGroup | metadataGroupNewGroup | |
+| metadata | metadataGroupNewGroup | |
 
 *!
 !***> Check children in metadataGroupNew
 
 !| MetadataLinkFixture |
 | authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? |
-| $adminAuthToken | metadataGroup | recordInfoNewGroup | 1 | 1 | recordInfo |
-| $adminAuthToken | metadataTextVariable | nameInDataTextVar | 1 | 1 | nameInData |
-| $adminAuthToken | metadataRecordLink | textIdLink | 0 | 1 | textId |
-| $adminAuthToken | metadataRecordLink | defTextIdLink | 0 | 1 | defTextId |
-| $adminAuthToken | metadataRecordLink | refParentIdGroupLink | 0 | 1 | refParentId |
-| $adminAuthToken | metadataGroup | attributeReferencesGroup | 0 | 1 | attributeReferences |
-| $adminAuthToken | metadataGroup | childReferencesGroup | 1 | 1 | childReferences |
-| $adminAuthToken | metadataGroup | recordInfoOldGroup | not found | not found | not found |
+| $adminAuthToken | metadata | recordInfoNewGroup | 1 | 1 | recordInfo |
+| $adminAuthToken | metadata | nameInDataTextVar | 1 | 1 | nameInData |
+| $adminAuthToken | metadata | textIdLink | 0 | 1 | textId |
+| $adminAuthToken | metadata | defTextIdLink | 0 | 1 | defTextId |
+| $adminAuthToken | metadata | refParentIdGroupLink | 0 | 1 | refParentId |
+| $adminAuthToken | metadata | attributeReferencesGroup | 0 | 1 | attributeReferences |
+| $adminAuthToken | metadata | childReferencesGroup | 1 | 1 | childReferences |
+| $adminAuthToken | metadata | recordInfoOldGroup | not found | not found | not found |
 
 *!
 !***> childReferences and childReference
 
 !| RecordEndpointFixture |
 | type | id | testReadRecord? | getStatusType? |
-| metadataGroup | childReferencesGroup | =~/"value":"childReferenceGroup".*"name":"ref".*"name":"childReference"/ | OK |
-| metadataGroup | childReferenceGroup | =~/"value":"repeatMinTextVar".*"name":"ref".*"value":"repeatMaxTextVar".*"name":"ref".*"value":"refMetadataLink".*"name":"ref".*"value":"childRefCollectIndexTermLink".*"name":"ref".*"value":"childRefCollectPermissionTermLink".*"name":"ref".*"value":"childRefCollectStorageTermLink".*"name":"ref"/ | OK |
+| metadata | childReferencesGroup | =~/"value":"childReferenceGroup".*"name":"ref".*"name":"childReference"/ | OK |
+| metadata | childReferenceGroup | =~/"value":"repeatMinTextVar".*"name":"ref".*"value":"repeatMaxTextVar".*"name":"ref".*"value":"refMetadataLink".*"name":"ref".*"value":"childRefCollectIndexTermLink".*"name":"ref".*"value":"childRefCollectPermissionTermLink".*"name":"ref".*"value":"childRefCollectStorageTermLink".*"name":"ref"/ | OK |
 
 *!
 
@@ -54,25 +54,25 @@
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | metadataTextVariable | {"children":[{"children":[{"name":"id","value":"someTextVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataTextVariable"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"someText"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}],"name":"defTextId"},{"name":"regEx","value":"^[r]{4}$"}],"name":"metadata","attributes":{"type":"textVariable"}} | | CREATED |
-| $adminAuthToken | metadataTextVariable | {"children":[{"children":[{"name":"id","value":"someOtherTextVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataTextVariable"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"someOtherText"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}],"name":"defTextId"},{"name":"regEx","value":"^[r]{4}$"}],"name":"metadata","attributes":{"type":"textVariable"}} | | CREATED |
+| $adminAuthToken | metadata | {"children":[{"children":[{"name":"id","value":"someTextVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataTextVariable"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"someText"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}],"name":"defTextId"},{"name":"regEx","value":"^[r]{4}$"}],"name":"metadata","attributes":{"type":"textVariable"}} | | CREATED |
+| $adminAuthToken | metadata | {"children":[{"children":[{"name":"id","value":"someOtherTextVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataTextVariable"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"someOtherText"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}],"name":"defTextId"},{"name":"regEx","value":"^[r]{4}$"}],"name":"metadata","attributes":{"type":"textVariable"}} | | CREATED |
 
 *!
 !***> Create a metadataGroups for (repeat)
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | metadataGroup | {"children":[{"children":[{"name":"id","value":"someSubGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}],"name":"defTextId"},{"name":"nameInData","value":"someSubGroup"},{"name":"excludePGroupCreation","value":"true"},{"children":[{"repeatId":"1","children":[{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"someTextVar"}],"name":"ref"},{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"}],"name":"childReference"},{"repeatId":"2","children":[{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"someOtherTextVar"}],"name":"ref"},{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"}],"name":"childReference"}],"name":"childReferences"}],"name":"metadata","attributes":{"type":"group"}} | | CREATED |
-| $adminAuthToken | metadataGroup | {"children":[{"children":[{"name":"id","value":"bikeNewGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}],"name":"defTextId"},{"name":"nameInData","value":"bike"},{"name":"excludePGroupCreation","value":"true"},{"children":[{"repeatId":"1","children":[{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"recordInfoNewGroup"}],"name":"ref"},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}],"name":"childReference"},{"repeatId":"2","children":[{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"someSubGroup"}],"name":"ref"},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}],"name":"childReference"}],"name":"childReferences"}],"name":"metadata","attributes":{"type":"group"}} | | CREATED |
-| $adminAuthToken | metadataGroup | {"children":[{"children":[{"name":"id","value":"bikeGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}],"name":"defTextId"},{"name":"nameInData","value":"bike"},{"name":"excludePGroupCreation","value":"true"},{"children":[{"repeatId":"1","children":[{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"recordInfoGroup"}],"name":"ref"},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}],"name":"childReference"},{"repeatId":"3","children":[{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"someSubGroup"}],"name":"ref"},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}],"name":"childReference"}],"name":"childReferences"}],"name":"metadata","attributes":{"type":"group"}} | | CREATED |
+| $adminAuthToken | metadata | {"children":[{"children":[{"name":"id","value":"someSubGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}],"name":"defTextId"},{"name":"nameInData","value":"someSubGroup"},{"name":"excludePGroupCreation","value":"true"},{"children":[{"repeatId":"1","children":[{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"someTextVar"}],"name":"ref"},{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"}],"name":"childReference"},{"repeatId":"2","children":[{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"someOtherTextVar"}],"name":"ref"},{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"}],"name":"childReference"}],"name":"childReferences"}],"name":"metadata","attributes":{"type":"group"}} | | CREATED |
+| $adminAuthToken | metadata | {"children":[{"children":[{"name":"id","value":"bikeNewGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}],"name":"defTextId"},{"name":"nameInData","value":"bike"},{"name":"excludePGroupCreation","value":"true"},{"children":[{"repeatId":"1","children":[{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"recordInfoNewGroup"}],"name":"ref"},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}],"name":"childReference"},{"repeatId":"2","children":[{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"someSubGroup"}],"name":"ref"},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}],"name":"childReference"}],"name":"childReferences"}],"name":"metadata","attributes":{"type":"group"}} | | CREATED |
+| $adminAuthToken | metadata | {"children":[{"children":[{"name":"id","value":"bikeGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}],"name":"defTextId"},{"name":"nameInData","value":"bike"},{"name":"excludePGroupCreation","value":"true"},{"children":[{"repeatId":"1","children":[{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"recordInfoGroup"}],"name":"ref"},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}],"name":"childReference"},{"repeatId":"3","children":[{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"someSubGroup"}],"name":"ref"},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}],"name":"childReference"}],"name":"childReferences"}],"name":"metadata","attributes":{"type":"group"}} | | CREATED |
 
 *!
 !***> Create texts needed for recordType
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | coraText | {"children":[{"children":[{"name":"id","value":"someFitnesseText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"En text"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}}],"name":"text"} | | CREATED |
-| $adminAuthToken | coraText | {"children":[{"children":[{"name":"id","value":"someFitnesseDefText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"En deftext"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"A defText"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"} | | CREATED |
+| $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"someFitnesseText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"En text"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}}],"name":"text"} | | CREATED |
+| $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"someFitnesseDefText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"En deftext"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"A defText"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"} | | CREATED |
 
 *!
 
@@ -81,8 +81,8 @@
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | recordType | {"children":[{"children":[{"name":"id","value":"bike"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"bikeGroup"}],"name":"metadataId"},{"name":"abstract","value":"false"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"someFitnesseViewPGroup"}],"name":"presentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"someFitnesseFormPGroup"}],"name":"presentationFormId"},{"children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"bikeNewGroup"}],"name":"newMetadataId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"someFitnesseFormNewPGroup"}],"name":"newPresentationFormId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"someFitnesseMenuPGroup"}],"name":"menuPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"someFitnesseListPGroup"}],"name":"listPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"someFitnesseListPGroup"}],"name":"autocompletePresentationView"},{"name":"userSuppliedId","value":"true"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someFitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someFitnesseDefText"}],"name":"defTextId"},{"children":[{"name":"linkedRecordType","value":"search"},{"name":"linkedRecordId","value":"recordTypeSearch"}],"name":"search"},{"repeatId":"0","name":"groupOfRecordType","value":"metadata"},{"name":"public","value":"false"},{"name":"storeInArchive","value":"false"}],"name":"recordType"} | | CREATED |
-| $adminAuthToken | validationType | {"name":"validationType","children":[{"name":"recordInfo","children":[{"name":"id","value":"bike"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationType"}],"name":"validationType"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"newMetadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"bikeNewGroup"}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadataGroup"},{"name":"linkedRecordId","value":"bikeGroup"}]},{"name":"newPresentationFormId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"recordTypePGroup"}]},{"name":"presentationFormId","children":[{"name":"linkedRecordType","value":"presentationGroup"},{"name":"linkedRecordId","value":"recordTypePGroup"}]},{"name":"validatesRecordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"bike"}]}]} | | CREATED |
+| $adminAuthToken | recordType | {"children":[{"children":[{"name":"id","value":"bike"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"bikeGroup"}],"name":"metadataId"},{"name":"abstract","value":"false"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"someFitnesseViewPGroup"}],"name":"presentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"someFitnesseFormPGroup"}],"name":"presentationFormId"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"bikeNewGroup"}],"name":"newMetadataId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"someFitnesseFormNewPGroup"}],"name":"newPresentationFormId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"someFitnesseMenuPGroup"}],"name":"menuPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"someFitnesseListPGroup"}],"name":"listPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"someFitnesseListPGroup"}],"name":"autocompletePresentationView"},{"name":"userSuppliedId","value":"true"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someFitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someFitnesseDefText"}],"name":"defTextId"},{"children":[{"name":"linkedRecordType","value":"search"},{"name":"linkedRecordId","value":"recordTypeSearch"}],"name":"search"},{"repeatId":"0","name":"groupOfRecordType","value":"metadata"},{"name":"public","value":"false"},{"name":"storeInArchive","value":"false"}],"name":"recordType"} | | CREATED |
+| $adminAuthToken | validationType | {"name":"validationType","children":[{"name":"recordInfo","children":[{"name":"id","value":"bike"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationType"}],"name":"validationType"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"newMetadataId","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"bikeNewGroup"}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"bikeGroup"}]},{"name":"newPresentationFormId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"recordTypePGroup"}]},{"name":"presentationFormId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"recordTypePGroup"}]},{"name":"validatesRecordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"bike"}]}]} | | CREATED |
 *!
 !***> Create correct data on bike
 
@@ -107,25 +107,25 @@
 | $adminAuthToken | search | bikeSearch | | OK |
 | $adminAuthToken | validationType | bike | | OK |
 | $adminAuthToken | recordType | bike | | OK |
-| $adminAuthToken | presentationGroup | someFitnesseMenuPGroup | | OK |
-| $adminAuthToken | presentationGroup | someFitnesseListPGroup | | OK |
-| $adminAuthToken | presentationGroup | someFitnesseFormPGroup | | OK |
-| $adminAuthToken | presentationGroup | someFitnesseFormNewPGroup | | OK |
-| $adminAuthToken | presentationGroup | someFitnesseViewPGroup | | OK |
-| $adminAuthToken | metadataGroup | bikeNewGroup | | OK |
-| $adminAuthToken | metadataGroup | bikeGroup | | OK |
-| $adminAuthToken | metadataGroup | someSubGroup | | OK |
-| $adminAuthToken | presentationVar | somePVar | | OK |
-| $adminAuthToken | presentationVar | someOutputPVar | | OK |
-| $adminAuthToken | presentationVar | someOtherPVar | | OK |
-| $adminAuthToken | presentationVar | someOtherOutputPVar | | OK |
-| $adminAuthToken | metadataTextVariable | someTextVar | | OK |
-| $adminAuthToken | metadataTextVariable | someOtherTextVar | | OK |
-| $adminAuthToken | coraText | someFitnesseText | | OK |
-| $adminAuthToken | coraText | someFitnesseDefText | | OK |
-| $adminAuthToken | coraText | someTestText | | OK |
-| $adminAuthToken | coraText | someTestDefText | | OK |
-| $adminAuthToken | coraText | bikeSearchText | | OK |
-| $adminAuthToken | coraText | bikeSearchDefText | | OK |
+| $adminAuthToken | presentation | someFitnesseMenuPGroup | | OK |
+| $adminAuthToken | presentation | someFitnesseListPGroup | | OK |
+| $adminAuthToken | presentation | someFitnesseFormPGroup | | OK |
+| $adminAuthToken | presentation | someFitnesseFormNewPGroup | | OK |
+| $adminAuthToken | presentation | someFitnesseViewPGroup | | OK |
+| $adminAuthToken | metadata | bikeNewGroup | | OK |
+| $adminAuthToken | metadata | bikeGroup | | OK |
+| $adminAuthToken | metadata | someSubGroup | | OK |
+| $adminAuthToken | presentation | somePVar | | OK |
+| $adminAuthToken | presentation | someOutputPVar | | OK |
+| $adminAuthToken | presentation | someOtherPVar | | OK |
+| $adminAuthToken | presentation | someOtherOutputPVar | | OK |
+| $adminAuthToken | metadata | someTextVar | | OK |
+| $adminAuthToken | metadata | someOtherTextVar | | OK |
+| $adminAuthToken | text | someFitnesseText | | OK |
+| $adminAuthToken | text | someFitnesseDefText | | OK |
+| $adminAuthToken | text | someTestText | | OK |
+| $adminAuthToken | text | someTestDefText | | OK |
+| $adminAuthToken | text | bikeSearchText | | OK |
+| $adminAuthToken | text | bikeSearchDefText | | OK |
 
 *!

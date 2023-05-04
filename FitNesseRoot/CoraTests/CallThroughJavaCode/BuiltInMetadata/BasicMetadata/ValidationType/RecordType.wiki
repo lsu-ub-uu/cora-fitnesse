@@ -40,7 +40,7 @@ Read the metadatagroup for later verification
 
 !| RecordEndpointFixture |
 | type | id | testReadRecordAndStoreJson? |
-| metadataGroup | validationTypeNewGroup | |
+| metadata | validationTypeNewGroup | |
 
 Verify children
 
@@ -50,14 +50,14 @@ Verify children
 
 !| MetadataLinkFixture |
 | authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
-| $adminAuthToken | metadataGroup | recordInfoNewGroup | 1 | 1 | recordInfo | noRestrictions |
-| $adminAuthToken | metadataRecordLink | textIdLink | 1 | 1 | textId | noRestrictions |
-| $adminAuthToken | metadataRecordLink | defTextIdLink | 1 | 1 | defTextId | noRestrictions |
-| $adminAuthToken | metadataRecordLink | validatesRecordTypeLink | 1 | 1 | validatesRecordType | noRestrictions |
-| $adminAuthToken | metadataRecordLink | newMetadataIdLink | 1 | 1 | newMetadataId | noRestrictions |
-| $adminAuthToken | metadataRecordLink | metadataIdLink | 1 | 1 | metadataId | noRestrictions |
-| $adminAuthToken | metadataRecordLink | newPresentationFormIdLink | 1 | 1 | newPresentationFormId | noRestrictions |
-| $adminAuthToken | metadataRecordLink | presentationFormIdLink | 1 | 1 | presentationFormId | noRestrictions |
+| $adminAuthToken | metadata | recordInfoNewGroup | 1 | 1 | recordInfo | noRestrictions |
+| $adminAuthToken | metadata | textIdLink | 1 | 1 | textId | noRestrictions |
+| $adminAuthToken | metadata | defTextIdLink | 1 | 1 | defTextId | noRestrictions |
+| $adminAuthToken | metadata | validatesRecordTypeLink | 1 | 1 | validatesRecordType | noRestrictions |
+| $adminAuthToken | metadata | newMetadataIdLink | 1 | 1 | newMetadataId | noRestrictions |
+| $adminAuthToken | metadata | metadataIdLink | 1 | 1 | metadataId | noRestrictions |
+| $adminAuthToken | metadata | newPresentationFormIdLink | 1 | 1 | newPresentationFormId | noRestrictions |
+| $adminAuthToken | metadata | presentationFormIdLink | 1 | 1 | presentationFormId | noRestrictions |
 
 *!
 !***> Verify recordInfoNewGroup
@@ -66,7 +66,7 @@ Read recordInfo for new group
 
 !| RecordEndpointFixture |
 | type | id | testReadRecordAndStoreJson? |
-| metadataGroup | recordInfoNewGroup | |
+| metadata | recordInfoNewGroup | |
 
 Verify children
 
@@ -76,9 +76,9 @@ Verify children
 
 !| MetadataLinkFixture |
 | authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
-| $adminAuthToken | metadataTextVariable | idTextVar | 1 | 1 | id | noRestrictions |
-| $adminAuthToken | metadataRecordLink | dataDividerLink | 1 | 1 | dataDivider | noRestrictions |
-| $adminAuthToken | metadataRecordLink | validationTypeLink | 1 | 1 | validationType | noRestrictions |
+| $adminAuthToken | metadata | idTextVar | 1 | 1 | id | noRestrictions |
+| $adminAuthToken | metadata | dataDividerLink | 1 | 1 | dataDivider | noRestrictions |
+| $adminAuthToken | metadata | validationTypeLink | 1 | 1 | validationType | noRestrictions |
 
 *!
 
@@ -88,7 +88,7 @@ Read the metadatagroup for later verification
 
 !| RecordEndpointFixture |
 | type | id | testReadRecordAndStoreJson? |
-| metadataGroup | validationTypeGroup | |
+| metadata | validationTypeGroup | |
 
 Verify children
 
@@ -98,14 +98,14 @@ Verify children
 
 !| MetadataLinkFixture |
 | authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
-| $adminAuthToken | metadataGroup | recordInfoGroup | 1 | 1 | recordInfo | noRestrictions |
-| $adminAuthToken | metadataRecordLink | textIdLink | 1 | 1 | textId | noRestrictions |
-| $adminAuthToken | metadataRecordLink | defTextIdLink | 1 | 1 | defTextId | noRestrictions |
-| $adminAuthToken | metadataRecordLink | validatesRecordTypeLink | 1 | 1 | validatesRecordType | noRestrictions |
-| $adminAuthToken | metadataRecordLink | newMetadataIdLink | 1 | 1 | newMetadataId | noRestrictions |
-| $adminAuthToken | metadataRecordLink | metadataIdLink | 1 | 1 | metadataId | noRestrictions |
-| $adminAuthToken | metadataRecordLink | newPresentationFormIdLink | 1 | 1 | newPresentationFormId | noRestrictions |
-| $adminAuthToken | metadataRecordLink | presentationFormIdLink | 1 | 1 | presentationFormId | noRestrictions |
+| $adminAuthToken | metadata | recordInfoGroup | 1 | 1 | recordInfo | noRestrictions |
+| $adminAuthToken | metadata | textIdLink | 1 | 1 | textId | noRestrictions |
+| $adminAuthToken | metadata | defTextIdLink | 1 | 1 | defTextId | noRestrictions |
+| $adminAuthToken | metadata | validatesRecordTypeLink | 1 | 1 | validatesRecordType | noRestrictions |
+| $adminAuthToken | metadata | newMetadataIdLink | 1 | 1 | newMetadataId | noRestrictions |
+| $adminAuthToken | metadata | metadataIdLink | 1 | 1 | metadataId | noRestrictions |
+| $adminAuthToken | metadata | newPresentationFormIdLink | 1 | 1 | newPresentationFormId | noRestrictions |
+| $adminAuthToken | metadata | presentationFormIdLink | 1 | 1 | presentationFormId | noRestrictions |
 
 *!
 !***> Verify recordInfoNewGroup
@@ -114,7 +114,7 @@ Read recordInfo for new group
 
 !| RecordEndpointFixture |
 | type | id | testReadRecordAndStoreJson? |
-| metadataGroup | recordInfoGroup | |
+| metadata | recordInfoGroup | |
 
 Verify children
 
@@ -124,14 +124,14 @@ Verify children
 
 !| MetadataLinkFixture |
 | authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
-| $adminAuthToken | metadataTextVariable | idTextVar | 1 | 1 | id | noRestrictions |
-| $adminAuthToken | metadataRecordLink | recordTypeLink | 1 | 1 | type | noRestrictions |
-| $adminAuthToken | metadataRecordLink | validationTypeLink | 1 | 1 | validationType | noRestrictions |
-| $adminAuthToken | metadataRecordLink | dataDividerLink | 1 | 1 | dataDivider | noRestrictions |
-| $adminAuthToken | metadataRecordLink | permissionUnitLink | 0 | X | permissionUnit | noRestrictions |
-| $adminAuthToken | metadataRecordLink | createdByLink | 1 | 1 | createdBy | noRestrictions |
-| $adminAuthToken | metadataTextVariable | tsCreatedTextVar | 1 | 1 | tsCreated | noRestrictions |
-| $adminAuthToken | metadataGroup | updatedGroup | 1 | X | updated | noRestrictions |
+| $adminAuthToken | metadata | idTextVar | 1 | 1 | id | noRestrictions |
+| $adminAuthToken | metadata | recordTypeLink | 1 | 1 | type | noRestrictions |
+| $adminAuthToken | metadata | validationTypeLink | 1 | 1 | validationType | noRestrictions |
+| $adminAuthToken | metadata | dataDividerLink | 1 | 1 | dataDivider | noRestrictions |
+| $adminAuthToken | metadata | permissionUnitLink | 0 | X | permissionUnit | noRestrictions |
+| $adminAuthToken | metadata | createdByLink | 1 | 1 | createdBy | noRestrictions |
+| $adminAuthToken | metadata | tsCreatedTextVar | 1 | 1 | tsCreated | noRestrictions |
+| $adminAuthToken | metadata | updatedGroup | 1 | X | updated | noRestrictions |
 *!
 
 *!

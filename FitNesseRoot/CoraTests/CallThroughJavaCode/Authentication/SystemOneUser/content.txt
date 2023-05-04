@@ -10,58 +10,58 @@ A test that first reads all predefined metadata needed to be able to create user
 
 !| RecordEndpointFixture |
 | type | id | testReadRecordAndStoreJson? |
-| metadataGroup | systemOneUserNewGroup | |
+| metadata | systemOneUserNewGroup | |
 
 *!
 !***> Check children in systemOneUserNewGroup
 
 !| MetadataLinkFixture |
 | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? |
-| metadataTextVariable | userIdTextVar | 1 | 1 |
-| metadataTextVariable | userFirstnameTextVar | 1 | 1 |
-| metadataTextVariable | userLastnameTextVar | 1 | 1 |
-| metadataGroup | systemOneUserRoleRelationGroup | 1 | X |
-| metadataCollectionVariable | activeStatusCollectionVar | 1 | 1 |
+| metadata | userIdTextVar | 1 | 1 |
+| metadata | userFirstnameTextVar | 1 | 1 |
+| metadata | userLastnameTextVar | 1 | 1 |
+| metadata | systemOneUserRoleRelationGroup | 1 | X |
+| metadata | activeStatusCollectionVar | 1 | 1 |
 
 *!
 !***> Load systemOneUserGroup to use in tests
 
 !| RecordEndpointFixture |
 | type | id | testReadRecordAndStoreJson? |
-| metadataGroup | systemOneUserGroup | |
+| metadata | systemOneUserGroup | |
 
 *!
 !***> Check children in systemOneUserGroup
 
 !| MetadataLinkFixture |
 | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? |
-| metadataTextVariable | userIdTextVar | 1 | 1 |
-| metadataTextVariable | userFirstnameTextVar | 1 | 1 |
-| metadataTextVariable | userLastnameTextVar | 1 | 1 |
-| metadataGroup | systemOneUserRoleRelationGroup | 1 | X |
-| metadataCollectionVariable | activeStatusCollectionVar | 1 | 1 |
+| metadata | userIdTextVar | 1 | 1 |
+| metadata | userFirstnameTextVar | 1 | 1 |
+| metadata | userLastnameTextVar | 1 | 1 |
+| metadata | systemOneUserRoleRelationGroup | 1 | X |
+| metadata | activeStatusCollectionVar | 1 | 1 |
 
 *!
 !***> Load systemOneUserRoleRelationGroup to use in tests
 
 !| RecordEndpointFixture |
 | type | id | testReadRecordAndStoreJson? |
-| metadataGroup | systemOneUserRoleRelationGroup | |
+| metadata | systemOneUserRoleRelationGroup | |
 
 *!
 !***> Check children in systemOneUserRoleRelationGroup
 
 !| MetadataLinkFixture |
 | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? |
-| metadataRecordLink | userRoleLink | 1 | 1 |
-| metadataGroup | permissionTermRulePartGroup | 0 | X |
+| metadata | userRoleLink | 1 | 1 |
+| metadata | permissionTermRulePartGroup | 0 | X |
 
 *!
 !***> Read recordType (systemOneUser)
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | recordType | systemOneUser | | OK |
+| $adminAuthToken | recordType | user | | OK |
 
 *!
 !2 Test with new systemOneUser
@@ -69,35 +69,35 @@ A test that first reads all predefined metadata needed to be able to create user
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecordCreatedType? | getStatusType? |
-| $adminAuthToken | collectPermissionTerm | {"children":[{"children":[{"name":"id","value":"testOrganisationPermissionTerm"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"collectPermissionTerm"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"testOrganisationPermissionTerm"},{"children":[{"name":"permissionKey","value":"SOME_KEY"}],"name":"extraData"}],"name":"collectPermissionTerm","attributes":{"type":"permission"}} | collectPermissionTerm | CREATED |
+| $adminAuthToken | collectTerm | {"children":[{"children":[{"name":"id","value":"testOrganisationPermissionTerm"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"collectPermissionTerm"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"testOrganisationPermissionTerm"},{"children":[{"name":"permissionKey","value":"SOME_KEY"}],"name":"extraData"}],"name":"collectPermissionTerm","attributes":{"type":"permission"}} | collectTerm | CREATED |
 
 *!
 !***> Create data of recordType systemOneUser
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecordCreatedType? | getStatusType? | getCreatedId? |
-| $adminAuthToken | systemOneUser | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}],"name":"validationType"}],"name":"recordInfo"},{"name":"userId","value":"fitnesseUser@system.cora.uu.se"},{"name":"userFirstname","value":"Some"},{"name":"userLastname","value":"User"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"user"}],"name":"userRole"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"collectPermissionTerm"},{"name":"linkedRecordId","value":"testOrganisationPermissionTerm"}],"name":"rule"},{"repeatId":"0","name":"value","value":"system.uu.*"}],"name":"permissionTermRulePart"}],"name":"userRole"},{"name":"activeStatus","value":"active"}],"name":"user","attributes":{"type":"systemOneUser"}} | systemOneUser | CREATED | $createdId= |
+| $adminAuthToken | user | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}],"name":"validationType"}],"name":"recordInfo"},{"name":"userId","value":"fitnesseUser@system.cora.uu.se"},{"name":"userFirstname","value":"Some"},{"name":"userLastname","value":"User"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"user"}],"name":"userRole"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"testOrganisationPermissionTerm"}],"name":"rule"},{"repeatId":"0","name":"value","value":"system.uu.*"}],"name":"permissionTermRulePart"}],"name":"userRole"},{"name":"activeStatus","value":"active"}],"name":"user","attributes":{"type":"systemOneUser"}} | user | CREATED | $createdId= |
 
 *!
 !***> Read systemOneUser
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | systemOneUser | $createdId | | OK |
+| $adminAuthToken | user | $createdId | | OK |
 
 *!
 !***> Update data of recordType systemOneUser
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | systemOneUser | $createdId | {"children":[{"children":[{"name":"id","value":"$createdId"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"systemOneUser"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}],"name":"validationType"}],"name":"recordInfo"},{"name":"userId","value":"fitnesseUser@system.cora.uu.se"},{"name":"userFirstname","value":"Some"},{"name":"userLastname","value":"User"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"user"}],"name":"userRole"}],"name":"userRole"},{"name":"activeStatus","value":"active"}],"name":"user"} | | OK |
+| $adminAuthToken | user | $createdId | {"children":[{"children":[{"name":"id","value":"$createdId"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}],"name":"validationType"}],"name":"recordInfo"},{"name":"userId","value":"fitnesseUser@system.cora.uu.se"},{"name":"userFirstname","value":"Some"},{"name":"userLastname","value":"User"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"user"}],"name":"userRole"}],"name":"userRole"},{"name":"activeStatus","value":"active"}],"name":"user"} | | OK |
 
 *!
 !***> List data(systemOneUser)
 
 !| RecordEndpointFixture |
 | authToken | type | testReadRecordList? | getStatusType? |
-| $adminAuthToken | systemOneUser | | OK |
+| $adminAuthToken | user | | OK |
 
 *!
 !2 Clean up created data
@@ -105,7 +105,7 @@ A test that first reads all predefined metadata needed to be able to create user
 
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | systemOneUser | $createdId | | OK |
-| $adminAuthToken | collectPermissionTerm | testOrganisationPermissionTerm | | OK |
+| $adminAuthToken | user | $createdId | | OK |
+| $adminAuthToken | collectTerm | testOrganisationPermissionTerm | | OK |
 
 *!

@@ -7,15 +7,15 @@
 | $adminAuthToken | search | exampleAttributeSearch | | OK |
 | $adminAuthToken | validationType | exampleAttribute | | OK |
 | $adminAuthToken | recordType | exampleAttribute | | OK |
-| $adminAuthToken | presentationGroup | someFitnessePGroup | | OK |
-| $adminAuthToken | metadataGroup | exampleAttributeNewGroup | | OK |
-| $adminAuthToken | metadataGroup | exampleAttributeGroup | | OK |
-| $adminAuthToken | coraText | someFitnesseText | | OK |
-| $adminAuthToken | coraText | someFitnesseDefText | | OK |
-| $adminAuthToken | coraText | exampleAttributeGroupText | | OK |
-| $adminAuthToken | coraText | exampleAttributeGroupDefText | | OK |
-| $adminAuthToken | coraText | exampleAttributeNewGroupText | | OK |
-| $adminAuthToken | coraText | exampleAttributeNewGroupDefText | | OK |
-| $adminAuthToken | coraText | exampleAttributeSearchText | | OK |
-| $adminAuthToken | coraText | exampleAttributeSearchDefText | | OK |
+| $adminAuthToken | presentation | someFitnessePGroup | | OK |
+| $adminAuthToken | metadata | exampleAttributeNewGroup | | OK |
+| $adminAuthToken | metadata | exampleAttributeGroup | | OK |
+| $adminAuthToken | text | someFitnesseText | | OK |
+| $adminAuthToken | text | someFitnesseDefText | | OK |
+| $adminAuthToken | text | exampleAttributeGroupText | | OK |
+| $adminAuthToken | text | exampleAttributeGroupDefText | | OK |
+| $adminAuthToken | text | exampleAttributeNewGroupText | | OK |
+| $adminAuthToken | text | exampleAttributeNewGroupDefText | | OK |
+| $adminAuthToken | text | exampleAttributeSearchText | | OK |
+| $adminAuthToken | text | exampleAttributeSearchDefText | | OK |
 *!

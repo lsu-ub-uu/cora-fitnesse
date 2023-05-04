@@ -14,8 +14,8 @@ Read texts to make sure they do not exist
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseTestTextVarText | coraText | | NOT_FOUND |
-| fitnesseTestTextVarDefText | coraText | | NOT_FOUND |
+| fitnesseTestTextVarText | text | | NOT_FOUND |
+| fitnesseTestTextVarDefText | text | | NOT_FOUND |
 
 *!
 When a metadataTextVariable is created, two presentationVars are automatically created, one for input and one for output.
@@ -26,8 +26,8 @@ Read pVars to make sure they do not exist
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseTestPVar | presentationVar | | NOT_FOUND |
-| fitnesseTestOutputPVar | presentationVar | | NOT_FOUND |
+| fitnesseTestPVar | presentation | | NOT_FOUND |
+| fitnesseTestOutputPVar | presentation | | NOT_FOUND |
 
 *!
 !2 
@@ -36,7 +36,7 @@ Read pVars to make sure they do not exist
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | metadataTextVariable | {"children":[{"children":[{"name":"id","value":"fitnesseTestTextVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataTextVariable"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"fintnesseTest"},{"name":"regEx","value":"(^[0-9A-Za-z:-_]{2,50}$)"}],"name":"metadata","attributes":{"type":"textVariable"}} | | CREATED |
+| $adminAuthToken | metadata | {"children":[{"children":[{"name":"id","value":"fitnesseTestTextVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataTextVariable"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"fintnesseTest"},{"name":"regEx","value":"(^[0-9A-Za-z:-_]{2,50}$)"}],"name":"metadata","attributes":{"type":"textVariable"}} | | CREATED |
 
 *!
 Read fitnesseTestTextVar to see that links to texts have been added to the metadata
@@ -45,7 +45,7 @@ Read fitnesseTestTextVar to see that links to texts have been added to the metad
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseTestTextVar | metadataTextVariable | =~/"name":"id","value":"fitnesseTestTextVar"/ | OK |
+| fitnesseTestTextVar | metadata | =~/"name":"id","value":"fitnesseTestTextVar"/ | OK |
 
 *!
 Read texts again to see that they have been created
@@ -54,8 +54,8 @@ Read texts again to see that they have been created
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseTestTextVarText | coraText | | OK |
-| fitnesseTestTextVarDefText | coraText | | OK |
+| fitnesseTestTextVarText | text | | OK |
+| fitnesseTestTextVarDefText | text | | OK |
 
 *!
 Read presentationVars again to see that they have been created
@@ -64,8 +64,8 @@ Read presentationVars again to see that they have been created
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseTestPVar | presentationVar | | OK |
-| fitnesseTestOutputPVar | presentationVar | | OK |
+| fitnesseTestPVar | presentation | | OK |
+| fitnesseTestOutputPVar | presentation | | OK |
 
 *!
 !1 Reset testdata
@@ -75,10 +75,10 @@ Remove data created for this test
 
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | presentationVar | fitnesseTestPVar | | OK |
-| $adminAuthToken | presentationVar | fitnesseTestOutputPVar | | OK |
-| $adminAuthToken | metadataTextVariable | fitnesseTestTextVar | | OK |
-| $adminAuthToken | coraText | fitnesseTestTextVarText | | OK |
-| $adminAuthToken | coraText | fitnesseTestTextVarDefText | | OK |
+| $adminAuthToken | presentation | fitnesseTestPVar | | OK |
+| $adminAuthToken | presentation | fitnesseTestOutputPVar | | OK |
+| $adminAuthToken | metadata | fitnesseTestTextVar | | OK |
+| $adminAuthToken | text | fitnesseTestTextVarText | | OK |
+| $adminAuthToken | text | fitnesseTestTextVarDefText | | OK |
 
 *!

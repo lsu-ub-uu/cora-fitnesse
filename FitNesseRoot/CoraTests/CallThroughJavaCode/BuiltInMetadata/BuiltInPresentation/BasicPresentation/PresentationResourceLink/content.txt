@@ -10,47 +10,47 @@ A test that first reads all predefined metadata needed to be able to add present
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | genericCollectionItem | pResourceLinkItem | =~/"name":"linkedRecordId","value":"pResourceLinkItemText"/ | OK |
+| $adminAuthToken | metadata | pResourceLinkItem | =~/"name":"linkedRecordId","value":"pResourceLinkItemText"/ | OK |
 
 *!
 !***> Read itemCollection (presentationTypeCollection)
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadataItemCollection | presentationTypeCollection | =~/"name":"linkedRecordId","value":"pVarItem".*"name":"linkedRecordId","value":"containerItem".*"linkedRecordId","value":"pRecordLinkItem".*"name":"linkedRecordId","value":"pCollVarItem".*"name":"linkedRecordId","value":"pResourceLinkItem".*"name":"linkedRecordId","value":"presentationLinkItem".*/ | OK |
+| $adminAuthToken | metadata | presentationTypeCollection | =~/"name":"linkedRecordId","value":"pVarItem".*"name":"linkedRecordId","value":"containerItem".*"linkedRecordId","value":"pRecordLinkItem".*"name":"linkedRecordId","value":"pCollVarItem".*"name":"linkedRecordId","value":"pResourceLinkItem".*"name":"linkedRecordId","value":"presentationLinkItem".*/ | OK |
 
 *!
 !***> Read collectionVariables (modeCollectionVar, presentationTypeCollectionVar, presentationTypePResourceLinkCollectionVar)
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadataCollectionVariable | outputFormatCollectionVar | | OK |
-| $adminAuthToken | metadataCollectionVariable | presentationTypeCollectionVar | | OK |
-| $adminAuthToken | metadataCollectionVariable | presentationTypePResourceLinkCollectionVar | | OK |
+| $adminAuthToken | metadata | outputFormatCollectionVar | | OK |
+| $adminAuthToken | metadata | presentationTypeCollectionVar | | OK |
+| $adminAuthToken | metadata | presentationTypePResourceLinkCollectionVar | | OK |
 
 *!
 !***> Read textVariable (idPResourceLinkTextVar)
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadataTextVariable | idPResourceLinkTextVar | | OK |
+| $adminAuthToken | metadata | idPResourceLinkTextVar | | OK |
 
 *!
 !***> Read metadataGroups (recordInfoPResourceLinkGroup, recordInfoNewPResourceLinkGroup, presentationResourceLinkNewGroup, presentationResourceLinkGroup)
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadataGroup | recordInfoPResourceLinkGroup | =~/"name":"linkedRecordId","value":"idPResourceLinkTextVar"/ | OK |
-| $adminAuthToken | metadataGroup | recordInfoNewPResourceLinkGroup | | OK |
-| $adminAuthToken | metadataGroup | presentationResourceLinkNewGroup | =~/"name":"linkedRecordId","value":"recordInfoNewPResourceLinkGroup"/ | OK |
-| $adminAuthToken | metadataGroup | presentationResourceLinkGroup | | OK |
+| $adminAuthToken | metadata | recordInfoPResourceLinkGroup | =~/"name":"linkedRecordId","value":"idPResourceLinkTextVar"/ | OK |
+| $adminAuthToken | metadata | recordInfoNewPResourceLinkGroup | | OK |
+| $adminAuthToken | metadata | presentationResourceLinkNewGroup | =~/"name":"linkedRecordId","value":"recordInfoNewPResourceLinkGroup"/ | OK |
+| $adminAuthToken | metadata | presentationResourceLinkGroup | | OK |
 
 *!
 !***> Read recordType ( presentationResourceLink)
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | recordType | presentationResourceLink | | OK |
+| $adminAuthToken | recordType | presentation | | OK |
 
 *!
 !2 Test with presentationResourceLink
@@ -58,18 +58,18 @@ A test that first reads all predefined metadata needed to be able to add present
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecordCreatedType? | getStatusType? |
-| $adminAuthToken | presentationResourceLink | {"children":[{"children":[{"name":"id","value":"withOutputPResLink"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationResourceLink"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadataResourceLink"},{"name":"linkedRecordId","value":"masterResLink"}],"name":"presentationOf"},{"name":"outputFormat","value":"image"}],"name":"presentation","attributes":{"type":"pResourceLink"}} | presentationResourceLink | CREATED |
-| $adminAuthToken | presentationResourceLink | {"children":[{"children":[{"name":"id","value":"withChildReferencesPResLink"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationResourceLink"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadataResourceLink"},{"name":"linkedRecordId","value":"masterResLink"}],"name":"presentationOf"},{"children":[{"repeatId":"0","children":[{"repeatId":"0","children":[{"children":[{"name":"linkedRecordId","value":"filesizeTextVarOutputPVar"},{"name":"linkedRecordType","value":"presentation"}],"name":"ref","attributes":{"type":"presentation"}}],"name":"refGroup"}],"name":"childReference"}],"name":"childReferences"}],"name":"presentation","attributes":{"type":"pResourceLink"}} | presentationResourceLink | CREATED |
-| $adminAuthToken | presentationResourceLink | {"children":[{"children":[{"name":"id","value":"withOutputAndChildReferencesPResLink"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationResourceLink"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadataResourceLink"},{"name":"linkedRecordId","value":"masterResLink"}],"name":"presentationOf"},{"children":[{"repeatId":"0","children":[{"repeatId":"0","children":[{"children":[{"name":"linkedRecordId","value":"filesizeTextVarOutputPVar"},{"name":"linkedRecordType","value":"presentation"}],"name":"ref","attributes":{"type":"presentation"}}],"name":"refGroup"}],"name":"childReference"}],"name":"childReferences"},{"name":"outputFormat","value":"image"}],"name":"presentation","attributes":{"type":"pResourceLink"}} | presentationResourceLink | CREATED |
+| $adminAuthToken | presentation | {"children":[{"children":[{"name":"id","value":"withOutputPResLink"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationResourceLink"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"masterResLink"}],"name":"presentationOf"},{"name":"outputFormat","value":"image"}],"name":"presentation","attributes":{"type":"pResourceLink"}} | presentation | CREATED |
+| $adminAuthToken | presentation | {"children":[{"children":[{"name":"id","value":"withChildReferencesPResLink"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationResourceLink"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"masterResLink"}],"name":"presentationOf"},{"children":[{"repeatId":"0","children":[{"repeatId":"0","children":[{"children":[{"name":"linkedRecordId","value":"filesizeTextVarOutputPVar"},{"name":"linkedRecordType","value":"presentation"}],"name":"ref","attributes":{"type":"presentation"}}],"name":"refGroup"}],"name":"childReference"}],"name":"childReferences"}],"name":"presentation","attributes":{"type":"pResourceLink"}} | presentation | CREATED |
+| $adminAuthToken | presentation | {"children":[{"children":[{"name":"id","value":"withOutputAndChildReferencesPResLink"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationResourceLink"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"masterResLink"}],"name":"presentationOf"},{"children":[{"repeatId":"0","children":[{"repeatId":"0","children":[{"children":[{"name":"linkedRecordId","value":"filesizeTextVarOutputPVar"},{"name":"linkedRecordType","value":"presentation"}],"name":"ref","attributes":{"type":"presentation"}}],"name":"refGroup"}],"name":"childReference"}],"name":"childReferences"},{"name":"outputFormat","value":"image"}],"name":"presentation","attributes":{"type":"pResourceLink"}} | presentation | CREATED |
 
 *!
 !***> Update data of recordType presentationResourceLink (withOutputPResLink, withChildReferencesPResLink, withOutputAndChildReferencesPResLink)
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | presentationResourceLink | withOutputPResLink | {"children":[{"children":[{"name":"id","value":"withOutputPResLink"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"presentationResourceLink"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationResourceLink"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadataResourceLink"},{"name":"linkedRecordId","value":"masterResLink"}],"name":"presentationOf"},{"name":"outputFormat","value":"download"}],"name":"presentation","attributes":{"type":"pResourceLink"}} | | OK |
-| $adminAuthToken | presentationResourceLink | withChildReferencesPResLink | {"children":[{"children":[{"name":"id","value":"withChildReferencesPResLink"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"presentationResourceLink"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationResourceLink"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadataResourceLink"},{"name":"linkedRecordId","value":"masterResLink"}],"name":"presentationOf"},{"children":[{"repeatId":"0","children":[{"repeatId":"0","children":[{"children":[{"name":"linkedRecordId","value":"filenameTextVarOutputPVar"},{"name":"linkedRecordType","value":"presentation"}],"name":"ref","attributes":{"type":"presentation"}}],"name":"refGroup"}],"name":"childReference"}],"name":"childReferences"}],"name":"presentation","attributes":{"type":"pResourceLink"}} | | OK |
-| $adminAuthToken | presentationResourceLink | withOutputAndChildReferencesPResLink | {"children":[{"children":[{"name":"id","value":"withOutputAndChildReferencesPResLink"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"presentationResourceLink"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationResourceLink"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadataResourceLink"},{"name":"linkedRecordId","value":"masterResLink"}],"name":"presentationOf"},{"children":[{"repeatId":"0","children":[{"repeatId":"0","children":[{"children":[{"name":"linkedRecordId","value":"filenameTextVarOutputPVar"},{"name":"linkedRecordType","value":"presentation"}],"name":"ref","attributes":{"type":"presentation"}}],"name":"refGroup"}],"name":"childReference"}],"name":"childReferences"},{"name":"outputFormat","value":"download"}],"name":"presentation","attributes":{"type":"pResourceLink"}} | | OK |
+| $adminAuthToken | presentation | withOutputPResLink | {"children":[{"children":[{"name":"id","value":"withOutputPResLink"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"presentation"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationResourceLink"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"masterResLink"}],"name":"presentationOf"},{"name":"outputFormat","value":"download"}],"name":"presentation","attributes":{"type":"pResourceLink"}} | | OK |
+| $adminAuthToken | presentation | withChildReferencesPResLink | {"children":[{"children":[{"name":"id","value":"withChildReferencesPResLink"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"presentation"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationResourceLink"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"masterResLink"}],"name":"presentationOf"},{"children":[{"repeatId":"0","children":[{"repeatId":"0","children":[{"children":[{"name":"linkedRecordId","value":"filenameTextVarOutputPVar"},{"name":"linkedRecordType","value":"presentation"}],"name":"ref","attributes":{"type":"presentation"}}],"name":"refGroup"}],"name":"childReference"}],"name":"childReferences"}],"name":"presentation","attributes":{"type":"pResourceLink"}} | | OK |
+| $adminAuthToken | presentation | withOutputAndChildReferencesPResLink | {"children":[{"children":[{"name":"id","value":"withOutputAndChildReferencesPResLink"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"presentation"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationResourceLink"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"masterResLink"}],"name":"presentationOf"},{"children":[{"repeatId":"0","children":[{"repeatId":"0","children":[{"children":[{"name":"linkedRecordId","value":"filenameTextVarOutputPVar"},{"name":"linkedRecordType","value":"presentation"}],"name":"ref","attributes":{"type":"presentation"}}],"name":"refGroup"}],"name":"childReference"}],"name":"childReferences"},{"name":"outputFormat","value":"download"}],"name":"presentation","attributes":{"type":"pResourceLink"}} | | OK |
 
 *!
 !2 List presentation data
@@ -78,7 +78,7 @@ A test that first reads all predefined metadata needed to be able to add present
 !| RecordEndpointFixture |
 | authToken | type | testReadRecordList? | getStatusType? |
 | $adminAuthToken | presentation | | OK |
-| $adminAuthToken | presentationResourceLink | | OK |
+| $adminAuthToken | presentation | | OK |
 
 *!
 !2 Incorrect data
@@ -86,7 +86,7 @@ A test that first reads all predefined metadata needed to be able to add present
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | presentationResourceLink | {"children":[{"children":[{"name":"id","value":"brokenTwoOutputFormatPResLink"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationResourceLink"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadataResourceLink"},{"name":"linkedRecordId","value":"masterResLink"}],"name":"presentationOf"},{"children":[{"repeatId":"0","children":[{"name":"ref","value":"filesizeTextVarOutputPVar"},{"name":"default","value":"ref"}],"name":"childReference"}],"name":"childReferences"},{"name":"outputFormat","value":"image"},{"name":"outputFormat","value":"download"}],"name":"presentation","attributes":{"type":"pResourceLink"}} | | BAD_REQUEST |
+| $adminAuthToken | presentation | {"children":[{"children":[{"name":"id","value":"brokenTwoOutputFormatPResLink"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationResourceLink"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"masterResLink"}],"name":"presentationOf"},{"children":[{"repeatId":"0","children":[{"name":"ref","value":"filesizeTextVarOutputPVar"},{"name":"default","value":"ref"}],"name":"childReference"}],"name":"childReferences"},{"name":"outputFormat","value":"image"},{"name":"outputFormat","value":"download"}],"name":"presentation","attributes":{"type":"pResourceLink"}} | | BAD_REQUEST |
 
 *!
 !2 Data needed by clients
@@ -94,24 +94,24 @@ A test that first reads all predefined metadata needed to be able to add present
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | presentationVar | streamIdTextVarOutputPVar | | OK |
-| $adminAuthToken | presentationVar | filenameTextVarOutputPVar | | OK |
-| $adminAuthToken | presentationVar | filesizeTextVarOutputPVar | | OK |
-| $adminAuthToken | presentationVar | mimeTypeTextVarOutputPVar | | OK |
+| $adminAuthToken | presentation | streamIdTextVarOutputPVar | | OK |
+| $adminAuthToken | presentation | filenameTextVarOutputPVar | | OK |
+| $adminAuthToken | presentation | filesizeTextVarOutputPVar | | OK |
+| $adminAuthToken | presentation | mimeTypeTextVarOutputPVar | | OK |
 
 *!
 !***> Read texts
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | coraText | streamIdTextVarText | | OK |
-| $adminAuthToken | coraText | streamIdTextVarDefText | | OK |
-| $adminAuthToken | coraText | filenameTextVarText | | OK |
-| $adminAuthToken | coraText | filenameTextVarDefText | | OK |
-| $adminAuthToken | coraText | filesizeTextVarText | | OK |
-| $adminAuthToken | coraText | filesizeTextVarDefText | | OK |
-| $adminAuthToken | coraText | mimeTypeTextVarText | | OK |
-| $adminAuthToken | coraText | mimeTypeTextVarDefText | | OK |
+| $adminAuthToken | text | streamIdTextVarText | | OK |
+| $adminAuthToken | text | streamIdTextVarDefText | | OK |
+| $adminAuthToken | text | filenameTextVarText | | OK |
+| $adminAuthToken | text | filenameTextVarDefText | | OK |
+| $adminAuthToken | text | filesizeTextVarText | | OK |
+| $adminAuthToken | text | filesizeTextVarDefText | | OK |
+| $adminAuthToken | text | mimeTypeTextVarText | | OK |
+| $adminAuthToken | text | mimeTypeTextVarDefText | | OK |
 
 *!
 !2 Clean up created data
@@ -119,8 +119,8 @@ A test that first reads all predefined metadata needed to be able to add present
 
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | presentationResourceLink | withOutputAndChildReferencesPResLink | | OK |
-| $adminAuthToken | presentationResourceLink | withChildReferencesPResLink | | OK |
-| $adminAuthToken | presentationResourceLink | withOutputPResLink | | OK |
+| $adminAuthToken | presentation | withOutputAndChildReferencesPResLink | | OK |
+| $adminAuthToken | presentation | withChildReferencesPResLink | | OK |
+| $adminAuthToken | presentation | withOutputPResLink | | OK |
 
 *!

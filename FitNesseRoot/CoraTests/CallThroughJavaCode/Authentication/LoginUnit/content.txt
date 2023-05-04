@@ -9,17 +9,17 @@
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadataGroup | loginUnitGroup | =~/"name":"linkedRecordType","value":"metadataGroup".*"name":"linkedRecordId","value":"recordInfoGroup".*"name":"linkedRecordType","value":"metadataGroup".*"name":"linkedRecordId","value":"loginUnitLoginInfoGroup"/ | OK |
-| $adminAuthToken | metadataGroup | loginUnitNewGroup | =~/"name":"linkedRecordType","value":"metadataGroup".*"name":"linkedRecordId","value":"recordInfoNewGroup".*"name":"linkedRecordType","value":"metadataGroup".*"name":"linkedRecordId","value":"loginUnitLoginInfoGroup"/ | OK |
-| $adminAuthToken | metadataGroup | loginUnitLoginInfoGroup | =~/"name":"linkedRecordType","value":"metadataRecordLink".*"name":"linkedRecordId","value":"loginLink".*"name":"linkedRecordType","value":"metadataRecordLink".*"name":"linkedRecordId","value":"loginDescriptionLink"/ | OK |
+| $adminAuthToken | metadata | loginUnitGroup | =~/"name":"linkedRecordType","value":"metadataGroup".*"name":"linkedRecordId","value":"recordInfoGroup".*"name":"linkedRecordType","value":"metadataGroup".*"name":"linkedRecordId","value":"loginUnitLoginInfoGroup"/ | OK |
+| $adminAuthToken | metadata | loginUnitNewGroup | =~/"name":"linkedRecordType","value":"metadataGroup".*"name":"linkedRecordId","value":"recordInfoNewGroup".*"name":"linkedRecordType","value":"metadataGroup".*"name":"linkedRecordId","value":"loginUnitLoginInfoGroup"/ | OK |
+| $adminAuthToken | metadata | loginUnitLoginInfoGroup | =~/"name":"linkedRecordType","value":"metadataRecordLink".*"name":"linkedRecordId","value":"loginLink".*"name":"linkedRecordType","value":"metadataRecordLink".*"name":"linkedRecordId","value":"loginDescriptionLink"/ | OK |
 
 *!
 !***> Read metadataRecordLinks (loginLink, loginDescriptionLink)
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadataRecordLink | loginLink | =~/"name":"linkedRecordType","value":"recordType".*"name":"linkedRecordId","value":"login"/ | OK |
-| $adminAuthToken | metadataRecordLink | loginDescriptionLink | =~/"name":"linkedRecordType","value":"recordType".*"name":"linkedRecordId","value":"text"/ | OK |
+| $adminAuthToken | metadata | loginLink | =~/"name":"linkedRecordType","value":"recordType".*"name":"linkedRecordId","value":"login"/ | OK |
+| $adminAuthToken | metadata | loginDescriptionLink | =~/"name":"linkedRecordType","value":"recordType".*"name":"linkedRecordId","value":"text"/ | OK |
 
 *!
 !2 Test with new loginUnit
@@ -30,14 +30,14 @@ This is needed since loginUnit requires a link to an instance of login an a link
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecordCreatedType? | getStatusType? |
-| $adminAuthToken | loginWebRedirect | {"children":[{"children":[{"name":"id","value":"testwr"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"loginWebRedirect"}],"name":"validationType"}],"name":"recordInfo"},{"name":"loginName","value":"Test web"},{"name":"url","value":"someUrl/something"}],"name":"login","attributes":{"type":"webRedirect"}} | loginWebRedirect | CREATED |
+| $adminAuthToken | login | {"children":[{"children":[{"name":"id","value":"testwr"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"loginWebRedirect"}],"name":"validationType"}],"name":"recordInfo"},{"name":"loginName","value":"Test web"},{"name":"url","value":"someUrl/something"}],"name":"login","attributes":{"type":"webRedirect"}} | login | CREATED |
 
 *!
 !***> Create data of recordType text (coraText)
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | coraText | {"children":[{"children":[{"name":"id","value":"testLoginWebRedirectDescriptionText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Min text för loginWebRedirectLink"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}}],"name":"text"} | | CREATED |
+| $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"testLoginWebRedirectDescriptionText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Min text för loginWebRedirectLink"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}}],"name":"text"} | | CREATED |
 
 *!
 !3 Create a loginUnit
@@ -74,8 +74,8 @@ This is needed since loginUnit requires a link to an instance of login an a link
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | loginUnit | testLoginUnit | | OK |
-| $adminAuthToken | loginWebRedirect | testwr | | OK |
-| $adminAuthToken | coraText | testLoginWebRedirectDescriptionText | | OK |
+| $adminAuthToken | login | testwr | | OK |
+| $adminAuthToken | text | testLoginWebRedirectDescriptionText | | OK |
 
 *!
 !2 Test with incorrect data

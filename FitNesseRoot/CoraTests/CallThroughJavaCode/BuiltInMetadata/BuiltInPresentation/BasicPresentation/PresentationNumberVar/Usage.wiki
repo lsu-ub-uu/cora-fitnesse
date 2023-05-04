@@ -12,22 +12,22 @@ A test that tests creating and updating presentationNumVars.
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecordCreatedType? | getStatusType? |
-| $adminAuthToken | metadataNumberVariable | {"children":[{"children":[{"name":"id","value":"numOfAuthorsNumberVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataNumberVariable"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"numOfAuthors"},{"children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"someTestText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"coraText"},{"name":"linkedRecordId","value":"someTestDefText"}],"name":"defTextId"},{"name":"min","value":"0"},{"name":"max","value":"999"},{"name":"warningMin","value":"1"},{"name":"warningMax","value":"99"},{"name":"numberOfDecimals","value":"0"}],"name":"metadata","attributes":{"type":"numberVariable"}} | metadataNumberVariable | CREATED |
+| $adminAuthToken | metadata | {"children":[{"children":[{"name":"id","value":"numOfAuthorsNumberVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataNumberVariable"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"numOfAuthors"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}],"name":"defTextId"},{"name":"min","value":"0"},{"name":"max","value":"999"},{"name":"warningMin","value":"1"},{"name":"warningMax","value":"99"},{"name":"numberOfDecimals","value":"0"}],"name":"metadata","attributes":{"type":"numberVariable"}} | metadata | CREATED |
 
 *!
 !***> Create presentationNumVar (myPNumVar)
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | presentationNumberVar | {"children":[{"children":[{"name":"id","value":"myPNumVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationNumberVar"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadataNumberVariable"},{"name":"linkedRecordId","value":"numOfAuthorsNumberVar"}],"name":"presentationOf"},{"name":"mode","value":"input"}],"name":"presentation","attributes":{"type":"pNumVar"}} | | CREATED |
+| $adminAuthToken | presentation | {"children":[{"children":[{"name":"id","value":"myPNumVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationNumberVar"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"numOfAuthorsNumberVar"}],"name":"presentationOf"},{"name":"mode","value":"input"}],"name":"presentation","attributes":{"type":"pNumVar"}} | | CREATED |
 
 *!
 !***> Try to create presentationNumVar with invalid data
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | presentationNumberVar | {"children":[{"children":[{"name":"id","value":"mySecondPNumVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationNumberVar"}],"name":"validationType"}],"name":"recordInfo"},{"name":"mode","value":"input"}],"name":"presentation","attributes":{"type":"pNumVar"}} | | BAD_REQUEST |
-| $adminAuthToken | presentationNumberVar | {"children":[{"children":[{"name":"id","value":"mySecondPNumVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationNumberVar"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadataNumberVariable"},{"name":"linkedRecordId","value":"numOfAuthorsNumberVar"}],"name":"presentationOf"}],"name":"presentation","attributes":{"type":"pNumVar"}} | | BAD_REQUEST |
+| $adminAuthToken | presentation | {"children":[{"children":[{"name":"id","value":"mySecondPNumVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationNumberVar"}],"name":"validationType"}],"name":"recordInfo"},{"name":"mode","value":"input"}],"name":"presentation","attributes":{"type":"pNumVar"}} | | BAD_REQUEST |
+| $adminAuthToken | presentation | {"children":[{"children":[{"name":"id","value":"mySecondPNumVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationNumberVar"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"numOfAuthorsNumberVar"}],"name":"presentationOf"}],"name":"presentation","attributes":{"type":"pNumVar"}} | | BAD_REQUEST |
 
 *!
 !2 Clean up created data
@@ -35,11 +35,11 @@ A test that tests creating and updating presentationNumVars.
 
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | presentationNumberVar | myPNumVar | | OK |
-| $adminAuthToken | presentationNumberVar | numOfAuthorsPNumVar | | OK |
-| $adminAuthToken | presentationNumberVar | numOfAuthorsOutputPNumVar | | OK |
-| $adminAuthToken | metadataNumberVariable | numOfAuthorsNumberVar | | OK |
-| $adminAuthToken | coraText | someTestText | | OK |
-| $adminAuthToken | coraText | someTestDefText | | OK |
+| $adminAuthToken | presentation | myPNumVar | | OK |
+| $adminAuthToken | presentation | numOfAuthorsPNumVar | | OK |
+| $adminAuthToken | presentation | numOfAuthorsOutputPNumVar | | OK |
+| $adminAuthToken | metadata | numOfAuthorsNumberVar | | OK |
+| $adminAuthToken | text | someTestText | | OK |
+| $adminAuthToken | text | someTestDefText | | OK |
 
 *!

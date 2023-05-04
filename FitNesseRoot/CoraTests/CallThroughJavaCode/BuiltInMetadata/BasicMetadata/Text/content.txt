@@ -10,75 +10,75 @@ A test that first reads all predefined metadata needed to be able to add texts t
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | genericCollectionItem | defaultItem | =~/"name":"nameInData","value":"default"/ | OK |
-| $adminAuthToken | genericCollectionItem | alternativeItem | =~/"name":"nameInData","value":"alternative"/ | OK |
+| $adminAuthToken | metadata | defaultItem | =~/"name":"nameInData","value":"default"/ | OK |
+| $adminAuthToken | metadata | alternativeItem | =~/"name":"nameInData","value":"alternative"/ | OK |
 
 *!
 !***> Read itemCollection (textPartTypeCollection)
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadataItemCollection | textPartTypeCollection | =~/"name":"linkedRecordId","value":"defaultItem".*"name":"linkedRecordId","value":"alternativeItem"/ | OK |
+| $adminAuthToken | metadata | textPartTypeCollection | =~/"name":"linkedRecordId","value":"defaultItem".*"name":"linkedRecordId","value":"alternativeItem"/ | OK |
 
 *!
 !***> Read collectionVariables (textPartTypeCollectionVar, textPartTypeDefaultCollectionVar, textPartTypeAlternativeCollectionVar)
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadataCollectionVariable | textPartTypeCollectionVar | =~/"name":"linkedRecordId","value":"textPartTypeCollection".*"name":"refCollection"/ | OK |
-| $adminAuthToken | metadataCollectionVariable | textPartTypeDefaultCollectionVar | =~/"name":"linkedRecordId","value":"textPartTypeCollection".*"name":"refCollection".*"name":"finalValue","value":"default"/ | OK |
-| $adminAuthToken | metadataCollectionVariable | textPartTypeAlternativeCollectionVar | | OK |
+| $adminAuthToken | metadata | textPartTypeCollectionVar | =~/"name":"linkedRecordId","value":"textPartTypeCollection".*"name":"refCollection"/ | OK |
+| $adminAuthToken | metadata | textPartTypeDefaultCollectionVar | =~/"name":"linkedRecordId","value":"textPartTypeCollection".*"name":"refCollection".*"name":"finalValue","value":"default"/ | OK |
+| $adminAuthToken | metadata | textPartTypeAlternativeCollectionVar | | OK |
 
 *!
 !***> Read collectionItems (svItem, enItem)
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | genericCollectionItem | svItem | | OK |
-| $adminAuthToken | genericCollectionItem | enItem | | OK |
+| $adminAuthToken | metadata | svItem | | OK |
+| $adminAuthToken | metadata | enItem | | OK |
 
 *!
 !***> Read itemCollection (systemLanguagesCollection)
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadataItemCollection | systemLanguagesCollection | =~/"name":"linkedRecordId","value":"svItem".*"name":"linkedRecordId","value":"enItem"/ | OK |
+| $adminAuthToken | metadata | systemLanguagesCollection | =~/"name":"linkedRecordId","value":"svItem".*"name":"linkedRecordId","value":"enItem"/ | OK |
 
 *!
 !***> Read collectionVariables (systemLanguagesCollectionVar, systemLanguageSvCollectionVar, systemLanguageEnCollectionVar)
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadataCollectionVariable | systemLanguagesCollectionVar | =~/name":"linkedRecordId","value":"systemLanguagesCollection"/ | OK |
-| $adminAuthToken | metadataCollectionVariable | systemLanguageSvCollectionVar | =~/"name":"linkedRecordId","value":"systemLanguagesCollection".*"name":"finalValue","value":"sv"/ | OK |
-| $adminAuthToken | metadataCollectionVariable | systemLanguageEnCollectionVar | =~/"name":"linkedRecordId","value":"systemLanguagesCollection".*"name":"finalValue","value":"en"/ | OK |
+| $adminAuthToken | metadata | systemLanguagesCollectionVar | =~/name":"linkedRecordId","value":"systemLanguagesCollection"/ | OK |
+| $adminAuthToken | metadata | systemLanguageSvCollectionVar | =~/"name":"linkedRecordId","value":"systemLanguagesCollection".*"name":"finalValue","value":"sv"/ | OK |
+| $adminAuthToken | metadata | systemLanguageEnCollectionVar | =~/"name":"linkedRecordId","value":"systemLanguagesCollection".*"name":"finalValue","value":"en"/ | OK |
 
 *!
 !***> Read textVariable (textVar)
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadataTextVariable | textTextVar | | OK |
+| $adminAuthToken | metadata | textTextVar | | OK |
 
 *!
 !***> Read metadataGroups (textPart, textPartDefault, textPartSv, textPartAlternative, textPartEn)
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadataGroup | textPartGroup | =~/"name":"linkedRecordId","value":"textTextVar".*"name":"linkedRecordId","value":"textPartGroupText".*"name":"linkedRecordId","value":"textPartTypeCollectionVar".*"name":"linkedRecordId","value":"systemLanguagesCollectionVar"/ | OK |
-| $adminAuthToken | metadataGroup | textPartDefaultGroup | =~/"name":"linkedRecordId","value":"textTextVar".*"name":"linkedRecordId","value":"textPartDefaultGroupText".*"name":"linkedRecordId","value":"textPartTypeDefaultCollectionVar".*"name":"linkedRecordId","value":"systemLanguagesCollectionVar".*"name":"linkedRecordId","value":"textPartGroup"/ | OK |
-| $adminAuthToken | metadataGroup | textPartSvGroup | =~/"name":"linkedRecordId","value":"systemLanguageSvCollectionVar"/ | OK |
-| $adminAuthToken | metadataGroup | textPartAlternativeGroup | | OK |
-| $adminAuthToken | metadataGroup | textPartEnGroup | | OK |
+| $adminAuthToken | metadata | textPartGroup | =~/"name":"linkedRecordId","value":"textTextVar".*"name":"linkedRecordId","value":"textPartGroupText".*"name":"linkedRecordId","value":"textPartTypeCollectionVar".*"name":"linkedRecordId","value":"systemLanguagesCollectionVar"/ | OK |
+| $adminAuthToken | metadata | textPartDefaultGroup | =~/"name":"linkedRecordId","value":"textTextVar".*"name":"linkedRecordId","value":"textPartDefaultGroupText".*"name":"linkedRecordId","value":"textPartTypeDefaultCollectionVar".*"name":"linkedRecordId","value":"systemLanguagesCollectionVar".*"name":"linkedRecordId","value":"textPartGroup"/ | OK |
+| $adminAuthToken | metadata | textPartSvGroup | =~/"name":"linkedRecordId","value":"systemLanguageSvCollectionVar"/ | OK |
+| $adminAuthToken | metadata | textPartAlternativeGroup | | OK |
+| $adminAuthToken | metadata | textPartEnGroup | | OK |
 
 *!
 !***> Read metadataGroups (text, textDefaultAlternative, coraText)
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadataGroup | textGroup | | OK |
-| $adminAuthToken | metadataGroup | textDefaultAlternativeGroup | | OK |
-| $adminAuthToken | metadataGroup | coraTextGroup | | OK |
+| $adminAuthToken | metadata | textGroup | | OK |
+| $adminAuthToken | metadata | textDefaultAlternativeGroup | | OK |
+| $adminAuthToken | metadata | coraTextGroup | | OK |
 
 *!
 !***> Read recordType (text, coraText)
@@ -86,7 +86,7 @@ A test that first reads all predefined metadata needed to be able to add texts t
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
 | $adminAuthToken | recordType | text | | OK |
-| $adminAuthToken | recordType | coraText | | OK |
+| $adminAuthToken | recordType | text | | OK |
 
 *!
 !2 Test with new texts
@@ -94,8 +94,8 @@ A test that first reads all predefined metadata needed to be able to add texts t
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | coraText | {"children":[{"children":[{"name":"id","value":"myText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Min svenska text"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}}],"name":"text"} | | CREATED |
-| $adminAuthToken | coraText | {"children":[{"children":[{"name":"id","value":"my2Text"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Min andra text på svenska"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"My second text in english"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"} | | CREATED |
+| $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"myText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Min svenska text"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}}],"name":"text"} | | CREATED |
+| $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"my2Text"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Min andra text på svenska"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"My second text in english"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"} | | CREATED |
 
 *!
 !***> List data(text, coraText)
@@ -103,28 +103,28 @@ A test that first reads all predefined metadata needed to be able to add texts t
 !| RecordEndpointFixture |
 | authToken | type | testReadRecordList? | getStatusType? |
 | $adminAuthToken | text | | OK |
-| $adminAuthToken | coraText | | OK |
+| $adminAuthToken | text | | OK |
 
 *!
 !***> Update data of recordType text
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | coraText | myText | {"children":[{"children":[{"name":"id","value":"myText"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"coraText"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Min svenska text uppdaterad"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}}],"name":"text"} | | OK |
-| $adminAuthToken | coraText | my2Text | {"children":[{"children":[{"name":"id","value":"my2Text"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"coraText"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Min andra text på svenska uppdaterad"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"My second text in english updated"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"} | | OK |
+| $adminAuthToken | text | myText | {"children":[{"children":[{"name":"id","value":"myText"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"text"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Min svenska text uppdaterad"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}}],"name":"text"} | | OK |
+| $adminAuthToken | text | my2Text | {"children":[{"children":[{"name":"id","value":"my2Text"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"text"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Min andra text på svenska uppdaterad"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"My second text in english updated"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"} | | OK |
 
 *!
 !***> Try to create data of recordType text (this should fail as the data is incorrect)
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | coraText | {"children":[{"children":[{"name":"id","value":"myNonWorking"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"TextId måste sluta på Text"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}}],"name":"text"} | | BAD_REQUEST |
-| $adminAuthToken | coraText | {"children":[{"children":[{"name":"id","value":"myNonWorkingText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"English is not default language"}],"name":"textPart","attributes":{"type":"default","lang":"en"}}],"name":"text"} | | BAD_REQUEST |
-| $adminAuthToken | coraText | {"children":[{"children":[{"name":"id","value":"myNonWorkingText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Only english as language is not allowed"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"} | | BAD_REQUEST |
-| $adminAuthToken | coraText | {"children":[{"children":[{"name":"id","value":"myNonWorkingText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Att ha samma språk(svenska) två gånger på en text fungerar inte"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"Något annat på svenska"}],"name":"textPart","attributes":{"type":"alternative","lang":"sv"}}],"name":"text"} | | BAD_REQUEST |
-| $adminAuthToken | coraText | {"children":[{"children":[{"name":"id","value":"myNonWorkingText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"It does not work to have the same language(english) twice in the same text"}],"name":"textPart","attributes":{"type":"default","lang":"en"}},{"children":[{"name":"text","value":"Some other text in english"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"} | | BAD_REQUEST |
-| $adminAuthToken | coraText | {"children":[{"children":[{"name":"id","value":"myNonWorkingText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Att ha flera av samma språk(engelska) på en text fungerar inte"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"It does not work to have the same language(english) twice in the same text"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}},{"children":[{"name":"text","value":"Some other text in english"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"} | | BAD_REQUEST |
-| $adminAuthToken | coraText | {"children":[{"children":[{"name":"id","value":"myNonWorkingText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Att ha språk som inte är definierade(norska) på en text fungerar inte"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"An ok english text"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}},{"children":[{"name":"text","value":"Dette går ikke"}],"name":"textPart","attributes":{"type":"alternative","lang":"no"}}],"name":"text"} | | BAD_REQUEST |
+| $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"myNonWorking"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"TextId måste sluta på Text"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}}],"name":"text"} | | BAD_REQUEST |
+| $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"myNonWorkingText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"English is not default language"}],"name":"textPart","attributes":{"type":"default","lang":"en"}}],"name":"text"} | | BAD_REQUEST |
+| $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"myNonWorkingText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Only english as language is not allowed"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"} | | BAD_REQUEST |
+| $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"myNonWorkingText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Att ha samma språk(svenska) två gånger på en text fungerar inte"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"Något annat på svenska"}],"name":"textPart","attributes":{"type":"alternative","lang":"sv"}}],"name":"text"} | | BAD_REQUEST |
+| $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"myNonWorkingText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"It does not work to have the same language(english) twice in the same text"}],"name":"textPart","attributes":{"type":"default","lang":"en"}},{"children":[{"name":"text","value":"Some other text in english"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"} | | BAD_REQUEST |
+| $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"myNonWorkingText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Att ha flera av samma språk(engelska) på en text fungerar inte"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"It does not work to have the same language(english) twice in the same text"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}},{"children":[{"name":"text","value":"Some other text in english"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"} | | BAD_REQUEST |
+| $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"myNonWorkingText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Att ha språk som inte är definierade(norska) på en text fungerar inte"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"An ok english text"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}},{"children":[{"name":"text","value":"Dette går ikke"}],"name":"textPart","attributes":{"type":"alternative","lang":"no"}}],"name":"text"} | | BAD_REQUEST |
 
 *!
 !2 Read and use predefined search for text (textSearch)
@@ -151,7 +151,7 @@ When the text myText (see above) was created and updated, the id of the  text wa
 
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | coraText | myText | | OK |
-| $adminAuthToken | coraText | my2Text | | OK |
+| $adminAuthToken | text | myText | | OK |
+| $adminAuthToken | text | my2Text | | OK |
 
 *!

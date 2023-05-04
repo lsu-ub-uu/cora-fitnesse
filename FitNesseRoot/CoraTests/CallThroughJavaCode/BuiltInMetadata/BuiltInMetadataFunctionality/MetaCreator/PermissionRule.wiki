@@ -14,8 +14,8 @@ Read texts to make sure they do not exist
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseTestPermissionRuleText | coraText | | NOT_FOUND |
-| fitnesseTestPermissionRuleDefText | coraText | | NOT_FOUND |
+| fitnesseTestPermissionRuleText | text | | NOT_FOUND |
+| fitnesseTestPermissionRuleDefText | text | | NOT_FOUND |
 
 *!
 !2 
@@ -42,8 +42,8 @@ Read texts again to see that they have been created
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseTestPermissionRuleText | coraText | | OK |
-| fitnesseTestPermissionRuleDefText | coraText | | OK |
+| fitnesseTestPermissionRuleText | text | | OK |
+| fitnesseTestPermissionRuleDefText | text | | OK |
 
 
 *!
@@ -55,7 +55,7 @@ Remove data created for this test
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | permissionRule | fitnesseTestPermissionRule | | OK |
-| $adminAuthToken | coraText | fitnesseTestPermissionRuleText | | OK |
-| $adminAuthToken | coraText | fitnesseTestPermissionRuleDefText | | OK |
+| $adminAuthToken | text | fitnesseTestPermissionRuleText | | OK |
+| $adminAuthToken | text | fitnesseTestPermissionRuleDefText | | OK |
 
 *!

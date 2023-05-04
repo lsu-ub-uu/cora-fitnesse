@@ -6,14 +6,14 @@
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadataTextVariable | idTextVar | | OK |
+| $adminAuthToken | metadata | idTextVar | | OK |
 
 *!
 !***> List data(metadataTextVariable)
 
 !| RecordEndpointFixture |
 | authToken | type | testReadRecordList? | getStatusType? |
-| $adminAuthToken | metadataTextVariable | | OK |
+| $adminAuthToken | metadata | | OK |
 
 *!
 !***> Read a metadataVariable2, which doesn't exist (id)
