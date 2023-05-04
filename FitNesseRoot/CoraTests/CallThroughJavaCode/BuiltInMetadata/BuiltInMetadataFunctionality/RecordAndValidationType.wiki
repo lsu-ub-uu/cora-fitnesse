@@ -47,7 +47,7 @@ Validation happens automatically during record creation.
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
-| $adminAuthToken | trainingClassLeaflet | {"name": "fitnesseExample", "children": [{ "name": "recordInfo", "children": [ { "name": "dataDivider", "children": [{ "name": "linkedRecordType", "value": "system" }, { "name": "linkedRecordId", "value": "testSystem" } ] }, { "name": "validationType", "children": [ { "name": "linkedRecordType", "value": "validationType" }, { "name": "linkedRecordId", "value": "personalTrainingLeafletValidation" } ] } ] }, { "name": "fitnesseTextVar", "value": "Hello and welcome to personal training John Smith. You will work out Tuesdays and Wednesdays." } ] } | | CREATED | $createdPersonalId= |
+| $adminAuthToken | trainingClassLeaflet | {"name": "fitnesseExample", "children": [{ "name": "recordInfo", "children": [ { "name": "dataDivider", "children": [{ "name": "linkedRecordType", "value": "system" }, { "name": "linkedRecordId", "value": "testSystem" } ] }, { "name": "validationType", "children": [ { "name": "linkedRecordType", "value": "validationType" }, { "name": "linkedRecordId", "value": "personalTrainingLeafletValidation" } ] } ] }, { "name": "fitnesseTextVar", "value": "Hello and welcome to personal training John Smith. You will work out Tuesdays and Wednesdays." } ] } |=~/trainingClassLeaflet:\d.+/| CREATED | $createdPersonalId= |
 
 
 *!
@@ -60,7 +60,7 @@ Case 2a: New records/instances with '''valid''' data of circuit training type.
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
-| $adminAuthToken | trainingClassLeaflet | {"name":"circuitTrainingLeaflet","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"circuitTrainingLeafletValidation"}]}]},{"repeatId":"0","name":"fitnesseTextVar","value":"Hello and welcome to circuit training Adam Davis with phone number 202-555-0144."},{"repeatId":"1","name":"fitnesseTextVar","value":"Hello and welcome to circuit training Adam Davis with phone number 202-555-0179."},{"repeatId":"2","name":"fitnesseTextVar","value":"Hello and welcome to circuit training Adam Davis with phone number 202-555-0133."}]}| | CREATED | $createdCircuitId= |
+| $adminAuthToken | trainingClassLeaflet | {"name":"circuitTrainingLeaflet","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"circuitTrainingLeafletValidation"}]}]},{"repeatId":"0","name":"fitnesseTextVar","value":"Hello and welcome to circuit training Adam Davis with phone number 202-555-0144."},{"repeatId":"1","name":"fitnesseTextVar","value":"Hello and welcome to circuit training Adam Davis with phone number 202-555-0179."},{"repeatId":"2","name":"fitnesseTextVar","value":"Hello and welcome to circuit training Adam Davis with phone number 202-555-0133."}]}|=~/trainingClassLeaflet:\d.+/| CREATED | $createdCircuitId= |
 
 
 Case 2b: New records/instances with '''invalid''' data of circuit training type
@@ -69,7 +69,7 @@ Record of circuit training type that is '''invalid''' and only contains two pers
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | trainingClassLeaflet | {"name": "circuitTrainingLeaflet", "children": [{ "name": "recordInfo", "children": [ { "name": "dataDivider", "children": [{ "name": "linkedRecordType", "value": "system" }, { "name": "linkedRecordId", "value": "testSystem" } ] }, { "name": "validationType", "children": [ { "name": "linkedRecordType", "value": "validationType" }, { "name": "linkedRecordId", "value": "circuitTrainingLeafletValidation" } ] } ] }, { "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0144." }, { "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0179." } ] } | | BAD_REQUEST |
+| $adminAuthToken | trainingClassLeaflet | {"name": "circuitTrainingLeaflet", "children": [{ "name": "recordInfo", "children": [ { "name": "dataDivider", "children": [{ "name": "linkedRecordType", "value": "system" }, { "name": "linkedRecordId", "value": "testSystem" } ] }, { "name": "validationType", "children": [ { "name": "linkedRecordType", "value": "validationType" }, { "name": "linkedRecordId", "value": "circuitTrainingLeafletValidation" } ] } ] }, { "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0144." }, { "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0179." } ] } | =~/Did not find enough data children with referenceId: fitnesseMetadataTextVar/ | BAD_REQUEST |
 
 *!
 
@@ -86,11 +86,12 @@ In this case we use three members (instead of the expected, at least four).
 
 !define updateData {!- {"name": "circuitTrainingLeaflet", "children": [{"name": "recordInfo", "children": [{"name": "id", "value": "$createdCircuitId"}, {"name": "type", "children": [{"name": "linkedRecordType", "value": "recordType"}, {"name": "linkedRecordId", "value": "trainingClassLeaflet"}]}, {"name": "dataDivider", "children": [{"name": "linkedRecordType", "value": "system"}, {"name": "linkedRecordId", "value": "testSystem"}]}, {"name": "validationType", "children": [{"name": "linkedRecordType", "value": "validationType"}, {"name": "linkedRecordId", "value": "circuitTrainingLeafletValidation"}]}]}, {"repeatId": "0", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0144."}, {"repeatId": "1", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training John Miller with phone number 202-555-0179."}, {"repeatId": "2", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Jenny Clinton with phone number 202-555-0133."}]} -!}
 !define expectedUpdateResult {BAD_REQUEST}
-!define expectedAnswer {}
+!define expectedAnswer {=~/Did not find enough data children with referenceId: fitnesseMetadataTextVar/}
 !include -seamless .HelperPages.updateRecord
 
 
 Case 3b: If the rules for updates to records (matching the update-specific metadata group of the validation type) are followed we should be allowed to perform the update to the system.
+!define expectedAnswer {}
 !define updateData {!- {"name": "circuitTrainingLeaflet", "children": [{"name": "recordInfo", "children": [{"name": "id", "value": "$createdCircuitId"}, {"name": "type", "children": [{"name": "linkedRecordType", "value": "recordType"}, {"name": "linkedRecordId", "value": "trainingClassLeaflet"}]}, {"name": "createdBy", "children": [{"name": "linkedRecordType", "value": "user"}, {"name": "linkedRecordId", "value": "131313"}]}, {"name": "dataDivider", "children": [{"name": "linkedRecordType", "value": "system"}, {"name": "linkedRecordId", "value": "testSystem"}]}, {"name": "tsCreated", "value": "2023-04-25T09:27:07.863465Z"}, {"name": "updated", "repeatId": "0", "children": [{"name": "updatedBy", "children": [{"name": "linkedRecordType", "value": "user"}, {"name": "linkedRecordId", "value": "131313"}]}, {"name": "tsUpdated", "value": "2023-04-25T09:27:07.863465Z"}]}, {"name": "validationType", "children": [{"name": "linkedRecordType", "value": "validationType"}, {"name": "linkedRecordId", "value": "circuitTrainingLeafletValidation"}]}]}, {"repeatId": "0", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0144."}, {"repeatId": "1", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Luke Jones with phone number 202-555-0144."}, {"repeatId": "2", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Nick Walker with phone number 202-555-0144."}, {"repeatId": "3", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Trey Nichols with phone number 202-555-0144."}]} -!}
 !define expectedUpdateResult {OK}
 !include -seamless .HelperPages.updateRecord
@@ -113,6 +114,7 @@ Case 4b: Changing to this validation type without matching the criteria (not eno
 !define recordId {$createdCircuitId}
 !define updateData {!- {"name": "bigCircuitTrainingLeaflet", "children": [{"name": "recordInfo", "children": [{"name": "id", "value": "$createdCircuitId"}, {"name": "type", "children": [{"name": "linkedRecordType", "value": "recordType"}, {"name": "linkedRecordId", "value": "trainingClassLeaflet"}]}, {"name": "dataDivider", "children": [{"name": "linkedRecordType", "value": "system"}, {"name": "linkedRecordId", "value": "testSystem"}]}, {"name": "validationType", "children": [{"name": "linkedRecordType", "value": "validationType"}, {"name": "linkedRecordId", "value": "circuitTrainingLeafletValidation"}]}]}, {"repeatId": "0", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0144."}, {"repeatId": "1", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training John Miller with phone number 202-555-0179."}, {"repeatId": "2", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Jenny Clinton with phone number 202-555-0133."}, {"repeatId": "3", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Alisa Jackson with phone number 202-555-0133."}, {"repeatId": "4", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Joe Smart with phone number 202-555-0133."}]} -!}
 !define expectedUpdateResult {BAD_REQUEST}
+!define expectedAnswer {=~/Did not find enough data children with referenceId: fitnesseMetadataTextVar/}
 !include -seamless .HelperPages.updateRecord
 
 Case 4c: Changing to validation type that does not exist (edge case) is also expected to fail:
@@ -120,6 +122,7 @@ Case 4c: Changing to validation type that does not exist (edge case) is also exp
 !define recordId {$createdCircuitId}
 !define updateData {!- {"name": "circuitTrainingLeaflet", "children": [{"name": "recordInfo", "children": [{"name": "id", "value": "$createdCircuitId"}, {"name": "type", "children": [{"name": "linkedRecordType", "value": "recordType"}, {"name": "linkedRecordId", "value": "trainingClassLeaflet"}]}, {"name": "dataDivider", "children": [{"name": "linkedRecordType", "value": "system"}, {"name": "linkedRecordId", "value": "testSystem"}]}, {"name": "validationType", "children": [{"name": "linkedRecordType", "value": "validationType"}, {"name": "linkedRecordId", "value": "nonExistentValidationType"}]}]}, {"repeatId": "0", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Adam Davis with phone number 202-555-0144."}, {"repeatId": "1", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training John Miller with phone number 202-555-0179."}, {"repeatId": "2", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Jenny Clinton with phone number 202-555-0133."}, {"repeatId": "3", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Alisa Jackson with phone number 202-555-0133."}, {"repeatId": "4", "name": "fitnesseTextVar", "value": "Hello and welcome to circuit training Joe Smart with phone number 202-555-0133."}]} -!}
 !define expectedUpdateResult {BAD_REQUEST}
+!define expectedAnswer {ValidationType with id: nonExistentValidationType, does not exist.}
 !include -seamless .HelperPages.updateRecord
 
 *!
@@ -168,7 +171,7 @@ The expectation is that the creation of the validation type should fail due to n
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | trainingClassLeaflet | $createdPersonalId | | OK |
 | $adminAuthToken | trainingClassLeaflet | $createdCircuitId | | OK |
-| $adminAuthToken | metadataGroup | nonConformingLeafletGroup | | OK |
 | $adminAuthToken | validationType | nonConformingLeafletValidation | | OK |
+| $adminAuthToken | metadataGroup | nonConformingLeafletGroup | | OK |
 
 *!
