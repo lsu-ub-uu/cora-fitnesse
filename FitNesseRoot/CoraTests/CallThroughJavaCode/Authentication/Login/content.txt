@@ -1,12 +1,18 @@
+!1 Login
+
+!style_red[OBS: loginLDAP needs to be change for login by password. And validationTypes needs to be verified]
+
 !***> Read RecordType login, loginWebRedirect and loginToken
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
 | $adminAuthToken | recordType | login | =~/"name":"linkedRecordId","value":"loginGroup"/ | OK |
-| $adminAuthToken | recordType | login | =~/"name":"linkedRecordId","value":"loginWebRedirectGroup"/ | OK |
-| $adminAuthToken | recordType | login | =~/"name":"linkedRecordId","value":"loginTokenGroup"/ | OK |
+| $adminAuthToken | validationType | loginToken | | OK |
+| $adminAuthToken | validationType | loginWebRedirect |  | OK |
+| $adminAuthToken | validationType | loginLDAP | | OK |
 
 *!
+
 !***> Load loginGroup to use in tests
 
 !| RecordEndpointFixture |
