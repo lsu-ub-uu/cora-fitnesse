@@ -1,0 +1,48 @@
+!3 Clean up
+!***> Clean up created data
+
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | yesNoUnknown | myYesNoUnknown | | OK |
+| $adminAuthToken | yesNoUnknown | myYesNoUnknown2 | | OK |
+| $adminAuthToken | search | yesNoUnknownSearch | | OK |
+| $adminAuthToken | validationType | yesNoUnknown | | OK |
+| $adminAuthToken | recordType | yesNoUnknown | | OK |
+| $adminAuthToken | presentation | yesNoUnknownMenuPGroup | | OK |
+| $adminAuthToken | presentation | yesNoUnknownListPGroup | | OK |
+| $adminAuthToken | presentation | yesNoUnknownFormPGroup | | OK |
+| $adminAuthToken | presentation | yesNoUnknownFormNewPGroup | | OK |
+| $adminAuthToken | presentation | yesNoUnknownViewPGroup | | OK |
+| $adminAuthToken | presentation | yesNoUnknownOutputPGroup | | OK |
+| $adminAuthToken | presentation | yesNoUnknownPGroup | | OK |
+| $adminAuthToken | metadata | yesNoUnknownGroup | | OK |
+| $adminAuthToken | metadata | yesNoUnknownNewGroup | | OK |
+| $adminAuthToken | presentation | testWithThreeItemsPCollVar | | OK |
+| $adminAuthToken | presentation | testWithThreeItemsOutputPCollVar | | OK |
+| $adminAuthToken | presentation | testYesNoUnknownOutputPCollVar | | OK |
+| $adminAuthToken | presentation | testYesNoUnknownPCollVar | | OK |
+| $adminAuthToken | presentation | testOnlyYesOutputPCollVar | | OK |
+| $adminAuthToken | presentation | testOnlyYesPCollVar | | OK |
+| $adminAuthToken | presentation | testYesNoPCollVar | | OK |
+| $adminAuthToken | presentation | testYesNoOutputPCollVar | | OK |
+| $adminAuthToken | presentation | testOnlyYesNoOutputPCollVar | | OK |
+| $adminAuthToken | presentation | testOnlyYesNoPCollVar | | OK |
+| $adminAuthToken | metadata | testYesNoCollectionVar | | OK |
+| $adminAuthToken | metadata | testYesNoUnknownCollectionVar | | OK |
+| $adminAuthToken | metadata | testOnlyYesNoCollectionVar | | OK |
+| $adminAuthToken | metadata | testOnlyYesCollectionVar | | OK |
+| $adminAuthToken | metadata | testWithThreeItemsCollectionVar | | OK |
+| $adminAuthToken | metadata | testYesNoCollection | | OK |
+| $adminAuthToken | metadata | testYesNoUnknownCollection | | OK |
+| $adminAuthToken | metadata | testYesItem | | OK |
+| $adminAuthToken | metadata | testNoItem | | OK |
+| $adminAuthToken | metadata | testUnknownItem | | OK |
+| $adminAuthToken | text | someTestText | | OK |
+| $adminAuthToken | text | someTestDefText | | OK |
+| $adminAuthToken | text | testYesNoCollectionVarDefText | | OK |
+| $adminAuthToken | text | testYesNoCollectionVarText | | OK |
+| $adminAuthToken | text | testYesNoUnknownCollectionVarDefText | | OK |
+| $adminAuthToken | text | testYesNoUnknownCollectionVarText | | OK |
+
+*!

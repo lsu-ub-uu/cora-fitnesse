@@ -1,0 +1,14 @@
+---
+Test
+---
+| import |
+| se.uu.ub.cora.fitnesseintegration |
+| se.uu.ub.cora.fitnesseintegration.compare |
+
+!1 CollectionVariable
+!style_blue[Add here some description about CollectionVariable.] 
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.CollectionVariable.CollectionVariableMetadata
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.CollectionVariable.CollectionVariableCreate
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.CollectionVariable.CollectionVariableUpdate
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.CollectionVariable.CollectionVariableCleanUp
