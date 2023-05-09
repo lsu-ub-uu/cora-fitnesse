@@ -1,185 +1,185 @@
-#!2 Clean up created data
-#!***> Clean up
-#
-#Reset, the role everything to not use the new rule, everythingForTestWorkoutRule.
-#
-#!| RecordEndpointFixture |
-#| authToken | type | id | json | testUpdateRecord? | getStatusType? |
-#| $adminAuthToken | permissionRole | everything | {"children":[{"children":[{"name":"id","value":"everything"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"createdBy"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"updatedBy"},{"name":"tsUpdated","value":"2017-11-01T17:51:52.000000Z"}],"name":"updated"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"validationType"}],"name":"recordInfo"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"everything"}],"name":"permissionRuleLink"},{"name":"activeStatus","value":"active"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"everythingRoleText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"everythingRoleDefText"}],"name":"defTextId"}],"name":"permissionRole"} | | OK |
-#
-#Reset, the role fitnesseTextAdmin to not use the new rule, limitedForTestWorkoutRule.
-#
-#!| RecordEndpointFixture |
-#| authToken | type | id | json | testUpdateRecord? | getStatusType? |
-#| $adminAuthToken | permissionRole | fitnesseTextAdmin | {"children":[{"children":[{"name":"id","value":"fitnesseTextAdmin"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"validationType"}],"name":"recordInfo"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"textAdmin"}],"name":"permissionRuleLink"},{"repeatId":"1","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"nothing"}],"name":"permissionRuleLink"},{"name":"activeStatus","value":"active"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleDefText"}],"name":"defTextId"}],"name":"permissionRole"} | | OK |
-#
-#Delete newly created rules
-#
-#!| RecordEndpointFixture |
-#| authToken | type | id | testDeleteRecord? | getStatusType? |
-#| $adminAuthToken | permissionRule | everythingForTestWorkoutRule | | OK |
-#| $adminAuthToken | permissionRule | limitedForTestWorkoutRule | | OK |
-#| $adminAuthToken | permissionRule | limitedForTestWorkoutCreateRule | | OK |
-#
-#Clean up created data
-#
-#!| RecordEndpointFixture |
-#| authToken | type | id | testDeleteRecord? | getStatusType? |
-#| $adminAuthToken | testWorkout | cirkelfys1 | | OK |
-#| $adminAuthToken | testWorkout | cirkelfys2 | | OK |
-#| $adminAuthToken | testWorkout | cirkelfys3 | | OK |
-#| $adminAuthToken | search | testWorkoutSearch | | OK |
-#| $adminAuthToken | search | testWorkoutExtendedSearch | | OK |
-#| $adminAuthToken | metadata | testWorkoutSearchGroup | | OK |
-#| $adminAuthToken | metadata | testWorkoutSearchIncludeGroup | | OK |
-#| $adminAuthToken | metadata | testWorkoutSearchIncludePartGroup | | OK |
-#| $adminAuthToken | validationType | testWorkout | | OK |
-#| $adminAuthToken | recordType | testWorkout | | OK |
-#| $adminAuthToken | presentation | testWorkoutGroupPGroup | | OK |
-#| $adminAuthToken | metadata | testWorkoutGroup | | OK |
-#| $adminAuthToken | metadata | testWorkoutNewGroup | | OK |
-#| $adminAuthToken | presentation | testWorkoutName1PVar | | OK |
-#| $adminAuthToken | presentation | testWorkoutName1OutputPVar | | OK |
-#| $adminAuthToken | metadata | testWorkoutName1TextVar | | OK |
-#| $adminAuthToken | presentation | testNumOfParticipants1PVar | | OK |
-#| $adminAuthToken | presentation | testNumOfParticipants1OutputPVar | | OK |
-#| $adminAuthToken | metadata | testNumOfParticipants1TextVar | | OK |
-#| $adminAuthToken | presentation | testNumOfParticipants2PVar | | OK |
-#| $adminAuthToken | presentation | testNumOfParticipants2OutputPVar | | OK |
-#| $adminAuthToken | metadata | testNumOfParticipants2TextVar | | OK |
-#| $adminAuthToken | presentation | testSelectableAttribute1PVar | | OK |
-#| $adminAuthToken | presentation | testSelectableAttribute1OutputPVar | | OK |
-#| $adminAuthToken | metadata | testSelectableAttribute1TextVar | | OK |
-#| $adminAuthToken | presentation | testSelectableAttribute2PVar | | OK |
-#| $adminAuthToken | presentation | testSelectableAttribute2OutputPVar | | OK |
-#| $adminAuthToken | metadata | testSelectableAttribute2TextVar | | OK |
-#| $adminAuthToken | presentation | testSelectableAttribute3PVar | | OK |
-#| $adminAuthToken | presentation | testSelectableAttribute3OutputPVar | | OK |
-#| $adminAuthToken | metadata | testSelectableAttribute3TextVar | | OK |
-#| $adminAuthToken | presentation | testInstructorId1PVar | | OK |
-#| $adminAuthToken | presentation | testInstructorId1OutputPVar | | OK |
-#| $adminAuthToken | metadata | testInstructorId1TextVar | | OK |
-#| $adminAuthToken | presentation | testInstructorId2PVar | | OK |
-#| $adminAuthToken | presentation | testInstructorId2OutputPVar | | OK |
-#| $adminAuthToken | metadata | testInstructorId2TextVar | | OK |
-#| $adminAuthToken | presentation | testInstructorId3PVar | | OK |
-#| $adminAuthToken | presentation | testInstructorId3OutputPVar | | OK |
-#| $adminAuthToken | metadata | testInstructorId3TextVar | | OK |
-#| $adminAuthToken | metadata | testExercises1Group | | OK |
-#| $adminAuthToken | presentation | testNumOfExercises1_1PVar | | OK |
-#| $adminAuthToken | presentation | testNumOfExercises1_1OutputPVar | | OK |
-#| $adminAuthToken | metadata | testNumOfExercises1_1TextVar | | OK |
-#| $adminAuthToken | presentation | testLaps1_1PVar | | OK |
-#| $adminAuthToken | presentation | testLaps1_1OutputPVar | | OK |
-#| $adminAuthToken | metadata | testLaps1_1TextVar | | OK |
-#| $adminAuthToken | presentation | testLaps1_2PVar | | OK |
-#| $adminAuthToken | presentation | testLaps1_2OutputPVar | | OK |
-#| $adminAuthToken | metadata | testLaps1_2TextVar | | OK |
-#| $adminAuthToken | presentation | testDuration1_1PVar | | OK |
-#| $adminAuthToken | presentation | testDuration1_1OutputPVar | | OK |
-#| $adminAuthToken | metadata | testDuration1_1TextVar | | OK |
-#| $adminAuthToken | presentation | testDuration1_2PVar | | OK |
-#| $adminAuthToken | presentation | testDuration1_2OutputPVar | | OK |
-#| $adminAuthToken | metadata | testDuration1_2TextVar | | OK |
-#| $adminAuthToken | presentation | testDuration1_3PVar | | OK |
-#| $adminAuthToken | presentation | testDuration1_3OutputPVar | | OK |
-#| $adminAuthToken | metadata | testDuration1_3TextVar | | OK |
-#| $adminAuthToken | metadata | testInstructorName1Group | | OK |
-#| $adminAuthToken | presentation | testNickName1_1PVar | | OK |
-#| $adminAuthToken | presentation | testNickName1_1OutputPVar | | OK |
-#| $adminAuthToken | metadata | testNickName1_1TextVar | | OK |
-#| $adminAuthToken | presentation | testInstructorFirstName1_1PVar | | OK |
-#| $adminAuthToken | presentation | testInstructorFirstName1_1OutputPVar | | OK |
-#| $adminAuthToken | metadata | testInstructorFirstName1_1TextVar | | OK |
-#| $adminAuthToken | presentation | testInstructorFirstName1_2PVar | | OK |
-#| $adminAuthToken | presentation | testInstructorFirstName1_2OutputPVar | | OK |
-#| $adminAuthToken | metadata | testInstructorFirstName1_2TextVar | | OK |
-#| $adminAuthToken | presentation | testInstructorLastName1_1PVar | | OK |
-#| $adminAuthToken | presentation | testInstructorLastName1_1OutputPVar | | OK |
-#| $adminAuthToken | metadata | testInstructorLastName1_1TextVar | | OK |
-#| $adminAuthToken | presentation | testInstructorLastName1_2PVar | | OK |
-#| $adminAuthToken | presentation | testInstructorLastName1_2OutputPVar | | OK |
-#| $adminAuthToken | metadata | testInstructorLastName1_2TextVar | | OK |
-#| $adminAuthToken | presentation | testInstructorLastName1_3PVar | | OK |
-#| $adminAuthToken | presentation | testInstructorLastName1_3OutputPVar | | OK |
-#| $adminAuthToken | metadata | testInstructorLastName1_3TextVar | | OK |
-#| $adminAuthToken | metadata | testInstructorName2Group | | OK |
-#| $adminAuthToken | presentation | testNickName2_1PVar | | OK |
-#| $adminAuthToken | presentation | testNickName2_1OutputPVar | | OK |
-#| $adminAuthToken | metadata | testNickName2_1TextVar | | OK |
-#| $adminAuthToken | presentation | testInstructorFirstName2_1PVar | | OK |
-#| $adminAuthToken | presentation | testInstructorFirstName2_1OutputPVar | | OK |
-#| $adminAuthToken | metadata | testInstructorFirstName2_1TextVar | | OK |
-#| $adminAuthToken | presentation | testInstructorFirstName2_2PVar | | OK |
-#| $adminAuthToken | presentation | testInstructorFirstName2_2OutputPVar | | OK |
-#| $adminAuthToken | metadata | testInstructorFirstName2_2TextVar | | OK |
-#| $adminAuthToken | presentation | testInstructorLastName2_1PVar | | OK |
-#| $adminAuthToken | presentation | testInstructorLastName2_1OutputPVar | | OK |
-#| $adminAuthToken | metadata | testInstructorLastName2_1TextVar | | OK |
-#| $adminAuthToken | presentation | testInstructorLastName2_2PVar | | OK |
-#| $adminAuthToken | presentation | testInstructorLastName2_2OutputPVar | | OK |
-#| $adminAuthToken | metadata | testInstructorLastName2_2TextVar | | OK |
-#| $adminAuthToken | presentation | testInstructorLastName2_3PVar | | OK |
-#| $adminAuthToken | presentation | testInstructorLastName2_3OutputPVar | | OK |
-#| $adminAuthToken | metadata | testInstructorLastName2_3TextVar | | OK |
-#| $adminAuthToken | metadata | testPopularity1Group | | OK |
-#| $adminAuthToken | presentation | testRating1_1PVar | | OK |
-#| $adminAuthToken | presentation | testRating1_1OutputPVar | | OK |
-#| $adminAuthToken | metadata | testRating1_1TextVar | | OK |
-#| $adminAuthToken | presentation | testRatingDate1_1PVar | | OK |
-#| $adminAuthToken | presentation | testRatingDate1_1OutputPVar | | OK |
-#| $adminAuthToken | metadata | testRatingDate1_1TextVar | | OK |
-#| $adminAuthToken | presentation | testRatingDate1_2PVar | | OK |
-#| $adminAuthToken | presentation | testRatingDate1_2OutputPVar | | OK |
-#| $adminAuthToken | metadata | testRatingDate1_2TextVar | | OK |
-#| $adminAuthToken | presentation | testVoteCount1_1PVar | | OK |
-#| $adminAuthToken | presentation | testVoteCount1_1OutputPVar | | OK |
-#| $adminAuthToken | metadata | testVoteCount1_1TextVar | | OK |
-#| $adminAuthToken | presentation | testVoteCount1_2PVar | | OK |
-#| $adminAuthToken | presentation | testVoteCount1_2OutputPVar | | OK |
-#| $adminAuthToken | metadata | testVoteCount1_2TextVar | | OK |
-#| $adminAuthToken | presentation | testVoteCount1_3PVar | | OK |
-#| $adminAuthToken | presentation | testVoteCount1_3OutputPVar | | OK |
-#| $adminAuthToken | metadata | testVoteCount1_3TextVar | | OK |
-#| $adminAuthToken | metadata | testPopularity2Group | | OK |
-#| $adminAuthToken | presentation | testRating2_1PVar | | OK |
-#| $adminAuthToken | presentation | testRating2_1OutputPVar | | OK |
-#| $adminAuthToken | metadata | testRating2_1TextVar | | OK |
-#| $adminAuthToken | presentation | testRatingDate2_1PVar | | OK |
-#| $adminAuthToken | presentation | testRatingDate2_1OutputPVar | | OK |
-#| $adminAuthToken | metadata | testRatingDate2_1TextVar | | OK |
-#| $adminAuthToken | presentation | testRatingDate2_2PVar | | OK |
-#| $adminAuthToken | presentation | testRatingDate2_2OutputPVar | | OK |
-#| $adminAuthToken | metadata | testRatingDate2_2TextVar | | OK |
-#| $adminAuthToken | presentation | testVoteCount2_1PVar | | OK |
-#| $adminAuthToken | presentation | testVoteCount2_1OutputPVar | | OK |
-#| $adminAuthToken | metadata | testVoteCount2_1TextVar | | OK |
-#| $adminAuthToken | presentation | testVoteCount2_2PVar | | OK |
-#| $adminAuthToken | presentation | testVoteCount2_2OutputPVar | | OK |
-#| $adminAuthToken | metadata | testVoteCount2_2TextVar | | OK |
-#| $adminAuthToken | presentation | testVoteCount2_3PVar | | OK |
-#| $adminAuthToken | presentation | testVoteCount2_3OutputPVar | | OK |
-#| $adminAuthToken | metadata | testVoteCount2_3TextVar | | OK |
-#| $adminAuthToken | metadata | testPopularity3Group | | OK |
-#| $adminAuthToken | presentation | testRating3_1PVar | | OK |
-#| $adminAuthToken | presentation | testRating3_1OutputPVar | | OK |
-#| $adminAuthToken | metadata | testRating3_1TextVar | | OK |
-#| $adminAuthToken | presentation | testRatingDate3_1PVar | | OK |
-#| $adminAuthToken | presentation | testRatingDate3_1OutputPVar | | OK |
-#| $adminAuthToken | metadata | testRatingDate3_1TextVar | | OK |
-#| $adminAuthToken | presentation | testRatingDate3_2PVar | | OK |
-#| $adminAuthToken | presentation | testRatingDate3_2OutputPVar | | OK |
-#| $adminAuthToken | metadata | testRatingDate3_2TextVar | | OK |
-#| $adminAuthToken | presentation | testVoteCount3_1PVar | | OK |
-#| $adminAuthToken | presentation | testVoteCount3_1OutputPVar | | OK |
-#| $adminAuthToken | metadata | testVoteCount3_1TextVar | | OK |
-#| $adminAuthToken | presentation | testVoteCount3_2PVar | | OK |
-#| $adminAuthToken | presentation | testVoteCount3_2OutputPVar | | OK |
-#| $adminAuthToken | metadata | testVoteCount3_2TextVar | | OK |
-#| $adminAuthToken | presentation | testVoteCount3_3PVar | | OK |
-#| $adminAuthToken | presentation | testVoteCount3_3OutputPVar | | OK |
-#| $adminAuthToken | metadata | testVoteCount3_3TextVar | | OK |
-#| $adminAuthToken | text | fitnesseExampleText | | OK |
-#| $adminAuthToken | text | fitnesseExampleDefText | | OK |
-#
-#*!
+!2 Clean up created data
+!***> Clean up
+
+Reset, the role everything to not use the new rule, everythingForTestWorkoutRule.
+
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? | getStatusType? |
+| $adminAuthToken | permissionRole | everything | {"children":[{"children":[{"name":"id","value":"everything"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"createdBy"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"updatedBy"},{"name":"tsUpdated","value":"2017-11-01T17:51:52.000000Z"}],"name":"updated"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"validationType"}],"name":"recordInfo"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"everything"}],"name":"permissionRuleLink"},{"name":"activeStatus","value":"active"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"everythingRoleText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"everythingRoleDefText"}],"name":"defTextId"}],"name":"permissionRole"} | | OK |
+
+Reset, the role fitnesseTextAdmin to not use the new rule, limitedForTestWorkoutRule.
+
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? | getStatusType? |
+| $adminAuthToken | permissionRole | fitnesseTextAdmin | {"children":[{"children":[{"name":"id","value":"fitnesseTextAdmin"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"validationType"}],"name":"recordInfo"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"textAdmin"}],"name":"permissionRuleLink"},{"repeatId":"1","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"nothing"}],"name":"permissionRuleLink"},{"name":"activeStatus","value":"active"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleDefText"}],"name":"defTextId"}],"name":"permissionRole"} | | OK |
+
+Delete newly created rules
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | permissionRule | everythingForTestWorkoutRule | | OK |
+| $adminAuthToken | permissionRule | limitedForTestWorkoutRule | | OK |
+| $adminAuthToken | permissionRule | limitedForTestWorkoutCreateRule | | OK |
+
+Clean up created data
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | testWorkout | cirkelfys1 | | OK |
+| $adminAuthToken | testWorkout | cirkelfys2 | | OK |
+| $adminAuthToken | testWorkout | cirkelfys3 | | OK |
+| $adminAuthToken | search | testWorkoutSearch | | OK |
+| $adminAuthToken | search | testWorkoutExtendedSearch | | OK |
+| $adminAuthToken | metadata | testWorkoutSearchGroup | | OK |
+| $adminAuthToken | metadata | testWorkoutSearchIncludeGroup | | OK |
+| $adminAuthToken | metadata | testWorkoutSearchIncludePartGroup | | OK |
+| $adminAuthToken | validationType | testWorkout | | OK |
+| $adminAuthToken | recordType | testWorkout | | OK |
+| $adminAuthToken | presentation | testWorkoutGroupPGroup | | OK |
+| $adminAuthToken | metadata | testWorkoutGroup | | OK |
+| $adminAuthToken | metadata | testWorkoutNewGroup | | OK |
+| $adminAuthToken | presentation | testWorkoutName1PVar | | OK |
+| $adminAuthToken | presentation | testWorkoutName1OutputPVar | | OK |
+| $adminAuthToken | metadata | testWorkoutName1TextVar | | OK |
+| $adminAuthToken | presentation | testNumOfParticipants1PVar | | OK |
+| $adminAuthToken | presentation | testNumOfParticipants1OutputPVar | | OK |
+| $adminAuthToken | metadata | testNumOfParticipants1TextVar | | OK |
+| $adminAuthToken | presentation | testNumOfParticipants2PVar | | OK |
+| $adminAuthToken | presentation | testNumOfParticipants2OutputPVar | | OK |
+| $adminAuthToken | metadata | testNumOfParticipants2TextVar | | OK |
+| $adminAuthToken | presentation | testSelectableAttribute1PVar | | OK |
+| $adminAuthToken | presentation | testSelectableAttribute1OutputPVar | | OK |
+| $adminAuthToken | metadata | testSelectableAttribute1TextVar | | OK |
+| $adminAuthToken | presentation | testSelectableAttribute2PVar | | OK |
+| $adminAuthToken | presentation | testSelectableAttribute2OutputPVar | | OK |
+| $adminAuthToken | metadata | testSelectableAttribute2TextVar | | OK |
+| $adminAuthToken | presentation | testSelectableAttribute3PVar | | OK |
+| $adminAuthToken | presentation | testSelectableAttribute3OutputPVar | | OK |
+| $adminAuthToken | metadata | testSelectableAttribute3TextVar | | OK |
+| $adminAuthToken | presentation | testInstructorId1PVar | | OK |
+| $adminAuthToken | presentation | testInstructorId1OutputPVar | | OK |
+| $adminAuthToken | metadata | testInstructorId1TextVar | | OK |
+| $adminAuthToken | presentation | testInstructorId2PVar | | OK |
+| $adminAuthToken | presentation | testInstructorId2OutputPVar | | OK |
+| $adminAuthToken | metadata | testInstructorId2TextVar | | OK |
+| $adminAuthToken | presentation | testInstructorId3PVar | | OK |
+| $adminAuthToken | presentation | testInstructorId3OutputPVar | | OK |
+| $adminAuthToken | metadata | testInstructorId3TextVar | | OK |
+| $adminAuthToken | metadata | testExercises1Group | | OK |
+| $adminAuthToken | presentation | testNumOfExercises1_1PVar | | OK |
+| $adminAuthToken | presentation | testNumOfExercises1_1OutputPVar | | OK |
+| $adminAuthToken | metadata | testNumOfExercises1_1TextVar | | OK |
+| $adminAuthToken | presentation | testLaps1_1PVar | | OK |
+| $adminAuthToken | presentation | testLaps1_1OutputPVar | | OK |
+| $adminAuthToken | metadata | testLaps1_1TextVar | | OK |
+| $adminAuthToken | presentation | testLaps1_2PVar | | OK |
+| $adminAuthToken | presentation | testLaps1_2OutputPVar | | OK |
+| $adminAuthToken | metadata | testLaps1_2TextVar | | OK |
+| $adminAuthToken | presentation | testDuration1_1PVar | | OK |
+| $adminAuthToken | presentation | testDuration1_1OutputPVar | | OK |
+| $adminAuthToken | metadata | testDuration1_1TextVar | | OK |
+| $adminAuthToken | presentation | testDuration1_2PVar | | OK |
+| $adminAuthToken | presentation | testDuration1_2OutputPVar | | OK |
+| $adminAuthToken | metadata | testDuration1_2TextVar | | OK |
+| $adminAuthToken | presentation | testDuration1_3PVar | | OK |
+| $adminAuthToken | presentation | testDuration1_3OutputPVar | | OK |
+| $adminAuthToken | metadata | testDuration1_3TextVar | | OK |
+| $adminAuthToken | metadata | testInstructorName1Group | | OK |
+| $adminAuthToken | presentation | testNickName1_1PVar | | OK |
+| $adminAuthToken | presentation | testNickName1_1OutputPVar | | OK |
+| $adminAuthToken | metadata | testNickName1_1TextVar | | OK |
+| $adminAuthToken | presentation | testInstructorFirstName1_1PVar | | OK |
+| $adminAuthToken | presentation | testInstructorFirstName1_1OutputPVar | | OK |
+| $adminAuthToken | metadata | testInstructorFirstName1_1TextVar | | OK |
+| $adminAuthToken | presentation | testInstructorFirstName1_2PVar | | OK |
+| $adminAuthToken | presentation | testInstructorFirstName1_2OutputPVar | | OK |
+| $adminAuthToken | metadata | testInstructorFirstName1_2TextVar | | OK |
+| $adminAuthToken | presentation | testInstructorLastName1_1PVar | | OK |
+| $adminAuthToken | presentation | testInstructorLastName1_1OutputPVar | | OK |
+| $adminAuthToken | metadata | testInstructorLastName1_1TextVar | | OK |
+| $adminAuthToken | presentation | testInstructorLastName1_2PVar | | OK |
+| $adminAuthToken | presentation | testInstructorLastName1_2OutputPVar | | OK |
+| $adminAuthToken | metadata | testInstructorLastName1_2TextVar | | OK |
+| $adminAuthToken | presentation | testInstructorLastName1_3PVar | | OK |
+| $adminAuthToken | presentation | testInstructorLastName1_3OutputPVar | | OK |
+| $adminAuthToken | metadata | testInstructorLastName1_3TextVar | | OK |
+| $adminAuthToken | metadata | testInstructorName2Group | | OK |
+| $adminAuthToken | presentation | testNickName2_1PVar | | OK |
+| $adminAuthToken | presentation | testNickName2_1OutputPVar | | OK |
+| $adminAuthToken | metadata | testNickName2_1TextVar | | OK |
+| $adminAuthToken | presentation | testInstructorFirstName2_1PVar | | OK |
+| $adminAuthToken | presentation | testInstructorFirstName2_1OutputPVar | | OK |
+| $adminAuthToken | metadata | testInstructorFirstName2_1TextVar | | OK |
+| $adminAuthToken | presentation | testInstructorFirstName2_2PVar | | OK |
+| $adminAuthToken | presentation | testInstructorFirstName2_2OutputPVar | | OK |
+| $adminAuthToken | metadata | testInstructorFirstName2_2TextVar | | OK |
+| $adminAuthToken | presentation | testInstructorLastName2_1PVar | | OK |
+| $adminAuthToken | presentation | testInstructorLastName2_1OutputPVar | | OK |
+| $adminAuthToken | metadata | testInstructorLastName2_1TextVar | | OK |
+| $adminAuthToken | presentation | testInstructorLastName2_2PVar | | OK |
+| $adminAuthToken | presentation | testInstructorLastName2_2OutputPVar | | OK |
+| $adminAuthToken | metadata | testInstructorLastName2_2TextVar | | OK |
+| $adminAuthToken | presentation | testInstructorLastName2_3PVar | | OK |
+| $adminAuthToken | presentation | testInstructorLastName2_3OutputPVar | | OK |
+| $adminAuthToken | metadata | testInstructorLastName2_3TextVar | | OK |
+| $adminAuthToken | metadata | testPopularity1Group | | OK |
+| $adminAuthToken | presentation | testRating1_1PVar | | OK |
+| $adminAuthToken | presentation | testRating1_1OutputPVar | | OK |
+| $adminAuthToken | metadata | testRating1_1TextVar | | OK |
+| $adminAuthToken | presentation | testRatingDate1_1PVar | | OK |
+| $adminAuthToken | presentation | testRatingDate1_1OutputPVar | | OK |
+| $adminAuthToken | metadata | testRatingDate1_1TextVar | | OK |
+| $adminAuthToken | presentation | testRatingDate1_2PVar | | OK |
+| $adminAuthToken | presentation | testRatingDate1_2OutputPVar | | OK |
+| $adminAuthToken | metadata | testRatingDate1_2TextVar | | OK |
+| $adminAuthToken | presentation | testVoteCount1_1PVar | | OK |
+| $adminAuthToken | presentation | testVoteCount1_1OutputPVar | | OK |
+| $adminAuthToken | metadata | testVoteCount1_1TextVar | | OK |
+| $adminAuthToken | presentation | testVoteCount1_2PVar | | OK |
+| $adminAuthToken | presentation | testVoteCount1_2OutputPVar | | OK |
+| $adminAuthToken | metadata | testVoteCount1_2TextVar | | OK |
+| $adminAuthToken | presentation | testVoteCount1_3PVar | | OK |
+| $adminAuthToken | presentation | testVoteCount1_3OutputPVar | | OK |
+| $adminAuthToken | metadata | testVoteCount1_3TextVar | | OK |
+| $adminAuthToken | metadata | testPopularity2Group | | OK |
+| $adminAuthToken | presentation | testRating2_1PVar | | OK |
+| $adminAuthToken | presentation | testRating2_1OutputPVar | | OK |
+| $adminAuthToken | metadata | testRating2_1TextVar | | OK |
+| $adminAuthToken | presentation | testRatingDate2_1PVar | | OK |
+| $adminAuthToken | presentation | testRatingDate2_1OutputPVar | | OK |
+| $adminAuthToken | metadata | testRatingDate2_1TextVar | | OK |
+| $adminAuthToken | presentation | testRatingDate2_2PVar | | OK |
+| $adminAuthToken | presentation | testRatingDate2_2OutputPVar | | OK |
+| $adminAuthToken | metadata | testRatingDate2_2TextVar | | OK |
+| $adminAuthToken | presentation | testVoteCount2_1PVar | | OK |
+| $adminAuthToken | presentation | testVoteCount2_1OutputPVar | | OK |
+| $adminAuthToken | metadata | testVoteCount2_1TextVar | | OK |
+| $adminAuthToken | presentation | testVoteCount2_2PVar | | OK |
+| $adminAuthToken | presentation | testVoteCount2_2OutputPVar | | OK |
+| $adminAuthToken | metadata | testVoteCount2_2TextVar | | OK |
+| $adminAuthToken | presentation | testVoteCount2_3PVar | | OK |
+| $adminAuthToken | presentation | testVoteCount2_3OutputPVar | | OK |
+| $adminAuthToken | metadata | testVoteCount2_3TextVar | | OK |
+| $adminAuthToken | metadata | testPopularity3Group | | OK |
+| $adminAuthToken | presentation | testRating3_1PVar | | OK |
+| $adminAuthToken | presentation | testRating3_1OutputPVar | | OK |
+| $adminAuthToken | metadata | testRating3_1TextVar | | OK |
+| $adminAuthToken | presentation | testRatingDate3_1PVar | | OK |
+| $adminAuthToken | presentation | testRatingDate3_1OutputPVar | | OK |
+| $adminAuthToken | metadata | testRatingDate3_1TextVar | | OK |
+| $adminAuthToken | presentation | testRatingDate3_2PVar | | OK |
+| $adminAuthToken | presentation | testRatingDate3_2OutputPVar | | OK |
+| $adminAuthToken | metadata | testRatingDate3_2TextVar | | OK |
+| $adminAuthToken | presentation | testVoteCount3_1PVar | | OK |
+| $adminAuthToken | presentation | testVoteCount3_1OutputPVar | | OK |
+| $adminAuthToken | metadata | testVoteCount3_1TextVar | | OK |
+| $adminAuthToken | presentation | testVoteCount3_2PVar | | OK |
+| $adminAuthToken | presentation | testVoteCount3_2OutputPVar | | OK |
+| $adminAuthToken | metadata | testVoteCount3_2TextVar | | OK |
+| $adminAuthToken | presentation | testVoteCount3_3PVar | | OK |
+| $adminAuthToken | presentation | testVoteCount3_3OutputPVar | | OK |
+| $adminAuthToken | metadata | testVoteCount3_3TextVar | | OK |
+| $adminAuthToken | text | fitnesseExampleText | | OK |
+| $adminAuthToken | text | fitnesseExampleDefText | | OK |
+
+*!
