@@ -1,10 +1,6 @@
 ---
 Test
 ---
-!contents -R2 -g -p -f -h
-| import |
-| se.uu.ub.cora.fitnesseintegration |
-
 !1 Testing metacompleter and creator for search
 !2 Read metadata, texts and presentations to make sure they do not already exist
 If text ids are not provided when creating a search the text ids are added and the texts are created in storage if they do not already exist.

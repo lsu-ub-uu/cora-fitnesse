@@ -2,11 +2,6 @@
 Test
 ---
 !include -c <RecordPartPermissions.RecordPartPermissionsSetUp
-!contents -R2 -g -p -f -h
-| import |
-| se.uu.ub.cora.fitnesseintegration |
-| se.uu.ub.cora.fitnesseintegration.compare |
-
 !2 Update when child contains attribute
 It is possible to have two children with same name in data but different attributes. If one of the children has contstraints, the other should still be handled normally
 

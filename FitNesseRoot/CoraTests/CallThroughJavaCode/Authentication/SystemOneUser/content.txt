@@ -1,7 +1,3 @@
-!contents -R2 -g -p -f -h
-| import |
-| se.uu.ub.cora.fitnesseintegration |
-
 !1 !-SystemOneUserTest-!
 A test that first reads all predefined metadata needed to be able to create users and then tests adding and updating a user.
 

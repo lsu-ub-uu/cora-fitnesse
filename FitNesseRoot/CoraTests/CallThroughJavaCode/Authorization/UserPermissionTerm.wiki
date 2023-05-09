@@ -1,10 +1,6 @@
 ---
 Test
 ---
-!contents -R2 -g -p -f -h
-| import |
-| se.uu.ub.cora.fitnesseintegration |
-
 !1 Testing permission terms in user
 If persmission terms are used in metadata for a record type, the user must have access to a key that matches the data value to have access to the record. !-
 -!Example: A recordType studentThesis has the data field belongsTo, which is a link to a permissionUnit (an organisation). If the user tries to read a record which belongs to a permissionUnit that the user has no access to, it will not be allowed.

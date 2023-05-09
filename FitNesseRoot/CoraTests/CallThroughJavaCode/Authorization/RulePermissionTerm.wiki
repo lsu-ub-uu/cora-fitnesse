@@ -1,10 +1,6 @@
 ---
 Test
 ---
-!contents -R2 -g -p -f -h
-| import |
-| se.uu.ub.cora.fitnesseintegration |
-
 !1 Testing permission terms in permission rule
 If persmission terms are used in metadata for a record type, the user must have access to a key that matches the data value to have access to the record. !-
 -!Example: A recordType studentThesis has the data field publishedStatus, which may be true (published) or false (not published). If the user tries to read a record which is not published but only has access to the !-

@@ -1,10 +1,6 @@
 ---
 Test
 ---
-!contents -R2 -g -p -f -h
-| import |
-| se.uu.ub.cora.fitnesseintegration |
-
 !1 Testing metacompleter and creator for permissionRole
 If text ids are not provided when creating a permissionRole, the text ids are added and the texts are created in storage if they do not already exist.
 

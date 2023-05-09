@@ -1,10 +1,6 @@
 ---
 Test
 ---
-!contents -R2 -g -p -f -h
-| import |
-| se.uu.ub.cora.fitnesseintegration |
-
 !1 Testing metadata validation
 It is possible to validate a record prior to creating or updating it. The input to the validation contains two parts. The first part is an instance of the record type validationOrder. It contains information about what record type we want to validate, what metadata we want to validate for (new or existing) and if we want to check that links entered  in the data exist. The second part of the input is the record that we want to validate.
 

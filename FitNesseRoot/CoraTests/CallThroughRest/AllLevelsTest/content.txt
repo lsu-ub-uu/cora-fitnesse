@@ -1,4 +1,3 @@
-!contents -R2 -g -p -f -h
 This test will create the metadatagroup trainingProgram, containing two fields, id and createdBy. they are both mandatory (min 1, max 1)!--!It will then create a metadatagroup called singleTrainingProgram which must contain one trainingProgram, no less, no more.!-
 -!Then the test will create a recordType which describes a singleTrainingProgram------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -6,9 +5,6 @@ Last, we will create a trainingProgram using the metadata groups specified. We c
 -!The first test is missing id.!-
 -!The second test is missing the entire trainingProgram child!-
 -!The third test contains everything needed
-
-| import |
-| se.uu.ub.cora.fitnesseintegration |
 
 !| script | SystemUrl |
 | setUrl | ${systemUnderTestUrl} |

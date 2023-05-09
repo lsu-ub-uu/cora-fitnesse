@@ -1,11 +1,6 @@
 ---
 Static
 ---
-!contents -R2 -g -p -f -h
-| import |
-| se.uu.ub.cora.fitnesseintegration |
-| se.uu.ub.cora.fitnesseintegration.compare |
-
 !2 Record part permissions
 Det ska vara möjligt i en post att för ett barn på översta nivån säga att den kräver läs- och/eller skrivrättighet.
 

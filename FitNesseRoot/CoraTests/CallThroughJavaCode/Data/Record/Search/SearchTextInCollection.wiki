@@ -1,11 +1,7 @@
 ---
 Test
 ---
-!contents -R2 -g -p -f -h
 Add tests that searches a string "sv" and preprocesses / joins it to language_id=[17,42]
-
-| import |
-| se.uu.ub.cora.fitnesseintegration |
 
 !1 Testing search type text in collection
 !2 Create metadata for data to index

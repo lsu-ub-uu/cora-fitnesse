@@ -1,7 +1,6 @@
 ---
 Test
 ---
-!contents -R2 -g -p -f -h
 !1 MetadataNumberVariable
 A metadataNumberVariable is a metadata variable for entering numbers.
 

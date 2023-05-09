@@ -1,7 +1,6 @@
 ---
 Test
 ---
-!contents -R2 -g -p -f -h
 !1 Calls to the API using XML
 The goal of this testpage is to show how to call the REST API when using XML as the dataformat.
 

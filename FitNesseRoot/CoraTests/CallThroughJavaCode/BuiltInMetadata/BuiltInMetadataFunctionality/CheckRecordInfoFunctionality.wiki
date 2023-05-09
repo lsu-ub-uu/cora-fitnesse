@@ -1,14 +1,10 @@
 ---
 Test
 ---
-!contents -R2 -g -p -f -h
 !2 Check recordInfo functionality
 Most of the information in a standard recordInfo is created by the system. The information is not allowed to be overwritten by data entered by a user.
 
 !2 Update record type and check that timestamp is correct format
-| import |
-| se.uu.ub.cora.fitnesseintegration |
-| se.uu.ub.cora.fitnesseintegration.compare |
 
 !***> Create record type myRecordType
 

@@ -1,9 +1,6 @@
 ---
 Test
 ---
-| import |
-| se.uu.ub.cora.fitnesseintegration |
-
 !img http://files/images/record-type.png
 
 The Record Type is a basic entity  in Cora. Everything in Cora is a record type, including all the metadata types that make up the system, including the record type itself.

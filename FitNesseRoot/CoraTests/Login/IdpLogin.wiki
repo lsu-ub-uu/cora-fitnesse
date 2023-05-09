@@ -2,10 +2,6 @@
 Help: A test that checks that idpLogin works as expected
 Test
 ---
-!contents -R2 -g -p -f -h
-| import |
-| se.uu.ub.cora.fitnesseintegration |
-
 !| script | SystemUrl |
 | setUrl | ${systemUnderTestUrl} |
 | setAppTokenVerifierUrl | ${appTokenVerifierUrl} |
