@@ -1,8 +1,7 @@
-!1 !-CollectTermTest-!
+!1 !-CollectTerm-!
 A test that first reads all predefined metadata needed to be able to create collect terms of different types, and then creates and modifies data for the differnt types.
 
-!2 Read predefined metadata to make sure it is correct
-!3 CollectTerm
+!2 !-CollectTerm record type-!
 !***> Read abstract[[ RecordType][RecordType]] collectTerm
 
 !| RecordEndpointFixture |
@@ -34,7 +33,6 @@ A test that first reads all predefined metadata needed to be able to create coll
 
 *!
 !***> Check children in collectTermNewGroup
-
 !| MetadataLinkFixture |
 | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? |
 | metadata | recordInfoNewGroup | 1 | 1 |
@@ -42,20 +40,19 @@ A test that first reads all predefined metadata needed to be able to create coll
 | metadata | collectTermExtraDataGroup | 1 | 1 |
 
 *!
-
 !***> List recordType collectTerm
-
 !| RecordEndpointFixture |
 | authToken | type | json | testReadRecordList? | getStatusType? |
 | $adminAuthToken | collectTerm | {"name":"filter","children":[]} | | OK |
 
 *!
-!3 CollectIndexTerm
+
+!2 !-CollectIndexTerm-! validation type
 !***> Read [[ RecordType][RecordType]] collectIndexTerm
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | recordType | collectTerm | =~/"name":"linkedRecordId","value":"collectIndexTermGroup"/ | OK |
+| $adminAuthToken | validationType | collectIndexTerm | =~/"name":"linkedRecordId","value":"collectIndexTermGroup"/ | OK |
 
 *!
 !***> Load collectIndexTermGroup to use in tests
@@ -91,12 +88,12 @@ A test that first reads all predefined metadata needed to be able to create coll
 
 *!
 
-!2 CollectPermissionTerm
+!2 CollectPermissionTerm validation type
 !***> Read [[ RecordType][RecordType]] collectPermissionTerm
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | recordType | collectTerm | =~/"name":"linkedRecordId","value":"collectPermissionTermGroup"/ | OK |
+| $adminAuthToken | validationType | collectPermissionTerm | =~/"name":"linkedRecordId","value":"collectPermissionTermGroup"/ | OK |
 
 *!
 !***> Load collectPermissionTermGroup to use in tests
@@ -132,12 +129,12 @@ A test that first reads all predefined metadata needed to be able to create coll
 
 *!
 
-!2 CollectStorageTerm
+!2 CollectStorageTerm validation type
 !***> Read [[ RecordType][RecordType]] collectStorageTerm
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | recordType | collectTerm | =~/"name":"linkedRecordId","value":"collectStorageTermGroup"/ | OK |
+| $adminAuthToken | validationType | collectStorageTerm | =~/"name":"linkedRecordId","value":"collectStorageTermGroup"/ | OK |
 
 *!
 !***> Load collectStorageTermGroup to use in tests
@@ -230,7 +227,7 @@ A test that first reads all predefined metadata needed to be able to create coll
 | $adminAuthToken | collectTerm | | OK |
 
 *!
-!***> Delete created collectIndexTerm and collectPermissionTerm
+!***> Delete created collectTerm and collectPermissionTerm
 
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |

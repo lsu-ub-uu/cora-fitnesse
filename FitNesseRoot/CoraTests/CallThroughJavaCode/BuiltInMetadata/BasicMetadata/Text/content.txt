@@ -2,7 +2,7 @@
 | import |
 | se.uu.ub.cora.fitnesseintegration |
 
-!1 !-TextTest-!
+!1 !-Text-!
 A test that first reads all predefined metadata needed to be able to add texts to the system, and then tests adding and updating texts.
 
 !2 Read metadata defined in code to make sure it is correct
@@ -65,7 +65,7 @@ A test that first reads all predefined metadata needed to be able to add texts t
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadata | textPartGroup | =~/"name":"linkedRecordId","value":"textTextVar".*"name":"linkedRecordId","value":"textPartGroupText".*"name":"linkedRecordId","value":"textPartTypeCollectionVar".*"name":"linkedRecordId","value":"systemLanguagesCollectionVar"/ | OK |
+| $adminAuthToken | metadata | textPartGroup | =~/"name":"linkedRecordId","value":"textPartGroupText".*"name":"linkedRecordId","value":"textPartTypeCollectionVar".*"name":"linkedRecordId","value":"systemLanguagesCollectionVar".*"name":"linkedRecordId","value":"textTextVar"/ | OK |
 | $adminAuthToken | metadata | textPartDefaultGroup | =~/"name":"linkedRecordId","value":"textTextVar".*"name":"linkedRecordId","value":"textPartDefaultGroupText".*"name":"linkedRecordId","value":"textPartTypeDefaultCollectionVar".*"name":"linkedRecordId","value":"systemLanguagesCollectionVar".*"name":"linkedRecordId","value":"textPartGroup"/ | OK |
 | $adminAuthToken | metadata | textPartSvGroup | =~/"name":"linkedRecordId","value":"systemLanguageSvCollectionVar"/ | OK |
 | $adminAuthToken | metadata | textPartAlternativeGroup | | OK |
@@ -134,7 +134,7 @@ A search for texts is predefined in the system. This is the definition of the te
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | search | textSearch | =~/"name":"linkedRecordId","value":"textSearchPGroup".*"name":"presentationId.*"name":"linkedRecordId","value":"coraText".*"name":"recordTypeToSearchIn"/ | OK |
+| $adminAuthToken | search | textSearch | =~/"name":"linkedRecordId","value":"textSearchPGroup".*"name":"presentationId.*"name":"linkedRecordId","value":"text".*"name":"recordTypeToSearchIn"/ | OK |
 
 *!
 When the text myText (see above) was created and updated, the id of the  text was indexed, and is therefore possible to search for.

@@ -40,7 +40,7 @@ Test that sending a valid authToken gives additional permissions compared to gue
 | setHeader | Content-Type:application/vnd.uub.record+json!-
 -! |
 | setBody | {"name":"text","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"textSystemOne"}]},{"name":"id","value":"authTokenTestingText"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"textPart","children":[{"name":"text","value":"En  text för att testa  authTokens"}],"attributes":{"type":"default","lang":"sv"}}]} |
-| POST | /rest/record/textSystemOne | 401 | | |
+| POST | /rest/record/text | 401 | | |
 
 *!
 !***> Test create without invalid token, should not be allowed (401)
@@ -50,7 +50,7 @@ Test that sending a valid authToken gives additional permissions compared to gue
 -!authToken:!-invalidToken
 -! |
 | setBody | {"name":"text","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"textSystemOne"}]},{"name":"id","value":"authTokenTestingText"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"textPart","children":[{"name":"text","value":"En  text för att testa  authTokens"}],"attributes":{"type":"default","lang":"sv"}}]} |
-| POST | /rest/record/textSystemOne | 401 | | |
+| POST | /rest/record/text | 401 | | |
 
 *!
 !***> Test create without invalid token, should not be allowed (403)
@@ -70,7 +70,7 @@ Test that sending a valid authToken gives additional permissions compared to gue
 -!authToken:$adminAuthToken!-
 -! |
 | setBody | {"name":"text","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"textSystemOne"}]},{"name":"id","value":"authTokenTestingText"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]}]},{"name":"textPart","children":[{"name":"text","value":"En  text för att testa  authTokens"}],"attributes":{"type":"default","lang":"sv"}}]} |
-| POST | /rest/record/textSystemOne | 201 | | |
+| POST | /rest/record/text | 201 | | |
 
 *!
 !***> Remove text
@@ -79,6 +79,6 @@ Test that sending a valid authToken gives additional permissions compared to gue
 | setHeader | Content-Type:application/vnd.uub.record+json!-
 -!authToken:$adminAuthToken!-
 -! | | | |
-| DELETE | /rest/record/textSystemOne/authTokenTestingText | 200 | | |
+| DELETE | /rest/record/text/authTokenTestingText | 200 | | |
 
 *!

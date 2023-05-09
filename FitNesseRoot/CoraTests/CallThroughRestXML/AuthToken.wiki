@@ -60,7 +60,7 @@ Test that sending a valid authToken gives additional permissions compared to gue
 -!		<text>A text to test authTokens</text>!-
 -!	</textPart>!-
 -!</text> |
-| POST | /rest/record/textSystemOne | 401 | | |
+| POST | /rest/record/text | 401 | | |
 
 *!
 !***> Test create without invalid token, should not be allowed (401)
@@ -89,7 +89,7 @@ Test that sending a valid authToken gives additional permissions compared to gue
 -!		<text>A text to test authTokens</text>!-
 -!	</textPart>!-
 -!</text> |
-| POST | /rest/record/textSystemOne | 401 | | |
+| POST | /rest/record/text | 401 | | |
 
 *!
 !***> Test create without invalid token, should not be allowed (403)
@@ -147,7 +147,7 @@ Test that sending a valid authToken gives additional permissions compared to gue
 -!		<text>A text to test authTokens</text>!-
 -!	</textPart>!-
 -!</text> |
-| POST | /rest/record/textSystemOne | 201 | | |
+| POST | /rest/record/text | 201 | | |
 
 *!
 !***> Remove text
@@ -156,6 +156,6 @@ Test that sending a valid authToken gives additional permissions compared to gue
 | setHeader | Content-Type:application/vnd.uub.record+xml!-
 -!authToken:$adminAuthToken!-
 -! | | | |
-| DELETE | /rest/record/textSystemOne/authTokenTestingText | 200 | | |
+| DELETE | /rest/record/text/authTokenTestingText | 200 | | |
 
 *!
