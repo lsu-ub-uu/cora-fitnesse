@@ -73,6 +73,14 @@ Record of circuit training type that is '''invalid''' and only contains two pers
 
 *!
 
+!***> Case 2c: New records/instances with '''non existing validationType'''
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | trainingClassLeaflet | {"name":"circuitTrainingLeaflet","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"nonExistingValidationType"}]}]},{"repeatId":"0","name":"fitnesseTextVar","value":"Hello and welcome to circuit training Adam Davis with phone number 202-555-0144."},{"repeatId":"1","name":"fitnesseTextVar","value":"Hello and welcome to circuit training Adam Davis with phone number 202-555-0179."},{"repeatId":"2","name":"fitnesseTextVar","value":"Hello and welcome to circuit training Adam Davis with phone number 202-555-0133."}]}| | BAD_REQUEST | $createdCircuitId= |
+
+*!
+
 
 !define recordId {$createdCircuitId}
 
