@@ -1,7 +1,6 @@
 ---
 Test
 ---
-!contents -R2 -g -p -f -h
 !1 MetadataNumberVariable
 A metadataNumberVariable is a metadata variable for entering numbers.
 
@@ -9,54 +8,54 @@ A metadataNumberVariable is a metadata variable for entering numbers.
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | recordType | metadataNumberVariable | | OK |
+| $adminAuthToken | recordType | metadata | | OK |
 
 *!
 !***> Load metadataNumberVariableNew to use in tests
 
 !| RecordEndpointFixture |
 | type | id | testReadRecordAndStoreJson? |
-| metadataGroup | metadataNumberVariableNewGroup | |
+| metadata | metadataNumberVariableNewGroup | |
 
 *!
 !***> Check children in metadataNumberVariableNew
 
 !| MetadataLinkFixture |
 | authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? |
-| $adminAuthToken | metadataGroup | recordInfoNewNumberVarGroup | 1 | 1 | recordInfo |
-| $adminAuthToken | metadataTextVariable | nameInDataTextVar | 1 | 1 | nameInData |
-| $adminAuthToken | metadataRecordLink | textIdLink | 0 | 1 | textId |
-| $adminAuthToken | metadataRecordLink | defTextIdLink | 0 | 1 | defTextId |
-| $adminAuthToken | metadataTextVariable | minValueNumberTextVar | 1 | 1 | min |
-| $adminAuthToken | metadataTextVariable | maxValueNumberTextVar | 1 | 1 | max |
-| $adminAuthToken | metadataTextVariable | warningMinValueNumberTextVar | 1 | 1 | warningMin |
-| $adminAuthToken | metadataTextVariable | warningMaxValueNumberTextVar | 1 | 1 | warningMax |
-| $adminAuthToken | metadataTextVariable | numberOfDecimalsNumberTextVar | 1 | 1 | numberOfDecimals |
-| $adminAuthToken | metadataGroup | recordInfoOldGroup | not found | not found | not found |
-| $adminAuthToken | metadataGroup | attributeReferencesGroup | 0 | 1 | attributeReferences |
+| $adminAuthToken | metadata | recordInfoNewNumberVarGroup | 1 | 1 | recordInfo |
+| $adminAuthToken | metadata | nameInDataTextVar | 1 | 1 | nameInData |
+| $adminAuthToken | metadata | textIdLink | 0 | 1 | textId |
+| $adminAuthToken | metadata | defTextIdLink | 0 | 1 | defTextId |
+| $adminAuthToken | metadata | minValueNumberTextVar | 1 | 1 | min |
+| $adminAuthToken | metadata | maxValueNumberTextVar | 1 | 1 | max |
+| $adminAuthToken | metadata | warningMinValueNumberTextVar | 1 | 1 | warningMin |
+| $adminAuthToken | metadata | warningMaxValueNumberTextVar | 1 | 1 | warningMax |
+| $adminAuthToken | metadata | numberOfDecimalsNumberTextVar | 1 | 1 | numberOfDecimals |
+| $adminAuthToken | metadata | recordInfoOldGroup | not found | not found | not found |
+| $adminAuthToken | metadata | attributeReferencesGroup | 0 | 1 | attributeReferences |
 
 *!
 !***> Load metadataNumberVariableGroup to use in tests
 
 !| RecordEndpointFixture |
 | type | id | testReadRecordAndStoreJson? |
-| metadataGroup | metadataNumberVariableGroup | |
+| metadata | metadataNumberVariableGroup | |
 
 *!
 !***> Check children in metadataNumberVariableGroup
 
 !| MetadataLinkFixture |
 | authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? |
-| $adminAuthToken | metadataGroup | recordInfoGroup | 1 | 1 | recordInfo |
-| $adminAuthToken | metadataTextVariable | nameInDataTextVar | 1 | 1 | nameInData |
-| $adminAuthToken | metadataRecordLink | textIdLink | 1 | 1 | textId |
-| $adminAuthToken | metadataRecordLink | defTextIdLink | 1 | 1 | defTextId |
-| $adminAuthToken | metadataTextVariable | minValueNumberTextVar | 1 | 1 | min |
-| $adminAuthToken | metadataTextVariable | maxValueNumberTextVar | 1 | 1 | max |
-| $adminAuthToken | metadataTextVariable | warningMinValueNumberTextVar | 1 | 1 | warningMin |
-| $adminAuthToken | metadataTextVariable | warningMaxValueNumberTextVar | 1 | 1 | warningMax |
-| $adminAuthToken | metadataTextVariable | numberOfDecimalsNumberTextVar | 1 | 1 | numberOfDecimals |
-| $adminAuthToken | metadataGroup | recordInfoOldGroup | not found | not found | not found |
-| $adminAuthToken | metadataGroup | attributeReferencesGroup | 0 | 1 | attributeReferences |
+| $adminAuthToken | metadata | recordInfoGroup | 1 | 1 | recordInfo |
+| $adminAuthToken | metadata | nameInDataTextVar | 1 | 1 | nameInData |
+| $adminAuthToken | metadata | textIdLink | 1 | 1 | textId |
+| $adminAuthToken | metadata | defTextIdLink | 1 | 1 | defTextId |
+| $adminAuthToken | metadata | minValueNumberTextVar | 1 | 1 | min |
+| $adminAuthToken | metadata | maxValueNumberTextVar | 1 | 1 | max |
+| $adminAuthToken | metadata | warningMinValueNumberTextVar | 1 | 1 | warningMin |
+| $adminAuthToken | metadata | warningMaxValueNumberTextVar | 1 | 1 | warningMax |
+| $adminAuthToken | metadata | numberOfDecimalsNumberTextVar | 1 | 1 | numberOfDecimals |
+| $adminAuthToken | metadata | recordInfoOldGroup | not found | not found | not found |
+| $adminAuthToken | metadata | attributeReferencesGroup | 0 | 1 | attributeReferences |
 
 *!

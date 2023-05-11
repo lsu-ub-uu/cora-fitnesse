@@ -1,10 +1,6 @@
 ---
 Test
 ---
-| import |
-| se.uu.ub.cora.fitnesseintegration |
-| se.uu.ub.cora.fitnesseintegration.compare |
-
 !1 Record part
 Record parts makes it possible to set up read and write restrictions on parts of a record. Restrictions can be added to all the children. However it is not allowed to add restrictions on children of any group that has repeatMax != 1. 
 Data sent from the server, collects read restrictions from the  recordTypes  metadataGroup linked through metadataId. A user gets its  record part read permissions from rules with the READ action. Record  parts that the user does not have read permission for are redacted  before the data is returned to the user. All ways a user can get data  from the server is checked for read permissions and data possibly  redacted, this include data for the obvious read cases: read, search and list, but also for data returned from actions that create or update data such as:  create and update. The use of the same restrictions and rules to  calculate what data to possibly redact is done to get a consistent and  easy way to know what restrictions and rules are in play for data  returned to users.

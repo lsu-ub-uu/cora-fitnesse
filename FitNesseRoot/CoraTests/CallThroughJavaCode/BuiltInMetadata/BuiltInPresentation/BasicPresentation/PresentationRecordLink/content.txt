@@ -1,9 +1,3 @@
- * 
-
-!contents -R2 -g -p -f -h
-| import |
-| se.uu.ub.cora.fitnesseintegration |
-
 !1 !-PresentationRecordLink-!
 A test that first reads all predefined metadata needed to be able to add presentationRecordLinks to the system, and then tests adding and updating presentationRecordLink
 
@@ -12,47 +6,47 @@ A test that first reads all predefined metadata needed to be able to add present
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | genericCollectionItem | pRecordLinkItem | =~/"name":"linkedRecordId","value":"pRecordLinkItemText"/ | OK |
+| $adminAuthToken | metadata | pRecordLinkItem | =~/"name":"linkedRecordId","value":"pRecordLinkItemText"/ | OK |
 
 *!
 !***> Read itemCollection (presentationTypeCollection)
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadataItemCollection | presentationTypeCollection | =~/"name":"linkedRecordId","value":"pVarItem".*"name":"linkedRecordId","value":"containerItem".*"linkedRecordId","value":"pRecordLinkItem".*"name":"linkedRecordId","value":"pCollVarItem".*"name":"linkedRecordId","value":"pResourceLinkItem".*"name":"linkedRecordId","value":"presentationLinkItem".*/ | OK |
+| $adminAuthToken | metadata | presentationTypeCollection | =~/"name":"linkedRecordId","value":"pVarItem".*"name":"linkedRecordId","value":"containerItem".*"linkedRecordId","value":"pRecordLinkItem".*"name":"linkedRecordId","value":"pCollVarItem".*"name":"linkedRecordId","value":"pResourceLinkItem".*"name":"linkedRecordId","value":"presentationLinkItem".*/ | OK |
 
 *!
 !***> Read collectionVariables (modeCollectionVar, presentationTypeCollectionVar, presentationTypePRecordLinkCollectionVar)
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadataCollectionVariable | modeCollectionVar | | OK |
-| $adminAuthToken | metadataCollectionVariable | presentationTypeCollectionVar | | OK |
-| $adminAuthToken | metadataCollectionVariable | presentationTypePRecordLinkCollectionVar | | OK |
+| $adminAuthToken | metadata | modeCollectionVar | | OK |
+| $adminAuthToken | metadata | presentationTypeCollectionVar | | OK |
+| $adminAuthToken | metadata | presentationTypePRecordLinkCollectionVar | | OK |
 
 *!
 !***> Read textVariable (idPRecordLinkTextVar)
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadataTextVariable | idPRecordLinkTextVar | | OK |
+| $adminAuthToken | metadata | idPRecordLinkTextVar | | OK |
 
 *!
 !***> Read metadataGroups (recordInfoPRecordLinkGroup, recordInfoNewPRecordLinkGroup, presentationRecordLinkNewGroup, presentationRecordLinkGroup)
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadataGroup | recordInfoPRecordLinkGroup | =~/"name":"linkedRecordId","value":"idPRecordLinkTextVar"/ | OK |
-| $adminAuthToken | metadataGroup | recordInfoNewPRecordLinkGroup | =~/"name":"linkedRecordId","value":"idPRecordLinkTextVar"/ | OK |
-| $adminAuthToken | metadataGroup | presentationRecordLinkNewGroup | =~/"name":"linkedRecordId","value":"recordInfoNewPRecordLinkGroup"/ | OK |
-| $adminAuthToken | metadataGroup | presentationRecordLinkGroup | =~/"name":"linkedRecordId","value":"recordInfoPRecordLinkGroup"/ | OK |
+| $adminAuthToken | metadata | recordInfoPRecordLinkGroup | =~/"name":"linkedRecordId","value":"idPRecordLinkTextVar"/ | OK |
+| $adminAuthToken | metadata | recordInfoNewPRecordLinkGroup | =~/"name":"linkedRecordId","value":"idPRecordLinkTextVar"/ | OK |
+| $adminAuthToken | metadata | presentationRecordLinkNewGroup | =~/"name":"linkedRecordId","value":"recordInfoNewPRecordLinkGroup"/ | OK |
+| $adminAuthToken | metadata | presentationRecordLinkGroup | =~/"name":"linkedRecordId","value":"recordInfoPRecordLinkGroup"/ | OK |
 
 *!
 !***> Read recordType ( presentationRecordLink)
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | recordType | presentationRecordLink | =~/"name":"linkedRecordId","value":"presentationRecordLinkGroup".*"name":"metadataId"/ | OK |
+| $adminAuthToken | recordType | presentation | =~/"name":"linkedRecordId","value":"presentationGroup".*"name":"metadataId"/ | OK |
 
 *!
 !2 Test with presentationRecordLink
@@ -60,15 +54,15 @@ A test that first reads all predefined metadata needed to be able to add present
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecordCreatedType? | getStatusType? |
-| $adminAuthToken | presentationRecordLink | {"children":[{"children":[{"name":"id","value":"myLinkNoPresentationOfLinkedRecordPLink"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationRecordLink"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadataRecordLink"},{"name":"linkedRecordId","value":"dataDividerCoraLink"}],"name":"presentationOf"},{"name":"mode","value":"input"}],"name":"presentation","attributes":{"type":"pRecordLink"}} | presentationRecordLink | CREATED |
-| $adminAuthToken | presentationRecordLink | {"children":[{"children":[{"name":"id","value":"myPLink"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationRecordLink"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadataRecordLink"},{"name":"linkedRecordId","value":"dataDividerCoraLink"}],"name":"presentationOf"},{"name":"mode","value":"input"},{"children":[{"repeatId":"1","children":[{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"image"}],"name":"presentedRecordType"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"imagePGroup"}],"name":"presentation"}],"name":"linkedRecordPresentation"},{"repeatId":"2","children":[{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"sound"}],"name":"presentedRecordType"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"soundPGroup"}],"name":"presentation"}],"name":"linkedRecordPresentation"}],"name":"linkedRecordPresentations"}],"name":"presentation","attributes":{"type":"pRecordLink"}} | presentationRecordLink | CREATED |
+| $adminAuthToken | presentation | {"children":[{"children":[{"name":"id","value":"myLinkNoPresentationOfLinkedRecordPLink"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationRecordLink"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"dataDividerCoraLink"}],"name":"presentationOf"},{"name":"mode","value":"input"}],"name":"presentation","attributes":{"type":"pRecordLink"}} | presentation | CREATED |
+| $adminAuthToken | presentation | {"children":[{"children":[{"name":"id","value":"myPLink"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationRecordLink"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"dataDividerCoraLink"}],"name":"presentationOf"},{"name":"mode","value":"input"},{"children":[{"repeatId":"1","children":[{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"binary"}],"name":"presentedRecordType"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"imagePGroup"}],"name":"presentation"}],"name":"linkedRecordPresentation"},{"repeatId":"2","children":[{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"binary"}],"name":"presentedRecordType"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"soundPGroup"}],"name":"presentation"}],"name":"linkedRecordPresentation"}],"name":"linkedRecordPresentations"}],"name":"presentation","attributes":{"type":"pRecordLink"}} | presentation | CREATED |
 
 *!
 !***> Update data of recordType presentationRecordLink
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | presentationRecordLink | myPLink | {"children":[{"children":[{"name":"id","value":"myPLink"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"presentationRecordLink"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationRecordLink"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadataRecordLink"},{"name":"linkedRecordId","value":"dataDividerCoraLink"}],"name":"presentationOf"},{"name":"mode","value":"input"},{"children":[{"repeatId":"1","children":[{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"image"}],"name":"presentedRecordType"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"imageOutputPGroup"}],"name":"presentation"}],"name":"linkedRecordPresentation"},{"repeatId":"2","children":[{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"sound"}],"name":"presentedRecordType"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"soundOutputPGroup"}],"name":"presentation"}],"name":"linkedRecordPresentation"}],"name":"linkedRecordPresentations"},{"children":[{"name":"linkedRecordType","value":"search"},{"name":"linkedRecordId","value":"textSearch"}],"name":"search"}],"name":"presentation","attributes":{"type":"pRecordLink"}} | | OK |
+| $adminAuthToken | presentation | myPLink | {"children":[{"children":[{"name":"id","value":"myPLink"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"presentation"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationRecordLink"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"dataDividerCoraLink"}],"name":"presentationOf"},{"name":"mode","value":"input"},{"children":[{"repeatId":"1","children":[{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"binary"}],"name":"presentedRecordType"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"imageOutputPGroup"}],"name":"presentation"}],"name":"linkedRecordPresentation"},{"repeatId":"2","children":[{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"binary"}],"name":"presentedRecordType"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"soundOutputPGroup"}],"name":"presentation"}],"name":"linkedRecordPresentation"}],"name":"linkedRecordPresentations"},{"children":[{"name":"linkedRecordType","value":"search"},{"name":"linkedRecordId","value":"textSearch"}],"name":"search"}],"name":"presentation","attributes":{"type":"pRecordLink"}} | | OK |
 
 *!
 !2 List presentation data
@@ -77,7 +71,7 @@ A test that first reads all predefined metadata needed to be able to add present
 !| RecordEndpointFixture |
 | authToken | type | testReadRecordList? | getStatusType? |
 | $adminAuthToken | presentation | | OK |
-| $adminAuthToken | presentationRecordLink | | OK |
+| $adminAuthToken | presentation | | OK |
 
 *!
 !2 Incorrect data
@@ -85,7 +79,7 @@ A test that first reads all predefined metadata needed to be able to add present
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | presentationRecordLink | {"children":[{"children":[{"name":"id","value":"myPLink"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationRecordLink"}],"name":"validationType"}],"name":"recordInfo"},{"name":"presentationOf","value":"myLink"},{"name":"mode","value":"input"},{"children":[],"name":"linkedRecordPresentations"}],"name":"presentation","attributes":{"type":"pRecordLink"}} | | BAD_REQUEST |
+| $adminAuthToken | presentation | {"children":[{"children":[{"name":"id","value":"myPLink"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"presentationRecordLink"}],"name":"validationType"}],"name":"recordInfo"},{"name":"presentationOf","value":"myLink"},{"name":"mode","value":"input"},{"children":[],"name":"linkedRecordPresentations"}],"name":"presentation","attributes":{"type":"pRecordLink"}} | | BAD_REQUEST |
 
 *!
 !2 Data needed by clients
@@ -93,18 +87,18 @@ A test that first reads all predefined metadata needed to be able to add present
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | presentationVar | linkedRecordTypeOutputPVar | | OK |
-| $adminAuthToken | presentationVar | linkedRecordIdPVar | | OK |
-| $adminAuthToken | presentationVar | linkedRecordIdOutputPVar | | OK |
-| $adminAuthToken | presentationVar | linkedRepeatIdPVar | | OK |
-| $adminAuthToken | presentationVar | linkedRepeatIdOutputPVar | | OK |
+| $adminAuthToken | presentation | linkedRecordTypeOutputPVar | | OK |
+| $adminAuthToken | presentation | linkedRecordIdPVar | | OK |
+| $adminAuthToken | presentation | linkedRecordIdOutputPVar | | OK |
+| $adminAuthToken | presentation | linkedRepeatIdPVar | | OK |
+| $adminAuthToken | presentation | linkedRepeatIdOutputPVar | | OK |
 
 *!
 !***> Read texts
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | coraText | linkedRecordTypeTextVarText | | OK |
+| $adminAuthToken | text | linkedRecordTypeTextVarText | | OK |
 
 *!
 !2 Clean up created data
@@ -112,7 +106,7 @@ A test that first reads all predefined metadata needed to be able to add present
 
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | presentationRecordLink | myPLink | | OK |
-| $adminAuthToken | presentationRecordLink | myLinkNoPresentationOfLinkedRecordPLink | | OK |
+| $adminAuthToken | presentation | myPLink | | OK |
+| $adminAuthToken | presentation | myLinkNoPresentationOfLinkedRecordPLink | | OK |
 
 *!

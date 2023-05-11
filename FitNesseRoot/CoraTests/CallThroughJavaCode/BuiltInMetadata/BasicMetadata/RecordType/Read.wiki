@@ -1,0 +1,26 @@
+---
+Static
+---
+
+!2 Read
+
+!***> It should be possible to read various foundational metadata about or strongly related to recordType itself
+
+As a recordType instance:
+
+!define recordType {recordType}
+!define recordId {recordType}
+!include -seamless .HelperPages.readRecord
+
+As a validationType instance:
+!define recordType {recordType}
+!define recordId {recordType}
+!include -seamless .HelperPages.readRecord
+
+Metadata groups:
+!| RecordEndpointFixture |
+| authToken | type | id | testReadRecord? | getStatusType? |
+| $adminAuthToken | metadata | recordTypeGroup | =~/"name":"linkedRecordId","value":"metadataIdLink".*"name":"linkedRecordId","value":"abstractCollectionVar".*"name":"linkedRecordId","value":"recordTypeParentIdLink".*"name":"linkedRecordId","value":"recordInfoGroup".*"name":"linkedRecordId","value":"presentationViewIdLink".*"name":"linkedRecordId","value":"presentationFormIdLink".*"name":"linkedRecordId","value":"newMetadataIdLink".*"name":"linkedRecordId","value":"newPresentationFormIdLink".*"name":"linkedRecordId","value":"menuPresentationViewIdLink".*"name":"linkedRecordId","value":"listPresentationViewIdLink".*"name":"linkedRecordId","value":"userSuppliedIdCollectionVar".*"name":"linkedRecordId","value":"recordTypeSearchLink".*"name":"linkedRecordId","value":"autocompletePresentationViewLink".*"value":"groupOfRecordTypeCollectionVar".*"value":"recordTypeFilterMetadataLink".*"value":"recordTypeFilterPresentationLink"/ | OK |
+| $adminAuthToken | metadata | recordTypeNewGroup | =~/"name":"linkedRecordId","value":"metadataIdLink".*"name":"linkedRecordId","value":"abstractCollectionVar".*"name":"linkedRecordId","value":"recordTypeParentIdLink".*"name":"linkedRecordId","value":"recordInfoNewGroup".*"name":"linkedRecordId","value":"presentationViewIdLink".*"name":"linkedRecordId","value":"presentationFormIdLink".*"name":"linkedRecordId","value":"newMetadataIdLink".*"name":"linkedRecordId","value":"newPresentationFormIdLink".*"name":"linkedRecordId","value":"menuPresentationViewIdLink".*"name":"linkedRecordId","value":"listPresentationViewIdLink".*"name":"linkedRecordId","value":"userSuppliedIdCollectionVar".*"name":"linkedRecordId","value":"recordTypeSearchLink".*"name":"linkedRecordId","value":"autocompletePresentationViewLink".*"value":"groupOfRecordTypeCollectionVar".*"value":"recordTypeFilterMetadataLink".*"value":"recordTypeFilterPresentationLink"/ | OK |
+
+*!

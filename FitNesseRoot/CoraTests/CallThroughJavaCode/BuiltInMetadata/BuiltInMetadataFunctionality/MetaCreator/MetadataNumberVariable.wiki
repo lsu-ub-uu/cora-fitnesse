@@ -1,10 +1,6 @@
 ---
 Test
 ---
-!contents -R2 -g -p -f -h
-| import |
-| se.uu.ub.cora.fitnesseintegration |
-
 !1 Testing metacompleter and creator for metadataNumberVariable
 If text ids are not provided when creating a metadataNumberVariable, the text ids are added and the texts are created in storage if they do not already exist.
 
@@ -14,8 +10,8 @@ Read texts to make sure they do not exist
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseTestNumberVarText | coraText | | NOT_FOUND |
-| fitnesseTestNumberVarDefText | coraText | | NOT_FOUND |
+| fitnesseTestNumberVarText | text | | NOT_FOUND |
+| fitnesseTestNumberVarDefText | text | | NOT_FOUND |
 
 *!
 When a metadataNumberVariable is created, two presentationNumberVars are automatically created, one for input and one for output.
@@ -26,8 +22,8 @@ Read pVars to make sure they do not exist
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseTestPNumVar | presentationNumberVar | | NOT_FOUND |
-| fitnesseTestOutputPNumVar | presentationNumberVar | | NOT_FOUND |
+| fitnesseTestPNumVar | presentation | | NOT_FOUND |
+| fitnesseTestOutputPNumVar | presentation | | NOT_FOUND |
 
 *!
 !2 
@@ -36,7 +32,7 @@ Read pVars to make sure they do not exist
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | metadataNumberVariable | {"children":[{"children":[{"name":"id","value":"fitnesseTestNumberVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataNumberVariable"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"numOfAuthors"},{"name":"min","value":"0"},{"name":"max","value":"999"},{"name":"warningMin","value":"1"},{"name":"warningMax","value":"99"},{"name":"numberOfDecimals","value":"0"}],"name":"metadata","attributes":{"type":"numberVariable"}} | | CREATED |
+| $adminAuthToken | metadata | {"children":[{"children":[{"name":"id","value":"fitnesseTestNumberVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataNumberVariable"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"numOfAuthors"},{"name":"min","value":"0"},{"name":"max","value":"999"},{"name":"warningMin","value":"1"},{"name":"warningMax","value":"99"},{"name":"numberOfDecimals","value":"0"}],"name":"metadata","attributes":{"type":"numberVariable"}} | | CREATED |
 
 *!
 Read fitnesseTestNumberVar to see that links to texts have been added to the metadata
@@ -45,7 +41,7 @@ Read fitnesseTestNumberVar to see that links to texts have been added to the met
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseTestNumberVar | metadataNumberVariable | =~/"name":"id","value":"fitnesseTestNumberVar"/ | OK |
+| fitnesseTestNumberVar | metadata | =~/"name":"id","value":"fitnesseTestNumberVar"/ | OK |
 
 *!
 Read texts again to see that they have been created
@@ -54,8 +50,8 @@ Read texts again to see that they have been created
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseTestNumberVarText | coraText | | OK |
-| fitnesseTestNumberVarDefText | coraText | | OK |
+| fitnesseTestNumberVarText | text | | OK |
+| fitnesseTestNumberVarDefText | text | | OK |
 
 *!
 Read presentationVars again to see that they have been created
@@ -64,8 +60,8 @@ Read presentationVars again to see that they have been created
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseTestPNumVar | presentationNumberVar | | OK |
-| fitnesseTestOutputPNumVar | presentationNumberVar | | OK |
+| fitnesseTestPNumVar | presentation | | OK |
+| fitnesseTestOutputPNumVar | presentation | | OK |
 
 *!
 !1 Reset testdata
@@ -75,10 +71,10 @@ Remove data created for this test
 
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | presentationNumberVar | fitnesseTestPNumVar | | OK |
-| $adminAuthToken | presentationNumberVar | fitnesseTestOutputPNumVar | | OK |
-| $adminAuthToken | metadataNumberVariable | fitnesseTestNumberVar | | OK |
-| $adminAuthToken | coraText | fitnesseTestNumberVarText | | OK |
-| $adminAuthToken | coraText | fitnesseTestNumberVarDefText | | OK |
+| $adminAuthToken | presentation | fitnesseTestPNumVar | | OK |
+| $adminAuthToken | presentation | fitnesseTestOutputPNumVar | | OK |
+| $adminAuthToken | metadata | fitnesseTestNumberVar | | OK |
+| $adminAuthToken | text | fitnesseTestNumberVarText | | OK |
+| $adminAuthToken | text | fitnesseTestNumberVarDefText | | OK |
 
 *!

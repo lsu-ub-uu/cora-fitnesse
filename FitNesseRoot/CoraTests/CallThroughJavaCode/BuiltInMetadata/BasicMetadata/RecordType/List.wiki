@@ -1,0 +1,15 @@
+---
+Static
+---
+!include -seamless .HelperPages.defineAdminAuthToken
+
+!2 List
+
+!***> It should be possible to list all recordTypes in the system
+
+!include -seamless .HelperPages.defineAdminAuthToken
+
+!| RecordEndpointFixture |
+| authToken | type | testReadRecordList? | getStatusType? |
+| $adminAuthToken | recordType | | OK |
+*!

@@ -1,14 +1,10 @@
-!contents -R2 -g -p -f -h
-| import |
-| se.uu.ub.cora.fitnesseintegration |
-
 If no token is provided will the request automatically be assigned the guest user, and its rights.  If a token that does not exist (or is no longer valid) is provided should the answer be UNAUTHORIZED
 
 !***> Read a metadataVariable with an invalid authToken
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| dummyUnauthenticatedToken | metadataTextVariable | idTextVar | | UNAUTHORIZED |
+| dummyUnauthenticatedToken | metadata | idTextVar | | UNAUTHORIZED |
 
 *!
 !| script | RecordEndpointFixture |
@@ -18,7 +14,7 @@ If no token is provided will the request automatically be assigned the guest use
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| | metadataTextVariable | idTextVar | | OK |
+| | metadata | idTextVar | | OK |
 
 *!
 !2 Test with new texts to show different createdBy userId
@@ -26,15 +22,15 @@ If no token is provided will the request automatically be assigned the guest use
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | textSystemOne | {"children":[{"children":[{"name":"id","value":"myAuthText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"textSystemOne"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Min svenska text"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}}],"name":"text"} | =~/"name":"linkedRecordId",\s*"value":"131313"/ | CREATED |
-| $userAuthToken | textSystemOne | {"children":[{"children":[{"name":"id","value":"myAuth3Text"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"textSystemOne"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Min andra text på svenska"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"My second text in english"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"} | =~/"name":"linkedRecordId",\s*"value":"121212"/ | CREATED |
+| $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"myAuthText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"textSystemOne"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Min svenska text"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}}],"name":"text"} | =~/"name":"linkedRecordId",\s*"value":"131313"/ | CREATED |
+| $userAuthToken | text | {"children":[{"children":[{"name":"id","value":"myAuth3Text"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"textSystemOne"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Min andra text på svenska"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"My second text in english"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"} | =~/"name":"linkedRecordId",\s*"value":"121212"/ | CREATED |
 
 *!
 !***> Clean up created data
 
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | textSystemOne | myAuthText | | OK |
-| $userAuthToken | textSystemOne | myAuth3Text | | OK |
+| $adminAuthToken | text | myAuthText | | OK |
+| $userAuthToken | text | myAuth3Text | | OK |
 
 *!

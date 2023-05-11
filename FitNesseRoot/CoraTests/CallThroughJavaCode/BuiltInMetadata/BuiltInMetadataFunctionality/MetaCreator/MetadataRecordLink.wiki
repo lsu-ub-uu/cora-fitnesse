@@ -1,10 +1,6 @@
 ---
 Test
 ---
-!contents -R2 -g -p -f -h
-| import |
-| se.uu.ub.cora.fitnesseintegration |
-
 !1 Testing metacompleter and creator for metadataRecordLink
 !2 Read metadata, texts and presentations to make sure they do not already exist
 If text ids are not provided when creating a metadataRecordLink the text ids are added and the texts are created in storage if they do not already exist.
@@ -16,8 +12,8 @@ Read texts to make sure they do not exist
 !| comment |
 | RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseBookLinkText | coraText | | NOT_FOUND |
-| fitnesseBookLinkDefText | coraText | | NOT_FOUND |
+| fitnesseBookLinkText | text | | NOT_FOUND |
+| fitnesseBookLinkDefText | text | | NOT_FOUND |
 
 *!
 When a recordLink has been created two presentations of that recordLink is created (input/output)
@@ -28,8 +24,8 @@ Read  presentationRecordLinks to make sure they do not exist
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseBookPLink | presentationRecordLink | | NOT_FOUND |
-| fitnesseBookOutputPLink | presentationRecordLink | | NOT_FOUND |
+| fitnesseBookPLink | presentation | | NOT_FOUND |
+| fitnesseBookOutputPLink | presentation | | NOT_FOUND |
 
 *!
 !2 
@@ -38,7 +34,7 @@ Read  presentationRecordLinks to make sure they do not exist
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | metadataRecordLink | {"children":[{"children":[{"name":"id","value":"fitnesseBookLink"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataRecordLink"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"fitnesseBook"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadataTextVariable"}],"name":"linkedRecordType"}],"name":"metadata","attributes":{"type":"recordLink"}} | | CREATED |
+| $adminAuthToken | metadata | {"children":[{"children":[{"name":"id","value":"fitnesseBookLink"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataRecordLink"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"fitnesseBook"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadata"}],"name":"linkedRecordType"}],"name":"metadata","attributes":{"type":"recordLink"}} | | CREATED |
 
 *!
 Read fitnesseBookLink to see that links to texts have been added to the metadata
@@ -47,7 +43,7 @@ Read fitnesseBookLink to see that links to texts have been added to the metadata
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseBookLink | metadataRecordLink | =~/"name":"linkedRecordId","value":"fitnesseBookLinkText".*"name":"textId".*"name":"linkedRecordId","value":"fitnesseBookLinkDefText".*"name":"defTextId"/ | OK |
+| fitnesseBookLink | metadata | =~/"name":"linkedRecordId","value":"fitnesseBookLinkText".*"name":"textId".*"name":"linkedRecordId","value":"fitnesseBookLinkDefText".*"name":"defTextId"/ | OK |
 
 *!
 Read texts again to see that they have been created
@@ -56,8 +52,8 @@ Read texts again to see that they have been created
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseBookLinkText | coraText | | OK |
-| fitnesseBookLinkDefText | coraText | | OK |
+| fitnesseBookLinkText | text | | OK |
+| fitnesseBookLinkDefText | text | | OK |
 
 *!
 Read presentationRecordLinks again to see that they have been created
@@ -66,8 +62,8 @@ Read presentationRecordLinks again to see that they have been created
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseBookPLink | presentationRecordLink | | OK |
-| fitnesseBookOutputPLink | presentationRecordLink | | OK |
+| fitnesseBookPLink | presentation | | OK |
+| fitnesseBookOutputPLink | presentation | | OK |
 
 *!
 !1 Reset testdata
@@ -77,10 +73,10 @@ Remove data created for this test
 
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | presentationRecordLink | fitnesseBookPLink | | OK |
-| $adminAuthToken | presentationRecordLink | fitnesseBookOutputPLink | | OK |
-| $adminAuthToken | metadataRecordLink | fitnesseBookLink | | OK |
-| $adminAuthToken | coraText | fitnesseBookLinkText | | OK |
-| $adminAuthToken | coraText | fitnesseBookLinkDefText | | OK |
+| $adminAuthToken | presentation | fitnesseBookPLink | | OK |
+| $adminAuthToken | presentation | fitnesseBookOutputPLink | | OK |
+| $adminAuthToken | metadata | fitnesseBookLink | | OK |
+| $adminAuthToken | text | fitnesseBookLinkText | | OK |
+| $adminAuthToken | text | fitnesseBookLinkDefText | | OK |
 
 *!

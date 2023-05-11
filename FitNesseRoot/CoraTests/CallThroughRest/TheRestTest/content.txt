@@ -1,7 +1,3 @@
-!contents -R2 -g -p -f -h
-| import |
-| se.uu.ub.cora.fitnesseintegration |
-
 !| script | SystemUrl |
 | setUrl | ${systemUnderTestUrl} |
 | setAppTokenVerifierUrl | ${appTokenVerifierUrl} |
@@ -35,7 +31,7 @@
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setBody | {"name":"metadata","attributes":{"type":"group"},"children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}]},{"name":"id","value":"generatedId"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"nameInData","value":"generatedId"},{"name":"excludePGroupCreation","value":"true"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}]},{"name":"childReferences","children":[{"name":"childReference","repeatId":"1","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"recordInfoGroup"}]},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}]},{"name":"childReference","repeatId":"2","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"idTextVar"}]},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}]}]}]} |
-| POST | /rest/record/metadataGroup | 201 | Content-Type : application/vnd.uub.record\+json | /* javascript */ !-
+| POST | /rest/record/metadata | 201 | Content-Type : application/vnd.uub.record\+json | /* javascript */ !-
 -!!-
 -!jsonbody.record.data.children[0].children[1].value == 'generatedId' &&!-
 -!jsonbody.record.actionLinks.read.requestMethod == 'GET' &&!-
@@ -46,8 +42,8 @@
 !***> Remove metadata
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| DELETE | /rest/record/metadataGroup/generatedId | 200 | | |
-| DELETE | /rest/record/coraText/someTestText | 200 | | |
-| DELETE | /rest/record/coraText/someTestDefText | 200 | | |
+| DELETE | /rest/record/metadata/generatedId | 200 | | |
+| DELETE | /rest/record/text/someTestText | 200 | | |
+| DELETE | /rest/record/text/someTestDefText | 200 | | |
 
 *!

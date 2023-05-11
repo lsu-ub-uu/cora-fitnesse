@@ -1,0 +1,17 @@
+---
+Static
+---
+!include -seamless .HelperPages.defineAdminAuthToken
+
+!2 Read
+
+!***> It should be possible from to read an instance of validationType for the validationType itself
+As a validationType instance
+!define recordType {validationType}
+!define recordId {validationType}
+!include -seamless .HelperPages.readRecord
+
+As a recordType instance
+!define recordType {recordType}
+!define recordId {validationType}
+!include -seamless .HelperPages.readRecord

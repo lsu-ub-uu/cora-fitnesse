@@ -1,10 +1,6 @@
 ---
 Test
 ---
-!contents -R2 -g -p -f -h
-| import |
-| se.uu.ub.cora.fitnesseintegration |
-
 !1 Testing metacompleter and creator for metadataItemCollection
 !2 Read metadata, texts and presentations to make sure they do not already exist
 If text ids are not provided when creating a metadataItemCollection, the text ids are added and the texts are created in storage if they do not already exist.
@@ -15,8 +11,8 @@ Read texts to make sure they do not exist
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseBookCollectionText | coraText | | NOT_FOUND |
-| fitfitnesseBookCollectionDefText | coraText | | NOT_FOUND |
+| fitnesseBookCollectionText | text | | NOT_FOUND |
+| fitfitnesseBookCollectionDefText | text | | NOT_FOUND |
 
 *!
 If a collectionItem that the itemCollection refers to does not exist in storage, the item is created.
@@ -27,7 +23,7 @@ Read item to make sure they do not exist
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| aFitnesseItem | genericCollectionItem | | NOT_FOUND |
+| aFitnesseItem | metadata | | NOT_FOUND |
 
 *!
 When the itemCollection has been created, a collectionVariable that uses the itemCollection automatically is created. When a collectionVarible has been created two presentations of that collectionVariable is created (input/output)
@@ -38,9 +34,9 @@ Read collectionVariable and presentationCollectionVars to make sure they do not 
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseBookCollectionVar | metadataCollectionVariable | | NOT_FOUND |
-| fitnesseBookPCollVar | presentationCollectionVar | | NOT_FOUND |
-| fitnesseBookOutputPCollVar | presentationCollectionVar | | NOT_FOUND |
+| fitnesseBookCollectionVar | metadata | | NOT_FOUND |
+| fitnesseBookPCollVar | presentation | | NOT_FOUND |
+| fitnesseBookOutputPCollVar | presentation | | NOT_FOUND |
 
 *!
 !2 
@@ -49,7 +45,7 @@ Read collectionVariable and presentationCollectionVars to make sure they do not 
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | metadataItemCollection | {"children":[{"children":[{"name":"id","value":"fitnesseBookCollection"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataItemCollection"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"fitnesseBook"},{"children":[{"repeatId":"0","children":[{"name":"linkedRecordType","value":"genericCollectionItem"},{"name":"linkedRecordId","value":"aFitnesseItem"}],"name":"ref"}],"name":"collectionItemReferences"}],"name":"metadata","attributes":{"type":"itemCollection"}} | !-=~/systemone/rest/record/text/fitnesseBookCollectionText".*-!!-systemone/rest/record/text/fitnesseBookCollectionDefText/-! | CREATED |
+| $adminAuthToken | metadata | {"children":[{"children":[{"name":"id","value":"fitnesseBookCollection"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataItemCollection"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"fitnesseBook"},{"children":[{"repeatId":"0","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"aFitnesseItem"}],"name":"ref"}],"name":"collectionItemReferences"}],"name":"metadata","attributes":{"type":"itemCollection"}} | !-=~/systemone/rest/record/text/fitnesseBookCollectionText".*-!!-systemone/rest/record/text/fitnesseBookCollectionDefText/-! | CREATED |
 
 *!
 Read fitnesseBookCollection to see that links to texts have been added to the metadata
@@ -58,7 +54,7 @@ Read fitnesseBookCollection to see that links to texts have been added to the me
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseBookCollection | metadataItemCollection | | OK |
+| fitnesseBookCollection | metadata | | OK |
 
 *!
 Read texts again to see that they have been created
@@ -67,8 +63,8 @@ Read texts again to see that they have been created
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseBookCollectionText | coraText | | OK |
-| fitnesseBookCollectionDefText | coraText | | OK |
+| fitnesseBookCollectionText | text | | OK |
+| fitnesseBookCollectionDefText | text | | OK |
 
 *!
 Read collectionItem again to see that it has been created
@@ -77,7 +73,7 @@ Read collectionItem again to see that it has been created
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| aFitnesseItem | genericCollectionItem | | OK |
+| aFitnesseItem | metadata | | OK |
 
 *!
 Read collectionVariable and presentationCollectionVars again to see that they have been created
@@ -86,9 +82,9 @@ Read collectionVariable and presentationCollectionVars again to see that they ha
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseBookCollectionVar | metadataCollectionVariable | | OK |
-| fitnesseBookPCollVar | presentationCollectionVar | | OK |
-| fitnesseBookOutputPCollVar | presentationCollectionVar | | OK |
+| fitnesseBookCollectionVar | metadata | | OK |
+| fitnesseBookPCollVar | presentation | | OK |
+| fitnesseBookOutputPCollVar | presentation | | OK |
 
 *!
 !1 Reset testdata
@@ -98,16 +94,16 @@ Remove data created for this test
 
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | presentationCollectionVar | fitnesseBookOutputPCollVar | | OK |
-| $adminAuthToken | presentationCollectionVar | fitnesseBookPCollVar | | OK |
-| $adminAuthToken | metadataCollectionVariable | fitnesseBookCollectionVar | | OK |
-| $adminAuthToken | metadataItemCollection | fitnesseBookCollection | | OK |
-| $adminAuthToken | coraText | fitnesseBookCollectionText | | OK |
-| $adminAuthToken | coraText | fitnesseBookCollectionDefText | | OK |
-| $adminAuthToken | genericCollectionItem | aFitnesseItem | | OK |
-| $adminAuthToken | coraText | aFitnesseItemText | | OK |
-| $adminAuthToken | coraText | aFitnesseItemDefText | | OK |
-| $adminAuthToken | coraText | fitnesseBookCollectionVarDefText | | OK |
-| $adminAuthToken | coraText | fitnesseBookCollectionVarText | | OK |
+| $adminAuthToken | presentation | fitnesseBookOutputPCollVar | | OK |
+| $adminAuthToken | presentation | fitnesseBookPCollVar | | OK |
+| $adminAuthToken | metadata | fitnesseBookCollectionVar | | OK |
+| $adminAuthToken | metadata | fitnesseBookCollection | | OK |
+| $adminAuthToken | text | fitnesseBookCollectionText | | OK |
+| $adminAuthToken | text | fitnesseBookCollectionDefText | | OK |
+| $adminAuthToken | metadata | aFitnesseItem | | OK |
+| $adminAuthToken | text | aFitnesseItemText | | OK |
+| $adminAuthToken | text | aFitnesseItemDefText | | OK |
+| $adminAuthToken | text | fitnesseBookCollectionVarDefText | | OK |
+| $adminAuthToken | text | fitnesseBookCollectionVarText | | OK |
 
 *!

@@ -1,0 +1,36 @@
+!3 Metadata
+!***> Setup metadata
+
+collectionItems
+
+!***> Create collectionItems (testYesItem, testNoItem, testUnknownItem)
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | metadata | {"children":[{"children":[{"name":"id","value":"testYesItem"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericCollectionItem"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"yes"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"testYesItemText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"testYesItemDefText"}],"name":"defTextId"}],"name":"metadata","attributes":{"type":"collectionItem"}} | | CREATED |
+| $adminAuthToken | metadata | {"children":[{"children":[{"name":"id","value":"testNoItem"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericCollectionItem"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"no"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"testNoItemText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"testNoItemDefText"}],"name":"defTextId"}],"name":"metadata","attributes":{"type":"collectionItem"}} | | CREATED |
+| $adminAuthToken | metadata | {"children":[{"children":[{"name":"id","value":"testUnknownItem"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericCollectionItem"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"unknown"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"testUnknownItemText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"testUnknownItemDefText"}],"name":"defTextId"}],"name":"metadata","attributes":{"type":"collectionItem"}} | | CREATED |
+
+*!
+ItemCollections
+
+!***> Create texts for itemCollections
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"someTestText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"En text"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}}],"name":"text"} | | CREATED |
+| $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"someTestDefText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"En definitionstext"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"A defText"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"} | | CREATED |
+
+*!
+!***> Create itemCollections (yesNoUnknown, yesNoCollection)
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecordCreatedType? | getStatusType? |
+| $adminAuthToken | metadata | {"children":[{"children":[{"name":"id","value":"testYesNoUnknownCollection"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataItemCollection"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"testYesNoUnknownI"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}],"name":"defTextId"},{"children":[{"repeatId":"0","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"testYesItem"}],"name":"ref"},{"repeatId":"1","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"testNoItem"}],"name":"ref"},{"repeatId":"2","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"testUnknownItem"}],"name":"ref"}],"name":"collectionItemReferences"}],"name":"metadata","attributes":{"type":"itemCollection"}} | metadata | CREATED |
+| $adminAuthToken | metadata | {"children":[{"children":[{"name":"id","value":"testYesNoCollection"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataItemCollection"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"testYesNo"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}],"name":"defTextId"},{"children":[{"repeatId":"0","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"testYesItem"}],"name":"ref"},{"repeatId":"1","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"testNoItem"}],"name":"ref"}],"name":"collectionItemReferences"}],"name":"metadata","attributes":{"type":"itemCollection"}} | | CREATED |
+
+*!
+
+*!
+
+
