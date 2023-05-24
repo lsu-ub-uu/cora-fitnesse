@@ -11,8 +11,6 @@
 | $adminAuthToken | recordType | yesNoUnknown | | OK |
 | $adminAuthToken | presentation | yesNoUnknownMenuPGroup | | OK |
 | $adminAuthToken | presentation | yesNoUnknownListPGroup | | OK |
-| $adminAuthToken | presentation | yesNoUnknownFormPGroup | | OK |
-| $adminAuthToken | presentation | yesNoUnknownFormNewPGroup | | OK |
 | $adminAuthToken | presentation | yesNoUnknownViewPGroup | | OK |
 | $adminAuthToken | presentation | yesNoUnknownOutputPGroup | | OK |
 | $adminAuthToken | presentation | yesNoUnknownPGroup | | OK |
