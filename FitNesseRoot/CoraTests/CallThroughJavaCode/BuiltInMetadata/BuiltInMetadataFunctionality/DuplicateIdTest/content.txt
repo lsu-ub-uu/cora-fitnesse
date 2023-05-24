@@ -77,8 +77,6 @@ A user should not be able to create a post with an id that already exists. This 
 | $adminAuthToken | recordType | car | | OK |
 | $adminAuthToken | presentation | someFitnesseMenuPGroup | | OK |
 | $adminAuthToken | presentation | someFitnesseListPGroup | | OK |
-| $adminAuthToken | presentation | someFitnesseFormPGroup | | OK |
-| $adminAuthToken | presentation | someFitnesseFormNewPGroup | | OK |
 | $adminAuthToken | presentation | someFitnesseViewPGroup | | OK |
 | $adminAuthToken | metadata | carGroup | | OK |
 | $adminAuthToken | metadata | carNewGroup | | OK |

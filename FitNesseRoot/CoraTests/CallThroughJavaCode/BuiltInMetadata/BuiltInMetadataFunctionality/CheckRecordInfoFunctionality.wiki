@@ -51,12 +51,15 @@ In the second test it verifies that the timestamps are updated properly and it d
 | $adminAuthToken | search | myRecordTypeSearch | | OK |
 | $adminAuthToken | validationType | myRecordType | | OK |
 | $adminAuthToken | recordType | myRecordType | | OK |
+| $adminAuthToken | presentation | myRecordTypeNewPGroup | | OK |
 | $adminAuthToken | presentation | myRecordTypePGroup | | OK |
 | $adminAuthToken | presentation | myRecordTypeOutputPGroup | | OK |
 | $adminAuthToken | metadata | myRecordTypeNewGroup | | OK |
 | $adminAuthToken | metadata | myRecordTypeGroup | | OK |
 | $adminAuthToken | text | someFitnesseText | | OK |
 | $adminAuthToken | text | someFitnesseDefText | | OK |
+
+myRecordTypeNewPGroup
 
 *!
 *!

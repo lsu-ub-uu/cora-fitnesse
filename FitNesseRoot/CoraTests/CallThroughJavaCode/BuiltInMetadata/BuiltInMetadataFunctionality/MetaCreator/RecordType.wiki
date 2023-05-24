@@ -19,11 +19,10 @@ If a metadataGroup that the recordType refers to does not exist in storage, the 
 
 Read metadatGroups to make sure they do not exist
 
-!***> Read fitnesseBookNewGroup and fitnesseBookGroup
+!***> Read fitnesseBookGroup
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseBookNewGroup | metadata | | NOT_FOUND |
 | fitnesseBookGroup | metadata | | NOT_FOUND |
 
 *!
@@ -69,7 +68,7 @@ Read fitnesseBook to see that metadata has been added
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseBook | recordType | =~/"name":"linkedRecordId","value":"fitnesseBookText".*"name":"textId".*"name":"linkedRecordId","value":"fitnesseBookDefText".*"name":"defTextId".*"name":"linkedRecordId","value":"fitnesseBookGroup".*"name":"metadataId".*"name":"linkedRecordId","value":"fitnesseBookNewGroup".*"name":"newMetadataId".*"name":"linkedRecordId","value":"fitnesseBookOutputPGroup".*"name":"presentationViewId".*"name":"linkedRecordId","value":"fitnesseBookPGroup".*"name":"presentationFormId".*"name":"linkedRecordId","value":"fitnesseBookNewPGroup".*"name":"newPresentationFormId".*"name":"linkedRecordId","value":"fitnesseBookMenuPGroup".*"name":"menuPresentationViewId".*"name":"linkedRecordId","value":"fitnesseBookListPGroup".*"name":"listPresentationViewId".*"name":"linkedRecordId","value":"fitnesseBookAutocompletePGroup".*"name":"autocompletePresentationView"/ | OK |
+| fitnesseBook | recordType | =~/"name":"linkedRecordId","value":"fitnesseBookText".*"name":"textId".*"name":"linkedRecordId","value":"fitnesseBookDefText".*"name":"defTextId".*"name":"linkedRecordId","value":"fitnesseBookGroup".*"name":"metadataId".*"name":"linkedRecordId","value":"fitnesseBookOutputPGroup".*"name":"presentationViewId".*"name":"linkedRecordId","value":"fitnesseBookMenuPGroup".*"name":"menuPresentationViewId".*"name":"linkedRecordId","value":"fitnesseBookListPGroup".*"name":"listPresentationViewId".*"name":"linkedRecordId","value":"fitnesseBookAutocompletePGroup".*"name":"autocompletePresentationView"/ | OK |
 
 *!
 Read texts again to see that they have been created
@@ -84,11 +83,10 @@ Read texts again to see that they have been created
 *!
 Read metadataGroups again to see that it has been created
 
-!***> Read fitnesseBookNewGroup andfitnesseBookGroup
+!***> Read fitnesseBookGroup
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseBookNewGroup | metadata | | OK |
 | fitnesseBookGroup | metadata | | OK |
 
 *!
@@ -99,8 +97,6 @@ Read presentationGroups again to see that they have been created
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
 | fitnesseBookOutputPGroup | presentation | =~/"name":"mode".*"value":"output".*"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoOutputPGroup"/ | OK |
-| fitnesseBookPGroup | presentation | =~/"name":"mode".*"value":"input".*"name":"refGroup".*name":"linkedRecordId","value":"recordInfoPGroup"/ | OK |
-| fitnesseBookNewPGroup | presentation | =~/"name":"mode".*"value":"input".*"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoNewPGroup"/ | OK |
 | fitnesseBookMenuPGroup | presentation | =~/"name":"mode".*"value":"output".*"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoOutputPGroup"/ | OK |
 | fitnesseBookListPGroup | presentation | =~/"name":"mode".*"value":"output".*"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoOutputPGroup"/ | OK |
 
@@ -113,8 +109,6 @@ Read presentationGroups again to see that they have been created
 | $adminAuthToken | search | fitnesseBookSearch | | OK |
 | $adminAuthToken | recordType | fitnesseBook | | OK |
 | $adminAuthToken | presentation | fitnesseBookOutputPGroup | | OK |
-| $adminAuthToken | presentation | fitnesseBookPGroup | | OK |
-| $adminAuthToken | presentation | fitnesseBookNewPGroup | | OK |
 | $adminAuthToken | presentation | fitnesseBookMenuPGroup | | OK |
 | $adminAuthToken | presentation | fitnesseBookListPGroup | | OK |
 | $adminAuthToken | presentation | fitnesseBookAutocompletePGroup | | OK |
@@ -128,12 +122,11 @@ Read presentationGroups again to see that they have been created
 | $adminAuthToken | metadata | {"children":[{"children":[{"name":"id","value":"someTestTextVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataTextVariable"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"someTest"},{"name":"regEx","value":"(^[0-9A-Za-z:-_\\s]{2,50}$)"}],"name":"metadata","attributes":{"type":"textVariable"}} | | CREATED |
 
 *!
-!***> Add someTestTextVar to  autocreatedfitnesseBookGroup and fitnesseBookNewGroup
+!***> Add someTestTextVar to  autocreatedfitnesseBookGroup
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
 | $adminAuthToken | metadata | fitnesseBookGroup | {"children":[{"children":[{"name":"id","value":"fitnesseBookGroup"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadata"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"fitnesseBook"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseBookGroupText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseBookGroupDefText"}],"name":"defTextId"},{"children":[{"repeatId":"0","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"recordInfoGroup"}],"name":"ref"}],"name":"childReference"},{"repeatId":"1","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"someTestTextVar"}],"name":"ref"}],"name":"childReference"}],"name":"childReferences"}],"name":"metadata","attributes":{"type":"group"}} | | OK |
-| $adminAuthToken | metadata | fitnesseBookNewGroup | {"children":[{"children":[{"name":"id","value":"fitnesseBookNewGroup"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadata"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"fitnesseBook"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseBookNewGroupText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseBookNewGroupDefText"}],"name":"defTextId"},{"children":[{"repeatId":"0","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"recordInfoNewGroup"}],"name":"ref"}],"name":"childReference"},{"repeatId":"1","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"someTestTextVar"}],"name":"ref"}],"name":"childReference"}],"name":"childReferences"}],"name":"metadata","attributes":{"type":"group"}} | | OK |
 
 *!
 !2 Create recordType fitnesseBook again and read presentation group again
@@ -151,8 +144,6 @@ Read presentationGroups again to see that they have been created. This time fitn
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
 | fitnesseBookOutputPGroup | presentation | =~/"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoOutputPGroup".*"name":"refGroup".*"name":"linkedRecordId","value":"someTestOutputPVar"/ | OK |
-| fitnesseBookPGroup | presentation | =~/name":"linkedRecordId","value":"recordInfoPGroup".*"name":"refGroup".*"name":"linkedRecordId","value":"someTestPVar".*"name":"refGroup"/ | OK |
-| fitnesseBookNewPGroup | presentation | =~/"name":"linkedRecordId","value":"recordInfoNewPGroup".*"name":"refGroup".*"name":"linkedRecordId","value":"someTestPVar".*"name":"refGroup"/ | OK |
 | fitnesseBookMenuPGroup | presentation | =~/"name":"linkedRecordId","value":"recordInfoOutputPGroup".*"name":"refGroup"/ | OK |
 | fitnesseBookListPGroup | presentation | =~/"name":"linkedRecordId","value":"recordInfoOutputPGroup".*"name":"refGroup"/ | OK |
 
@@ -167,22 +158,17 @@ Remove data created for this test
 | $adminAuthToken | search | fitnesseBookSearch | | OK |
 | $adminAuthToken | recordType | fitnesseBook | | OK |
 | $adminAuthToken | presentation | fitnesseBookOutputPGroup | | OK |
-| $adminAuthToken | presentation | fitnesseBookPGroup | | OK |
-| $adminAuthToken | presentation | fitnesseBookNewPGroup | | OK |
 | $adminAuthToken | presentation | fitnesseBookMenuPGroup | | OK |
 | $adminAuthToken | presentation | fitnesseBookListPGroup | | OK |
 | $adminAuthToken | presentation | fitnesseBookAutocompletePGroup | | OK |
 | $adminAuthToken | presentation | someTestPVar | | OK |
 | $adminAuthToken | presentation | someTestOutputPVar | | OK |
-| $adminAuthToken | metadata | fitnesseBookNewGroup | | OK |
 | $adminAuthToken | metadata | fitnesseBookGroup | | OK |
 | $adminAuthToken | metadata | someTestTextVar | | OK |
 | $adminAuthToken | text | fitnesseBookText | | OK |
 | $adminAuthToken | text | fitnesseBookDefText | | OK |
 | $adminAuthToken | text | fitnesseBookGroupText | | OK |
 | $adminAuthToken | text | fitnesseBookGroupDefText | | OK |
-| $adminAuthToken | text | fitnesseBookNewGroupText | | OK |
-| $adminAuthToken | text | fitnesseBookNewGroupDefText | | OK |
 | $adminAuthToken | text | fitnesseBookSearchText | | OK |
 | $adminAuthToken | text | fitnesseBookSearchDefText | | OK |
 
