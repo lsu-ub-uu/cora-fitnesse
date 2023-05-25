@@ -1,2 +1,2 @@
 !1 Test suite for all metadata
-!contents -R2 -g -p -f -h
+!contents -R3 -g -p -f -h

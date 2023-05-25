@@ -1,219 +1,253 @@
-!3 
-!2 Auto-creation
-NOT YET ACTIVE WAITING FOR CORA-1842
-!5 If trying to create a record type that does not have a at least one validation type, the system should handle this automatically and generate a validation type with the same name as the recordType.
-!***> Create recordType for fitnessStudentThesis
+---
+Test
+---
+!1 Testing metacreator for validation type
+ * '''Case 1:''' Metacreator creates metadata group for a definitionNew and a definitionUpdate if they do not exist in storage.
+ * '''Case 2:''' Metacreator creates presentations for new  and update if they do not exist.
+ * '''Case 3:''' Metacreator creates text och defText if they do not exist.
+ * '''Case 4: '''Metacreator creates links for definitions and presentations if they do not exist.
+ * '''Case 5''': If validatesRecordtype does not exist, no groups and presentations are created.
 
-#!| RecordEndpointFixture |
-#| authToken | type | json | testCreateRecord? | getStatusType? |
-#| $adminAuthToken | recordType | {"children":[{"children":[{"name":"id","value":"fitnessStudentThesis"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseGroup"}],"name":"metadataId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"presentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"menuPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"listPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"autocompletePresentationView"},{"name":"public","value":"false"},{"name":"userSuppliedId","value":"false"},{"name":"storeInArchive","value":"false"},{"repeatId":"0","name":"groupOfRecordType","value":"metadata"},{"name":"abstract","value":"false"}],"name":"recordType"} | | CREATED |
-*!
+!2 Read metadata, texts and presentations to make sure they do not already exist
+If text ids are not provided when creating a recordType, the text ids are added and the texts are created in storage if they do not already exist.
 
-!***> Create data (a record) for a fitnessStudentThesis with an automatically generated validation type used.
+Read texts to make sure they do not exist
 
-!5 We should also be able to create a new record and reference the validationType the system automatically generated.
-
-#!| RecordEndpointFixture |
-#| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
-#| $adminAuthToken | fitnessStudentThesis | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnessStudentThesis"}],"name":"validationType"}],"name":"recordInfo"},{"name":"fitnesseTextVar","value":"This is a very long thesis"}],"name":"fitnesseExample"} | | CREATED | $createdId= |
-*!
-
-!4 Clean up
-!***> Delete the recordType, the generated validation type and the record.
+!***> Read fitnesseBookText and fitnesseBookDefText
 
 !| RecordEndpointFixture |
-#| $adminAuthToken | fitnessStudentThesis | $createdId | | OK |
-#| $adminAuthToken | validationType | fitnessStudentThesis | | OK |
-#| $adminAuthToken | search | fitnessStudentThesisSearch | | OK |
-#| $adminAuthToken | recordType | fitnessStudentThesis | | OK |
+| id | type | testReadRecord? | getStatusType? |
+| fitnesseBookText | text | | NOT_FOUND |
+| fitnesseBookDefText | text | | NOT_FOUND |
+
+*!
+If a metadataGroup that the recordType refers to does not exist in storage, the metadataGroup is created.
+
+Read metadatGroups to make sure they do not exist
+
+!***> Read fitnesseBookNewGroup and fitnesseBookGroup
+
+!| RecordEndpointFixture |
+| id | type | testReadRecord? | getStatusType? |
+| fitnesseBookNewGroup | metadata | | NOT_FOUND |
+| fitnesseBookGroup | metadata | | NOT_FOUND |
+
+*!
+If a presentationGroup that the recordType refers to does not exist in storage, the presentationGroup is created.
+
+Read presentationGroups to make sure they do not exist
+
+!***> Read fitnesseBookOutputPGroup, fitnesseBookPGroup, fitnesseBookNewPGroup, fitnesseBookMenuPGroup and fitnesseBookListPGroup
+
+!| RecordEndpointFixture |
+| id | type | testReadRecord? | getStatusType? |
+| fitnesseBookOutputPGroup | presentation | | NOT_FOUND |
+| fitnesseBookPGroup | presentation | | NOT_FOUND |
+| fitnesseBookNewPGroup | presentation | | NOT_FOUND |
+| fitnesseBookMenuPGroup | presentation | | NOT_FOUND |
+| fitnesseBookListPGroup | presentation | | NOT_FOUND |
+| fitnesseBookAutocompletePGroup | presentation | | NOT_FOUND |
+
+*!
+If a search for the recordType does not exist in storage, the search is created.
+
+Read search to make sure it does not exist
+
+!***> Read fitnesseBookSearch
+
+!| RecordEndpointFixture |
+| id | type | testReadRecord? | getStatusType? |
+| fitnesseBookSearch | search | | NOT_FOUND |
+
+*!
+!2 
+!2 Create a new recordType
+!***> Create data of recordType recordType (fitnesseBook)
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | recordType | {"children":[{"name":"abstract","value":"false"},{"children":[{"name":"id","value":"fitnesseBook"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}],"name":"validationType"}],"name":"recordInfo"},{"name":"userSuppliedId","value":"true"},{"repeatId":"0","name":"groupOfRecordType","value":"metadata"},{"name":"storeInArchive","value":"false"}],"name":"recordType"} | | CREATED |
+
+*!
+Read fitnesseBook to see that metadata has been added
+
+!***> Read fitnesseBook
+
+!| RecordEndpointFixture |
+| id | type | testReadRecord? | getStatusType? |
+| fitnesseBook | recordType | =~/"name":"linkedRecordId","value":"fitnesseBookText".*"name":"textId".*"name":"linkedRecordId","value":"fitnesseBookDefText".*"name":"defTextId".*"name":"linkedRecordId","value":"fitnesseBookGroup".*"name":"metadataId".*"name":"linkedRecordId","value":"fitnesseBookOutputPGroup".*"name":"presentationViewId".*"name":"linkedRecordId","value":"fitnesseBookMenuPGroup".*"name":"menuPresentationViewId".*"name":"linkedRecordId","value":"fitnesseBookListPGroup".*"name":"listPresentationViewId".*"name":"linkedRecordId","value":"fitnesseBookAutocompletePGroup".*"name":"autocompletePresentationView"/ | OK |
+
+*!
+Read texts again to see that they have been created
+
+!***> Read fitnesseBookText and fitnesseBookDefText
+
+!| RecordEndpointFixture |
+| id | type | testReadRecord? | getStatusType? |
+| fitnesseBookText | text | | OK |
+| fitnesseBookDefText | text | | OK |
+
+*!
+Read metadataGroups again to see that it has been created
+
+!***> Read fitnesseBookNewGroup andfitnesseBookGroup
+
+!| RecordEndpointFixture |
+| id | type | testReadRecord? | getStatusType? |
+| fitnesseBookGroup | metadata | | OK |
+
+*!
+Read presentationGroups again to see that they have been created
+
+!***> Read fitnesseBookOutputPGroup, fitnesseBookPGroup, fitnesseBookNewPGroup, fitnesseBookMenuPGroup and fitnesseBookListPGroup
+
+!| RecordEndpointFixture |
+| id | type | testReadRecord? | getStatusType? |
+| fitnesseBookOutputPGroup | presentation | =~/"name":"mode".*"value":"output".*"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoOutputPGroup"/ | OK |
+| fitnesseBookPGroup | presentation | =~/"name":"mode".*"value":"input".*"name":"refGroup".*name":"linkedRecordId","value":"recordInfoPGroup"/ | OK |
+| fitnesseBookNewPGroup | presentation | =~/"name":"mode".*"value":"input".*"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoNewPGroup"/ | OK |
+| fitnesseBookMenuPGroup | presentation | =~/"name":"mode".*"value":"output".*"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoOutputPGroup"/ | OK |
+| fitnesseBookListPGroup | presentation | =~/"name":"mode".*"value":"output".*"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoOutputPGroup"/ | OK |
+
+*!
+!2 Delete some data
+!***> Delete RecordType and presentations
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | search | fitnesseBookSearch | | OK |
+| $adminAuthToken | recordType | fitnesseBook | | OK |
+| $adminAuthToken | presentation | fitnesseBookOutputPGroup | | OK |
+| $adminAuthToken | presentation | fitnesseBookPGroup | | OK |
+| $adminAuthToken | presentation | fitnesseBookNewPGroup | | OK |
+| $adminAuthToken | presentation | fitnesseBookMenuPGroup | | OK |
+| $adminAuthToken | presentation | fitnesseBookListPGroup | | OK |
+| $adminAuthToken | presentation | fitnesseBookAutocompletePGroup | | OK |
+
+*!
+!2 Update metadata groups and add some childRefs
+!***> Create metadataTextVariable someTestTextVar
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | metadata | {"children":[{"children":[{"name":"id","value":"someTestTextVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataTextVariable"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"someTest"},{"name":"regEx","value":"(^[0-9A-Za-z:-_\\s]{2,50}$)"}],"name":"metadata","attributes":{"type":"textVariable"}} | | CREATED |
+
+*!
+!***> Add someTestTextVar to  autocreatedfitnesseBookGroup and fitnesseBookNewGroup
+
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? | getStatusType? |
+| $adminAuthToken | metadata | fitnesseBookGroup | {"children":[{"children":[{"name":"id","value":"fitnesseBookGroup"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadata"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"fitnesseBook"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseBookGroupText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseBookGroupDefText"}],"name":"defTextId"},{"children":[{"repeatId":"0","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"recordInfoGroup"}],"name":"ref"}],"name":"childReference"},{"repeatId":"1","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"someTestTextVar"}],"name":"ref"}],"name":"childReference"}],"name":"childReferences"}],"name":"metadata","attributes":{"type":"group"}} | | OK |
+| $adminAuthToken | metadata | fitnesseBookNewGroup | {"children":[{"children":[{"name":"id","value":"fitnesseBookNewGroup"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadata"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"fitnesseBook"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseBookNewGroupText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseBookNewGroupDefText"}],"name":"defTextId"},{"children":[{"repeatId":"0","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"recordInfoNewGroup"}],"name":"ref"}],"name":"childReference"},{"repeatId":"1","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"someTestTextVar"}],"name":"ref"}],"name":"childReference"}],"name":"childReferences"}],"name":"metadata","attributes":{"type":"group"}} | | OK |
+
+*!
+!2 Create recordType fitnesseBook again and read presentation group again
+!***> Create data of recordType recordType (fitnesseBook)
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | recordType | {"children":[{"name":"abstract","value":"false"},{"children":[{"name":"id","value":"fitnesseBook"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}],"name":"validationType"}],"name":"recordInfo"},{"name":"userSuppliedId","value":"true"},{"repeatId":"0","name":"groupOfRecordType","value":"metadata"},{"name":"storeInArchive","value":"false"}],"name":"recordType"} | | CREATED |
+
+*!
+Read presentationGroups again to see that they have been created. This time fitnesseBookFormPGroup, fitnesseBookFormNewPGroup and fitnesseBookViewPGroup should also have a reference to presentation variable for the added text variable child
+
+!***> Read fitnesseBookOutputPGroup, fitnesseBookPGroup, fitnesseBookNewPGroup, fitnesseBookMenuPGroup and fitnesseBookListPGroup
+
+!| RecordEndpointFixture |
+| id | type | testReadRecord? | getStatusType? |
+| fitnesseBookOutputPGroup | presentation | =~/"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoOutputPGroup".*"name":"refGroup".*"name":"linkedRecordId","value":"someTestOutputPVar"/ | OK |
+| fitnesseBookPGroup | presentation | =~/name":"linkedRecordId","value":"recordInfoPGroup".*"name":"refGroup".*"name":"linkedRecordId","value":"someTestPVar".*"name":"refGroup"/ | OK |
+| fitnesseBookNewPGroup | presentation | =~/"name":"linkedRecordId","value":"recordInfoNewPGroup".*"name":"refGroup".*"name":"linkedRecordId","value":"someTestPVar".*"name":"refGroup"/ | OK |
+| fitnesseBookMenuPGroup | presentation | =~/"name":"linkedRecordId","value":"recordInfoOutputPGroup".*"name":"refGroup"/ | OK |
+| fitnesseBookListPGroup | presentation | =~/"name":"linkedRecordId","value":"recordInfoOutputPGroup".*"name":"refGroup"/ | OK |
+
+*!
+!1 Reset testdata
+Remove data created for this test
+
+!***> Delete created metadata, presentations and texts
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | search | fitnesseBookSearch | | OK |
+| $adminAuthToken | recordType | fitnesseBook | | OK |
+| $adminAuthToken | presentation | fitnesseBookOutputPGroup | | OK |
+| $adminAuthToken | presentation | fitnesseBookPGroup | | OK |
+| $adminAuthToken | presentation | fitnesseBookNewPGroup | | OK |
+| $adminAuthToken | presentation | fitnesseBookMenuPGroup | | OK |
+| $adminAuthToken | presentation | fitnesseBookListPGroup | | OK |
+| $adminAuthToken | presentation | fitnesseBookAutocompletePGroup | | OK |
+| $adminAuthToken | presentation | someTestPVar | | OK |
+| $adminAuthToken | presentation | someTestOutputPVar | | OK |
+| $adminAuthToken | metadata | fitnesseBookNewGroup | | OK |
+| $adminAuthToken | metadata | fitnesseBookGroup | | OK |
+| $adminAuthToken | metadata | someTestTextVar | | OK |
+| $adminAuthToken | text | fitnesseBookText | | OK |
+| $adminAuthToken | text | fitnesseBookDefText | | OK |
+| $adminAuthToken | text | fitnesseBookGroupText | | OK |
+| $adminAuthToken | text | fitnesseBookGroupDefText | | OK |
+| $adminAuthToken | text | fitnesseBookNewGroupText | | OK |
+| $adminAuthToken | text | fitnesseBookNewGroupDefText | | OK |
+| $adminAuthToken | text | fitnesseBookSearchText | | OK |
+| $adminAuthToken | text | fitnesseBookSearchDefText | | OK |
+
+*!
+#!3
+
+#!2 Auto-creation
+
+#NOT YET ACTIVE WAITING FOR CORA-1842
+
+#!5 If trying to create a record type that does not have a at least one validation type, the system should handle this automatically and generate a validation type with the same name as the recordType.
+
+#!***> Create recordType for fitnessStudentThesis
+
 #
-#
-#---
-#Test
-#---
-#!1 Testing metacompleter and creator for recordType
-#!2 Read metadata, texts and presentations to make sure they do not already exist
-#If text ids are not provided when creating a recordType, the text ids are added and the texts are created in storage if they do not already exist.
-#
-#Read texts to make sure they do not exist
-#
-#!***> Read fitnesseBookText and fitnesseBookDefText
-#
-#!| RecordEndpointFixture |
-#| id | type | testReadRecord? | getStatusType? |
-#| fitnesseBookText | text | | NOT_FOUND |
-#| fitnesseBookDefText | text | | NOT_FOUND |
-#
+
+##!| RecordEndpointFixture |
+
+##| authToken | type | json | testCreateRecord? | getStatusType? |
+
+##| $adminAuthToken | recordType | {"children":[{"children":[{"name":"id","value":"fitnessStudentThesis"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseGroup"}],"name":"metadataId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"presentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"menuPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"listPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"autocompletePresentationView"},{"name":"public","value":"false"},{"name":"userSuppliedId","value":"false"},{"name":"storeInArchive","value":"false"},{"repeatId":"0","name":"groupOfRecordType","value":"metadata"},{"name":"abstract","value":"false"}],"name":"recordType"} | | CREATED |
+
 #*!
-#If a metadataGroup that the recordType refers to does not exist in storage, the metadataGroup is created.
+
 #
-#Read metadatGroups to make sure they do not exist
+
+#!***> Create data (a record) for a fitnessStudentThesis with an automatically generated validation type used.
+
 #
-#!***> Read fitnesseBookNewGroup and fitnesseBookGroup
+
+#!5 We should also be able to create a new record and reference the validationType the system automatically generated.
+
 #
-#!| RecordEndpointFixture |
-#| id | type | testReadRecord? | getStatusType? |
-#| fitnesseBookNewGroup | metadata | | NOT_FOUND |
-#| fitnesseBookGroup | metadata | | NOT_FOUND |
-#
+
+##!| RecordEndpointFixture |
+
+##| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
+
+##| $adminAuthToken | fitnessStudentThesis | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnessStudentThesis"}],"name":"validationType"}],"name":"recordInfo"},{"name":"fitnesseTextVar","value":"This is a very long thesis"}],"name":"fitnesseExample"} | | CREATED | $createdId= |
+
 #*!
-#If a presentationGroup that the recordType refers to does not exist in storage, the presentationGroup is created.
+
 #
-#Read presentationGroups to make sure they do not exist
+
+#!4 Clean up
+
+#!***> Delete the recordType, the generated validation type and the record.
+
 #
-#!***> Read fitnesseBookOutputPGroup, fitnesseBookPGroup, fitnesseBookNewPGroup, fitnesseBookMenuPGroup and fitnesseBookListPGroup
-#
+
 #!| RecordEndpointFixture |
-#| id | type | testReadRecord? | getStatusType? |
-#| fitnesseBookOutputPGroup | presentation | | NOT_FOUND |
-#| fitnesseBookPGroup | presentation | | NOT_FOUND |
-#| fitnesseBookNewPGroup | presentation | | NOT_FOUND |
-#| fitnesseBookMenuPGroup | presentation | | NOT_FOUND |
-#| fitnesseBookListPGroup | presentation | | NOT_FOUND |
-#| fitnesseBookAutocompletePGroup | presentation | | NOT_FOUND |
-#
-#*!
-#If a search for the recordType does not exist in storage, the search is created.
-#
-#Read search to make sure it does not exist
-#
-#!***> Read fitnesseBookSearch
-#
-#!| RecordEndpointFixture |
-#| id | type | testReadRecord? | getStatusType? |
-#| fitnesseBookSearch | search | | NOT_FOUND |
-#
-#*!
-#!2 
-#!2 Create a new recordType
-#!***> Create data of recordType recordType (fitnesseBook)
-#
-#!| RecordEndpointFixture |
-#| authToken | type | json | testCreateRecord? | getStatusType? |
-#| $adminAuthToken | recordType | {"children":[{"name":"abstract","value":"false"},{"children":[{"name":"id","value":"fitnesseBook"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}],"name":"validationType"}],"name":"recordInfo"},{"name":"userSuppliedId","value":"true"},{"repeatId":"0","name":"groupOfRecordType","value":"metadata"},{"name":"storeInArchive","value":"false"}],"name":"recordType"} | | CREATED |
-#
-#*!
-#Read fitnesseBook to see that metadata has been added
-#
-#!***> Read fitnesseBook
-#
-#!| RecordEndpointFixture |
-#| id | type | testReadRecord? | getStatusType? |
-#| fitnesseBook | recordType | =~/"name":"linkedRecordId","value":"fitnesseBookText".*"name":"textId".*"name":"linkedRecordId","value":"fitnesseBookDefText".*"name":"defTextId".*"name":"linkedRecordId","value":"fitnesseBookGroup".*"name":"metadataId".*"name":"linkedRecordId","value":"fitnesseBookOutputPGroup".*"name":"presentationViewId".*"name":"linkedRecordId","value":"fitnesseBookMenuPGroup".*"name":"menuPresentationViewId".*"name":"linkedRecordId","value":"fitnesseBookListPGroup".*"name":"listPresentationViewId".*"name":"linkedRecordId","value":"fitnesseBookAutocompletePGroup".*"name":"autocompletePresentationView"/ | OK |
-#
-#*!
-#Read texts again to see that they have been created
-#
-#!***> Read fitnesseBookText and fitnesseBookDefText
-#
-#!| RecordEndpointFixture |
-#| id | type | testReadRecord? | getStatusType? |
-#| fitnesseBookText | text | | OK |
-#| fitnesseBookDefText | text | | OK |
-#
-#*!
-#Read metadataGroups again to see that it has been created
-#
-#!***> Read fitnesseBookNewGroup andfitnesseBookGroup
-#
-#!| RecordEndpointFixture |
-#| id | type | testReadRecord? | getStatusType? |
-#| fitnesseBookGroup | metadata | | OK |
-#
-#*!
-#Read presentationGroups again to see that they have been created
-#
-#!***> Read fitnesseBookOutputPGroup, fitnesseBookPGroup, fitnesseBookNewPGroup, fitnesseBookMenuPGroup and fitnesseBookListPGroup
-#
-#!| RecordEndpointFixture |
-#| id | type | testReadRecord? | getStatusType? |
-#| fitnesseBookOutputPGroup | presentation | =~/"name":"mode".*"value":"output".*"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoOutputPGroup"/ | OK |
-#| fitnesseBookPGroup | presentation | =~/"name":"mode".*"value":"input".*"name":"refGroup".*name":"linkedRecordId","value":"recordInfoPGroup"/ | OK |
-#| fitnesseBookNewPGroup | presentation | =~/"name":"mode".*"value":"input".*"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoNewPGroup"/ | OK |
-#| fitnesseBookMenuPGroup | presentation | =~/"name":"mode".*"value":"output".*"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoOutputPGroup"/ | OK |
-#| fitnesseBookListPGroup | presentation | =~/"name":"mode".*"value":"output".*"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoOutputPGroup"/ | OK |
-#
-#*!
-#!2 Delete some data
-#!***> Delete RecordType and presentations
-#
-#!| RecordEndpointFixture |
-#| authToken | type | id | testDeleteRecord? | getStatusType? |
-#| $adminAuthToken | search | fitnesseBookSearch | | OK |
-#| $adminAuthToken | recordType | fitnesseBook | | OK |
-#| $adminAuthToken | presentation | fitnesseBookOutputPGroup | | OK |
-#| $adminAuthToken | presentation | fitnesseBookPGroup | | OK |
-#| $adminAuthToken | presentation | fitnesseBookNewPGroup | | OK |
-#| $adminAuthToken | presentation | fitnesseBookMenuPGroup | | OK |
-#| $adminAuthToken | presentation | fitnesseBookListPGroup | | OK |
-#| $adminAuthToken | presentation | fitnesseBookAutocompletePGroup | | OK |
-#
-#*!
-#!2 Update metadata groups and add some childRefs
-#!***> Create metadataTextVariable someTestTextVar
-#
-#!| RecordEndpointFixture |
-#| authToken | type | json | testCreateRecord? | getStatusType? |
-#| $adminAuthToken | metadata | {"children":[{"children":[{"name":"id","value":"someTestTextVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataTextVariable"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"someTest"},{"name":"regEx","value":"(^[0-9A-Za-z:-_\\s]{2,50}$)"}],"name":"metadata","attributes":{"type":"textVariable"}} | | CREATED |
-#
-#*!
-#!***> Add someTestTextVar to  autocreatedfitnesseBookGroup and fitnesseBookNewGroup
-#
-#!| RecordEndpointFixture |
-#| authToken | type | id | json | testUpdateRecord? | getStatusType? |
-#| $adminAuthToken | metadata | fitnesseBookGroup | {"children":[{"children":[{"name":"id","value":"fitnesseBookGroup"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadata"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"fitnesseBook"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseBookGroupText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseBookGroupDefText"}],"name":"defTextId"},{"children":[{"repeatId":"0","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"recordInfoGroup"}],"name":"ref"}],"name":"childReference"},{"repeatId":"1","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"someTestTextVar"}],"name":"ref"}],"name":"childReference"}],"name":"childReferences"}],"name":"metadata","attributes":{"type":"group"}} | | OK |
-#| $adminAuthToken | metadata | fitnesseBookNewGroup | {"children":[{"children":[{"name":"id","value":"fitnesseBookNewGroup"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadata"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"fitnesseBook"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseBookNewGroupText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseBookNewGroupDefText"}],"name":"defTextId"},{"children":[{"repeatId":"0","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"recordInfoNewGroup"}],"name":"ref"}],"name":"childReference"},{"repeatId":"1","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"someTestTextVar"}],"name":"ref"}],"name":"childReference"}],"name":"childReferences"}],"name":"metadata","attributes":{"type":"group"}} | | OK |
-#
-#*!
-#!2 Create recordType fitnesseBook again and read presentation group again
-#!***> Create data of recordType recordType (fitnesseBook)
-#
-#!| RecordEndpointFixture |
-#| authToken | type | json | testCreateRecord? | getStatusType? |
-#| $adminAuthToken | recordType | {"children":[{"name":"abstract","value":"false"},{"children":[{"name":"id","value":"fitnesseBook"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}],"name":"validationType"}],"name":"recordInfo"},{"name":"userSuppliedId","value":"true"},{"repeatId":"0","name":"groupOfRecordType","value":"metadata"},{"name":"storeInArchive","value":"false"}],"name":"recordType"} | | CREATED |
-#
-#*!
-#Read presentationGroups again to see that they have been created. This time fitnesseBookFormPGroup, fitnesseBookFormNewPGroup and fitnesseBookViewPGroup should also have a reference to presentation variable for the added text variable child
-#
-#!***> Read fitnesseBookOutputPGroup, fitnesseBookPGroup, fitnesseBookNewPGroup, fitnesseBookMenuPGroup and fitnesseBookListPGroup
-#
-#!| RecordEndpointFixture |
-#| id | type | testReadRecord? | getStatusType? |
-#| fitnesseBookOutputPGroup | presentation | =~/"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoOutputPGroup".*"name":"refGroup".*"name":"linkedRecordId","value":"someTestOutputPVar"/ | OK |
-#| fitnesseBookPGroup | presentation | =~/name":"linkedRecordId","value":"recordInfoPGroup".*"name":"refGroup".*"name":"linkedRecordId","value":"someTestPVar".*"name":"refGroup"/ | OK |
-#| fitnesseBookNewPGroup | presentation | =~/"name":"linkedRecordId","value":"recordInfoNewPGroup".*"name":"refGroup".*"name":"linkedRecordId","value":"someTestPVar".*"name":"refGroup"/ | OK |
-#| fitnesseBookMenuPGroup | presentation | =~/"name":"linkedRecordId","value":"recordInfoOutputPGroup".*"name":"refGroup"/ | OK |
-#| fitnesseBookListPGroup | presentation | =~/"name":"linkedRecordId","value":"recordInfoOutputPGroup".*"name":"refGroup"/ | OK |
-#
-#*!
-#!1 Reset testdata
-#Remove data created for this test
-#
-#!***> Delete created metadata, presentations and texts
-#
-#!| RecordEndpointFixture |
-#| authToken | type | id | testDeleteRecord? | getStatusType? |
-#| $adminAuthToken | search | fitnesseBookSearch | | OK |
-#| $adminAuthToken | recordType | fitnesseBook | | OK |
-#| $adminAuthToken | presentation | fitnesseBookOutputPGroup | | OK |
-#| $adminAuthToken | presentation | fitnesseBookPGroup | | OK |
-#| $adminAuthToken | presentation | fitnesseBookNewPGroup | | OK |
-#| $adminAuthToken | presentation | fitnesseBookMenuPGroup | | OK |
-#| $adminAuthToken | presentation | fitnesseBookListPGroup | | OK |
-#| $adminAuthToken | presentation | fitnesseBookAutocompletePGroup | | OK |
-#| $adminAuthToken | presentation | someTestPVar | | OK |
-#| $adminAuthToken | presentation | someTestOutputPVar | | OK |
-#| $adminAuthToken | metadata | fitnesseBookNewGroup | | OK |
-#| $adminAuthToken | metadata | fitnesseBookGroup | | OK |
-#| $adminAuthToken | metadata | someTestTextVar | | OK |
-#| $adminAuthToken | text | fitnesseBookText | | OK |
-#| $adminAuthToken | text | fitnesseBookDefText | | OK |
-#| $adminAuthToken | text | fitnesseBookGroupText | | OK |
-#| $adminAuthToken | text | fitnesseBookGroupDefText | | OK |
-#| $adminAuthToken | text | fitnesseBookNewGroupText | | OK |
-#| $adminAuthToken | text | fitnesseBookNewGroupDefText | | OK |
-#| $adminAuthToken | text | fitnesseBookSearchText | | OK |
-#| $adminAuthToken | text | fitnesseBookSearchDefText | | OK |
-#
-#*!
+
+##| $adminAuthToken | fitnessStudentThesis | $createdId | | OK |
+
+##| $adminAuthToken | validationType | fitnessStudentThesis | | OK |
+
+##| $adminAuthToken | search | fitnessStudentThesisSearch | | OK |
+
+##| $adminAuthToken | recordType | fitnessStudentThesis | | OK |
+
+##
+
 #
