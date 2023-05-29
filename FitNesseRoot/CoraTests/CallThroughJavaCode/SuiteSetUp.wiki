@@ -1,6 +1,7 @@
 ---
 Suite
 ---
+!***> SuiteSetUp
 !***> Setup login
 
 !***> Login for admin
@@ -25,3 +26,5 @@ Suite
 *!
 
 !include -seamless .CoraTests.CallThroughJavaCode.SuiteSetUp.ExamplesPool
+
+*!

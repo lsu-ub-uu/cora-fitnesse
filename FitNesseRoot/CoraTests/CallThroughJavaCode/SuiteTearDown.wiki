@@ -9,6 +9,7 @@ Suite
 | $adminAuthToken | validationType | circuitTrainingLeafletValidation | | OK |
 | $adminAuthToken | validationType | personalTrainingLeafletValidation | | OK |
 | $adminAuthToken | search | trainingClassLeafletSearch | | OK |
+| $adminAuthToken | search | fitnesseRecordTypeSearch | | OK |
 | $adminAuthToken | recordType | trainingClassLeaflet | | OK |
 | $adminAuthToken | recordType | fitnesseRecordType | | OK |
 | $adminAuthToken | metadata | circuitTrainingLeafletGroup | | OK |
