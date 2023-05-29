@@ -51,13 +51,13 @@ Verify children
 !| MetadataLinkFixture |
 | authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
 | $adminAuthToken | metadata | recordInfoNewGroup | 1 | 1 | recordInfo | noRestrictions |
-| $adminAuthToken | metadata | textIdLink | 1 | 1 | textId | noRestrictions |
-| $adminAuthToken | metadata | defTextIdLink | 1 | 1 | defTextId | noRestrictions |
+| $adminAuthToken | metadata | textIdLink | 0 | 1 | textId | noRestrictions |
+| $adminAuthToken | metadata | defTextIdLink | 0 | 1 | defTextId | noRestrictions |
 | $adminAuthToken | metadata | validatesRecordTypeLink | 1 | 1 | validatesRecordType | noRestrictions |
-| $adminAuthToken | metadata | newMetadataIdLink | 1 | 1 | newMetadataId | noRestrictions |
-| $adminAuthToken | metadata | metadataIdLink | 1 | 1 | metadataId | noRestrictions |
-| $adminAuthToken | metadata | newPresentationFormIdLink | 1 | 1 | newPresentationFormId | noRestrictions |
-| $adminAuthToken | metadata | presentationFormIdLink | 1 | 1 | presentationFormId | noRestrictions |
+| $adminAuthToken | metadata | newMetadataIdLink | 0 | 1 | newMetadataId | noRestrictions |
+| $adminAuthToken | metadata | metadataIdLink | 0 | 1 | metadataId | noRestrictions |
+| $adminAuthToken | metadata | newPresentationFormIdLink | 0 | 1 | newPresentationFormId | noRestrictions |
+| $adminAuthToken | metadata | presentationFormIdLink | 0 | 1 | presentationFormId | noRestrictions |
 
 *!
 !***> Verify recordInfoNewGroup
