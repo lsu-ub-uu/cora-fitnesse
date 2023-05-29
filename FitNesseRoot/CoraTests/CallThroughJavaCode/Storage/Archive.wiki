@@ -32,7 +32,7 @@ Files are written to disk in the archive The archive is managed by the latest ve
 
 !| script | StringSupport |
 |note|Create a recordId to use in the test|
-|$tempDemoId=|dateFormat;|mmssss|
+|$tempDemoId=|dateFormat;|mmssSS|
 
 !include -seamless .CoraTests.CallThroughJavaCode.Storage.Archive.Create
 !include -seamless .CoraTests.CallThroughJavaCode.Storage.Archive.Update
