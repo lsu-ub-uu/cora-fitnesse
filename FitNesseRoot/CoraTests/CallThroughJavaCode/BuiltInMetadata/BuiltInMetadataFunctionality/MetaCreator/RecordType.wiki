@@ -106,8 +106,8 @@ Read presentationGroups again to see that they have been created
 
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | search | fitnesseBookSearch | | OK |
 | $adminAuthToken | recordType | fitnesseBook | | OK |
+| $adminAuthToken | search | fitnesseBookSearch | | OK |
 | $adminAuthToken | presentation | fitnesseBookOutputPGroup | | OK |
 | $adminAuthToken | presentation | fitnesseBookMenuPGroup | | OK |
 | $adminAuthToken | presentation | fitnesseBookListPGroup | | OK |
@@ -155,8 +155,8 @@ Remove data created for this test
 
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | search | fitnesseBookSearch | | OK |
 | $adminAuthToken | recordType | fitnesseBook | | OK |
+| $adminAuthToken | search | fitnesseBookSearch | | OK |
 | $adminAuthToken | presentation | fitnesseBookOutputPGroup | | OK |
 | $adminAuthToken | presentation | fitnesseBookMenuPGroup | | OK |
 | $adminAuthToken | presentation | fitnesseBookListPGroup | | OK |
@@ -174,8 +174,16 @@ Remove data created for this test
 
 *!
 
-!style_red[OBS: test should look like below.]
+!style_red[OBS: above tests should be moved here]
 !1 Metacreator for record type
+Metacreator will create the following data if it does not exist in storage.
+ * Metadata group for definitionNew and definitionUpdate.
+ * Presentations for menu, list, output and autocomplete.
+ * Text and defText.
+ * Search for the record type.
+ * Links for definitions, presentations, search and texts.
+
+
 
  * '''Case 1''': When creating a record type using an already created group that have 'recordInfo' but id does not contain the text 'recordInfo'. Then all presentations should be created correctly.
 
@@ -228,8 +236,8 @@ This is the definition group for the record type.
 
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | search | metacreatorRecordTypeWithGroupWithRecordInfoSearch | | OK |
 | $adminAuthToken | recordType | metacreatorRecordTypeWithGroupWithRecordInfo | | OK |
+| $adminAuthToken | search | metacreatorRecordTypeWithGroupWithRecordInfoSearch | | OK |
 | $adminAuthToken | text | metacreatorRecordTypeWithGroupWithRecordInfoText | | OK |
 | $adminAuthToken | text | metacreatorRecordTypeWithGroupWithRecordInfoDefText | | OK |
 | $adminAuthToken | presentation | metacreatorRecordTypeWithGroupWithRecordInfoOutputPGroup | | OK |
