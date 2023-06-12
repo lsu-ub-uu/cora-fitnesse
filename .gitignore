@@ -8,3 +8,4 @@
 /test-output/
 /${sys::catalina.base}/
 coraLog4j.log
+coraLog4j-*
