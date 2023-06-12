@@ -36,6 +36,8 @@ Suite
 | $adminAuthToken | metadata | fitnesseCollection | | OK |
 | $adminAuthToken | metadata | fitnesseBlueItem | | OK |
 | $adminAuthToken | metadata | fitnesseLink | | OK |
+| $adminAuthToken | text | fitnesseRecordTypeSearchDefText | | OK |
+| $adminAuthToken | text | fitnesseRecordTypeSearchText | | OK |
 | $adminAuthToken | text | fitnesseText | | OK |
 
  #Not needed presentations because we are using excludePGroupCreation flag

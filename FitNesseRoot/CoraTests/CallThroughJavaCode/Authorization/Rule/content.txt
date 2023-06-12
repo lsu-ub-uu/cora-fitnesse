@@ -293,5 +293,7 @@ needs to be developed
 | $adminAuthToken | metadata | testNotPublishedItem | | OK |
 | $adminAuthToken | text | someFitnesseText | | OK |
 | $adminAuthToken | text | someFitnesseDefText | | OK |
+| $adminAuthToken | text | testStudentThesisRuleDefText | | OK |
+| $adminAuthToken | text | testStudentThesisRuleText | | OK |
 
 *!

@@ -79,5 +79,8 @@ However, when the field "public" in the record type definition for fitnessStuden
 | $adminAuthToken | search | fitnessStudentThesisSearch | | OK |
 | $adminAuthToken | validationType | fitnessStudentThesisValidation | | OK |
 | $adminAuthToken | recordType | fitnessStudentThesis | | OK |
-
+| $adminAuthToken | text | testWorkoutExtendedSearchDefText | | OK |
+| $adminAuthToken | text | testWorkoutExtendedSearchText | | OK |
+| $adminAuthToken | text | fitnessStudentThesisSearchDefText | | OK |
+| $adminAuthToken | text | fitnessStudentThesisSearchText | | OK |
 *!

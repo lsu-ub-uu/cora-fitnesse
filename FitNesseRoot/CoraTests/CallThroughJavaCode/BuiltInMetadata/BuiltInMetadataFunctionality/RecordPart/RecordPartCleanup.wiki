@@ -181,5 +181,13 @@ Clean up created data
 | $adminAuthToken | metadata | testVoteCount3_3TextVar | | OK |
 | $adminAuthToken | text | fitnesseExampleText | | OK |
 | $adminAuthToken | text | fitnesseExampleDefText | | OK |
+| $adminAuthToken | text | testWorkoutExtendedSearchDefText | | OK |
+| $adminAuthToken | text | testWorkoutExtendedSearchText | | OK |
+| $adminAuthToken | text | limitedForTestWorkoutCreateRuleDefText | | OK |
+| $adminAuthToken | text | limitedForTestWorkoutCreateRuleText | | OK |
+| $adminAuthToken | text | limitedForTestWorkoutRuleDefText | | OK |
+| $adminAuthToken | text | limitedForTestWorkoutRuleText | | OK |
+| $adminAuthToken | text | everythingForTestWorkoutRuleDefText | | OK |
+| $adminAuthToken | text | everythingForTestWorkoutRuleText | | OK |
 
 *!

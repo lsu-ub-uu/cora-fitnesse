@@ -236,8 +236,6 @@ This is the definition group for the record type.
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | search | metacreatorRecordTypeWithGroupWithRecordInfoSearch | | OK |
 | $adminAuthToken | recordType | metacreatorRecordTypeWithGroupWithRecordInfo | | OK |
-| $adminAuthToken | text | metacreatorRecordTypeWithGroupWithRecordInfoText | | OK |
-| $adminAuthToken | text | metacreatorRecordTypeWithGroupWithRecordInfoDefText | | OK |
 | $adminAuthToken | presentation | metacreatorRecordTypeWithGroupWithRecordInfoOutputPGroup | | OK |
 | $adminAuthToken | presentation | metacreatorRecordTypeWithGroupWithRecordInfoMenuPGroup | | OK |
 | $adminAuthToken | presentation | metacreatorRecordTypeWithGroupWithRecordInfoListPGroup | | OK |
@@ -248,5 +246,10 @@ This is the definition group for the record type.
 | $adminAuthToken | presentation | groupWithRecordWithInfoOutputPGroup | | OK |
 | $adminAuthToken | metadata | definitionExampleGroup | | OK |
 | $adminAuthToken | metadata | groupWithRecordWithInfoGroup | | OK |
+| $adminAuthToken | text | metacreatorRecordTypeWithGroupWithRecordInfoText | | OK |
+| $adminAuthToken | text | metacreatorRecordTypeWithGroupWithRecordInfoDefText | | OK |
+| $adminAuthToken | text | metacreatorRecordTypeWithGroupWithRecordInfoSearchDefText | | OK |
+| $adminAuthToken | text | metacreatorRecordTypeWithGroupWithRecordInfoSearchText | | OK |
+
 *!
 *!

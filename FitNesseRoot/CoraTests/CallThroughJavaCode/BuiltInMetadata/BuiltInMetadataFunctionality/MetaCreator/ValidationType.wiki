@@ -159,6 +159,10 @@ Read presentations for new form (metacreatorValidationTypeNewPGroup) and update 
 | $adminAuthToken | presentation | noExistingFitnessePGroup | | OK |
 | $adminAuthToken | metadata | noExistingFitnesseGroup | | OK |
 | $adminAuthToken | metadata | noExistingFitnesseNewGroup | | OK |
+| $adminAuthToken | text | noExistingFitnesseGroupDefText | | OK |
+| $adminAuthToken | text | noExistingFitnesseGroupText | | OK |
+| $adminAuthToken | text | noExistingFitnesseNewGroupDefText | | OK |
+| $adminAuthToken | text | noExistingFitnesseNewGroupText | | OK |
 *!
 *!
 !***> '''Case3'''

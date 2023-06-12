@@ -654,6 +654,14 @@ url encode, use this in the query:
 | DELETE | /rest/record/text/someFitnesseDefText | 200 | | |
 | DELETE | /rest/record/text/someTestText | 200 | | |
 | DELETE | /rest/record/text/someTestDefText | 200 | | |
+| DELETE | /rest/record/text/trainingSearchDefText | 200 | | |
+| DELETE | /rest/record/text/trainingSearchText | 200 | | |
+| DELETE | /rest/record/text/trainingSearchGroupDefText | 200 | | |
+| DELETE | /rest/record/text/trainingSearchGroupText | 200 | | |
+| DELETE | /rest/record/text/trainingSearchIncludePartGroupDefText | 200 | | |
+| DELETE | /rest/record/text/trainingSearchIncludePartGroupText | 200 | | |
+| DELETE | /rest/record/text/trainingIdSearchTextVarDefText | 200 | | |
+| DELETE | /rest/record/text/trainingIdSearchTextVarText | 200 | | |
 | DELETE | /rest/record/collectTerm/trainingIdIndexTerm | 200 | | |
 
 *!

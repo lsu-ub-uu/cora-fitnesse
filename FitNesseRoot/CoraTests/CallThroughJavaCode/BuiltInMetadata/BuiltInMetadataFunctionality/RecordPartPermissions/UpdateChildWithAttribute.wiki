@@ -102,5 +102,7 @@ Also check that the user is not allowed to update the instructor name with no at
 | $adminAuthToken | metadata | instructorNameTypeCollection | | OK |
 | $adminAuthToken | text | fitnesseExampleText | | OK |
 | $adminAuthToken | text | fitnesseExampleDefText | | OK |
+| $adminAuthToken | text | testWorkoutExtendedSearchDefText | | OK |
+| $adminAuthToken | text | testWorkoutExtendedSearchText | | OK |
 
 *!

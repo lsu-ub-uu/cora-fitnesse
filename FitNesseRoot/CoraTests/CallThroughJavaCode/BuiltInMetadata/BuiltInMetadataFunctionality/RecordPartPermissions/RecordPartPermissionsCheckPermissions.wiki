@@ -178,5 +178,7 @@ När man söker efter poster så ska varje post i resultatet bara innehålla de 
 | $adminAuthToken | metadata | testRatingTextVar | | OK |
 | $adminAuthToken | text | fitnesseExampleText | | OK |
 | $adminAuthToken | text | fitnesseExampleDefText | | OK |
+| $adminAuthToken | text | testWorkoutExtendedSearchDefText | | OK |
+| $adminAuthToken | text | testWorkoutExtendedSearchText | | OK |
 
 *!

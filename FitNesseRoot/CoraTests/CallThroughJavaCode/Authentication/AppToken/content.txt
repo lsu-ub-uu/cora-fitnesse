@@ -113,17 +113,13 @@ Reset, the role fitnesseTextAdmin to not use the new rule, updateMySelfRule.
 
 '''Currently not removing created texts, as those tests do not work, see reason above.'''
 
-Remove created records
-
-!| Comment |
-| RecordEndpointFixture |
-| authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | text | myAuthText | | OK |
-| $adminAuthToken | text | myAppTokenTestText | | OK |
+CleanUp
 
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | appToken | $createdId | | OK |
 | $adminAuthToken | permissionRule | updateMySelfRule | | OK |
+| $adminAuthToken | text | updateMySelfRuleDefText | | OK |
+| $adminAuthToken | text | updateMySelfRuleText | | OK |
 
 *!
