@@ -13,7 +13,7 @@
 | $adminAuthToken | metadata | nameInDataTextVar | 1 | 1 | nameInData |
 | $adminAuthToken | metadata | textIdLink | 1 | 1 | textId |
 | $adminAuthToken | metadata | defTextIdLink | 1 | 1 | defTextId |
-| $adminAuthToken | metadata | refParentIdGroupLink | 0 | 1 | refParentId |
+| $adminAuthToken | metadata | refParentLink | 0 | 1 | refParentId |
 | $adminAuthToken | metadata | attributeReferencesGroup | 0 | 1 | attributeReferences |
 | $adminAuthToken | metadata | childReferencesGroup | 1 | 1 | childReferences |
 | $adminAuthToken | metadata | recordInfoOldGroup | not found | not found | |
