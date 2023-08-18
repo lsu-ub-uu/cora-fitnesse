@@ -1,0 +1,36 @@
+---
+Test
+---
+!1 Binary
+Binary is a record type intended to handle binares in Cora. Binary records keep information about the binaries that are stored in the system.
+
+!img files/images/binary.png 
+
+   
+   (Error handler)
+   * status 1..1
+   * fel 0..X
+
+There four validation types of binaries:
+
+ * '''!-ImageBinary-!''': All the binaries which are pictures.
+ * '''!-SoundBinary!-''': All the binaries which are sound.
+ * '''!-VideoBinary!-''': All the binaries which are videos.
+ * '''!-DocumentBinary!-''': All the binaries which are documents.
+ * '''!-TextBinary!-''': All the binaries which are documents.
+ * '''!-CompressBinary!-''': All the binaries which are documents.
+ * '''!-GenericBinary!-''': Includes all the binaries which are no included in the previous validation types. These binaries are generic and the system can not provide any specific information about them.
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.RecordType
+TO BE REPLACED
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.data.defaults
+TO BE REPLACED
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.Create
+TO BE REPLACED
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.List
+TO BE REPLACED
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.Read
+TO BE REPLACED
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.Update
+TO BE REPLACED
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.Delete

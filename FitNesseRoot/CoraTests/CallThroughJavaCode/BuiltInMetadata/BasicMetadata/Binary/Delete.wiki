@@ -1,0 +1,31 @@
+---
+Static
+---
+
+
+!2 Delete
+
+!***> It should be possible to delete a recordType without incoming links (that is not being used/referenced by records in the system).
+!include -seamless .HelperPages.defineAdminAuthToken
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | search | fitnessStudentThesisSearch | | OK |
+| $adminAuthToken | recordType | fitnessStudentThesis | | OK |
+
+*!
+
+!***> It should not be possible to delete a recordType with incoming links (that is being used/referenced by records in the system).
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | recordType | recordType | | METHOD_NOT_ALLOWED |
+
+*!
+
+!***> Clean up
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | text | fitnessStudentThesisSearchDefText | | OK |
+| $adminAuthToken | text | fitnessStudentThesisSearchText | | OK |
+*!

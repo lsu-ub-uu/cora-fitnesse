@@ -1,0 +1,184 @@
+---
+Static
+---
+!2 Definition
+!style_blue[BEFORE]
+ * binary(group)
+   * recordInfo(group, 1-1, noConstraint)
+     * id(textVariable, 1-1, noConstraint, I)
+     * type(recordLink, 1-1, noConstraint)
+     * validationType(recordLink, 1-1, noConstraint)
+     * dataDivider(recordLink, 1-1, noConstraint, P)
+     * createdBy(recordLink, 1-1, noConstraint)
+     * permissionUnit(recordLink, 0-X, noConstraint)
+     * tsCreated(textVariable, 1-1, noConstraint)
+     * updated(group, 1-X, noConstraint)
+       * updatedBy(recordLink, 1-1, noConstraint)
+       * tsUpdated(textVariable, 1-1, noConstraint)
+     * resourceInfo(group, 0-1, noConstraint)
+       * master(resourceLink, 1-1, noConstraint)
+       * thumbnail(group, 0-1, noConstraint)
+         * streamId(textVariable, 1-1, noConstraint)
+         * filesize(textVariable, 1-1, noConstraint)
+         * url(textVariable, 0-1, noConstraint)
+       * thumbnailLarge(group, 0-1, noConstraint)
+         * streamId(textVariable, 1-1, noConstraint)
+         * filesize(textVariable, 1-1, noConstraint)
+         * url(textVariable, 0-1, noConstraint)
+       * thumbnailSmall(group, 0-1, noConstraint)
+         * streamId(textVariable, 1-1, noConstraint)
+         * filesize(textVariable, 1-1, noConstraint)
+         * url(textVariable, 0-1, noConstraint)
+     * filename(textVariable, 1-1, noConstraint)
+     * filesize(textVariable, 1-1, noConstraint)
+
+!style_blue[NOW]
+ * '''binary'''(group)
+   * '''recordInfo'''(group, 1-1, noConstraint)
+     * '''id'''(textVariable, 1-1, noConstraint, I)
+     * '''type'''(recordLink, 1-1, noConstraint)
+     * '''validationType'''(recordLink, 1-1, noConstraint)
+     * '''dataDivider'''(recordLink, 1-1, noConstraint, P)
+     * '''createdBy'''(recordLink, 1-1, noConstraint)
+     * '''permissionUnit'''(recordLink, 0-X, noConstraint)
+     * '''tsCreated'''(textVariable, 1-1, noConstraint)
+     * '''updated'''(group, 1-X, noConstraint)
+       * '''updatedBy'''(recordLink, 1-1, noConstraint)
+       * '''tsUpdated'''(textVariable, 1-1, noConstraint)
+   * '''resourceInfo'''(group, 0-1, noConstraint)
+     * '''master'''(resourceLink, 1-1, noConstraint)
+       * '''resourceId'''(textVariable, 1-1, readWrite)
+       * '''resourceLink'''(resourceLink, 0-1, write)
+     * '''thumbnail'''(group, 0-1, noConstraint)
+       * '''resourceId'''(textVariable, 1-1, readWrite)
+       * '''resourceLink'''(resourceLink, 0-1, write)
+   * '''originalFileName'''(textVariable, 1-1, noConstraint)
+   * '''fileName'''(textVariable, 1-1, write)
+   * '''fileSize'''(textVariable, 1-1, write)
+   * '''checksum'''(textVariable, 1-1, write)
+   * '''checksumType'''(textVariable, 1-1, write) finalValue = MD5?
+   * '''height'''(textVariable, 0-1, write)
+   * '''width'''(textVariable, 0-1, write)
+   * '''resolution'''(textVariable, 0-1, write)
+
+
+!***> Test definition
+!***> Read record type Binary
+
+!| RecordEndpointFixture |
+| authToken | type | id | testReadRecord? | getStatusType? |
+| $adminAuthToken | recordType | binary | | OK |
+
+*!
+!***> Validate binaryGroup
+
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadata | binaryGroup | |
+
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 15 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadata | recordInfoGroup | 1 | 1 | recordInfo | noRestrictions |
+| $adminAuthToken | metadata | resourceInfoGroup | 1 | 1 | resourceInfo | noRestrictions |
+| $adminAuthToken | metadata | originalFileNameTextVar | 0 | 1 | originalFileName | noRestrictions |
+| $adminAuthToken | metadata | filenameTextVar | 0 | 1 | fileName | write |
+| $adminAuthToken | metadata | filesizeTextVar | 1 | 1 | fileSize | write |
+| $adminAuthToken | metadata | checksumTextVar | 1 | 1 | checksum | write |
+| $adminAuthToken | metadata | checksumTypeTextVar | 1 | 1 | checksumType | write |
+| $adminAuthToken | metadata | heightTextVar | 0 | 1 | height | write |
+| $adminAuthToken | metadata | widthTextVar | 0 | 1 | width | write |
+| $adminAuthToken | metadata | resolutionTextVar | 0 | 1 | resolution | write |
+
+*!
+!***> Validate recordInfoGroup
+
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadata | recordInfoGroup | |
+
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 8 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadata | dataDividerDivaLink | 1 | 1 | dataDivider | noRestrictions |
+
+*!
+!***> Validate resourceInfoGroup
+
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadata | resourceInfoGroup | |
+
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 2 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadata | dataDividerDivaLink | 1 | 1 | dataDivider | noRestrictions |
+*!
+*!
+
+!3 Roller
+#Notera att rättigheterna som kontrolleras i det här avsnittet gäller, vilka rättigheter man har på postTypen inte enstaka poster. Rättigheterna för enstaka poster kontrolleras under de olika testerna för rättigheter så som read, update, etc.
+#
+#!4 !-SystemAdmin-!
+#!-SystemAdmin har tillgång till validate, list och search för person postTypen-!
+#
+#!style_red[Validate och batch_index för personpost är inte implementerade än, därför finns de med i expectedPermissionResult ]
+#!***> Kontrollera de actions systemAdmin får med i recordType för person
+#
+#!define currentAuthToken {$systemAdminAuthToken}
+#!define currentRecordType {person}
+#!define expectedPermissionResult {Action update is missing. Action delete is missing. Action index is missing. Action create is missing. Action validate is missing. Action batch_index is missing.}
+#!include -seamless .TheDiVATests.DivaTests.checkActionsForRecordType
+#*!
+#!***> Kontrollera de actions systemAdmin får med i recordType för personDomainPart
+#
+#!define currentAuthToken {$systemAdminAuthToken}
+#!define currentRecordType {personDomainPart}
+#!define expectedPermissionResult {Action update is missing. Action delete is missing. Action index is missing. Action validate is missing. Action batch_index is missing.}
+##!define expectedPermissionResult {Action update is missing. Action delete is missing. Action index is missing. Action batch_index is missing.}
+#
+#!include -seamless .TheDiVATests.DivaTests.checkActionsForRecordType
+#*!
+#!4 !-DomainAdmin-!
+#!-DomainAdmin har tillgång till validate och search för person  postTypen-!
+#
+#!***> Kontrollera de actions domainAdmin får med i recordType för person
+#
+#!define currentAuthToken {$domainAdminUUAuthToken}
+#!define currentRecordType {person}
+#!define expectedPermissionResult {Action update is missing. Action delete is missing. Action index is missing. Action create is missing. Action validate is missing. Action list is missing. Action batch_index is missing.}
+#!include -seamless .TheDiVATests.DivaTests.checkActionsForRecordType
+#*!
+#!***> Kontrollera de actions domainAdmin får med i recordType för personDomainPart
+#
+#!define currentAuthToken {$domainAdminUUAuthToken}
+#!define currentRecordType {personDomainPart}
+#!define expectedPermissionResult {Action update is missing. Action delete is missing. Action index is missing. Action validate is missing. Action list is missing. Action batch_index is missing.}
+#!include -seamless .TheDiVATests.DivaTests.checkActionsForRecordType
+#*!
+#!4 !-Guest-!
+#!-Guest har tillgång till search för person postTypen-!
+#
+#!***> Kontrollera de actions guest får med i recordType för person
+#
+#!define currentAuthToken {$guestToken}
+#!define currentRecordType {person}
+#!define expectedPermissionResult {Action update is missing. Action delete is missing. Action index is missing. Action create is missing. Action validate is missing. Action list is missing. Action batch_index is missing.}
+#!include -seamless .TheDiVATests.DivaTests.checkActionsForRecordType
+#*!
+#!***> Kontrollera de actions guest får med i recordType för personDomainPart
+#
+#!define currentAuthToken {$guestToken}
+#!define currentRecordType {personDomainPart}
+#!define expectedPermissionResult {Action update is missing. Action delete is missing. Action index is missing. Action create is missing. Action validate is missing. Action list is missing. Action batch_index is missing.}
+#!include -seamless .TheDiVATests.DivaTests.checkActionsForRecordType
+#*!
