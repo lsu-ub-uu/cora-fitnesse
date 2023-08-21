@@ -22,7 +22,6 @@ There four validation types of binaries:
  * '''!-GenericBinary!-''': Includes all the binaries which are no included in the previous validation types. These binaries are generic and the system can not provide any specific information about them.
 
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.RecordType
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.ImageBinary.ValidationType
 TO BE REPLACED
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.data.defaults
 TO BE REPLACED
