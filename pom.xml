@@ -92,6 +92,7 @@
 					<include>FrontPage/</include>
 					<include>CoraTests/</include>
 					<include>DocumentationPage/</include>
+					<include>files/</include>
 					<include>HelperPages/</include>
 					<include>JsClient/</include>
 					<include>RestFixtureInstallTest/</include>
