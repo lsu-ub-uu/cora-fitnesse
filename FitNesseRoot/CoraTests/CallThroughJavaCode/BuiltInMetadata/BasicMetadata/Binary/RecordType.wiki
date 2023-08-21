@@ -1,38 +1,56 @@
 ---
 Static
 ---
-!2 Definition
-!style_blue[BEFORE]
- * binary(group)
-   * recordInfo(group, 1-1, noConstraint)
-     * id(textVariable, 1-1, noConstraint, I)
-     * type(recordLink, 1-1, noConstraint)
-     * validationType(recordLink, 1-1, noConstraint)
-     * dataDivider(recordLink, 1-1, noConstraint, P)
-     * createdBy(recordLink, 1-1, noConstraint)
-     * permissionUnit(recordLink, 0-X, noConstraint)
-     * tsCreated(textVariable, 1-1, noConstraint)
-     * updated(group, 1-X, noConstraint)
-       * updatedBy(recordLink, 1-1, noConstraint)
-       * tsUpdated(textVariable, 1-1, noConstraint)
-     * resourceInfo(group, 0-1, noConstraint)
-       * master(resourceLink, 1-1, noConstraint)
-       * thumbnail(group, 0-1, noConstraint)
-         * streamId(textVariable, 1-1, noConstraint)
-         * filesize(textVariable, 1-1, noConstraint)
-         * url(textVariable, 0-1, noConstraint)
-       * thumbnailLarge(group, 0-1, noConstraint)
-         * streamId(textVariable, 1-1, noConstraint)
-         * filesize(textVariable, 1-1, noConstraint)
-         * url(textVariable, 0-1, noConstraint)
-       * thumbnailSmall(group, 0-1, noConstraint)
-         * streamId(textVariable, 1-1, noConstraint)
-         * filesize(textVariable, 1-1, noConstraint)
-         * url(textVariable, 0-1, noConstraint)
-     * filename(textVariable, 1-1, noConstraint)
-     * filesize(textVariable, 1-1, noConstraint)
+!2 Definitions
 
-!style_blue[NOW]
+!3 Definition for Binary
+ * '''binary'''(group)
+   * '''recordInfo'''(group, 1-1, noConstraint)
+     * '''id'''(textVariable, 0-1, noConstraint, I)
+     * '''type'''(recordLink, 0-1, noConstraint)
+     * '''validationType'''(recordLink, 1-1, noConstraint)
+     * '''dataDivider'''(recordLink, 1-1, noConstraint, P)
+     * '''createdBy'''(recordLink, 0-1, noConstraint)
+     * '''permissionUnit'''(recordLink, 0-X, noConstraint)
+     * '''tsCreated'''(textVariable, 0-1, noConstraint)
+     * '''updated'''(group, 0-X, noConstraint)
+       * '''updatedBy'''(recordLink, 0-1, noConstraint)
+       * '''tsUpdated'''(textVariable, 0-1, noConstraint)
+   * '''resourceInfo'''(group, 0-1, noConstraint)
+     * '''master'''(group, 1-1, noConstraint)
+       * '''resourceId'''(textVariable, 1-1, readWrite)
+       * '''resourceLink'''(resourceLink, 1-1, noConstraints)
+       * '''fileSize'''(textVariable, 1-1, noConstraints)
+       * '''mimeType'''(textVariable, 1-1, noConstraints)
+       * '''height'''(textVariable, 1-1, noConstraints)
+       * '''width'''(textVariable, 1-1, noConstraints)
+       * '''resolution'''(textVariable, 1-1, noConstraints)
+     * '''thumbnail'''(group, 0-1, noConstraint)
+       * '''resourceId'''(textVariable, 1-1, readWrite)
+       * '''resourceLink'''(resourceLink, 1-1, noConstraints)
+       * '''fileSize'''(textVariable, 1-1, noConstraints)
+       * '''mimeType'''(textVariable, 1-1, noConstraints)
+       * '''height'''(textVariable, 1-1, noConstraints)
+       * '''width'''(textVariable, 1-1, noConstraints)
+       * '''resolution'''(textVariable, 0-1, noConstraints)
+   * '''originalFileName'''(textVariable, 1-1, noConstraint)
+   * '''expectedFileSize'''(textVariable, 0-1, noConstraints) (only for new)
+   * '''expectedChecksum'''(textVariable, 0-1, noConstraints) (only for new)
+   * '''expectedMimeType'''(textVariable, 0-1, noConstraints) (only for new)
+   * '''checksum'''(textVariable, 0-1, noConstraints)
+   * '''checksumType'''(textVariable, 0-1, noConstraints)
+   
+!3 !-ImageBinary, definition for new-!
+ * '''binary'''(group)
+   * '''recordInfo'''(group, 1-1, noConstraint)
+     * '''validationType'''(recordLink, 1-1, noConstraint)
+     * '''dataDivider'''(recordLink, 1-1, noConstraint, P)
+   * '''originalFileName'''(textVariable, 1-1, noConstraint)
+   * '''expectedFileSize'''(textVariable, 0-1, noConstraints)
+   * '''expectedChecksum'''(textVariable, 0-1, noConstraints)
+   * '''expectedMimeType'''(textVariable, 0-1, noConstraints)
+   
+!3 !-ImageBinary, definition for update-!
  * '''binary'''(group)
    * '''recordInfo'''(group, 1-1, noConstraint)
      * '''id'''(textVariable, 1-1, noConstraint, I)
@@ -45,21 +63,26 @@ Static
      * '''updated'''(group, 1-X, noConstraint)
        * '''updatedBy'''(recordLink, 1-1, noConstraint)
        * '''tsUpdated'''(textVariable, 1-1, noConstraint)
-   * '''resourceInfo'''(group, 0-1, noConstraint)
-     * '''master'''(resourceLink, 1-1, noConstraint)
+   * '''resourceInfo'''(group, 1-1, noConstraint)
+     * '''master'''(group, 1-1, noConstraint)
        * '''resourceId'''(textVariable, 1-1, readWrite)
-       * '''resourceLink'''(resourceLink, 0-1, write)
+       * '''resourceLink'''(resourceLink, 1-1, noConstraints)
+       * '''fileSize'''(textVariable, 1-1, noConstraints)
+       * '''mimeType'''(textVariable, 1-1, noConstraints)
+       * '''height'''(textVariable, 1-1, noConstraints)
+       * '''width'''(textVariable, 1-1, noConstraints)
+       * '''resolution'''(textVariable, 1-1, noConstraints)
      * '''thumbnail'''(group, 0-1, noConstraint)
        * '''resourceId'''(textVariable, 1-1, readWrite)
-       * '''resourceLink'''(resourceLink, 0-1, write)
+       * '''resourceLink'''(resourceLink, 1-1, noConstraints)
+       * '''fileSize'''(textVariable, 1-1, noConstraints)
+       * '''mimeType'''(textVariable, 1-1, noConstraints)
+       * '''height'''(textVariable, 1-1, noConstraints)
+       * '''width'''(textVariable, 1-1, noConstraints)
+       * '''resolution'''(textVariable, 1-1, noConstraints)
    * '''originalFileName'''(textVariable, 1-1, noConstraint)
-   * '''fileName'''(textVariable, 1-1, write)
-   * '''fileSize'''(textVariable, 1-1, write)
-   * '''checksum'''(textVariable, 1-1, write)
-   * '''checksumType'''(textVariable, 1-1, write) finalValue = MD5?
-   * '''height'''(textVariable, 0-1, write)
-   * '''width'''(textVariable, 0-1, write)
-   * '''resolution'''(textVariable, 0-1, write)
+   * '''checksum'''(textVariable, 1-1, noConstraints)
+   * '''checksumType'''(textVariable, 1-1, noConstraints)
 
 
 !***> Test definition
@@ -124,61 +147,3 @@ Static
 | $adminAuthToken | metadata | dataDividerDivaLink | 1 | 1 | dataDivider | noRestrictions |
 *!
 *!
-
-!3 Roller
-#Notera att rättigheterna som kontrolleras i det här avsnittet gäller, vilka rättigheter man har på postTypen inte enstaka poster. Rättigheterna för enstaka poster kontrolleras under de olika testerna för rättigheter så som read, update, etc.
-#
-#!4 !-SystemAdmin-!
-#!-SystemAdmin har tillgång till validate, list och search för person postTypen-!
-#
-#!style_red[Validate och batch_index för personpost är inte implementerade än, därför finns de med i expectedPermissionResult ]
-#!***> Kontrollera de actions systemAdmin får med i recordType för person
-#
-#!define currentAuthToken {$systemAdminAuthToken}
-#!define currentRecordType {person}
-#!define expectedPermissionResult {Action update is missing. Action delete is missing. Action index is missing. Action create is missing. Action validate is missing. Action batch_index is missing.}
-#!include -seamless .TheDiVATests.DivaTests.checkActionsForRecordType
-#*!
-#!***> Kontrollera de actions systemAdmin får med i recordType för personDomainPart
-#
-#!define currentAuthToken {$systemAdminAuthToken}
-#!define currentRecordType {personDomainPart}
-#!define expectedPermissionResult {Action update is missing. Action delete is missing. Action index is missing. Action validate is missing. Action batch_index is missing.}
-##!define expectedPermissionResult {Action update is missing. Action delete is missing. Action index is missing. Action batch_index is missing.}
-#
-#!include -seamless .TheDiVATests.DivaTests.checkActionsForRecordType
-#*!
-#!4 !-DomainAdmin-!
-#!-DomainAdmin har tillgång till validate och search för person  postTypen-!
-#
-#!***> Kontrollera de actions domainAdmin får med i recordType för person
-#
-#!define currentAuthToken {$domainAdminUUAuthToken}
-#!define currentRecordType {person}
-#!define expectedPermissionResult {Action update is missing. Action delete is missing. Action index is missing. Action create is missing. Action validate is missing. Action list is missing. Action batch_index is missing.}
-#!include -seamless .TheDiVATests.DivaTests.checkActionsForRecordType
-#*!
-#!***> Kontrollera de actions domainAdmin får med i recordType för personDomainPart
-#
-#!define currentAuthToken {$domainAdminUUAuthToken}
-#!define currentRecordType {personDomainPart}
-#!define expectedPermissionResult {Action update is missing. Action delete is missing. Action index is missing. Action validate is missing. Action list is missing. Action batch_index is missing.}
-#!include -seamless .TheDiVATests.DivaTests.checkActionsForRecordType
-#*!
-#!4 !-Guest-!
-#!-Guest har tillgång till search för person postTypen-!
-#
-#!***> Kontrollera de actions guest får med i recordType för person
-#
-#!define currentAuthToken {$guestToken}
-#!define currentRecordType {person}
-#!define expectedPermissionResult {Action update is missing. Action delete is missing. Action index is missing. Action create is missing. Action validate is missing. Action list is missing. Action batch_index is missing.}
-#!include -seamless .TheDiVATests.DivaTests.checkActionsForRecordType
-#*!
-#!***> Kontrollera de actions guest får med i recordType för personDomainPart
-#
-#!define currentAuthToken {$guestToken}
-#!define currentRecordType {personDomainPart}
-#!define expectedPermissionResult {Action update is missing. Action delete is missing. Action index is missing. Action create is missing. Action validate is missing. Action list is missing. Action batch_index is missing.}
-#!include -seamless .TheDiVATests.DivaTests.checkActionsForRecordType
-#*!
