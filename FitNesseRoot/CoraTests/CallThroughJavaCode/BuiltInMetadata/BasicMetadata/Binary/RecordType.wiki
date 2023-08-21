@@ -20,41 +20,42 @@ Static
      * '''master'''(group, 1-1, noConstraint)
        * '''resourceId'''(textVariable, 1-1, readWrite)
        * '''resourceLink'''(resourceLink, 1-1, noConstraints)
-       * '''fileSize'''(textVariable, 1-1, noConstraints)
+       * '''fileSize'''(textVariable, 1-1, noConstraints) (bytes)
        * '''mimeType'''(textVariable, 1-1, noConstraints)
-       * '''height'''(textVariable, 1-1, noConstraints)
-       * '''width'''(textVariable, 1-1, noConstraints)
-       * '''resolution'''(textVariable, 1-1, noConstraints)
+       * '''height'''(textVariable, 1-1, noConstraints) (pixels)
+       * '''width'''(textVariable, 1-1, noConstraints) (pixels)
+       * '''resolution'''(textVariable, 1-1, noConstraints) (dpi)
      * '''thumbnail'''(group, 0-1, noConstraint)
        * '''resourceId'''(textVariable, 1-1, readWrite)
        * '''resourceLink'''(resourceLink, 1-1, noConstraints)
-       * '''fileSize'''(textVariable, 1-1, noConstraints)
+       * '''fileSize'''(textVariable, 1-1, noConstraints) (bytes)
        * '''mimeType'''(textVariable, 1-1, noConstraints)
-       * '''height'''(textVariable, 1-1, noConstraints)
-       * '''width'''(textVariable, 1-1, noConstraints)
-       * '''resolution'''(textVariable, 0-1, noConstraints)
+       * '''height'''(textVariable, 1-1, noConstraints) (pixels)
+       * '''width'''(textVariable, 1-1, noConstraints) (pixels)
+       * '''resolution'''(textVariable, 0-1, noConstraints) (dpi)
    * '''originalFileName'''(textVariable, 1-1, noConstraint)
-   * '''expectedFileSize'''(textVariable, 0-1, noConstraints) (only for new)
-   * '''expectedChecksum'''(textVariable, 0-1, noConstraints) (only for new)
+   * '''expectedFileSize'''(textVariable, 0-1, noConstraints) (only for new) (pixels)
+   * '''expectedChecksum'''(textVariable, 0-1, noConstraints) (only for new) (md5)
    * '''expectedMimeType'''(textVariable, 0-1, noConstraints) (only for new)
-   * '''checksum'''(textVariable, 0-1, noConstraints)
+   * '''checksum'''(textVariable, 0-1, noConstraints) (md5)
    * '''checksumType'''(textVariable, 0-1, noConstraints)
    
 
 
-!***> Test definition
-!***> Read record type Binary
+!***> Test definitions for Binary
+!***> Validate recordType Binary
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | recordType | binary | | OK |
+| $adminAuthToken | recordType | Binary | | OK |
 
 *!
-!***> Validate binaryGroup
+!***> Validate  definition of Binary
 
 !| RecordEndpointFixture |
 | type | id | testReadRecordAndStoreJson? |
 | metadata | binaryGroup | |
+
 
 !| ChildComparerFixture |
 | expectedNumberOfChildren | testCheckNumberOfChildren? |
@@ -62,7 +63,7 @@ Static
 
 !| MetadataLinkFixture |
 | authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
-| $adminAuthToken | metadata | recordInfoGroup | 1 | 1 | recordInfo | noRestrictions |
+| $adminAuthToken | metadata | recordInfoBinaryGroup | 1 | 1 | recordInfo | noRestrictions |
 | $adminAuthToken | metadata | resourceInfoGroup | 1 | 1 | resourceInfo | noRestrictions |
 | $adminAuthToken | metadata | originalFileNameTextVar | 0 | 1 | originalFileName | noRestrictions |
 | $adminAuthToken | metadata | filenameTextVar | 0 | 1 | fileName | write |
@@ -73,27 +74,11 @@ Static
 | $adminAuthToken | metadata | widthTextVar | 0 | 1 | width | write |
 | $adminAuthToken | metadata | resolutionTextVar | 0 | 1 | resolution | write |
 
-*!
 !***> Validate recordInfoGroup
 
 !| RecordEndpointFixture |
 | type | id | testReadRecordAndStoreJson? |
-| metadata | recordInfoGroup | |
-
-!| ChildComparerFixture |
-| expectedNumberOfChildren | testCheckNumberOfChildren? |
-| 8 | OK |
-
-!| MetadataLinkFixture |
-| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
-| $adminAuthToken | metadata | dataDividerDivaLink | 1 | 1 | dataDivider | noRestrictions |
-
-*!
-!***> Validate resourceInfoGroup
-
-!| RecordEndpointFixture |
-| type | id | testReadRecordAndStoreJson? |
-| metadata | resourceInfoGroup | |
+| metadata | recordInfoBinaryGroup | |
 
 !| ChildComparerFixture |
 | expectedNumberOfChildren | testCheckNumberOfChildren? |
@@ -101,6 +86,66 @@ Static
 
 !| MetadataLinkFixture |
 | authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadata | validationTypeLink | 1 | 1 | validationType | noRestrictions |
 | $adminAuthToken | metadata | dataDividerDivaLink | 1 | 1 | dataDivider | noRestrictions |
+
+*!
+!***> Validate resourceInfoGroup
+
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadata | resourceInfoBinaryGroup | |
+
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 2 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadata | masterBinaryGroup | 1 | 1 | master | noRestrictions |
+| $adminAuthToken | metadata | thumbnailGroup | 0 | 1 | thumbnail | noRestrictions |
+
+*!
+!***> Validate masterBinaryGroup
+
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadata | masterBinaryGroup | |
+
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 7 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadata | resourceIdTextVar | 1 | 1 | resourceId | noRestrictions |
+| $adminAuthToken | metadata | resourceLinkResourceLink | 0 | 1 | resourceLink | noRestrictions |
+| $adminAuthToken | metadata | fileSizeNumVar | 1 | 1 | fileSize | noRestrictions |
+| $adminAuthToken | metadata | mimeTypeTextVar | 1 | 1 | mimeType | noRestrictions |
+| $adminAuthToken | metadata | heightNumVar | 1 | 1 | height | noRestrictions |
+| $adminAuthToken | metadata | widthNumVar | 1 | 1 | width | noRestrictions |
+| $adminAuthToken | metadata | resolutionNumVar | 1 | 1 | resolution | noRestrictions |
+
+*!
+!***> Validate thumbnail
+
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadata | thumbnailGroup | |
+
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 7 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadata | resourceIdTextVar | 1 | 1 | resourceId | noRestrictions |
+| $adminAuthToken | metadata | resourceLinkResourceLink | 0 | 1 | resourceLink | noRestrictions |
+| $adminAuthToken | metadata | fileSizeNumVar | 1 | 1 | fileSize | noRestrictions |
+| $adminAuthToken | metadata | mimeTypeTextVar | 1 | 1 | mimeType | noRestrictions |
+| $adminAuthToken | metadata | heightNumVar | 1 | 1 | height | noRestrictions |
+| $adminAuthToken | metadata | widthNumVar | 1 | 1 | width | noRestrictions |
+| $adminAuthToken | metadata | resolutionNumVar | 1 | 1 | resolution | noRestrictions |
+*!
 *!
 *!

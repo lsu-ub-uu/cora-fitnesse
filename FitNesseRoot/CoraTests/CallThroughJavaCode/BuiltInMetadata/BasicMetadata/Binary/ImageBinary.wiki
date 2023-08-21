@@ -1,36 +1,22 @@
 ---
 Test
 ---
-!1 Binary
-Binary is a record type intended to handle binares in Cora. Binary records keep information about the binaries that are stored in the system.
+!1 ImageBinary
+Binary is a validation type intended to hold metadata for images. 
 
-!img files/images/binary.png 
+Explain a bit about expectedFileSize, expectedChecksum, expectedMimeType...
 
-   
-   (Error handler)
-   * status 1..1
-   * fel 0..X
 
-There four validation types of binaries:
-
- * '''!-ImageBinary-!''': All the binaries which are pictures.
- * '''!-SoundBinary!-''': All the binaries which are sound.
- * '''!-VideoBinary!-''': All the binaries which are videos.
- * '''!-DocumentBinary!-''': All the binaries which are documents.
- * '''!-TextBinary!-''': All the binaries which are documents.
- * '''!-CompressBinary!-''': All the binaries which are documents.
- * '''!-GenericBinary!-''': Includes all the binaries which are no included in the previous validation types. These binaries are generic and the system can not provide any specific information about them.
-
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.RecordType
-TO BE REPLACED
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.data.defaults
-TO BE REPLACED
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.Create
-TO BE REPLACED
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.List
-TO BE REPLACED
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.Read
-TO BE REPLACED
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.Update
-TO BE REPLACED
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.Delete
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.ImageBinary.ValidationType
+#TO BE REPLACED
+#!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.ImageBinary.data.defaults
+#TO BE REPLACED
+#!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.ImageBinary.actions.Create
+#TO BE REPLACED
+#!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.ImageBinary.actions.List
+#TO BE REPLACED
+#!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.ImageBinary.actions.Read
+#TO BE REPLACED
+#!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.ImageBinary.actions.Update
+#TO BE REPLACED
+#!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.ImageBinary.actions.Delete
