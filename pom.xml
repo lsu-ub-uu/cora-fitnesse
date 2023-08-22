@@ -96,7 +96,6 @@
 					<include>HelperPages/</include>
 					<include>JsClient/</include>
 					<include>RestFixtureInstallTest/</include>
-<!--					<include>_root.wiki</include>-->
 					<include>*.wiki</include>
 					<include>properties</include>
 					<include>content.txt</include>
