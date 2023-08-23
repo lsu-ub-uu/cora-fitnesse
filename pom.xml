@@ -92,11 +92,10 @@
 					<include>FrontPage/</include>
 					<include>CoraTests/</include>
 					<include>DocumentationPage/</include>
-					<include>files/</include>
+					<include>files/Images/</include>
 					<include>HelperPages/</include>
 					<include>JsClient/</include>
 					<include>RestFixtureInstallTest/</include>
-<!--					<include>_root.wiki</include>-->
 					<include>*.wiki</include>
 					<include>properties</include>
 					<include>content.txt</include>
@@ -104,6 +103,7 @@
 				</includes>
 				<excludes>
 					<exclude>**/*.zip</exclude>
+<!--					<exclude>files/testResults/</exclude>-->
 				</excludes>
 			</resource>
 		</resources>
