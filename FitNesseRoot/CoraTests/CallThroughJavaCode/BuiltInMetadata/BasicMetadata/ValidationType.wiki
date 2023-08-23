@@ -3,7 +3,7 @@ Test
 ---
 !1 Validation Type
 
-!img files/images/validationType.png 
+!img files/Images/validationType.png 
 
 Validation type is used to know how to validate incoming data for a recordType. A validation type links to the record type it validates data for.
 For the system to work correctly must each defined record type have at least one validation type that links to it, but there can be any number of validation types linking to one particular record type.
