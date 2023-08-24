@@ -4,7 +4,7 @@ Test
 !1 Binary
 Binary is a record type intended to handle binares in Cora. Binary records keep information about the binaries that are stored in the system.
 
-!img files/images/binary.png 
+!img files/Images/binary.png 
 
    
    (Error handler)

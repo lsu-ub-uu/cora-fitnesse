@@ -3,7 +3,7 @@ Test
 ---
 !1 Record Type
 
-!img files/images/recordType.png
+!img files/Images/recordType.png
 
 The Record Type is a basic entity  in Cora. Everything in Cora is a record type, including all the metadata types that make up the system, including the record type itself.
 When you create a record type, you define what should apply when instances of that record type are created.
