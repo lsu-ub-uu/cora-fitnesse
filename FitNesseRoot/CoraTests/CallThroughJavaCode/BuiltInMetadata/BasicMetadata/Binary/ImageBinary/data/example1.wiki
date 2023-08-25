@@ -1,0 +1,26 @@
+---
+Help: Data for example example1
+---
+!***> Data for example examplee1
+
+!define recordType {binary}
+!define recordId {exampleValidationType1}
+!define recordPermissions {!-{"read":[],"write":[]}-!}
+
+!define createData {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"imageBinary"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"originalFileName","value":"thisIsTheOrginalFileName.png"},{"name":"expectedFileSize","value":"654644"}],"attributes":{"type":"image"}}-!}
+
+!define expectedCreatedData createData
+
+!define updateData {!--!}
+!define expectedUpdatedData updateData
+!define originalData updateData
+!define expectedOriginalData originalData
+ 
+!define searchId {!--!}
+!define searchQueryData {!--!}
+
+# customUpdateData is a json string which can be filled with extra json using the variable customJsonPart
+!define jsonPart customJsonPart
+!define customJsonPart {}
+!define customUpdateData {!--!}
+*!
