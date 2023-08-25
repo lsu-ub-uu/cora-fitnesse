@@ -181,8 +181,6 @@ A test that first reads all predefined metadata needed to be able to add binary 
 | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? |
 | metadata | masterResLink | 1 | 1 |
 | metadata | thumbnailGroup | 0 | 1 |
-| metadata | thumbnailLargeGroup | 0 | 1 |
-| metadata | thumbnailSmallGroup | 0 | 1 |
 
 *!
 !***> Read metadataResourceLink (masterResLink)
