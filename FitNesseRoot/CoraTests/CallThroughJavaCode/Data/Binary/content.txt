@@ -1,4 +1,4 @@
-!1 !-BinaryTest-!
+!1 !-BinaryTest-! OBS: It might be moved somewhereelse
 A test that first reads all predefined metadata needed to be able to add binary data to the system, and then tests adding and updating images.
 
 !2 Read metadata defined in code to make sure it is correct

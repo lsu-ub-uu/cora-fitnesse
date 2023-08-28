@@ -2,7 +2,7 @@
 <properties>
 <Edit>true</Edit>
 <Files>true</Files>
-<Help>EVERYTHING is a record, test for handling records in the system (create, read, update, delete, list, etc)</Help>
+<Help>OBS: It might be moved somewhereelse. EVERYTHING is a record, test for handling records in the system (create, read, update, delete, list, etc)</Help>
 <Properties>true</Properties>
 <RecentChanges>true</RecentChanges>
 <Refactor>true</Refactor>
