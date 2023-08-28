@@ -4,23 +4,11 @@ Static
 
 !2 Read
 
-!***> It should be possible to read various foundational metadata about or strongly related to recordType itself
+ * '''Case 1''': It shoulbe be possible to read a record. The record should be identical than the expected created record from above.
 
-As a recordType instance:
-
-!define recordType {recordType}
-!define recordId {recordType}
-!include -seamless .HelperPages.readRecord
-
-As a validationType instance:
-!define recordType {recordType}
-!define recordId {recordType}
-!include -seamless .HelperPages.readRecord
-
-Metadata groups:
-!| RecordEndpointFixture |
-| authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadata | recordTypeGroup | =~/"name":"linkedRecordId","value":"metadataIdLink".*"name":"linkedRecordId","value":"recordInfoGroup".*"name":"linkedRecordId","value":"presentationViewIdLink".*"name":"linkedRecordId","value":"menuPresentationViewIdLink".*"name":"linkedRecordId","value":"listPresentationViewIdLink".*"name":"linkedRecordId","value":"userSuppliedIdCollectionVar".*"name":"linkedRecordId","value":"recordTypeSearchLink".*"name":"linkedRecordId","value":"autocompletePresentationViewLink".*"value":"groupOfRecordTypeCollectionVar".*"value":"recordTypeFilterMetadataLink".*"value":"recordTypeFilterPresentationLink"/ | OK |
-| $adminAuthToken | metadata | recordTypeNewGroup | =~/"name":"linkedRecordId","value":"metadataIdLink".*"name":"linkedRecordId","value":"recordInfoNewGroup".*"name":"linkedRecordId","value":"presentationViewIdLink".*"name":"linkedRecordId","value":"menuPresentationViewIdLink".*"name":"linkedRecordId","value":"listPresentationViewIdLink".*"name":"linkedRecordId","value":"userSuppliedIdCollectionVar".*"name":"linkedRecordId","value":"recordTypeSearchLink".*"name":"linkedRecordId","value":"autocompletePresentationViewLink".*"value":"groupOfRecordTypeCollectionVar".*"value":"recordTypeFilterMetadataLink".*"value":"recordTypeFilterPresentationLink"/ | OK |
-
+!***> Case 1
+!define expectedCompareResult {OK}
+!define expectedActionResult {Action read_incoming_links is missing.}
+!define expectedPermissionResult {OK}
+!include -seamless .HelperPages.readCheck
 *!

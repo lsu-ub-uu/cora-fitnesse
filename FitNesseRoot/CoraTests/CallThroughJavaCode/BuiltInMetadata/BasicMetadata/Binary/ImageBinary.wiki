@@ -7,15 +7,10 @@ Binary is a validation type intended to hold metadata for images.
 Explain a bit about expectedFileSize, expectedChecksum, expectedMimeType...
 
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.ImageBinary.data.example1
-
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.ImageBinary.ValidationType
-
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.ImageBinary.actions.Create
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.ImageBinary.actions.Read
 
-#TO BE REPLACED
-#!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.ImageBinary.actions.List
-#TO BE REPLACED
-#!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.ImageBinary.actions.Read
 #TO BE REPLACED
 #!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.ImageBinary.actions.Update
 #TO BE REPLACED

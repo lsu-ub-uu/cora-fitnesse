@@ -5,16 +5,15 @@ Static
 
 !2 Create
 
-!***> It should be possible to create a recordType
+ * '''Case 1''': It should be possible to create an imageBinary record.
+
+!***> Case 1
 
 !define expectedCreatedData createData
-
 !define expectedCreateResult {CREATED}
 !define expectedAnswer {}
 !define expectedCompareResult {OK}
 !define expectedActionResult {}
 !define expectedPermissionResult {OK}
-
 !include -seamless .HelperPages.createCheckReadCheck
-
 *!
