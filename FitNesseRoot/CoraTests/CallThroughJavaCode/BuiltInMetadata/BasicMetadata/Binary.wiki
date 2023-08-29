@@ -14,7 +14,7 @@ Binary is a record type intended to handle binares in Cora. Binary records keep 
 There four validation types of binaries:
 
  * '''[[!-ImageBinary-!][<CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.ImageBinary]]''': All the binaries which are pictures.
- * '''!-SoundBinary-!''': All the binaries which are sound.
+ * '''!-AudioBinary-!''': All the binaries which are audios.
  * '''!-VideoBinary-!''': All the binaries which are videos.
  * '''!-DocumentBinary-!''': All the binaries which are documents.
  * '''!-TextBinary-!''': All the binaries which are documents.
