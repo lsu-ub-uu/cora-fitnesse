@@ -4,8 +4,9 @@ Help: Create a record according to variables
 !***> Create record, for recordType ${recordType}
 
 !| ChildComparerFixture |
-| authToken | type | json | testCreateAndStoreRecord? | getStatusType? |
-| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $createdRecordId= |
 
 !define expectedAnswer {}
+!define recordId {$createdRecordId}
 *!
