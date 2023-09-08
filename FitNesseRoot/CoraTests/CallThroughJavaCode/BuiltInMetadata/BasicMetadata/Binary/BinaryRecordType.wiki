@@ -1,0 +1,153 @@
+---
+Static
+---
+!2 Definitions
+
+!3 Definition for Binary
+ * '''binary''' type:{image, genericBinary, sound} (group)
+   * '''recordInfo'''(group, 1-1, noConstraint)
+     * '''id'''(textVariable, 0-1, noConstraint, I)
+     * '''type'''(recordLink, 0-1, noConstraint)
+     * '''validationType'''(recordLink, 1-1, noConstraint)
+     * '''dataDivider'''(recordLink, 1-1, noConstraint, P)
+     * '''createdBy'''(recordLink, 0-1, noConstraint)
+     * '''permissionUnit'''(recordLink, 0-X, noConstraint)
+     * '''tsCreated'''(textVariable, 0-1, noConstraint)
+     * '''updated'''(group, 0-X, noConstraint)
+       * '''updatedBy'''(recordLink, 0-1, noConstraint)
+       * '''tsUpdated'''(textVariable, 0-1, noConstraint)
+   * '''resourceInfo'''(group, 0-1, write)
+     * '''master'''(group, 1-1, noConstraint)
+       * '''resourceId'''(textVariable, 1-1, readWrite)
+       * '''resourceLink'''(resourceLink, 1-1, noConstraints)
+       * '''fileSize'''(textVariable, 1-1, noConstraints) (bytes)
+       * '''mimeType'''(textVariable, 1-1, noConstraints)
+       * '''height'''(textVariable, 0-1, noConstraints) (pixels)
+       * '''width'''(textVariable, 0-1, noConstraints) (pixels)
+       * '''resolution'''(textVariable, 0-1, noConstraints) (dpi)
+     * '''thumbnail'''(group, 0-1, write)
+       * '''resourceId'''(textVariable, 1-1, readWrite)
+       * '''resourceLink'''(resourceLink, 1-1, noConstraints)
+       * '''fileSize'''(textVariable, 1-1, noConstraints) (bytes)
+       * '''mimeType'''(textVariable, 1-1, noConstraints)
+       * '''height'''(textVariable, 1-1, noConstraints) (pixels)
+       * '''width'''(textVariable, 1-1, noConstraints) (pixels)
+       * '''resolution'''(textVariable, 0-1, noConstraints) (dpi)
+   * '''originalFileName'''(textVariable, 1-1, write)
+   * '''expectedFileSize'''(textVariable, 0-1, noConstraints) (only for new) (pixels)
+   * '''expectedChecksum'''(textVariable, 0-1, noConstraints) (only for new) (SHA512)
+   * '''checksum'''(textVariable, 0-1, write) (final value SHA512)
+   * '''checksumType'''(textVariable, 0-1, write)
+   
+
+
+!***> Test definitions for Binary
+!***> Validate recordType Binary
+
+!| RecordEndpointFixture |
+| authToken | type | id | testReadRecord? | getStatusType? |
+| $adminAuthToken | recordType | binary | | OK |
+
+*!
+!***> Validate  definition of Binary
+
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadata | binaryGroup | |
+
+
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 7 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadata | recordInfoBinaryGroup | 1 | 1 | recordInfo | noRestrictions |
+| $adminAuthToken | metadata | resourceInfoGroup | 0 | 1 | resourceInfo | write |
+| $adminAuthToken | metadata | originalFileNameTextVar | 1 | 1 | originalFileName | noRestrictions |
+| $adminAuthToken | metadata | expectedFileSizeNumberVar | 0 | 1 | expectedFileSize | noRestrictions |
+| $adminAuthToken | metadata | expectedChecksumTextVar | 0 | 1 | expectedChecksum | noRestrictions |
+| $adminAuthToken | metadata | checksumTextVar | 0 | 1 | checksum | write |
+| $adminAuthToken | metadata | checksumTypeTextVar | 0 | 1 | checksumType | write |
+
+!***> Validate recordInfoGroup
+
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadata | recordInfoBinaryGroup | |
+
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 8 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadata | idTextVar | 0 | 1 | id | noRestrictions |
+| $adminAuthToken | metadata | recordTypeLink | 0 | 1 | type | noRestrictions |
+| $adminAuthToken | metadata | validationTypeLink | 1 | 1 | validationType | noRestrictions |
+| $adminAuthToken | metadata | dataDividerLink | 1 | 1 | dataDivider | noRestrictions |
+| $adminAuthToken | metadata | createdByLink | 0 | 1 | createdBy | noRestrictions |
+| $adminAuthToken | metadata | permissionUnitLink | 0 | X | permissionUnit | noRestrictions |
+| $adminAuthToken | metadata | tsCreatedTextVar | 0 | 1 | tsCreated | noRestrictions |
+| $adminAuthToken | metadata | updatedGroup | 0 | X | updated | noRestrictions |
+
+*!
+!***> Validate resourceInfoGroup
+
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadata | resourceInfoGroup | |
+
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 2 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadata | masterGroup | 1 | 1 | master | noRestrictions |
+| $adminAuthToken | metadata | thumbnailGroup | 0 | 1 | thumbnail | noRestrictions |
+
+*!
+!***> Validate masterBinaryGroup
+
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadata | masterGroup | |
+
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 7 | OK |
+resourceLinkResLink
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadata | resourceIdTextVar | 1 | 1 | resourceId | readWrite |
+| $adminAuthToken | metadata | resourceLinkResLink | 1 | 1 | resourceLink | noRestrictions |
+| $adminAuthToken | metadata | fileSizeNumberVar | 1 | 1 | fileSize | noRestrictions |
+| $adminAuthToken | metadata | mimeTypeTextVar | 1 | 1 | mimeType | noRestrictions |
+| $adminAuthToken | metadata | heightImageBinaryNumberVar | 0 | 1 | height | noRestrictions |
+| $adminAuthToken | metadata | widthImageBinaryNumberVar | 0 | 1 | width | noRestrictions |
+| $adminAuthToken | metadata | resoultionImageBinaryNumberVar | 0 | 1 | resolution | noRestrictions |
+
+*!
+!***> Validate thumbnail
+
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadata | thumbnailGroup | |
+
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 7 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadata | resourceIdTextVar | 1 | 1 | resourceId | readWrite |
+| $adminAuthToken | metadata | resourceLinkResLink | 1 | 1 | resourceLink | noRestrictions |
+| $adminAuthToken | metadata | fileSizeNumberVar | 1 | 1 | fileSize | noRestrictions |
+| $adminAuthToken | metadata | mimeTypeTextVar | 1 | 1 | mimeType | noRestrictions |
+| $adminAuthToken | metadata | heightImageBinaryNumberVar | 1 | 1 | height | noRestrictions |
+| $adminAuthToken | metadata | widthImageBinaryNumberVar | 1 | 1 | width | noRestrictions |
+| $adminAuthToken | metadata | resoultionImageBinaryNumberVar | 1 | 1 | resolution | noRestrictions |
+*!
+*!
+*!

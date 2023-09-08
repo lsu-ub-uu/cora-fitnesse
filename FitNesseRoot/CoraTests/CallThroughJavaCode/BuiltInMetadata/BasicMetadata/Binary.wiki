@@ -13,12 +13,12 @@ Binary is a record type intended to handle binares in Cora. Binary records keep 
 
 There four validation types of binaries:
 
+ * '''[[!-GenericBinary-!][<CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary]]''': Includes all the binaries which are no included in the previous validation types. These binaries are generic and the system can not provide any specific information about them.
  * '''[[!-ImageBinary-!][<CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.ImageBinary]]''': All the binaries which are pictures.
  * '''!-AudioBinary-!''': All the binaries which are audios.
  * '''!-VideoBinary-!''': All the binaries which are videos.
  * '''!-DocumentBinary-!''': All the binaries which are documents.
  * '''!-TextBinary-!''': All the binaries which are documents.
  * '''!-CompressBinary-!''': All the binaries which are documents.
- * '''!-GenericBinary-!''': Includes all the binaries which are no included in the previous validation types. These binaries are generic and the system can not provide any specific information about them.
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.RecordType
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.BinaryRecordType
