@@ -2,7 +2,7 @@
 Static
 ---
 !3 !-GenericBinary, definition for new-!
- * '''binary''' type:{image} (group)
+ * '''binary''' type:{generic} (group)
    * '''recordInfo'''(group, 1-1, noConstraint)
      * '''validationType'''(recordLink, 1-1, noConstraint)
      * '''dataDivider'''(recordLink, 1-1, noConstraint, P)
@@ -11,7 +11,7 @@ Static
    * '''expectedChecksum'''(textVariable, 0-1, noConstraints)	(SHA512)
    
 !3 !-GenericBinary, definition for update-!
- * '''binary''' type:{image} (group)
+ * '''binary''' type:{generic} (group)
    * '''recordInfo'''(group, 1-1, noConstraint)
      * '''id'''(textVariable, 1-1, noConstraint, I)
      * '''type'''(recordLink, 1-1, noConstraint)
