@@ -1,5 +1,9 @@
 ---
 Suite
 ---
-!1 Test suite X
+!1 Metacreator 
+Metacreator is a component that gathers all "extended functionalities" which are meant to auto create metadata, creating standard placeholders for parts that might be trivial to create but that takes time to achive. The common use case is the creation of texts. 
+Extended functionalities are pluggable packages of code which are intended to do an extraordinary task which is not included on the standard cora process.
+
+ 
 !contents -R2 -g -p -f -h

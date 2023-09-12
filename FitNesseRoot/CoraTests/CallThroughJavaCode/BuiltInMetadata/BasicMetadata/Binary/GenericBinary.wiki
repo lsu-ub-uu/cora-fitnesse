@@ -1,0 +1,12 @@
+---
+Test
+---
+!1 GenericBinary
+GenericBinary is a validation type intended to for images for all types of resources. 
+
+Explain a bit about expectedFileSize, expectedChecksum, expectedMimeType...
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.data.example1
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.ValidationType
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.actions.Create
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.actions.Read
