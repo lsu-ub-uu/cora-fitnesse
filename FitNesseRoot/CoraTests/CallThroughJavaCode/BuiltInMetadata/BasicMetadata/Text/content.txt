@@ -26,19 +26,20 @@ A test that first reads all predefined metadata needed to be able to add texts t
 | $adminAuthToken | metadata | textPartTypeAlternativeCollectionVar | | OK |
 
 *!
-!***> Read collectionItems (svItem, enItem)
+!***> Read collectionItems (svLangItem, enLangItem, noLangItem)
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadata | svItem | | OK |
-| $adminAuthToken | metadata | enItem | | OK |
+| $adminAuthToken | metadata | svLangItem | | OK |
+| $adminAuthToken | metadata | enLangItem | | OK |
+| $adminAuthToken | metadata | noLangItem | | OK |
 
 *!
 !***> Read itemCollection (systemLanguagesCollection)
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadata | systemLanguagesCollection | =~/"name":"linkedRecordId","value":"svItem".*"name":"linkedRecordId","value":"enItem"/ | OK |
+| $adminAuthToken | metadata | systemLanguagesCollection | =~/"name":"linkedRecordId","value":"svLangItem".*"name":"linkedRecordId","value":"enLangItem.*"name":"linkedRecordId","value":"noLangItem"/ | OK |
 
 *!
 !***> Read collectionVariables (systemLanguagesCollectionVar, systemLanguageSvCollectionVar, systemLanguageEnCollectionVar)
@@ -92,6 +93,7 @@ A test that first reads all predefined metadata needed to be able to add texts t
 | authToken | type | json | testCreateRecord? | getStatusType? |
 | $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"myText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Min svenska text"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}}],"name":"text"} | | CREATED |
 | $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"my2Text"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Min andra text på svenska"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"My second text in english"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"} | | CREATED |
+| $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"my3Text"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Min andra text på svenska"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"My second text in english"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}},{"children":[{"name":"text","value":"Min andra tekst på norsk"}],"name":"textPart","attributes":{"type":"alternative","lang":"no"}}],"name":"text"} | | CREATED |
 
 *!
 !***> List data(text, coraText)
@@ -120,7 +122,7 @@ A test that first reads all predefined metadata needed to be able to add texts t
 | $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"myNonWorkingText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Att ha samma språk(svenska) två gånger på en text fungerar inte"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"Något annat på svenska"}],"name":"textPart","attributes":{"type":"alternative","lang":"sv"}}],"name":"text"} | | BAD_REQUEST |
 | $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"myNonWorkingText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"It does not work to have the same language(english) twice in the same text"}],"name":"textPart","attributes":{"type":"default","lang":"en"}},{"children":[{"name":"text","value":"Some other text in english"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"} | | BAD_REQUEST |
 | $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"myNonWorkingText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Att ha flera av samma språk(engelska) på en text fungerar inte"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"It does not work to have the same language(english) twice in the same text"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}},{"children":[{"name":"text","value":"Some other text in english"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"} | | BAD_REQUEST |
-| $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"myNonWorkingText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Att ha språk som inte är definierade(norska) på en text fungerar inte"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"An ok english text"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}},{"children":[{"name":"text","value":"Dette går ikke"}],"name":"textPart","attributes":{"type":"alternative","lang":"no"}}],"name":"text"} | | BAD_REQUEST |
+| $adminAuthToken | text | {"children":[{"children":[{"name":"id","value":"myNonWorkingText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Att ha språk som inte är definierade(danska) på en text fungerar inte"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"An ok english text"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}},{"children":[{"name":"text","value":"Dette går"}],"name":"textPart","attributes":{"type":"alternative","lang":"no"}},{"children":[{"name":"text","value":"Dette går ikke"}],"name":"textPart","attributes":{"type":"alternative","lang":"dk"}}],"name":"text"} | | BAD_REQUEST |
 
 *!
 !2 Read and use predefined search for text (textSearch)
@@ -149,5 +151,7 @@ When the text myText (see above) was created and updated, the id of the  text wa
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | text | myText | | OK |
 | $adminAuthToken | text | my2Text | | OK |
+| $adminAuthToken | text | my3Text | | OK |
+
 
 *!
