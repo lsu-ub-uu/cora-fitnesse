@@ -38,7 +38,7 @@ A test that first reads all predefined metadata needed to be able to add texts t
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadata | systemLanguagesCollection | =~/"name":"linkedRecordId","value":"svItem".*"name":"linkedRecordId","value":"enItem"/ | OK |
+| $adminAuthToken | metadata | systemLanguagesCollection | =~/"name":"linkedRecordId","value":"svLangItem".*"name":"linkedRecordId","value":"enLangItem".*"name":"linkedRecordId","value":"noLangItem"/ | OK |
 
 *!
 !***> Read collectionVariables (systemLanguagesCollectionVar, systemLanguageSvCollectionVar, systemLanguageEnCollectionVar)
