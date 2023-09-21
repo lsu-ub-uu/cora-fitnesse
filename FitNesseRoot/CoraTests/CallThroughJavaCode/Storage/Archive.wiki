@@ -35,4 +35,5 @@ Files are written to disk in the archive The archive is managed by the latest ve
 |$tempDemoId=|dateFormat;|mmssSS|
 
 !include -seamless .CoraTests.CallThroughJavaCode.Storage.Archive.Create
+!include -seamless .CoraTests.CallThroughJavaCode.Storage.Archive.Read
 !include -seamless .CoraTests.CallThroughJavaCode.Storage.Archive.Update
