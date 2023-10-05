@@ -41,7 +41,7 @@ Show file structure after storing a new record
 *!
 !***> '''Case 2'''
 
-!define createBinaryGeneric {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"originalFileName","value":"sonGokuCloud.jpg"},{"name":"expectedFileSize","value":"110104"}],"attributes":{"type":"generic"}}-!}
+!define createBinaryGeneric {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"originalFileName","value":"aBinaryText.txt"},{"name":"expectedFileSize","value":"110104"}],"attributes":{"type":"generic"}}-!}
 !define recordType {binary}
 !define createData createBinaryGeneric
 !define expectedAnswer {}
@@ -59,7 +59,7 @@ Show file structure after storing a new record
 
 !| RecordEndpointFixture |
 | authToken | type | id | fileName | testUpload? | getStatusType? |
-| $adminAuthToken | binary | $createdRecordId | sonGokuCloud.jpg | | OK |
+| $adminAuthToken | binary | $createdRecordId | aBinaryText.txt | =~/"name":"originalFileName","value":"aBinaryText.txt".*"name":"fileSize","value":"8".*"name":"mimeType","value":"text/plain".*"name":"checksum","value":"d9f28c8b153ee8916c7f8faaa9d94bb04d06da7616034a4cd7e03102e30fa67cfa8eee1e7afbc7d3a5909285e41b24b16e08b2f7338d15398554407cf7025b45"/| OK |
 
 *!
 !include -seamless .HelperPages.showFileVersion
