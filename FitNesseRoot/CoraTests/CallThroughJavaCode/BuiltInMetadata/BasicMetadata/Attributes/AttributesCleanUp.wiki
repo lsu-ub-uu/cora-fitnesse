@@ -18,6 +18,4 @@
 | $adminAuthToken | text | exampleAttributeNewGroupDefText | | OK |
 | $adminAuthToken | text | exampleAttributeSearchText | | OK |
 | $adminAuthToken | text | exampleAttributeSearchDefText | | OK |
-| $adminAuthToken | text | testWorkoutExtendedSearchDefText | | OK |
-| $adminAuthToken | text | testWorkoutExtendedSearchText | | OK |
 *!

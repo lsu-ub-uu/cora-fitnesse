@@ -96,9 +96,9 @@ Read presentationGroups again to see that they have been created
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseBookOutputPGroup | presentation | =~/"name":"mode".*"value":"output".*"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoOutputPGroup"/ | OK |
-| fitnesseBookMenuPGroup | presentation | =~/"name":"mode".*"value":"output".*"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoOutputPGroup"/ | OK |
-| fitnesseBookListPGroup | presentation | =~/"name":"mode".*"value":"output".*"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoOutputPGroup"/ | OK |
+| fitnesseBookOutputPGroup | presentation | =~/"name":"mode".*"value":"output".*"name":"linkedRecordId","value":"recordInfoOutputPGroup".*"name":"refGroup"/ | OK |
+| fitnesseBookMenuPGroup   | presentation | =~/"name":"mode".*"value":"output".*"name":"linkedRecordId","value":"recordInfoOutputPGroup".*"name":"refGroup"/ | OK |
+| fitnesseBookListPGroup   | presentation | =~/"name":"mode".*"value":"output".*"name":"linkedRecordId","value":"recordInfoOutputPGroup".*"name":"refGroup"/ | OK |
 
 *!
 !2 Delete some data
@@ -143,7 +143,7 @@ Read presentationGroups again to see that they have been created. This time fitn
 
 !| RecordEndpointFixture |
 | id | type | testReadRecord? | getStatusType? |
-| fitnesseBookOutputPGroup | presentation | =~/"name":"refGroup".*"name":"linkedRecordId","value":"recordInfoOutputPGroup".*"name":"refGroup".*"name":"linkedRecordId","value":"someTestOutputPVar"/ | OK |
+| fitnesseBookOutputPGroup | presentation | =~/"name":"linkedRecordId","value":"recordInfoOutputPGroup".*"name":"refGroup".*"name":"linkedRecordId","value":"someTestOutputPVar".*"name":"refGroup"/ | OK |
 | fitnesseBookMenuPGroup | presentation | =~/"name":"linkedRecordId","value":"recordInfoOutputPGroup".*"name":"refGroup"/ | OK |
 | fitnesseBookListPGroup | presentation | =~/"name":"linkedRecordId","value":"recordInfoOutputPGroup".*"name":"refGroup"/ | OK |
 
