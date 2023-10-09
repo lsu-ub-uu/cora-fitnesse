@@ -22,22 +22,34 @@ Static
 Show file structure before storing a new record
 !include -seamless .HelperPages.archiveFile
 
-!define createDemoRecord {!-{"children":[{"children":[{"name":"id","value":"demo:$tempDemoId"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"demo"}],"name":"validationType"}],"name":"recordInfo"},{"name":"bookTitle","value":"Harry Potter"}],"name":"book"}-!}
+#!define createDemoRecord {!-{"children":[{"children":[{"name":"id","value":"demo:$tempDemoId"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"demo"}],"name":"validationType"}],"name":"recordInfo"},{"name":"bookTitle","value":"Harry Potter"}],"name":"book"}-!}
+!define createDemoRecord {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"myRecordInArchive"}]}-!}
 
-!define recordType {demo}
+!define recordType {fitnesseRecordType}
 !define createData createDemoRecord
 !define expectedAnswer {}
 !define expectedCreateResult {CREATED}
-!define archiveFileName {demo:demo:$tempDemoId}
+#!define archiveFileName {fitnesseRecordType:$createdRecordId}
+!define archiveFileName {fitnesseRecordType:$tmpRecordId1}
 !define archiveVersion1 {v1}
 !define archiveVersion2 {v1}
 
-!include -seamless .HelperPages.createRecord
+
+!***> Create record, for recordType ${recordType}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $tmpRecordId1= |
+
+!define expectedAnswer {}
+!define recordId {$createdRecordId}
+*!
 
 !include -seamless .HelperPages.showFileVersion
 
 Show file structure after storing a new record
 !include -seamless .HelperPages.archiveFile
+
 *!
 !***> '''Case 2'''
 
@@ -47,11 +59,19 @@ Show file structure after storing a new record
 !define expectedAnswer {}
 !define expectedCreateResult {CREATED}
 
-!define archiveFileName {binary:$createdRecordId-master}
+!define archiveFileName {binary:$tmpRecordId2-master}
 !define archiveVersion1 {v1}
 !define archiveVersion2 {v1}
 
-!include -seamless .HelperPages.createRecord
+!***> Create record, for recordType ${recordType}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $tmpRecordId2= |
+
+!define expectedAnswer {}
+!define recordId {$createdRecordId}
+*!
 
 !***> Upload image
 
@@ -59,20 +79,12 @@ Show file structure after storing a new record
 
 !| RecordEndpointFixture |
 | authToken | type | id | fileName | testUpload? | getStatusType? |
-| $adminAuthToken | binary | $createdRecordId | aBinaryText.txt | =~/"name":"originalFileName","value":"aBinaryText.txt".*"name":"fileSize","value":"8".*"name":"mimeType","value":"text/plain".*"name":"checksum","value":"d9f28c8b153ee8916c7f8faaa9d94bb04d06da7616034a4cd7e03102e30fa67cfa8eee1e7afbc7d3a5909285e41b24b16e08b2f7338d15398554407cf7025b45"/| OK |
+| $adminAuthToken | binary | $tmpRecordId2 | aBinaryText.txt | =~/"name":"originalFileName","value":"aBinaryText.txt".*"name":"fileSize","value":"8".*"name":"mimeType","value":"text/plain".*"name":"checksum","value":"d9f28c8b153ee8916c7f8faaa9d94bb04d06da7616034a4cd7e03102e30fa67cfa8eee1e7afbc7d3a5909285e41b24b16e08b2f7338d15398554407cf7025b45"/| OK |
 
 *!
 !include -seamless .HelperPages.showFileVersion
 
 Show file structure after storing a new record
 !include -seamless .HelperPages.archiveFile
-
-!***> Clean up created data
-
-!| RecordEndpointFixture |
-| authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | binary | $createdRecordId | | OK |
-
-*!
 
 *!

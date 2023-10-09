@@ -1,0 +1,11 @@
+---
+Suite
+---
+!***> Clean up example fitnesse pool
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | fitnesseRecordType | $tmpRecordId1 | | OK |
+| $adminAuthToken | binary | $tmpRecordId2 | | OK |
+
+*!

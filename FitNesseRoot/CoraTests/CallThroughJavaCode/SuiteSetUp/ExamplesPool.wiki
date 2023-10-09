@@ -11,114 +11,91 @@ It should be possible to create new validation types
  * A group for read or update
  * A standard presentation
 
-#
-#!***> Creation of a standard fitnesse new presentationGroup
-#!define currentAuthToken {$adminAuthToken}
-#!define recordType {presentation}
-#!define createData {!-{"name":"presentation","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnessePGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"presentationOf","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseGroup"}]},{"name":"childReferences","children":[{"name":"childReference","repeatId":"0","children":[{"name":"textStyle","value":""},{"name":"childStyle","repeatId":"1","value":""},{"name":"refGroup","repeatId":"0","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnesseMetadataPVar"}],"attributes":{"type":"presentation"}}]},{"name":"minNumberOfRepeatingToShow","value":""},{"name":"presentationSize","value":""},{"name":"title","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":""}]}]}]},{"name":"mode","value":"input"},{"name":"presentationStyle","value":"frame"},{"name":"presentAs","value":"recordRelation"}],"attributes":{"type":"pGroup"}}-!}
-#!define expectedAnswer {!--!}
-#!define expectedCreateResult {CREATED}
-#
-#!include -seamless .HelperPages.createRecord
-#
-#*!
-#
+!define currentAuthToken {$adminAuthToken}
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {!--!}
+
 !***> Creation of a standard fitnesse text
 
-!define currentAuthToken {$adminAuthToken}
 !define recordType {text}
 !define createData {!-{"children":[{"children":[{"name":"id","value":"fitnesseText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"fitnesseText"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"fitnesseText"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"}-!}
-!define expectedAnswer {!--!}
-!define expectedCreateResult {CREATED}
 
 !include -seamless .HelperPages.createRecord
-
 *!
 
 !***> Creation of a standard fitnesse metadataTextVariable
-!define currentAuthToken {$adminAuthToken}
 !define recordType {metadata}
 !define createData {!-{"children":[{"children":[{"name":"id","value":"fitnesseMetadataTextVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"name":"validationType", "children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataTextVariable"}]}],"name":"recordInfo"},{"name":"nameInData","value":"fitnesseTextVar"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"name":"regEx","value":".*"}],"name":"metadata","attributes":{"type":"textVariable"}}-!}
-!define expectedAnswer {!--!}
-!define expectedCreateResult {CREATED}
 
 !include -seamless .HelperPages.createRecord
-
 *!
+
 !***> Creation of a standard fitnesse metadataNumberVariable
-!define currentAuthToken {$adminAuthToken}
 !define recordType {metadata}
 !define createData {!-{"children":[{"children":[{"name":"id","value":"fitnesseMetadataNumberVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataNumberVariable"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"fitnesseNumberVar"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"name":"min","value":"0"},{"name":"max","value":"10"},{"name":"warningMin","value":"1"},{"name":"warningMax","value":"9"},{"name":"numberOfDecimals","value":"0"}],"name":"metadata","attributes":{"type":"numberVariable"}}-!}
-!define expectedAnswer {!--!}
-!define expectedCreateResult {CREATED}
 
 !include -seamless .HelperPages.createRecord
-
 *!
+
 !***> Creation of a standard fitnesse genericCollectionItem
-!define currentAuthToken {$adminAuthToken}
 !define recordType {metadata}
 !define createData {!-{"children":[{"children":[{"name":"id","value":"fitnesseBlueItem"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericCollectionItem"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"blue"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"}],"name":"metadata","attributes":{"type":"collectionItem"}}-!}
-!define expectedAnswer {!--!}
-!define expectedCreateResult {CREATED}
 
 !include -seamless .HelperPages.createRecord
-
 *!
+
 !***> Creation of a standard fitnesse metadataItemCollection
-!define currentAuthToken {$adminAuthToken}
 !define recordType {metadata}
 !define createData {!-{"children":[{"children":[{"name":"id","value":"fitnesseCollection"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataItemCollection"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"colour"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"repeatId":"0","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseBlueItem"}],"name":"ref"}],"name":"collectionItemReferences"}],"name":"metadata","attributes":{"type":"itemCollection"}}-!}
-!define expectedAnswer {!--!}
-!define expectedCreateResult {CREATED}
 
 !include -seamless .HelperPages.createRecord
-
 *!
+
 !style_red[metadataRecordLink point to a Demo recordType. Change to a fitnesse recordType]
 !***> Creation of a standard fitnesse metadataRecordLink
-!define currentAuthToken {$adminAuthToken}
 !define recordType {metadata}
 !define createData {!-{"children":[{"children":[{"name":"id","value":"fitnesseLink"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataRecordLink"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"demo"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"demo"}],"name":"linkedRecordType"}],"name":"metadata","attributes":{"type":"recordLink"}}-!}
-!define expectedAnswer {!--!}
-!define expectedCreateResult {CREATED}
 
 !include -seamless .HelperPages.createRecord
-
 *!
+
+!***> Create recordLink to binary
+!define recordType {metadata}
+!define createData {!-{"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseBinaryLink"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataRecordLink"}]}]},{"name":"nameInData","value":"fitnesseBinary"},{"name":"linkedRecordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"binary"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]}],"attributes":{"type":"recordLink"}}-!}
+
+!include -seamless .HelperPages.createRecord
+*!
+
 !style_red[fitnesseGroup point to exampleRecordInfoGroup. It must be change to a fitnesse generated group]
 !***> Creation of a standard fitnesse metadataGroup
-!define currentAuthToken {$adminAuthToken}
 !define recordType {metadata}
-#!define createData {!-{"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"test"},{"name":"childReferences","children":[{"name":"childReference","repeatId":"0","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseMetadataTextVar"}]}]}]}],"attributes":{"type":"group"}}-!}
-!define createData {!- {"children":[{"children":[{"name":"id","value":"fitnesseGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"fitnesseExample"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"repeatId":"4","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"exampleRecordInfoGroup"}],"name":"ref"}],"name":"childReference"},{"repeatId":"0","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"20"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseMetadataTextVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"1","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"X"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseMetadataNumberVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"2","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseCollectionVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"3","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseLink"}],"name":"ref"}],"name":"childReference"}],"name":"childReferences"}],"name":"metadata","attributes":{"type":"group"}} -!}
-!define expectedAnswer {!--!}
-!define expectedCreateResult {CREATED}
+!define createData {!- {"children":[{"children":[{"name":"id","value":"fitnesseGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"fitnesseExample"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"repeatId":"0","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"exampleRecordInfoGroup"}],"name":"ref"}],"name":"childReference"},{"repeatId":"1","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"20"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseMetadataTextVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"2","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"X"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseMetadataNumberVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"3","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseCollectionVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"4","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseLink"}],"name":"ref"}],"name":"childReference"},{"repeatId":"5","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseBinaryLink"}],"name":"ref"}],"name":"childReference"}],"name":"childReferences"}],"name":"metadata","attributes":{"type":"group"}} -!}
 
 !include -seamless .HelperPages.createRecord
-
 *!
+
 !style_red[fitnesseGroup point to exampleRecordInfoNewGroup. It must be change to a fitnesse generated group]
 !***> Creation of a standard fitnesse new metadataGroup
-!define currentAuthToken {$adminAuthToken}
 !define recordType {metadata}
-!define createData {!-{"children":[{"children":[{"name":"id","value":"fitnesseNewGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"fitnesseExample"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"repeatId":"4","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"exampleRecordInfoNewGroup"}],"name":"ref"}],"name":"childReference"},{"repeatId":"0","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseMetadataTextVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"1","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"X"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseMetadataNumberVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"2","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseCollectionVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"3","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseLink"}],"name":"ref"}],"name":"childReference"}],"name":"childReferences"}],"name":"metadata","attributes":{"type":"group"}}-!}
-!define expectedAnswer {!--!}
-!define expectedCreateResult {CREATED}
+!define createData {!-{"children":[{"children":[{"name":"id","value":"fitnesseNewGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"fitnesseExample"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"repeatId":"4","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"exampleRecordInfoNewGroup"}],"name":"ref"}],"name":"childReference"},{"repeatId":"0","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseMetadataTextVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"1","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"X"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseMetadataNumberVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"2","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseCollectionVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"3","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseLink"}],"name":"ref"}],"name":"childReference"},{"name":"childReference","repeatId":"5","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseBinaryLink"}]}]}],"name":"childReferences"}],"name":"metadata","attributes":{"type":"group"}}-!}
 
 !include -seamless .HelperPages.createRecord
 
 *!
 !***> Creation of a standard fitnesse recordType
-!define currentAuthToken {$adminAuthToken}
 !define recordType {recordType}
-!define createData {!-{"children":[{"children":[{"name":"id","value":"fitnesseRecordType"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseGroup"}],"name":"metadataId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"presentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"menuPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"listPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"autocompletePresentationView"},{"name":"public","value":"true"},{"name":"userSuppliedId","value":"false"},{"name":"storeInArchive","value":"false"},{"repeatId":"0","name":"groupOfRecordType","value":"metadata"}],"name":"recordType"}-!}
-!define expectedAnswer {!--!}
-!define expectedCreateResult {CREATED}
+!define createData {!-{"children":[{"children":[{"name":"id","value":"fitnesseRecordType"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseGroup"}],"name":"metadataId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"presentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"menuPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"listPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"autocompletePresentationView"},{"name":"public","value":"true"},{"name":"userSuppliedId","value":"false"},{"name":"storeInArchive","value":"true"},{"repeatId":"0","name":"groupOfRecordType","value":"metadata"}],"name":"recordType"}-!}
 
 !include -seamless .HelperPages.createRecord
-
 *!
+
+!***> Creation of a standard fitnesse recordType
+!define recordType {validationType}
+!define createData {!-{"name":"validationType","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseValidationType"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"newMetadataId","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseNewGroup"}]},{"name":"newPresentationFormId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseGroup"}]},{"name":"presentationFormId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"validatesRecordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]}]}-!}
+
+!include -seamless .HelperPages.createRecord
+*!
+
 *!
 
 !***> Creation of '''trainingClassLeaflet''' which is a record type used a foundation for validation type tests
