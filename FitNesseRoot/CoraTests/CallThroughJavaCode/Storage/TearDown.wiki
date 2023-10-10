@@ -5,8 +5,7 @@ Suite
 
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | binary | ${recordId} | | OK |
-
-
+| $adminAuthToken | fitnesseRecordType | $tmpRecordId1 | | OK |
+| $adminAuthToken | binary | $tmpRecordId2 | | OK |
 
 *!

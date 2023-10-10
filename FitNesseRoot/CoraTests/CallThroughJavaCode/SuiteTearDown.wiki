@@ -5,6 +5,7 @@ Suite
 
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | validationType | fitnesseValidationType | | OK |
 | $adminAuthToken | validationType | bigCircuitTrainingLeafletValidation | | OK |
 | $adminAuthToken | validationType | circuitTrainingLeafletValidation | | OK |
 | $adminAuthToken | validationType | personalTrainingLeafletValidation | | OK |
@@ -28,6 +29,8 @@ Suite
 | $adminAuthToken | presentation | fitnesseOutputPLink | | OK |
 | $adminAuthToken | presentation | fitnessePCollVar | | OK |
 | $adminAuthToken | presentation | fitnesseOutputPCollVar | | OK |
+| $adminAuthToken | presentation | fitnesseBinaryPLink | | OK |
+| $adminAuthToken | presentation | fitnesseBinaryOutputPLink | | OK |
 | $adminAuthToken | metadata | fitnesseGroup | | OK |
 | $adminAuthToken | metadata | fitnesseNewGroup | | OK |
 | $adminAuthToken | metadata | fitnesseMetadataTextVar | | OK |
@@ -36,11 +39,10 @@ Suite
 | $adminAuthToken | metadata | fitnesseCollection | | OK |
 | $adminAuthToken | metadata | fitnesseBlueItem | | OK |
 | $adminAuthToken | metadata | fitnesseLink | | OK |
+| $adminAuthToken | metadata | fitnesseBinaryLink | | OK |
 | $adminAuthToken | text | fitnesseRecordTypeSearchDefText | | OK |
 | $adminAuthToken | text | fitnesseRecordTypeSearchText | | OK |
 | $adminAuthToken | text | fitnesseText | | OK |
 
  #Not needed presentations because we are using excludePGroupCreation flag
-
-
 *!
