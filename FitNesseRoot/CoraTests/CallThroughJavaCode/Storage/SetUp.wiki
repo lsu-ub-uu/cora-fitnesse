@@ -1,0 +1,7 @@
+---
+Suite
+---
+!***> SetUp 
+!include -seamless .HelperPages.defineAdminAuthToken 
+!define expectedUpdateResult {OK}
+*!
