@@ -38,7 +38,10 @@ Show file structure after storing a new record
 *!
 !***> '''Case 2'''
 
-!define createBinaryGeneric {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"originalFileName","value":"aBinaryText.txt"},{"name":"expectedFileSize","value":"110104"}],"attributes":{"type":"generic"}}-!}
+!define originalFileName {aBinaryText.txt}
+!define expectedChecksumSha512 {d9f28c8b153ee8916c7f8faaa9d94bb04d06da7616034a4cd7e03102e30fa67cfa8eee1e7afbc7d3a5909285e41b24b16e08b2f7338d15398554407cf7025b45}
+
+!define createBinaryGeneric {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"110104"}],"attributes":{"type":"generic"}}-!}
 !define recordType {binary}
 !define createData createBinaryGeneric
 !define expectedAnswer {}
@@ -64,7 +67,7 @@ Show file structure after storing a new record
 
 !| RecordEndpointFixture |
 | authToken | type | id | fileName | testUpload? | getStatusType? |
-| $adminAuthToken | binary | $tmpRecordId2 | aBinaryText.txt | =~/"name":"originalFileName","value":"aBinaryText.txt".*"name":"fileSize","value":"8".*"name":"mimeType","value":"text/plain".*"name":"checksum","value":"d9f28c8b153ee8916c7f8faaa9d94bb04d06da7616034a4cd7e03102e30fa67cfa8eee1e7afbc7d3a5909285e41b24b16e08b2f7338d15398554407cf7025b45"/| OK |
+| $adminAuthToken | binary | $tmpRecordId2 | ${originalFileName} | =~/"name":"originalFileName","value":"${originalFileName}".*"name":"fileSize","value":"8".*"name":"mimeType","value":"text/plain".*"name":"checksum","value":"${expectedChecksumSha512}"/| OK |
 
 *!
 
@@ -75,14 +78,12 @@ Show file structure after storing a new record
 
 !***> Validate metadata has been stored in the Archive
 	
-| Table:smartrics.rest.fitnesse.fixture.RestFixture | http://systemone-docker-fedora:8080/fcrepo/rest/ |
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | http://systemone-fedora:8080/fcrepo/rest/ |
 | setHeaders | Accept: !-application/ld+json-! |
 | GET | /systemOne/resource/binary:$tmpRecordId2-master/fcr:metadata | 200 | | |
-| let | varname | js | response.body.match(/ebucore#filename":\[{"@value":"([\w.]*)"}\]/)[0] |ebucore#filename":[{"@value":"aBinaryText.txt"}]|
+| let | varname | js | response.body.match(/ebucore#filename":\[{"@value":"([\w.]*)"}\]/)[0] |ebucore#filename":[{"@value":"${originalFileName}"}]|
 | let | varname | js | response.body.match(/ebucore#hasMimeType":\[{"@value":"[\w/]*"}\]/)[0] |ebucore#hasMimeType":[{"@value":"text/plain"}]|
-| let | varname | js | response.body.match(/urn:sha-512:[\w\d]*/)[0] |urn:sha-512:d9f28c8b153ee8916c7f8faaa9d94bb04d06da7616034a4cd7e03102e30fa67cfa8eee1e7afbc7d3a5909285e41b24b16e08b2f7338d15398554407cf7025b45|
+| let | varname | js | response.body.match(/urn:sha-512:[\w\d]*/)[0] |urn:sha-512:${expectedChecksumSha512}|
 | let | varname | js | response.body.match(/hasSize":\[{"@value":"\d*"/)[0] |hasSize":[{"@value":"8"|
-
-
 *!
 *!
