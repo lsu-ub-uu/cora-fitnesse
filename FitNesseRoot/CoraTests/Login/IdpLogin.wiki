@@ -10,7 +10,6 @@ Test
 
 !| script | DependencyProvider |
 | setHttpHandlerFactoryClassName | se.uu.ub.cora.httphandler.HttpHandlerFactoryImp |
-| setJsonToDataFactoryClassName | se.uu.ub.cora.clientdata.converter.jsontojava.JsonToDataConverterFactoryImp |
 
 !1 !-IdpLoginTest-!
 !2 Fetch authTokens using idpLogin

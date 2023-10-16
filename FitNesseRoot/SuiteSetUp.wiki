@@ -16,7 +16,6 @@ Suite
 
 !| script | DependencyProvider |
 | setHttpHandlerFactoryClassName | se.uu.ub.cora.httphandler.HttpHandlerFactoryImp |
-| setJsonToDataFactoryClassName | se.uu.ub.cora.clientdata.converter.jsontojava.JsonToDataConverterFactoryImp |
 | setChildComparerUsingClassName | se.uu.ub.cora.fitnesseintegration.ChildComparerImp |
 | setComparerFactoryUsingClassName | se.uu.ub.cora.fitnesseintegration.compare.ComparerFactoryImp |
 
