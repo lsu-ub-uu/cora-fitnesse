@@ -11,4 +11,8 @@ Help: Check permissions for a record
 | permissions | testCheckPermissions? |
 | ${recordPermissions} | ${expectedPermissionResult} |
 
+#!| Record part permissions in last handled record |
+#| read part permissions specified in metadata | expected missing read part permissions? |
+#| ${recordReadPermissions}| ${expectedMissingReadPartPermissions} |
+
 *!

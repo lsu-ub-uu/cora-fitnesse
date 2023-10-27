@@ -48,10 +48,19 @@ Read texts again to see that they have been created
 
 !***> Read fitnesseTestTextVarText and fitnesseTestTextVarDefText
 
-!| RecordEndpointFixture |
-| id | type | testReadRecord? | getStatusType? |
-| fitnesseTestTextVarText | text | | OK |
-| fitnesseTestTextVarDefText | text | | OK |
+!define expectedReadData {!- {"name":"text","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}]}]},{"name":"textPart","children":[{"name":"text","value":"Text för:fitnesseTestTextVarText"}],"attributes":{"type":"default","lang":"sv"}},{"name":"textPart","children":[{"name":"text","value":"Text for:fitnesseTestTextVarText"}],"attributes":{"type":"alternative","lang":"en"}}]} -!}
+!define expectedCompareResult {OK}
+!| ChildComparerFixture |
+| authToken | type | id | testReadAndStoreRecord? | children | testCheckContainWithValues? |
+| $adminAuthToken | text | fitnesseTestTextVarText | | ${expectedReadData} | ${expectedCompareResult} |
+
+!define expectedReadData {!- {"name":"text","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}]}]},{"name":"textPart","children":[{"name":"text","value":"Text för:fitnesseTestTextVarDefText"}],"attributes":{"type":"default","lang":"sv"}},{"name":"textPart","children":[{"name":"text","value":"Text for:fitnesseTestTextVarDefText"}],"attributes":{"type":"alternative","lang":"en"}}]} -!}
+!define expectedCompareResult {OK}
+!| ChildComparerFixture |
+| authToken | type | id | testReadAndStoreRecord? | children | testCheckContainWithValues? |
+| $adminAuthToken | text | fitnesseTestTextVarDefText | | ${expectedReadData} | ${expectedCompareResult} |
+
+
 
 *!
 Read presentationVars again to see that they have been created
