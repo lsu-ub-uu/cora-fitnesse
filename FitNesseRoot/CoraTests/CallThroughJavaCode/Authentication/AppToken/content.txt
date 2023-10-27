@@ -32,7 +32,6 @@ Update permissionRole, textAdmin, adding new rule updateMySelfRule and existing 
 When a user creates a new appToken record, with a note (to remember what the appToken was created for) is an randomized appToken string added to the record on the server, and a link is created from the user to the new appToken record. The appToken record is returned to the user with the new appToken string in it. This is the only time it is possible for a user to read the appToken, as no user have read access to appTokens. We store the appToken string value in the parameter "newAppToken" to use later in this test.
 
 !***> Create appToken
-
 The only thing a user normally enters for a new appToken record is "note", a note that is used to remind the user what application the appToken was created for. Here we just use "My device" as an example.
 
 !| RecordEndpointFixture |
