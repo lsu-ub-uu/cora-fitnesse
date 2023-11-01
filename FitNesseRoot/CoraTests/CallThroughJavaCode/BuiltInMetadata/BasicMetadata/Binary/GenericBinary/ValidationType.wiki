@@ -139,7 +139,7 @@ Static
 
 !| ChildComparerFixture |
 | expectedNumberOfChildren | testCheckNumberOfChildren? |
-| 4 | OK |
+| 7 | OK |
 
 !| MetadataLinkFixture |
 | authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
@@ -147,6 +147,9 @@ Static
 | $adminAuthToken | metadata | resourceLinkResLink | 1 | 1 | master | noRestrictions |
 | $adminAuthToken | metadata | fileSizeNumberVar | 1 | 1 | fileSize | noRestrictions |
 | $adminAuthToken | metadata | mimeTypeTextVar | 1 | 1 | mimeType | noRestrictions |
+| $adminAuthToken | metadata | heightImageBinaryNumberVar | 0 | 1 | height | noRestrictions |
+| $adminAuthToken | metadata | widthImageBinaryNumberVar | 0 | 1 | width | noRestrictions |
+| $adminAuthToken | metadata | resolutionImageBinaryTextVar | 0 | 1 | resolution | noRestrictions |
 *!
 *!
 *!

@@ -126,7 +126,7 @@ resourceLinkResLink
 | $adminAuthToken | metadata | mimeTypeTextVar | 1 | 1 | mimeType | noRestrictions |
 | $adminAuthToken | metadata | heightImageBinaryNumberVar | 0 | 1 | height | noRestrictions |
 | $adminAuthToken | metadata | widthImageBinaryNumberVar | 0 | 1 | width | noRestrictions |
-| $adminAuthToken | metadata | resoultionImageBinaryNumberVar | 0 | 1 | resolution | noRestrictions |
+| $adminAuthToken | metadata | resolutionImageBinaryTextVar | 0 | 1 | resolution | noRestrictions |
 
 *!
 !***> Validate thumbnail
@@ -147,7 +147,7 @@ resourceLinkResLink
 | $adminAuthToken | metadata | mimeTypeTextVar | 1 | 1 | mimeType | noRestrictions |
 | $adminAuthToken | metadata | heightImageBinaryNumberVar | 1 | 1 | height | noRestrictions |
 | $adminAuthToken | metadata | widthImageBinaryNumberVar | 1 | 1 | width | noRestrictions |
-| $adminAuthToken | metadata | resoultionImageBinaryNumberVar | 1 | 1 | resolution | noRestrictions |
+| $adminAuthToken | metadata | resolutionImageBinaryTextVar | 1 | 1 | resolution | noRestrictions |
 *!
 *!
 *!
