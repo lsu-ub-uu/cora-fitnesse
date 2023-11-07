@@ -1,0 +1,58 @@
+---
+Static
+---
+
+
+
+!2 Images
+ * '''Case 1:''' Tiff
+ * '''Case 2:''' Jpeg
+   
+!***> '''Case 1''' Tiff
+!define originalFileName {sagradaFamilia.tiff}
+!define expectedChecksumSha512 {18e566f03b75c25ae68f7a543c1e31d4afd7d8934912a80b96005e4cbd664e268fd12d23e5687a1f62c93119c254ea52e56d398d17b5fea8987d8d96cc25115d}
+!define expectedMimeType {image/tiff}
+!define expectedFileSize {54452040}
+
+!define createBinaryGeneric {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"110104"}],"attributes":{"type":"generic"}}-!}
+!define recordType {binary}
+!define createData createBinaryGeneric
+!define expectedAnswer {}
+!define expectedCreateResult {CREATED}
+
+
+!***> Create record, for recordType ${recordType}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $tmpRecordId1= |
+
+#!define createdRecordId {$tmpRecordId1}
+#!define expectedAnswer {}
+!define recordId {$tmpRecordId1}
+*!
+
+!***> Upload image
+!| RecordEndpointFixture |
+| authToken | type | id | fileName | testUpload? | getStatusType? |
+| $adminAuthToken | binary | $tmpRecordId1 | ${originalFileName} |  =~/"name":"originalFileName","value":"${originalFileName}".*"name":"fileSize","value":"${expectedFileSize}".*"name":"mimeType","value":"${expectedMimeType}".*"name":"checksum","value":"${expectedChecksumSha512}"/| OK |
+*!
+!***> Upload image
+!| RecordEndpointFixture |
+| authToken | type | id | fileName |sleepTime| testRead? | getStatusType? |
+| $adminAuthToken | binary | $tmpRecordId1 | ${originalFileName} | 1| | OK |
+*!
+
+!define expectedUpdatedData {!-{"children":[{"name":"originalFileName","value":"sagradaFamilia.tiff"},{"children":[{"children":[{"name":"resourceId","value":"$tmpRecordId1"},{"actionLinks":{"read":{"requestMethod":"GET","rel":"read","url":"http://localhost:8080/systemone/rest/record/binary/binary:6958323906668/master","accept":"image/tiff"}},"name":"master","mimeType":"image/tiff"},{"name":"fileSize","value":"54452040"},{"name":"mimeType","value":"image/tiff"}],"name":"master"}],"name":"resourceInfo"},{"name":"checksum","value":"18e566f03b75c25ae68f7a543c1e31d4afd7d8934912a80b96005e4cbd664e268fd12d23e5687a1f62c93119c254ea52e56d398d17b5fea8987d8d96cc25115d"},{"name":"checksumType","value":"SHA512"}],"name":"binary","attributes":{"type":"generic"}}-!}
+!define expectedCompareResult {!--!}
+!define expectedActionResult {!-Action read_incoming_links is missing.-!}
+!define expectedPermissionResult {!--!}
+!define recordPermissions {!-{"read":[],"write":[]}-!}
+
+!include -seamless .HelperPages.readCheck
+
+*!
+!***> '''Case 2'''
+
+
+*!
