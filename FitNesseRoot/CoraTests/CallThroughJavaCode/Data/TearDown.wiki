@@ -2,8 +2,8 @@
 Suite
 ---
 !***> Clean up example fitnesse pool
-
-!| RecordEndpointFixture |
+!|Comment|
+| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | binaryNOT | $tmpRecordId1 | | OK |
 

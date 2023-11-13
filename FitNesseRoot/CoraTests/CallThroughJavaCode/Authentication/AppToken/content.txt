@@ -55,11 +55,15 @@ Read data for the user that created the appToken and ensure the createdId from t
 Use the new appToken that was returned in the new appToken record, to get a new authToken.
 
 !***> Login fitnessUser using new appToken
-
 !| Comment |
 | AppTokenEndpointFixture |
 | userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
 | 121212 | $newAppToken | | $newUserAuthToken= | CREATED |
+
+!| CreateAuthTokenForAppTokenFixture |
+| userId | appToken | getAuthTokenUsingUserIdAndAppToken? |
+| 121212 | $newAppToken | $newUserAuthToken= | 
+
 
 *!
 !2 Test with new texts to show that we can use our authToken and be our user
@@ -69,8 +73,7 @@ Use the newly fetched authToken for our newly created appToken, to show that it 
 
 !***> Create data of recordType text (textSystemOne)
 
-!| Comment |
-| RecordEndpointFixture |
+!| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
 | $userAuthToken | text | {"children":[{"children":[{"name":"id","value":"myAuthText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"textSystemOne"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Min svenska text"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}}],"name":"text"} | =~/"name":"linkedRecordId",\s*"value":"121212"/ | CREATED |
 | $newUserAuthToken | text | {"children":[{"children":[{"name":"id","value":"myAppTokenTestText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"textSystemOne"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Min text för att testa en ny appToken"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}}],"name":"text"} | =~/"name":"linkedRecordId",\s*"value":"121212"/ | CREATED |
@@ -78,8 +81,7 @@ Use the newly fetched authToken for our newly created appToken, to show that it 
 *!
 !***> Logout
 
-!| Comment |
-| AppTokenEndpointFixture |
+!| AppTokenEndpointFixture |
 | userId | authTokenToLogOut | removeAuthTokenForUser? | getStatusType? |
 | 121212 | $newUserAuthToken | | OK |
 

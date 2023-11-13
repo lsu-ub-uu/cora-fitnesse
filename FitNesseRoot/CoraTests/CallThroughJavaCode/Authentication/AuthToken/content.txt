@@ -7,10 +7,8 @@ If no token is provided will the request automatically be assigned the guest use
 | dummyUnauthenticatedToken | metadata | idTextVar | | UNAUTHORIZED |
 
 *!
-!| script | RecordEndpointFixture |
-| setAuthToken | |
 
-!***> Read a metadataVariable (idTextVar)
+!***> Read a metadataVariable without an authToken
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |

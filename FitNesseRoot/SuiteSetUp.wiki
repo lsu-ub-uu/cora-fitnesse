@@ -4,8 +4,10 @@ Suite
 !***> Setup import and scripts
 | import |
 | se.uu.ub.cora.fitnesseintegration |
+| se.uu.ub.cora.fitnesseintegration.authtoken.fixture |
 | se.uu.ub.cora.fitnesseintegration.file |
 | se.uu.ub.cora.fitnesseintegration.compare |
+| se.uu.ub.cora.fitnesseintegration.script |
 | se.uu.ub.cora.fitnesseintegration.server.compare.fixtures |
 
 !| script | SystemUrl |
