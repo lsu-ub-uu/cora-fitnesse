@@ -36,8 +36,11 @@ When a user creates a new appToken record, with a note (to remember what the app
 The only thing a user normally enters for a new appToken record is "note", a note that is used to remind the user what application the appToken was created for. Here we just use "My device" as an example.
 
 !| RecordEndpointFixture |
-| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? | getToken? |
-| $userAuthToken | appToken | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"appToken"}],"name":"validationType"}],"name":"recordInfo"},{"name":"note","value":"My device"}],"name":"appToken"} | | CREATED | $createdId= | $newAppToken= |
+| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? | 
+| $userAuthToken | appToken | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"appToken"}],"name":"validationType"}],"name":"recordInfo"},{"name":"note","value":"My device"}],"name":"appToken"} | | CREATED | $createdId= | 
+
+!| script | ReadAppTokenFromRecord |
+|  $newAppToken=  |getAppTokenStringFromCreatedAppTokenRecord |
 
 *!
 Read data for the user that created the appToken and ensure the createdId from the new appToken is linked from the user.
@@ -50,15 +53,10 @@ Read data for the user that created the appToken and ensure the createdId from t
 
 *!
 !2 Get a new authToken using for the new appToken
-'''This part of the test does not currently work as we have different instances of in memory storage, between where the appTokens are created and where the login system reads them.'''
 
 Use the new appToken that was returned in the new appToken record, to get a new authToken.
 
 !***> Login fitnessUser using new appToken
-!| Comment |
-| AppTokenEndpointFixture |
-| userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
-| 121212 | $newAppToken | | $newUserAuthToken= | CREATED |
 
 !| CreateAuthTokenForAppTokenFixture |
 | userId | appToken | getAuthTokenUsingUserIdAndAppToken? |
@@ -67,7 +65,6 @@ Use the new appToken that was returned in the new appToken record, to get a new 
 
 *!
 !2 Test with new texts to show that we can use our authToken and be our user
-'''This part of the test does not currently work, see reason above.'''
 
 Use the newly fetched authToken for our newly created appToken, to show that it is fully functional.
 
@@ -113,8 +110,6 @@ Reset, the role fitnesseTextAdmin to not use the new rule, updateMySelfRule.
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
 | $adminAuthToken | permissionRole | fitnesseTextAdmin | {"children":[{"children":[{"name":"id","value":"fitnesseTextAdmin"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"validationType"}],"name":"recordInfo"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"textAdmin"}],"name":"permissionRuleLink"},{"repeatId":"1","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"nothing"}],"name":"permissionRuleLink"},{"name":"activeStatus","value":"active"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleDefText"}],"name":"defTextId"}],"name":"permissionRole"} | | OK |
 
-'''Currently not removing created texts, as those tests do not work, see reason above.'''
-
 CleanUp
 
 !| RecordEndpointFixture |
@@ -123,5 +118,7 @@ CleanUp
 | $adminAuthToken | permissionRule | updateMySelfRule | | OK |
 | $adminAuthToken | text | updateMySelfRuleDefText | | OK |
 | $adminAuthToken | text | updateMySelfRuleText | | OK |
+| $adminAuthToken | text | myAuthText | | OK |
+| $adminAuthToken | text | myAppTokenTestText | | OK |
 
 *!

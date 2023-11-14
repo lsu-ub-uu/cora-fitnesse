@@ -38,18 +38,25 @@ Static
 | $adminAuthToken | binary | $tmpRecordId1 | ${originalFileName} |  =~/"name":"originalFileName","value":"${originalFileName}".*"name":"fileSize","value":"${expectedFileSize}".*"name":"mimeType","value":"${expectedMimeType}".*"name":"checksum","value":"${expectedChecksumSha512}"/| OK |
 *!
 !***> Upload image
-!| RecordEndpointFixture |
-| authToken | type | id | fileName |sleepTime| testRead? | getStatusType? |
+!|Comment|
+| RecordEndpointFixture |
+| authToken | recordType | recordId | sleepTime |maxNumberOfCalls| testRead? | getStatusType? |
 | $adminAuthToken | binary | $tmpRecordId1 | ${originalFileName} | 1| | OK |
 *!
 
-!define expectedUpdatedData {!-{"children":[{"name":"originalFileName","value":"sagradaFamilia.tiff"},{"children":[{"children":[{"name":"resourceId","value":"$tmpRecordId1"},{"actionLinks":{"read":{"requestMethod":"GET","rel":"read","url":"http://localhost:8080/systemone/rest/record/binary/binary:6958323906668/master","accept":"image/tiff"}},"name":"master","mimeType":"image/tiff"},{"name":"fileSize","value":"54452040"},{"name":"mimeType","value":"image/tiff"}],"name":"master"}],"name":"resourceInfo"},{"name":"checksum","value":"18e566f03b75c25ae68f7a543c1e31d4afd7d8934912a80b96005e4cbd664e268fd12d23e5687a1f62c93119c254ea52e56d398d17b5fea8987d8d96cc25115d"},{"name":"checksumType","value":"SHA512"}],"name":"binary","attributes":{"type":"generic"}}-!}
-!define expectedCompareResult {!--!}
-!define expectedActionResult {!-Action read_incoming_links is missing.-!}
-!define expectedPermissionResult {!--!}
-!define recordPermissions {!-{"read":[],"write":[]}-!}
+!| WaitForRegExReadResultFixture |
+| authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
+| $adminAuthToken | binary | $tmpRecordId1 |500| 50 | master | Found |
 
-!include -seamless .HelperPages.readCheck
+#!define expectedUpdatedData {!-{"children":[{"name":"originalFileName","value":"sagradaFamilia.tiff"},{"children":[{"children":[{"name":"resourceId","value":"$tmpRecordId1"},{"actionLinks":{"read":{"requestMethod":"GET","rel":"read","url":"http://localhost:8080/systemone/rest/record/binary/binary:6958323906668/master","accept":"image/tiff"}},"name":"master","mimeType":"image/tiff"},{"name":"fileSize","value":"54452040"},{"name":"mimeType","value":"image/tiff"}],"name":"master"}],"name":"resourceInfo"},{"name":"checksum","value":"18e566f03b75c25ae68f7a543c1e31d4afd7d8934912a80b96005e4cbd664e268fd12d23e5687a1f62c93119c254ea52e56d398d17b5fea8987d8d96cc25115d"},{"name":"checksumType","value":"SHA512"}],"name":"binary","attributes":{"type":"generic"}}-!}
+
+!define expectedUpdatedData {!-{"children":[{"name":"originalFileName","value":"sagradaFamilia.tiff"},{"children":[{"children":[{"name":"resourceId","value":"$tmpRecordId1"},{"name":"fileSize","value":"54452040"},{"name":"mimeType","value":"image/tiff"}],"name":"master"}],"name":"resourceInfo"},{"name":"checksum","value":"18e566f03b75c25ae68f7a543c1e31d4afd7d8934912a80b96005e4cbd664e268fd12d23e5687a1f62c93119c254ea52e56d398d17b5fea8987d8d96cc25115d"},{"name":"checksumType","value":"SHA512"}],"name":"binary","attributes":{"type":"generic"}}-!}
+!define expectedCompareResult {!-OK-!}
+#!define expectedActionResult {!-Action read_incoming_links is missing.-!}
+#!define expectedPermissionResult {!--!}
+#!define recordPermissions {!-{"read":[],"write":[]}-!}
+
+!include -seamless .HelperPages.compareRecord
 
 *!
 !***> '''Case 2'''

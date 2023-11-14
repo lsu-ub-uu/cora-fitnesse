@@ -31,8 +31,8 @@ A test that first reads all predefined metadata needed to be able to add appToke
 !***> Create data of recordType appToken
 
 !| RecordEndpointFixture |
-| authToken | type | json | testCreateRecordCreatedType? | getStatusType? | getCreatedId? | getToken? |
-| $adminAuthToken | appToken | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"appToken"}],"name":"validationType"}],"name":"recordInfo"},{"name":"note","value":"My device"}],"name":"appToken"} | appToken | CREATED | $createdId= | $token= |
+| authToken | type | json | testCreateRecordCreatedType? | getStatusType? | getCreatedId? |
+| $adminAuthToken | appToken | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"appToken"}],"name":"validationType"}],"name":"recordInfo"},{"name":"note","value":"My device"}],"name":"appToken"} | appToken | CREATED | $createdId= |
 
 *!
 !***> Read data of recordType appToken
