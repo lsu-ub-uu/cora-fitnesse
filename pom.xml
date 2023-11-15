@@ -104,11 +104,21 @@
 				</includes>
 				<excludes>
 					<exclude>**/*.zip</exclude>
-<!--					<exclude>files/testResults/</exclude>-->
+					<!--					<exclude>files/testResults/</exclude>-->
 				</excludes>
 			</resource>
 		</resources>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<nonFilteredFileExtensions>
+						<nonFilteredFileExtension>pdf</nonFilteredFileExtension>
+						<nonFilteredFileExtension>tiff</nonFilteredFileExtension>
+					</nonFilteredFileExtensions>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
