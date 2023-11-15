@@ -25,6 +25,12 @@ The formats that images are converted to are:
 !define expectedHeight {3419}
 !define expectedWidth {2653}
 !define expectedResolution {1200x1200}
+!define expectedThumbnailMimeType {image/tiff}
+!define expectedThumbnailFileSize {54452040}
+!define expectedThumbnailHeight {100}
+!define expectedThumbnailWidth {2653}
+!define expectedThumbnailResolution {1200x1200}
+
 !define createBinaryGeneric {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
 !define recordType {binary}
 !define createData createBinaryGeneric
@@ -55,9 +61,9 @@ TODO: ResourceLink cannot be validated. Change CompareFixture in order to be abl
 
 !| WaitForRegExReadResultFixture |
 | authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
-| $adminAuthToken | binary | $tmpRecordId1 | 500 | 50 | name[",:]*resolution | Found |
+| $adminAuthToken | binary | $tmpRecordId1 | 500 | 50 | thumbnail | Found |
 
-!define expectedUpdatedData {!-{"children":[{"name":"originalFileName","value":"-!${originalFileName}!-"},{"children":[{"children":[{"name":"resourceId","value":"$tmpRecordId1"},{"name":"fileSize","value":"-!${expectedFileSize}!-"},{"name":"mimeType","value":"-!${expectedMimeType}!-"},{"name":"height","value":"-!${expectedHeight}!-"},{"name":"width","value":"-!${expectedWidth}!-"},{"name":"resolution","value":"-!${expectedResolution}!-"}],"name":"master"}],"name":"resourceInfo"},{"name":"checksum","value":"-!${expectedChecksumSha512}!-"},{"name":"checksumType","value":"SHA512"}],"name":"binary","attributes":{"type":"generic"}}-!}
+!define expectedUpdatedData {!-{"children":[{"name":"originalFileName","value":"-!${originalFileName}!-"},{"children":[{"children":[{"name":"resourceId","value":"-!$tmpRecordId1!-"},{"name":"fileSize","value":"-!${expectedFileSize}!-"},{"name":"mimeType","value":"-!${expectedMimeType}!-"},{"name":"height","value":"-!${expectedHeight}!-"},{"name":"width","value":"-!${expectedWidth}!-"},{"name":"resolution","value":"-!${expectedResolution}!-"}],"name":"master"},{"children":[{"name":"resourceId","value":"-!$tmpThumbnailRecordId1!-"},{"name":"fileSize","value":"-!${expectedThumbnailFileSize}!-"},{"name":"mimeType","value":"-!${expectedThumbnailMimeType}!-"},{"name":"height","value":"-!${expectedThumbnailHeight}!-"},{"name":"width","value":"-!${expectedThumbnailWidth}!-"},{"name":"resolution","value":"-!${expectedThumbnailResolution}!-"}],"name":"thumbnail"}],"name":"resourceInfo"},{"name":"checksum","value":"-!${expectedChecksumSha512}!-"},{"name":"checksumType","value":"SHA512"}],"name":"binary","attributes":{"type":"generic"}}-!}
 !define expectedCompareResult {!-OK-!}
 !define expectedActionResult {!-Action read_incoming_links is missing.-!}
 !define expectedPermissionResult {}
