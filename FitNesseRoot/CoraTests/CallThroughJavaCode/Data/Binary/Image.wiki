@@ -1,12 +1,23 @@
 ---
 Static
 ---
-
 !2 Images
- * '''Case 1:''' Tiff
- * '''Case 2:''' Jpeg
-   
+Binary images will be analyzed and then converted to different formats.The information from extracted from analyze step is:
+ * Height in pixels
+ * Width in pixels
+ * Resolution in Dpi
+ 
+The formats that images are converted to are:
+ * thumbnail: small image in jpg format. Fixed width 100px, height relative to the original.
+ * record: large thumbnail (displayed on the post card) jpg format. Fixed width 300px, height relative to the original.
+ * preview: medium-sized image in jpg format. Fixed width 600px, height relative to the original.
+ * to the image viewer: JPEG2000 corresponding to the original file. Note that even uploaded images in low-resolution original formats other than tiff are converted to JPEG2000
+
+ * '''Case 1:''' It must be possible to upload and analyze a TIFF image
+ * '''Case 2:''' It must be possible to upload and analyze a JPEG image
+
 !***> '''Case 1''' Tiff
+
 !define originalFileName {sagradaFamilia.tiff}
 !define expectedChecksumSha512 {18e566f03b75c25ae68f7a543c1e31d4afd7d8934912a80b96005e4cbd664e268fd12d23e5687a1f62c93119c254ea52e56d398d17b5fea8987d8d96cc25115d}
 !define expectedMimeType {image/tiff}
@@ -14,14 +25,11 @@ Static
 !define expectedHeight {3419}
 !define expectedWidth {2653}
 !define expectedResolution {1200x1200}
-
 !define createBinaryGeneric {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
 !define recordType {binary}
 !define createData createBinaryGeneric
 !define expectedAnswer {}
 !define expectedCreateResult {CREATED}
-
-
 !***> Create record, for recordType ${recordType}
 
 !| ChildComparerFixture |
@@ -29,31 +37,36 @@ Static
 | ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $tmpRecordId1= |
 
 #!define createdRecordId {$tmpRecordId1}
+
 #!define expectedAnswer {}
+
 !define recordId {$tmpRecordId1}
 *!
-
 !***> Upload image
+
 !| RecordEndpointFixture |
 | authToken | type | id | fileName | testUpload? | getStatusType? |
-| $adminAuthToken | binary | $tmpRecordId1 | ${originalFileName} |  =~/"name":"originalFileName","value":"${originalFileName}".*"name":"fileSize","value":"${expectedFileSize}".*"name":"mimeType","value":"${expectedMimeType}".*"name":"checksum","value":"${expectedChecksumSha512}"/| OK |
+| $adminAuthToken | binary | $tmpRecordId1 | ${originalFileName} | =~/"name":"originalFileName","value":"${originalFileName}".*"name":"fileSize","value":"${expectedFileSize}".*"name":"mimeType","value":"${expectedMimeType}".*"name":"checksum","value":"${expectedChecksumSha512}"/ | OK |
+
 *!
 !***> Wait and validate record has been updated using image analyzer
+
 TODO: ResourceLink cannot be validated. Change CompareFixture in order to be able to validate it.
+
 !| WaitForRegExReadResultFixture |
 | authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
-| $adminAuthToken | binary | $tmpRecordId1 |500| 50| name[",:]*resolution | Found |
+| $adminAuthToken | binary | $tmpRecordId1 | 500 | 50 | name[",:]*resolution | Found |
 
 !define expectedUpdatedData {!-{"children":[{"name":"originalFileName","value":"-!${originalFileName}!-"},{"children":[{"children":[{"name":"resourceId","value":"$tmpRecordId1"},{"name":"fileSize","value":"-!${expectedFileSize}!-"},{"name":"mimeType","value":"-!${expectedMimeType}!-"},{"name":"height","value":"-!${expectedHeight}!-"},{"name":"width","value":"-!${expectedWidth}!-"},{"name":"resolution","value":"-!${expectedResolution}!-"}],"name":"master"}],"name":"resourceInfo"},{"name":"checksum","value":"-!${expectedChecksumSha512}!-"},{"name":"checksumType","value":"SHA512"}],"name":"binary","attributes":{"type":"generic"}}-!}
 !define expectedCompareResult {!-OK-!}
 !define expectedActionResult {!-Action read_incoming_links is missing.-!}
-!define expectedPermissionResult {!--!}
+!define expectedPermissionResult {}
 !define recordPermissions {!-{"read":[],"write":[]}-!}
-
 !include -seamless .HelperPages.readCheck
 *!
 *!
-!***> '''Case 2'''
+!***> '''Case 2''' Jpeg
+
 !define originalFileName {esparreguera.jpg}
 !define expectedChecksumSha512 {8121447df8b82183f181611f23234247a026d0d66fda7bc421686b96c0cd66c11415f396cf7574dccd86815c26979234f74e64d3a82c6696f1dcfcc6b6bf070e}
 !define expectedMimeType {image/jpeg}
@@ -61,40 +74,43 @@ TODO: ResourceLink cannot be validated. Change CompareFixture in order to be abl
 !define expectedHeight {1690}
 !define expectedWidth {1795}
 !define expectedResolution {300x300}
-
 !define recordType {binary}
 !define createBinaryGeneric {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
 !define createData createBinaryGeneric
 !define expectedAnswer {}
 !define expectedCreateResult {CREATED}
-
-
 !***> Create record, for recordType ${recordType}
+
 !| ChildComparerFixture |
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
 | ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $tmpRecordId2= |
 
 #!define createdRecordId {$tmpRecordId2}
+
 #!define expectedAnswer {}
+
 !define recordId {$tmpRecordId2}
 *!
 !***> Upload image
+
 !| RecordEndpointFixture |
 | authToken | type | id | fileName | testUpload? | getStatusType? |
-| $adminAuthToken | binary | $tmpRecordId2 | ${originalFileName} |  =~/"name":"originalFileName","value":"${originalFileName}".*"name":"fileSize","value":"${expectedFileSize}".*"name":"mimeType","value":"${expectedMimeType}".*"name":"checksum","value":"${expectedChecksumSha512}"/| OK |
+| $adminAuthToken | binary | $tmpRecordId2 | ${originalFileName} | =~/"name":"originalFileName","value":"${originalFileName}".*"name":"fileSize","value":"${expectedFileSize}".*"name":"mimeType","value":"${expectedMimeType}".*"name":"checksum","value":"${expectedChecksumSha512}"/ | OK |
+
 *!
 !***> Wait and validate record has been updated using image analyzer
+
 TODO: ResourceLink cannot be validated. Change CompareFixture in order to be able to validate it.
+
 !| WaitForRegExReadResultFixture |
 | authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
-| $adminAuthToken | binary | $tmpRecordId2 |500| 50| name[",:]*resolution | Found |
+| $adminAuthToken | binary | $tmpRecordId2 | 500 | 50 | name[",:]*resolution | Found |
 
 !define expectedUpdatedData {!-{"children":[{"name":"originalFileName","value":"-!${originalFileName}!-"},{"children":[{"children":[{"name":"resourceId","value":"$tmpRecordId2"},{"name":"fileSize","value":"-!${expectedFileSize}!-"},{"name":"mimeType","value":"-!${expectedMimeType}!-"},{"name":"height","value":"-!${expectedHeight}!-"},{"name":"width","value":"-!${expectedWidth}!-"},{"name":"resolution","value":"-!${expectedResolution}!-"}],"name":"master"}],"name":"resourceInfo"},{"name":"checksum","value":"-!${expectedChecksumSha512}!-"},{"name":"checksumType","value":"SHA512"}],"name":"binary","attributes":{"type":"generic"}}-!}
 !define expectedCompareResult {!-OK-!}
 !define expectedActionResult {!-Action read_incoming_links is missing.-!}
-!define expectedPermissionResult {!--!}
+!define expectedPermissionResult {}
 !define recordPermissions {!-{"read":[],"write":[]}-!}
-
 !include -seamless .HelperPages.readCheck
 *!
 *!
