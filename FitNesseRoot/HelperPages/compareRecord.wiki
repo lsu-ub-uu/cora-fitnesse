@@ -1,7 +1,7 @@
 ---
 Help: Compare an in memory stored record according to variables
 ---
-!***> Compare record data ${recordId}
+!***> Compare record data-!${recordId}!-
 
 !| ChildComparerFixture |
 | children | testCheckContainWithValues? |

@@ -2,9 +2,9 @@
 Suite
 ---
 !***> Clean up example fitnesse pool
-!|Comment|
-| RecordEndpointFixture |
+!| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | binaryNOT | $tmpRecordId1 | | OK |
+| $adminAuthToken | binary | $tmpRecordId1 | | OK |
+| $adminAuthToken | binary | $tmpRecordId2 | | OK |
 
 *!
