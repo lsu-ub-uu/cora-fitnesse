@@ -178,10 +178,6 @@ A test that first reads all predefined metadata needed to be able to add present
 !| RecordEndpointFixture |
 | authToken | type | testReadRecordList? | getStatusType? |
 | $adminAuthToken | presentation | | OK |
-| $adminAuthToken | presentation | | OK |
-| $adminAuthToken | presentation | | OK |
-| $adminAuthToken | presentation | | OK |
-| $adminAuthToken | presentation | | OK |
 
 *!
 !2 Incorrect data
