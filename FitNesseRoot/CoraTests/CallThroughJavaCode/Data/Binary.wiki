@@ -1,0 +1,10 @@
+---
+Help: Binaries for Cora
+Test
+---
+
+!1 Binaries 
+
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Image
+#!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Pdf
+

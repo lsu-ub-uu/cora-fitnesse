@@ -40,10 +40,10 @@ Show file structure after storing a new record
 *!
 !***> '''Case 2'''
 
-!define originalFileName {aBinaryText.txt}
-!define expectedChecksumSha512 {d9f28c8b153ee8916c7f8faaa9d94bb04d06da7616034a4cd7e03102e30fa67cfa8eee1e7afbc7d3a5909285e41b24b16e08b2f7338d15398554407cf7025b45}
-!define expectedMimeType {text/plain}
-!define expectedFileSize {8}
+!define originalFileName {sagradaFamilia.tiff}
+!define expectedChecksumSha512 {18e566f03b75c25ae68f7a543c1e31d4afd7d8934912a80b96005e4cbd664e268fd12d23e5687a1f62c93119c254ea52e56d398d17b5fea8987d8d96cc25115d}
+!define expectedMimeType {image/tiff}
+!define expectedFileSize {54452040}
 
 !define createBinaryGeneric {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"110104"}],"attributes":{"type":"generic"}}-!}
 !define recordType {binary}
@@ -66,16 +66,10 @@ Show file structure after storing a new record
 *!
 
 !***> Upload image
-
-(Uses a stream generated at the server)
-
 !| RecordEndpointFixture |
 | authToken | type | id | fileName | testUpload? | getStatusType? |
 | $adminAuthToken | binary | $tmpRecordId2 | ${originalFileName} | =~/"name":"originalFileName","value":"${originalFileName}".*"name":"fileSize","value":"${expectedFileSize}".*"name":"mimeType","value":"${expectedMimeType}".*"name":"checksum","value":"${expectedChecksumSha512}"/| OK |
-
 *!
-
-!include -seamless .HelperPages.showFileVersion
 
 Show file structure after storing a new record
 !include -seamless .HelperPages.archiveFile
