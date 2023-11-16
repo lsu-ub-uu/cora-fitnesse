@@ -11,7 +11,7 @@ Static
 
 !| RecordEndpointFixture |
 | authToken | type | id | resourceName | testDownload? | getContentLength? | getContentDisposition? | getStatusType? |
-| $adminAuthToken | binary | $tmpRecordId2 | master | | | | OK |
+| $adminAuthToken | binary | $tmpRecordId2 | master | this is an example text file |${expectedFileSize} | | OK |
 
 *!
 *!

@@ -40,10 +40,10 @@ Show file structure after storing a new record
 *!
 !***> '''Case 2'''
 
-!define originalFileName {sagradaFamilia.tiff}
-!define expectedChecksumSha512 {18e566f03b75c25ae68f7a543c1e31d4afd7d8934912a80b96005e4cbd664e268fd12d23e5687a1f62c93119c254ea52e56d398d17b5fea8987d8d96cc25115d}
-!define expectedMimeType {image/tiff}
-!define expectedFileSize {54452040}
+!define originalFileName {textFile.txt}
+!define expectedChecksumSha512 {5ee3dbf5b81474c1fb73ac49b389ba6d445f672d82abbdc865defced83b09b6aa811790966eb4fcf33d74799d22e9849f6b1ab99d74673d7207ec5f35af54bac}
+!define expectedMimeType {text/plain}
+!define expectedFileSize {28}
 
 !define createBinaryGeneric {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"110104"}],"attributes":{"type":"generic"}}-!}
 !define recordType {binary}
