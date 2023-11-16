@@ -97,8 +97,6 @@
 !| RecordEndpointFixture |
 | authToken | type | testReadRecordList? | getStatusType? |
 | $adminAuthToken | login | | OK |
-| $adminAuthToken | login | | OK |
-| $adminAuthToken | login | | OK |
 
 *!
 !2 Test with new loginWebRedirect
