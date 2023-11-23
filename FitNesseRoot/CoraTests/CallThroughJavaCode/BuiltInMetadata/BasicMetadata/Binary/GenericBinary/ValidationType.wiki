@@ -124,11 +124,14 @@ Static
 
 !| ChildComparerFixture |
 | expectedNumberOfChildren | testCheckNumberOfChildren? |
-| 1 | OK |
+| 4 | OK |
 
 !| MetadataLinkFixture |
 | authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
 | $adminAuthToken | metadata | masterGenericBinaryGroup | 1 | 1 | master | noRestrictions |
+| $adminAuthToken | metadata | thumbnailGroup | 0 | 1 | thumbnail | noRestrictions |
+| $adminAuthToken | metadata | mediumGroup | 0 | 1 | medium | noRestrictions |
+| $adminAuthToken | metadata | largeGroup | 0 | 1 | large | noRestrictions |
 
 *!
 !***> Validate masterBinaryGroup
@@ -150,6 +153,66 @@ Static
 | $adminAuthToken | metadata | heightImageBinaryNumberVar | 0 | 1 | height | noRestrictions |
 | $adminAuthToken | metadata | widthImageBinaryNumberVar | 0 | 1 | width | noRestrictions |
 | $adminAuthToken | metadata | resolutionImageBinaryTextVar | 0 | 1 | resolution | noRestrictions |
+*!
+!***> Validate thumbnailGroup
+
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadata | thumbnailGroup | |
+
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 7 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadata | resourceIdTextVar | 1 | 1 | resourceId | readWrite |
+| $adminAuthToken | metadata | thumbnailResLink | 1 | 1 | thumbnail | noRestrictions |
+| $adminAuthToken | metadata | fileSizeNumberVar | 1 | 1 | fileSize | noRestrictions |
+| $adminAuthToken | metadata | mimeTypeTextVar | 1 | 1 | mimeType | noRestrictions |
+| $adminAuthToken | metadata | heightImageBinaryNumberVar | 1 | 1 | height | noRestrictions |
+| $adminAuthToken | metadata | widthImageBinaryNumberVar | 1 | 1 | width | noRestrictions |
+| $adminAuthToken | metadata | resolutionImageBinaryTextVar | 1 | 1 | resolution | noRestrictions |
+*!
+!***> Validate mediumGroup
+
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadata | mediumGroup | |
+
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 7 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadata | resourceIdTextVar | 1 | 1 | resourceId | readWrite |
+| $adminAuthToken | metadata | mediumResLink | 1 | 1 | medium | noRestrictions |
+| $adminAuthToken | metadata | fileSizeNumberVar | 1 | 1 | fileSize | noRestrictions |
+| $adminAuthToken | metadata | mimeTypeTextVar | 1 | 1 | mimeType | noRestrictions |
+| $adminAuthToken | metadata | heightImageBinaryNumberVar | 1 | 1 | height | noRestrictions |
+| $adminAuthToken | metadata | widthImageBinaryNumberVar | 1 | 1 | width | noRestrictions |
+| $adminAuthToken | metadata | resolutionImageBinaryTextVar | 1 | 1 | resolution | noRestrictions |
+*!
+!***> Validate largeGroup
+
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadata | largeGroup | |
+
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 7 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadata | resourceIdTextVar | 1 | 1 | resourceId | readWrite |
+| $adminAuthToken | metadata | largeResLink | 1 | 1 | large | noRestrictions |
+| $adminAuthToken | metadata | fileSizeNumberVar | 1 | 1 | fileSize | noRestrictions |
+| $adminAuthToken | metadata | mimeTypeTextVar | 1 | 1 | mimeType | noRestrictions |
+| $adminAuthToken | metadata | heightImageBinaryNumberVar | 1 | 1 | height | noRestrictions |
+| $adminAuthToken | metadata | widthImageBinaryNumberVar | 1 | 1 | width | noRestrictions |
+| $adminAuthToken | metadata | resolutionImageBinaryTextVar | 1 | 1 | resolution | noRestrictions |
 *!
 *!
 *!
