@@ -1,0 +1,49 @@
+---
+Static
+---
+!2 Text
+Binary text files can be stored into Cora. Accepted formats:
+ * TXT
+
+Any other extra data will be read from these files.
+ 
+ * '''Case 1:''' It must be possible to upload a TXT file
+
+!***> '''Case 1''' TXT
+
+!define originalFileName {textFile.txt}
+!define expectedChecksumSha512 {5ee3dbf5b81474c1fb73ac49b389ba6d445f672d82abbdc865defced83b09b6aa811790966eb4fcf33d74799d22e9849f6b1ab99d74673d7207ec5f35af54bac}
+!define expectedMimeType {text/plain}
+!define expectedFileSize {28}
+!define binaryType {text}
+
+!define createBinaryGeneric {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
+!define recordType {binary}
+!define createData createBinaryGeneric
+!define expectedAnswer {}
+!define expectedCreateResult {CREATED}
+!***> Create record, for recordType ${recordType}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $tmpRecordId3= |
+
+!define recordId {$tmpRecordId3}
+*!
+!***> Upload image
+
+!| RecordEndpointFixture |
+| authToken | type | id | fileName | testUpload? | getStatusType? |
+| $adminAuthToken | binary | $tmpRecordId3 | ${originalFileName} | =~/"name":"originalFileName","value":"${originalFileName}".*"name":"fileSize","value":"${expectedFileSize}".*"name":"mimeType","value":"${expectedMimeType}".*"name":"checksum","value":"${expectedChecksumSha512}".*"name":"binary","attributes":\{"type":"${binaryType}"\}/ | OK |
+
+*!
+!***> Validate record has been updated using image analyzer
+
+!define expectedUpdatedData {!-{"children":[{"name":"originalFileName","value":"-!${originalFileName}!-"},{"children":[{"children":[{"name":"resourceId","value":"$tmpRecordId3"},{"name":"fileSize","value":"-!${expectedFileSize}!-"},{"name":"mimeType","value":"-!${expectedMimeType}!-"}],"name":"master"}],"name":"resourceInfo"},{"name":"checksum","value":"-!${expectedChecksumSha512}!-"},{"name":"checksumType","value":"SHA512"}],"name":"binary"}-!}
+!define expectedCompareResult {!-OK-!}
+!define expectedActionResult {!-Action read_incoming_links is missing.-!}
+!define expectedPermissionResult {}
+!define recordPermissions {!-{"read":[],"write":[]}-!}
+!include -seamless .HelperPages.readCheck
+*!
+*!
