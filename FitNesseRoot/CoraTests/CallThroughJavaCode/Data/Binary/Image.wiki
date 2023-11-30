@@ -76,11 +76,31 @@ TODO: ResourceLink cannot be validated. Change CompareFixture in order to be abl
 
 !define originalFileName {esparreguera.jpg}
 !define expectedChecksumSha512 {8121447df8b82183f181611f23234247a026d0d66fda7bc421686b96c0cd66c11415f396cf7574dccd86815c26979234f74e64d3a82c6696f1dcfcc6b6bf070e}
+
 !define expectedMimeType {image/jpeg}
 !define expectedFileSize {347554}
 !define expectedHeight {1690}
 !define expectedWidth {1795}
 !define expectedResolution {300x300}
+
+!define expectedThumbnailMimeType {image/jpeg}
+!define expectedThumbnailFileSize {347554}
+!define expectedThumbnailHeight {1690}
+!define expectedThumbnailWidth {100}
+!define expectedThumbnailResolution {300x300}
+
+!define expectedMediumMimeType {image/jpeg}
+!define expectedMediumFileSize {347554}
+!define expectedMediumHeight {1690}
+!define expectedMediumWidth {300}
+!define expectedMediumResolution {300x300}
+
+!define expectedLargeMimeType {image/jpeg}
+!define expectedLargeFileSize {347554}
+!define expectedLargeHeight {1690}
+!define expectedLargeWidth {600}
+!define expectedLargeResolution {300x300}
+
 !define recordType {binary}
 !define binaryType {image}
 
@@ -115,7 +135,9 @@ TODO: ResourceLink cannot be validated. Change CompareFixture in order to be abl
 | authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
 | $adminAuthToken | binary | $tmpRecordId2 | 500 | 50 | name[",:]*resolution | Found |
 
-!define expectedUpdatedData {!-{"children":[{"name":"originalFileName","value":"-!${originalFileName}!-"},{"children":[{"children":[{"name":"resourceId","value":"$tmpRecordId2-master"},{"name":"fileSize","value":"-!${expectedFileSize}!-"},{"name":"mimeType","value":"-!${expectedMimeType}!-"},{"name":"height","value":"-!${expectedHeight}!-"},{"name":"width","value":"-!${expectedWidth}!-"},{"name":"resolution","value":"-!${expectedResolution}!-"}],"name":"master"}],"name":"resourceInfo"},{"name":"checksum","value":"-!${expectedChecksumSha512}!-"},{"name":"checksumType","value":"SHA-512"}],"name":"binary"}-!}
+#!define expectedUpdatedData {!-{"children":[{"name":"originalFileName","value":"-!${originalFileName}!-"},{"children":[{"children":[{"name":"resourceId","value":"$tmpRecordId2-master"},{"name":"fileSize","value":"-!${expectedFileSize}!-"},{"name":"mimeType","value":"-!${expectedMimeType}!-"},{"name":"height","value":"-!${expectedHeight}!-"},{"name":"width","value":"-!${expectedWidth}!-"},{"name":"resolution","value":"-!${expectedResolution}!-"}],"name":"master"}],"name":"resourceInfo"},{"name":"checksum","value":"-!${expectedChecksumSha512}!-"},{"name":"checksumType","value":"SHA-512"}],"name":"binary"}-!}
+!define expectedUpdatedData {!-{"children":[{"name":"originalFileName","value":"${originalFileName}"},{"children":[{"children":[{"name":"resourceId","value":"$tmpRecordId2-master"},{"name":"fileSize","value":"${expectedFileSize}"},{"name":"mimeType","value":"${expectedMimeType}"},{"name":"height","value":"${expectedHeight}"},{"name":"width","value":"${expectedWidth}"},{"name":"resolution","value":"${expectedResolution}"}],"name":"master"},{"children":[{"name":"resourceId","value":"$tmpRecordId2-thumbnail"},{"name":"fileSize","value":"${expectedThumbnailFileSize}"},{"name":"mimeType","value":"${expectedThumbnailMimeType}"},{"name":"height","value":"${expectedThumbnailHeight}"},{"name":"width","value":"${expectedThumbnailWidth}"},{"name":"resolution","value":"${expectedThumbnailResolution}"}],"name":"thumbnail"},{"children":[{"name":"resourceId","value":"$tmpRecordId2-medium"},{"name":"fileSize","value":"${expectedMediumFileSize}"},{"name":"mimeType","value":"${expectedMediumMimeType}"},{"name":"height","value":"${expectedMediumHeight}"},{"name":"width","value":"${expectedMediumWidth}"},{"name":"resolution","value":"${expectedMediumResolution}"}],"name":"medium"},{"children":[{"name":"resourceId","value":"$tmpRecordId2-large"},{"name":"fileSize","value":"${expectedLargeFileSize}"},{"name":"mimeType","value":"${expectedLargeMimeType}"},{"name":"height","value":"${expectedLargeHeight}"},{"name":"width","value":"${expectedLargeWidth}"},{"name":"resolution","value":"${expectedLargeResolution}"}],"name":"large"}],"name":"resourceInfo"},{"name":"checksum","value":"${expectedChecksumSha512}"},{"name":"checksumType","value":"SHA-512"}],"name":"binary"}-!}
+
 !define expectedCompareResult {!-OK-!}
 !define expectedActionResult {!-Action read_incoming_links is missing.-!}
 !define expectedPermissionResult {}
