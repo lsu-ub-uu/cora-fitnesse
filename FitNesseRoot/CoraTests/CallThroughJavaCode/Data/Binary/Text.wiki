@@ -39,7 +39,7 @@ Any other extra data will be read from these files.
 *!
 !***> Validate record has been updated using image analyzer
 
-!define expectedUpdatedData {!-{"children":[{"name":"originalFileName","value":"-!${originalFileName}!-"},{"children":[{"children":[{"name":"resourceId","value":"$tmpRecordId3"},{"name":"fileSize","value":"-!${expectedFileSize}!-"},{"name":"mimeType","value":"-!${expectedMimeType}!-"}],"name":"master"}],"name":"resourceInfo"},{"name":"checksum","value":"-!${expectedChecksumSha512}!-"},{"name":"checksumType","value":"SHA512"}],"name":"binary"}-!}
+!define expectedUpdatedData {!-{"children":[{"name":"originalFileName","value":"-!${originalFileName}!-"},{"children":[{"children":[{"name":"resourceId","value":"$tmpRecordId3-master"},{"name":"fileSize","value":"-!${expectedFileSize}!-"},{"name":"mimeType","value":"-!${expectedMimeType}!-"}],"name":"master"}],"name":"resourceInfo"},{"name":"checksum","value":"-!${expectedChecksumSha512}!-"},{"name":"checksumType","value":"SHA-512"}],"name":"binary"}-!}
 !define expectedCompareResult {!-OK-!}
 !define expectedActionResult {!-Action read_incoming_links is missing.-!}
 !define expectedPermissionResult {}
