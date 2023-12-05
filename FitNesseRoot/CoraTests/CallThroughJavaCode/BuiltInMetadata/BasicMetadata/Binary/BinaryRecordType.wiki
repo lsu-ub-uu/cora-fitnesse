@@ -48,6 +48,14 @@ Static
        * '''height'''(numberVariable, 1-1, noConstraint)
        * '''width'''(numberVariable, 1-1, noConstraint)
        * '''resolution'''(textVariable, 1-1, noConstraint)
+     * '''jp2'''(group, 0-1, noConstraint)
+       * '''resourceId'''(textVariable, 1-1, readWrite)
+       * '''large'''(resourceLink, 1-1, noConstraint)
+       * '''fileSize'''(numberVariable, 1-1, noConstraint)
+       * '''mimeType'''(textVariable, 1-1, noConstraint)
+       * '''height'''(numberVariable, 1-1, noConstraint)
+       * '''width'''(numberVariable, 1-1, noConstraint)
+       * '''resolution'''(textVariable, 1-1, noConstraint)
    * '''originalFileName'''(textVariable, 1-1, noConstraint)
    * '''checksum'''(textVariable, 0-1, write)
    * '''checksumType'''{SHA-512}(textVariable, 0-1, write)
@@ -113,7 +121,7 @@ Static
 
 !| ChildComparerFixture |
 | expectedNumberOfChildren | testCheckNumberOfChildren? |
-| 4 | OK |
+| 5 | OK |
 
 !| MetadataLinkFixture |
 | authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
@@ -121,6 +129,7 @@ Static
 | $adminAuthToken | metadata | thumbnailGroup | 0 | 1 | thumbnail | noRestrictions |
 | $adminAuthToken | metadata | mediumGroup | 0 | 1 | medium | noRestrictions |
 | $adminAuthToken | metadata | largeGroup | 0 | 1 | large | noRestrictions |
+| $adminAuthToken | metadata | jp2Group | 0 | 1 | jp2 | noRestrictions |
 
 *!
 !***> Validate masterBinaryGroup
@@ -201,6 +210,26 @@ resourceLinkResLink
 | authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
 | $adminAuthToken | metadata | resourceIdTextVar | 1 | 1 | resourceId | readWrite |
 | $adminAuthToken | metadata | largeResLink | 1 | 1 | large | noRestrictions |
+| $adminAuthToken | metadata | fileSizeNumberVar | 1 | 1 | fileSize | noRestrictions |
+| $adminAuthToken | metadata | mimeTypeTextVar | 1 | 1 | mimeType | noRestrictions |
+| $adminAuthToken | metadata | heightImageBinaryNumberVar | 1 | 1 | height | noRestrictions |
+| $adminAuthToken | metadata | widthImageBinaryNumberVar | 1 | 1 | width | noRestrictions |
+| $adminAuthToken | metadata | resolutionImageBinaryTextVar | 1 | 1 | resolution | noRestrictions |
+*!
+!***> Validate jp2Group
+
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadata | jp2Group | |
+
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 7 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadata | resourceIdTextVar | 1 | 1 | resourceId | readWrite |
+| $adminAuthToken | metadata | jp2ResLink | 1 | 1 | jp2 | noRestrictions |
 | $adminAuthToken | metadata | fileSizeNumberVar | 1 | 1 | fileSize | noRestrictions |
 | $adminAuthToken | metadata | mimeTypeTextVar | 1 | 1 | mimeType | noRestrictions |
 | $adminAuthToken | metadata | heightImageBinaryNumberVar | 1 | 1 | height | noRestrictions |
