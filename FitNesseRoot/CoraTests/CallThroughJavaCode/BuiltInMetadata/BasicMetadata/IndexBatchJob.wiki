@@ -34,7 +34,7 @@ Validate the '''response''' returned on the '''read''' call contains the expecte
 
 
 !***> Read the record and verify that the update was successful.
-!define expectedUpdatedData {${updateData}}
+!define expectedUpdatedData {!-{"children":[{"children":[{"name":"id","value":"-!${recordId}!-"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"indexBatchJob"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"indexBatchJob"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"fromNo","value":"1"},{"name":"toNo","value":"4"}],"name":"filter"},{"name":"recordTypeToIndex","value":"metadataTextVariable"},{"name":"totalNumberToIndex","value":"4"},{"name":"numberOfProcessedRecords","value":"0"},{"name":"status","value":"started"}],"name":"indexBatchJob"}-!}
 !include -seamless .HelperPages.readRecord
 Validate the '''response''' returned on the '''read''' call contains the expected record parts.
 !include -seamless .HelperPages.compareRecord
