@@ -12,7 +12,7 @@ Static
 Show file structure before storing a new record
 !include -seamless .HelperPages.archiveFile
 
-!define updateDemoRecord {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"id","value":"$tmpRecordId1"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}],"name":"type"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"repeatId":"0","name":"fitnesseTextVar","value":"myUpdatedRecordInArchive"}]}-!}
+!define updateDemoRecord {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"id","value":"$tmpRecordId1"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}],"name":"type"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"repeatId":"0","name":"fitnesseTextVar","value":"myUpdatedRecordInArchive"}]}-!}
 
 !define recordType {fitnesseRecordType}
 !define recordId {$tmpRecordId1}

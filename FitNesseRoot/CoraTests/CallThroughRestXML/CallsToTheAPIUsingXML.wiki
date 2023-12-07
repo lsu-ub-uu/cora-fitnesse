@@ -464,6 +464,7 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 | setBody | <?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
 -!<recordInfo>!-
+-!<ignoreOverwriteProtection>true</ignoreOverwriteProtection>!-
 -!<dataDivider>!-
 -!<linkedRecordType>system</linkedRecordType>!-
 -!<linkedRecordId>cora</linkedRecordId>!-
@@ -487,6 +488,7 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 | setBody | <?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
 -!<recordInfo>!-
+-!<ignoreOverwriteProtection>true</ignoreOverwriteProtection>!-
 -!<dataDivider>!-
 -!<linkedRecordType>system</linkedRecordType>!-
 -!<linkedRecordId>cora</linkedRecordId>!-
@@ -508,6 +510,7 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 | setBody |<?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
 -!<recordInfo>!-
+-!<ignoreOverwriteProtection>true</ignoreOverwriteProtection>!-
 -!<dataDivider>!-
 -!<linkedRecordType>system</linkedRecordType>!-
 -!<linkedRecordId>cora</linkedRecordId>!-
@@ -538,6 +541,7 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 | setBody |<?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
 -!<recordInfo>!-
+-!<ignoreOverwriteProtection>true</ignoreOverwriteProtection>!-
 -!<dataDivider>!-
 -!<linkedRecordType>system</linkedRecordType>!-
 -!<linkedRecordId>cora</linkedRecordId>!-
