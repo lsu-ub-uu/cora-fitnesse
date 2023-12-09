@@ -68,7 +68,7 @@ Show file structure after storing a new record
 !***> Upload image
 !| RecordEndpointFixture |
 | authToken | type | id | fileName | testUpload? | getStatusType? |
-| $adminAuthToken | binary | $tmpRecordId2 | ${originalFileName} | =~/"name":"originalFileName","value":"${originalFileName}".*"name":"fileSize","value":"${expectedFileSize}".*"name":"mimeType","value":"${expectedMimeType}".*"name":"checksum","value":"${expectedChecksumSha512}"/| OK |
+| $adminAuthToken | binary | $tmpRecordId2 | ${originalFileName} | =~/"name":"fileSize","value":"${expectedFileSize}".*"name":"mimeType","value":"${expectedMimeType}".*"name":"checksum","value":"${expectedChecksumSha512}".*.*"name":"checksumType","value":"SHA-512".*"name":"originalFileName","value":"${originalFileName}"/| OK |
 *!
 
 Show file structure after storing a new record

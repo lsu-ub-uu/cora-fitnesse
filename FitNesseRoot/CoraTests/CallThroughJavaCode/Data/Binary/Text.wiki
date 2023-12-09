@@ -34,12 +34,12 @@ Any other extra data will be read from these files.
 
 !| RecordEndpointFixture |
 | authToken | type | id | fileName | testUpload? | getStatusType? |
-| $adminAuthToken | binary | $tmpRecordId3 | ${originalFileName} | =~/"name":"originalFileName","value":"${originalFileName}".*"name":"fileSize","value":"${expectedFileSize}".*"name":"mimeType","value":"${expectedMimeType}".*"name":"checksum","value":"${expectedChecksumSha512}".*"name":"binary","attributes":\{"type":"${binaryType}"\}/ | OK |
+| $adminAuthToken | binary | $tmpRecordId3 | ${originalFileName} | =~/"name":"fileSize","value":"${expectedFileSize}".*"name":"mimeType","value":"${expectedMimeType}".*"name":"checksum","value":"${expectedChecksumSha512}".*"name":"originalFileName","value":"${originalFileName}".*"name":"binary","attributes":\{"type":"${binaryType}"\}/ | OK |
 
 *!
 !***> Validate record has been updated using image analyzer
 
-!define expectedUpdatedData {!-{"children":[{"name":"originalFileName","value":"-!${originalFileName}!-"},{"children":[{"children":[{"name":"resourceId","value":"$tmpRecordId3-master"},{"name":"fileSize","value":"-!${expectedFileSize}!-"},{"name":"mimeType","value":"-!${expectedMimeType}!-"}],"name":"master"}],"name":"resourceInfo"},{"name":"checksum","value":"-!${expectedChecksumSha512}!-"},{"name":"checksumType","value":"SHA-512"}],"name":"binary"}-!}
+!define expectedUpdatedData {!-{"children":[{"children":[{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"resourceId","value":"$tmpRecordId3-master"},{"name":"fileSize","value":"-!${expectedFileSize}!-"},{"name":"mimeType","value":"-!${expectedMimeType}!-"},{"name":"checksum","value":"-!${expectedChecksumSha512}!-"},{"name":"checksumType","value":"SHA-512"}],"name":"master"}],"name":"binary"}-!}
 !define expectedCompareResult {!-OK-!}
 !define expectedActionResult {!-Action read_incoming_links is missing.-!}
 !define expectedPermissionResult {}
