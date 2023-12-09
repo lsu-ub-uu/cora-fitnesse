@@ -64,15 +64,16 @@ Same defintion as binary group.
 
 !| ChildComparerFixture |
 | expectedNumberOfChildren | testCheckNumberOfChildren? |
-| 5 | OK |
+| 6 | OK |
 
 !| MetadataLinkFixture |
 | authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
 | $adminAuthToken | metadata | recordInfoGroup | 1 | 1 | recordInfo | noRestrictions |
-| $adminAuthToken | metadata | resourceInfoGenericBinaryGroup | 1 | 1 | resourceInfo | write |
-| $adminAuthToken | metadata | originalFileNameTextVar | 1 | 1 | originalFileName | write |
-| $adminAuthToken | metadata | checksumTextVar | 1 | 1 | checksum | write |
-| $adminAuthToken | metadata | checksumTypeTextVar | 1 | 1 | checksumType | write |
+| $adminAuthToken | metadata | masterGroup | 0 | 1 | master | noRestrictions |
+| $adminAuthToken | metadata | thumbnailGroup | 0 | 1 | thumbnail | noRestrictions |
+| $adminAuthToken | metadata | mediumGroup | 0 | 1 | medium | noRestrictions |
+| $adminAuthToken | metadata | largeGroup | 0 | 1 | large | noRestrictions |
+| $adminAuthToken | metadata | jp2Group | 0 | 1 | jp2 | noRestrictions |
 
 !***> Validate recordInfoGroup
 
@@ -96,34 +97,16 @@ Same defintion as binary group.
 | $adminAuthToken | metadata | updatedGroup | 1 | X | updated | noRestrictions |
 
 *!
-!***> Validate resourceInfoGroup
 
-!| RecordEndpointFixture |
-| type | id | testReadRecordAndStoreJson? |
-| metadata | resourceInfoGenericBinaryGroup | |
-
-!| ChildComparerFixture |
-| expectedNumberOfChildren | testCheckNumberOfChildren? |
-| 5 | OK |
-
-!| MetadataLinkFixture |
-| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
-| $adminAuthToken | metadata | masterGenericBinaryGroup | 1 | 1 | master | noRestrictions |
-| $adminAuthToken | metadata | thumbnailGroup | 0 | 1 | thumbnail | noRestrictions |
-| $adminAuthToken | metadata | mediumGroup | 0 | 1 | medium | noRestrictions |
-| $adminAuthToken | metadata | largeGroup | 0 | 1 | large | noRestrictions |
-| $adminAuthToken | metadata | jp2Group | 0 | 1 | jp2 | noRestrictions |
-
-*!
 !***> Validate masterBinaryGroup
 
 !| RecordEndpointFixture |
 | type | id | testReadRecordAndStoreJson? |
-| metadata | masterGenericBinaryGroup | |
+| metadata | masterGroup | |
 
 !| ChildComparerFixture |
 | expectedNumberOfChildren | testCheckNumberOfChildren? |
-| 7 | OK |
+| 10 | OK |
 
 !| MetadataLinkFixture |
 | authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
@@ -134,6 +117,10 @@ Same defintion as binary group.
 | $adminAuthToken | metadata | heightImageBinaryNumberVar | 0 | 1 | height | noRestrictions |
 | $adminAuthToken | metadata | widthImageBinaryNumberVar | 0 | 1 | width | noRestrictions |
 | $adminAuthToken | metadata | resolutionImageBinaryTextVar | 0 | 1 | resolution | noRestrictions |
+| $adminAuthToken | metadata | originalFileNameTextVar | 1 | 1 | originalFileName | noRestrictions |
+| $adminAuthToken | metadata | checksumTextVar | 0 | 1 | checksum | noRestrictions |
+| $adminAuthToken | metadata | checksumTypeTextVar | 0 | 1 | checksumType | noRestrictions |
+
 *!
 !***> Validate thumbnailGroup
 
@@ -143,7 +130,7 @@ Same defintion as binary group.
 
 !| ChildComparerFixture |
 | expectedNumberOfChildren | testCheckNumberOfChildren? |
-| 7 | OK |
+| 6 | OK |
 
 !| MetadataLinkFixture |
 | authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
@@ -153,7 +140,6 @@ Same defintion as binary group.
 | $adminAuthToken | metadata | mimeTypeTextVar | 1 | 1 | mimeType | noRestrictions |
 | $adminAuthToken | metadata | heightImageBinaryNumberVar | 1 | 1 | height | noRestrictions |
 | $adminAuthToken | metadata | widthImageBinaryNumberVar | 1 | 1 | width | noRestrictions |
-| $adminAuthToken | metadata | resolutionImageBinaryTextVar | 1 | 1 | resolution | noRestrictions |
 *!
 !***> Validate mediumGroup
 
@@ -163,7 +149,7 @@ Same defintion as binary group.
 
 !| ChildComparerFixture |
 | expectedNumberOfChildren | testCheckNumberOfChildren? |
-| 7 | OK |
+| 6 | OK |
 
 !| MetadataLinkFixture |
 | authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
@@ -173,7 +159,6 @@ Same defintion as binary group.
 | $adminAuthToken | metadata | mimeTypeTextVar | 1 | 1 | mimeType | noRestrictions |
 | $adminAuthToken | metadata | heightImageBinaryNumberVar | 1 | 1 | height | noRestrictions |
 | $adminAuthToken | metadata | widthImageBinaryNumberVar | 1 | 1 | width | noRestrictions |
-| $adminAuthToken | metadata | resolutionImageBinaryTextVar | 1 | 1 | resolution | noRestrictions |
 *!
 !***> Validate largeGroup
 
@@ -183,7 +168,7 @@ Same defintion as binary group.
 
 !| ChildComparerFixture |
 | expectedNumberOfChildren | testCheckNumberOfChildren? |
-| 7 | OK |
+| 6 | OK |
 
 !| MetadataLinkFixture |
 | authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
@@ -193,7 +178,6 @@ Same defintion as binary group.
 | $adminAuthToken | metadata | mimeTypeTextVar | 1 | 1 | mimeType | noRestrictions |
 | $adminAuthToken | metadata | heightImageBinaryNumberVar | 1 | 1 | height | noRestrictions |
 | $adminAuthToken | metadata | widthImageBinaryNumberVar | 1 | 1 | width | noRestrictions |
-| $adminAuthToken | metadata | resolutionImageBinaryTextVar | 1 | 1 | resolution | noRestrictions |
 *!
 !***> Validate jp2Group
 
@@ -203,7 +187,7 @@ Same defintion as binary group.
 
 !| ChildComparerFixture |
 | expectedNumberOfChildren | testCheckNumberOfChildren? |
-| 7 | OK |
+| 6 | OK |
 
 !| MetadataLinkFixture |
 | authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
@@ -213,7 +197,6 @@ Same defintion as binary group.
 | $adminAuthToken | metadata | mimeTypeTextVar | 1 | 1 | mimeType | noRestrictions |
 | $adminAuthToken | metadata | heightImageBinaryNumberVar | 1 | 1 | height | noRestrictions |
 | $adminAuthToken | metadata | widthImageBinaryNumberVar | 1 | 1 | width | noRestrictions |
-| $adminAuthToken | metadata | resolutionImageBinaryTextVar | 1 | 1 | resolution | noRestrictions |
 *!
 *!
 *!
