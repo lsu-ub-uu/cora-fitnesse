@@ -25,52 +25,26 @@ The formats that images are converted to are:
 !define expectedHeight {3419}
 !define expectedWidth {2653}
 !define expectedResolution {1200x1200}
-!define expectedThumbnailMimeType {image/tiff}
-!define expectedThumbnailFileSize {54452040}
-!define expectedThumbnailHeight {100}
-!define expectedThumbnailWidth {2653}
-!define expectedThumbnailResolution {1200x1200}
+!define thumbnailFileSize {33099}
+!define thumbnailMimeType {image/jpeg}
+!define thumbnailHeight {129}
+!define thumbnailWidth {100}
+!define mediumFileSize {68145}
+!define mediumMimeType {image/jpeg}
+!define mediumHeight {387}
+!define mediumWidth {300}
+!define largeFileSize {170904}
+!define largeMimeType {image/jpeg}
+!define largeHeight {773}
+!define largeWidth {600}
+!define jp2FileSize {565635}
+!define jp2MimeType {image/jp2}
+!define jp2Height {3419}
+!define jp2Width {2653}
 !define binaryType {image}
 
-!define createBinaryGeneric {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
-!define recordType {binary}
-!define createData createBinaryGeneric
-!define expectedAnswer {}
-!define expectedCreateResult {CREATED}
-!***> Create record, for recordType ${recordType}
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadImageAnalyzeAndValidateConvertion
 
-!| ChildComparerFixture |
-| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
-| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $tmpRecordId1= |
-
-#!define createdRecordId {$tmpRecordId1}
-
-#!define expectedAnswer {}
-
-!define recordId {$tmpRecordId1}
-*!
-!***> Upload image
-
-!| RecordEndpointFixture |
-| authToken | type | id | fileName | testUpload? | getStatusType? |
-| $adminAuthToken | binary | $tmpRecordId1 | ${originalFileName} | =~/"name":"fileSize","value":"${expectedFileSize}".*"name":"mimeType","value":"${expectedMimeType}".*"name":"checksum","value":"${expectedChecksumSha512}".*"name":"originalFileName","value":"${originalFileName}".*"name":"binary","attributes":\{"type":"${binaryType}"\}/ | OK |
-
-*!
-!***> Wait and validate record has been updated using image analyzer
-
-TODO: ResourceLink cannot be validated. Change CompareFixture in order to be able to validate it.
-
-!| WaitForRegExReadResultFixture |
-| authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
-| $adminAuthToken | binary | $tmpRecordId1 | 500 | 50 | thumbnail | Found |
-
-!define expectedUpdatedData {!-{"children":[{"children":[{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"resourceId","value":"$tmpRecordId1-master"},{"name":"fileSize","value":"-!${expectedFileSize}!-"},{"name":"mimeType","value":"-!${expectedMimeType}!-"},{"name":"height","value":"-!${expectedHeight}!-"},{"name":"width","value":"-!${expectedWidth}!-"},{"name":"resolution","value":"-!${expectedResolution}!-"},{"name":"checksum","value":"-!${expectedChecksumSha512}!-"},{"name":"checksumType","value":"SHA-512"}],"name":"master"}],"name":"binary"}-!}
-!define expectedCompareResult {!-OK-!}
-!define expectedActionResult {!-Action read_incoming_links is missing.-!}
-!define expectedPermissionResult {}
-!define recordPermissions {!-{"read":[],"write":[]}-!}
-!include -seamless .HelperPages.readCheck
-*!
 *!
 !***> '''Case 2''' Jpeg
 
@@ -82,44 +56,24 @@ TODO: ResourceLink cannot be validated. Change CompareFixture in order to be abl
 !define expectedWidth {1795}
 !define expectedResolution {300x300}
 !define recordType {binary}
+!define thumbnailFileSize {38944}
+!define thumbnailMimeType {image/jpeg}
+!define thumbnailHeight {94}
+!define thumbnailWidth {100}
+!define mediumFileSize {64902}
+!define mediumMimeType {image/jpeg}
+!define mediumHeight {283}
+!define mediumWidth {300}
+!define largeFileSize {148597}
+!define largeMimeType {image/jpeg}
+!define largeHeight {565}
+!define largeWidth {600}
+!define jp2FileSize {368036}
+!define jp2MimeType {image/jp2}
+!define jp2Height {1690}
+!define jp2Width {1795}
 !define binaryType {image}
 
-!define createBinaryGeneric {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
-!define createData createBinaryGeneric
-!define expectedAnswer {}
-!define expectedCreateResult {CREATED}
-!***> Create record, for recordType ${recordType}
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadImageAnalyzeAndValidateConvertion
 
-!| ChildComparerFixture |
-| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
-| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $tmpRecordId2= |
-
-#!define createdRecordId {$tmpRecordId2}
-
-#!define expectedAnswer {}
-
-!define recordId {$tmpRecordId2}
-*!
-!***> Upload image
-
-!| RecordEndpointFixture |
-| authToken | type | id | fileName | testUpload? | getStatusType? |
-| $adminAuthToken | binary | $tmpRecordId2 | ${originalFileName} | =~/"name":"fileSize","value":"${expectedFileSize}".*"name":"mimeType","value":"${expectedMimeType}".*"name":"checksum","value":"${expectedChecksumSha512}".*"name":"originalFileName","value":"${originalFileName}".*"name":"binary","attributes":\{"type":"${binaryType}"\}/ | OK |
-
-*!
-!***> Wait and validate record has been updated using image analyzer
-
-TODO: ResourceLink cannot be validated. Change CompareFixture in order to be able to validate it.
-
-!| WaitForRegExReadResultFixture |
-| authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
-| $adminAuthToken | binary | $tmpRecordId2 | 500 | 50 | name[",:]*resolution | Found |
-
-!define expectedUpdatedData {!-{"children":[{"children":[{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"resourceId","value":"$tmpRecordId2-master"},{"name":"fileSize","value":"-!${expectedFileSize}!-"},{"name":"mimeType","value":"-!${expectedMimeType}!-"},{"name":"height","value":"-!${expectedHeight}!-"},{"name":"width","value":"-!${expectedWidth}!-"},{"name":"resolution","value":"-!${expectedResolution}!-"},{"name":"checksum","value":"-!${expectedChecksumSha512}!-"},{"name":"checksumType","value":"SHA-512"}],"name":"master"}],"name":"binary"}-!}
-!define expectedCompareResult {!-OK-!}
-!define expectedActionResult {!-Action read_incoming_links is missing.-!}
-!define expectedPermissionResult {}
-!define recordPermissions {!-{"read":[],"write":[]}-!}
-!include -seamless .HelperPages.readCheck
-*!
 *!

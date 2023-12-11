@@ -5,6 +5,4 @@ Suite
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | binary | $tmpRecordId1 | | OK |
-| $adminAuthToken | binary | $tmpRecordId2 | | OK |
-| $adminAuthToken | binary | $tmpRecordId3 | | OK |
 *!
