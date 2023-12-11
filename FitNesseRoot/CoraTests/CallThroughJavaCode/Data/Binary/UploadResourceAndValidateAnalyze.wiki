@@ -24,7 +24,7 @@ Static
 | $adminAuthToken | binary | $tmpRecordId1 | ${originalFileName} | | OK |
 
 *!
-!***> Wait and validate record has been updated using image analyzer
+!***> Wait and validate record has been uploaded
 
 TODO: ResourceLink cannot be validated. Change CompareFixture in order to be able to validate it.
 
