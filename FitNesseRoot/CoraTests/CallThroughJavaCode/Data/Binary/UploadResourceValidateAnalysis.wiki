@@ -32,7 +32,7 @@ TODO: ResourceLink cannot be validated. Change CompareFixture in order to be abl
 | authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
 | $adminAuthToken | binary | $tmpRecordId1 | 500 | 50 | master | Found |
 
-!define expectedUpdatedData {!{"children":[{"children":[{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"resourceId","value":"$tmpRecordId1-master"},{"name":"fileSize","value":"-!${expectedFileSize}!-"},{"name":"mimeType","value":"-!${expectedMimeType}!-"},{"name":"checksum","value":"-!${expectedChecksumSha512}!-"},{"name":"checksumType","value":"SHA-512"}],"name":"master"}],"name":"binary"}-!}
+!define expectedUpdatedData {!-{"children":[{"children":[{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"resourceId","value":"$tmpRecordId1-master"},{"name":"fileSize","value":"-!${expectedFileSize}!-"},{"name":"mimeType","value":"-!${expectedMimeType}!-"},{"name":"checksum","value":"-!${expectedChecksumSha512}!-"},{"name":"checksumType","value":"SHA-512"}],"name":"master"}],"name":"binary"}-!}
 !define expectedCompareResult {!-OK-!}
 !define expectedActionResult {!-Action read_incoming_links is missing.-!}
 !define expectedPermissionResult {}

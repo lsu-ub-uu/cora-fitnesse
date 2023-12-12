@@ -7,5 +7,6 @@ Test
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Image
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Text
-#!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Pdf
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Pdf
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Compressed
 

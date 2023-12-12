@@ -1,0 +1,45 @@
+---
+Test
+---
+!2 PDF
+Binary's PDF first page is converted to different image sizes. 
+ 
+The formats of the images are :
+ * '''thumbnail''': small image in jpg format. Fixed width 100px, height relative to the original.
+ * '''record''': large thumbnail (displayed on the post card) jpg format. Fixed width 300px, height relative to the original.
+ * '''preview''': medium-sized image in jpg format. Fixed width 600px, height relative to the original.
+ 
+
+ * '''Case 1:''' It must be possible to upload and convert a PDF
+
+!***> '''Case 1''' PDF
+
+!define originalFileName {aPdf.pdf}
+!define expectedChecksumSha512 {edd61d83b20c9d49d6caad7175a3817ded3c5c4552df70b816bba8fcd3b17f862dde8781753ebe9d3691f3b5ebbb7b22927dc023f36dbdc526068091a095ed77}
+!define expectedMimeType {application/pdf}
+!define expectedFileSize {1678169}
+!define thumbnailFileSize {10382}
+!define thumbnailMimeType {image/jpeg}
+!define thumbnailHeight {142}
+!define thumbnailWidth {100}
+!define mediumFileSize {38109}
+!define mediumMimeType {image/jpeg}
+!define mediumHeight {425}
+!define mediumWidth {300}
+!define largeFileSize {100382}
+!define largeMimeType {image/jpeg}
+!define largeHeight {849}
+!define largeWidth {600}
+!define binaryType {document}
+
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadPdfValidateAnalysisAndConvertion
+
+!define archiveFileSystemPath {/tmp/sharedArchiveReadable/systemOne}
+Show files in archive
+!include -seamless .HelperPages.archiveFile
+!define archiveFileSystemPath {/tmp/sharedFileStorage/systemOne/streams}
+Show files in file storage
+!include -seamless .HelperPages.archiveFile
+
+*!
+

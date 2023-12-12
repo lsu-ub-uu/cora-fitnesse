@@ -1,0 +1,47 @@
+---
+Test
+---
+!2 Compressed
+Compressed files can be stored in cora. The accepted formats are:
+ * ZIP
+ * TAR.GZ
+ 
+ * '''Case 1:''' It must be possible to upload a ZIP file
+ * '''Case 1:''' It must be possible to upload a TAR.GZ file
+
+!***> '''Case 1''' ZIP
+
+!define originalFileName {aZip.zip}
+!define expectedChecksumSha512 {e84f97a43765c44603b543ede63b1a6641b068778e8499dd51b4f04816439f31884aac8e145e5828d86f1c83cf321758e07d8875c4519116ce04bb8612934e27}
+!define expectedMimeType {application/zip}}
+!define expectedFileSize {150}
+!define binaryType {text}
+
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadResourceValidateAnalysis
+
+
+!define archiveFileSystemPath {/tmp/sharedArchiveReadable/systemOne}
+Show files in archive
+!include -seamless .HelperPages.archiveFile
+!define archiveFileSystemPath {/tmp/sharedFileStorage/systemOne/streams}
+Show files in file storage
+!include -seamless .HelperPages.archiveFile
+*!
+!***> '''Case 1''' TAR.GZ
+
+!define originalFileName {aTarGz.tar.gz}
+!define expectedChecksumSha512 {111d7a73da5cbdb32c99d6c7af8da1019434799ab5d7c5ef825cc8fd3bf4225454b4dc6a83260005035f9a4f86788c16e3fe662b6af80c3b161507fcc6ce97e2}
+!define expectedMimeType {application/gzip}
+!define expectedFileSize {302}
+!define binaryType {compressed}
+
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadResourceValidateAnalysis
+
+
+!define archiveFileSystemPath {/tmp/sharedArchiveReadable/systemOne}
+Show files in archive
+!include -seamless .HelperPages.archiveFile
+!define archiveFileSystemPath {/tmp/sharedFileStorage/systemOne/streams}
+Show files in file storage
+!include -seamless .HelperPages.archiveFile
+*!
