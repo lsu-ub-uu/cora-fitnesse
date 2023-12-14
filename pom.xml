@@ -93,7 +93,7 @@
 					<include>CoraTests/</include>
 					<include>DocumentationPage/</include>
 					<include>files/Images/</include>
-					<include>files/testResources/</include>
+<!--					<include>files/testResources/</include>-->
 					<include>HelperPages/</include>
 					<include>JsClient/</include>
 					<include>RestFixtureInstallTest/</include>
@@ -104,8 +104,15 @@
 				</includes>
 				<excludes>
 					<exclude>**/*.zip</exclude>
-					<!--					<exclude>files/testResults/</exclude>-->
 				</excludes>
+			</resource>
+			<resource>
+				<targetPath>FitNesseRoot</targetPath>
+				<directory>FitNesseRoot</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>files/testResources/</include>
+				</includes>
 			</resource>
 		</resources>
 		<plugins>
@@ -117,6 +124,7 @@
 						<nonFilteredFileExtension>pdf</nonFilteredFileExtension>
 						<nonFilteredFileExtension>tiff</nonFilteredFileExtension>
 						<nonFilteredFileExtension>gz</nonFilteredFileExtension>
+						<nonFilteredFileExtension>zip</nonFilteredFileExtension>
 					</nonFilteredFileExtensions>
 				</configuration>
 			</plugin>
