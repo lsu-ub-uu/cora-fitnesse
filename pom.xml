@@ -116,6 +116,7 @@
 					<nonFilteredFileExtensions>
 						<nonFilteredFileExtension>pdf</nonFilteredFileExtension>
 						<nonFilteredFileExtension>tiff</nonFilteredFileExtension>
+						<nonFilteredFileExtension>gz</nonFilteredFileExtension>
 					</nonFilteredFileExtensions>
 				</configuration>
 			</plugin>
