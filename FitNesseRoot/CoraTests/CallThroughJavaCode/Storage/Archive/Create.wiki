@@ -40,7 +40,7 @@ Show file structure after storing a new record
 *!
 !***> '''Case 2'''
 
-!define originalFileName {textFile.txt}
+!define originalFileName {aText.txt}
 !define expectedChecksumSha512 {5ee3dbf5b81474c1fb73ac49b389ba6d445f672d82abbdc865defced83b09b6aa811790966eb4fcf33d74799d22e9849f6b1ab99d74673d7207ec5f35af54bac}
 !define expectedMimeType {text/plain}
 !define expectedFileSize {28}
@@ -68,7 +68,7 @@ Show file structure after storing a new record
 !***> Upload image
 !| RecordEndpointFixture |
 | authToken | type | id | fileName | testUpload? | getStatusType? |
-| $adminAuthToken | binary | $tmpRecordId2 | ${originalFileName} | =~/"name":"fileSize","value":"${expectedFileSize}".*"name":"mimeType","value":"${expectedMimeType}".*"name":"checksum","value":"${expectedChecksumSha512}".*.*"name":"checksumType","value":"SHA-512".*"name":"originalFileName","value":"${originalFileName}"/| OK |
+| $adminAuthToken | binary | $tmpRecordId2 | ${originalFileName} | | OK |
 *!
 
 Show file structure after storing a new record

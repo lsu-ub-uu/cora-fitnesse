@@ -12,10 +12,10 @@ Compressed files can be stored in cora. The accepted formats are:
 !***> '''Case 1''' ZIP
 
 !define originalFileName {aZip.zip}
-!define expectedChecksumSha512 {e84f97a43765c44603b543ede63b1a6641b068778e8499dd51b4f04816439f31884aac8e145e5828d86f1c83cf321758e07d8875c4519116ce04bb8612934e27}
+!define expectedChecksumSha512 {cd13d9ec7646468d713595cce23729562637a40a972c1d765b285c538789b21f05d725e9b79d473ebbcb556863a78719abf7c56265c3a8987b2d2a5e1f06ee1d}
 !define expectedMimeType {application/zip}}
-!define expectedFileSize {150}
-!define binaryType {text}
+!define expectedFileSize {144}
+!define binaryType {compressed}
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadResourceValidateAnalysis
 
