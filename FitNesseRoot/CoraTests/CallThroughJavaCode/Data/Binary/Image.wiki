@@ -45,6 +45,22 @@ The formats that images are converted to are:
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadImageValidateAnalysisAndConvertion
 
+!define representation {master}
+!define expectedResult {OK}
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.DownloadResource
+!define representation {thumbnail}
+!define expectedResult {OK}
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.DownloadResource
+!define representation {medium}
+!define expectedResult {OK}
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.DownloadResource
+!define representation {large}
+!define expectedResult {OK}
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.DownloadResource
+!define representation {jp2}
+!define expectedResult {OK}
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.DownloadResource
+
 !define archiveFileSystemPath {/tmp/sharedArchiveReadable/systemOne}
 Show files in archive
 !include -seamless .HelperPages.archiveFile
@@ -82,6 +98,22 @@ Show files in file storage
 !define binaryType {image}
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadImageValidateAnalysisAndConvertion
+
+!define representation {master}
+!define expectedResult {OK}
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.DownloadResource
+!define representation {thumbnail}
+!define expectedResult {OK}
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.DownloadResource
+!define representation {medium}
+!define expectedResult {OK}
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.DownloadResource
+!define representation {large}
+!define expectedResult {OK}
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.DownloadResource
+!define representation {jp2}
+!define expectedResult {OK}
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.DownloadResource
 
 !define archiveFileSystemPath {/tmp/sharedArchiveReadable/systemOne}
 Show files in archive

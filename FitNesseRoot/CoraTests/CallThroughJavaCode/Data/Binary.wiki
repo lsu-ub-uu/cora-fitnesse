@@ -5,8 +5,15 @@ Test
 
 !1 Binaries 
 
+Binary is a record type that contains information about binaries. See [[binary definition][<CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary]].
+
+It should be possible to upload a resource file to any instance of binary. Then the resource is analyzed to read basic data such filesize, checksum and mime type. Depending on mime type, the resources will be processed in different ways and some of them will create different representations, for example thumbnail, medium, large, jp2.
+
+All representation should be able to be download including master.  
+
+!3 Types of resources
+
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Image
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Text
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Pdf
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Compressed
-

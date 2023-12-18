@@ -21,24 +21,5 @@ In summary, the Binary record type is a specialized and reserved entity within t
 
 !img files/Images/binary.png 
 
-!3 Types of resources
-However there different types of resources. Cora fetches different metadata depending on the resource type.  
-
- * '''!-Image-!'''
-   * '''height''' (pixels)
-   * '''width''' (pixels)
-   * '''resolution''' (dpi)
- * '''!-Audio-!'''
-   * '''...'''
- * '''!-Video-!'''
-   * '''...'''
- * '''!-Document-!'''
-   * '''...'''
- * '''!-Text-!'''
-   * '''...'''
- * '''!-Compress-!'''
-   * '''...'''
- * '''!-Other-!'''
-
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.BinaryRecordType
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary
