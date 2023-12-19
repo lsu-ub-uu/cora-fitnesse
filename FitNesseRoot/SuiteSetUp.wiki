@@ -11,6 +11,7 @@ Suite
 | se.uu.ub.cora.fitnesseintegration.script |
 | se.uu.ub.cora.fitnesseintegration.waiter.fixture |
 | se.uu.ub.cora.fitnesseintegration.server.compare.fixtures |
+| se.uu.ub.cora.fitnesseintegration.binary |
 
 !| script | SystemUrl |
 | setUrl | ${systemUnderTestUrl} |

@@ -45,6 +45,22 @@ The formats that images are converted to are:
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadImageValidateAnalysisAndConvertion
 
+!define httpCode {200}
+!define representation {master}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {thumbnail}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {medium}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {large}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {jp2}
+!include -seamless .HelperPages.downloadResource
+
 !define archiveFileSystemPath {/tmp/sharedArchiveReadable/systemOne}
 Show files in archive
 !include -seamless .HelperPages.archiveFile
@@ -82,6 +98,21 @@ Show files in file storage
 !define binaryType {image}
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadImageValidateAnalysisAndConvertion
+
+!define representation {master}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {thumbnail}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {medium}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {large}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {jp2}
+!include -seamless .HelperPages.downloadResource
 
 !define archiveFileSystemPath {/tmp/sharedArchiveReadable/systemOne}
 Show files in archive
