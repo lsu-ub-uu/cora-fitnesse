@@ -34,6 +34,23 @@ The formats of the images are :
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadPdfValidateAnalysisAndConvertion
 
+!define httpCode {200}
+!define representation {master}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {thumbnail}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {medium}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {large}
+!include -seamless .HelperPages.downloadResource
+
+!define httpCode {Code: 500 Message: can not read stream from disk, no such stream}
+!define representation {jp2}
+!include -seamless .HelperPages.downloadResource
+
 !define archiveFileSystemPath {/tmp/sharedArchiveReadable/systemOne}
 Show files in archive
 !include -seamless .HelperPages.archiveFile

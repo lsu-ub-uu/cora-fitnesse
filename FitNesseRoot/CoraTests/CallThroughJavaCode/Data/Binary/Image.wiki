@@ -45,21 +45,21 @@ The formats that images are converted to are:
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadImageValidateAnalysisAndConvertion
 
+!define httpCode {200}
 !define representation {master}
-!define expectedResult {OK}
-!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.DownloadResource
+!include -seamless .HelperPages.downloadResource
+
 !define representation {thumbnail}
-!define expectedResult {OK}
-!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.DownloadResource
+!include -seamless .HelperPages.downloadResource
+
 !define representation {medium}
-!define expectedResult {OK}
-!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.DownloadResource
+!include -seamless .HelperPages.downloadResource
+
 !define representation {large}
-!define expectedResult {OK}
-!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.DownloadResource
+!include -seamless .HelperPages.downloadResource
+
 !define representation {jp2}
-!define expectedResult {OK}
-!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.DownloadResource
+!include -seamless .HelperPages.downloadResource
 
 !define archiveFileSystemPath {/tmp/sharedArchiveReadable/systemOne}
 Show files in archive
@@ -100,20 +100,19 @@ Show files in file storage
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadImageValidateAnalysisAndConvertion
 
 !define representation {master}
-!define expectedResult {OK}
-!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.DownloadResource
+!include -seamless .HelperPages.downloadResource
+
 !define representation {thumbnail}
-!define expectedResult {OK}
-!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.DownloadResource
+!include -seamless .HelperPages.downloadResource
+
 !define representation {medium}
-!define expectedResult {OK}
-!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.DownloadResource
+!include -seamless .HelperPages.downloadResource
+
 !define representation {large}
-!define expectedResult {OK}
-!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.DownloadResource
+!include -seamless .HelperPages.downloadResource
+
 !define representation {jp2}
-!define expectedResult {OK}
-!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.DownloadResource
+!include -seamless .HelperPages.downloadResource
 
 !define archiveFileSystemPath {/tmp/sharedArchiveReadable/systemOne}
 Show files in archive
