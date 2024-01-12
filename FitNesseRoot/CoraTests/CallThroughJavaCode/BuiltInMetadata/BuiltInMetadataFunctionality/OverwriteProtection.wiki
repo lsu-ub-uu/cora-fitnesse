@@ -1,0 +1,44 @@
+---
+Test
+---
+!1 Overwrite Protection
+The "Overwrite Protection" functionality ensures data integrity by preventing unintended data loss when multiple users attempt to update the same record simultaneously. The system uses a flag, ignoreOverwriteProtection, which, when set, allows users to bypass the Overwrite protection mechanism.
+
+!3 Test Case 1: Successful Update
+'''Test Description:''' 
+    Verify that the system allows a user to update a record successfully when there are no conflicting changes.
+
+'''Test Steps:'''
+        User A retrieves the record for editing.
+        User A updates the record.
+        User A saves the changes.
+        Confirm that the system reflects the updated information.
+
+'''Expected Result:''' 
+    The system accepts the changes without conflicts, and the record is updated successfully.
+    
+!***> Test Case 1: Successful Update
+
+*!    
+
+!3 Test Case 2: Concurrent Updates - With Overwrite Protection
+'''Test Description:''' Verify that the system prevents data loss by applying Overwrite protection.
+
+'''Test Steps:'''
+        User B retrieves the record for editing that User A is working on.
+        User A updates the record and saves changes.
+        User B attempts to save changes without refreshing the record.
+
+'''Expected Result:''' The system detects that User C's version is outdated and prompts them to refresh the record before saving, preventing data loss.
+
+!3 Test Case 3: Stale Data Detection with Overwrite Protection Bypass
+'''Test Description''': Confirm that the system allows bypassing Overwrite protection when the ''ignoreOverwriteProtection'' flag is used.
+
+'''Test Steps:'''
+        User A retrieves the record for editing.
+        User B updates the same record before User A makes changes.
+        User A saves changes with the ''ignoreOverwriteProtection'' flag.
+
+'''Expected Result:''' The system allows User A to save changes even though the data is stale, as the ''ignoreOverwriteProtection'' flag is used.
+
+
