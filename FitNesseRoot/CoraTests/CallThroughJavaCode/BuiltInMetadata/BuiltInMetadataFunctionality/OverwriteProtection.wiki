@@ -12,12 +12,50 @@ The "Overwrite Protection" functionality ensures data integrity by preventing un
         User A retrieves the record for editing.
         User A updates the record.
         User A saves the changes.
+        User B retrieves the record for editing.
+        User B updates the record.
+        User B saves the changes.
         Confirm that the system reflects the updated information.
 
 '''Expected Result:''' 
     The system accepts the changes without conflicts, and the record is updated successfully.
     
+!***> Test setup
+!include -seamless .HelperPages.defineAdminAuthToken
+!define recordType {fitnesseRecordType}
+!define createData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"fitnesseTextVar","value":"hejsan"}]}-!}
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {}
+
+!include -seamless .HelperPages.createRecord
+
+*!   
+ 
+    
 !***> Test Case 1: Successful Update
+!| ChildComparerFixture |
+| authToken | type | id | testReadAndStoreRecord? |
+| ${currentAuthToken} | ${recordType} | ${recordId} | $readRecordData= |
+
+
+#|script|
+#|set|response|{"record":{"data":{"children":[...]}}}|
+#|check|response|matches|,"actionLinks":\{[^}]*\}|
+#|set|modifiedJson|{response.replaceAll(,"actionLinks\":\\{[^}]*\\}", "")}|
+
+|script|
+|$response=|{"record":{"data":{"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}],"actionLinks":{"read":{"requestMethod":"GET","rel":"read","url":"http://localhost:8080/systemone/rest/record/validationType/fitnesseValidationType","accept":"application/vnd.uub.record+json"}},"name":"validationType"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"actionLinks":{"read":{"requestMethod":"GET","rel":"read","url":"http://localhost:8080/systemone/rest/record/system/cora","accept":"application/vnd.uub.record+json"}},"name":"dataDivider"},{"name":"id","value":"fitnesseRecordType:18696185347863"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}],"actionLinks":{"read":{"requestMethod":"GET","rel":"read","url":"http://localhost:8080/systemone/rest/record/recordType/fitnesseRecordType","accept":"application/vnd.uub.record+json"}},"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"actionLinks":{"read":{"requestMethod":"GET","rel":"read","url":"http://localhost:8080/systemone/rest/record/user/131313","accept":"application/vnd.uub.record+json"}},"name":"createdBy"},{"name":"tsCreated","value":"2024-01-17T13:30:54.113152Z"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"actionLinks":{"read":{"requestMethod":"GET","rel":"read","url":"http://localhost:8080/systemone/rest/record/user/131313","accept":"application/vnd.uub.record+json"}},"name":"updatedBy"},{"name":"tsUpdated","value":"2024-01-17T13:30:54.113152Z"}],"name":"updated"}],"name":"recordInfo"},{"name":"fitnesseTextVar","value":"hejsan"}],"name":"fitnesseExample"},"actionLinks":{"read":{"requestMethod":"GET","rel":"read","url":"http://localhost:8080/systemone/rest/record/fitnesseRecordType/fitnesseRecordType:18696185347863","accept":"application/vnd.uub.record+json"},"update":{"requestMethod":"POST","rel":"update","contentType":"application/vnd.uub.record+json","url":"http://localhost:8080/systemone/rest/record/fitnesseRecordType/fitnesseRecordType:18696185347863","accept":"application/vnd.uub.record+json"},"index":{"requestMethod":"POST","rel":"index","body":{"children":[{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}],"name":"recordType"},{"name":"recordId","value":"fitnesseRecordType:18696185347863"},{"name":"type","value":"index"}],"name":"workOrder"},"contentType":"application/vnd.uub.record+json","url":"http://localhost:8080/systemone/rest/record/workOrder/","accept":"application/vnd.uub.record+json"},"delete":{"requestMethod":"DELETE","rel":"delete","url":"http://localhost:8080/systemone/rest/record/fitnesseRecordType/fitnesseRecordType:18696185347863"}}}}|
+|check|response matches|,"actionLinks":\{[^}]*\}|
+|$modifiedJson=|{response.replaceAll(,"actionLinks\":\\{[^}]*\\}", "")}|
+
+#!define updateData {$readRecordData}
+!define updateData {$modifiedJson}
+!define expectedUpdateResult {UPDATED}
+!define expectedAnswer {}
+!define recordId {$createdRecordId}
+
+!include -seamless .HelperPages.updateRecord
+
 
 *!    
 
@@ -29,7 +67,7 @@ The "Overwrite Protection" functionality ensures data integrity by preventing un
         User A updates the record and saves changes.
         User B attempts to save changes without refreshing the record.
 
-'''Expected Result:''' The system detects that User C's version is outdated and prompts them to refresh the record before saving, preventing data loss.
+'''Expected Result:''' The system detects that User A's version is outdated and prompts them to refresh the record before saving, preventing data loss.
 
 !3 Test Case 3: Stale Data Detection with Overwrite Protection Bypass
 '''Test Description''': Confirm that the system allows bypassing Overwrite protection when the ''ignoreOverwriteProtection'' flag is used.
@@ -42,3 +80,8 @@ The "Overwrite Protection" functionality ensures data integrity by preventing un
 '''Expected Result:''' The system allows User A to save changes even though the data is stale, as the ''ignoreOverwriteProtection'' flag is used.
 
 
+!***> CleanUp test
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | fitnesseRecordType | $createdRecordId | | OK |
+*!  
