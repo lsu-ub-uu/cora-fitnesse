@@ -1,0 +1,17 @@
+---
+Help: Read a record
+---
+!***> Read record ${recordType} ${recordId}
+
+!| ChildComparerFixture |
+| authToken | type | id | testReadAndStoreRecord? |
+| ${currentAuthToken} | ${recordType} | ${recordId} | |
+
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeaders | ${currentAuthToken}!-
+-!Accept: application/vnd.uub.record+xml|
+| GET | /rest/record/${recordType}/${recordId} | ${httpCode} | Content-Type: application\/vnd\.uub\.record\+xml| |
+
+
+*!

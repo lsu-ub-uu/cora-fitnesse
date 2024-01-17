@@ -47,4 +47,6 @@ Show files in archive
 !define archiveFileSystemPath {/tmp/sharedFileStorage/systemOne/streams}
 Show files in file storage
 !include -seamless .HelperPages.archiveFile
+
+!include -seamless .HelperPages.readRecordInXML
 *!

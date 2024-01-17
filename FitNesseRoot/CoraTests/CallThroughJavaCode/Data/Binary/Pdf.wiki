@@ -58,5 +58,6 @@ Show files in archive
 Show files in file storage
 !include -seamless .HelperPages.archiveFile
 
+!include -seamless .HelperPages.readRecordInXML
 *!
 
