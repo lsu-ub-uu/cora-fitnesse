@@ -26,8 +26,15 @@ Show files in archive
 !define archiveFileSystemPath {/tmp/sharedFileStorage/systemOne/streams}
 Show files in file storage
 !include -seamless .HelperPages.archiveFile
+
+!define expectedXpath {//master/master/mimeType[text()='${expectedMimeType}']
+//master/master/actionLinks/read/accept[text()='${expectedMimeType}']
+//master/master/actionLinks/read/rel[text()='read']}
+
+!include -seamless .HelperPages.readRecordInXML
+
 *!
-!***> '''Case 1''' TAR.GZ
+!***> '''Case 2''' TAR.GZ
 
 !define originalFileName {aTarGz.tar.gz}
 !define expectedChecksumSha512 {111d7a73da5cbdb32c99d6c7af8da1019434799ab5d7c5ef825cc8fd3bf4225454b4dc6a83260005035f9a4f86788c16e3fe662b6af80c3b161507fcc6ce97e2}
@@ -47,6 +54,10 @@ Show files in archive
 !define archiveFileSystemPath {/tmp/sharedFileStorage/systemOne/streams}
 Show files in file storage
 !include -seamless .HelperPages.archiveFile
+
+!define expectedXpath {//master/master/mimeType[text()='${expectedMimeType}']
+//master/master/actionLinks/read/accept[text()='${expectedMimeType}']
+//master/master/actionLinks/read/rel[text()='read']}
 
 !include -seamless .HelperPages.readRecordInXML
 *!
