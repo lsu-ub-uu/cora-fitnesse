@@ -377,7 +377,7 @@ We will read a trainingProgram.
 
  * '''Case 1:''' Tries to read using wrong recordType
  * '''Case 2:''' Tries to read using wrong recordId
- * '''Case 3:''' Reads using an existing recordType and recordId
+ * '''Case 3:''' Reads using an existing recordType and recordId. Verify actionLinks exists.
 
 !***> Case 1
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
@@ -396,7 +396,11 @@ We will read a trainingProgram.
 | setHeaders | authToken:$adminAuthToken!-
 -!Accept: application/vnd.uub.record+xml|
 | GET | /rest/record/singleTrainingProgram/cirkelfys | 200 | Content-Type: application\/vnd\.uub\.record\+xml| /record/data/singleTrainingProgram/trainingProgram/id[text()='x1']!-
--!/record/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'asta_kask'] |
+-!/record/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'asta_kask']!-
+-!//actionLinks/read/requestMethod[text() = 'GET']!-
+-!//actionLinks/update/requestMethod[text() = 'POST']!-
+-!//actionLinks/delete/requestMethod[text() = 'DELETE']!-
+-!//actionLinks/index/requestMethod[text() = 'POST'] |
 *!
 
 !2 Read record list
