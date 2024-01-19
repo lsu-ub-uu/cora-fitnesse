@@ -4,80 +4,176 @@ Test
 !1 Overwrite Protection
 The "Overwrite Protection" functionality ensures data integrity by preventing unintended data loss when multiple users attempt to update the same record simultaneously. The system uses a flag, ignoreOverwriteProtection, which, when set, allows users to bypass the Overwrite protection mechanism.
 
-!3 Test Case 1: Successful Update
+!***> Test setup
+!include -seamless .HelperPages.defineAdminAuthToken
+!define recordType {fitnesseRecordType}
+!define createData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"fitnesseOnlyOneTextVar","value":"hejsan"}]}-!}
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {}
+
+!include -seamless .HelperPages.createRecord
+*!  
+
+!3 Test Case 1: Successful update in succession
 '''Test Description:''' 
-    Verify that the system allows a user to update a record successfully when there are no conflicting changes.
+    Verify that the system allows two users are allowed to update a record successfully in succession.
 
 '''Test Steps:'''
         User A retrieves the record for editing.
         User A updates the record.
         User A saves the changes.
-        User B retrieves the record for editing.
+        User B then retrieves the same record for editing.
         User B updates the record.
         User B saves the changes.
         Confirm that the system reflects the updated information.
 
 '''Expected Result:''' 
     The system accepts the changes without conflicts, and the record is updated successfully.
-    
-!***> Test setup
-!include -seamless .HelperPages.defineAdminAuthToken
-!define recordType {fitnesseRecordType}
-!define createData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"fitnesseTextVar","value":"hejsan"}]}-!}
-!define expectedCreateResult {CREATED}
-!define expectedAnswer {}
-
-!include -seamless .HelperPages.createRecord
-
-*!   
- 
-    
+         
 !***> Test Case 1: Successful Update
+!***> User A fetch and updates a record
 !| ChildComparerFixture |
 | authToken | type | id | testReadAndStoreRecord? |
 | ${currentAuthToken} | ${recordType} | ${recordId} | $readRecordData= |
 
+!| script | DataHandlerScript |
+| $response= | extractDataElement | $readRecordData |
 
-#|script|
-#|set|response|{"record":{"data":{"children":[...]}}}|
-#|check|response|matches|,"actionLinks":\{[^}]*\}|
-#|set|modifiedJson|{response.replaceAll(,"actionLinks\":\\{[^}]*\\}", "")}|
-
-|script|
-|$response=|{"record":{"data":{"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}],"actionLinks":{"read":{"requestMethod":"GET","rel":"read","url":"http://localhost:8080/systemone/rest/record/validationType/fitnesseValidationType","accept":"application/vnd.uub.record+json"}},"name":"validationType"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"actionLinks":{"read":{"requestMethod":"GET","rel":"read","url":"http://localhost:8080/systemone/rest/record/system/cora","accept":"application/vnd.uub.record+json"}},"name":"dataDivider"},{"name":"id","value":"fitnesseRecordType:18696185347863"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}],"actionLinks":{"read":{"requestMethod":"GET","rel":"read","url":"http://localhost:8080/systemone/rest/record/recordType/fitnesseRecordType","accept":"application/vnd.uub.record+json"}},"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"actionLinks":{"read":{"requestMethod":"GET","rel":"read","url":"http://localhost:8080/systemone/rest/record/user/131313","accept":"application/vnd.uub.record+json"}},"name":"createdBy"},{"name":"tsCreated","value":"2024-01-17T13:30:54.113152Z"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"actionLinks":{"read":{"requestMethod":"GET","rel":"read","url":"http://localhost:8080/systemone/rest/record/user/131313","accept":"application/vnd.uub.record+json"}},"name":"updatedBy"},{"name":"tsUpdated","value":"2024-01-17T13:30:54.113152Z"}],"name":"updated"}],"name":"recordInfo"},{"name":"fitnesseTextVar","value":"hejsan"}],"name":"fitnesseExample"},"actionLinks":{"read":{"requestMethod":"GET","rel":"read","url":"http://localhost:8080/systemone/rest/record/fitnesseRecordType/fitnesseRecordType:18696185347863","accept":"application/vnd.uub.record+json"},"update":{"requestMethod":"POST","rel":"update","contentType":"application/vnd.uub.record+json","url":"http://localhost:8080/systemone/rest/record/fitnesseRecordType/fitnesseRecordType:18696185347863","accept":"application/vnd.uub.record+json"},"index":{"requestMethod":"POST","rel":"index","body":{"children":[{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}],"name":"recordType"},{"name":"recordId","value":"fitnesseRecordType:18696185347863"},{"name":"type","value":"index"}],"name":"workOrder"},"contentType":"application/vnd.uub.record+json","url":"http://localhost:8080/systemone/rest/record/workOrder/","accept":"application/vnd.uub.record+json"},"delete":{"requestMethod":"DELETE","rel":"delete","url":"http://localhost:8080/systemone/rest/record/fitnesseRecordType/fitnesseRecordType:18696185347863"}}}}|
-|check|response matches|,"actionLinks":\{[^}]*\}|
-|$modifiedJson=|{response.replaceAll(,"actionLinks\":\\{[^}]*\\}", "")}|
-
-#!define updateData {$readRecordData}
-!define updateData {$modifiedJson}
-!define expectedUpdateResult {UPDATED}
+!define updateData {$response}
+!define expectedUpdateResult {OK}
 !define expectedAnswer {}
 !define recordId {$createdRecordId}
 
 !include -seamless .HelperPages.updateRecord
+*!
 
+!***> After User A have saved a new version User B then fetch and updates the same record
+!| ChildComparerFixture |
+| authToken | type | id | testReadAndStoreRecord? |
+| ${currentAuthToken} | ${recordType} | ${recordId} | $readRecordData= |
 
+!| script | DataHandlerScript |
+| $response= | extractDataElement | $readRecordData |
+
+!define updateData {$response}
+!define expectedUpdateResult {OK}
+!define expectedAnswer {}
+!define recordId {$createdRecordId}
+
+!include -seamless .HelperPages.updateRecord
+*!
 *!    
+
 
 !3 Test Case 2: Concurrent Updates - With Overwrite Protection
 '''Test Description:''' Verify that the system prevents data loss by applying Overwrite protection.
 
 '''Test Steps:'''
-        User B retrieves the record for editing that User A is working on.
+		User A retrieves the record for editing.
+        User B retrieves the same record for editing that User A is working on.
         User A updates the record and saves changes.
         User B attempts to save changes without refreshing the record.
 
-'''Expected Result:''' The system detects that User A's version is outdated and prompts them to refresh the record before saving, preventing data loss.
+'''Expected Result:''' The system detects that User B's version is outdated and blocks the update due to conflicting data
+
+!***> Test Case 2: Concurrent Updates - With Overwrite Protection
+!***> User A fetch a record
+!| ChildComparerFixture |
+| authToken | type | id | testReadAndStoreRecord? |
+| ${currentAuthToken} | ${recordType} | ${recordId} | $readRecordDataUserA= |
+
+!| script | DataHandlerScript |
+| $responseUserA= | extractDataElement | $readRecordDataUserA |
+*!
+
+!***> User B fetch the same record as user A
+!| ChildComparerFixture |
+| authToken | type | id | testReadAndStoreRecord? |
+| ${currentAuthToken} | ${recordType} | ${recordId} | $readRecordDataUserB= |
+
+!| script | DataHandlerScript |
+| $responseUserB= | extractDataElement | $readRecordDataUserB |
+*!
+
+!***> User A updates the record creating a new version
+!define updateData {$responseUserA}
+!define expectedUpdateResult {OK}
+!define expectedAnswer {}
+!define recordId {$createdRecordId}
+
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> User B tries to update the same record with an older version
+!define updateData {$responseUserB}
+!define expectedUpdateResult {CONFLICT}
+!define expectedAnswer {}
+!define recordId {$createdRecordId}
+
+!include -seamless .HelperPages.updateRecord
+*!
+*!
 
 !3 Test Case 3: Stale Data Detection with Overwrite Protection Bypass
 '''Test Description''': Confirm that the system allows bypassing Overwrite protection when the ''ignoreOverwriteProtection'' flag is used.
 
 '''Test Steps:'''
         User A retrieves the record for editing.
-        User B updates the same record before User A makes changes.
-        User A saves changes with the ''ignoreOverwriteProtection'' flag.
+        User B retrieves the record for editing that User A is working on.
+        User A updates the record and saves changes.
+        User B forcefully overwrite User A's changes using the ''ignoreOverwriteProtection'' flag.
+        Verify that the ''ignoreOverwriteProtection'' flag is removed from the record after User B have forced an update
 
-'''Expected Result:''' The system allows User A to save changes even though the data is stale, as the ''ignoreOverwriteProtection'' flag is used.
+'''Expected Result:''' The system allows User B to save changes even though the data is stale, as the ''ignoreOverwriteProtection'' flag is used.
+
+!***> Test Case 3: Stale Data Detection with Overwrite Protection Bypass
+!***> User A fetch a record
+!| ChildComparerFixture |
+| authToken | type | id | testReadAndStoreRecord? |
+| ${currentAuthToken} | ${recordType} | ${recordId} | $readRecordDataUserA= |
+
+!| script | DataHandlerScript |
+| $responseUserA= | extractDataElement | $readRecordDataUserA |
+*!
+
+!***> User B fetch the same record as user A
+!| ChildComparerFixture |
+| authToken | type | id | testReadAndStoreRecord? |
+| ${currentAuthToken} | ${recordType} | ${recordId} | $readRecordDataUserB= |
+
+!| script | DataHandlerScript |
+| $responseUserB= | extractDataElement | $readRecordDataUserB |
+*!
+
+!***> User A updates the record
+!define updateData {$responseUserA}
+!define expectedUpdateResult {OK}
+!define expectedAnswer {}
+!define recordId {$createdRecordId}
+
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> User B forcefully updates the same record with an older version using the ''ignoreOverwriteProtection'' flag
+!define updateData {$responseUserB}
+!define expectedUpdateResult {OK}
+!define expectedAnswer {}
+!define recordId {$createdRecordId}
+
+!include -seamless .HelperPages.updateRecord
+*!
+*!
+
+!3 Test Case 4: Try to force an update using an erroneous setting on ''ignoreOverwriteProtection'' 
+'''Test Description''': Confirm that the system does not allow bypassing Overwrite protection when the ''ignoreOverwriteProtection'' have an incorrect setting (not ''true'').
+
+'''Test Steps:'''
+        User A retrieves the record for editing.
+        User B retrieves the record for editing that User A is working on.
+        User A updates the record and saves changes.
+        User B tries to save changes using an erroneous ''ignoreOverwriteProtection'' flag setting.
+
+'''Expected Result:''' The system does not allow User B to save changes due to erroneous ''ignoreOverwriteProtection'' flag setting.
 
 
 !***> CleanUp test
