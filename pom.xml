@@ -151,48 +151,4 @@
 		</plugins>
 	</build>
 
-	<profiles>
-		<profile>
-			<id>tooling</id>
-			<properties>
-				<src.dir>tooling/src/main/java</src.dir>
-			</properties>
-			<activation>
-				<property>
-					<name>tooling</name>
-					<value>true</value>
-				</property>
-			</activation>
-			<dependencies>
-				<!-- Tooling deps -->
-				<dependency>
-					<groupId>org.json</groupId>
-					<artifactId>json</artifactId>
-					<version>20230227</version>
-				</dependency>
-
-				<dependency>
-					<groupId>org.apache.commons</groupId>
-					<artifactId>commons-lang3</artifactId>
-					<version>3.12.0</version>
-				</dependency>
-
-				<dependency>
-					<groupId>commons-io</groupId>
-					<artifactId>commons-io</artifactId>
-					<version>2.11.0</version>
-				</dependency>
-
-
-				<dependency>
-					<groupId>org.skyscreamer</groupId>
-					<artifactId>jsonassert</artifactId>
-					<version>1.5.1</version>
-					<scope>test</scope>
-				</dependency>
-
-
-			</dependencies>
-		</profile>
-	</profiles>
 </project>

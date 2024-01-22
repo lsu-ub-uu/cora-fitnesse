@@ -23,6 +23,8 @@ Suite
 | $adminAuthToken | presentation | fitnesseNewOutputPGroup | | OK |
 | $adminAuthToken | presentation | fitnesseMetadataPVar | | OK |
 | $adminAuthToken | presentation | fitnesseMetadataOutputPVar | | OK |
+| $adminAuthToken | presentation | fitnesseOnlyOneMetadataPVar | | OK |
+| $adminAuthToken | presentation | fitnesseOnlyOneMetadataOutputPVar | | OK |
 | $adminAuthToken | presentation | fitnesseMetadataPNumVar | | OK |
 | $adminAuthToken | presentation | fitnesseMetadataOutputPNumVar | | OK |
 | $adminAuthToken | presentation | fitnessePLink | | OK |
@@ -34,6 +36,7 @@ Suite
 | $adminAuthToken | metadata | fitnesseGroup | | OK |
 | $adminAuthToken | metadata | fitnesseNewGroup | | OK |
 | $adminAuthToken | metadata | fitnesseMetadataTextVar | | OK |
+| $adminAuthToken | metadata | fitnesseOnlyOneMetadataTextVar | | OK |
 | $adminAuthToken | metadata | fitnesseMetadataNumberVar | | OK |
 | $adminAuthToken | metadata | fitnesseCollectionVar | | OK |
 | $adminAuthToken | metadata | fitnesseCollection | | OK |
