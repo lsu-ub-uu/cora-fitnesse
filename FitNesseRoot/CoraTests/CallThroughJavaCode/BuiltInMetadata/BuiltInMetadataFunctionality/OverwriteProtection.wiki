@@ -58,12 +58,10 @@ The "Overwrite Protection" functionality ensures data integrity by preventing un
 !define updateData {$response}
 !define expectedUpdateResult {OK}
 !define expectedAnswer {}
-!define recordId {$createdRecordId}
 
 !include -seamless .HelperPages.updateRecord
 *!
 *!    
-
 
 !3 Test Case 2: Concurrent Updates - With Overwrite Protection
 '''Test Description:''' Verify that the system prevents data loss by applying Overwrite protection.
@@ -99,7 +97,6 @@ The "Overwrite Protection" functionality ensures data integrity by preventing un
 !define updateData {$responseUserA}
 !define expectedUpdateResult {OK}
 !define expectedAnswer {}
-!define recordId {$createdRecordId}
 
 !include -seamless .HelperPages.updateRecord
 *!
@@ -108,7 +105,6 @@ The "Overwrite Protection" functionality ensures data integrity by preventing un
 !define updateData {$responseUserB}
 !define expectedUpdateResult {CONFLICT}
 !define expectedAnswer {}
-!define recordId {$createdRecordId}
 
 !include -seamless .HelperPages.updateRecord
 *!
@@ -118,49 +114,23 @@ The "Overwrite Protection" functionality ensures data integrity by preventing un
 '''Test Description''': Confirm that the system allows bypassing Overwrite protection when the ''ignoreOverwriteProtection'' flag is used.
 
 '''Test Steps:'''
-        User A retrieves the record for editing.
-        User B retrieves the record for editing that User A is working on.
-        User A updates the record and saves changes.
-        User B forcefully overwrite User A's changes using the ''ignoreOverwriteProtection'' flag.
+        User B forcefully overwrite a post with older updated date using the ''ignoreOverwriteProtection'' flag.
         Verify that the ''ignoreOverwriteProtection'' flag is removed from the record after User B have forced an update
 
 '''Expected Result:''' The system allows User B to save changes even though the data is stale, as the ''ignoreOverwriteProtection'' flag is used.
 
 !***> Test Case 3: Stale Data Detection with Overwrite Protection Bypass
-!***> User A fetch a record
-!| ChildComparerFixture |
-| authToken | type | id | testReadAndStoreRecord? |
-| ${currentAuthToken} | ${recordType} | ${recordId} | $readRecordDataUserA= |
 
-!| script | DataHandlerScript |
-| $responseUserA= | extractDataElement | $readRecordDataUserA |
-*!
+!***> User B forcefully updates the record with an older version using the ''ignoreOverwriteProtection'' flag
 
-!***> User B fetch the same record as user A
-!| ChildComparerFixture |
-| authToken | type | id | testReadAndStoreRecord? |
-| ${currentAuthToken} | ${recordType} | ${recordId} | $readRecordDataUserB= |
-
-!| script | DataHandlerScript |
-| $responseUserB= | extractDataElement | $readRecordDataUserB |
-*!
-
-!***> User A updates the record
-!define updateData {$responseUserA}
+!define updateData {!-{"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}],"name":"validationType"},{"name":"ignoreOverwriteProtection","value":"true"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"name":"id","value":"-!${recordId}!-"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}],"name":"type"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"updatedBy"},{"name":"tsUpdated","value":"2024-01-22T09:06:24.248823Z"}],"name":"updated"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2024-01-22T09:06:24.248823Z"}],"name":"recordInfo"},{"name":"fitnesseOnlyOneTextVar","value":"hejsan"}],"name":"fitnesseExample"}-!}
 !define expectedUpdateResult {OK}
-!define expectedAnswer {}
-!define recordId {$createdRecordId}
+!define expectedAnswer {=~/^(?!.*ignoreOverwriteProtection).*/}
 
 !include -seamless .HelperPages.updateRecord
 *!
 
-!***> User B forcefully updates the same record with an older version using the ''ignoreOverwriteProtection'' flag
-!define updateData {$responseUserB}
-!define expectedUpdateResult {OK}
-!define expectedAnswer {}
-!define recordId {$createdRecordId}
-
-!include -seamless .HelperPages.updateRecord
+!***> Verify that the ''ignoreOverwriteProtection'' flag is removed from the record
 *!
 *!
 
@@ -168,13 +138,20 @@ The "Overwrite Protection" functionality ensures data integrity by preventing un
 '''Test Description''': Confirm that the system does not allow bypassing Overwrite protection when the ''ignoreOverwriteProtection'' have an incorrect setting (not ''true'').
 
 '''Test Steps:'''
-        User A retrieves the record for editing.
-        User B retrieves the record for editing that User A is working on.
-        User A updates the record and saves changes.
-        User B tries to save changes using an erroneous ''ignoreOverwriteProtection'' flag setting.
+        User B tries to update a post using old update date by using an erroneous ''ignoreOverwriteProtection'' flag setting.
 
 '''Expected Result:''' The system does not allow User B to save changes due to erroneous ''ignoreOverwriteProtection'' flag setting.
 
+!***> Test Case 4: Try to force an update using an erroneous setting on ''ignoreOverwriteProtection'' 
+
+!***> User B forcefully tries to update a record with an older version with an older version using an erroneous ''ignoreOverwriteProtection'' flag
+!define updateData {!-{"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}],"name":"validationType"},{"name":"ignoreOverwriteProtection","value":"kalleanka"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"name":"id","value":"-!${recordId}!-"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}],"name":"type"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"updatedBy"},{"name":"tsUpdated","value":"2024-01-22T09:06:24.248823Z"}],"name":"updated"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2024-01-22T09:06:24.248823Z"}],"name":"recordInfo"},{"name":"fitnesseOnlyOneTextVar","value":"hejsan"}],"name":"fitnesseExample"}-!}
+!define expectedUpdateResult {CONFLICT}
+!define expectedAnswer {Could not update record because it exist a newer version of the record in the storage.}
+
+!include -seamless .HelperPages.updateRecord
+*!
+*!
 
 !***> CleanUp test
 !| RecordEndpointFixture |
