@@ -2,7 +2,7 @@
 Static
 ---
 
-!define createBinaryGeneric {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
+!define createBinaryGeneric {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"unpublished"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
 !define recordType {binary}
 !define createData createBinaryGeneric
 !define expectedAnswer {}
@@ -29,7 +29,7 @@ TODO: ResourceLink cannot be validated. Change CompareFixture in order to be abl
 
 !| WaitForRegExReadResultFixture |
 | authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
-| $adminAuthToken | binary | $tmpRecordId1 | 500 | 50 | jp2 | Found |
+| $adminAuthToken | binary | $tmpRecordId1 | 500 | 50 | \"name\":\"jp2\" | Found |
 
 !define expectedUpdatedData {!-{"children":[{"children":[{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"resourceId","value":"$tmpRecordId1-master"},{"name":"fileSize","value":"-!${expectedFileSize}!-"},{"name":"mimeType","value":"-!${expectedMimeType}!-"},{"name":"height","value":"-!${expectedHeight}!-"},{"name":"width","value":"-!${expectedWidth}!-"},{"name":"resolution","value":"-!${expectedResolution}!-"},{"name":"checksum","value":"-!${expectedChecksumSha512}!-"},{"name":"checksumType","value":"SHA-512"}],"name":"master"},{"children":[{"name":"resourceId","value":"$tmpRecordId1-thumbnail"},{"name":"fileSize","value":"-!${thumbnailFileSize}!-"},{"name":"mimeType","value":"-!${thumbnailMimeType}!-"},{"name":"height","value":"-!${thumbnailHeight}!-"},{"name":"width","value":"-!${thumbnailWidth}!-"}],"name":"thumbnail"},{"children":[{"name":"resourceId","value":"$tmpRecordId1-medium"},{"name":"fileSize","value":"-!${mediumFileSize}!-"},{"name":"mimeType","value":"-!${mediumMimeType}!-"},{"name":"height","value":"-!${mediumHeight}!-"},{"name":"width","value":"-!${mediumWidth}!-"}],"name":"medium"},{"children":[{"name":"resourceId","value":"$tmpRecordId1-large"},{"name":"fileSize","value":"-!${largeFileSize}!-"},{"name":"mimeType","value":"-!${largeMimeType}!-"},{"name":"height","value":"-!${largeHeight}!-"},{"name":"width","value":"-!${largeWidth}!-"}],"name":"large"},{"children":[{"name":"resourceId","value":"$tmpRecordId1-jp2"},{"name":"fileSize","value":"-!${jp2FileSize}!-"},{"name":"mimeType","value":"-!${jp2MimeType}!-"},{"name":"height","value":"-!${jp2Height}!-"},{"name":"width","value":"-!${jp2Width}!-"}],"name":"jp2"}],"name":"binary"}-!}
 !define expectedCompareResult {!-OK-!}

@@ -26,7 +26,7 @@
 		<fitnesseintegration.version>4.1-SNAPSHOT</fitnesseintegration.version>
 		<coralog4j.version>2.15.0</coralog4j.version>
 		<basicdata.version>5.6.0</basicdata.version>
-		<xmlconverter.version>2.9.0</xmlconverter.version>
+		<xmlconverter.version>2.10-SNAPSHOT</xmlconverter.version>
 		<smartrics-RestFixture.version>4.4</smartrics-RestFixture.version>
 		<src.dir>src/main/java</src.dir>
 	</properties>
