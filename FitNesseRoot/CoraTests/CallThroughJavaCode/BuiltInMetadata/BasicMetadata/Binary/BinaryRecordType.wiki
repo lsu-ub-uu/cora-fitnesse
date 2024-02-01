@@ -15,6 +15,8 @@ Static
      * '''updated'''(group, 0-X, noConstraint)
        * '''updatedBy'''(recordLink, 1-1, noConstraint)
        * '''tsUpdated'''(textVariable, 1-1, noConstraint)
+   * '''adminInfo'''(group, 1-1, noConstraint)
+     * '''visibility'''(collectionVariable, 1-1, noConstraint)       
    * '''resourceInfo'''(group, 0-1, write)
      * '''master'''(group, 1-1, noConstraint)
        * '''resourceId'''(textVariable, 1-1, readWrite)
@@ -114,6 +116,23 @@ Static
 | $adminAuthToken | metadata | permissionUnitLink | 0 | X | permissionUnit | noRestrictions |
 | $adminAuthToken | metadata | tsCreatedTextVar | 0 | 1 | tsCreated | noRestrictions |
 | $adminAuthToken | metadata | updatedGroup | 0 | X | updated | noRestrictions |
+
+*!
+
+!***> Validate adminInfoGroup
+
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadata | adminInfoGroup | |
+
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 2 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadata | visibilityCollectionVar | 1 | 1 | visibility | noRestrictions |
+| $adminAuthToken | metadata | tsVisibilityTextVar | 0 | 1 | tsVisibility | write |
 
 *!
 
