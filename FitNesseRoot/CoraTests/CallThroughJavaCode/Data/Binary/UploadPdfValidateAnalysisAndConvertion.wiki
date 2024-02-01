@@ -29,7 +29,7 @@ TODO: ResourceLink cannot be validated. Change CompareFixture in order to be abl
 
 !| WaitForRegExReadResultFixture |
 | authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
-| $adminAuthToken | binary | $tmpRecordId1 | 500 | 50 | thumbnail | Found |
+| $adminAuthToken | binary | $tmpRecordId1 | 500 | 50 | \"name\":\"thumbnail\" | Found |
 
 !define expectedUpdatedData {!-{"children":[{"children":[{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"resourceId","value":"$tmpRecordId1-master"},{"name":"fileSize","value":"-!${expectedFileSize}!-"},{"name":"mimeType","value":"-!${expectedMimeType}!-"},{"name":"checksum","value":"-!${expectedChecksumSha512}!-"},{"name":"checksumType","value":"SHA-512"}],"name":"master"},{"children":[{"name":"resourceId","value":"$tmpRecordId1-thumbnail"},{"name":"fileSize","value":"-!${thumbnailFileSize}!-"},{"name":"mimeType","value":"-!${thumbnailMimeType}!-"},{"name":"height","value":"-!${thumbnailHeight}!-"},{"name":"width","value":"-!${thumbnailWidth}!-"}],"name":"thumbnail"},{"children":[{"name":"resourceId","value":"$tmpRecordId1-medium"},{"name":"fileSize","value":"-!${mediumFileSize}!-"},{"name":"mimeType","value":"-!${mediumMimeType}!-"},{"name":"height","value":"-!${mediumHeight}!-"},{"name":"width","value":"-!${mediumWidth}!-"}],"name":"medium"},{"children":[{"name":"resourceId","value":"$tmpRecordId1-large"},{"name":"fileSize","value":"-!${largeFileSize}!-"},{"name":"mimeType","value":"-!${largeMimeType}!-"},{"name":"height","value":"-!${largeHeight}!-"},{"name":"width","value":"-!${largeWidth}!-"}],"name":"large"}],"name":"binary"}-!}
 !define expectedCompareResult {!-OK-!}
