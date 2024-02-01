@@ -4,7 +4,7 @@ Help: Read a record
 !***> Read record in XML ${recordType} ${recordId}
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setHeaders | ${currentAuthToken}!-
+| setHeaders | authToken: ${currentAuthToken}!-
 -!Accept: application/vnd.uub.record+xml|
 | GET | /rest/record/${recordType}/${recordId} | ${httpCode} | Content-Type: application\/vnd\.uub\.record\+xml| ${expectedXpath} |
 
