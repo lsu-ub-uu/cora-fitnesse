@@ -23,3 +23,4 @@ The '''master''' . Other formats depending on the resourceType are listed below:
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.ValidationType
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.actions.Create
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.actions.Read
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.actions.Update

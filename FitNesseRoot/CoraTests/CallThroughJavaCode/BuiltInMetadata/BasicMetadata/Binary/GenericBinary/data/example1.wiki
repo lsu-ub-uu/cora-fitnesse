@@ -13,7 +13,7 @@ Help: Data for example example1
 !define expectedCreatedData createData
 
 !define updateData {!--!}
-!define expectedUpdatedData updateData
+!define expectedUpdatedData {!--!}
 !define originalData updateData
 !define expectedOriginalData originalData
  
