@@ -5,20 +5,20 @@ Test
 !1 Binaries
 Binary is a record type that contains information about binaries. See [[binary definition][<CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary]].
 
-'''Upload Resource File:'''
+!2 Upload Resource File:
 Users should have the capability to upload a resource file to any instance of the binary system.
 
-'''Resource Analysis:'''
+!2 Resource Analysis:
 Upon successful upload, the binary system undertakes an analysis of the uploaded resource. The analysis focuses on extracting fundamental data, including but not limited to see [[binary definition][<CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary]] :
 
  * File Size: Determining the size of the uploaded resource file.
  * Checksum: Calculating a checksum to verify the integrity of the resource.
  * Mime Type: Identifying the type of the resource based on its MIME type.
 
-'''Processing Based on Mime Type:'''
+!2 Processing Based on Mime Type:
 The binary system processes the resource differently depending on its MIME type. Various actions are taken based on the identified MIME type to ensure appropriate handling and representation of the resource.
 
-'''Representation Generation:'''
+!2 Representation Generation:
 For certain MIME types, the binary system generates different representations of the resource. These representations may include:
 
  * Thumbnail: A smaller version of the resource suitable for preview.
@@ -26,13 +26,19 @@ For certain MIME types, the binary system generates different representations of
  * Large: A larger version of the resource, suitable for certain applications.
  * JP2: A representation in JPEG 2000 format.
 
-'''Downloadable Representations:'''
+!2 Downloadable Representations:
 All generated representations, including the original master representation, are made available for download. Users have the option to retrieve the master representation or any of the processed representations, facilitating flexibility in accessing and utilizing the resource in different contexts.
 
 In summary, the binary system supports the upload and analysis of resource files, tailoring its processing based on MIME types. The generation of different representations ensures versatility, and users can conveniently download the representation that best suits their needs, whether it be the original master or one of the processed versions.
 
-!3 Types of resources
+!2 IIIF protocol
+The IIIF Image API is a standard protocol within the International Image  Interoperability Framework ([[IIIF][https://iiif.io/]]) that enables efficient access and  presentation of digital images. It allows for dynamic manipulation of  images through standardized URI syntax, supporting functions such as  region selection, resizing, rotation, and quality adjustments. With its  format-agnostic nature, the API ensures compatibility with various image  formats, fostering interoperability among different repositories and  platforms. By facilitating seamless interaction between IIIF-compliant  image servers and clients, the API promotes collaboration and sharing of  digital image collections across cultural heritage institutions,  libraries, museums, and other organizations on the web.
+
+In Cora, the IIIF protocol is exclusively available for accessing  binaries in JP2 format. This feature ensures that users can efficiently  retrieve and present digital assets through standardized methods. By adhering to these standards,  Cora maintains consistency and facilitates seamless access to digital  content while leveraging the benefits of the IIIF framework. In response to a binary record read or update, Cora will provide the necessary IIIF server and identifier details required to access a specific record.
+
+!2 Types of resources
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Image
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Text
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Pdf
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Compressed
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Iiif
