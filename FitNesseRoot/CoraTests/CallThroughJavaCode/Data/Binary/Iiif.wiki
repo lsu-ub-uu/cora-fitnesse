@@ -1,0 +1,47 @@
+---
+Test
+---
+!2 IIIF
+Iiif information will be present on the response of a Read of a Image if the image has a JP2 representation generated and if the user has right to read it. 
+
+ * '''Case 1:''' When reading an image with a Jp2 representation an IIIF protocol must be present. It must have a server and identifier properties in it. 
+ * '''Case 2:''' When reading an any other binary that does not have any JP2 then IIIF should not be present.
+ 
+
+!***> '''Case 1'''
+!define originalFileName {aTiff.tiff}
+!define expectedChecksumSha512 {18e566f03b75c25ae68f7a543c1e31d4afd7d8934912a80b96005e4cbd664e268fd12d23e5687a1f62c93119c254ea52e56d398d17b5fea8987d8d96cc25115d}
+!define expectedFileSize {54452040}
+
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadImageAndWait
+
+!| ChildComparerFixture |
+| authToken | type | id | testReadAndStoreRecord? |
+| ${currentAuthToken} | ${recordType} | ${recordId} |=~/!-"otherProtocols":\{"iiif":\{"server":"http:\/\/systemone-iiif:8080\/iiif\/","identifier":"binary:\d*"\}\}-!/ |
+
+!define iiifServerUrl {!-http://systemone-iiif:8080/iiif/-!}
+
+!define expectedXpath {//otherProtocols/iiif/server[text() = '${iiifServerUrl}']
+//otherProtocols/iiif/identifier[text() = '${recordId}']}
+!include -seamless .HelperPages.readRecordInXML
+*!
+
+!***> '''Case 2'''
+!define originalFileName {aZip.zip}
+!define expectedChecksumSha512 {cd13d9ec7646468d713595cce23729562637a40a972c1d765b285c538789b21f05d725e9b79d473ebbcb556863a78719abf7c56265c3a8987b2d2a5e1f06ee1d}
+!define expectedMimeType {application/zip}}
+!define expectedFileSize {144}
+!define binaryType {compressed}
+
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadResourceValidateAnalysis
+
+!| ChildComparerFixture |
+| authToken | type | id | testReadAndStoreRecord? |
+| ${currentAuthToken} | ${recordType} | ${recordId} |=~/!-^(?!.*"otherProtocols":\{"iiif":\{"server":"http:\/\/systemone-iiif:8080\/iiif\/","identifier":"binary:\d*"\}\}).*-!/ |
+
+!define iiifServerUrl {!-http://systemone-iiif:8080/iiif/-!}
+
+!define expectedXpath {count(//notExistingElement) = 0}
+!include -seamless .HelperPages.readRecordInXML
+*!
+

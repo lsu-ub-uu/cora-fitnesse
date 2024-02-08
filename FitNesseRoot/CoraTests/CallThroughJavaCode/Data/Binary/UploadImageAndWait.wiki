@@ -1,0 +1,33 @@
+---
+Static
+---
+
+!define createBinaryGeneric {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"unpublished"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
+!define recordType {binary}
+!define createData createBinaryGeneric
+!define expectedAnswer {}
+!define expectedCreateResult {CREATED}
+!***> Create record, for recordType ${recordType}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $tmpRecordId1= |
+
+
+!define recordId {$tmpRecordId1}
+*!
+!***> Upload image
+
+!| RecordEndpointFixture |
+| authToken | type | id | fileName | testUpload? | getStatusType? |
+| $adminAuthToken | binary | $tmpRecordId1 | ${originalFileName} | | OK |
+
+*!
+!***> Wait and validate record has been updated using image analyzer and converted to the different representations
+
+TODO: ResourceLink cannot be validated. Change CompareFixture in order to be able to validate it.
+
+!| WaitForRegExReadResultFixture |
+| authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
+| $adminAuthToken | binary | $tmpRecordId1 | 500 | 50 | \"name\":\"jp2\" | Found |
+*!
