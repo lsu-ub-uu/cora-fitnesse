@@ -17,15 +17,18 @@ Static
 !include -seamless .HelperPages.updateCheckReadCheck
 *!
 
+!***> Case 2 
+We store the previous tsVisibility (!-$tsVisibility-!) from the first update. Since this update should not update visbility then the timestamps should not be changed.
+
+!***> Setup case 2
 !| ChildComparerFixture |
 | authToken | type | id | testReadAndStoreRecord? |
 | ${currentAuthToken} | ${recordType} | ${recordId} | $readRecordPayload= |
 
 !| script | ExtractSubstringUsingRegex |
 | $tsVisibility= | get substring using text | $readRecordPayload | and regex | "tsVisibility","value":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z |
+*!
 
-!***> Case 2 
-We store the previous tsVisibility (!-$tsVisibility-!) from the first update. Since this update should not update visbility then the timestamps should not be changed.
 !define updateData {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"binary"}],"name":"type"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"id","value":"-!$createdRecordId!-"}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]}],"attributes":{"type":"generic"}}-!}
 !define expectedUpdatedData {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"binary"}],"name":"type"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"id","value":"-!$createdRecordId!-"}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]}],"attributes":{"type":"generic"}}-!}
 !define originalData updateData
