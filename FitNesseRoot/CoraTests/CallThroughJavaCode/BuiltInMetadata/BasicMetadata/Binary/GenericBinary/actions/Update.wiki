@@ -4,21 +4,32 @@ Static
 
 !2 Update
 
- * '''Case 1''': It should be possible to update visiblity of a binary. This should create a tsVisibility timestamp that specify when this occured.
+ * '''Case 1''': It should be possible to update visiblity of a binary. This should update the existing tsVisibility timestamp.
  * '''Case 2''': If the value of visibility is not changed to another value during an update (ex. published -> published), tsVisibility should not be updated and remain unchanged.
 
 !***> Case 1
+We store the original existing (!-$originalTsVisibility-!) from the binary we created. Since we change the value of visibility this means that the timestamp should also change when we update.
+
+!***> Setup case 1
+!| ChildComparerFixture |
+| authToken | type | id | testReadAndStoreRecord? |
+| ${currentAuthToken} | ${recordType} | ${recordId} | $readRecordPayload= |
+
+!| script | ExtractSubstringUsingRegex |
+| $originalTsVisibility= | get substring using text | $readRecordPayload | and regex | "tsVisibility","value":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z |
+*!
+
 !define updateData {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"binary"}],"name":"type"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"id","value":"-!$createdRecordId!-"}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]}],"attributes":{"type":"generic"}}-!}
 !define expectedUpdatedData {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"binary"}],"name":"type"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"id","value":"-!$createdRecordId!-"}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]}],"attributes":{"type":"generic"}}-!}
 !define originalData updateData
 !define expectedOriginalData originalData
 !define expectedUpdateResult {OK}
-!define expectedAnswer {=~/!-"tsVisibility","value":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z"-!/}
+!define expectedAnswer {=~/^(?!.*$originalTsVisibility)/}
 !include -seamless .HelperPages.updateCheckReadCheck
 *!
 
 !***> Case 2 
-We store the previous tsVisibility (!-$tsVisibility-!) from the first update. Since this update should not update visbility then the timestamps should not be changed.
+We store the previous tsVisibility (!-$tsVisibility-!) from the first update. Since we do not update the visbility we assert that the timestamp has not changed.
 
 !***> Setup case 2
 !| ChildComparerFixture |
