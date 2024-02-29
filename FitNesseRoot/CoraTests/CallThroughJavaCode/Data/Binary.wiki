@@ -42,3 +42,4 @@ In Cora, the IIIF protocol is exclusively available for accessing  binaries in J
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Pdf
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Compressed
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Iiif
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.IiifEndpoint
