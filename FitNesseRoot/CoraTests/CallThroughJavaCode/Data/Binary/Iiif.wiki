@@ -17,10 +17,13 @@ Iiif information will be present on the response of a Read of a Image if the ima
 
 !| ChildComparerFixture |
 | authToken | type | id | testReadAndStoreRecord? |
-| ${currentAuthToken} | ${recordType} | ${recordId} |=~/!-"otherProtocols":\{"iiif":\{"server":"http:\/\/systemone-iiif:8080\/iiif\/","identifier":"binary:\d*"\}\}-!/ |
+| ${currentAuthToken} | ${recordType} | ${recordId} |=~/[!-"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/","identifier":"binary:\d*"\}\}-!]/ |
 
-!define iiifServerUrl {!-http://systemone-iiif:8080/iiif/-!}
+#!define iiifServerUrl {[!-${systemUnderTestUrl}iiif/-!]}
+!define iiifServerUrl {!-[${systemUnderTestUrl}]-!}
 
+#!define expectedXpath {//otherProtocols/iiif/server[text() = '${iiifServerUrl}']
+#//otherProtocols/iiif/identifier[text() = '${recordId}']}
 !define expectedXpath {//otherProtocols/iiif/server[text() = '${iiifServerUrl}']
 //otherProtocols/iiif/identifier[text() = '${recordId}']}
 !include -seamless .HelperPages.readRecordInXML
@@ -37,7 +40,7 @@ Iiif information will be present on the response of a Read of a Image if the ima
 
 !| ChildComparerFixture |
 | authToken | type | id | testReadAndStoreRecord? |
-| ${currentAuthToken} | ${recordType} | ${recordId} |=~/!-^(?!.*"otherProtocols":\{"iiif":\{"server":"http:\/\/systemone-iiif:8080\/iiif\/","identifier":"binary:\d*"\}\}).*-!/ |
+| ${currentAuthToken} | ${recordType} | ${recordId} |=~/[!-^(?!.*"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/","identifier":"binary:\d*"\}\}).*-!]/ |
 
 !define iiifServerUrl {!-http://systemone-iiif:8080/iiif/-!}
 
