@@ -3,38 +3,81 @@ Help: Binaries for Cora
 Test
 ---
 !1 Binaries
-Binary is a record type that contains information about binaries. See [[binary definition][<CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary]].
+Binary is a metadata record type that contains information about binaries. See [[binary definition][<CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary]].
 
-!2 Upload Resource File:
-Users should have the capability to upload a resource file to any instance of the binary system.
+!2 Create a binary
+When uploading a file into Cora, the first thing we need to do is create an record of the recordType Binary. The created record contains an action link (upload) with information of how to upload the file. 
 
-!2 Resource Analysis:
-Upon successful upload, the binary system undertakes an analysis of the uploaded resource. The analysis focuses on extracting fundamental data, including but not limited to see [[binary definition][<CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary]] :
+ "upload": {
+        "requestMethod": "POST",
+        "rel": "upload",
+        "contentType": "multipart/form-data",
+        "url": "http://localhost:8080/systemone/rest/record/binary/binary:{recordId}/master"
+  }
 
- * File Size: Determining the size of the uploaded resource file.
- * Checksum: Calculating a checksum to verify the integrity of the resource.
- * Mime Type: Identifying the type of the resource based on its MIME type.
+!3 Upload Resource File:
+At this point we can upload the file using the link, Cora will store the original file in the system and store information about the uploaded file in the master section of the binary record. The information stored conatains following fields. See see [[binary definition][<CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary]] for more informationa about the binary record definition. 
 
-!2 Processing Based on Mime Type:
-The binary system processes the resource differently depending on its MIME type. Various actions are taken based on the identified MIME type to ensure appropriate handling and representation of the resource.
+ * originalFileName: The original name of the file when uploaded to Cora.
+ * resourceId: Internal id of the resource, only available for support users.
+ * resourceLink: Link to the representation. 
+ * fileSize: The file size of the uploaded resource.
+ * checksum: The checksum of the file in SHA-512.
+ * mimeType: The mimeType of the file, extracted using [[Apache Tika][https://tika.apache.org/]]
 
-!2 Representation Generation:
-For certain MIME types, the binary system generates different representations of the resource. These representations may include:
+!3 Representations
+If the file is an image or a PDF are different representations of the file created in the background, and information about them is store in the binary record in the representation sections. See representation description below.
 
  * Thumbnail: A smaller version of the resource suitable for preview.
  * Medium: An intermediate-sized representation for various use cases.
  * Large: A larger version of the resource, suitable for certain applications.
- * JP2: A representation in JPEG 2000 format.
+ * JP2: A representation in JPEG 2000 format (jp2 is only generated for images).
 
-!2 Downloadable Representations:
-All generated representations, including the original master representation, are made available for download. Users have the option to retrieve the master representation or any of the processed representations, facilitating flexibility in accessing and utilizing the resource in different contexts.
+!3 Analyze and convertion
+Different converters are started depending on the mimeType. The converters are started depending on the mimeType of the binary. All of them store image information into the each newly created representation. The information stored is:
 
-In summary, the binary system supports the upload and analysis of resource files, tailoring its processing based on MIME types. The generation of different representations ensures versatility, and users can conveniently download the representation that best suits their needs, whether it be the original master or one of the processed versions.
+ * resourceId: Internal id of the resource, only available for support users.
+ * resourceLink: Link to the representation. 
+ * fileSize: The file size of the uploaded resource.
+ * mimeType: The mimeType of the file, extracted using [[Apache Tika][https://tika.apache.org/]]
+ * width: The width of the representation in pixels.
+ * length: The length of the representation in pixels.
 
-!2 IIIF protocol
-The IIIF Image API is a standard protocol within the International Image  Interoperability Framework ([[IIIF][https://iiif.io/]]) that enables efficient access and  presentation of digital images. It allows for dynamic manipulation of  images through standardized URI syntax, supporting functions such as  region selection, resizing, rotation, and quality adjustments. With its  format-agnostic nature, the API ensures compatibility with various image  formats, fostering interoperability among different repositories and  platforms. By facilitating seamless interaction between IIIF-compliant  image servers and clients, the API promotes collaboration and sharing of  digital image collections across cultural heritage institutions,  libraries, museums, and other organizations on the web.
+!4 Analyze and convert image to thumbnail, medium and large
+This converters starts analyzing the master representation and extracting image information and storing into the binary record. The information is extracted using [[ImageMagick][https://imagemagick.org/]]. See the information extracted below:
 
-In Cora, the IIIF protocol is exclusively available for accessing  binaries in JP2 format. This feature ensures that users can efficiently  retrieve and present digital assets through standardized methods. By adhering to these standards,  Cora maintains consistency and facilitates seamless access to digital  content while leveraging the benefits of the IIIF framework. In response to a binary record read or update, Cora will provide the necessary IIIF server and identifier details required to access a specific record.
+ * width: The width of the representation in pixels.
+ * length: The length of the representation in pixels.
+ * resolution: The resolution of the representation in dpi.
+ 
+ Once the analyze is done, the master resource is converted to thumbnail, medium and large using ImageMagick. Thumbnail is 100 px width, medium is 300 px width and large is 600px width.
+ 
+ For each representation, image information is stored int the record.
+ 
+!4 Convert PDF to thumbnail, medium and large
+This converter converts the first page of a PDF to an image in three diferent representations, thumbnail 100 px width, medium 300 px width and large 600px width, using [[ImageMagick][https://imagemagick.org/]] Later, for each representation, image information is stored int the record.
+
+!4 Convert image to JP2
+This converter converts an image master to a JP2 representation using  [[OpenJPEG2][https://github.com/uclouvain/openjpeg]]. When the image is converted the image information is stored in the record. 
+
+!3 Readability of the record
+The binary record instance can be read anytime and information of available representations will be added once they are created.
+
+!3 Downloadable representations:
+All generated representations, including the original master representation, are made available for download. Users have the option to retrieve the master representation or any of the processed representations. 
+
+!2 IIIF API
+Cora implements IIIF Image API. Refer to the [[IIIF Image API documentation][https://iiif.io/api/image/3.0/]].
+Cora provides the capability to expose all images using the IIIF Image API. This feature is only available for the JP2 representation of the original image.
+
+!3 Design
+To implement the IIIF Image API, we utilize an open-source image server [[iipsrv][https://github.com/ruven/iipsrv.git]]. While "iipsrv" implements the IIIF Image API, it may not fully adhere to the standard. Additionally, to manage permissions and conceal internal configurations, we've developed a "proxy" within the spider package. This proxy ensures that only authorized users can access images, marking a significant improvement over previous versions of Cora. At the front end, an HTTP endpoint receives incoming calls and forwards them to the proxy.
+
+!3 Permissions
+Currently, only "published" images are accessible via the IIIF endpoint. In the future, access to "unpublished" images will also be possible, provided the user has the appropriate permissions.
+
+!3 Viewer
+The choice of viewer is yet to be finalized, but we are considering using the [[iipmooviewer][https://github.com/ruven/iipmooviewer.git]] in jsClient.
 
 !2 Types of resources
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Image
@@ -42,3 +85,4 @@ In Cora, the IIIF protocol is exclusively available for accessing  binaries in J
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Pdf
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Compressed
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Iiif
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.IiifApi

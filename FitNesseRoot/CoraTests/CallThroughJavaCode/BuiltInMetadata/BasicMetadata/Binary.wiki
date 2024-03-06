@@ -6,8 +6,8 @@ Test
 The Binary record type is a fundamental component within the Cora system, serving as a reserved data structure specifically designed to manage binary data. This documentation outlines the purpose, structure, and management of Binary records in Cora.
 
 !3 Purpose
-Binary records play a pivotal role in Cora, as they are exclusively designated to handle binary data. When resources are uploaded to the Cora platform, each of them is associated with a corresponding Binary record. This Binary record stores essential information pertaining to the resource, including but not limited to the following attributes: filename, filesize, checksum, etc.
-The information within the Binary record is automatically calculated and populated during the resource upload process into Cora.
+Binary records play a pivotal role in Cora, as they are exclusively designated to handle binary data. 
+
 
 !3 Management
 !4 Ownership:
