@@ -25,20 +25,16 @@ record id ($tmpRecordId1), iiif server url etc.
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadImageAndWait
 
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}iiif/ |
-| GET | /$tmpRecordId1/info.json | 200 | Content-Type : text/html;charset=utf-8 | |
+| GET | /$tmpRecordId1/info.json | 200 | Content-Type : application/ld\+json;profile="http://iiif.io/api/image/3/context.json" | |
 
 !***> Clean up example fitnesse pool
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | binary | $tmpRecordId1 | | OK |
 *!
-
 *!
 
-
-
 !***> '''Case 2'''
-
 !define originalFileName {aTiff.tiff}
 !define unpublishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"unpublished"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
 !define createData unpublishedBinary
@@ -50,9 +46,7 @@ record id ($tmpRecordId1), iiif server url etc.
 *!
 
 !***> '''Case 4''' Trying to read a record that does not exist should return Not Found (404). 
-
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}iiif/ |
 | GET | /aNonExixtingIdentifier/info.json | 404 | Content-Type : text/html;charset=utf-8 | |
-
 *!
 
