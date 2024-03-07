@@ -18,8 +18,7 @@ record id ($tmpRecordId1), iiif server url etc.
 
 *!
 !***> '''Case 1'''
- 
- !define originalFileName {aTiff.tiff}
+!define originalFileName {aTiff.tiff}
 !define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
 !define createData publishedBinary
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadImageAndWait
