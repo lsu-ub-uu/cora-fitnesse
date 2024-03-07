@@ -5,7 +5,7 @@ Test
 Other protocols with information about how to access a binary for an image using IIIF will be present in the returned record of a Read, if the image has a JP2 representation generated and if the user has specific rights to read it or if the binary is published. 
 
  * '''Case 1:''' When reading a "published" image with a Jp2 representation an IIIF protocol information must be present. It must have a server and identifier properties in it. 
- * '''Case 2:''' When reading an "unpublished" image with a Jp2 representation an IIIF protocol information should not be present. (NOT IMPLEMENTED YET)
+ * '''Case 2:''' (NOT IMPLEMENTED YET) When reading an "unpublished" image with a Jp2 representation an IIIF protocol information should not be present. 
  * '''Case 3:''' When reading an any other binary that is not an image then IIIF protocol information should not be present.
  
 !***> Setup
@@ -21,9 +21,9 @@ Other protocols with information about how to access a binary for an image using
 *!
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryUploadImageAndWait
 
-!| ChildComparerFixture |
-| authToken | type | id | testReadAndStoreRecord? |
-| ${currentAuthToken} | ${recordType} | ${recordId} |=~/[!-"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/","identifier":"binary:\d*"\}\}-!]/ |
+!| ChildComparerFixture                                                                                                                                  |
+|authToken          |type         |id         |testReadAndStoreRecord?                                                                                   |
+|${currentAuthToken}|${recordType}|${recordId}|=~/[!-"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/","identifier":"binary:\d*"\}\}-!]/|
 
 !define iiifServerUrl (${systemUnderTestUrl}iiif/)
 
@@ -34,7 +34,7 @@ Other protocols with information about how to access a binary for an image using
 !include -seamless .HelperPages.deleteRecord
 *!
 
-#!***> '''Case 2'''
+!***> '''Case 2''' (NOT IMPLEMENTED YET)
 #!*< definition
 #!define originalFileName {aTiff.tiff}
 #!define createData publishedBinary
@@ -51,7 +51,7 @@ Other protocols with information about how to access a binary for an image using
 #!include -seamless .HelperPages.readRecordInXML
 #
 #!include -seamless .HelperPages.deleteRecord
-#*!
+*!
 
 !***> '''Case 3'''
 !define originalFileName {aZip.zip}
@@ -59,9 +59,9 @@ Other protocols with information about how to access a binary for an image using
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryAndUploadFile
 
-!| ChildComparerFixture |
-| authToken | type | id | testReadAndStoreRecord? |
-| ${currentAuthToken} | ${recordType} | ${recordId} |=~/[!-^(?!.*"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/","identifier":"binary:\d*"\}\}).*-!]/ |
+!| ChildComparerFixture                                                                                                                                           |
+|authToken          |type         |id         |testReadAndStoreRecord?                                                                                            |
+|${currentAuthToken}|${recordType}|${recordId}|=~/[!-^(?!.*"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/","identifier":"binary:\d*"\}\}).*-!]/|
 
 !define expectedXpath {count(//otherProtocols) = 0}
 !include -seamless .HelperPages.readRecordInXML
