@@ -1,0 +1,13 @@
+---
+Static
+---
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryAndUploadFile
+
+!***> Wait and validate record has been updated using image analyzer and converted to the different representations
+
+TODO: ResourceLink cannot be validated. Change CompareFixture in order to be able to validate it.
+
+!| WaitForRegExReadResultFixture |
+| authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
+| $adminAuthToken | binary | $tmpRecordId1 | 500 | 50 | \"name\":\"jp2\" | Found |
+*!

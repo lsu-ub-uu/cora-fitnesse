@@ -14,8 +14,8 @@ The formats that images are converted to are:
  * '''large''': medium-sized image in jpg format. Fixed width 600px, height relative to the original.
  * '''jp2''': JP2 corresponding to the original file. Note that even uploaded images in low-resolution original formats other than tiff are converted to JP2.
 
- * '''Case 1:''' It must be possible to upload a TIFF image. The image must be analyzed and converted to all described formats.
- * '''Case 2:''' It must be possible to upload a JPEG image. The image must be analyzed and converted to all described formats.
+ * '''Case 1:''' It must be possible to upload and download TIFF image. The image must be analyzed and converted to all described formats.
+ * '''Case 2:''' It must be possible to upload and download JPEG image. The image must be analyzed and converted to all described formats.
 
 !***> '''Case 1''' Tiff
 

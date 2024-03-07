@@ -9,7 +9,8 @@ Static
    
 !***> '''Case 1'''
 Show file structure before storing a new record
-!include -seamless .HelperPages.archiveFile
+!define expectedRegexpArchive {}
+!include -seamless .HelperPages.readFileSystem
 
 !define createFitnesseRecord {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"myRecordInArchive"}]}-!}
 
@@ -35,7 +36,7 @@ Show file structure before storing a new record
 !include -seamless .HelperPages.showFileVersion
 
 Show file structure after storing a new record
-!include -seamless .HelperPages.archiveFile
+!include -seamless .HelperPages.readFileSystem
 
 *!
 !***> '''Case 2'''
@@ -72,7 +73,7 @@ Show file structure after storing a new record
 *!
 
 Show file structure after storing a new record
-!include -seamless .HelperPages.archiveFile
+!include -seamless .HelperPages.readFileSystem
 
 !***> Validate metadata has been stored in the Archive
 Validate that:

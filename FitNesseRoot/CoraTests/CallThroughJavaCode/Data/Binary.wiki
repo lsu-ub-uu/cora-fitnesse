@@ -80,6 +80,7 @@ Currently, only "published" images are accessible via the IIIF endpoint. In the 
 The choice of viewer is yet to be finalized, but we are considering using the [[iipmooviewer][https://github.com/ruven/iipmooviewer.git]] in jsClient.
 
 !2 Types of resources
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.AllTypes
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Image
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Text
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.Pdf

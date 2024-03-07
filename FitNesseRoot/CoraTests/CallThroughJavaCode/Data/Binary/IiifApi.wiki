@@ -21,7 +21,7 @@ record id ($tmpRecordId1), iiif server url etc.
 !define originalFileName {aTiff.tiff}
 !define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
 !define createData publishedBinary
-!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadImageAndWait
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryUploadImageAndWait
 
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}iiif/ |
 | GET | /$tmpRecordId1/info.json | 200 | Content-Type : application/ld\+json;profile="http://iiif.io/api/image/3/context.json" | |
@@ -37,12 +37,23 @@ record id ($tmpRecordId1), iiif server url etc.
 !define originalFileName {aTiff.tiff}
 !define unpublishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"unpublished"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
 !define createData unpublishedBinary
-!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadImageAndWait
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryUploadImageAndWait
 
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}iiif/ |
 | GET | /$tmpRecordId1/info.json | 401 | Content-Type : text/html;charset=utf-8 | |
 
 *!
+
+!***> '''Case 3''' Trying to read a record that does not exist should return Not Found (404). 
+!define originalFileName {aZip.zip}
+!define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
+!define createData publishedBinary
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryAndUploadFile
+
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}iiif/ |
+| GET | /aNonExixtingIdentifier/info.json | 404 | Content-Type : text/html;charset=utf-8 | |
+*!
+
 
 !***> '''Case 4''' Trying to read a record that does not exist should return Not Found (404). 
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}iiif/ |
