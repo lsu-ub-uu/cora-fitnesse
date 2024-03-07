@@ -1,0 +1,8 @@
+---
+Static
+---
+!***> Delete record for type: ${recordType} and id: ${recordId}
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | ${recordType} | ${recordId} | | OK |
+*!
