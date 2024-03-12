@@ -93,7 +93,6 @@
 					<include>CoraTests/</include>
 					<include>DocumentationPage/</include>
 					<include>files/Images/</include>
-<!--					<include>files/testResources/</include>-->
 					<include>HelperPages/</include>
 					<include>JsClient/</include>
 					<include>RestFixtureInstallTest/</include>
