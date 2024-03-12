@@ -18,7 +18,7 @@ Show file structure before storing a new record
 !define createData createFitnesseRecord
 !define expectedAnswer {}
 !define expectedCreateResult {CREATED}
-!define archiveFileName {fitnesseRecordType:$tmpRecordId1}
+!define archiveFileName {testSystem:fitnesseRecordType:$tmpRecordId1}
 !define archiveVersion1 {v1}
 !define archiveVersion2 {v1}
 
@@ -52,7 +52,7 @@ Show file structure after storing a new record
 !define expectedAnswer {}
 !define expectedCreateResult {CREATED}
 
-!define archiveFileName {binary:$tmpRecordId2-master}
+!define archiveFileName {systemOne:binary:$tmpRecordId2-master}
 !define archiveVersion1 {v1}
 !define archiveVersion2 {v1}
 
@@ -82,7 +82,7 @@ Validate that:
 	
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | http://systemone-fedora:8080/fcrepo/rest/ |
 | setHeaders | Accept: !-application/ld+json-! |
-| GET | /systemOne/resource/binary:$tmpRecordId2-master/fcr:metadata | 200 | | |
+| GET | /systemOne:binary:$tmpRecordId2-master/fcr:metadata | 200 | | |
 | let | varname | js | response.body.match(/ebucore#filename":\[{"@value":"([\w.]*)"}\]/)[0] |ebucore#filename":[{"@value":"${originalFileName}"}]|
 | let | varname | js | response.body.match(/ebucore#hasMimeType":\[{"@value":"[\w/]*"}\]/)[0] |ebucore#hasMimeType":[{"@value":"${expectedMimeType}"}]|
 | let | varname | js | response.body.match(/urn:sha-512:[\w\d]*/)[0] |urn:sha-512:${expectedChecksumSha512}|

@@ -21,7 +21,7 @@ Show file structure before storing a new record
 
 !include -seamless .HelperPages.updateRecord
 
-!define archiveFileName {fitnesseRecordType:$tmpRecordId1}
+!define archiveFileName {testSystem:fitnesseRecordType:$tmpRecordId1}
 !define archiveVersion1 {v1}
 !define archiveVersion2 {v2}
 
