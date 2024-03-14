@@ -1,0 +1,38 @@
+---
+Test
+---
+When uploading binary files we need to validate that the integrity of the uploaded data. This can be done in different ways such as file size comparison and checksum checks.
+#!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.BinaryDataIntegrityValidation
+
+* '''Case 1:''' A binary is uploaded and the file size reported from archive does not match the expected file size from the request.
+* '''Case 2:''' A binary is uploaded and the checksum reported from archive does not match the expected checksum from the request.
+
+!3 File size validation
+!***> '''Case 1''' The file size of the binary stored in the archive does not match the expected file size from the request.
+!*< definition
+!define originalFileName {aText.txt}
+!define expectedFileSize {1234567890}
+!define expectedUploadResult {BAD_REQUEST}
+!define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
+!define createData publishedBinary
+
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryAndUploadFileForDataIntegrityValidation
+*!
+*!
+!3 Checksum validation
+!***> '''Case 2''' The checksum of the binary stored in the archive does not match the expected checksum from the request.
+!*< definition
+!define originalFileName {aText.txt}
+!define expectedChecksum {1234567890}
+!define expectedUploadResult {BAD_REQUEST}
+!define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedChecksum","value":"-!${expectedChecksum}!-"}],"attributes":{"type":"generic"}}-!}
+!define createData publishedBinary
+
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryAndUploadFileForDataIntegrityValidation
+*!
+*!
+
+#check 500 if upload crashed
+#for all:
+#check that uploaded file data is deleted from the archive
+#validate that all processing of the uploaded file is interrupted (converting etc)
