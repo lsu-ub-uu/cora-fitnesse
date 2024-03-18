@@ -2,7 +2,7 @@
 Static
 ---
 
-!2 Read
+!4 Read
 
  * '''Case 1''': It should be possible to read a record. The record should be identical than the expected created record from above.
 

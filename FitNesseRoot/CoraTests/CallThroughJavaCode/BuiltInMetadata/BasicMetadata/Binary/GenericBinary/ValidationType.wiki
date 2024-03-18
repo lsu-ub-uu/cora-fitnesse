@@ -1,7 +1,7 @@
 ---
 Static
 ---
-!3 !-GenericBinary, definition for new-!
+!3 !-Definition for new-!
  * '''binary''' type:{generic} (group)
    * '''recordInfo'''(group, 1-1, noConstraint)
      * '''validationType'''(recordLink, 1-1, noConstraint)
@@ -12,24 +12,19 @@ Static
    * '''expectedFileSize'''(numberVariable, 1-1, noConstraints) (bytes)
    * '''expectedChecksum'''(textVariable, 0-1, noConstraints)	(SHA512)
    
-!3 !-GenericBinary, definition for update-!
+!3 !-Deifinition for update-!
 Same defintion as binary group.
-
 
 !***> Test definitions for GenericBinary
 !***> Validate validationType GenericBinary
-
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
 | $adminAuthToken | validationType | genericBinary | | OK |
-
 *!
 !***> Validate  definition for '''new''' GenericBinaryNewGroup
-
 !| RecordEndpointFixture |
 | type | id | testReadRecordAndStoreJson? |
 | metadata | genericBinaryNewGroup | |
-
 !| ChildComparerFixture |
 | expectedNumberOfChildren | testCheckNumberOfChildren? |
 | 5 | OK |
@@ -58,7 +53,6 @@ Same defintion as binary group.
 | $adminAuthToken | metadata | dataDividerLink | 1 | 1 | dataDivider | noRestrictions |
 
 *!
-
 !***> Validate adminInfoNewGroup
 
 !| RecordEndpointFixture |
@@ -75,7 +69,6 @@ Same defintion as binary group.
 
 *!
 *!
-
 !***> Validate  definition for '''update''' GenericBinaryUpdateGroup
 
 !| RecordEndpointFixture |
@@ -118,7 +111,6 @@ Same defintion as binary group.
 | $adminAuthToken | metadata | updatedGroup | 1 | X | updated | noRestrictions |
 
 *!
-
 !***> Validate adminInfoGroup
 
 !| RecordEndpointFixture |
@@ -135,7 +127,6 @@ Same defintion as binary group.
 | $adminAuthToken | metadata | tsVisibilityTextVar | 0 | 1 | tsVisibility | write |
 
 *!
-
 !***> Validate masterBinaryGroup
 
 !| RecordEndpointFixture |
