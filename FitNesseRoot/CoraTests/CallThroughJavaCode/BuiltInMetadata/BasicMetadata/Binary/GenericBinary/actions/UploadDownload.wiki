@@ -1,0 +1,36 @@
+---
+Test
+---
+
+!4 Upload and Download
+
+ * '''Case 1''': It should be possible to upload a file to a binary record.
+ 	 It should be possible to download the master resource and all its representationer froma a binary record.
+
+!***> '''Case 1'''
+!*< definition
+!define originalFileName {aTiff.tiff}
+!define createData publishedBinary
+*!
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryUploadImageAndWait
+
+!define representation {master}
+!define httpCode {200}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {thumbnail}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {medium}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {large}
+!include -seamless .HelperPages.downloadResource
+*!
+
+!5 Guest
+#!include -seamless .HelperPages.defineGuestAuthToken
+
+ * '''Case 1''': Guest user should not be able to read unpublished records.
+ * '''Case 2''': Guest user should not be able to read the upload link when reading a record. 
+#!include -seamless .HelperPages.readRecord

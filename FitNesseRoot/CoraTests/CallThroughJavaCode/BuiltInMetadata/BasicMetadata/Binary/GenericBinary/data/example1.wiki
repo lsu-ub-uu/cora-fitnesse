@@ -1,7 +1,7 @@
 ---
 Help: Data for example example1
 ---
-!***> Data for example examplee1
+!***< Data for example example1
 
 !define recordType {binary}
 !define validationType {genericBinary}
@@ -20,8 +20,4 @@ Help: Data for example example1
 !define searchId {!--!}
 !define searchQueryData {!--!}
 
-# customUpdateData is a json string which can be filled with extra json using the variable customJsonPart
-!define jsonPart customJsonPart
-!define customJsonPart {}
-!define customUpdateData {!--!}
 *!

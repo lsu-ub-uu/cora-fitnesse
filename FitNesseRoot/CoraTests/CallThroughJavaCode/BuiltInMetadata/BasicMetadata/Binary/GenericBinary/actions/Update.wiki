@@ -1,8 +1,8 @@
 ---
-Static
+Test
 ---
 
-!2 Update
+!4 Update
 
  * '''Case 1''': It should be possible to update visiblity of a binary. This should update the existing tsVisibility timestamp.
  * '''Case 2''': If the value of visibility is not changed to another value during an update (ex. published -> published), tsVisibility should not be updated and remain unchanged.
@@ -27,7 +27,6 @@ We store the original existing (!-$originalTsVisibility-!) from the binary we cr
 !define expectedAnswer {=~/^(?!.*$originalTsVisibility)/}
 !include -seamless .HelperPages.updateCheckReadCheck
 *!
-
 !***> Case 2 
 We store the previous tsVisibility (!-$tsVisibility-!) from the first update. Since we do not update the visbility we assert that the timestamp has not changed.
 
@@ -48,4 +47,3 @@ We store the previous tsVisibility (!-$tsVisibility-!) from the first update. Si
 !define expectedAnswer {=~/$tsVisibility/}
 !include -seamless .HelperPages.updateCheckReadCheck
 *!
-
