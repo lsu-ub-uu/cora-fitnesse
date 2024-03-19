@@ -1,0 +1,14 @@
+---
+Static
+---
+!include -seamless .HelperPages.defineAdminAuthToken
+
+!4 Delete
+
+ * '''Case 1''': It should be possible to delete an binary record. We also assert that all representations of the binary is removed from disk.
+
+!***> Case 1
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | binary | $createdRecordId | | OK |
+*!

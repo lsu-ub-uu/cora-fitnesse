@@ -12,15 +12,9 @@ Static
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
 | ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $tmpRecordId1= |
 
-
 !define recordId {$tmpRecordId1}
-*!
-!***> Upload image
-
-!| RecordEndpointFixture |
-| authToken | type | id | fileName | testUpload? | getStatusType? |
-| $adminAuthToken | binary | $tmpRecordId1 | ${originalFileName} | | OK |
-
+!define uploadRecordId {$tmpRecordId1}
+!include -seamless .HelperPages.uploadResource
 *!
 !***> Wait and validate record has been updated using image analyzer and converted to the different representations
 

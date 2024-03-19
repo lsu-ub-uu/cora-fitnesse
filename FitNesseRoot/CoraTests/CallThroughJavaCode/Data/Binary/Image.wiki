@@ -46,6 +46,9 @@ The formats that images are converted to are:
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadImageValidateAnalysisAndConvertion
 
+!*< definition
+!define downloadRecordId {$tmpRecordId1}
+*!
 !define httpCode {200}
 !define representation {master}
 !include -seamless .HelperPages.downloadResource
@@ -98,7 +101,9 @@ The formats that images are converted to are:
 !define binaryType {image}
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadImageValidateAnalysisAndConvertion
-
+!*< definition
+!define downloadRecordId {$tmpRecordId1}
+*!
 !define representation {master}
 !include -seamless .HelperPages.downloadResource
 

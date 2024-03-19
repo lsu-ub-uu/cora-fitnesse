@@ -5,17 +5,31 @@ Test
 !4 Upload and Download
 
  * '''Case 1''': It should be possible to upload a file to a binary record.
- 	 It should be possible to download the master resource and all its representationer froma a binary record.
+ * '''Case 2''': It should be possible to download the master resource and all its representationer from a binary record.
+ 	 
 
 !***> '''Case 1'''
-!*< definition
+!***< definition
 !define originalFileName {aTiff.tiff}
 !define createData publishedBinary
+!define expectedUploadAnswer {!--!}
+!define uploadRecordId {$createdRecordId}
 *!
-!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryUploadImageAndWait
+!include -seamless .HelperPages.uploadResource
+*!
 
-!define representation {master}
+!***> '''Case 2'''
+!***< definition
+!define downloadRecordId {$createdRecordId}
+*!
+
+!| WaitForRegExReadResultFixture                                                                                               |
+|authToken      |recordType|recordId        |sleepTime|maxNumberOfCalls|regEx           |waitUntilUntilRegExpFoundInReadRecord?|
+|$adminAuthToken|binary    |$createdRecordId|500      |50              |\"name\":\"jp2\"|Found                                 |
+
+
 !define httpCode {200}
+!define representation {master}
 !include -seamless .HelperPages.downloadResource
 
 !define representation {thumbnail}
@@ -28,9 +42,70 @@ Test
 !include -seamless .HelperPages.downloadResource
 *!
 
-!5 Guest
-#!include -seamless .HelperPages.defineGuestAuthToken
+!5 The user Guest is used as as an example of a user without specific rights on binaries
 
  * '''Case 1''': Guest user should not be able to read unpublished records.
- * '''Case 2''': Guest user should not be able to read the upload link when reading a record. 
-#!include -seamless .HelperPages.readRecord
+ * '''Case 2''': Guest user should be able to read published records. (Not implemented yet, not set up in permissions metadata)
+  * It should not be able to read the upload link.
+ * '''Case 3''': Guest user should be able to download all representations from a published binary record when a file has been uploaded. 
+  * It should have a link to read all representations.
+ 
+!***> '''Case 1'''
+!| RecordEndpointFixture                                                   |
+|authToken      |type  |id                  |testReadRecord?|getStatusType?|
+|$guestAuthToken|binary|$unpublishedRecordId|               |FORBIDDEN     |
+*!
+!***> '''Case 2''' (Not implemented yet, not set up in permissions metadata)
+#!define currentAuthToken {}
+#!| RecordEndpointFixture |
+#| authToken | type | id | testReadRecord? | getStatusType? |
+#| $guestAuthToken | binary | $publishedRecordId | =~/^(?!.*("rel":"upload")).+$/ | OK |
+*!
+!***> '''Case 3''' (Not implemented yet, not set up in permissions metadata) 
+!***> Upload a file
+!define currentAuthToken {$adminAuthToken}
+!define originalFileName {aTiff.tiff}
+!define createData publishedBinary
+!define expectedUploadAnswer {!--!}
+!define uploadRecordId {$publishedRecordId}
+!include -seamless .HelperPages.uploadResource
+*!
+!***> Read published binary, action link to read master exists. OBS, add regex to thumbnail, medium, large, jp2
+#!define currentAuthToken {}
+#!| RecordEndpointFixture |
+#| authToken | type | id | testReadRecord? | getStatusType? |
+#| $guestAuthToken | binary | $publishedRecordId | =~/^(?=.*("read":{"requestMethod":"GET","rel":"read","url".*\/master)).+$/ | OK |
+*!
+
+!***> Download master
+!define downloadRecordId {$publishedRecordId}
+!define currentAuthToken {$guestAuthToken}
+!define representation {master}
+!include -seamless .HelperPages.downloadResource
+*!
+#
+#!define representation {thumbnail}
+#!include -seamless .HelperPages.downloadResource
+#
+#!define representation {medium}
+#!include -seamless .HelperPages.downloadResource
+#
+#!define representation {large}
+#!include -seamless .HelperPages.downloadResource
+*!
+ 
+ 
+!5 The user fitnesseUser is used as as an example of a user with some rights on binaries, 
+has read on unpublished, but no download
+!include -seamless .HelperPages.defineCurrentAuthTokenAsFitnesseUser
+ * '''Case 1''': FitnesseUser user should be able to read unpublished records.
+ * '''Case 2''': FitnesseUser user should not have any links to read and should not be able download, any representations from an unpublished binary record. 
+
+
+change permissions to:
+has read on unpublished, and download on each representation in turn master, thumbnail, medium, large, jp2
+ * '''Case 1''': FitnesseUser user should have a link to read master representation and download it, but not other representaitons from an unpublished binary record.
+ * '''Case 2''': FitnesseUser user should have a link to read thumbnail representation and download it, but not other representaitons from an unpublished binary record.
+ * '''Case 3''': FitnesseUser user should have a link to read medium representation and download it, but not other representaitons from an unpublished binary record.
+ * '''Case 4''': FitnesseUser user should have a link to read large representation and download it, but not other representaitons from an unpublished binary record.
+ * '''Case 5''': FitnesseUser user should have a link to read jp2 representation and download it, but not other representaitons from an unpublished binary record.

@@ -3,7 +3,7 @@ Test
 ---
 
 !4 Update
-
+It should really not be possible to update a binary record that does not have a master representation, see: CORA-2471
  * '''Case 1''': It should be possible to update visiblity of a binary. This should update the existing tsVisibility timestamp.
  * '''Case 2''': If the value of visibility is not changed to another value during an update (ex. published -> published), tsVisibility should not be updated and remain unchanged.
 
@@ -11,6 +11,7 @@ Test
 We store the original existing (!-$originalTsVisibility-!) from the binary we created. Since we change the value of visibility this means that the timestamp should also change when we update.
 
 !***> Setup case 1
+!include -seamless .HelperPages.defineAdminAuthToken
 !| ChildComparerFixture |
 | authToken | type | id | testReadAndStoreRecord? |
 | ${currentAuthToken} | ${recordType} | ${recordId} | $readRecordPayload= |
@@ -20,7 +21,7 @@ We store the original existing (!-$originalTsVisibility-!) from the binary we cr
 *!
 
 !define updateData {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"binary"}],"name":"type"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"id","value":"-!$createdRecordId!-"}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]}],"attributes":{"type":"generic"}}-!}
-!define expectedUpdatedData {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"binary"}],"name":"type"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"id","value":"-!$createdRecordId!-"}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]}],"attributes":{"type":"generic"}}-!}
+!define expectedUpdatedData {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"binary"}],"name":"type"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"id","value":"-!$createdRecordId!-"}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"children":[],"name":"master"},{"children":[],"name":"thumbnail"},{"children":[],"name":"medium"},{"children":[],"name":"large"},{"children":[],"name":"jp2"}],"attributes":{"type":"generic"}}-!}
 !define originalData updateData
 !define expectedOriginalData originalData
 !define expectedUpdateResult {OK}
@@ -40,7 +41,7 @@ We store the previous tsVisibility (!-$tsVisibility-!) from the first update. Si
 *!
 
 !define updateData {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"binary"}],"name":"type"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"id","value":"-!$createdRecordId!-"}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]}],"attributes":{"type":"generic"}}-!}
-!define expectedUpdatedData {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"binary"}],"name":"type"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"id","value":"-!$createdRecordId!-"}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]}],"attributes":{"type":"generic"}}-!}
+#!define expectedUpdatedData {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"binary"}],"name":"type"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"id","value":"-!$createdRecordId!-"}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]}],"attributes":{"type":"generic"}}-!}
 !define originalData updateData
 !define expectedOriginalData originalData
 !define expectedUpdateResult {OK}

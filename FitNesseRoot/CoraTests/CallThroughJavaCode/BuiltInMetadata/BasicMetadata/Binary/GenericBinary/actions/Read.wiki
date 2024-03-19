@@ -4,10 +4,10 @@ Static
 
 !4 Read
 
- * '''Case 1''': It should be possible to read a record. The record should be identical than the expected created record from above.
+ * '''Case 1''': It should be possible to read a binary record. The record should be identical than the expected created record from above.
 
 !***> Case 1
-!define expectedCompareResult {OK}
+!define expectedCompareResult {Child with nameInData master and type group is missing. Child with nameInData thumbnail and type group is missing. Child with nameInData medium and type group is missing. Child with nameInData large and type group is missing. Child with nameInData jp2 and type group is missing.}
 !define expectedActionResult {Action read_incoming_links is missing.}
 !define expectedPermissionResult {OK}
 !include -seamless .HelperPages.readCheck

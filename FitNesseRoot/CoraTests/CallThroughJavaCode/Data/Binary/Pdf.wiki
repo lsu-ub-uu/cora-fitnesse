@@ -33,7 +33,9 @@ The formats of the images are :
 !define binaryType {document}
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadPdfValidateAnalysisAndConvertion
-
+!*< definition
+!define downloadRecordId {$tmpRecordId1}
+*!
 !define httpCode {200}
 !define representation {master}
 !include -seamless .HelperPages.downloadResource

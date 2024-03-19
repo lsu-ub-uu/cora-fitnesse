@@ -24,5 +24,6 @@ The '''master''' . Other formats depending on the resourceType are listed below:
 !3 Actions
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.actions.Create
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.actions.Read
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.actions.Update
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.actions.UploadDownload
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.actions.Update
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.actions.Delete

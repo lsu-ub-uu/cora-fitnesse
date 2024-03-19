@@ -5,13 +5,21 @@ Static
 
 !4 Create
 
- * '''Case 1''': It should be possible to create an imageBinary record. We also assert that we get a tsVisibility timestamp when the record is created.
+ * '''Case 1''': It should be possible to create an binary record. We also assert that we get a tsVisibility timestamp when the record is created.
+ * '''Case 1''': It should be possible to create an binary record with visibility set to published.
 
 !***> Case 1
-!define expectedCreatedData createData
 !define expectedCreateResult {CREATED}
 !define expectedAnswer {=~/!-"tsVisibility","value":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z"-!/}
-!define expectedCompareResult {OK}
+!define expectedCompareResult {Child with nameInData master and type group is missing. Child with nameInData thumbnail and type group is missing. Child with nameInData medium and type group is missing. Child with nameInData large and type group is missing. Child with nameInData jp2 and type group is missing.}
+!define expectedActionResult {}
+!define expectedPermissionResult {OK}
+!include -seamless .HelperPages.createCheckReadCheck
+*!
+!***> Case 1
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {=~/!-"tsVisibility","value":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z"-!/}
+!define expectedCompareResult {Child with nameInData master and type group is missing. Child with nameInData thumbnail and type group is missing. Child with nameInData medium and type group is missing. Child with nameInData large and type group is missing. Child with nameInData jp2 and type group is missing.}
 !define expectedActionResult {}
 !define expectedPermissionResult {OK}
 !include -seamless .HelperPages.createCheckReadCheck

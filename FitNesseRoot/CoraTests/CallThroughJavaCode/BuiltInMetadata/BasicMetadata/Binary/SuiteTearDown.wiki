@@ -1,0 +1,14 @@
+---
+Suite
+---
+!***> Clean up published and unpublished binary records
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | binary | $publishedRecordId | | OK |
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | binary | $unpublishedRecordId | | OK |
+
+*!

@@ -66,11 +66,8 @@ Show file structure after storing a new record
 !define recordId {$createdRecordId}
 *!
 
-!***> Upload image
-!| RecordEndpointFixture |
-| authToken | type | id | fileName | testUpload? | getStatusType? |
-| $adminAuthToken | binary | $tmpRecordId2 | ${originalFileName} | | OK |
-*!
+!define uploadRecordId {$tmpRecordId2}
+!include -seamless .HelperPages.uploadResource
 
 Show file structure after storing a new record
 !include -seamless .HelperPages.readFileSystem

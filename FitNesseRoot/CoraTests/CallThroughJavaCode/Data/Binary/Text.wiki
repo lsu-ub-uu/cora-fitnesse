@@ -18,7 +18,9 @@ Any other extra data will be read from these files.
 !define binaryType {text}
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadResourceValidateAnalysis
-
+!*< definition
+!define downloadRecordId {$tmpRecordId1}
+*!
 !define httpCode {200}
 !define representation {master}
 !include -seamless .HelperPages.downloadResource

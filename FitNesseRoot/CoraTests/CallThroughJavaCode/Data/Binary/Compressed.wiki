@@ -36,6 +36,9 @@ Compressed files can be stored in cora. The accepted formats are:
 !define binaryType {compressed}
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadResourceValidateAnalysis
+!*< definition
+!define downloadRecordId {$tmpRecordId1}
+*!
 
 !define httpCode {200}
 !define representation {master}

@@ -10,7 +10,7 @@ Help: Data for example example1
 
 !define createData {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"unpublished"}]},{"name":"originalFileName","value":"thisIsTheOrginalFileName.png"},{"name":"expectedFileSize","value":"654644"}],"attributes":{"type":"generic"}}-!}
 
-!define expectedCreatedData createData
+!define expectedCreatedData {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"unpublished"}]},{"children":[],"name":"master"},{"children":[],"name":"thumbnail"},{"children":[],"name":"medium"},{"children":[],"name":"large"},{"children":[],"name":"jp2"},{"name":"originalFileName","value":"thisIsTheOrginalFileName.png"},{"name":"expectedFileSize","value":"654644"}],"attributes":{"type":"generic"}}-!}
 
 !define updateData {!--!}
 !define expectedUpdatedData {!--!}

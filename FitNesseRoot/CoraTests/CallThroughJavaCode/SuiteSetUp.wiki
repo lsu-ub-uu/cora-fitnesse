@@ -4,25 +4,32 @@ Suite
 !***> SuiteSetUp
 !***> Setup login
 
-!***> Login for admin
+!***> Login for fitnesse admin
 
 !| AppTokenEndpointFixture |
 | userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
 | 131313 | | | $adminAuthToken= | CREATED |
 
-*!
 !| script | AuthTokenHolder |
 | setAdminAuthToken | $adminAuthToken |
+*!
 
-!***> Login for user
+!***> Login for fitnesse user
 
 !| AppTokenEndpointFixture |
 | userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
 | 121212 | | | $userAuthToken= | CREATED |
 
-*!
 !| script | AuthTokenHolder |
 | setUserAuthToken | $userAuthToken |
+*!
+!***> Login for fitnesse guest
+
+!| IdpLoginServletFixture |
+| EPPN | getAuthTokenForEPPN? | getIdFromLogin? | getResponseCode? | getAuthToken? | getValidForNoSeconds? | getDeleteUrl? |
+| userNotInDb@user.uu.se | |  |  | $guestAuthToken= | |  |
+
+*!
 *!
 
 !include -seamless .CoraTests.CallThroughJavaCode.SuiteSetUp.ExamplesPool
