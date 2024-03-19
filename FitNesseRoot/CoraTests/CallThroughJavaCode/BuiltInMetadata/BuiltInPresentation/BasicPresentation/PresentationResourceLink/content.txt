@@ -13,7 +13,7 @@ A test that first reads all predefined metadata needed to be able to add present
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadata | presentationTypeCollection | =~/"name":"linkedRecordId","value":"pVarItem".*"name":"linkedRecordId","value":"containerItem".*"linkedRecordId","value":"pRecordLinkItem".*"name":"linkedRecordId","value":"pCollVarItem".*"name":"linkedRecordId","value":"pResourceLinkItem".*"name":"linkedRecordId","value":"presentationLinkItem".*/ | OK |
+| $adminAuthToken | metadata | presentationTypeCollection | =~/"name":"linkedRecordId","value":"pVarItem".*"name":"linkedRecordId","value":"containerItem".*"linkedRecordId","value":"pRecordLinkItem".*"name":"linkedRecordId","value":"pCollVarItem".*"name":"linkedRecordId","value":"pResourceLinkItem".*/ | OK |
 
 *!
 !***> Read collectionVariables (modeCollectionVar, presentationTypeCollectionVar, presentationTypePResourceLinkCollectionVar)

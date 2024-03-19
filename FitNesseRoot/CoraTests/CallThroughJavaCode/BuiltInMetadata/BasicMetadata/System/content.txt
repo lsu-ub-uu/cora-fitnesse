@@ -9,15 +9,57 @@ A test that first reads all predefined metadata needed to be able to add system 
 | $adminAuthToken | metadata | systemNameTextVar | | OK |
 
 *!
-!***> Read metadataGroups (recordInfo, systemGroup, systemNewGroup)
 
+!***> Validate recordInfoNewGroup
 !| RecordEndpointFixture |
-| authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadata | recordInfoGroup | | OK |
-| $adminAuthToken | metadata | systemGroup | =~/"name":"linkedRecordId","value":"systemNameTextVar".*"name":"linkedRecordId","value":"systemGroupText".*"name":"linkedRecordId","value":"systemGroupDefText"/ | OK |
-| $adminAuthToken | metadata | systemNewGroup | =~/"name":"linkedRecordId","value":"systemNameTextVar".*"name":"linkedRecordId","value":"systemNewGroupText".*"name":"linkedRecordId","value":"systemNewGroupDefText"/ | OK |
+| type | id | testReadRecordAndStoreJson? |
+| metadata | recordInfoNewGroup | |
 
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 3 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadata | idTextVar | 1 | 1 | id | noRestrictions |
+| $adminAuthToken | metadata | validationTypeLink | 1 | 1 | validationType | noRestrictions |
+| $adminAuthToken | metadata | dataDividerLink | 1 | 1 | dataDivider | noRestrictions |
 *!
+
+!***> Validate systemNewGroup
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadata | systemNewGroup | |
+
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 4 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadata | recordInfoNewGroup | 1 | 1 | recordInfo | noRestrictions |
+| $adminAuthToken | metadata | systemNameTextVar | 1 | 1 | systemName | noRestrictions |
+| $adminAuthToken | metadata | textIdLink | 0 | 1 | textId | noRestrictions |
+| $adminAuthToken | metadata | defTextIdLink | 0 | 1 | defTextId | noRestrictions |
+*!
+
+!***> Validate systemGroup
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadata | systemGroup | |
+
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 4 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadata | recordInfoGroup | 1 | 1 | recordInfo | noRestrictions |
+| $adminAuthToken | metadata | systemNameTextVar | 1 | 1 | systemName | noRestrictions |
+| $adminAuthToken | metadata | textIdLink | 0 | 1 | textId | noRestrictions |
+| $adminAuthToken | metadata | defTextIdLink | 0 | 1 | defTextId | noRestrictions |
+*!
+
 !***> Read recordType (system)
 
 !| RecordEndpointFixture |
