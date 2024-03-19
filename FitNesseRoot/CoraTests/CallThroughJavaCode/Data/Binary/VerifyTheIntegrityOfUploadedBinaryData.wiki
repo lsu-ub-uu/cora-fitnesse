@@ -6,6 +6,7 @@ When uploading binary files we need to validate that the integrity of the upload
 
 * '''Case 1:''' A binary is uploaded and the file size reported from archive does not match the expected file size from the request.
 * '''Case 2:''' A binary is uploaded and the checksum reported from archive does not match the expected checksum from the request.
+* '''Case 3:''' A binary is uploaded and the upload breaks halfway.
 
 !3 File size validation
 !***> '''Case 1''' The file size of the binary stored in the archive does not match the expected file size from the request.
@@ -17,6 +18,10 @@ When uploading binary files we need to validate that the integrity of the upload
 !define createData publishedBinary
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryAndUploadFileForDataIntegrityValidation
+
+!define httpCode {Code: 404 Message: Some errorFailed to read resource due to it could not be found in Fedora Archive for type binary and id $tmpRecordId1.}
+!define representation {master}
+!include -seamless .HelperPages.downloadResource
 *!
 *!
 !3 Checksum validation
@@ -29,8 +34,24 @@ When uploading binary files we need to validate that the integrity of the upload
 !define createData publishedBinary
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryAndUploadFileForDataIntegrityValidation
+
+!define httpCode {Code: 404 Message: Some errorFailed to read resource due to it could not be found in Fedora Archive for type binary and id $tmpRecordId1.}
+!define representation {master}
+!include -seamless .HelperPages.downloadResource
 *!
 *!
+#!3 Broken upload should return 500
+#!***> '''Case 3''' The file transfer breaks half way through the upload
+#!*< definition
+#!define originalFileName {aText.txt}
+#!define expectedChecksum {1234567890}
+#!define expectedUploadResult {BAD_REQUEST}
+#!define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedChecksum","value":"-!${expectedChecksum}!-"}],"attributes":{"type":"generic"}}-!}
+#!define createData publishedBinary
+
+#!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryAndStartABrokenUpload
+#*!
+#*!
 
 #check 500 if upload crashed
 #for all:
