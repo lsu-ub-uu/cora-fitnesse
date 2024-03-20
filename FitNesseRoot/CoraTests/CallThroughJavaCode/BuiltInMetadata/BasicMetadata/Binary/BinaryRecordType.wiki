@@ -75,11 +75,11 @@ Static
 | $adminAuthToken | recordType | binary | | OK |
 
 *!
-!***> Validate  definition of Binary
+!***> Validate  definition of Binary group
 
 !| RecordEndpointFixture |
-| type | id | testReadRecordAndStoreJson? |
-| metadata | binaryGroup | |
+| type | id | testReadRecordAndStoreJson? | getStatusType? |
+| metadata | binaryGroup | | OK |
 
 !| ChildComparerFixture |
 | expectedNumberOfChildren | testCheckNumberOfChildren? |

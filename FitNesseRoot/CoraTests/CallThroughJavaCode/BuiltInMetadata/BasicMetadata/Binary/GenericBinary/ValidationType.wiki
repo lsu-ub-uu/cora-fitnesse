@@ -12,10 +12,10 @@ Static
    * '''expectedFileSize'''(numberVariable, 0-1, noConstraints) (bytes)
    * '''expectedChecksum'''(textVariable, 0-1, noConstraints)	(SHA512)
    
-!3 !-Deifinition for update-!
+!3 !-Definition for update-!
 Same defintion as binary group.
 
-!***> Test definitions for GenericBinary
+!***> !-Test definitions for GenericBinary-!
 !***> Validate validationType GenericBinary
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |

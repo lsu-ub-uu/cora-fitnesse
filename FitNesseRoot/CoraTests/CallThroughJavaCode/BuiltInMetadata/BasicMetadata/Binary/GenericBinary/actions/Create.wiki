@@ -2,12 +2,15 @@
 Static
 ---
 !include -seamless .HelperPages.defineAdminAuthToken
-
 !4 Create
-
- * '''Case 1''': It should be possible to create an binary record. We also assert that we get a tsVisibility timestamp when the record is created.
- * '''Case 1''': It should be possible to create an binary record with visibility set to published.
-
+It should be possible to create new binary records that are either unpublished or published. 
+ * '''Case 1''': It should be possible to create an binary record with visibility set to '''unpublished'''.
+ * '''Case 2''': It should be possible to create an binary record with visibility set to '''published'''.
+ We check the following for all cases:
+ * that the returned created data matches the data we sent to create
+ * that the returned created data has the following actions: read, delete, index, upload '''Note!''' There is no update on a binary record until data has been uploaded as originalFileName and expectedFileSize only can be set when the binary record is created and does not exist for updated binaries.
+ * that the timestamp tsVisibility is set when the record is created
+ * that there is no information about different representations (master, thumbnail, medium, large, jp2) as no data has been uploaded against the binary yet.
 !***> Case 1
 !define expectedCreateResult {CREATED}
 !define expectedAnswer {=~/!-"tsVisibility","value":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z"-!/}
@@ -15,12 +18,19 @@ Static
 !define expectedActionResult {}
 !define expectedPermissionResult {OK}
 !include -seamless .HelperPages.createCheckReadCheck
+!| ActionComparerFixture |
+| actions | testCheckActions? |
+| {"actions":["read", "update", "delete", "index", "read_incoming_links", "upload"]} | Action update is missing. Action read_incoming_links is missing. |
+
 *!
-!***> Case 1
+!***> Case 2
 !define expectedCreateResult {CREATED}
 !define expectedAnswer {=~/!-"tsVisibility","value":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z"-!/}
 !define expectedCompareResult {Child with nameInData master and type group is missing. Child with nameInData thumbnail and type group is missing. Child with nameInData medium and type group is missing. Child with nameInData large and type group is missing. Child with nameInData jp2 and type group is missing.}
 !define expectedActionResult {}
 !define expectedPermissionResult {OK}
 !include -seamless .HelperPages.createCheckReadCheck
+!| ActionComparerFixture |
+| actions | testCheckActions? |
+| {"actions":["read", "update", "delete", "index", "read_incoming_links", "upload"]} | Action update is missing. Action read_incoming_links is missing. |
 *!

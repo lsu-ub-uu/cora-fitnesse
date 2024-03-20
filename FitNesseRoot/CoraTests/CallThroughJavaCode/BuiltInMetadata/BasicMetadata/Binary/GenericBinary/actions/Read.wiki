@@ -1,14 +1,26 @@
 ---
 Static
 ---
-
 !4 Read
-
+It should be possible to set up a Cora system so that binary records that are published should be readable by all users and records that are unpublished needs more permissions. The user Guest is used as as an example of a user without specific rights on binaries.
  * '''Case 1''': It should be possible to read a binary record. The record should be identical than the expected created record from above.
+ * '''Case 2''': Guest user should not be able to read unpublished records.
+ * '''Case 3''': Guest user should be able to read published records. (Not implemented yet, not set up in permissions metadata)
 
-!***> Case 1
+!***> '''Case 1'''
 !define expectedCompareResult {Child with nameInData master and type group is missing. Child with nameInData thumbnail and type group is missing. Child with nameInData medium and type group is missing. Child with nameInData large and type group is missing. Child with nameInData jp2 and type group is missing.}
 !define expectedActionResult {Action read_incoming_links is missing.}
 !define expectedPermissionResult {OK}
 !include -seamless .HelperPages.readCheck
+*!
+!***> '''Case 2'''
+!| RecordEndpointFixture                                                   |
+|authToken      |type  |id                  |testReadRecord?|getStatusType?|
+|$guestAuthToken|binary|$unpublishedRecordId|               |FORBIDDEN     |
+*!
+!***> '''Case 3''' (Not implemented yet, not set up in permissions metadata)
+#!define currentAuthToken {}
+#!| RecordEndpointFixture |
+#| authToken | type | id | testReadRecord? | getStatusType? |
+#| $guestAuthToken | binary | $publishedRecordId | =~/^(?!.*("rel":"upload")).+$/ | OK |
 *!

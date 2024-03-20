@@ -1,13 +1,10 @@
 ---
 Test
 ---
-
 !4 Upload and Download
-
  * '''Case 1''': It should be possible to upload a file to a binary record.
- * '''Case 2''': It should be possible to download the master resource and all its representationer from a binary record.
- 	 
-
+ * '''Case 2''': It should be possible to download the master resource and all its representations from a binary record.
+'''We need to add tests that make sure there is no upload on an updated binary as that will not work, or think about another solution....'''
 !***> '''Case 1'''
 !***< definition
 !define originalFileName {aTiff.tiff}
@@ -22,7 +19,6 @@ Test
 !***< definition
 !define downloadRecordId {$createdRecordId}
 *!
-
 !| WaitForRegExReadResultFixture                                                                                               |
 |authToken      |recordType|recordId        |sleepTime|maxNumberOfCalls|regEx           |waitUntilUntilRegExpFoundInReadRecord?|
 |$adminAuthToken|binary    |$createdRecordId|500      |50              |\"name\":\"jp2\"|Found                                 |
@@ -44,23 +40,10 @@ Test
 
 !5 The user Guest is used as as an example of a user without specific rights on binaries
 
- * '''Case 1''': Guest user should not be able to read unpublished records.
- * '''Case 2''': Guest user should be able to read published records. (Not implemented yet, not set up in permissions metadata)
   * It should not be able to read the upload link.
  * '''Case 3''': Guest user should be able to download all representations from a published binary record when a file has been uploaded. 
   * It should have a link to read all representations.
  
-!***> '''Case 1'''
-!| RecordEndpointFixture                                                   |
-|authToken      |type  |id                  |testReadRecord?|getStatusType?|
-|$guestAuthToken|binary|$unpublishedRecordId|               |FORBIDDEN     |
-*!
-!***> '''Case 2''' (Not implemented yet, not set up in permissions metadata)
-#!define currentAuthToken {}
-#!| RecordEndpointFixture |
-#| authToken | type | id | testReadRecord? | getStatusType? |
-#| $guestAuthToken | binary | $publishedRecordId | =~/^(?!.*("rel":"upload")).+$/ | OK |
-*!
 !***> '''Case 3''' (Not implemented yet, not set up in permissions metadata) 
 !***> Upload a file
 !define currentAuthToken {$adminAuthToken}
