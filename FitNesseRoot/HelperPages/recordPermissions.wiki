@@ -3,16 +3,12 @@ Help: Check permissions for a record
 ---
 !***> Check permissions for a record ${recordId}
 
-!| ActionComparerFixture |
-| actions | testCheckActions? |
-| {"actions":["read","update", "delete", "index", "read_incoming_links"]} | ${expectedActionResult} |
+#!| ActionComparerFixture |
+#| actions | testCheckActions? |
+#| {"actions":["read","update", "delete", "index", "read_incoming_links"]} | ${expectedActionResult} |
 
 !| PermissionComparerFixture |
 | permissions | testCheckPermissions? |
 | ${recordPermissions} | ${expectedPermissionResult} |
-
-#!| Record part permissions in last handled record |
-#| read part permissions specified in metadata | expected missing read part permissions? |
-#| ${recordReadPermissions}| ${expectedMissingReadPartPermissions} |
 
 *!

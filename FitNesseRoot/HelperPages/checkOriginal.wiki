@@ -3,3 +3,4 @@ Help: Compare data, check permissions
 ---
 !include -seamless .HelperPages.compareOriginalRecord
 !include -seamless .HelperPages.recordPermissions
+!include -seamless .HelperPages.checkActionsForRecord

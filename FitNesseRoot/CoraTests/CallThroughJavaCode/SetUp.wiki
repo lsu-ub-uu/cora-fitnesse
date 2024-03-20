@@ -1,0 +1,3 @@
+!***> SetUp variables
+!define expectedActionsForRecord {!-{"actions":["read","update","delete","index","read_incoming_links"]}-!}
+*!

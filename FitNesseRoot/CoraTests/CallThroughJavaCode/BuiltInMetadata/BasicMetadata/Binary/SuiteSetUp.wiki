@@ -2,15 +2,16 @@
 Suite
 ---
 !***> SuiteSetUp -  Create unpublished and published binary record
-!define  expectedFileSize {0}
+!define expectedFileSize {0}
 !define unpublishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"unpublished"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
 !define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
 
-!| RecordEndpointFixture |
-| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
-| $adminAuthToken | binary | ${unpublishedBinary} | | CREATED | $unpublishedRecordId= |
+!| RecordEndpointFixture                                                                           |
+|authToken      |type  |json                |testCreateRecord?|getStatusType?|getCreatedId?        |
+|$adminAuthToken|binary|${unpublishedBinary}|                 |CREATED       |$unpublishedRecordId=|
 
-!| RecordEndpointFixture |
-| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
-| $adminAuthToken | binary | ${publishedBinary} | | CREATED | $publishedRecordId= |
+!| RecordEndpointFixture                                                                       |
+|authToken      |type  |json              |testCreateRecord?|getStatusType?|getCreatedId?      |
+|$adminAuthToken|binary|${publishedBinary}|                 |CREATED       |$publishedRecordId=|
+
 *!

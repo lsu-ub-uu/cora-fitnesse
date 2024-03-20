@@ -36,6 +36,9 @@ Test
 
 !define representation {large}
 !include -seamless .HelperPages.downloadResource
+
+!define representation {jp2}
+!include -seamless .HelperPages.downloadResource
 *!
 
 !5 The user Guest is used as as an example of a user without specific rights on binaries
