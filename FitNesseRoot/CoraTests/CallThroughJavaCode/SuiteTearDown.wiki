@@ -2,50 +2,67 @@
 Suite
 ---
 !***> Clean up example fitnesse pool
+!***> Update fitnesse user. Add fitnesseBinaryReadOnAllVisibilitiesRole role.
+
+!define addfitnesseBinaryReadOnAllVisibilitiesRole {!--!}
+
+!define fitnesseUserOriginalData {!-{"name":"user","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"121212"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"userId","value":"fitnesseUser@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"User"},{"name":"userRole","repeatId":"7175775086411621","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"fitnesseTextAdmin"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"activeStatus","value":"active"},{"name":"userAppTokenGroup","repeatId":"7175775086411619","children":[{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"appToken"},{"name":"linkedRecordId","value":"appToken:7175774276485719"}]},{"name":"note","value":"For fitnesse"}]}-!${addfitnesseBinaryReadOnAllVisibilitiesRole}!-]}-!}
+
+!define currentAuthToken {$adminAuthToken}
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${fitnesseUserOriginalData}}
+!define expectedAnswer {}
+!define expectedUpdateResult {OK}
+
+!include -seamless .HelperPages.updateRecord
+*!
 
 !| RecordEndpointFixture |
-| authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | validationType | fitnesseValidationType | | OK |
-| $adminAuthToken | validationType | bigCircuitTrainingLeafletValidation | | OK |
-| $adminAuthToken | validationType | circuitTrainingLeafletValidation | | OK |
-| $adminAuthToken | validationType | personalTrainingLeafletValidation | | OK |
-| $adminAuthToken | search | trainingClassLeafletSearch | | OK |
-| $adminAuthToken | search | fitnesseRecordTypeSearch | | OK |
-| $adminAuthToken | recordType | trainingClassLeaflet | | OK |
-| $adminAuthToken | recordType | fitnesseRecordType | | OK |
-| $adminAuthToken | metadata | circuitTrainingLeafletGroup | | OK |
-| $adminAuthToken | metadata | circuitTrainingLeafletNewGroup | | OK |
-| $adminAuthToken | metadata | bigCircuitTrainingLeafletGroup | | OK |
-| $adminAuthToken | metadata | bigCircuitTrainingLeafletNewGroup | | OK |
-| $adminAuthToken | presentation | fitnessePGroup | | OK |
-| $adminAuthToken | presentation | fitnesseOutputPGroup | | OK |
-| $adminAuthToken | presentation | fitnesseNewPGroup | | OK |
-| $adminAuthToken | presentation | fitnesseNewOutputPGroup | | OK |
-| $adminAuthToken | presentation | fitnesseMetadataPVar | | OK |
-| $adminAuthToken | presentation | fitnesseMetadataOutputPVar | | OK |
-| $adminAuthToken | presentation | fitnesseOnlyOneMetadataPVar | | OK |
-| $adminAuthToken | presentation | fitnesseOnlyOneMetadataOutputPVar | | OK |
-| $adminAuthToken | presentation | fitnesseMetadataPNumVar | | OK |
-| $adminAuthToken | presentation | fitnesseMetadataOutputPNumVar | | OK |
-| $adminAuthToken | presentation | fitnessePLink | | OK |
-| $adminAuthToken | presentation | fitnesseOutputPLink | | OK |
-| $adminAuthToken | presentation | fitnessePCollVar | | OK |
-| $adminAuthToken | presentation | fitnesseOutputPCollVar | | OK |
-| $adminAuthToken | presentation | fitnesseBinaryPLink | | OK |
-| $adminAuthToken | presentation | fitnesseBinaryOutputPLink | | OK |
-| $adminAuthToken | metadata | fitnesseGroup | | OK |
-| $adminAuthToken | metadata | fitnesseNewGroup | | OK |
-| $adminAuthToken | metadata | fitnesseMetadataTextVar | | OK |
-| $adminAuthToken | metadata | fitnesseOnlyOneMetadataTextVar | | OK |
-| $adminAuthToken | metadata | fitnesseMetadataNumberVar | | OK |
-| $adminAuthToken | metadata | fitnesseCollectionVar | | OK |
-| $adminAuthToken | metadata | fitnesseCollection | | OK |
-| $adminAuthToken | metadata | fitnesseBlueItem | | OK |
-| $adminAuthToken | metadata | fitnesseLink | | OK |
-| $adminAuthToken | metadata | fitnesseBinaryLink | | OK |
-| $adminAuthToken | text | fitnesseRecordTypeSearchDefText | | OK |
-| $adminAuthToken | text | fitnesseRecordTypeSearchText | | OK |
-| $adminAuthToken | text | fitnesseText | | OK |
+|authToken|type|id|testDeleteRecord?|getStatusType?|
+|$adminAuthToken|validationType|fitnesseValidationType||OK|
+|$adminAuthToken|validationType|bigCircuitTrainingLeafletValidation||OK|
+|$adminAuthToken|validationType|circuitTrainingLeafletValidation||OK|
+|$adminAuthToken|validationType|personalTrainingLeafletValidation||OK|
+|$adminAuthToken|search|trainingClassLeafletSearch||OK|
+|$adminAuthToken|search|fitnesseRecordTypeSearch||OK|
+|$adminAuthToken|recordType|trainingClassLeaflet||OK|
+|$adminAuthToken|recordType|fitnesseRecordType||OK|
+|$adminAuthToken|metadata|circuitTrainingLeafletGroup||OK|
+|$adminAuthToken|metadata|circuitTrainingLeafletNewGroup||OK|
+|$adminAuthToken|metadata|bigCircuitTrainingLeafletGroup||OK|
+|$adminAuthToken|metadata|bigCircuitTrainingLeafletNewGroup||OK|
+|$adminAuthToken|presentation|fitnessePGroup||OK|
+|$adminAuthToken|presentation|fitnesseOutputPGroup||OK|
+|$adminAuthToken|presentation|fitnesseNewPGroup||OK|
+|$adminAuthToken|presentation|fitnesseNewOutputPGroup||OK|
+|$adminAuthToken|presentation|fitnesseMetadataPVar||OK|
+|$adminAuthToken|presentation|fitnesseMetadataOutputPVar||OK|
+|$adminAuthToken|presentation|fitnesseOnlyOneMetadataPVar||OK|
+|$adminAuthToken|presentation|fitnesseOnlyOneMetadataOutputPVar||OK|
+|$adminAuthToken|presentation|fitnesseMetadataPNumVar||OK|
+|$adminAuthToken|presentation|fitnesseMetadataOutputPNumVar||OK|
+|$adminAuthToken|presentation|fitnessePLink||OK|
+|$adminAuthToken|presentation|fitnesseOutputPLink||OK|
+|$adminAuthToken|presentation|fitnessePCollVar||OK|
+|$adminAuthToken|presentation|fitnesseOutputPCollVar||OK|
+|$adminAuthToken|presentation|fitnesseBinaryPLink||OK|
+|$adminAuthToken|presentation|fitnesseBinaryOutputPLink||OK|
+|$adminAuthToken|metadata|fitnesseGroup||OK|
+|$adminAuthToken|metadata|fitnesseNewGroup||OK|
+|$adminAuthToken|metadata|fitnesseMetadataTextVar||OK|
+|$adminAuthToken|metadata|fitnesseOnlyOneMetadataTextVar||OK|
+|$adminAuthToken|metadata|fitnesseMetadataNumberVar||OK|
+|$adminAuthToken|metadata|fitnesseCollectionVar||OK|
+|$adminAuthToken|metadata|fitnesseCollection||OK|
+|$adminAuthToken|metadata|fitnesseBlueItem||OK|
+|$adminAuthToken|metadata|fitnesseLink||OK|
+|$adminAuthToken|metadata|fitnesseBinaryLink||OK|
+|$adminAuthToken|text|fitnesseRecordTypeSearchDefText||OK|
+|$adminAuthToken|text|fitnesseRecordTypeSearchText||OK|
+|$adminAuthToken|permissionRole|fitnesseBinaryReadOnAllVisibilitiesRole||OK|
+|$adminAuthToken|permissionRule|fitnesseBinaryReadOnAllVisibilitiesRule||OK|
+|$adminAuthToken|text|fitnesseText||OK|
 
  #Not needed presentations because we are using excludePGroupCreation flag
 *!

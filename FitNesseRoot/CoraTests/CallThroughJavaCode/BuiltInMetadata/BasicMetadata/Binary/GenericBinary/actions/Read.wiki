@@ -6,6 +6,7 @@ It should be possible to set up a Cora system so that binary records that are pu
  * '''Case 1''': It should be possible to read a binary record. The record should be identical than the expected created record from above.
  * '''Case 2''': Guest user should not be able to read unpublished records.
  * '''Case 3''': Guest user should be able to read published records. (Not implemented yet, not set up in permissions metadata)
+ * '''Case 4''': FitnesseUser user should be able to read unpublished records but not be able to read download links to all representations.
 
 !***> '''Case 1'''
 !define expectedCompareResult {Child with nameInData master and type group is missing. Child with nameInData thumbnail and type group is missing. Child with nameInData medium and type group is missing. Child with nameInData large and type group is missing. Child with nameInData jp2 and type group is missing.}
@@ -23,4 +24,9 @@ It should be possible to set up a Cora system so that binary records that are pu
 #!| RecordEndpointFixture |
 #| authToken | type | id | testReadRecord? | getStatusType? |
 #| $guestAuthToken | binary | $publishedRecordId | =~/^(?!.*("rel":"upload")).+$/ | OK |
+*!
+!***> '''Case 4'''
+!| RecordEndpointFixture                                                   |
+|authToken      |type  |id                  |testReadRecord?|getStatusType?|
+| $userAuthToken|binary|$unpublishedRecordId|               |OK            |
 *!

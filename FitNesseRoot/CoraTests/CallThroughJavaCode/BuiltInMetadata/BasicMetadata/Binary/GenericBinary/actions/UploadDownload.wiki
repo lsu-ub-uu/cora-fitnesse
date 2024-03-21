@@ -44,50 +44,46 @@ Test
 !5 The user Guest is used as as an example of a user without specific rights on binaries
 
   * It should not be able to read the upload link.
- * '''Case 3''': Guest user should be able to download all representations from a published binary record when a file has been uploaded. 
+ * '''Case 1''': Guest user should be able to download all representations from a published binary record when a file has been uploaded. 
   * It should have a link to read all representations.
  
 !***> '''Case 3''' (Not implemented yet, not set up in permissions metadata) 
-!***> Upload a file
-!define currentAuthToken {$adminAuthToken}
-!define originalFileName {aTiff.tiff}
-!define createData publishedBinary
-!define expectedUploadAnswer {!--!}
-!define uploadRecordId {$publishedRecordId}
-!include -seamless .HelperPages.uploadResource
-*!
-!***> Read published binary, action link to read master exists. OBS, add regex to thumbnail, medium, large, jp2
-#!define currentAuthToken {}
-#!| RecordEndpointFixture |
-#| authToken | type | id | testReadRecord? | getStatusType? |
-#| $guestAuthToken | binary | $publishedRecordId | =~/^(?=.*("read":{"requestMethod":"GET","rel":"read","url".*\/master)).+$/ | OK |
-*!
-
-!***> Download master
-!define downloadRecordId {$publishedRecordId}
-!define currentAuthToken {$guestAuthToken}
-!define representation {master}
-!include -seamless .HelperPages.downloadResource
-*!
+#!***> Upload a file
+#!define currentAuthToken {$adminAuthToken}
+#!define originalFileName {aTiff.tiff}
+#!define createData publishedBinary
+#!define expectedUploadAnswer {!--!}
+#!define uploadRecordId {$publishedRecordId}
+#!include -seamless .HelperPages.uploadResource
+#*!
+#!***> Read published binary, action link to read master exists. OBS, add regex to thumbnail, medium, large, jp2
+##!define currentAuthToken {}
+##!| RecordEndpointFixture |
+##| authToken | type | id | testReadRecord? | getStatusType? |
+##| $guestAuthToken | binary | $publishedRecordId | =~/^(?=.*("read":{"requestMethod":"GET","rel":"read","url".*\/master)).+$/ | OK |
+#*!
 #
-#!define representation {thumbnail}
+#!***> Download master
+#!define downloadRecordId {$publishedRecordId}
+#!define currentAuthToken {$guestAuthToken}
+#!define representation {master}
 #!include -seamless .HelperPages.downloadResource
-#
-#!define representation {medium}
-#!include -seamless .HelperPages.downloadResource
-#
-#!define representation {large}
-#!include -seamless .HelperPages.downloadResource
+#*!
+##
+##!define representation {thumbnail}
+##!include -seamless .HelperPages.downloadResource
+##
+##!define representation {medium}
+##!include -seamless .HelperPages.downloadResource
+##
+##!define representation {large}
+##!include -seamless .HelperPages.downloadResource
 *!
- 
  
 !5 The user fitnesseUser is used as as an example of a user with some rights on binaries, 
 has read on unpublished, but no download
 !include -seamless .HelperPages.defineCurrentAuthTokenAsFitnesseUser
- * '''Case 1''': FitnesseUser user should be able to read unpublished records.
- * '''Case 2''': FitnesseUser user should not have any links to read and should not be able download, any representations from an unpublished binary record. 
-
-
+ * '''Case 1''': FitnesseUser user should not have any links to read and should not be able to download, any representations from an unpublished binary record. 
 change permissions to:
 has read on unpublished, and download on each representation in turn master, thumbnail, medium, large, jp2
  * '''Case 1''': FitnesseUser user should have a link to read master representation and download it, but not other representaitons from an unpublished binary record.
@@ -95,3 +91,4 @@ has read on unpublished, and download on each representation in turn master, thu
  * '''Case 3''': FitnesseUser user should have a link to read medium representation and download it, but not other representaitons from an unpublished binary record.
  * '''Case 4''': FitnesseUser user should have a link to read large representation and download it, but not other representaitons from an unpublished binary record.
  * '''Case 5''': FitnesseUser user should have a link to read jp2 representation and download it, but not other representaitons from an unpublished binary record.
+ 

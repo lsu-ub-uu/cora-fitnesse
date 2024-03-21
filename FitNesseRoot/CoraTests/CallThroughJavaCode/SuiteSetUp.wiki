@@ -1,7 +1,7 @@
 ---
 Suite
 ---
-!***> SuiteSetUp
+!***> SuiteSetUp for Fitnesse Example
 !***> Setup login
 
 !***> Login for fitnesse admin
@@ -13,7 +13,6 @@ Suite
 !| script | AuthTokenHolder |
 | setAdminAuthToken | $adminAuthToken |
 *!
-
 !***> Login for fitnesse user
 
 !| AppTokenEndpointFixture |
