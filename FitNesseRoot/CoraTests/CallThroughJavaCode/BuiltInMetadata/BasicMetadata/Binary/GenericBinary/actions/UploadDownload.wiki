@@ -1,5 +1,5 @@
 ---
-Test
+Static
 ---
 !4 Upload and Download
  * '''Case 1''': It should be possible to upload a file to a binary record.

@@ -17,6 +17,7 @@ It should be possible to set up a Cora system so that binary records that are pu
 !***> '''Case 2'''
 !| RecordEndpointFixture                                                   |
 |authToken      |type  |id                  |testReadRecord?|getStatusType?|
+|$adminAuthToken|binary|$unpublishedRecordId|               |OK            |
 |$guestAuthToken|binary|$unpublishedRecordId|               |FORBIDDEN     |
 *!
 !***> '''Case 3''' (Not implemented yet, not set up in permissions metadata)
@@ -28,5 +29,8 @@ It should be possible to set up a Cora system so that binary records that are pu
 !***> '''Case 4'''
 !| RecordEndpointFixture                                                   |
 |authToken      |type  |id                  |testReadRecord?|getStatusType?|
+| $adminAuthToken|user|121212|               |OK            |
+| $adminAuthToken|permissionRole|fitnesseBinaryReadOnAllVisibilitiesRole|               |OK            |
+| $adminAuthToken|permissionRule|fitnesseBinaryReadOnAllVisibilitiesRule|               |OK            |
 | $userAuthToken|binary|$unpublishedRecordId|               |OK            |
 *!
