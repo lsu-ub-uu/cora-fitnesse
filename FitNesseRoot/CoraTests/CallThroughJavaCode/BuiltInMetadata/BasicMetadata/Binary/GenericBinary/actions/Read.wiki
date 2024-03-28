@@ -17,7 +17,6 @@ It should be possible to set up a Cora system so that binary records that are pu
 !***> '''Case 2'''
 !| RecordEndpointFixture                                                   |
 |authToken      |type  |id                  |testReadRecord?|getStatusType?|
-|$adminAuthToken|binary|$unpublishedRecordId|               |OK            |
 |$guestAuthToken|binary|$unpublishedRecordId|               |FORBIDDEN     |
 *!
 !***> '''Case 3''' (Not implemented yet, not set up in permissions metadata)
@@ -27,10 +26,12 @@ It should be possible to set up a Cora system so that binary records that are pu
 #| $guestAuthToken | binary | $publishedRecordId | =~/^(?!.*("rel":"upload")).+$/ | OK |
 *!
 !***> '''Case 4'''
-!| RecordEndpointFixture                                                   |
-|authToken      |type  |id                  |testReadRecord?|getStatusType?|
-| $adminAuthToken|user|121212|               |OK            |
-| $adminAuthToken|permissionRole|fitnesseBinaryReadOnAllVisibilitiesRole|               |OK            |
-| $adminAuthToken|permissionRule|fitnesseBinaryReadOnAllVisibilitiesRule|               |OK            |
-| $userAuthToken|binary|$unpublishedRecordId|               |OK            |
+!| ChildComparerFixture |
+| authToken      | type   | id                   | testReadAndStoreRecord? | getStatusType? |
+| $userAuthToken | binary | $unpublishedRecordId |                         | OK             |
+
+!| ActionComparerFixture |
+|authToken      | actions                     | testCheckActions?      |
+|$userAuthToken | ${expectedActionsForRecord} | Action update is missing. Action delete is missing. Action index is missing. Action read_incoming_links is missing. Action upload is missing.|
+
 *!
