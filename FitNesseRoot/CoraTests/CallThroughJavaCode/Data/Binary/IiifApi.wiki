@@ -17,6 +17,7 @@ In this case we create a binary record with visibility "published", then we uplo
 
 !***> definition
 !define originalFileName {aTiff.tiff}
+!define expectedFileSize {54452040}
 !define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
 !define createData publishedBinary
 *!
@@ -67,6 +68,7 @@ Get a section of the image
 In this case we create a binary record with visibility "published", then we upload an compressed file and we wait it is stored in cora. Once this is done we try to get info.json from that file. This should not work.
 !***> definition
 !define originalFileName {aZip.zip}
+!define expectedFileSize {144}
 !define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
 !define createData publishedBinary
 *!

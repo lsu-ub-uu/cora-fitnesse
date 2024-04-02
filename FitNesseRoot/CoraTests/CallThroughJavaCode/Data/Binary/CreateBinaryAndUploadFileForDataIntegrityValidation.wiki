@@ -1,0 +1,24 @@
+---
+Static
+---
+!*< definition
+!define recordType {binary}
+!define expectedAnswer {}
+!define expectedCreateResult {CREATED}
+*!
+!***> Create record, for recordType ${recordType}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $tmpRecordId1= |
+
+
+!define recordId {$tmpRecordId1}
+*!
+!***> Upload image
+
+!| RecordEndpointFixture |
+| authToken | type | id | fileName | testUpload? | getStatusType? |
+| $adminAuthToken | binary | $tmpRecordId1 | ${originalFileName} | | ${expectedUploadResult} |
+
+*!

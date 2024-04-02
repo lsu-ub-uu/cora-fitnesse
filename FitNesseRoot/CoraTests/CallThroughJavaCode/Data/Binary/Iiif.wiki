@@ -23,6 +23,7 @@ All cases will make sure there is no IIIF protocol information when the binary r
 !***> '''Case 1'''
 !*< definition
 !define originalFileName {aTiff.tiff}
+!define expectedFileSize {54452040}
 !define createData publishedBinary
 *!
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryUploadImageAndWait
@@ -61,6 +62,7 @@ All cases will make sure there is no IIIF protocol information when the binary r
 
 !***> '''Case 3'''
 !define originalFileName {aZip.zip}
+!define expectedFileSize {144}
 !define createData unpublishedBinary
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryAndUploadFile
