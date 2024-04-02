@@ -69,9 +69,11 @@ Static
 has read on unpublished, but no download
 !include -seamless .HelperPages.defineCurrentAuthTokenAsFitnesseUser
 !***> '''Case 1''': FitnesseUser user should not have any links to read and should not be able to download, any representations from an unpublished binary record. 
+
+!define regexpAllRepresentationMissing {!-^(?!.*(-!$unpublishedRecordId!-\/master|-!$unpublishedRecordId!-\/thumbnail|-!$unpublishedRecordId!-\/medium|-!$unpublishedRecordId!-\/large|-!$unpublishedRecordId!-\/jp2).*).+$-!}
 !| RecordEndpointFixture                                                   |
-|authToken      |type  |id                  |testReadRecord?|getStatusType?|
-|$userAuthToken|binary|$unpublishedRecordId|               |OK     |
+|authToken     |type  |id                  |testReadRecord?                      |getStatusType?|
+|$userAuthToken|binary|$unpublishedRecordId|=~/${regexpAllRepresentationMissing}/|OK     |
 
 !define httpCode {=~/Code: 403/}
 !define representation {master}
@@ -113,10 +115,18 @@ has read on unpublished, and download on each representation in turn master, thu
 !define regexpRepresentationMedium {!-"actionLinks":\{"read":\{"requestMethod":"GET","rel":"read","url":"http:.*-!$unpublishedRecordId!-\/medium","accept":"image\/jpeg"\}\}-!}
 !define regexpRepresentationLarge {!-"actionLinks":\{"read":\{"requestMethod":"GET","rel":"read","url":"http:.*-!$unpublishedRecordId!-\/large","accept":"image\/jpeg"\}\}-!}
 !define regexpRepresentationJp2 {!-"actionLinks":\{"read":\{"requestMethod":"GET","rel":"read","url":"http:.*-!$unpublishedRecordId!-\/jp2","accept":"image\/jp2"\}\}-!}
+
+#Define several regexp in order to match the actionLinks related to the representations without permissions. Better solution would be using a Fixture.
+!define regexpAllRepresentationMissingButMaster {!-^(?!.*(-!$unpublishedRecordId!-\/thumbnail|-!$unpublishedRecordId!-\/medium|-!$unpublishedRecordId!-\/large|-!$unpublishedRecordId!-\/jp2).*).+$-!}
+!define regexpAllRepresentationMissingButThumbnail {!-^(?!.*(-!$unpublishedRecordId!-\/master|-!$unpublishedRecordId!-\/medium|-!$unpublishedRecordId!-\/large|-!$unpublishedRecordId!-\/jp2).*).+$-!}
+!define regexpAllRepresentationMissingButMedium {!-^(?!.*(-!$unpublishedRecordId!-\/master|-!$unpublishedRecordId!-\/thumbnail|-!$unpublishedRecordId!-\/large|-!$unpublishedRecordId!-\/jp2).*).+$-!}
+!define regexpAllRepresentationMissingButLarge {!-^(?!.*(-!$unpublishedRecordId!-\/master|-!$unpublishedRecordId!-\/thumbnail|-!$unpublishedRecordId!-\/medium|-!$unpublishedRecordId!-\/jp2).*).+$-!}
+!define regexpAllRepresentationMissingButJp2 {!-^(?!.*(-!$unpublishedRecordId!-\/master|-!$unpublishedRecordId!-\/thumbnail|-!$unpublishedRecordId!-\/medium|-!$unpublishedRecordId!-\/large).*).+$-!}
 *!
 !| RecordEndpointFixture |
-|authToken     |type  |id                  |testReadRecord?                    |getStatusType?|
-|$userAuthToken|binary|$unpublishedRecordId| =~/${regexpRepresentationMaster}/ |OK     |
+|authToken     |type  |id                  |testReadRecord?                      |getStatusType?|
+|$userAuthToken|binary|$unpublishedRecordId|=~/${regexpRepresentationMaster}/    |OK            |
+|$userAuthToken|binary|$unpublishedRecordId|=~/${regexpAllRepresentationMissingButMaster}/|OK            |
 
 !| DownloadFixture |
 | authToken | recordType | recordId | representation | testDownload? | 
@@ -132,9 +142,10 @@ has read on unpublished, and download on each representation in turn master, thu
 !define updateData {${fitnesseBinaryReadOnAllVisibilitiesRuleMetaData}}
 !include -seamless .HelperPages.updateRecord
 *!
-!| RecordEndpointFixture                                                   |
-|authToken     |type  |id                  |testReadRecord?                      |getStatusType?|
-|$userAuthToken|binary|$unpublishedRecordId| =~/${regexpRepresentationThumbnail}/ |OK     |
+!| RecordEndpointFixture |
+|authToken     |type  |id                  |testReadRecord?                                  |getStatusType?|
+|$userAuthToken|binary|$unpublishedRecordId|=~/${regexpRepresentationThumbnail}/             |OK     |
+|$userAuthToken|binary|$unpublishedRecordId|=~/${regexpAllRepresentationMissingButThumbnail}/|OK     |
 
 !| DownloadFixture |
 | authToken | recordType | recordId | representation | testDownload? | 
@@ -150,9 +161,10 @@ has read on unpublished, and download on each representation in turn master, thu
 !define updateData {${fitnesseBinaryReadOnAllVisibilitiesRuleMetaData}}
 !include -seamless .HelperPages.updateRecord
 *!
-!| RecordEndpointFixture                                                   |
-|authToken     |type  |id                  |testReadRecord?                   |getStatusType?|
-|$userAuthToken|binary|$unpublishedRecordId| =~/${regexpRepresentationMedium}/ |OK            |
+!| RecordEndpointFixture |
+|authToken     |type  |id                  |testReadRecord?                                 |getStatusType?|
+|$userAuthToken|binary|$unpublishedRecordId| =~/${regexpRepresentationMedium}/              |OK            |
+|$userAuthToken|binary|$unpublishedRecordId| =~/${regexpAllRepresentationMissingButMedium}/ |OK            |
 
 !| DownloadFixture |
 | authToken | recordType | recordId | representation | testDownload? | 
@@ -171,6 +183,7 @@ has read on unpublished, and download on each representation in turn master, thu
 !| RecordEndpointFixture                                                   |
 |authToken     |type  |id                  |testReadRecord?                  |getStatusType?|
 |$userAuthToken|binary|$unpublishedRecordId| =~/${regexpRepresentationLarge}/ |OK     |
+|$userAuthToken|binary|$unpublishedRecordId| =~/${regexpAllRepresentationMissingButLarge}/ |OK     |
 
 !| DownloadFixture |
 | authToken | recordType | recordId | representation | testDownload? | 
@@ -186,9 +199,10 @@ has read on unpublished, and download on each representation in turn master, thu
 !define updateData {${fitnesseBinaryReadOnAllVisibilitiesRuleMetaData}}
 !include -seamless .HelperPages.updateRecord
 *!
-!| RecordEndpointFixture                                                   |
-|authToken     |type  |id                  |testReadRecord?                |getStatusType?|
-|$userAuthToken|binary|$unpublishedRecordId| =~/${regexpRepresentationJp2}/ | OK           |
+!| RecordEndpointFixture |
+|authToken     |type  |id                  |testReadRecord?                                 |getStatusType?|
+|$userAuthToken|binary|$unpublishedRecordId| =~/${regexpRepresentationJp2}/                 | OK           |
+|$userAuthToken|binary|$unpublishedRecordId| =~/${regexpAllRepresentationMissingButJp2}/ |OK     |
 
 !| DownloadFixture |
 | authToken | recordType | recordId | representation | testDownload? | 
