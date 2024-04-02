@@ -19,6 +19,6 @@ Static
 
 !| RecordEndpointFixture |
 | authToken | type | id | fileName | testUpload? | getStatusType? |
-| $adminAuthToken | binary | $tmpRecordId1 | ${originalFileName} | | ${expectedUploadResult} |
+| $adminAuthToken | binary | $tmpRecordId1 | ${originalFileName} | ${expectedUploadAnswer}| ${expectedUploadResult} |
 
 *!

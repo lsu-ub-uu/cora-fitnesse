@@ -16,11 +16,13 @@ When uploading binary files we need to validate that the integrity of the upload
 !define expectedUploadResult {BAD_REQUEST}
 !define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
 !define createData publishedBinary
+!define expectedUploadAnswer {An error has ocurred while uploading a resource :The file size verification of uploaded data failed: the actual value was: 28 but the expected value was: 1234567890}
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryAndUploadFileForDataIntegrityValidation
 
 !define httpCode {Code: 404 Message: Some errorFailed to read resource due to it could not be found in Fedora Archive for type binary and id $tmpRecordId1.}
 !define representation {master}
+!define downloadRecordId {$tmpRecordId1}
 !include -seamless .HelperPages.downloadResource
 *!
 *!
@@ -32,11 +34,13 @@ When uploading binary files we need to validate that the integrity of the upload
 !define expectedUploadResult {BAD_REQUEST}
 !define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedChecksum","value":"-!${expectedChecksum}!-"}],"attributes":{"type":"generic"}}-!}
 !define createData publishedBinary
+!define expectedUploadAnswer {An error has ocurred while uploading a resource :The checksum verification of uploaded data failed: the actual value was: 5ee3dbf5b81474c1fb73ac49b389ba6d445f672d82abbdc865defced83b09b6aa811790966eb4fcf33d74799d22e9849f6b1ab99d74673d7207ec5f35af54bac but the expected value was: 1234567890}
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryAndUploadFileForDataIntegrityValidation
 
 !define httpCode {Code: 404 Message: Some errorFailed to read resource due to it could not be found in Fedora Archive for type binary and id $tmpRecordId1.}
 !define representation {master}
+!define downloadRecordId {$tmpRecordId1}
 !include -seamless .HelperPages.downloadResource
 *!
 *!
