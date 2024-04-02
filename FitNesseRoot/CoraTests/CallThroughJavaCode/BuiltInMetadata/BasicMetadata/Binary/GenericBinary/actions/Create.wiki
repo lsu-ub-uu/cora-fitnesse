@@ -17,6 +17,8 @@ It should be possible to create new binary records that are either unpublished o
 !define expectedCompareResult {Child with nameInData master and type group is missing. Child with nameInData thumbnail and type group is missing. Child with nameInData medium and type group is missing. Child with nameInData large and type group is missing. Child with nameInData jp2 and type group is missing.}
 !define expectedActionResult {Action read_incoming_links is missing.}
 !define expectedPermissionResult {OK}
+!define createData {${unpublishedBinary}}
+!define expectedCreatedData {${expectedUnpublishedBinary}}
 !include -seamless .HelperPages.createCheckReadCheck
 
 #!define expectedCreateResult {CREATED}
@@ -24,6 +26,8 @@ It should be possible to create new binary records that are either unpublished o
 #!define expectedCompareResult {Child with nameInData master and type group is missing. Child with nameInData thumbnail and type group is missing. Child with nameInData medium and type group is missing. Child with nameInData large and type group is missing. Child with nameInData jp2 and type group is missing.}
 #!define expectedActionResult {Action update is missing. Action read_incoming_links is missing.}
 #!define expectedPermissionResult {OK}
+#!define createData {${unpublishedBinary}}
+#!define expectedCreatedData {${unpublishedBinary}}
 #!include -seamless .HelperPages.createCheckReadCheck
 
 *!
@@ -34,6 +38,8 @@ It should be possible to create new binary records that are either unpublished o
 !define expectedActionResult {}
 !define expectedActionResult {Action read_incoming_links is missing.}
 !define expectedPermissionResult {OK}
+!define createData {${publishedBinary}}
+!define expectedCreatedData {${expectedPublishedBinary}}
 !include -seamless .HelperPages.createCheckReadCheck
 
 #!define expectedCreateResult {CREATED}

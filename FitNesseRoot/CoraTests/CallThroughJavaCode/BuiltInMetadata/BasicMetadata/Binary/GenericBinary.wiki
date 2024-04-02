@@ -19,7 +19,6 @@ The '''master''' . Other formats depending on the resourceType are listed below:
  * '''width''' Is the width in pixels of the resource.
  * '''resolution''' Is the resoultion in dpi of the resource.
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.data.example1
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.ValidationType
 !3 Actions
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.actions.Create

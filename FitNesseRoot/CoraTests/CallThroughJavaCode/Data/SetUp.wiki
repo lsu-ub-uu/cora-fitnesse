@@ -8,4 +8,5 @@ Suite
 
 !define expectedAnswer {=~/!-^(?!.*(iiif|"url":.*$tmpRecordId1/master)).+$-!/}
 !define expectedUploadAnswer {=~/!-^(?!.*iiif)(?=.*"url":.*$tmpRecordId1/master).+$-!/}
+!define expectedActionsForRecord {!-{"actions":["read","update","delete","index","read_incoming_links"]}-!}
 *!
