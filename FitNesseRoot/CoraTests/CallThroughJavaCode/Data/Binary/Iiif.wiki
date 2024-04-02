@@ -17,6 +17,7 @@ Other protocols with information about how to access a binary for an image using
 !***> '''Case 1'''
 !*< definition
 !define originalFileName {aTiff.tiff}
+!define expectedFileSize {54452040}
 !define createData publishedBinary
 *!
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryUploadImageAndWait
@@ -55,6 +56,7 @@ Other protocols with information about how to access a binary for an image using
 
 !***> '''Case 3'''
 !define originalFileName {aZip.zip}
+!define expectedFileSize {144}
 !define createData unpublishedBinary
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryAndUploadFile
