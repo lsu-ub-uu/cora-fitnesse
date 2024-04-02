@@ -19,7 +19,7 @@ When uploading binary files we need to validate that the integrity of the upload
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryAndUploadFileForDataIntegrityValidation
 
-!define httpCode {Code: 404 Message: Some errorFailed to read resource due to it could not be found in Fedora Archive for type binary and id $tmpRecordId1.}
+!define httpCode {Code: 404 Message: Could not download the stream because it could not be found in storage. Type: binary, id: $tmpRecordId1 and representation: master}
 !define representation {master}
 !include -seamless .HelperPages.downloadResource
 *!
@@ -35,7 +35,7 @@ When uploading binary files we need to validate that the integrity of the upload
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryAndUploadFileForDataIntegrityValidation
 
-!define httpCode {Code: 404 Message: Some errorFailed to read resource due to it could not be found in Fedora Archive for type binary and id $tmpRecordId1.}
+!define httpCode {Code: 404 Message: Could not download the stream because it could not be found in storage. Type: binary, id: $tmpRecordId1 and representation: master}}
 !define representation {master}
 !include -seamless .HelperPages.downloadResource
 *!

@@ -47,7 +47,7 @@ The formats of the images are :
 !define representation {large}
 !include -seamless .HelperPages.downloadResource
 
-!define httpCode {Code: 404 Message: Some errorCould not download the stream because it could not be found in storage. Type: binary, id: $tmpRecordId1 and representation: jp2}
+!define httpCode {Code: 404 Message: Could not download the stream because it could not be found in storage. Type: binary, id: $tmpRecordId1 and representation: jp2}
 !define representation {jp2}
 !include -seamless .HelperPages.downloadResource
 
