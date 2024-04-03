@@ -38,7 +38,7 @@ The formats that images are converted to are:
 !define largeMimeType {image/jpeg}
 !define largeHeight {773}
 !define largeWidth {600}
-!define jp2FileSize {12678964}
+!define jp2FileSize {12678948}
 !define jp2MimeType {image/jp2}
 !define jp2Height {3419}
 !define jp2Width {2653}
@@ -48,8 +48,8 @@ The formats that images are converted to are:
 
 !*< definition
 !define downloadRecordId {$tmpRecordId1}
+!define expectedDownloadStatus {OK}
 *!
-!define httpCode {200}
 !define representation {master}
 !include -seamless .HelperPages.downloadResource
 
@@ -103,8 +103,9 @@ The formats that images are converted to are:
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadImageValidateAnalysisAndConvertion
 !*< definition
 !define downloadRecordId {$tmpRecordId1}
-*!
 !define representation {master}
+*!
+
 !include -seamless .HelperPages.downloadResource
 
 !define representation {thumbnail}

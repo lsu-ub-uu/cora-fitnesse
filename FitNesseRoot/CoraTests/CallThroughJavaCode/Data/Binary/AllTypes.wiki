@@ -1,6 +1,13 @@
 ---
 Test
 ---
+!*< Initialize variables
+!define expectedUploadAnswer {}
+!define expectedUploadResult {OK}
+!define httpCode {200}
+!define expectedDownloadAnswer {}
+*!
+
 !2 All Types
 
 All binaries representations must be stored in storage. Master representation is stored in the Archive, othre representations are stored in the fileSystem.

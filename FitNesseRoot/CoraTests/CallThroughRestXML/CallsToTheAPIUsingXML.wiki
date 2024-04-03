@@ -383,13 +383,13 @@ We will read a trainingProgram.
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
 -!Accept: application/vnd.uub.record+xml|
-| GET | /rest/record/singleTrainingProgramNOT/cirkelfys | 404 | Content-Type: text\/plain;charset=utf-8| Error reading record with recordType: singleTrainingProgramNOT and recordId: cirkelfys.No record exists with recordId: singleTrainingProgramNOT|
+| GET | /rest/record/singleTrainingProgramNOT/cirkelfys | 404 | Content-Type: text\/plain;charset=utf-8| Error reading record with recordType: singleTrainingProgramNOT and recordId: cirkelfys. No record exists with recordId: singleTrainingProgramNOT|
 *!
 !***> Case 2
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
 -!Accept: application/vnd.uub.record+xml|
-| GET | /rest/record/singleTrainingProgram/cirkelfysNOT | 404 | Content-Type: text\/plain;charset=utf-8| Error reading record with recordType: singleTrainingProgram and recordId: cirkelfysNOT.No record exists with recordId: cirkelfysNOT |
+| GET | /rest/record/singleTrainingProgram/cirkelfysNOT | 404 | Content-Type: text\/plain;charset=utf-8| Error reading record with recordType: singleTrainingProgram and recordId: cirkelfysNOT. No record exists with recordId: cirkelfysNOT |
 *!
 !***> Case 3
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
@@ -413,7 +413,7 @@ We will read a list of trainingPrograms.
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
 -!Accept: application/vnd.uub.recordList+xml|
-| GET | /rest/record/singleTrainingProgramNOT/ | 404 | Content-Type: text\/plain;charset=utf-8| Error reading records with recordType: singleTrainingProgramNOT.No record exists with recordId: singleTrainingProgramNOT |
+| GET | /rest/record/singleTrainingProgramNOT/ | 404 | Content-Type: text\/plain;charset=utf-8| Error reading records with recordType: singleTrainingProgramNOT. No record exists with recordId: singleTrainingProgramNOT |
 *!
 !***> Case 2
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
@@ -582,7 +582,7 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
 -!Accept: application/vnd.uub.recordList+xml|
-| GET | /rest/record/searchResult/trainingNOTexistsSearch?searchData=%3C%3Fxml+version%3D%221.0%22+encoding%3D%22UTF-8%22%3F%3E%3CtrainingSearch%3E%3Cinclude%3E%3CincludePart%3E%3CtrainingIdSearchTerm%3E%2A%2A%3C%2FtrainingIdSearchTerm%3E%3C%2FincludePart%3E%3C%2Finclude%3E%3C%2FtrainingSearch%3E | 404 | Content-Type: text/plain;charset=utf-8 | Error searching record with searchId: trainingNOTexistsSearch.No record exists with recordId: trainingNOTexistsSearch |
+| GET | /rest/record/searchResult/trainingNOTexistsSearch?searchData=%3C%3Fxml+version%3D%221.0%22+encoding%3D%22UTF-8%22%3F%3E%3CtrainingSearch%3E%3Cinclude%3E%3CincludePart%3E%3CtrainingIdSearchTerm%3E%2A%2A%3C%2FtrainingIdSearchTerm%3E%3C%2FincludePart%3E%3C%2Finclude%3E%3C%2FtrainingSearch%3E | 404 | Content-Type: text/plain;charset=utf-8 | Error searching record with searchId: trainingNOTexistsSearch. No record exists with recordId: trainingNOTexistsSearch |
 *!
 !***> Case 2
 
