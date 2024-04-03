@@ -1,22 +1,9 @@
 ---
-Help: Update a record according to variables
+Help: Download a representation of a binary record
 ---
-#!***> Update record ${recordId}
-#
-#
-#
-#!| ChildComparerFixture |
-#| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
-#| ${currentAuthToken} | ${recordType} | ${recordId} | ${updateData} | ${expectedAnswer} | ${expectedUpdateResult} |
-#
-#!define expectedAnswer {}
-#*!
-#
-#
-
-!***> Download image
+!***> Download resource
 
 !| DownloadFixture |
-| authToken | recordType | recordId | representation | testDownload? | 
-| ${currentAuthToken} | binary | ${recordId} | ${representation} | ${httpCode} |
+| authToken | recordType | recordId | representation | testDownload? | getStatusType?|
+| ${currentAuthToken} | binary | ${recordId} | ${representation} |${expectedDownloadAnswer} |${expectedDownloadStatus} |
 *!

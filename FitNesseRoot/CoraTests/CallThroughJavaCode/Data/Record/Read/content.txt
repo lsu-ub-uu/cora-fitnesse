@@ -16,7 +16,7 @@
 
 !| RecordEndpointFixture |
 | authToken | id | type | testReadRecord? | getStatusType? |
-| $adminAuthToken | id | metadataTextVariable2 | Error reading record with recordType: metadataTextVariable2 and recordId: id.No record exists with recordId: metadataTextVariable2 | NOT_FOUND |
+| $adminAuthToken | id | metadataTextVariable2 | Error reading record with recordType: metadataTextVariable2 and recordId: id. No record exists with recordId: metadataTextVariable2 | NOT_FOUND |
 
 *!
 !***> List data(metadataTextVariable2), which doesn't exist

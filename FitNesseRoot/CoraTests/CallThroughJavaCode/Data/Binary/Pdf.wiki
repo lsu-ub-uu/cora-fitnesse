@@ -34,7 +34,7 @@ The formats of the images are :
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadPdfValidateAnalysisAndConvertion
 
-!define httpCode {200}
+!define expectedDownloadStatus {OK}
 !define representation {master}
 !include -seamless .HelperPages.downloadResource
 
@@ -47,11 +47,12 @@ The formats of the images are :
 !define representation {large}
 !include -seamless .HelperPages.downloadResource
 
-!define httpCode {Code: 404 Message: Could not download the stream because it could not be found in storage. Type: binary, id: $tmpRecordId1 and representation: jp2}
+!define expectedDownloadStatus {NOT_FOUND}
+!define expectedDownloadAnswer {An error has ocurred while downloading a resource: Could not download the stream because it could not be found in storage. Type: binary, id: $tmpRecordId1 and representation: jp2}
 !define representation {jp2}
 !include -seamless .HelperPages.downloadResource
 
-!define httpCode {200}
+!define expectedDownloadStatus {OK}
 !define expectedXpath {//master/master/mimeType[text()='${expectedMimeType}']
 //master/master/actionLinks/read/accept[text()='${expectedMimeType}']
 //master/master/actionLinks/read/rel[text()='read']}

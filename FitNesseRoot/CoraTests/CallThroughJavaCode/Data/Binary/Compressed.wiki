@@ -9,6 +9,12 @@ Compressed files can be stored in cora. The accepted formats are:
  * '''Case 1:''' It must be possible to upload a ZIP file
  * '''Case 1:''' It must be possible to upload a TAR.GZ file
 
+!*< Define common variables
+!define expectedDownloadStatus {OK}
+!define expectedDownloadAnswer {}
+*!
+
+
 !***> '''Case 1''' ZIP
 
 !define originalFileName {aZip.zip}
@@ -18,6 +24,10 @@ Compressed files can be stored in cora. The accepted formats are:
 !define binaryType {compressed}
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadResourceValidateAnalysis
+
+!define expectedDownloadAnswer {}
+!define representation {master}
+!include -seamless .HelperPages.downloadResource
 
 !define expectedXpath {//master/master/mimeType[text()='${expectedMimeType}']
 //master/master/actionLinks/read/accept[text()='${expectedMimeType}']
@@ -37,7 +47,6 @@ Compressed files can be stored in cora. The accepted formats are:
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadResourceValidateAnalysis
 
-!define httpCode {200}
 !define representation {master}
 !include -seamless .HelperPages.downloadResource
 
