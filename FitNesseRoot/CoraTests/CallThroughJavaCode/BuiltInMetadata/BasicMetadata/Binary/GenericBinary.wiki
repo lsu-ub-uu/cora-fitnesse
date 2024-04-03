@@ -1,7 +1,7 @@
 ---
 Test
 ---
-!1 !-GenericBinary validation type-!
+!2 !-GenericBinary validation type-!
 !-GenericBinary-! is the only validation type that is available for Binaries, therefor genericBinary can hold information for all kind of resources. Only one validationType is needed since Cora and only Cora is responsible to handle binary metadata, so no need to have extra validation types. !-GenericBinary-! has a group named resourceInfo. Each child of resourceInfo is a representation of the binary in different formats. ResourceInfo will always have master child. Each child have four common fields and x variables fields depending on the format. The common fields are:
 
  * '''resourceId''' Is the resource id in archive or storage. 
@@ -19,8 +19,10 @@ The '''master''' . Other formats depending on the resourceType are listed below:
  * '''width''' Is the width in pixels of the resource.
  * '''resolution''' Is the resoultion in dpi of the resource.
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.data.example1
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.ValidationType
+!3 Actions
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.actions.Create
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.actions.Read
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.actions.UploadDownload
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.actions.Update
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Binary.GenericBinary.actions.Delete

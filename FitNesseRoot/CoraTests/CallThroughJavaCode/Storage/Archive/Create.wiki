@@ -17,6 +17,7 @@ Show file structure before storing a new record
 !define recordType {fitnesseRecordType}
 !define createData createFitnesseRecord
 !define expectedAnswer {}
+!define expectedUploadAnswer {}
 !define expectedCreateResult {CREATED}
 !define archiveFileName {testSystem:fitnesseRecordType:$tmpRecordId1}
 !define archiveVersion1 {v1}
@@ -66,11 +67,8 @@ Show file structure after storing a new record
 !define recordId {$createdRecordId}
 *!
 
-!***> Upload image
-!| RecordEndpointFixture |
-| authToken | type | id | fileName | testUpload? | getStatusType? |
-| $adminAuthToken | binary | $tmpRecordId2 | ${originalFileName} | | OK |
-*!
+!define uploadRecordId {$tmpRecordId2}
+!include -seamless .HelperPages.uploadResource
 
 Show file structure after storing a new record
 !include -seamless .HelperPages.readFileSystem

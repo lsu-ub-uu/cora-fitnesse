@@ -1,30 +1,43 @@
 ---
 Suite
 ---
-!***> SuiteSetUp
+!***> SuiteSetUp for Fitnesse Example
+
 !***> Setup login
 
-!***> Login for admin
-
+!***> Login for fitnesse admin
 !| AppTokenEndpointFixture |
 | userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
 | 131313 | | | $adminAuthToken= | CREATED |
 
-*!
 !| script | AuthTokenHolder |
 | setAdminAuthToken | $adminAuthToken |
+*!
+!***> Login for fitnesse user (Disabled. Related to CORA-2475. Enabled when fixed.)
+#!| AppTokenEndpointFixture |
+#| userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
+#| 121212 | | | $userAuthToken= | CREATED |
+#
+#!| script | AuthTokenHolder |
+#| setUserAuthToken | $userAuthToken |
+*!
+!***> Login for fitnesse guest
+!| IdpLoginServletFixture |
+| EPPN | getAuthTokenForEPPN? | getIdFromLogin? | getResponseCode? | getAuthToken? | getValidForNoSeconds? | getDeleteUrl? |
+| userNotInDb@user.uu.se | |  |  | $guestAuthToken= | |  |
+*!
+*!
 
-!***> Login for user
+!include -seamless .CoraTests.CallThroughJavaCode.SuiteSetUp.ExamplesPool
+
+!***> Login for fitnesse user (Related to CORA-2475. Remove when fixed)
 
 !| AppTokenEndpointFixture |
 | userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
 | 121212 | | | $userAuthToken= | CREATED |
 
-*!
 !| script | AuthTokenHolder |
 | setUserAuthToken | $userAuthToken |
 *!
-
-!include -seamless .CoraTests.CallThroughJavaCode.SuiteSetUp.ExamplesPool
 
 *!

@@ -2,5 +2,5 @@
 Help: Define AdminAuthToken
 ---
 !***< Define AdminAuthToken
-!define currentAuthToken {$adminAuthToken}
+!define currentAuthToken {$userAuthToken}
 *!

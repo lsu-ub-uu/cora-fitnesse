@@ -1,8 +1,8 @@
 ---
 Help: Download a representation of a binary record
 ---
-!***> Download resource
 
+!***> Download resource
 !| DownloadFixture |
 | authToken | recordType | recordId | representation | testDownload? | getStatusType?|
 | ${currentAuthToken} | binary | ${recordId} | ${representation} |${expectedDownloadAnswer} |${expectedDownloadStatus} |

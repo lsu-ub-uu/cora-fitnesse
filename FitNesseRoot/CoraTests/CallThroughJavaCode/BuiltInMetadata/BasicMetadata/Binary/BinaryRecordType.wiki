@@ -1,7 +1,7 @@
 ---
 Static
 ---
-!2 Definitions
+!2 Binary record type
 !3 Definition for Binary
  * '''binary''' type:{generic, image, sound, video, document, text, compressed}(group)
    * '''recordInfo'''(group, 1-1, noConstraint)
@@ -16,9 +16,11 @@ Static
        * '''updatedBy'''(recordLink, 1-1, noConstraint)
        * '''tsUpdated'''(textVariable, 1-1, noConstraint)
    * '''adminInfo'''(group, 1-1, noConstraint)
-     * '''visibility'''(collectionVariable, 1-1, noConstraint)       
+     * '''visibility'''(collectionVariable, 1-1, noConstraint, P)  
+     * '''tsVisibility'''(textVariable, 0-1, write)     
    * '''resourceInfo'''(group, 0-1, write)
      * '''master'''(group, 1-1, noConstraint)
+       * '''originalFileName'''(textVariable, 1-1, noConstraint)
        * '''resourceId'''(textVariable, 1-1, readWrite)
        * '''master'''(resourceLink, 1-1, noConstraint)
        * '''fileSize'''(numberVariable, 1-1, noConstraint)
@@ -26,6 +28,8 @@ Static
        * '''width'''(numberVariable, 0-1, noConstraint)
        * '''height'''(numberVariable, 0-1, noConstraint)
        * '''resolution'''(textVariable, 0-1, noConstraint)
+       * '''checksum'''(textVariable, 0-1, write)
+   	   * '''checksumType'''{SHA-512}(textVariable, 0-1, write)
      * '''thumbnail'''(group, 0-1, noConstraint)
        * '''resourceId'''(textVariable, 1-1, readWrite)
        * '''thumbnail'''(resourceLink, 1-1, noConstraint)
@@ -58,11 +62,9 @@ Static
        * '''height'''(numberVariable, 1-1, noConstraint)
        * '''width'''(numberVariable, 1-1, noConstraint)
        * '''resolution'''(textVariable, 1-1, noConstraint)
-   * '''originalFileName'''(textVariable, 1-1, noConstraint)
-   * '''checksum'''(textVariable, 0-1, write)
-   * '''checksumType'''{SHA-512}(textVariable, 0-1, write)
    * '''expectedFileSize'''(numberVariable, 0-1, noConstraint)
    * '''expectedChecksum'''(textVariable, 0-1, noConstraint)
+   * '''originalFileName'''(textVariable, 1-1, noConstraint)
 
 !***> Test definitions for Binary
 
@@ -73,11 +75,11 @@ Static
 | $adminAuthToken | recordType | binary | | OK |
 
 *!
-!***> Validate  definition of Binary
+!***> Validate  definition of Binary group
 
 !| RecordEndpointFixture |
-| type | id | testReadRecordAndStoreJson? |
-| metadata | binaryGroup | |
+| type | id | testReadRecordAndStoreJson? | getStatusType? |
+| metadata | binaryGroup | | OK |
 
 !| ChildComparerFixture |
 | expectedNumberOfChildren | testCheckNumberOfChildren? |

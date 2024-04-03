@@ -1,3 +1,8 @@
-!| ActionComparerFixture |
-| authToken | type | id | actions | testReadAndStoreRecord? | testCheckActions? |
-| ${currentAuthToken} | ${currentRecordType}| ${currentRecordId} | {"actions":["read","update", "delete", "index", "read_incoming_links"]} | | ${expectedPermissionResult} |
+---
+Help: Check Actions for a record
+---
+!***> Check actions for a record $recordId
+!| ActionComparerFixture                                                |
+|authToken          |actions                    |testCheckActions?      |
+|${currentAuthToken}|${expectedActionsForRecord}|${expectedActionResult}|
+*!

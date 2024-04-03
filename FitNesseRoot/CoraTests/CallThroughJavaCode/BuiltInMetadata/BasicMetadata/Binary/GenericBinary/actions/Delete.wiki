@@ -1,0 +1,20 @@
+---
+Static
+---
+!include -seamless .HelperPages.defineAdminAuthToken
+
+!4 Delete
+
+ * '''Case 1''': It should be possible to delete a '''published''' binary record.
+ * '''Case 1''': It should be possible to delete an '''unpublished''' binary record.
+
+!***> Case 1
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | binary | $publishedRecordId | | OK |
+*!
+!***> Case 2
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | binary | $unpublishedRecordId | | OK |
+*!

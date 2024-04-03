@@ -7,4 +7,6 @@ Help: Compare data, check permissions, read record, compare data
 Validate the '''response''' returned on the '''read''' call contains the expected record parts.
 !include -seamless .HelperPages.compareRecord
 !include -seamless .HelperPages.recordPermissions
+!include -seamless .HelperPages.checkActionsForRecord
+
 *!

@@ -1,0 +1,30 @@
+!***> SetUp - Set variables
+!define expectedActionsForRecord {!-{"actions":["read","update","delete","index","read_incoming_links","upload"]}-!}
+
+
+!***> SuiteSetUp -  Create unpublished and published binary record
+!define recordType {binary}
+!define validationType {genericBinary}
+!define recordPermissions {!-{"read":[],"write":[]}-!}
+
+!define originalFileName {someOriginalFileName}
+!define expectedFileSize {54452040}
+
+!define unpublishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"unpublished"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
+!define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
+
+!define expectedUnpublishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"unpublished"}]},{"children":[],"name":"master"},{"children":[],"name":"thumbnail"},{"children":[],"name":"medium"},{"children":[],"name":"large"},{"children":[],"name":"jp2"},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
+!define expectedPublishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"children":[],"name":"master"},{"children":[],"name":"thumbnail"},{"children":[],"name":"medium"},{"children":[],"name":"large"},{"children":[],"name":"jp2"},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
+
+
+!| RecordEndpointFixture                                                                           |
+|authToken      |type         |json                |testCreateRecord?|getStatusType?|getCreatedId?        |
+|$adminAuthToken|${recordType}|${unpublishedBinary}|                 |CREATED       |$unpublishedRecordId=|
+
+!| RecordEndpointFixture                                                                       |
+|authToken      |type         |json              |testCreateRecord?|getStatusType?|getCreatedId?      |
+|$adminAuthToken|${recordType}|${publishedBinary}|                 |CREATED       |$publishedRecordId=|
+
+*!
+
+*!

@@ -1,0 +1,258 @@
+---
+Static
+---
+!4 Upload and Download
+ * '''Case 1''': It should be possible to upload a file to a '''published''' binary record.
+ * '''Case 2''': It should be possible to upload a file to an '''unpublished''' binary record.
+ * '''Case 3''': It should be possible to download the master resource and all its representations from a '''published''' binary record.
+ * '''Case 4''': It should be possible to download the master resource and all its representations from an '''unpublished''' binary record.
+ * '''Case 5''': TO BE DISCUSSED! When uploading a file to a binary that already has a resource, we will get an internal server error. 
+'''We need to add tests that make sure there is no upload on an updated binary as that will not work, or think about another solution....'''
+!***< Set common variables
+!define originalFileName {aTiff.tiff}
+!define expectedUploadAnswer {}
+!define expectedDownloadAnswer {}
+!define expectedDownloadStatus {OK}
+*!
+!***> '''Case 1'''
+!define uploadRecordId {$publishedRecordId}
+!include -seamless .HelperPages.uploadResource
+*!
+!***> '''Case 2'''
+!define uploadRecordId {$unpublishedRecordId}
+!include -seamless .HelperPages.uploadResource
+*!
+!***> '''Case 3'''
+!| WaitForRegExReadResultFixture                                                                                               |
+|authToken      |recordType|recordId        |sleepTime|maxNumberOfCalls|regEx           |waitUntilUntilRegExpFoundInReadRecord?|
+|$adminAuthToken|binary    |$publishedRecordId|500      |50              |\"name\":\"jp2\"|Found                                 |
+
+!define recordId {$publishedRecordId}
+!define representation {master}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {thumbnail}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {medium}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {large}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {jp2}
+!include -seamless .HelperPages.downloadResource
+*!
+!***> '''Case 4'''
+!| WaitForRegExReadResultFixture                                                                                               |
+|authToken      |recordType|recordId        |sleepTime|maxNumberOfCalls|regEx           |waitUntilUntilRegExpFoundInReadRecord?|
+|$adminAuthToken|binary    |$unpublishedRecordId|500      |50              |\"name\":\"jp2\"|Found                                 |
+
+!define recordId {$unpublishedRecordId}
+!define representation {master}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {thumbnail}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {medium}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {large}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {jp2}
+!include -seamless .HelperPages.downloadResource
+*!
+
+!5 The user '''fitnesseUser''' is used as as an example of a user with some rights on binaries, 
+has read on unpublished, but no download
+!include -seamless .HelperPages.defineCurrentAuthTokenAsFitnesseUser
+!***> '''Case 1''': FitnesseUser user should not have any links to read and should not be able to download, any representations from an unpublished binary record. 
+
+!define regexpAllRepresentationMissing {!-^(?!.*(-!$unpublishedRecordId!-\/master|-!$unpublishedRecordId!-\/thumbnail|-!$unpublishedRecordId!-\/medium|-!$unpublishedRecordId!-\/large|-!$unpublishedRecordId!-\/jp2).*).+$-!}
+!| RecordEndpointFixture                                                   |
+|authToken     |type  |id                  |testReadRecord?                      |getStatusType?|
+|$userAuthToken|binary|$unpublishedRecordId|=~/${regexpAllRepresentationMissing}/|OK     |
+
+!| DownloadFixture |
+| authToken | recordType | recordId | representation | testDownload? | getStatusType? | 
+| $userAuthToken | binary | $unpublishedRecordId | master | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | thumbnail | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | medium | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | large | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | jp2 | |FORBIDDEN|
+
+*!
+
+change permissions to:
+has read on unpublished, and download on each representation in turn master, thumbnail, medium, large, jp2
+ * '''Case 1''': FitnesseUser user should have a link to read master representation and download it, but not other representaitons from an unpublished binary record.
+ * '''Case 2''': FitnesseUser user should have a link to read thumbnail representation and download it, but not other representaitons from an unpublished binary record.
+ * '''Case 3''': FitnesseUser user should have a link to read medium representation and download it, but not other representaitons from an unpublished binary record.
+ * '''Case 4''': FitnesseUser user should have a link to read large representation and download it, but not other representaitons from an unpublished binary record.
+ * '''Case 5''': FitnesseUser user should have a link to read jp2 representation and download it, but not other representaitons from an unpublished binary record.
+ 
+!***< SetUp 
+!define representation {master}
+!define recordType {permissionRule}
+!define recordId {fitnesseBinaryReadOnAllVisibilitiesRule}
+!define expectedAnswer {}
+!define currentAuthToken {$adminAuthToken}
+!define expectedUpdateResult {OK}
+!define ignoreOverwriteProtectionReadOnAllVisibilitiesRule {!-{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRule"}]},-!}
+!define fitnesseBinaryReadOnAllVisibilitiesRuleMetaData {!-{"name":"permissionRule","children":[{"name":"recordInfo","children":[-!${ignoreOverwriteProtectionReadOnAllVisibilitiesRule}!-{"name":"id","value":"fitnesseBinaryReadOnAllVisibilitiesRule"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRule"}]}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","repeatId":"0","value":"system.read"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":-!${permissionRulePartReadOnAllVisibilitiesRule}!-,"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"visibilityPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]}]}-!}
+*! 
+!***> '''Case 1'''
+!***> Update fitnesse user rule. Add credential to read '''master'''
+!define permissionRulePartReadOnAllVisibilitiesRule {!-[{"name":"permissionRulePartValue","repeatId":"1","value":"system.binary"},{"name":"permissionRulePartValue","repeatId":"2","value":"system.binary.master"}]-!}
+!define updateData {${fitnesseBinaryReadOnAllVisibilitiesRuleMetaData}}
+!include -seamless .HelperPages.updateRecord
+!define regexpRepresentationMaster {!-"actionLinks":\{"read":\{"requestMethod":"GET","rel":"read","url":"http:.*-!$unpublishedRecordId!-\/master","accept":"image\/tiff"\}\}-!}
+!define regexpRepresentationThumbnail {!-"actionLinks":\{"read":\{"requestMethod":"GET","rel":"read","url":"http:.*-!$unpublishedRecordId!-\/thumbnail","accept":"image\/jpeg"\}\}-!}
+!define regexpRepresentationMedium {!-"actionLinks":\{"read":\{"requestMethod":"GET","rel":"read","url":"http:.*-!$unpublishedRecordId!-\/medium","accept":"image\/jpeg"\}\}-!}
+!define regexpRepresentationLarge {!-"actionLinks":\{"read":\{"requestMethod":"GET","rel":"read","url":"http:.*-!$unpublishedRecordId!-\/large","accept":"image\/jpeg"\}\}-!}
+!define regexpRepresentationJp2 {!-"actionLinks":\{"read":\{"requestMethod":"GET","rel":"read","url":"http:.*-!$unpublishedRecordId!-\/jp2","accept":"image\/jp2"\}\}-!}
+
+#Define several regexp in order to match the actionLinks related to the representations without permissions. Better solution would be using a Fixture.
+!define regexpAllRepresentationMissingButMaster {!-^(?!.*(-!$unpublishedRecordId!-\/thumbnail|-!$unpublishedRecordId!-\/medium|-!$unpublishedRecordId!-\/large|-!$unpublishedRecordId!-\/jp2).*).+$-!}
+!define regexpAllRepresentationMissingButThumbnail {!-^(?!.*(-!$unpublishedRecordId!-\/master|-!$unpublishedRecordId!-\/medium|-!$unpublishedRecordId!-\/large|-!$unpublishedRecordId!-\/jp2).*).+$-!}
+!define regexpAllRepresentationMissingButMedium {!-^(?!.*(-!$unpublishedRecordId!-\/master|-!$unpublishedRecordId!-\/thumbnail|-!$unpublishedRecordId!-\/large|-!$unpublishedRecordId!-\/jp2).*).+$-!}
+!define regexpAllRepresentationMissingButLarge {!-^(?!.*(-!$unpublishedRecordId!-\/master|-!$unpublishedRecordId!-\/thumbnail|-!$unpublishedRecordId!-\/medium|-!$unpublishedRecordId!-\/jp2).*).+$-!}
+!define regexpAllRepresentationMissingButJp2 {!-^(?!.*(-!$unpublishedRecordId!-\/master|-!$unpublishedRecordId!-\/thumbnail|-!$unpublishedRecordId!-\/medium|-!$unpublishedRecordId!-\/large).*).+$-!}
+*!
+!| RecordEndpointFixture |
+|authToken     |type  |id                  |testReadRecord?                      |getStatusType?|
+|$userAuthToken|binary|$unpublishedRecordId|=~/${regexpRepresentationMaster}/    |OK            |
+|$userAuthToken|binary|$unpublishedRecordId|=~/${regexpAllRepresentationMissingButMaster}/|OK            |
+
+!| DownloadFixture |
+| authToken | recordType | recordId | representation | testDownload? | getStatusType? | 
+| $userAuthToken | binary | $unpublishedRecordId | master | |OK|
+| $userAuthToken | binary | $unpublishedRecordId | thumbnail | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | medium | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | large | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | jp2 | |FORBIDDEN|
+*!
+!***> '''Case 2'''
+!***> Update fitnesse user rule. Add credential to read '''thumbnail'''
+!define permissionRulePartReadOnAllVisibilitiesRule {!-[{"name":"permissionRulePartValue","repeatId":"1","value":"system.binary"},{"name":"permissionRulePartValue","repeatId":"2","value":"system.binary.thumbnail"}]-!}
+!define updateData {${fitnesseBinaryReadOnAllVisibilitiesRuleMetaData}}
+!include -seamless .HelperPages.updateRecord
+*!
+!| RecordEndpointFixture |
+|authToken     |type  |id                  |testReadRecord?                                  |getStatusType?|
+|$userAuthToken|binary|$unpublishedRecordId|=~/${regexpRepresentationThumbnail}/             |OK     |
+|$userAuthToken|binary|$unpublishedRecordId|=~/${regexpAllRepresentationMissingButThumbnail}/|OK     |
+
+!| DownloadFixture |
+| authToken | recordType | recordId | representation | testDownload? | getStatusType? | 
+| $userAuthToken | binary | $unpublishedRecordId | master | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | thumbnail | |OK|
+| $userAuthToken | binary | $unpublishedRecordId | medium | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | large | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | jp2 | |FORBIDDEN|
+*!
+!***> '''Case 3'''
+!***> Update fitnesse user rule. Add credential to read '''medium'''
+!define permissionRulePartReadOnAllVisibilitiesRule {!-[{"name":"permissionRulePartValue","repeatId":"1","value":"system.binary"},{"name":"permissionRulePartValue","repeatId":"2","value":"system.binary.medium"}]-!}
+!define updateData {${fitnesseBinaryReadOnAllVisibilitiesRuleMetaData}}
+!include -seamless .HelperPages.updateRecord
+*!
+!| RecordEndpointFixture |
+|authToken     |type  |id                  |testReadRecord?                                 |getStatusType?|
+|$userAuthToken|binary|$unpublishedRecordId| =~/${regexpRepresentationMedium}/              |OK            |
+|$userAuthToken|binary|$unpublishedRecordId| =~/${regexpAllRepresentationMissingButMedium}/ |OK            |
+
+!| DownloadFixture |
+| authToken | recordType | recordId | representation | testDownload? | getStatusType? | 
+| $userAuthToken | binary | $unpublishedRecordId | master | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | thumbnail | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | medium | |OK|
+| $userAuthToken | binary | $unpublishedRecordId | large | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | jp2 | |FORBIDDEN|
+*!
+!***> '''Case 4'''
+!***> Update fitnesse user rule. Add credential to read '''large'''
+!define permissionRulePartReadOnAllVisibilitiesRule {!-[{"name":"permissionRulePartValue","repeatId":"1","value":"system.binary"},{"name":"permissionRulePartValue","repeatId":"2","value":"system.binary.large"}]-!}
+!define updateData {${fitnesseBinaryReadOnAllVisibilitiesRuleMetaData}}
+!include -seamless .HelperPages.updateRecord
+*!
+!| RecordEndpointFixture                                                   |
+|authToken     |type  |id                  |testReadRecord?                  | getStatusType?|
+|$userAuthToken|binary|$unpublishedRecordId| =~/${regexpRepresentationLarge}/ |OK     |
+|$userAuthToken|binary|$unpublishedRecordId| =~/${regexpAllRepresentationMissingButLarge}/ |OK     |
+
+!| DownloadFixture |
+| authToken | recordType | recordId | representation | testDownload? |getStatusType? | 
+| $userAuthToken | binary | $unpublishedRecordId | master | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | thumbnail | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | medium | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | large | |OK|
+| $userAuthToken | binary | $unpublishedRecordId | jp2 | |FORBIDDEN|
+*!
+!***> '''Case 5'''
+!***> Update fitnesse user rule. Add credential to read '''jp2'''
+!define permissionRulePartReadOnAllVisibilitiesRule {!-[{"name":"permissionRulePartValue","repeatId":"1","value":"system.binary"},{"name":"permissionRulePartValue","repeatId":"2","value":"system.binary.jp2"}]-!}
+!define updateData {${fitnesseBinaryReadOnAllVisibilitiesRuleMetaData}}
+!include -seamless .HelperPages.updateRecord
+*!
+!| RecordEndpointFixture |
+|authToken     |type  |id                  |testReadRecord?                                 |getStatusType?|
+|$userAuthToken|binary|$unpublishedRecordId| =~/${regexpRepresentationJp2}/                 | OK           |
+|$userAuthToken|binary|$unpublishedRecordId| =~/${regexpAllRepresentationMissingButJp2}/ |OK     |
+
+!| DownloadFixture |
+| authToken      | recordType | recordId         |representation |testDownload? |getStatusType? |
+| $userAuthToken | binary | $unpublishedRecordId | master         |             |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | thumbnail      | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | medium | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | large | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | jp2 | |OK|
+*!
+
+!***> Clean up fitnesse user rule
+!define permissionRulePartReadOnAllVisibilitiesRule {!-[{"name":"permissionRulePartValue","repeatId":"1","value":"system.binary"}]-!}
+!define updateData {${fitnesseBinaryReadOnAllVisibilitiesRuleMetaData}}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!5 The user '''Guest''' is used as as an example of a user without specific rights on binaries
+
+  * It should not be able to read the upload link.
+ * '''Case 1''': Guest user should be able to download all representations from a published binary record when a file has been uploaded. 
+  * It should have a link to read all representations.
+ 
+!***> '''Case 3''' (Not implemented yet, not set up in permissions metadata) 
+#!***> Upload a file
+#!define currentAuthToken {$adminAuthToken}
+#!define originalFileName {aTiff.tiff}
+#!define createData publishedBinary
+#!define expectedUploadAnswer {!--!}
+#!define uploadRecordId {$publishedRecordId}
+#!include -seamless .HelperPages.uploadResource
+#*!
+#!***> Read published binary, action link to read master exists. OBS, add regex to thumbnail, medium, large, jp2
+##!define currentAuthToken {}
+##!| RecordEndpointFixture |
+##| authToken | type | id | testReadRecord? | getStatusType? |
+##| $guestAuthToken | binary | $publishedRecordId | =~/^(?=.*("read":{"requestMethod":"GET","rel":"read","url".*\/master)).+$/ | OK |
+#*!
+#
+#!***> Download master
+#!define downloadRecordId {$publishedRecordId}
+#!define currentAuthToken {$guestAuthToken}
+#!define representation {master}
+#!include -seamless .HelperPages.downloadResource
+#*!
+##
+##!define representation {thumbnail}
+##!include -seamless .HelperPages.downloadResource
+##
+##!define representation {medium}
+##!include -seamless .HelperPages.downloadResource
+##
+##!define representation {large}
+##!include -seamless .HelperPages.downloadResource
+*!
+ 

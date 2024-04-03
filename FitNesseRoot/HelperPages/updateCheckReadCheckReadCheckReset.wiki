@@ -7,6 +7,7 @@ Update the record
 Validate the '''response''' returned on the '''update''' call contains the expected record parts.
 !include -seamless .HelperPages.compareRecord
 !include -seamless .HelperPages.recordPermissions
+!include -seamless .HelperPages.checkActionsForRecord
 
 Read the record has been updated correctly, by reading the stored record again.
 !include -seamless .HelperPages.readRecord
@@ -14,6 +15,7 @@ Read the record has been updated correctly, by reading the stored record again.
 Validate the read '''response''' returned on the '''read''' call contains the expected record parts.
 !include -seamless .HelperPages.compareRecord
 !include -seamless .HelperPages.recordPermissions
+!include -seamless .HelperPages.checkActionsForRecord
 
 Read and check data with full permissions to see the record as it is stored.
 !define currentAuthToken {$adminAuthToken}
