@@ -1,5 +1,5 @@
 ---
-Test
+Static
 ---
 !2 Text
 Binary text files can be stored into Cora. Accepted formats:

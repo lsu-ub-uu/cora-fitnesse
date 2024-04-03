@@ -1,5 +1,5 @@
 ---
-Test
+Static
 ---
 !2 Image
 Binary images will be analyzed and then converted to different formats.The information from extracted from analyze step is:

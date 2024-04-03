@@ -211,6 +211,11 @@ has read on unpublished, and download on each representation in turn master, thu
 | $userAuthToken | binary | $unpublishedRecordId | jp2 | |OK|
 *!
 
+!***> Clean up fitnesse user rule
+!define permissionRulePartReadOnAllVisibilitiesRule {!-[{"name":"permissionRulePartValue","repeatId":"1","value":"system.binary"}]-!}
+!define updateData {${fitnesseBinaryReadOnAllVisibilitiesRuleMetaData}}
+!include -seamless .HelperPages.updateRecord
+*!
 
 !5 The user '''Guest''' is used as as an example of a user without specific rights on binaries
 

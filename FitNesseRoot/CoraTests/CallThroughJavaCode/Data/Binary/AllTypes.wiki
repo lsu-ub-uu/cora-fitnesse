@@ -1,5 +1,5 @@
 ---
-Test
+Static
 ---
 !*< Initialize variables
 !define expectedUploadAnswer {}
