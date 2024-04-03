@@ -13,8 +13,8 @@ When uploading binary files we need to validate that the integrity of the upload
 !define expectedDownloadAnswer {An error has ocurred while downloading a resource: Could not download the stream because it could not be found in storage. Type: binary, id: $tmpRecordId1 and representation: master}
 !define expectedDownloadStatus {NOT_FOUND}
 !define representation {master}
+!define recordType {binary}
 *!
-
 
 !3 File size validation
 !***> '''Case 1''' The file size of the binary stored in the archive does not match the expected file size from the request.
@@ -23,6 +23,7 @@ When uploading binary files we need to validate that the integrity of the upload
 !define expectedUploadAnswer {An error has ocurred while uploading a resource: The file size verification of uploaded data failed: the actual value was: 28 but the expected value was: 1234567890.}
 !define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
 !define createData publishedBinary
+!define recordId {$tmpRecordId1}
 *!
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryAndUploadFile
@@ -36,6 +37,7 @@ When uploading binary files we need to validate that the integrity of the upload
 !define expectedUploadAnswer {An error has ocurred while uploading a resource: The checksum verification of uploaded data failed: the actual value was: 5ee3dbf5b81474c1fb73ac49b389ba6d445f672d82abbdc865defced83b09b6aa811790966eb4fcf33d74799d22e9849f6b1ab99d74673d7207ec5f35af54bac but the expected value was: 1234567890.}
 !define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedChecksum","value":"-!${expectedChecksum}!-"}],"attributes":{"type":"generic"}}-!}
 !define createData publishedBinary
+!define recordId {$tmpRecordId1}
 *!
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryAndUploadFile

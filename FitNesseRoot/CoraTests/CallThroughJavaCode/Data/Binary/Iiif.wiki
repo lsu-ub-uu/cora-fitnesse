@@ -10,8 +10,8 @@ Other protocols contain information about how to access the image using the IIIF
  or 
  * the binary is published. 
 All cases will make sure there is no IIIF protocol information when the binary record is created, or when the file is first uploaded.
- * '''Case 1:''' When reading a "published" image with a Jp2 representation, IIIF protocol information must be present. It must have a server and identifier properties in it. 
- * '''Case 2:''' When reading an "unpublished" image with a Jp2 representation IIIF protocol information should not be present. 
+ * '''Case 1:''' IIIF protocol information must be present with a user that has permissions to read the jp2 representation. Information must contain a server and identifier properties. 
+ * '''Case 2:''' IIIF protocol information must '''not''' be present with a user that has '''no''' permissions to read the jp2 representation.
  * '''Case 3:''' When reading an any other binary that is not an image then IIIF protocol information should not be present.
  
 !***> Setup
@@ -19,12 +19,11 @@ All cases will make sure there is no IIIF protocol information when the binary r
 !define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
 *!
 
-
-!***> '''Case 1'''
+!***> '''Case 1''' We use guestAuthToken to read an unpublished binary record
 !*< definition
 !define originalFileName {aTiff.tiff}
 !define expectedFileSize {54452040}
-!define createData publishedBinary
+!define createData unpublishedBinary
 *!
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryUploadImageAndWait
 
@@ -38,32 +37,29 @@ All cases will make sure there is no IIIF protocol information when the binary r
 //otherProtocols/iiif/identifier[text() = '${recordId}']}
 !include -seamless .HelperPages.readRecordInXML
 
-!include -seamless .HelperPages.deleteRecord
 *!
 
-!***> '''Case 2'''
-!*< definition
-!define originalFileName {aTiff.tiff}
-!define createData publishedBinary
-*!
-!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryUploadImageAndWait
+!***> '''Case 2''' We use userAuthToken to read an unpublished binary record
+!define currentAuthToken {$userAuthToken}
 
 !| ChildComparerFixture |
 | authToken | type | id | testReadAndStoreRecord? |
-| ${currentAuthToken} | ${recordType} | ${recordId} |=~/!-r"(?!iiif)\b\w+\b-!/ |
+| ${currentAuthToken} | ${recordType} | ${recordId} |=~/!-^(?!.*(iiif).*).+$-!/ |
 
 !define iiifServerUrl (${systemUnderTestUrl}iiif/)
 
 !define expectedXpath {count(//otherProtocols) = 0}
 !include -seamless .HelperPages.readRecordInXML
 
+!***> Cleanup case 1 and case 2
 !include -seamless .HelperPages.deleteRecord
 *!
-
+*!
 !***> '''Case 3'''
+!include -seamless .HelperPages.defineAdminAuthToken
 !define originalFileName {aZip.zip}
 !define expectedFileSize {144}
-!define createData unpublishedBinary
+!define createData publishedBinary
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryAndUploadFile
 
@@ -74,6 +70,7 @@ All cases will make sure there is no IIIF protocol information when the binary r
 !define expectedXpath {count(//otherProtocols) = 0}
 !include -seamless .HelperPages.readRecordInXML
 
+!***> Cleanup case 3
 !include -seamless .HelperPages.deleteRecord
 *!
-
+*!

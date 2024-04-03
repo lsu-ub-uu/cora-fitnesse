@@ -8,9 +8,11 @@ Static
  * '''Case 4''': It should be possible to download the master resource and all its representations from an '''unpublished''' binary record.
  * '''Case 5''': TO BE DISCUSSED! When uploading a file to a binary that already has a resource, we will get an internal server error. 
 '''We need to add tests that make sure there is no upload on an updated binary as that will not work, or think about another solution....'''
-!***< definition
+!***< Set common variables
 !define originalFileName {aTiff.tiff}
 !define expectedUploadAnswer {}
+!define expectedDownloadAnswer {}
+!define expectedDownloadStatus {OK}
 *!
 !***> '''Case 1'''
 !define uploadRecordId {$publishedRecordId}
@@ -25,8 +27,7 @@ Static
 |authToken      |recordType|recordId        |sleepTime|maxNumberOfCalls|regEx           |waitUntilUntilRegExpFoundInReadRecord?|
 |$adminAuthToken|binary    |$publishedRecordId|500      |50              |\"name\":\"jp2\"|Found                                 |
 
-!define downloadRecordId {$publishedRecordId}
-!define httpCode {200}
+!define recordId {$publishedRecordId}
 !define representation {master}
 !include -seamless .HelperPages.downloadResource
 
@@ -47,8 +48,7 @@ Static
 |authToken      |recordType|recordId        |sleepTime|maxNumberOfCalls|regEx           |waitUntilUntilRegExpFoundInReadRecord?|
 |$adminAuthToken|binary    |$unpublishedRecordId|500      |50              |\"name\":\"jp2\"|Found                                 |
 
-!define downloadRecordId {$unpublishedRecordId}
-!define httpCode {200}
+!define recordId {$unpublishedRecordId}
 !define representation {master}
 !include -seamless .HelperPages.downloadResource
 
@@ -75,16 +75,13 @@ has read on unpublished, but no download
 |authToken     |type  |id                  |testReadRecord?                      |getStatusType?|
 |$userAuthToken|binary|$unpublishedRecordId|=~/${regexpAllRepresentationMissing}/|OK     |
 
-!define httpCode {=~/Code: 403/}
-!define representation {master}
-
 !| DownloadFixture |
-| authToken | recordType | recordId | representation | testDownload? | 
-| $userAuthToken | binary | $unpublishedRecordId | master | =~/Code: 403/ |
-| $userAuthToken | binary | $unpublishedRecordId | thumbnail | =~/Code: 403/ |
-| $userAuthToken | binary | $unpublishedRecordId | medium | =~/Code: 403/ |
-| $userAuthToken | binary | $unpublishedRecordId | large | =~/Code: 403/ |
-| $userAuthToken | binary | $unpublishedRecordId | jp2 | =~/Code: 403/ |
+| authToken | recordType | recordId | representation | testDownload? | getStatusType? | 
+| $userAuthToken | binary | $unpublishedRecordId | master | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | thumbnail | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | medium | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | large | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | jp2 | |FORBIDDEN|
 
 *!
 
@@ -97,6 +94,7 @@ has read on unpublished, and download on each representation in turn master, thu
  * '''Case 5''': FitnesseUser user should have a link to read jp2 representation and download it, but not other representaitons from an unpublished binary record.
  
 !***< SetUp 
+!define representation {master}
 !define recordType {permissionRule}
 !define recordId {fitnesseBinaryReadOnAllVisibilitiesRule}
 !define expectedAnswer {}
@@ -129,12 +127,12 @@ has read on unpublished, and download on each representation in turn master, thu
 |$userAuthToken|binary|$unpublishedRecordId|=~/${regexpAllRepresentationMissingButMaster}/|OK            |
 
 !| DownloadFixture |
-| authToken | recordType | recordId | representation | testDownload? | 
-| $userAuthToken | binary | $unpublishedRecordId | master | 200 |
-| $userAuthToken | binary | $unpublishedRecordId | thumbnail | =~/Code: 403/ |
-| $userAuthToken | binary | $unpublishedRecordId | medium | =~/Code: 403/ |
-| $userAuthToken | binary | $unpublishedRecordId | large | =~/Code: 403/ |
-| $userAuthToken | binary | $unpublishedRecordId | jp2 | =~/Code: 403/ |
+| authToken | recordType | recordId | representation | testDownload? | getStatusType? | 
+| $userAuthToken | binary | $unpublishedRecordId | master | |OK|
+| $userAuthToken | binary | $unpublishedRecordId | thumbnail | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | medium | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | large | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | jp2 | |FORBIDDEN|
 *!
 !***> '''Case 2'''
 !***> Update fitnesse user rule. Add credential to read '''thumbnail'''
@@ -148,12 +146,12 @@ has read on unpublished, and download on each representation in turn master, thu
 |$userAuthToken|binary|$unpublishedRecordId|=~/${regexpAllRepresentationMissingButThumbnail}/|OK     |
 
 !| DownloadFixture |
-| authToken | recordType | recordId | representation | testDownload? | 
-| $userAuthToken | binary | $unpublishedRecordId | master | =~/Code: 403/ |
-| $userAuthToken | binary | $unpublishedRecordId | thumbnail | 200 |
-| $userAuthToken | binary | $unpublishedRecordId | medium | =~/Code: 403/ |
-| $userAuthToken | binary | $unpublishedRecordId | large | =~/Code: 403/ |
-| $userAuthToken | binary | $unpublishedRecordId | jp2 | =~/Code: 403/ |
+| authToken | recordType | recordId | representation | testDownload? | getStatusType? | 
+| $userAuthToken | binary | $unpublishedRecordId | master | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | thumbnail | |OK|
+| $userAuthToken | binary | $unpublishedRecordId | medium | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | large | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | jp2 | |FORBIDDEN|
 *!
 !***> '''Case 3'''
 !***> Update fitnesse user rule. Add credential to read '''medium'''
@@ -167,12 +165,12 @@ has read on unpublished, and download on each representation in turn master, thu
 |$userAuthToken|binary|$unpublishedRecordId| =~/${regexpAllRepresentationMissingButMedium}/ |OK            |
 
 !| DownloadFixture |
-| authToken | recordType | recordId | representation | testDownload? | 
-| $userAuthToken | binary | $unpublishedRecordId | master | =~/Code: 403/ |
-| $userAuthToken | binary | $unpublishedRecordId | thumbnail | =~/Code: 403/ |
-| $userAuthToken | binary | $unpublishedRecordId | medium | 200 |
-| $userAuthToken | binary | $unpublishedRecordId | large | =~/Code: 403/ |
-| $userAuthToken | binary | $unpublishedRecordId | jp2 | =~/Code: 403/ |
+| authToken | recordType | recordId | representation | testDownload? | getStatusType? | 
+| $userAuthToken | binary | $unpublishedRecordId | master | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | thumbnail | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | medium | |OK|
+| $userAuthToken | binary | $unpublishedRecordId | large | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | jp2 | |FORBIDDEN|
 *!
 !***> '''Case 4'''
 !***> Update fitnesse user rule. Add credential to read '''large'''
@@ -181,17 +179,17 @@ has read on unpublished, and download on each representation in turn master, thu
 !include -seamless .HelperPages.updateRecord
 *!
 !| RecordEndpointFixture                                                   |
-|authToken     |type  |id                  |testReadRecord?                  |getStatusType?|
+|authToken     |type  |id                  |testReadRecord?                  | getStatusType?|
 |$userAuthToken|binary|$unpublishedRecordId| =~/${regexpRepresentationLarge}/ |OK     |
 |$userAuthToken|binary|$unpublishedRecordId| =~/${regexpAllRepresentationMissingButLarge}/ |OK     |
 
 !| DownloadFixture |
-| authToken | recordType | recordId | representation | testDownload? | 
-| $userAuthToken | binary | $unpublishedRecordId | master | =~/Code: 403/ |
-| $userAuthToken | binary | $unpublishedRecordId | thumbnail | =~/Code: 403/ |
-| $userAuthToken | binary | $unpublishedRecordId | medium | =~/Code: 403/ |
-| $userAuthToken | binary | $unpublishedRecordId | large | 200 |
-| $userAuthToken | binary | $unpublishedRecordId | jp2 | =~/Code: 403/ |
+| authToken | recordType | recordId | representation | testDownload? |getStatusType? | 
+| $userAuthToken | binary | $unpublishedRecordId | master | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | thumbnail | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | medium | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | large | |OK|
+| $userAuthToken | binary | $unpublishedRecordId | jp2 | |FORBIDDEN|
 *!
 !***> '''Case 5'''
 !***> Update fitnesse user rule. Add credential to read '''jp2'''
@@ -205,12 +203,12 @@ has read on unpublished, and download on each representation in turn master, thu
 |$userAuthToken|binary|$unpublishedRecordId| =~/${regexpAllRepresentationMissingButJp2}/ |OK     |
 
 !| DownloadFixture |
-| authToken | recordType | recordId | representation | testDownload? | 
-| $userAuthToken | binary | $unpublishedRecordId | master | =~/Code: 403/ |
-| $userAuthToken | binary | $unpublishedRecordId | thumbnail | =~/Code: 403/ |
-| $userAuthToken | binary | $unpublishedRecordId | medium | =~/Code: 403/ |
-| $userAuthToken | binary | $unpublishedRecordId | large | =~/Code: 403/ |
-| $userAuthToken | binary | $unpublishedRecordId | jp2 | 200 |
+| authToken      | recordType | recordId         |representation |testDownload? |getStatusType? |
+| $userAuthToken | binary | $unpublishedRecordId | master         |             |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | thumbnail      | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | medium | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | large | |FORBIDDEN|
+| $userAuthToken | binary | $unpublishedRecordId | jp2 | |OK|
 *!
 
 
