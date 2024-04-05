@@ -11,7 +11,7 @@ Check there is no mention of iiif in the answer when creating a binary
 | ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $tmpRecordId1= |
 
 *!
-!***> Upload image
+!***> Upload a file
 !| RecordEndpointFixture |
 | authToken | type | id | fileName | testUpload? | getStatusType? |
 | $adminAuthToken | binary | $tmpRecordId1 | ${originalFileName} | ${expectedUploadAnswer} | ${expectedUploadResult} |

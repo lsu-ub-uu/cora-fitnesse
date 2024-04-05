@@ -28,7 +28,7 @@ All cases will make sure there is no IIIF protocol information when the binary r
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryUploadImageAndWait
 !define unpublishedRecordId {$tmpRecordId1}
 *!
-!***> '''Case 1''' We use guestAuthToken to read an unpublished binary record
+!***> '''Case 1''' We use adminAuthToken to read an unpublished binary record
 !*< definition
 *!
 
