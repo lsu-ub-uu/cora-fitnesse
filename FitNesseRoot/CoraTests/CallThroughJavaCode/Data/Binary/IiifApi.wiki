@@ -1,14 +1,26 @@
 ---
-Static
+Test
 ---
 !2 IIIF API
 This section test the IIIF API in Cora. The test will call the IIIF Api using http requests.
 
- * '''Case 1:''' It should be possible to read a binary image that is published and has been converted to JP2 using IIIF protocol. 
- * '''Case 2:''' It should not be possible to read a binary image that is unpublished, it should return Forbbiden (401) 
- * '''Case 3:''' It should be possible to read a binary image that is unpublished, for a user that has permissions to read jp2 by using IIIF "Authorization" header (with Cora authToken)
- * '''Case 4:''' Trying to read any other binary should return Not Found (404).  
- * '''Case 5:''' Trying to read a record that does not exist should return Not Found (404). 
+!3 Read
+ * '''Case 1:''' It should be possible to read a binary image that has been converted to JP2 using IIIF protocol. 
+ * '''Case 2:''' Trying to read a binary before an image has been uploaded should return Not Found (404).  
+ * '''Case 3:''' Trying to read any other binary than an image with a JP2 representation should return Not Found (404).  
+ * '''Case 4:''' Trying to read a record that does not exist should return Not Found (404). 
+ * '''Case 5:''' Trying to read an image that Guest does not have access to, without sending an authToken should result in Unauthorized (401)
+ * '''Case 6:''' Trying to read an image with a valid authToken without permissions to read the JP2 representation should result in Forbidden (403)
+
+!4 Using permissions
+It should be possible to set up permissions so that a guest user only can read published binaries with JP2 representations
+It should be possible to set up permissions so that an other user can read unpublished binaries with JP2 representations
+
+'''Guest''' !-in SystemOne should be set up this way so:-!
+ * '''Case 7:''' It should be possible for Guest to read a binary image that is published and has been converted to JP2 using IIIF protocol. 
+ * '''Case 8:''' It should not be possible for Guest to read a binary image that is unpublished and has been converted to JP2 using IIIF protocol. 
+ * '''Case 9:''' It should not be possible for Guest to read a binary image that is hidden and has been converted to JP2 using IIIF protocol. 
+
 
 !***> '''Case 1'''
 In this case we create a binary record with visibility "published", then we upload an image and we wait until the convertion to JP2 is completed. Once this is done we call iiif endpoint three time.
@@ -19,7 +31,6 @@ In this case we create a binary record with visibility "published", then we uplo
 !***> definition
 !define originalFileName {aTiff.tiff}
 !define expectedFileSize {54452040}
-!define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
 !define createData publishedBinary
 *!
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryUploadImageAndWait
@@ -38,15 +49,59 @@ Get a section of the image
 
 !include -seamless .HelperPages.deleteRecord
 *!
-!***> '''Setup for case 2-3'''
+
+#!***> '''Case 3'''
+#In this case we use a binary record with visibility "unpublished", we call iiif endpoint three time.
+# * Request info.json file
+# * Request full image
+# * Request a part of the image.
+#All of them should return 200 Ok.
+#
+#
+#!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/    |
+#|GET                                                |/$tmpRecordId1/info.json|200|||
+#
+#Get full image
+#!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/                  |
+#|GET                                                |/$tmpRecordId1/full/244,/0/default.jpg|200|||
+#
+#Get a section of the image
+#!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/                                     |
+#|GET                                                |/$tmpRecordId1/2048,2048,2048,2048/!256,256/0/default.jpg|200|||
+#
+#*!
+
+!***> '''Case 3''' 
+In this case we create a binary record with visibility "published", then we upload an compressed file and we wait it is stored in cora. Once this is done we try to get info.json from that file. This should not work.
+!***> definition
+!define originalFileName {aZip.zip}
+!define expectedFileSize {144}
+!define createData publishedBinary
+*!
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryAndUploadFile
+
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/    |
+|GET                                                |/$tmpRecordId1/info.json|404|||
+
+#TODO: 404 it should be thrown from spider and we should get Content-Type : text/html;charset=utf-8
+#!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/                                          |
+#|GET                                                |/$tmpRecordId1/info.json|404|Content-Type : text/html;charset=utf-8||
+
+!include -seamless .HelperPages.deleteRecord
+*!
+!***> '''Case 4''' 
+In this case we try to read an image with a record id that does not exists.
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/                                                   |
+|GET                                                |/aNonExixtingIdentifier/info.json|404|Content-Type : text/html;charset=utf-8||
+*!
+!***> '''Case 5'''
+!***> '''Setup for case 5'''
 !***> definition
 !define originalFileName {aTiff.tiff}
-!define unpublishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"unpublished"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
 !define createData unpublishedBinary
 *!
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryUploadImageAndWait
 *!
-!***> '''Case 2'''
 In this case we create a binary record with visibility "unpublished", then we upload an image and we wait until the convertion to JP2 is completed. Once this is done we call iiif endpoint three time.
  * Request info.json file
  * Request full image
@@ -64,53 +119,7 @@ Get full image
 Get a section of the image
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/                                     |
 |GET                                                |/$tmpRecordId1/2048,2048,2048,2048/!256,256/0/default.jpg|401|||
-
-*!
-!***> '''Case 3'''
-In this case we use a binary record with visibility "unpublished", we call iiif endpoint three time.
- * Request info.json file
- * Request full image
- * Request a part of the image.
-All of them should return 200 Ok.
-
-
-!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/    |
-|GET                                                |/$tmpRecordId1/info.json|200|||
-
-Get full image
-!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/                  |
-|GET                                                |/$tmpRecordId1/full/244,/0/default.jpg|200|||
-
-Get a section of the image
-!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/                                     |
-|GET                                                |/$tmpRecordId1/2048,2048,2048,2048/!256,256/0/default.jpg|200|||
-
-*!
 !***> '''Cleanup case 2-3''' 
 !include -seamless .HelperPages.deleteRecord
 *!
-!***> '''Case 4''' 
-In this case we create a binary record with visibility "published", then we upload an compressed file and we wait it is stored in cora. Once this is done we try to get info.json from that file. This should not work.
-!***> definition
-!define originalFileName {aZip.zip}
-!define expectedFileSize {144}
-!define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
-!define createData publishedBinary
 *!
-!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryAndUploadFile
-
-!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/    |
-|GET                                                |/$tmpRecordId1/info.json|404|||
-
-#TODO: 404 it should be thrown from spider and we should get Content-Type : text/html;charset=utf-8
-#!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/                                          |
-#|GET                                                |/$tmpRecordId1/info.json|404|Content-Type : text/html;charset=utf-8||
-
-!include -seamless .HelperPages.deleteRecord
-*!
-!***> '''Case 5''' 
-In this case we try to read an image with a record id that does not exists.
-!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/                                                   |
-|GET                                                |/aNonExixtingIdentifier/info.json|404|Content-Type : text/html;charset=utf-8||
-*!
-
