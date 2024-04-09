@@ -99,7 +99,7 @@ Three calls are made:
  * Request a part of the image.
 All of them should return 403 Forbidden.
 
-Set guest as authToken header
+Set fitnesse user as authToken header
 | Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
 | restfixture.default.headers | authToken:$userAuthToken  |
 
