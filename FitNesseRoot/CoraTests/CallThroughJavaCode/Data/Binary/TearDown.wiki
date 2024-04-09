@@ -1,0 +1,10 @@
+---
+Static
+---
+!***> Clean up
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | binary | $unpublishedRecordId | | OK |
+| $adminAuthToken | binary | $publishedRecordId | | OK |
+| $adminAuthToken | binary | $hiddenRecordId | | OK |
+*!
