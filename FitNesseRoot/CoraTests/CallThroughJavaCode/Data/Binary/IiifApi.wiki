@@ -33,9 +33,9 @@ Three calls are made:
  * Request a part of the image.
 
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/|
-| GET |/$unpublishedRecordId/info.json|404|Content-Type : text/html;charset=utf-8||
-| GET |/$unpublishedRecordId/full/244,/0/default.jpg|404|Content-Type : text/html;charset=utf-8||
-| GET |/$unpublishedRecordId/2048,2048,2048,2048/!256,256/0/default.jpg|404|Content-Type : text/html;charset=utf-8||
+| GET |/$publishedRecordId/info.json|404|Content-Type : text/html;charset=utf-8||
+| GET |/$publishedRecordId/full/244,/0/default.jpg|404|Content-Type : text/html;charset=utf-8||
+| GET |/$publishedRecordId/2048,2048,2048,2048/!256,256/0/default.jpg|404|Content-Type : text/html;charset=utf-8||
 
 *!
 !***> '''Case 2''' 
