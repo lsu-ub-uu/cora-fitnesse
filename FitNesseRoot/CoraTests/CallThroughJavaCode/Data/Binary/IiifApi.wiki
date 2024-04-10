@@ -8,19 +8,19 @@ This section test the IIIF API in Cora. The test will call the IIIF Api using ht
  * '''Case 1:''' Trying to read a binary before an image has been uploaded should return Not Found (404).  
  * '''Case 2:''' Trying to read any other binary than an image with a JP2 representation should return Not Found (404).  
  * '''Case 3:''' Trying to read a record that does not exist should return Not Found (404). 
- * '''Case 4:''' Trying to read an image that Guest does not have access to, without sending an authToken should result in Unauthorized (401)
- * '''Case 5:''' Trying to read an image with a valid authToken without permissions to read the JP2 representation should result in Forbidden (403)
- * '''Case 6:''' It should be possible to read an unpublished binary image that has been converted to JP2 using IIIF protocol. 
- * '''Case 7:''' It should be possible to read a hidden binary image that has been converted to JP2 using IIIF protocol. 
+ * '''Case 4:''' Trying to read an image with a valid authToken without permissions to read the JP2 representation should result in Forbidden (403)
+ * '''Case 5:''' It should be possible to read an unpublished binary image that has been converted to JP2 using IIIF protocol. 
+ * '''Case 6:''' It should be possible to read a hidden binary image that has been converted to JP2 using IIIF protocol. 
 
 !4 Using permissions
 It should be possible to set up permissions so that a guest user only can read published binaries with JP2 representations
 It should be possible to set up permissions so that an other user can read unpublished binaries with JP2 representations
 
 '''Guest''' !-in SystemOne should be set up this way so:-!
- * '''Case 8:''' It should be possible for Guest to read a binary image that is published and has been converted to JP2 using IIIF protocol. 
- * '''Case 9:''' It should not be possible for Guest to read a binary image that is unpublished and has been converted to JP2 using IIIF protocol. It should result in Unauthorized (401)
- * '''Case 10:''' It should not be possible for Guest to read a binary image that is hidden and has been converted to JP2 using IIIF protocol. It should result in Unauthorized (401)
+ * '''Case 7:''' It should be possible for Guest to read a binary image that is published and has been converted to JP2 using IIIF protocol. 
+ * '''Case 8:''' It should not be possible for Guest to read a binary image that Guest does not have access to, without sending an authToken should result in Unauthorized (401)
+ * '''Case 9:''' It should not be possible for Guest to read a binary image that is unpublished and has been converted to JP2 using IIIF protocol. It should result in Forbidden (403)
+ * '''Case 10:''' It should not be possible for Guest to read a binary image that is hidden and has been converted to JP2 using IIIF protocol. It should result in Forbidden (403)
 
 !5 Prepatarions before running the tests
 Two record binaries have been created in the setup. On that is published and the other one unpublished. Under the first test cases no file has been uploaded to them. In some point the same image is uploaded to both binaries for further testing. 
@@ -61,7 +61,7 @@ In this case we try to read an image with a record id that does not exists. Expe
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/                                                   |
 | GET |/aNonExixtingIdentifier/info.json|404|Content-Type : text/html;charset=utf-8||
 *!
-!***> Upload Tiff to published and unpublished binary record for further testing
+!***> Upload Tiff to published, unpublished and hidden binary record for further testing
 !define originalFileName {aTiff.tiff}
 !| RecordEndpointFixture |
 | authToken | type | id | fileName | testUpload? | getStatusType? |
@@ -75,21 +75,7 @@ In this case we try to read an image with a record id that does not exists. Expe
 | $adminAuthToken | binary | $publishedRecordId | 500 | 50 | \"name\":\"jp2\" | Found |
 | $adminAuthToken | binary | $hiddenRecordId | 500 | 50 | \"name\":\"jp2\" | Found |
 *!
-
 !***> '''Case 4'''
-It tries to read a restricted image without using a token. 
-Three calls are made:
- * Request info.json file
- * Request full image
- * Request a part of the image.
-All of them should return 401 Unauthorized.
-
-!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/    |
-| GET |/$unpublishedRecordId/info.json|401|||
-| GET |/$unpublishedRecordId/full/244,/0/default.jpg|401|||
-| GET |/$unpublishedRecordId/2048,2048,2048,2048/!256,256/0/default.jpg|401|||
-*!
-!***> '''Case 5'''
 It tries to read a restricted image with a valid token but without the required permissions.
 This test uses fitnesse user which has permission on all "visibilities" but no has no permission to read jp2. Expecting '''Content-Type : text/html;charset=utf-8''' means that we epect a response from Cora an not from iipsrv.
 Three calls are made:
@@ -108,7 +94,7 @@ Set fitnesse user as authToken header
 | GET |/$unpublishedRecordId/full/244,/0/default.jpg|403| Content-Type : text/html;charset=utf-8 | |
 | GET |/$unpublishedRecordId/2048,2048,2048,2048/!256,256/0/default.jpg|403| Content-Type : text/html;charset=utf-8 | |
 *!
-!***> '''Case 6'''
+!***> '''Case 5'''
 It reads a unpublished image using Admin as user. Admin must be able to read unpublished images.
 Three calls are made:
  * Request info.json file
@@ -120,11 +106,11 @@ Three calls are made:
 | restfixture.default.headers | authToken:$adminAuthToken  |
  
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/                                                                                         |
-| GET |/$publishedRecordId/info.json|200|Content-Type : application/ld\+json;profile="http://iiif.io/api/image/3/context.json"||
-| GET |/$publishedRecordId/full/244,/0/default.jpg|200|Content-Type: image/jpeg||
-| GET |/$publishedRecordId/2048,2048,2048,2048/!256,256/0/default.jpg|200|Content-Type: image/jpeg||
+| GET |/$unpublishedRecordId/info.json|200|Content-Type : application/ld\+json;profile="http://iiif.io/api/image/3/context.json"||
+| GET |/$unpublishedRecordId/full/244,/0/default.jpg|200|Content-Type: image/jpeg||
+| GET |/$unpublishedRecordId/2048,2048,2048,2048/!256,256/0/default.jpg|200|Content-Type: image/jpeg||
 *!
-!***> '''Case 7'''
+!***> '''Case 6'''
 It reads a hidden image using Admin as user. Admin must be able to read hidden images.
 Three calls are made:
  * Request info.json file
@@ -140,7 +126,7 @@ Three calls are made:
 | GET |/$hiddenRecordId/full/244,/0/default.jpg|200|Content-Type: image/jpeg||
 | GET |/$hiddenRecordId/2048,2048,2048,2048/!256,256/0/default.jpg|200|Content-Type: image/jpeg||
 *!
-!***> '''Case 8'''
+!***> '''Case 7'''
 It reads a published image using Guest as user. Guest must be able to read published images.
 Three calls are made:
  * Request info.json file
@@ -155,6 +141,19 @@ Three calls are made:
 | GET |/$publishedRecordId/info.json|200|Content-Type : application/ld\+json;profile="http://iiif.io/api/image/3/context.json"||
 | GET |/$publishedRecordId/full/244,/0/default.jpg|200|Content-Type: image/jpeg||
 | GET |/$publishedRecordId/2048,2048,2048,2048/!256,256/0/default.jpg|200|Content-Type: image/jpeg||
+*!
+!***> '''Case 8'''
+It tries to read a restricted image without using a token. 
+Three calls are made:
+ * Request info.json file
+ * Request full image
+ * Request a part of the image.
+All of them should return 401 Unauthorized.
+
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/    |
+| GET |/$unpublishedRecordId/info.json|401|||
+| GET |/$unpublishedRecordId/full/244,/0/default.jpg|401|||
+| GET |/$unpublishedRecordId/2048,2048,2048,2048/!256,256/0/default.jpg|401|||
 *!
 !***> '''Case 9'''
 It reads an unpublished image using Guest as user. Guest must not be able to read unpublished images.
