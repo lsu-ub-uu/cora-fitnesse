@@ -1,5 +1,5 @@
 ---
-Test
+Static
 ---
 !2 !-GenericBinary validation type-!
 !-GenericBinary-! is the only validation type that is available for Binaries, therefor genericBinary can hold information for all kind of resources. Only one validationType is needed since Cora and only Cora is responsible to handle binary metadata, so no need to have extra validation types. !-GenericBinary-! has a group named resourceInfo. Each child of resourceInfo is a representation of the binary in different formats. ResourceInfo will always have master child. Each child have four common fields and x variables fields depending on the format. The common fields are:

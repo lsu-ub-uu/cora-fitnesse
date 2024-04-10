@@ -1,5 +1,5 @@
 ---
-Test
+Static
 ---
 !2 IIIF API
 This section test the IIIF API in Cora. The test will call the IIIF Api using http requests.
@@ -95,13 +95,13 @@ Set fitnesse user as authToken header
 | GET |/$unpublishedRecordId/2048,2048,2048,2048/!256,256/0/default.jpg|403| Content-Type : text/html;charset=utf-8 | |
 *!
 !***> '''Case 5'''
-It reads a unpublished image using Admin as user. Admin must be able to read unpublished images.
+It reads a unpublished image using fitnesse admin as user. Fitnesse admin must be able to read unpublished images.
 Three calls are made:
  * Request info.json file
  * Request full image
  * Request a part of the image.
  
- Set guest as authToken header
+ Set fitnesse admin user as authToken header
 | Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
 | restfixture.default.headers | authToken:$adminAuthToken  |
  
@@ -111,13 +111,13 @@ Three calls are made:
 | GET |/$unpublishedRecordId/2048,2048,2048,2048/!256,256/0/default.jpg|200|Content-Type: image/jpeg||
 *!
 !***> '''Case 6'''
-It reads a hidden image using Admin as user. Admin must be able to read hidden images.
+It reads a hidden image using fitnesse admin as user. fitnesse admin must be able to read hidden images.
 Three calls are made:
  * Request info.json file
  * Request full image
  * Request a part of the image.
  
- Set guest as authToken header
+ Set fitnesse admin user as authToken header
 | Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
 | restfixture.default.headers | authToken:$adminAuthToken  |
  
@@ -135,7 +135,7 @@ Three calls are made:
  
  Set guest as authToken header
 | Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
-| restfixture.default.headers | authToken : $guestAuthToken  |
+| restfixture.default.headers | authToken:$guestAuthToken  |
  
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/ |
 | GET |/$publishedRecordId/info.json|200|Content-Type : application/ld\+json;profile="http://iiif.io/api/image/3/context.json"||
@@ -150,6 +150,7 @@ Three calls are made:
  * Request a part of the image.
 All of them should return 401 Unauthorized.
 
+Remove authToken as header.
 | Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
 | restfixture.default.headers |  |
 

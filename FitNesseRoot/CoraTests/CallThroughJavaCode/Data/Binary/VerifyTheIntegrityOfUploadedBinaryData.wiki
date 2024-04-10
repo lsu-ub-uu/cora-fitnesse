@@ -1,5 +1,5 @@
 ---
-Test
+Static
 ---
 When uploading binary files we need to validate that the integrity of the uploaded data. This can be done in different ways such as file size comparison and checksum checks.
 #!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.BinaryDataIntegrityValidation
