@@ -1,5 +1,5 @@
 ---
-Test
+Static
 ---
 !2 IIIF protocol in binary for images
 A binary record for an image has information about how to access the image using the IIIF protocol. This information can be found as IIIF in the top level element otherProtocols. 

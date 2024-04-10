@@ -1,0 +1,26 @@
+---
+Static
+---
+!2 Setup for binary tests
+!include -seamless .HelperPages.defineAdminAuthToken 
+!define expectedUpdateResult {OK}
+
+!define expectedAnswer {=~/!-^(?!.*(iiif|"url":.*$tmpRecordId1/master)).+$-!/}
+!define expectedUploadAnswer {=~/!-^(?!.*iiif)(?=.*"url":.*$tmpRecordId1/master).+$-!/}
+!define expectedActionsForRecord {!-{"actions":["read","update","delete","index","read_incoming_links"]}-!}
+
+!define unpublishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"unpublished"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
+
+!define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
+
+!define hiddenBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"hidden"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
+
+!define originalFileName {aTiff.tiff}
+!define expectedFileSize {54452040}
+
+It creates two binaries examples. One of them has visibilty set to published and the other one to unpublished.
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | binary | ${unpublishedBinary} | | CREATED | $unpublishedRecordId= |
+| $adminAuthToken | binary | ${publishedBinary} | | CREATED | $publishedRecordId= |
+| $adminAuthToken | binary | ${hiddenBinary} | | CREATED | $hiddenRecordId= |

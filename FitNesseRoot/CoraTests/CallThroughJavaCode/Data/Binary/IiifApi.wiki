@@ -4,88 +4,190 @@ Static
 !2 IIIF API
 This section test the IIIF API in Cora. The test will call the IIIF Api using http requests.
 
- * '''Case 1:''' It should be possible to read a binary image that is published and has been converted to JP2 using IIIF protocol. 
- * '''Case 2:''' It should not be possible to read a binary image that is unpublished, it should return Forbbiden (401) 
- * '''Case 3:''' Trying to read any other binary should return Not Found (404).  
- * '''Case 4:''' Trying to read a record that does not exist should return Not Found (404). 
+!3 Read
+ * '''Case 1:''' Trying to read a binary before an image has been uploaded should return Not Found (404).  
+ * '''Case 2:''' Trying to read any other binary than an image with a JP2 representation should return Not Found (404).  
+ * '''Case 3:''' Trying to read a record that does not exist should return Not Found (404). 
+ * '''Case 4:''' Trying to read an image with a valid authToken without permissions to read the JP2 representation should result in Forbidden (403)
+ * '''Case 5:''' It should be possible to read an unpublished binary image that has been converted to JP2 using IIIF protocol. 
+ * '''Case 6:''' It should be possible to read a hidden binary image that has been converted to JP2 using IIIF protocol. 
 
-!***> '''Case 1'''
-In this case we create a binary record with visibility "published", then we upload an image and we wait until the convertion to JP2 is completed. Once this is done we call iiif endpoint three time.
+!4 Using permissions
+It should be possible to set up permissions so that a guest user only can read published binaries with JP2 representations
+It should be possible to set up permissions so that an other user can read unpublished binaries with JP2 representations
+
+'''Guest''' !-in SystemOne should be set up this way so:-!
+ * '''Case 7:''' It should be possible for Guest to read a binary image that is published and has been converted to JP2 using IIIF protocol. 
+ * '''Case 8:''' It should not be possible for Guest to read a binary image that Guest does not have access to, without sending an authToken should result in Unauthorized (401)
+ * '''Case 9:''' It should not be possible for Guest to read a binary image that is unpublished and has been converted to JP2 using IIIF protocol. It should result in Forbidden (403)
+ * '''Case 10:''' It should not be possible for Guest to read a binary image that is hidden and has been converted to JP2 using IIIF protocol. It should result in Forbidden (403)
+
+!5 Prepatarions before running the tests
+Two record binaries have been created in the setup. On that is published and the other one unpublished. Under the first test cases no file has been uploaded to them. In some point the same image is uploaded to both binaries for further testing. 
+
+!***> '''Case 1''' 
+Try to read and image without any image uploaded. Expecting '''Content-Type : text/html;charset=utf-8''' means that we epect a response from Cora an not from iipsrv.
+Three calls are made:
  * Request info.json file
  * Request full image
  * Request a part of the image.
 
-!***> definition
-!define originalFileName {aTiff.tiff}
-!define expectedFileSize {54452040}
-!define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
-!define createData publishedBinary
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/|
+| GET |/$publishedRecordId/info.json|404|Content-Type : text/html;charset=utf-8||
+| GET |/$publishedRecordId/full/244,/0/default.jpg|404|Content-Type : text/html;charset=utf-8||
+| GET |/$publishedRecordId/2048,2048,2048,2048/!256,256/0/default.jpg|404|Content-Type : text/html;charset=utf-8||
+
 *!
-!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryUploadImageAndWait
-
-Get info.json
-!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/                                                                                         |
-|GET                                                |/$tmpRecordId1/info.json|200|Content-Type : application/ld\+json;profile="http://iiif.io/api/image/3/context.json"||
-
-Get full image
-!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/                                          |
-|GET                                                |/$tmpRecordId1/full/244,/0/default.jpg|200|Content-Type: image/jpeg||
-
-Get a section of the image
-!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/                                                             |
-|GET                                                |/$tmpRecordId1/2048,2048,2048,2048/!256,256/0/default.jpg|200|Content-Type: image/jpeg||
-
-!include -seamless .HelperPages.deleteRecord
-*!
-!***> '''Case 2'''
-In this case we create a binary record with visibility "unpublished", then we upload an image and we wait until the convertion to JP2 is completed. Once this is done we call iiif endpoint three time.
- * Request info.json file
- * Request full image
- * Request a part of the image.
-All of them should return 401 Forbidden.
-
-!***> definition
-!define originalFileName {aTiff.tiff}
-!define unpublishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"unpublished"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
-!define createData unpublishedBinary
-*!
-!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryUploadImageAndWait
-
-!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/    |
-|GET                                                |/$tmpRecordId1/info.json|401|||
-
-Get full image
-!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/                  |
-|GET                                                |/$tmpRecordId1/full/244,/0/default.jpg|401|||
-
-Get a section of the image
-!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/                                     |
-|GET                                                |/$tmpRecordId1/2048,2048,2048,2048/!256,256/0/default.jpg|401|||
-
-!include -seamless .HelperPages.deleteRecord
-*!
-!***> '''Case 3''' 
-In this case we create a binary record with visibility "published", then we upload an compressed file and we wait it is stored in cora. Once this is done we try to get info.json from that file. This should not work.
-!***> definition
+!***> '''Case 2''' 
+In this case we create a binary record with visibility "published", then we upload a '''compressed''' file and we wait it is stored in cora. Once this is done we try to get info.json from that file. This should not work. Expecting '''Content-Type : text/html;charset=utf-8''' means that we epect a response from Cora an not from iipsrv.
+!***< definition
 !define originalFileName {aZip.zip}
 !define expectedFileSize {144}
-!define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
 !define createData publishedBinary
 *!
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryAndUploadFile
 
+It tries to read a compress file.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/    |
-|GET                                                |/$tmpRecordId1/info.json|404|||
+| GET |/$tmpRecordId1/info.json|404|Content-Type : text/html;charset=utf-8||
+| GET |/$tmpRecordId1/full/244,/0/default.jpg|404|Content-Type : text/html;charset=utf-8||
+| GET |/$tmpRecordId1/2048,2048,2048,2048/!256,256/0/default.jpg|404|Content-Type : text/html;charset=utf-8||
 
-#TODO: 404 it should be thrown from spider and we should get Content-Type : text/html;charset=utf-8
-#!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/                                          |
-#|GET                                                |/$tmpRecordId1/info.json|404|Content-Type : text/html;charset=utf-8||
-
+It deletes the binary used for this test.
 !include -seamless .HelperPages.deleteRecord
 *!
-!***> '''Case 4''' 
-In this case we try to read an image with a record id that does not exists.
+!***> '''Case 3''' 
+In this case we try to read an image with a record id that does not exists. Expecting '''Content-Type : text/html;charset=utf-8''' means that we epect a response from Cora an not from iipsrv.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/                                                   |
-|GET                                                |/aNonExixtingIdentifier/info.json|404|Content-Type : text/html;charset=utf-8||
+| GET |/aNonExixtingIdentifier/info.json|404|Content-Type : text/html;charset=utf-8||
 *!
+!***> Upload Tiff to published, unpublished and hidden binary record for further testing
+!define originalFileName {aTiff.tiff}
+!| RecordEndpointFixture |
+| authToken | type | id | fileName | testUpload? | getStatusType? |
+| $adminAuthToken | binary | $unpublishedRecordId | ${originalFileName} |  | ${expectedUploadResult} |
+| $adminAuthToken | binary | $publishedRecordId | ${originalFileName} | | ${expectedUploadResult} |
+| $adminAuthToken | binary | $hiddenRecordId | ${originalFileName} | | ${expectedUploadResult} |
 
+!| WaitForRegExReadResultFixture |
+| authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
+| $adminAuthToken | binary | $unpublishedRecordId | 500 | 50 | \"name\":\"jp2\" | Found |
+| $adminAuthToken | binary | $publishedRecordId | 500 | 50 | \"name\":\"jp2\" | Found |
+| $adminAuthToken | binary | $hiddenRecordId | 500 | 50 | \"name\":\"jp2\" | Found |
+*!
+!***> '''Case 4'''
+It tries to read a restricted image with a valid token but without the required permissions.
+This test uses fitnesse user which has permission on all "visibilities" but no has no permission to read jp2. Expecting '''Content-Type : text/html;charset=utf-8''' means that we epect a response from Cora an not from iipsrv.
+Three calls are made:
+Three calls are made:
+ * Request info.json file
+ * Request full image
+ * Request a part of the image.
+All of them should return 403 Forbidden.
+
+Set fitnesse user as authToken header
+| Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
+| restfixture.default.headers | authToken:$userAuthToken  |
+
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/    |
+| GET |/$unpublishedRecordId/info.json|403| Content-Type : text/html;charset=utf-8 | |
+| GET |/$unpublishedRecordId/full/244,/0/default.jpg|403| Content-Type : text/html;charset=utf-8 | |
+| GET |/$unpublishedRecordId/2048,2048,2048,2048/!256,256/0/default.jpg|403| Content-Type : text/html;charset=utf-8 | |
+*!
+!***> '''Case 5'''
+It reads a unpublished image using fitnesse admin as user. Fitnesse admin must be able to read unpublished images.
+Three calls are made:
+ * Request info.json file
+ * Request full image
+ * Request a part of the image.
+ 
+ Set fitnesse admin user as authToken header
+| Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
+| restfixture.default.headers | authToken:$adminAuthToken  |
+ 
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/                                                                                         |
+| GET |/$unpublishedRecordId/info.json|200|Content-Type : application/ld\+json;profile="http://iiif.io/api/image/3/context.json"||
+| GET |/$unpublishedRecordId/full/244,/0/default.jpg|200|Content-Type: image/jpeg||
+| GET |/$unpublishedRecordId/2048,2048,2048,2048/!256,256/0/default.jpg|200|Content-Type: image/jpeg||
+*!
+!***> '''Case 6'''
+It reads a hidden image using fitnesse admin as user. fitnesse admin must be able to read hidden images.
+Three calls are made:
+ * Request info.json file
+ * Request full image
+ * Request a part of the image.
+ 
+ Set fitnesse admin user as authToken header
+| Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
+| restfixture.default.headers | authToken:$adminAuthToken  |
+ 
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/                                                                                         |
+| GET |/$hiddenRecordId/info.json|200|Content-Type : application/ld\+json;profile="http://iiif.io/api/image/3/context.json"||
+| GET |/$hiddenRecordId/full/244,/0/default.jpg|200|Content-Type: image/jpeg||
+| GET |/$hiddenRecordId/2048,2048,2048,2048/!256,256/0/default.jpg|200|Content-Type: image/jpeg||
+*!
+!***> '''Case 7'''
+It reads a published image using Guest as user. Guest must be able to read published images.
+Three calls are made:
+ * Request info.json file
+ * Request full image
+ * Request a part of the image.
+ 
+ Set guest as authToken header
+| Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
+| restfixture.default.headers | authToken:$guestAuthToken  |
+ 
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/ |
+| GET |/$publishedRecordId/info.json|200|Content-Type : application/ld\+json;profile="http://iiif.io/api/image/3/context.json"||
+| GET |/$publishedRecordId/full/244,/0/default.jpg|200|Content-Type: image/jpeg||
+| GET |/$publishedRecordId/2048,2048,2048,2048/!256,256/0/default.jpg|200|Content-Type: image/jpeg||
+*!
+!***> '''Case 8'''
+It tries to read a restricted image without using a token. 
+Three calls are made:
+ * Request info.json file
+ * Request full image
+ * Request a part of the image.
+All of them should return 401 Unauthorized.
+
+Remove authToken as header.
+| Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
+| restfixture.default.headers |  |
+
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/    |
+| GET |/$unpublishedRecordId/info.json|401|||
+| GET |/$unpublishedRecordId/full/244,/0/default.jpg|401|||
+| GET |/$unpublishedRecordId/2048,2048,2048,2048/!256,256/0/default.jpg|401|||
+*!
+!***> '''Case 9'''
+It reads an unpublished image using Guest as user. Guest must not be able to read unpublished images.
+Three calls are made:
+ * Request info.json file
+ * Request full image
+ * Request a part of the image.
+ 
+ Set guest as authToken header
+| Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
+| restfixture.default.headers | authToken:$guestAuthToken  |
+
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/ |
+| GET | /$unpublishedRecordId/info.json | 403 | Content-Type : text/html;charset=utf-8 | |
+| GET | /$unpublishedRecordId/full/244,/0/default.jpg | 403 | Content-Type : text/html;charset=utf-8 | |
+| GET | /$unpublishedRecordId/2048,2048,2048,2048/!256,256/0/default.jpg | 403 | Content-Type : text/html;charset=utf-8 | |
+*!
+!***> '''Case 10'''
+It reads an hidden image using Guest as user. Guest must not be able to read hidden images.
+Three calls are made:
+ * Request info.json file
+ * Request full image
+ * Request a part of the image.
+ 
+ Set guest as authToken header
+| Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
+| restfixture.default.headers | authToken:$guestAuthToken  |
+
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/ |
+| GET | /$hiddenRecordId/info.json | 403 | Content-Type : text/html;charset=utf-8 | |
+| GET | /$hiddenRecordId/full/244,/0/default.jpg | 403 | Content-Type : text/html;charset=utf-8 | |
+| GET | /$hiddenRecordId/2048,2048,2048,2048/!256,256/0/default.jpg | 403 | Content-Type : text/html;charset=utf-8 | |
+*!
