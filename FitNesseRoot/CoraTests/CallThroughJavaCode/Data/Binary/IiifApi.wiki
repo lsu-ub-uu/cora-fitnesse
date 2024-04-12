@@ -71,9 +71,9 @@ In this case we try to read an image with a record id that does not exists. Expe
 
 !| WaitForRegExReadResultFixture |
 | authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
-| $adminAuthToken | binary | $unpublishedRecordId | 500 | 50 | \"name\":\"jp2\" | Found |
-| $adminAuthToken | binary | $publishedRecordId | 500 | 50 | \"name\":\"jp2\" | Found |
-| $adminAuthToken | binary | $hiddenRecordId | 500 | 50 | \"name\":\"jp2\" | Found |
+| $adminAuthToken | binary | $unpublishedRecordId | 250 | 50 | \"name\":\"jp2\" | Found |
+| $adminAuthToken | binary | $publishedRecordId | 250 | 50 | \"name\":\"jp2\" | Found |
+| $adminAuthToken | binary | $hiddenRecordId | 250 | 50 | \"name\":\"jp2\" | Found |
 *!
 !***> '''Case 4'''
 It tries to read a restricted image with a valid token but without the required permissions.

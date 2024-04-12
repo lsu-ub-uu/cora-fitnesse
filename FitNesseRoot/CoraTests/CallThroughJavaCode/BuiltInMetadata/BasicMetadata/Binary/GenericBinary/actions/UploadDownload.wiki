@@ -25,7 +25,7 @@ Static
 !***> '''Case 3'''
 !| WaitForRegExReadResultFixture                                                                                               |
 |authToken      |recordType|recordId        |sleepTime|maxNumberOfCalls|regEx           |waitUntilUntilRegExpFoundInReadRecord?|
-|$adminAuthToken|binary    |$publishedRecordId|500      |50              |\"name\":\"jp2\"|Found                                 |
+|$adminAuthToken|binary    |$publishedRecordId|250      |50              |\"name\":\"jp2\"|Found                                 |
 
 !define recordId {$publishedRecordId}
 !define representation {master}
@@ -46,7 +46,7 @@ Static
 !***> '''Case 4'''
 !| WaitForRegExReadResultFixture                                                                                               |
 |authToken      |recordType|recordId        |sleepTime|maxNumberOfCalls|regEx           |waitUntilUntilRegExpFoundInReadRecord?|
-|$adminAuthToken|binary    |$unpublishedRecordId|500      |50              |\"name\":\"jp2\"|Found                                 |
+|$adminAuthToken|binary    |$unpublishedRecordId|250      |50              |\"name\":\"jp2\"|Found                                 |
 
 !define recordId {$unpublishedRecordId}
 !define representation {master}

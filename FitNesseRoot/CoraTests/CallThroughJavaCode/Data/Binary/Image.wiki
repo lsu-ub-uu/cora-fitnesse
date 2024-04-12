@@ -20,28 +20,28 @@ The formats that images are converted to are:
 !***> '''Case 1''' Tiff
 
 !define originalFileName {aTiff.tiff}
-!define expectedChecksumSha512 {18e566f03b75c25ae68f7a543c1e31d4afd7d8934912a80b96005e4cbd664e268fd12d23e5687a1f62c93119c254ea52e56d398d17b5fea8987d8d96cc25115d}
+!define expectedChecksumSha512 {d1be63c95bcac2c3b142c0ae7c551859daec71df8fabe52e5c6bf906edc4d056c808571c990c27b467d7c729cb1e9291353203623208dd217cc8591067849549}
 !define expectedMimeType {image/tiff}
-!define expectedFileSize {54452040}
-!define expectedHeight {3419}
-!define expectedWidth {2653}
+!define expectedFileSize {1938386}
+!define expectedHeight {644}
+!define expectedWidth {500}
 !define expectedResolution {1200x1200}
-!define thumbnailFileSize {33099}
+!define thumbnailFileSize {10847}
 !define thumbnailMimeType {image/jpeg}
 !define thumbnailHeight {129}
 !define thumbnailWidth {100}
-!define mediumFileSize {68145}
+!define mediumFileSize {42142}
 !define mediumMimeType {image/jpeg}
 !define mediumHeight {387}
 !define mediumWidth {300}
-!define largeFileSize {170904}
+!define largeFileSize {118482}
 !define largeMimeType {image/jpeg}
 !define largeHeight {773}
 !define largeWidth {600}
-!define jp2FileSize {12678948}
+!define jp2FileSize {375895}
 !define jp2MimeType {image/jp2}
-!define jp2Height {3419}
-!define jp2Width {2653}
+!define jp2Height {644}
+!define jp2Width {500}
 !define binaryType {image}
 
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadImageValidateAnalysisAndConvertion

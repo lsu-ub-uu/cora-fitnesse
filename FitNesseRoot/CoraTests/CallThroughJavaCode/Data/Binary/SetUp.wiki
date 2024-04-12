@@ -16,7 +16,7 @@ Static
 !define hiddenBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"hidden"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
 
 !define originalFileName {aTiff.tiff}
-!define expectedFileSize {54452040}
+!define expectedFileSize {1938386}
 
 It creates two binaries examples. One of them has visibilty set to published and the other one to unpublished.
 !| RecordEndpointFixture |

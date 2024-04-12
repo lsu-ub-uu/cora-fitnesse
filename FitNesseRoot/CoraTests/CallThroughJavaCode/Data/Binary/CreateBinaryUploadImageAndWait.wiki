@@ -9,5 +9,5 @@ TODO: ResourceLink cannot be validated. Change CompareFixture in order to be abl
 
 !| WaitForRegExReadResultFixture |
 | authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
-| $adminAuthToken | binary | $tmpRecordId1 | 500 | 50 | \"name\":\"jp2\" | Found |
+| $adminAuthToken | binary | $tmpRecordId1 | 250 | 50 | \"name\":\"jp2\" | Found |
 *!

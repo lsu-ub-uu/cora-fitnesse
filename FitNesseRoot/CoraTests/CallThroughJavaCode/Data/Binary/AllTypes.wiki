@@ -18,7 +18,7 @@ All binaries representations must be stored in storage. Master representation is
 !***> '''Case 1''' Tiff
 !*< definition
 !define originalFileName {aTiff.tiff}
-!define expectedFileSize {54452040}
+!define expectedFileSize {1938386}
 !define expectedChecksum {5ee3dbf5b81474c1fb73ac49b389ba6d445f672d82abbdc865defced83b09b6aa811790966eb4fcf33d74799d22e9849f6b1ab99d74673d7207ec5f35af54bac}
 !define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
 !define createData publishedBinary

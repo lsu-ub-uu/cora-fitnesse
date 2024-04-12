@@ -23,7 +23,7 @@ All cases will make sure there is no IIIF protocol information when the binary r
 *!
 !***> Create unpublished binary record and upload an image to it, to use in tests 1-3
 !define originalFileName {aTiff.tiff}
-!define expectedFileSize {54452040}
+!define expectedFileSize {1938386}
 !define createData unpublishedBinary
 !include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.CreateBinaryUploadImageAndWait
 !define unpublishedRecordId {$tmpRecordId1}
