@@ -23,7 +23,7 @@
 	<name>Fitnesse</name>
 
 	<properties>
-		<fitnesseintegration.version>4.2-SNAPSHOT</fitnesseintegration.version>
+		<fitnesseintegration.version>4.3.0</fitnesseintegration.version>
 		<coralog4j.version>2.16.0</coralog4j.version>
 		<basicdata.version>5.7.0</basicdata.version>
 		<xmlconverter.version>3.0.0</xmlconverter.version>
