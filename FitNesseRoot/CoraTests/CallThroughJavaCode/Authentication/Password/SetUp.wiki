@@ -1,0 +1,7 @@
+---
+Static
+---
+!2 Setup for passwrod tests
+!include -seamless .HelperPages.defineAdminAuthToken 
+
+!define systemSecretMinimalGroup {!-{"name":"systemsecret","attributes":{"type":"group"},"children":[]}-!}
