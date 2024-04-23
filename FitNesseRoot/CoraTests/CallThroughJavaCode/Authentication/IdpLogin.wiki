@@ -52,3 +52,11 @@ Test
 | $adminAuthToken | text | myAuthText | | OK |
 
 *!
+!***> ReLogin user 121212
+!| AppTokenEndpointFixture |
+| userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
+| 121212 | | | $userAuthToken= | CREATED |
+
+!| script | AuthTokenHolder |
+| setUserAuthToken | $userAuthToken |
+*!
