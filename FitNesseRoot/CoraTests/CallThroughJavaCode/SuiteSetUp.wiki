@@ -31,7 +31,6 @@ Suite
 !include -seamless .CoraTests.CallThroughJavaCode.SuiteSetUp.ExamplesPool
 
 !***> Login for fitnesse user (Related to CORA-2475. Remove when fixed)
-
 !| AppTokenEndpointFixture |
 | userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
 | 121212 | | | $userAuthToken= | CREATED |

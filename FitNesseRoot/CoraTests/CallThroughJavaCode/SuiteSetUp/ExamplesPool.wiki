@@ -105,6 +105,26 @@ It should be possible to create new validation types
 !include -seamless .HelperPages.createRecord
 *!
 
+!***> Fitnesse Search Group
+!define fitnesseSearchIncludePartGroup {!-{"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseSearchIncludePartGroup"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"includePart"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"childReferences","children":[{"name":"childReference","repeatId":"0","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseMetadataTextVar"}]}]}]},{"name":"excludePGroupCreation","value":"true"}],"attributes":{"type":"group"}}-!}
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | metadata | ${fitnesseSearchIncludePartGroup} | | CREATED | |
+
+!define fitnesseSearchIncludeGroup {!-{"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseSearchIncludeGroup"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"include"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"childReferences","children":[{"name":"childReference","repeatId":"0","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseSearchIncludePartGroup"}]}]}]},{"name":"excludePGroupCreation","value":"true"}],"attributes":{"type":"group"}}-!}
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | metadata | ${fitnesseSearchIncludeGroup} | | CREATED | |
+
+!define fitnesseSearchGroup {!-{"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseSearchGroup"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"fitnesseSearch"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"childReferences","children":[{"name":"childReference","repeatId":"0","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseSearchIncludeGroup"}]}]},{"name":"childReference","repeatId":"1","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"searchStartNumberVar"}]}]},{"name":"childReference","repeatId":"2","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"searchRowsNumberVar"}]}]}]}],"attributes":{"type":"group"}}-!}
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | metadata | ${fitnesseSearchGroup} | | CREATED | |
+*!
+
 !***> Creation of Roles And Rules for fitnesse users
 
 !***> Creation of rule fitnesseBinaryReadOnAllVisibilitiesRule (It should be able to read binary record instances with all possible visibilities)

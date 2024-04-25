@@ -1,0 +1,7 @@
+---
+Static
+---
+Remove binary records
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | search | systemSecretSearch | | OK |

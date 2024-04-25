@@ -1,0 +1,14 @@
+---
+Static
+---
+!2 Setup for passwrod tests
+!include -seamless .HelperPages.defineAdminAuthToken 
+
+!define systemSecretMinimalGroup {!-{"name":"systemsecret","attributes":{"type":"group"},"children":[]}-!}
+
+!4 SystemSecret search: A systemSearch is created using fitnesseSearchGroup created in the suite.
+!define systemSecretSearch {!-{"name":"search","children":[{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseSearchGroup"}]},{"name":"recordInfo","children":[{"name":"id","value":"systemSecretSearch"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"search"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"presentationId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnesseSearchPGroup"}]},{"name":"recordTypeToSearchIn","repeatId":"1","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"systemSecret"}]},{"name":"searchGroup","value":"autocomplete"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]}]}-!}
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | search | ${systemSecretSearch} | | CREATED | |

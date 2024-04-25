@@ -48,6 +48,11 @@ Suite
 |$adminAuthToken|presentation|fitnesseOutputPCollVar||OK|
 |$adminAuthToken|presentation|fitnesseBinaryPLink||OK|
 |$adminAuthToken|presentation|fitnesseBinaryOutputPLink||OK|
+|$adminAuthToken|presentation|fitnesseSearchPGroup||OK|
+|$adminAuthToken|presentation|fitnesseSearchOutputPGroup||OK|
+|$adminAuthToken|metadata|fitnesseSearchGroup||OK|
+|$adminAuthToken|metadata|fitnesseSearchIncludeGroup||OK|
+|$adminAuthToken|metadata|fitnesseSearchIncludePartGroup||OK|
 |$adminAuthToken|metadata|fitnesseGroup||OK|
 |$adminAuthToken|metadata|fitnesseNewGroup||OK|
 |$adminAuthToken|metadata|fitnesseMetadataTextVar||OK|
