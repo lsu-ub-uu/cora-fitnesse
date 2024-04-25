@@ -12,9 +12,3 @@ Static
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
 | $adminAuthToken | search | ${systemSecretSearch} | | CREATED | |
-
-
-####################################################
-
-
-
