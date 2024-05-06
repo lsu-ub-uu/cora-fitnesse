@@ -1,17 +1,10 @@
 This test will create the metadatagroup trainingProgram, containing two fields, id and createdBy. they are both mandatory (min 1, max 1)!--!It will then create a metadatagroup called singleTrainingProgram which must contain one trainingProgram, no less, no more.!-
--!Then the test will create a recordType which describes a singleTrainingProgram------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+* -!Then the test will create a recordType which describes a singleTrainingProgram
 
 Last, we will create a trainingProgram using the metadata groups specified. We can only create a trainingProgram if we provide the mandatory elements.!-
--!The first test is missing id.!-
--!The second test is missing the entire trainingProgram child!-
--!The third test contains everything needed
-
-!| script | SystemUrl |
-| setUrl | ${systemUnderTestUrl} |
-| setAppTokenVerifierUrl | ${appTokenVerifierUrl} |
-
-!| script | DependencyProvider |
-| setHttpHandlerFactoryClassName | se.uu.ub.cora.httphandler.HttpHandlerFactoryImp |
+ * -!The first test is missing id.!-
+ * -!The second test is missing the entire trainingProgram child!-
+ * -!The third test contains everything needed
 
 !2 Login  - call is made through java code
 !***> Login for admin
