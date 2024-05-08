@@ -12,3 +12,10 @@ Static
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
 | $adminAuthToken | search | ${systemSecretSearch} | | CREATED | |
+
+!4 PasswordUser: A user is created for password tests in the suite.
+!define passwordUserCreateJson {!-{"name":"user","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraUser"}]}]},{"name":"userId","value":"password@login.fake"},{"name":"userFirstname","value":"Password"},{"name":"userLastname","value":"Login"},{"name":"userRole","repeatId":"0","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"nothing"}]}]},{"name":"activeStatus","value":"active"}],"attributes":{"type":"coraUser"}}-!}
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | user | ${passwordUserCreateJson} | | CREATED | $passwordUserId= |
