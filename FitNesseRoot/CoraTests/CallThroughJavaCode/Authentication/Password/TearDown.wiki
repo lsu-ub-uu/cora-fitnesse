@@ -5,4 +5,8 @@ Remove systemsecretsearch
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | search | systemSecretSearch | | OK |
+
+Remove data created for password tests
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | user | $passwordUserId | | OK |
