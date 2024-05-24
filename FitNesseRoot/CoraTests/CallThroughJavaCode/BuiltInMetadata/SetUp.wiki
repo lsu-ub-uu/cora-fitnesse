@@ -3,4 +3,5 @@ Suite
 ---
 !***> SetUp 
 !define expectedActionsForRecord {!-{"actions":["read","update","delete","index","read_incoming_links"]}-!}
+!include -seamless .CoraTests.CallThroughJavaCode.SuiteSetUp.CreateAdminFitnesseUser
 *!
