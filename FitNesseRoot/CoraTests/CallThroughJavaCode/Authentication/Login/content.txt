@@ -9,7 +9,7 @@
 | $adminAuthToken | recordType | login | =~/"name":"linkedRecordId","value":"loginGroup"/ | OK |
 | $adminAuthToken | validationType | loginToken | | OK |
 | $adminAuthToken | validationType | loginWebRedirect |  | OK |
-| $adminAuthToken | validationType | loginLDAP | | OK |
+| $adminAuthToken | validationType | loginPassword | | OK |
 
 *!
 
@@ -25,7 +25,11 @@
 !| MetadataLinkFixture |
 | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? |
 | metadata | recordInfoGroup | 1 | 1 |
-| metadata | loginNameTextVar | 1 | 1 |
+| metadata | urlTextVar | 0 | 1 |
+| metadata | loginNameTextVar | 0 | 1 |
+| metadata | viewDefinitionLink | 0 | 1 |
+| metadata | viewPresentationLink | 0 | 1 |
+| metadata | descriptionTextVar | 0 | 1 |
 
 *!
 !***> Load loginWebRedirectNewGroup to use in tests
