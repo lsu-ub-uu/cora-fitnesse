@@ -145,6 +145,11 @@ Validation must be able to offer the possiblity to validate records for both act
  * '''Case 3b: ''' A record containing all required data for update and the referred record exists in the system should validate as true.
  * '''Case 4a: ''' A record containing all required data for creation should validate as true using '''xml'''.
  * '''Case 4b: ''' A record containing missing data should validate as false, using '''xml'''.
+ * '''Case 5: ''' The workOrder must contain one validationOrder and one recordToValidate
+ * '''Case 5a: ''' A record with a missing validationOrder should cause bad request, using '''xml'''.
+ * '''Case 5b: ''' A record with a missing record should cause bad request, using '''xml'''.
+ * '''Case 5c: ''' A record containing multiple validationOrders should cause bad request, using '''xml'''.
+ * '''Case 5d: ''' A record containing multiple records should cause bad request, using '''xml'''.
 
 !***> Prepare tests: Create recordType testStudentThesis and metadata that is needed
 
@@ -248,6 +253,39 @@ Using same valid data as case 3a but this time it is valid since the record exis
 -!authToken:$adminAuthToken|
 | setBody | <?xml version="1.0" encoding="UTF-8"?><workOrder><order><validationOrder><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>validationOrder</linkedRecordId></validationType></recordInfo><recordType><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></recordType><validateLinks>false</validateLinks><metadataToValidate>existing</metadataToValidate></validationOrder></order><record><testStudentThesis><recordInfo><id>studentThesis1</id><type><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></type><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></validationType></recordInfo><testTitle>Entitel</testTitle><publishedStatus>notPublished</publishedStatus></testStudentThesis></record></workOrder> |
 | POST | /record/workOrder | 200 | | |
+
+*!
+!***> '''Case 5a: ''' A record with a missing validationOrder should cause bad request, using '''xml'''.
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+| setHeader | Accept:application/vnd.uub.record+xml!-
+-!Content-Type:application/vnd.uub.workorder+xml!-
+-!authToken:$adminAuthToken|
+| setBody | <?xml version="1.0" encoding="UTF-8"?><workOrder><order></order><record><testStudentThesis><recordInfo><id>studentThesis1</id><type><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></type><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></validationType></recordInfo><testTitle>Entitel</testTitle><publishedStatus>notPublished</publishedStatus></testStudentThesis></record></workOrder> |
+| POST | /record/workOrder | 400 | | Validation failed due to: WorkOrder part 'order' not found. |
+*!
+!***> '''Case 5b: ''' A record with a missing record should cause bad request, using '''xml'''.
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+| setHeader | Accept:application/vnd.uub.record+xml!-
+-!Content-Type:application/vnd.uub.workorder+xml!-
+-!authToken:$adminAuthToken|
+| setBody | <?xml version="1.0" encoding="UTF-8"?><workOrder><order><validationOrder><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>validationOrder</linkedRecordId></validationType></recordInfo><recordType><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></recordType><validateLinks>false</validateLinks><metadataToValidate>new</metadataToValidate></validationOrder></order><record></record></workOrder> |
+| POST | /record/workOrder | 400 | | Validation failed due to: WorkOrder part 'record' not found. |
+*!
+!***> '''Case 5c: ''' A record containing multiple validationOrders should cause bad request, using '''xml'''.
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+| setHeader | Accept:application/vnd.uub.record+xml!-
+-!Content-Type:application/vnd.uub.workorder+xml!-
+-!authToken:$adminAuthToken|
+| setBody | <?xml version="1.0" encoding="UTF-8"?><workOrder><order><validationOrder><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>validationOrder</linkedRecordId></validationType></recordInfo><recordType><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></recordType><validateLinks>false</validateLinks><metadataToValidate>existing</metadataToValidate></validationOrder><validationOrder><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>validationOrder</linkedRecordId></validationType></recordInfo><recordType><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></recordType><validateLinks>false</validateLinks><metadataToValidate>existing</metadataToValidate></validationOrder></order><record><testStudentThesis><recordInfo><id>studentThesis1</id><type><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></type><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></validationType></recordInfo><testTitle>Entitel</testTitle><publishedStatus>notPublished</publishedStatus></testStudentThesis></record></workOrder> |
+| POST | /record/workOrder | 400 | | Validation failed due to: Too many children in workOrder part. |
+*!
+!***> '''Case 5d: ''' A record containing multiple records should cause bad request, using '''xml'''.
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+| setHeader | Accept:application/vnd.uub.record+xml!-
+-!Content-Type:application/vnd.uub.workorder+xml!-
+-!authToken:$adminAuthToken|
+| setBody | <?xml version="1.0" encoding="UTF-8"?><workOrder><order><validationOrder><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>validationOrder</linkedRecordId></validationType></recordInfo><recordType><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></recordType><validateLinks>false</validateLinks><metadataToValidate>existing</metadataToValidate></validationOrder></order><record><testStudentThesis><recordInfo><id>studentThesis1</id><type><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></type><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></validationType></recordInfo><testTitle>Entitel</testTitle><publishedStatus>notPublished</publishedStatus></testStudentThesis><testStudentThesis><recordInfo><id>studentThesis1</id><type><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></type><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></validationType></recordInfo><testTitle>Entitel</testTitle><publishedStatus>notPublished</publishedStatus></testStudentThesis></record></workOrder> |
+| POST | /record/workOrder | 400 | | Validation failed due to: Too many children in workOrder part. |
 
 *!
 ----
