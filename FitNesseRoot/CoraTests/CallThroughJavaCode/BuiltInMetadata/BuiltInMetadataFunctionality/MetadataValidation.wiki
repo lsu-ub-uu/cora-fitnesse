@@ -230,7 +230,6 @@ Using same valid data as case 3a but this time it is valid since the record exis
 
 *!
 !***> '''Case 4a''' A record containing all required data for creation should validate as true using '''xml'''
-
 #!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
 #| setHeader | Accept:application/vnd.uub.record+xml!-
 #-!Content-Type:application/vnd.uub.record+json!-
@@ -242,8 +241,8 @@ Using same valid data as case 3a but this time it is valid since the record exis
 | setHeader | Accept:application/vnd.uub.record+xml!-
 -!Content-Type:application/vnd.uub.workorder+xml!-
 -!authToken:$adminAuthToken|
-| setBody | <?xml version="1.0" encoding="UTF-8"?><workOrder><order><validationOrder><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>validationOrder</linkedRecordId></validationType></recordInfo><recordType><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></recordType><validateLinks>false</validateLinks><metadataToValidate>new</metadataToValidate></validationOrder></order><record><testStudentThesis><recordInfo><id>studentThesis1</id><type><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></type><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></validationType></recordInfo><testTitle>Entitel</testTitle><publishedStatus>notPublished</publishedStatus></testStudentThesis></record></workOrder> |
-| POST | /record/workOrder | 200 | | |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><workOrder><order><validationOrder><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>validationOrder</linkedRecordId></validationType></recordInfo><recordType><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></recordType><validateLinks>true</validateLinks><metadataToValidate>new</metadataToValidate></validationOrder></order><record><testStudentThesis><recordInfo><id>studentThesis1</id><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></validationType></recordInfo><testTitle>Entitel</testTitle><publishedStatus>notPublished</publishedStatus></testStudentThesis></record></workOrder> |
+| POST | /record/workOrder | 200 | | //validationResult/valid[text()='true'] |
 
 *!
 !***> '''Case 4b''' A record containing missing data should validate as false, using '''xml'''
@@ -252,7 +251,7 @@ Using same valid data as case 3a but this time it is valid since the record exis
 -!Content-Type:application/vnd.uub.workorder+xml!-
 -!authToken:$adminAuthToken|
 | setBody | <?xml version="1.0" encoding="UTF-8"?><workOrder><order><validationOrder><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>validationOrder</linkedRecordId></validationType></recordInfo><recordType><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></recordType><validateLinks>false</validateLinks><metadataToValidate>existing</metadataToValidate></validationOrder></order><record><testStudentThesis><recordInfo><id>studentThesis1</id><type><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></type><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></validationType></recordInfo><testTitle>Entitel</testTitle><publishedStatus>notPublished</publishedStatus></testStudentThesis></record></workOrder> |
-| POST | /record/workOrder | 200 | | |
+| POST | /record/workOrder | 200 | | //validationResult/valid[text()='false'] |
 
 *!
 !***> '''Case 5a: ''' A record with a missing validationOrder should cause bad request, using '''xml'''.
