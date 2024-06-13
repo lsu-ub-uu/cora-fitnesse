@@ -1,0 +1,59 @@
+---
+Test
+---
+!1 AppToken
+!2 What is an appToken
+An appToken (short for application token) is a form of digital authentication token used in various applications to securely verify the identity of the application itself, rather than a user. Here are some key characteristics and uses of app tokens:
+
+1. '''Authentication and Authorization''': AppTokens are used to authenticate the application making a request to a service or API, ensuring that the application has permission to access certain resources or perform specific actions.
+
+2. '''Security''': By using appTokens, applications can securely interact with APIs and services without exposing sensitive credentials like usernames and passwords. This reduces the risk of credential theft or misuse.
+
+3. '''Access Control''': AppTokens can encapsulate various permissions and roles, allowing fine-grained access control. This means different applications or instances of the same application can have different levels of access to resources based on the token they present.
+
+4. '''Expiration and Renewal''': AppTokens typically have an expiration time to enhance security. After they expire, new tokens must be obtained to continue accessing services. This ensures that even if a token is compromised, its usefulness is limited to a specific time window.
+
+5. '''Applications''': AppTokens are suited for applications, enabling them to operate autonomously within the permissions granted.
+
+!2 Working with appTokens
+!3 Create an appToken
+Each user is able to create multiple appTokens, by just adding a new appToken and a note in the user configuration and updating the user. Once this is done an appToken is generated and stored (hashed) as a [[systemSecret][.CoraTests.CallThroughJavaCode.Authentication.Password.SystemSecret]]. The response of the update will contain the generated appToken as clear text. This clear text appToken will only be shown once and never again. Make sure to copy it.
+
+!4 Metadata definition included in User
+ * '''user'''
+   * ''' ... '''
+   * '''appToken'''(group, 0-X, readWrite)
+     * '''appTokenLink'''(recordLink(systemSecret), 0-1, readWrite)
+     * '''note'''(text, 1-1, noConstraints)
+     * '''appTokenclearText'''(text, 0-1, noConstraints)
+
+!3 Use an appToken
+In order to be authenticated by the system you need to have an [[authToken][.CoraTests.CallThroughJavaCode.Authentication.AuthToken]] . To get an authToken using an appToken you need to make a call !style_pass(POST) to '''${systemUnderTestUrl}rest/login/apptoken/{user}''' using the appToken as payload. The response will contain a valid authToken.
+!style_darkRed[At this moment '''Access control''' and  '''Expiration and Renewal''' is not implemented.]
+
+!3 Delete an appToken
+You can delete an appToken by simply removing its apptoken group in the user configuration and updating the user.
+
+!2 Test cases
+!3 User
+ * '''Case 1: ''' Any user should be able to create an appToken for his own user. (User already has one appToken)
+ * '''Assert 1a: ''' ApptokenClearText must never be stored.
+ * '''Case 2: ''' Any user should be able to read the appToken notes for his own user.
+ * '''Case 3: ''' Any user should be able to login using its own appToken.
+ * '''Case 4: ''' A user should not be able to login using another users appToken.
+ * '''Case 5: ''' Any user should be able to delete its own appToken.
+ * '''Case 6: ''' A user should not be able to delete another users appToken.
+
+!3 SystemAdmin
+ * '''Case 1: ''' SystemAdmin should be able to create an appToken for any user. 
+ * '''Case 2: ''' SystemAdmin should not be able to login using another users appToken.
+ * '''Case 3: ''' SystemAdmin should be able to delete any other users appToken.
+
+
+ 
+
+ 
+
+#!include -seamless .CoraTests.CallThroughJavaCode.Authentication.Password.SystemSecret
+
+#!include -seamless .CoraTests.CallThroughJavaCode.Authentication.Password.PasswordLoginAPI
