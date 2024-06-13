@@ -143,31 +143,39 @@ Example of validationResult below as json.
     <data>
         <validationResult>
             <recordInfo>
-                <id>validationOrder:1216498246337957</id>
-                    <type>
-                        <linkedRecordType>recordType</linkedRecordType>
-                         <linkedRecordId>validationOrder</linkedRecordId>
-                    </type>
-               <createdBy>
-                   <linkedRecordType>user</linkedRecordType>
-                   <linkedRecordId>someUser</linkedRecordId>
-               </createdBy>
-               <tsCreated>2024-06-13T11:35:42.985255Z</tsCreated>
-               <updated repeatId="0">
-                   <updatedBy>
-                       <linkedRecordType>user</linkedRecordType>
-                       <linkedRecordId>someUser</linkedRecordId>
-                   </updatedBy>
-                   <tsUpdated>2024-06-13T11:35:42.985255Z</tsUpdated>
-               </updated>
+                <id>validationOrder:1218302590797777</id>
+                <type>
+                    <linkedRecordType>recordType</linkedRecordType>
+                    <linkedRecordId>validationOrder</linkedRecordId>
+                </type>
+                <createdBy>
+                    <linkedRecordType>user</linkedRecordType>
+                    <linkedRecordId>someUser</linkedRecordId>
+                </createdBy>
+                <tsCreated>2024-06-13T12:05:47.329715Z</tsCreated>
+                <updated repeatId="0">
+                    <updatedBy>
+                        <linkedRecordType>user</linkedRecordType>
+                        <linkedRecordId>someUser</linkedRecordId>
+                    </updatedBy>
+                    <tsUpdated>2024-06-13T12:05:47.329715Z</tsUpdated>
+                </updated>
             </recordInfo>
             <errorMessages>
                 <errorMessage repeatId="0">Did not find enough data children with referenceId: createdByLink(with nameInData:createdBy).</errorMessage>
-                <valid>false</valid>
-            </validationResult>
-        </data>
-        <actionLinks>...</actionLinks>
-	</record>
+            </errorMessages>
+            <valid>false</valid>
+        </validationResult>
+    </data>
+    <actionLinks>
+        <read>
+            <requestMethod>GET</requestMethod>
+            <rel>read</rel>
+            <url>http://somesystem:8080/somewhere/rest/record/validationOrder/validationOrder:1218302590797777</url>
+            <accept>application/vnd.uub.record+xml</accept>
+        </read>
+    </actionLinks>
+</record>
 }}}
 *!
 
