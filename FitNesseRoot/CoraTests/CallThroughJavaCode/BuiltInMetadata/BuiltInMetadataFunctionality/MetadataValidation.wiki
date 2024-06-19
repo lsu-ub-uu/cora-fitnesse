@@ -328,8 +328,25 @@ Using same valid data as case 3a but this time it is valid since the record exis
 -!authToken:$adminAuthToken|
 | setBody | <?xml version="1.0" encoding="UTF-8"?><workOrder><order><validationOrder><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>validationOrder</linkedRecordId></validationType></recordInfo><recordType><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></recordType><validateLinks>false</validateLinks><metadataToValidate>existing</metadataToValidate></validationOrder></order><record><testStudentThesis><recordInfo><id>studentThesis1</id><type><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></type><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></validationType></recordInfo><testTitle>Entitel</testTitle><publishedStatus>notPublished</publishedStatus></testStudentThesis><testStudentThesis><recordInfo><id>studentThesis1</id><type><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></type><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></validationType></recordInfo><testTitle>Entitel</testTitle><publishedStatus>notPublished</publishedStatus></testStudentThesis></record></workOrder> |
 | POST | /record/workOrder | 400 | | Validation failed due to: Too many children in workOrder part. |
-
 *!
+
+!***> '''Case 6a: ''' The recordType of record should be validated against workOrder's recordType, using '''json'''.
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+| setHeader | Accept:application/vnd.uub.record+xml!-
+-!Content-Type:application/vnd.uub.workorder+json!-
+-!authToken:$adminAuthToken|
+| setBody | {"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"binary"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"testStudentThesis","children":[{"name":"recordInfo","children":[{"name":"id","value":"studentThesis1"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"testStudentThesis"}]}]},{"name":"testTitle","value":"Entitel"},{"name":"publishedStatus","value":"notPublished"}]}} |
+| POST | /record/workOrder | 200 | | //validationResult/valid[text()='false'] |
+*!
+!***> '''Case 6b: ''' The recordType of record should be validated against workOrder's recordType, using '''xml'''.
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+| setHeader | Accept:application/vnd.uub.record+xml!-
+-!Content-Type:application/vnd.uub.workorder+xml!-
+-!authToken:$adminAuthToken|
+| setBody | <?xml version="1.0" encoding="UTF-8"?><workOrder><order><validationOrder><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>validationOrder</linkedRecordId></validationType></recordInfo><recordType><linkedRecordType>recordType</linkedRecordType><linkedRecordId>binary</linkedRecordId></recordType><validateLinks>false</validateLinks><metadataToValidate>new</metadataToValidate></validationOrder></order><record><testStudentThesis><recordInfo><id>studentThesis1</id><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></validationType></recordInfo><testTitle>Entitel</testTitle><publishedStatus>notPublished</publishedStatus></testStudentThesis></record></workOrder> |
+| POST | /record/workOrder | 200 | | //validationResult/valid[text()='false'] |
+*!
+
 ----
 !***> Clean up created data
 
