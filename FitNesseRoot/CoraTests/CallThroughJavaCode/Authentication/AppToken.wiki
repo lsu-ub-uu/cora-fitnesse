@@ -17,40 +17,37 @@ An appToken (short for application token) is a form of digital authentication to
 
 !2 Working with appTokens
 !3 Create an appToken
-Each user is able to create multiple appTokens, by just adding a new appToken and a note in the user configuration and updating the user. Once this is done an appToken is generated and stored (hashed) as a [[systemSecret][.CoraTests.CallThroughJavaCode.Authentication.Password.SystemSecret]]. The response of the update will contain the generated appToken as clear text. This clear text appToken will only be shown once and never again. Make sure to copy it.
+Each user is able to create multiple appTokens, by just adding a new appToken and a note in the user configuration and updating the user. Once this is done an appToken is generated and stored (hashed) as a [[systemSecret][.CoraTests.CallThroughJavaCode.Authentication.Password.SystemSecret]]. The response of the update will contain the generated appToken as clear text. This clear text appToken will only be shown once, at '''appTokenclearText''' field, and never again. Make sure to copy it.
 
 !4 Metadata definition included in User
  * '''user'''
    * ''' ... '''
-   * '''appToken'''(group, 0-X, readWrite)
-     * '''appTokenLink'''(recordLink(systemSecret), 0-1, readWrite)
-     * '''note'''(text, 1-1, noConstraints)
-     * '''appTokenclearText'''(text, 0-1, noConstraints)
+   * '''appTokens''' (group, 0-1, readWrite)
+     * '''appToken''' (group, 0-X, noConstraints)
+       * '''appTokenLink''' (recordLink(systemSecret), 0-1, readWrite)
+       * '''note''' (text, 1-1, noConstraints)
+       * '''appTokenclearText''' (text, 0-1, noConstraints)
 
 !3 Use an appToken
 In order to be authenticated by the system you need to have an [[authToken][.CoraTests.CallThroughJavaCode.Authentication.AuthToken]] . To get an authToken using an appToken you need to make a call !style_pass(POST) to '''${systemUnderTestUrl}rest/login/apptoken/{user}''' using the appToken as payload. The response will contain a valid authToken.
 !style_darkRed[At this moment '''Access control''' and  '''Expiration and Renewal''' is not implemented.]
 
+!3 Update the note of an existing appToken
+The user is able to update the note of any single appToken of its own. This can be achieve buy changing the note in specific appToken.
+
 !3 Delete an appToken
 You can delete an appToken by simply removing its apptoken group in the user configuration and updating the user.
 
 !2 Test cases
-!3 User
  * '''Case 1: ''' Any user should be able to create an appToken for his own user. (User already has one appToken)
  * '''Assert 1a: ''' ApptokenClearText must never be stored.
  * '''Case 2: ''' Any user should be able to read the appToken notes for his own user.
  * '''Case 3: ''' Any user should be able to login using its own appToken.
  * '''Case 4: ''' A user should not be able to login using another users appToken.
- * '''Case 5: ''' Any user should be able to delete its own appToken.
- * '''Case 6: ''' A user should not be able to delete another users appToken.
-
-!3 SystemAdmin
- * '''Case 1: ''' SystemAdmin should be able to create an appToken for any user. 
- * '''Case 2: ''' SystemAdmin should not be able to login using another users appToken.
- * '''Case 3: ''' SystemAdmin should be able to delete any other users appToken.
-
-
- 
+ * '''Case 5: ''' Any user should be able to update the note in any of its own appTokens.
+ * '''Case 5: ''' A user should not be able to update the note to an appToken of its own.
+ * '''Case 6: ''' Any user should be able to delete its own appToken.
+ * '''Case 7: ''' A user should not be able to delete another users appToken.
 
  
 
