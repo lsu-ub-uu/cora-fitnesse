@@ -193,11 +193,11 @@ Validation must be able to offer the possiblity to validate records for both act
  * '''Case 5b: ''' A record with a missing record should cause bad request, using '''xml'''.
  * '''Case 5c: ''' A record containing multiple validationOrders should cause bad request, using '''xml'''.
  * '''Case 5d: ''' A record containing multiple records should cause bad request, using '''xml'''.
- * '''Case 6a: ''' A recordType of record that does not match the recordType specified in the workOrder should validate as false, using '''json'''.
- * '''Case 6b: ''' A recordType of record that does not match the recordType specified in the workOrder should validate as false, using '''xml'''.
- * '''Case 7a: ''' When workOrder is set to validate links a record with an existing recordlink should return true
- * '''Case 7b: ''' When workOrder is set to validate links a record with an non-existing recordlink should return false
- * '''Case 7c: ''' When workOrder is set to NOT validate links a record with a non-existing recordlink should return true
+ * '''Case 6a: ''' A recordType of record that does not match the recordType specified in the validationOrder should validate as false, using '''json'''.
+ * '''Case 6b: ''' A recordType of record that does not match the recordType specified in the validationOrder should validate as false, using '''xml'''.
+ * '''Case 7a: ''' When validationOrder is set to validate links, a record with an existing recordlink should validate as true
+ * '''Case 7b: ''' When validationOrder is set to validate links, a record with an non-existing recordlink should validate as false
+ * '''Case 7c: ''' When validationOrder is set to NOT validate links, a record with a non-existing recordlink should validate as true
  
 !***> Prepare tests: Create recordType testStudentThesis and metadata that is needed
 
@@ -336,7 +336,7 @@ Using same valid data as case 3a but this time it is valid since the record exis
 | POST | /record/workOrder | 400 | | Validation failed due to: Too many children in workOrder part. |
 
 *!
-!***> '''Case 6a: ''' A recordType of record that does not match the recordType specified in the workOrder should validate as false, using '''json'''.
+!***> '''Case 6a: ''' A recordType of record that does not match the recordType specified in the validationOrder should validate as false, using '''json'''.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
 | setHeader | Accept:application/vnd.uub.record+xml!-
 -!Content-Type:application/vnd.uub.workorder+json!-
@@ -344,7 +344,7 @@ Using same valid data as case 3a but this time it is valid since the record exis
 | setBody | {"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"binary"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"testStudentThesis","children":[{"name":"recordInfo","children":[{"name":"id","value":"studentThesis1"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"testStudentThesis"}]}]},{"name":"testTitle","value":"Entitel"},{"name":"publishedStatus","value":"notPublished"}]}} |
 | POST | /record/workOrder | 200 | | //validationResult/valid[text()='false'] |
 *!
-!***> '''Case 6b: ''' A recordType of record that does not match the recordType specified in the workOrder should validate as false, using '''xml'''.
+!***> '''Case 6b: ''' A recordType of record that does not match the recordType specified in the validationOrder should validate as false, using '''xml'''.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
 | setHeader | Accept:application/vnd.uub.record+xml!-
 -!Content-Type:application/vnd.uub.workorder+xml!-
@@ -353,17 +353,17 @@ Using same valid data as case 3a but this time it is valid since the record exis
 | POST | /record/workOrder | 200 | | //validationResult/valid[text()='false'] |
 
 *!
-!***> '''Case 7a''' When workOrder is set to validate links a record with an existing recordlink should validate as true
+!***> '''Case 7a''' When validationOrder is set to validate links, a record with an existing recordlink should validate as true
 !| MetadataValidationFixture |
 | authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
 | $adminAuthToken | workOrder | {"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testStudentThesis"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"testStudentThesis","children":[{"name":"recordInfo","children":[{"name":"id","value":"studentThesis1"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"testStudentThesis"}]}]},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someFitnesseText"}],"name":"someTestValidationLink"},{"name":"testTitle","value":"Entitel"},{"name":"publishedStatus","value":"notPublished"}]}} | | true | OK |
 *!
-!***> '''Case 7b''' When workOrder is set to validate links a record with an non-existing recordlink should validate as false
+!***> '''Case 7b''' When validationOrder is set to validate links, a record with an non-existing recordlink should validate as false
 !| MetadataValidationFixture |
 | authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
 | $adminAuthToken | workOrder | {"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testStudentThesis"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"testStudentThesis","children":[{"name":"recordInfo","children":[{"name":"id","value":"studentThesis1"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"testStudentThesis"}]}]},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someNoneExistingText"}],"name":"someTestValidationLink"},{"name":"testTitle","value":"Entitel"},{"name":"publishedStatus","value":"notPublished"}]}} | | false | OK |
 *!
-!***> '''Case 7c''' When workOrder is set to NOT validate links a record with a non-existing recordlink should validate as true
+!***> '''Case 7c''' When validationOrder is set to NOT validate links, a record with a non-existing recordlink should validate as true
 !| MetadataValidationFixture |
 | authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
 | $adminAuthToken | workOrder | {"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testStudentThesis"}]},{"name":"validateLinks","value":"false"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"testStudentThesis","children":[{"name":"recordInfo","children":[{"name":"id","value":"studentThesis1"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"testStudentThesis"}]}]},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someNoneExistingText"}],"name":"someTestValidationLink"},{"name":"testTitle","value":"Entitel"},{"name":"publishedStatus","value":"notPublished"}]}} | | true | OK |
