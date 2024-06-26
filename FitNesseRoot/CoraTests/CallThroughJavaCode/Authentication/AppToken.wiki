@@ -49,7 +49,61 @@ You can delete an appToken by simply removing its apptoken group in the user con
  * '''Case 6: ''' Any user should be able to delete its own appToken.
  * '''Case 7: ''' A user should not be able to delete another users appToken.
 
- 
+!3 User tests
+!***> '''Case 1: ''' Any user should be able to create an appToken for his own user. (User already has one appToken)
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+| setHeader | Accept:application/vnd.uub.record+xml!-
+-!Content-Type:application/vnd.uub.record+json!-
+-!authToken:$userAuthToken|
+| setBody | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"appToken"}],"name":"validationType"}],"name":"recordInfo"},{"name":"note","value":"My device"}],"name":"appToken"} |
+| POST | /record/appToken | 200 | | $appUserToken= |
+*!
+#assert 1a: ApptokenClearText must never be stored.
+
+!***> '''Case 2: ''' Any user should be able to read the appToken notes for his own user.
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+| setHeader | Accept:application/vnd.uub.record+xml!-
+-!Content-Type:application/vnd.uub.record+json!-
+-!authToken:$userAuthToken|
+| GET | /record/appToken/{$appUserToken} | 200 | | |
+*!
+
+!***> '''Case 3: ''' Any user should be able to login using its own appToken.
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+| setHeader | Accept:application/vnd.uub.record+xml!-
+-!Content-Type:application/vnd.uub.record+json!-
+####-!authToken:$userAuthToken|
+| setBody | $appUserToken |
+| POST | /appToken/{$appUserId} | 200 | | $appUserAuthToken= |
+*!
+
+# prep for tests -> $otherAppUserToken (case 4) & $otherAppUserTokenId (case 6)
+!***> '''Case 4: ''' A user should not be able to login using another users appToken.
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+| setHeader | Accept:application/vnd.uub.record+xml!-
+-!Content-Type:application/vnd.uub.record+json!-
+####-!authToken:$userAuthToken|
+| setBody | $otherAppUserToken |
+| POST | /appToken/{$appUserId} | 403 | | |
+*!
+
+!***> '''Case 5: ''' Any user should be able to delete its own appToken.
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+| setHeader | Accept:application/vnd.uub.record+xml!-
+-!Content-Type:application/vnd.uub.record+json!-
+-!authToken:$userAuthToken|
+| setBody | |
+| DELETE | /appToken/{$appUserTokenId} | 200 | | |
+*!
+
+!***> '''Case 6: ''' A user should not be able to delete another users appToken.
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+| setHeader | Accept:application/vnd.uub.record+xml!-
+-!Content-Type:application/vnd.uub.record+json!-
+-!authToken:$userAuthToken|
+| setBody | |
+| DELETE | /appToken/{$otherAppUserTokenId} | 403 | | |
+*!
 
 #!include -seamless .CoraTests.CallThroughJavaCode.Authentication.Password.SystemSecret
 
