@@ -45,27 +45,45 @@ You can delete an appToken by simply removing its apptoken group in the user con
  * '''Case 3: ''' Any user should be able to login using its own appToken.
  * '''Case 4: ''' A user should not be able to login using another users appToken.
  * '''Case 5: ''' Any user should be able to update the note in any of its own appTokens.
- * '''Case 5: ''' A user should not be able to update the note to an appToken of its own.
- * '''Case 6: ''' Any user should be able to delete its own appToken.
- * '''Case 7: ''' A user should not be able to delete another users appToken.
+ * '''Case 6: ''' A user should not be able to update the note to an appToken of its own.
+ * '''Case 7: ''' Any user should be able to delete its own appToken.
+ * '''Case 8: ''' A user should not be able to delete another users appToken.
+
+!***> Prepare test data needed for tests (case 4 and 8):
+
+!***> Create Apptoken for other user (admin)
+#extract actual token from clearTextAppToken from record in response to $otherAppUserToken....
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? | 
+| $adminAuthToken | appToken | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"appToken"}],"name":"validationType"}],"name":"recordInfo"},{"name":"note","value":"My admin device"}],"name":"appToken"} | | CREATED | $otherAppUserTokenId= | 
+
+!define otherAppUserTokenId {$createdId}
+# script probably needs to be updated to fit new data structure
+!| script | ReadAppTokenFromRecord |
+|  $otherAppUserToken=  | getAppTokenStringFromCreatedAppTokenRecord |
+*!
+*!
 
 !3 User tests
 !***> '''Case 1: ''' Any user should be able to create an appToken for his own user. (User already has one appToken)
-!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
-| setHeader | Accept:application/vnd.uub.record+xml!-
--!Content-Type:application/vnd.uub.record+json!-
--!authToken:$userAuthToken|
-| setBody | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"appToken"}],"name":"validationType"}],"name":"recordInfo"},{"name":"note","value":"My device"}],"name":"appToken"} |
-| POST | /record/appToken | 200 | | $appUserToken= |
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? | 
+| $userAuthToken | appToken | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"appToken"}],"name":"validationType"}],"name":"recordInfo"},{"name":"note","value":"My device"}],"name":"appToken"} | | CREATED | $appUserTokenId= | 
+
+!define appUserTokenId {$createdId}
+# script probably needs to be updated to fit new data structure
+!| script | ReadAppTokenFromRecord |
+|  $appUserToken=  | getAppTokenStringFromCreatedAppTokenRecord |
+
 *!
-#assert 1a: ApptokenClearText must never be stored.
+#assert 1a: ApptokenClearText must never be stored. (combined check of data received in case 2?)
 
 !***> '''Case 2: ''' Any user should be able to read the appToken notes for his own user.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
 | setHeader | Accept:application/vnd.uub.record+xml!-
 -!Content-Type:application/vnd.uub.record+json!-
 -!authToken:$userAuthToken|
-| GET | /record/appToken/{$appUserToken} | 200 | | |
+| GET | /record/appToken/{$appUserTokenId} | 200 | | |
 *!
 
 !***> '''Case 3: ''' Any user should be able to login using its own appToken.
@@ -74,35 +92,53 @@ You can delete an appToken by simply removing its apptoken group in the user con
 -!Content-Type:application/vnd.uub.record+json!-
 ####-!authToken:$userAuthToken|
 | setBody | $appUserToken |
-| POST | /appToken/{$appUserId} | 200 | | $appUserAuthToken= |
+| POST | /login/apptoken/121212 | 200 | | $appUserAuthToken= |
 *!
 
-# prep for tests -> $otherAppUserToken (case 4) & $otherAppUserTokenId (case 6)
 !***> '''Case 4: ''' A user should not be able to login using another users appToken.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
 | setHeader | Accept:application/vnd.uub.record+xml!-
 -!Content-Type:application/vnd.uub.record+json!-
 ####-!authToken:$userAuthToken|
 | setBody | $otherAppUserToken |
-| POST | /appToken/{$appUserId} | 403 | | |
+| POST | /login/apptoken/121212 | 403 | | |
 *!
 
-!***> '''Case 5: ''' Any user should be able to delete its own appToken.
+!***> '''Case 5: ''' Any user should be able to update the note in any of its own appTokens.
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+| setHeader | Accept:application/vnd.uub.record+xml!-
+-!Content-Type:application/vnd.uub.record+json!-
+-!authToken:$userAuthToken|
+| setBody | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"appToken"}],"name":"validationType"}],"name":"recordInfo"},{"name":"note","value":"My updated note"}],"name":"appToken"} |
+| POST | /record/appToken/{$appUserTokenId} | 200 | | |
+| let | note | js | response.body.match(/note","value":"([^"]+)"}/)[1] | My updated note |
+*!
+
+!***> '''Case 6: ''' A user should not be able to update the note to an appToken of its own. (???)
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+| setHeader | Accept:application/vnd.uub.record+xml!-
+-!Content-Type:application/vnd.uub.record+json!-
+-!authToken:$userAuthToken|
+| setBody | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"appToken"}],"name":"validationType"}],"name":"recordInfo"},{"name":"note","value":"My device"}],"name":"appToken"} |
+| POST | /record/appToken/{$otherAppUserTokenId} | 403 | | |
+*!
+
+!***> '''Case 7: ''' Any user should be able to delete its own appToken.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
 | setHeader | Accept:application/vnd.uub.record+xml!-
 -!Content-Type:application/vnd.uub.record+json!-
 -!authToken:$userAuthToken|
 | setBody | |
-| DELETE | /appToken/{$appUserTokenId} | 200 | | |
+| DELETE | /record/appToken/{$appUserTokenId} | 200 | | |
 *!
 
-!***> '''Case 6: ''' A user should not be able to delete another users appToken.
+!***> '''Case 8: ''' A user should not be able to delete another users appToken.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
 | setHeader | Accept:application/vnd.uub.record+xml!-
 -!Content-Type:application/vnd.uub.record+json!-
 -!authToken:$userAuthToken|
 | setBody | |
-| DELETE | /appToken/{$otherAppUserTokenId} | 403 | | |
+| DELETE | /record/appToken/{$otherAppUserTokenId} | 403 | | |
 *!
 
 #!include -seamless .CoraTests.CallThroughJavaCode.Authentication.Password.SystemSecret
