@@ -86,8 +86,7 @@ You can delete an appToken by simply removing its apptoken group in the user con
 !***> '''Case 3: ''' Any user should be able to login using its own appToken.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
 | setHeader | Accept:application/vnd.uub.record+json!-
--!Content-Type:text/plain;charset=UTF-8!-
-#-!authToken:$userAuthToken|
+-!Content-Type:text/plain;charset=UTF-8 |
 | setBody | %appUserToken% |
 | POST | /login/apptoken/121212 | 200 | | $appUserAuthToken= |
 *!
@@ -95,8 +94,7 @@ You can delete an appToken by simply removing its apptoken group in the user con
 !***> '''Case 4: ''' A user should not be able to login using another users appToken.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
 | setHeader | Accept:application/vnd.uub.record+json!-
--!Content-Type:text/plain;charset=UTF-8!-
-#-!authToken:$userAuthToken|
+-!Content-Type:text/plain;charset=UTF-8 |
 | setBody | %otherAppUserToken% |
 | POST | /login/apptoken/121212 | 403 | | |
 *!
