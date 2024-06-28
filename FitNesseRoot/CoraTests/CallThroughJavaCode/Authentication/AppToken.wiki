@@ -80,7 +80,7 @@ You can delete an appToken by simply removing its apptoken group in the user con
 -!authToken:$userAuthToken|
 | GET | /record/appToken/{$appUserTokenId} | 200 | | |
 | let | note | js | response.body.match(/"note","value":"([^"]+)"}/)[1] | My device |
-| let | note | js | response.body.match(/"appTokenclearText","value":"([^"]+)"}/)[1] | null |
+| let | appTokenClearTextShouldNotExist | js | response.body.match(/"appTokenclearText","value":"([^"]+)"}/)[1] | null |
 *!
 
 !***> '''Case 3: ''' Any user should be able to login using its own appToken.
@@ -108,7 +108,7 @@ You can delete an appToken by simply removing its apptoken group in the user con
 -!authToken:$userAuthToken|
 | setBody | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"appToken"}],"name":"validationType"}],"name":"recordInfo"},{"name":"note","value":"My updated note"}],"name":"appToken"} |
 | POST | /record/appToken/{$appUserTokenId} | 200 | | |
-| let | note | js | response.body.match(/"note","value":"([^"]+)"}/)[1] | My updated note |
+| let | updatedNote | js | response.body.match(/"note","value":"([^"]+)"}/)[1] | My updated note |
 *!
 
 !***> '''Case 6: ''' A user should not be able to update the note to an appToken of its own. (???)
