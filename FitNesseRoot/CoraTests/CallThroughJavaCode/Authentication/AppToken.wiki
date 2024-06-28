@@ -26,7 +26,7 @@ Each user is able to create multiple appTokens, by just adding a new appToken an
      * '''appToken''' (group, 0-X, noConstraints)
        * '''appTokenLink''' (recordLink(systemSecret), 0-1, readWrite)
        * '''note''' (text, 1-1, noConstraints)
-       * '''appTokenclearText''' (text, 0-1, noConstraints)
+       * '''appTokenClearText''' (text, 0-1, noConstraints)
 
 !3 Use an appToken
 In order to be authenticated by the system you need to have an [[authToken][.CoraTests.CallThroughJavaCode.Authentication.AuthToken]] . To get an authToken using an appToken you need to make a !style_pass(POST) call to '''${systemUnderTestUrl}rest/login/apptoken/{user}''' using the appToken as payload. The response will contain a valid authToken.
@@ -78,7 +78,7 @@ You can delete an appToken by simply removing its apptoken group in the user con
 | setHeader | Accept:application/vnd.uub.record+json!-
 -!Content-Type:application/vnd.uub.record+json!-
 -!authToken:$userAuthToken|
-| GET | /record/appToken/{$appUserTokenId} | 200 | | |
+| GET | /record/appToken/$appUserTokenId | 200 | | |
 | let | note | js | response.body.match(/"note","value":"([^"]+)"}/)[1] | My device |
 | let | appTokenClearTextShouldNotExist | js | response.body.match(/"appTokenClearText","value":"([^"]+)"}/)[1] | null |
 *!
@@ -88,7 +88,7 @@ You can delete an appToken by simply removing its apptoken group in the user con
 | setHeader | Accept:application/vnd.uub.record+json!-
 -!Content-Type:text/plain;charset=UTF-8!-
 #-!authToken:$userAuthToken|
-| setBody | $appUserToken |
+| setBody | %appUserToken% |
 | POST | /login/apptoken/121212 | 200 | | $appUserAuthToken= |
 *!
 
@@ -97,7 +97,7 @@ You can delete an appToken by simply removing its apptoken group in the user con
 | setHeader | Accept:application/vnd.uub.record+json!-
 -!Content-Type:text/plain;charset=UTF-8!-
 #-!authToken:$userAuthToken|
-| setBody | $otherAppUserToken |
+| setBody | %otherAppUserToken% |
 | POST | /login/apptoken/121212 | 403 | | |
 *!
 
@@ -107,7 +107,7 @@ You can delete an appToken by simply removing its apptoken group in the user con
 -!Content-Type:application/vnd.uub.record+json!-
 -!authToken:$userAuthToken|
 | setBody | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"appToken"}],"name":"validationType"}],"name":"recordInfo"},{"name":"note","value":"My updated note"}],"name":"appToken"} |
-| POST | /record/appToken/{$appUserTokenId} | 200 | | |
+| POST | /record/appToken/$appUserTokenId | 200 | | |
 | let | updatedNote | js | response.body.match(/"note","value":"([^"]+)"}/)[1]  | My updated note |
 *!
 
@@ -117,7 +117,7 @@ You can delete an appToken by simply removing its apptoken group in the user con
 -!Content-Type:application/vnd.uub.record+json!-
 -!authToken:$userAuthToken|
 | setBody | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"appToken"}],"name":"validationType"}],"name":"recordInfo"},{"name":"note","value":"My device"}],"name":"appToken"} |
-| POST | /record/appToken/{$otherAppUserTokenId} | 403 | | |
+| POST | /record/appToken/$otherAppUserTokenId | 403 | | |
 *!
 
 !***> '''Case 7: ''' Any user should be able to delete its own appToken.
@@ -126,7 +126,7 @@ You can delete an appToken by simply removing its apptoken group in the user con
 -!Content-Type:application/vnd.uub.record+json!-
 -!authToken:$userAuthToken|
 | setBody | |
-| DELETE | /record/appToken/{$appUserTokenId} | 200 | | |
+| DELETE | /record/appToken/$appUserTokenId | 200 | | |
 *!
 
 !***> '''Case 8: ''' A user should not be able to delete another users appToken.
@@ -135,7 +135,7 @@ You can delete an appToken by simply removing its apptoken group in the user con
 -!Content-Type:application/vnd.uub.record+json!-
 -!authToken:$userAuthToken|
 | setBody | |
-| DELETE | /record/appToken/{$otherAppUserTokenId} | 403 | | |
+| DELETE | /record/appToken/$otherAppUserTokenId | 403 | | |
 *!
 
 #!include -seamless .CoraTests.CallThroughJavaCode.Authentication.Password.SystemSecret
