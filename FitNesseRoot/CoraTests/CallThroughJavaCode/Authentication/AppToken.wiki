@@ -84,19 +84,19 @@ You can delete an appToken by simply removing its apptoken group in the user con
 *!
 
 !***> '''Case 3: ''' Any user should be able to login using its own appToken (the returned authToken ($appUserAuthToken) will be used for the rest of the test cases).
-!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${appTokenVerifierUrl}rest/ |
 | setHeader | Accept:application/vnd.uub.record+json!-
 -!Content-Type:text/plain;charset=UTF-8 |
 | setBody | %appUserToken% |
-| POST | /login/apptoken/121212 | 200 | | $appUserAuthToken= |
+| POST | /apptoken/121212 | 200 | | $appUserAuthToken= |
 *!
 
 !***> '''Case 4: ''' A user should not be able to login using another users appToken.
-!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${appTokenVerifierUrl}rest/ |
 | setHeader | Accept:application/vnd.uub.record+json!-
 -!Content-Type:text/plain;charset=UTF-8 |
 | setBody | %otherAppUserToken% |
-| POST | /login/apptoken/121212 | 403 | | |
+| POST | /apptoken/121212 | 403 | | |
 *!
 
 !***> '''Case 5: ''' Any user should be able to update the note in any of its own appTokens.
