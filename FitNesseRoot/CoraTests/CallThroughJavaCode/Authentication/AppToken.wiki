@@ -56,7 +56,6 @@ You can delete an appToken by simply removing its apptoken group in the user con
 -!authToken:$adminAuthToken |
 | setBody | {"name":"user","children":[{"name":"recordInfo","children":[{"name":"id","value":"131313"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"}]},{"name":"userId","value":"fitnesseAdmin@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"Admin"},{"name":"userRole","repeatId":"1","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"everything"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"userRole","repeatId":"3603423986673","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"binaryUserRole"}]}]},{"name":"activeStatus","value":"active"},{"name":"userAppTokenGroup","repeatId":"3603423986672","children":[{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"appToken"},{"name":"linkedRecordId","value":"appToken:3603190243788"}]},{"name":"note","value":"JsClient"}]},{"name":"usePassword","value":"false"},{"name":"tsPasswordUpdated","value":""},{"name":"appTokens","children":[{"name":"appToken","repeatId":"0","children":[{"name":"appTokenNote","value":"My admin advice"}]}]}],"attributes":{"type":"systemOneUser"}} |
 | POST | /record/user/131313 | 200 | | |
-| let | otherAppUserTokenId | js | response.body.match(/"id","value":"([^"]+)"}/)[1] | |
 | let | otherAppUserToken | js | response.body.match(/"appTokenClearText","value":"([^"]+)"}/)[1] | |
 *!
 
@@ -68,7 +67,6 @@ You can delete an appToken by simply removing its apptoken group in the user con
 -!authToken:$userAuthToken |
 | setBody | {"name":"user","children":[{"name":"recordInfo","children":[{"name":"id","value":"121212"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"}]},{"name":"userId","value":"fitnesseUser@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"User"},{"name":"userRole","repeatId":"7175775086411621","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"fitnesseTextAdmin"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"activeStatus","value":"active"},{"name":"userAppTokenGroup","repeatId":"7175775086411619","children":[{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"appToken"},{"name":"linkedRecordId","value":"appToken:7175774276485719"}]},{"name":"note","value":"For fitnesse"}]},{"name":"usePassword","value":"false"},{"name":"tsPasswordUpdated","value":""},{"name":"appTokens","children":[{"name":"appToken","repeatId":"0","children":[{"name":"appTokenNote","value":"My device"}]}]}],"attributes":{"type":"systemOneUser"}} |
 | POST | /record/user/121212 | 200 | | |
-| let | appUserTokenId | js | response.body.match(/"id","value":"([^"]+)"}/)[1] | |
 | let | appUserToken | js | response.body.match(/"appTokenClearText","value":"([^"]+)"}/)[1] | |
 *!
 
@@ -80,7 +78,7 @@ You can delete an appToken by simply removing its apptoken group in the user con
 -!authToken:$userAuthToken |
 | GET | /record/user/121212 | 200 | | |
 | let | note | js | response.body.match(/"note","value":"([^"]+)"}/)[1] | My device |
-| let | appTokenClearTextShouldNotExist | js | response.body.match(/"appTokenClearText","value":"([^"]+)"}/)[1] | null |
+| let | appTokenClearTextShouldNotExist | js | var regExp = new RegExp('"appTokenClearText"') ; regExp.test(response.body) | false |
 *!
 
 !***> '''Case 3: ''' Any user should be able to login using its own appToken (the returned authToken ($appUserAuthToken) will be used for the rest of the test cases).
@@ -106,7 +104,7 @@ You can delete an appToken by simply removing its apptoken group in the user con
 -!authToken:${appUserAuthToken} |
 | setBody | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"appToken"}],"name":"validationType"}],"name":"recordInfo"},{"name":"note","value":"My updated note"}],"name":"appToken"} |
 | POST | /record/user/121212 | 200 | | |
-| let | updatedNote | js | response.body.match(/"note","value":"([^"]+)"}/)[1]  | My updated note |
+| let | updatedNote | js | response.body.match(/"appTokenNote","value":"([^"]+)"}/)[1]  | My updated note |
 *!
 
 #!***> '''Case 6: ''' A user should not be able to update the note to an appToken of its own. (???)
