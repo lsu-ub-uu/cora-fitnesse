@@ -8,7 +8,7 @@ Suite
 !***> Login for fitnesse admin
 !| AppTokenEndpointFixture |
 | userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
-| 131313 | | | $adminAuthToken= | CREATED |
+| fitnesseAdmin@system.cora.uu.se | | | $adminAuthToken= | CREATED |
 
 !| script | AuthTokenHolder |
 | setAdminAuthToken | $adminAuthToken |
@@ -16,7 +16,7 @@ Suite
 !***> Login for fitnesse user (Disabled. Related to CORA-2475. Enabled when fixed.)
 #!| AppTokenEndpointFixture |
 #| userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
-#| 121212 | | | $userAuthToken= | CREATED |
+#| fitnesseUser@system.cora.uu.se | | | $userAuthToken= | CREATED |
 #
 #!| script | AuthTokenHolder |
 #| setUserAuthToken | $userAuthToken |
@@ -33,7 +33,7 @@ Suite
 !***> Login for fitnesse user (Related to CORA-2475. Remove when fixed)
 !| AppTokenEndpointFixture |
 | userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
-| 121212 | | | $userAuthToken= | CREATED |
+| fitnesseUser@system.cora.uu.se | | | $userAuthToken= | CREATED |
 
 !| script | AuthTokenHolder |
 | setUserAuthToken | $userAuthToken |
