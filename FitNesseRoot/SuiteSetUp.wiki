@@ -25,4 +25,13 @@ Suite
 | setComparerFactoryUsingClassName | se.uu.ub.cora.fitnesseintegration.compare.ComparerFactoryImp |
 
 !define TEST_SYSTEM {slim}
+
+!***> Login for fitnesse admin
+!| AppTokenEndpointFixture |
+| userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
+| fitnesseAdmin@system.cora.uu.se | | | $adminAuthToken= | CREATED |
+
+!| script | AuthTokenHolder |
+| setAdminAuthToken | $adminAuthToken |
+*!
 *!

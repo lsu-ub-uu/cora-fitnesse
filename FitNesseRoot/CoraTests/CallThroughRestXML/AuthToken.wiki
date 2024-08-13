@@ -1,23 +1,6 @@
 ---
 Test
 ---
-!| script | SystemUrl |
-| setUrl | ${systemUnderTestUrl} |
-| setAppTokenVerifierUrl | ${appTokenVerifierUrl} |
-
-!| script | DependencyProvider |
-| setHttpHandlerFactoryClassName | se.uu.ub.cora.httphandler.HttpHandlerFactoryImp |
-
-!2 Login  - call is made through java code
-!***> Login for admin
-
-!| AppTokenEndpointFixture |
-| userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
-| 131313 | | | $adminAuthToken= | CREATED |
-*!
-!| script | AuthTokenHolder |
-| setAdminAuthToken | $adminAuthToken |
-
 !1 Test AuthToken
 Test that sending a valid authToken gives additional permissions compared to guest (no token).
 

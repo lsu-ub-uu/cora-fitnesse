@@ -1,21 +1,3 @@
-!| script | SystemUrl |
-| setUrl | ${systemUnderTestUrl} |
-| setAppTokenVerifierUrl | ${appTokenVerifierUrl} |
-
-!| script | DependencyProvider |
-| setHttpHandlerFactoryClassName | se.uu.ub.cora.httphandler.HttpHandlerFactoryImp |
-
-!2 Login  - call is made through java code
-!***> Login for admin
-
-!| AppTokenEndpointFixture |
-| userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
-| 131313 | | | $adminAuthToken= | CREATED |
-
-*!
-!| script | AuthTokenHolder |
-| setAdminAuthToken | $adminAuthToken |
-
 !***> Configure !-RestFixture-!
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
