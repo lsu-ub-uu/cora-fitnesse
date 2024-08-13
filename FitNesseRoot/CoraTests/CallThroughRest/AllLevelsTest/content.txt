@@ -6,17 +6,6 @@ Last, we will create a trainingProgram using the metadata groups specified. We c
  * -!The second test is missing the entire trainingProgram child!-
  * -!The third test contains everything needed
 
-!2 Login  - call is made through java code
-!***> Login for admin
-
-!| AppTokenEndpointFixture |
-| userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
-| 131313 | | | $adminAuthToken= | CREATED |
-
-*!
-!| script | AuthTokenHolder |
-| setAdminAuthToken | $adminAuthToken |
-
 !***> Configure !-RestFixture-!
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |

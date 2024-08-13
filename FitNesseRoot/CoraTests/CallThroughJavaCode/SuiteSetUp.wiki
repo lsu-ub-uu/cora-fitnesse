@@ -1,18 +1,7 @@
 ---
 Suite
 ---
-!***> SuiteSetUp for Fitnesse Example
 
-!***> Setup login
-
-!***> Login for fitnesse admin
-!| AppTokenEndpointFixture |
-| userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
-| fitnesseAdmin@system.cora.uu.se | | | $adminAuthToken= | CREATED |
-
-!| script | AuthTokenHolder |
-| setAdminAuthToken | $adminAuthToken |
-*!
 !***> Login for fitnesse user (Disabled. Related to CORA-2475. Enabled when fixed.)
 #!| AppTokenEndpointFixture |
 #| userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
@@ -26,8 +15,8 @@ Suite
 | EPPN | getAuthTokenForEPPN? | getIdFromLogin? | getResponseCode? | getAuthToken? | getValidForNoSeconds? | getDeleteUrl? |
 | userNotInDb@user.uu.se | |  |  | $guestAuthToken= | |  |
 *!
-*!
 
+!***> SuiteSetUp for Fitnesse Example
 !include -seamless .CoraTests.CallThroughJavaCode.SuiteSetUp.ExamplesPool
 
 !***> Login for fitnesse user (Related to CORA-2475. Remove when fixed)
