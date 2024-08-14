@@ -38,119 +38,71 @@ The user is able to update the note of any single appToken of its own. This can 
 !3 Delete an appToken
 You can delete an appToken by simply removing its apptoken group in the user configuration and updating the user.
 
-!2 Old Test cases
- * '''Case 1: ''' It should be able to create an appToken for a user. The generated appToken should be visible only once when it is created.
- * '''Case 2: ''' Any user should be able to login using its own appToken.
- * '''Case 3: ''' Any user should be able to read the appToken notes for his own user.
-# * '''Case 4: ''' A user should not be able to login using another users appToken.
-# * '''Case 5: ''' Any user should be able to update the note in any of its own appTokens.
-# * '''Case 6: ''' Any user should be able to delete its own appToken.
-# * '''Case 7: ''' A user should not be able to delete another users appToken.
-# * '''Case 6: ''' A user should not be able to update the note to an appToken of its own.
-#
-#!2 Test cases
-# * '''Case 1: ''' It should be able to create an appToken for a user. The generated appToken should be visible only once when it is created.
-# * '''Assert 1a: ''' ApptokenClearText must never be stored.
-# * '''Case 2: ''' Any user should be able to read the appToken notes for his own user.
-# * '''Case 3: ''' Any user should be able to login using its own appToken.
-# * '''Case 4: ''' A user should not be able to login using another users appToken.
-# * '''Case 5: ''' Any user should be able to update the note in any of its own appTokens.
-# * '''Case 6: ''' Any user should be able to delete its own appToken.
-# * '''Case 7: ''' A user should not be able to delete another users appToken.
-## * '''Case 6: ''' A user should not be able to update the note to an appToken of its own.
-#
-#!***> Prepare test data needed for tests (case 4 and 8):
-#!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
-#| setHeader | Accept:application/vnd.uub.record+json!-
-#-!Content-Type:application/vnd.uub.record+json!-
-#-!authToken:$adminAuthToken |
-#| setBody | {"name":"user","children":[{"name":"recordInfo","children":[{"name":"id","value":"131313"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"}]},{"name":"userId","value":"fitnesseAdmin@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"Admin"},{"name":"userRole","repeatId":"1","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"everything"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"userRole","repeatId":"3603423986673","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"binaryUserRole"}]}]},{"name":"activeStatus","value":"active"},{"name":"userAppTokenGroup","repeatId":"3603423986672","children":[{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"appToken"},{"name":"linkedRecordId","value":"appToken:3603190243788"}]},{"name":"note","value":"JsClient"}]},{"name":"usePassword","value":"false"},{"name":"tsPasswordUpdated","value":""},{"name":"appTokens","children":[{"name":"appToken","repeatId":"0","children":[{"name":"appTokenNote","value":"My admin advice"}]}]}],"attributes":{"type":"systemOneUser"}} |
-#| POST | /record/user/131313 | 200 | | |
-#| let | otherAppUserToken | js | response.body.match(/"appTokenClearText","value":"([^"]+)"}/)[1] | |
-#*!
-#
+--------
+!2 Test cases
+ * '''Case 1: ''' It should be possible to create an appToken. The appTokenClearText of the apptoken should be visible at the time of its creation.
+ * '''Case 2: ''' It should be possible to login using a created appToken.
+ * '''Case 3: ''' It should be possible to read the note for an apptoken. There must be no appTokenClearText present in the data.
+ * '''Case 4: ''' It should be possible to delete an appToken.
+ * '''Case 5: ''' When updating an appToken and supplying an existing appToken in clear text (using appTokenClearText), appTokenClearText must never be visible in the response.
+ * '''Case 6: ''' It should be possible to update the note of an apptoken.
+
 !3 User tests
-!***> '''Case 1: ''' It should be able to create an appToken for a user. (User already has one appToken)
+!***> '''Case 1: ''' It should be possible to create an appToken. The appTokenClearText of the apptoken should be visible at the time of its creation.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
 | setHeader | Accept:application/vnd.uub.record+json!-
 -!Content-Type:application/vnd.uub.record+json!-
 -!authToken:$adminAuthToken |
-| setBody | {"name":"user","children":[{"name":"recordInfo","children":[{"name":"id","value":"131313"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"}]},{"name":"userId","value":"fitnesseAdmin@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"Admin"},{"name":"userRole","repeatId":"1","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"everything"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"userRole","repeatId":"3603423986673","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"binaryUserRole"}]}]},{"name":"activeStatus","value":"active"},{"name":"userAppTokenGroup","repeatId":"3603423986672","children":[{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"appToken"},{"name":"linkedRecordId","value":"appToken:3603190243788"}]},{"name":"note","value":"JsClient"}]},{"name":"usePassword","value":"false"},{"name":"tsPasswordUpdated","value":""},{"name":"appTokens","children":[{"name":"appToken","repeatId":"0","children":[{"name":"appTokenNote","value":"My admin device"}]}]}],"attributes":{"type":"systemOneUser"}} |
+| setBody | {"name":"user","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"131313"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"userId","value":"fitnesseAdmin@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"Admin"},{"name":"userRole","repeatId":"1","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"everything"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"userRole","repeatId":"3603423986673","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"binaryUserRole"}]}]},{"name":"activeStatus","value":"active"},{"name":"appTokens","children":[{"name":"appToken","repeatId":"0","children":[{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"systemSecret"},{"name":"linkedRecordId","value":"systemSecret:3452556002950361"}]},{"name":"appTokenNote","value":"Token for development"}]},{"name":"appToken","repeatId":"1","children":[{"name":"appTokenNote","value":"My admin device"}]}]},{"name":"usePassword","value":"false"}],"attributes":{"type":"systemOneUser"}} |
 | POST | /record/user/131313 | 200 | | |
 | let | appUserToken | js | response.body.match(/"appTokenClearText","value":"([^"]+)"}/)[1] | |
 *!
 
-!***> '''Case 2: ''' Any user should be able to login using its own appToken.
+!***> '''Case 2: ''' It should be possible to login using a created appToken.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${appTokenVerifierUrl}rest/ |
 | setHeader | Accept:application/vnd.uub.record+json!-
 -!Content-Type:text/plain;charset=UTF-8 |
 | setBody | %appUserToken% |
-| POST | /apptoken/fitnesseAdmin@system.cora.uu.se | 201 | | $appUserTokenResponse= |
+| POST | /apptoken/fitnesseAdmin@system.cora.uu.se | 201 | | |
+| let | appUserAuthToken | js | response.body.match(/"name":"id","value":"([^"]+)"}/)[1] | |
 *!
 
-!***> Extract authToken from logging in using the created apptoken
-!| script | ExtractSubstringUsingRegex |
-| $appUserAuthToken= | get substring using text | $appUserTokenResponse | and regex | [0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12} |
-*!
-
-#assert 1a: ApptokenClearText must never be stored. (combined check of data received in case 2?)
-!***> '''Case 3: ''' Any user should be able to read the appToken notes for his own user.
+!***> '''Case 3: ''' It should be possible to read the note for an apptoken. There must be no appTokenClearText present in the data.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
 | setHeader | Accept:application/vnd.uub.record+json!-
 -!Content-Type:application/vnd.uub.record+json!-
--!authToken:$appUserAuthToken |
+-!authToken:%appUserAuthToken% |
 | GET | /record/user/131313 | 200 | | |
 | let | noteShouldExist | js | var regExp = new RegExp('"My admin device"') ; regExp.test(response.body) | true |
 | let | appTokenClearTextShouldNotExist | js | var regExp = new RegExp('"appTokenClearText"') ; regExp.test(response.body) | false |
 *!
 
+!***> '''Case 4: ''' It should be possible to delete an appToken.
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+| setHeader | Accept:application/vnd.uub.record+json!-
+-!Content-Type:application/vnd.uub.record+json!-
+-!authToken:$adminAuthToken |
+| setBody | {"name":"user","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"131313"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"userId","value":"fitnesseAdmin@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"Admin"},{"name":"userRole","repeatId":"1","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"everything"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"userRole","repeatId":"3603423986673","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"binaryUserRole"}]}]},{"name":"activeStatus","value":"active"},{"name":"appTokens","children":[{"name":"appToken","repeatId":"0","children":[{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"systemSecret"},{"name":"linkedRecordId","value":"systemSecret:3452556002950361"}]},{"name":"appTokenNote","value":"Token for development"}]}]},{"name":"usePassword","value":"false"}],"attributes":{"type":"systemOneUser"}} |
+| POST | /record/user/131313 | 200 | | |
+| let | appUserToken | js | var regExp = new RegExp('"My admin device"') ; regExp.test(response.body) | false |
+*!
 
-#
-#!***> '''Case 4: ''' A user should not be able to login using another users appToken.
-#!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${appTokenVerifierUrl}rest/ |
-#| setHeader | Accept:application/vnd.uub.record+json!-
-#-!Content-Type:text/plain;charset=UTF-8 |
-#| setBody | %otherAppUserToken% |
-#| POST | /apptoken/121212 | 403 | | |
-#*!
-#
-#!***> '''Case 5: ''' Any user should be able to update the note in any of its own appTokens.
+!***> '''Case 5: ''' When updating an appToken and supplying an existing appToken in clear text (using appTokenClearText), appTokenClearText must never be visible in the response. '''(disabled but should be enabled after CORA-2593 have been fixed)'''
 #!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
 #| setHeader | Accept:application/vnd.uub.record+json!-
 #-!Content-Type:application/vnd.uub.record+json!-
 #-!authToken:$adminAuthToken |
-#| setBody | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"appToken"}],"name":"validationType"}],"name":"recordInfo"},{"name":"note","value":"My updated note"}],"name":"appToken"} |
-#| POST | /record/user/121212 | 200 | | |
-#| let | updatedNote | js | response.body.match(/"appTokenNote","value":"([^"]+)"}/)[1]  | My updated note |
-#*!
-#
-##!***> '''Case 6: ''' A user should not be able to update the note to an appToken of its own. (???)
-##!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
-##| setHeader | Accept:application/vnd.uub.record+json!-
-##-!Content-Type:application/vnd.uub.record+json!-
-##-!authToken:${appUserAuthToken} |
-##| setBody | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"appToken"}],"name":"validationType"}],"name":"recordInfo"},{"name":"note","value":"My device"}],"name":"appToken"} |
-##| POST | /record/user/131313 | 403 | | |
-##*!
-#!***> '''Case 6: ''' Any user should be able to delete its own appToken.
-#!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
-#| setHeader | Accept:application/vnd.uub.record+json!-
-#-!Content-Type:application/vnd.uub.record+json!-
-#-!authToken:$adminAuthToken |
-#| setBody | {"name":"user","children":[{"name":"recordInfo","children":[{"name":"id","value":"121212"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"}]},{"name":"userId","value":"fitnesseUser@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"User"},{"name":"userRole","repeatId":"7175775086411621","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"fitnesseTextAdmin"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"activeStatus","value":"active"},{"name":"userAppTokenGroup","repeatId":"7175775086411619","children":[{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"appToken"},{"name":"linkedRecordId","value":"appToken:7175774276485719"}]},{"name":"note","value":"For fitnesse"}]},{"name":"usePassword","value":"false"},{"name":"tsPasswordUpdated","value":""}],"attributes":{"type":"systemOneUser"}} |
-#| POST | /record/user/121212 | 200 | | |
-#*!
-#
-##!***> '''Case 7: ''' A user should not be able to delete another users appToken.
-##!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
-##| setHeader | Accept:application/vnd.uub.record+json!-
-##-!Content-Type:application/vnd.uub.record+json!-
-##-!authToken:${appUserAuthToken} |
-##| setBody | {"name":"user","children":[{"name":"recordInfo","children":[{"name":"id","value":"131313"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"}]},{"name":"userId","value":"fitnesseAdmin@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"Admin"},{"name":"userRole","repeatId":"1","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"everything"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"userRole","repeatId":"3603423986673","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"binaryUserRole"}]}]},{"name":"activeStatus","value":"active"},{"name":"userAppTokenGroup","repeatId":"3603423986672","children":[{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"appToken"},{"name":"linkedRecordId","value":"appToken:3603190243788"}]},{"name":"note","value":"JsClient"}]},{"name":"usePassword","value":"false"},{"name":"tsPasswordUpdated","value":""}],"attributes":{"type":"systemOneUser"}} |
-##| POST | /record/appToken/131313 | 403 | | |
-##*!
-#
-#!include -seamless .CoraTests.CallThroughJavaCode.Authentication.Password.SystemSecret
-#
-#!include -seamless .CoraTests.CallThroughJavaCode.Authentication.Password.PasswordLoginAPI
-#
+#| setBody | {"name":"user","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"131313"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"userId","value":"fitnesseAdmin@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"Admin"},{"name":"userRole","repeatId":"1","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"everything"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"userRole","repeatId":"3603423986673","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"binaryUserRole"}]}]},{"name":"activeStatus","value":"active"},{"name":"appTokens","children":[{"name":"appToken","repeatId":"0","children":[{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"systemSecret"},{"name":"linkedRecordId","value":"systemSecret:3452556002950361"}]},{"name":"appTokenNote","value":"Token for development"},{"name":"appTokenClearText","value":"00000000-1111-2222-3333-444444444444"}]}]},{"name":"usePassword","value":"false"}],"attributes":{"type":"systemOneUser"}} |
+#| POST | /record/user/131313 | 200 | | |
+#| let | appUserToken | js | var regExp = new RegExp('"appTokenClearText"') ; regExp.test(response.body) | false |
+*!
+
+!***> '''Case 6: ''' It should be possible to update the note of an apptoken.
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+| setHeader | Accept:application/vnd.uub.record+json!-
+-!Content-Type:application/vnd.uub.record+json!-
+-!authToken:$adminAuthToken |
+| setBody | {"name":"user","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"131313"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"userId","value":"fitnesseAdmin@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"Admin"},{"name":"userRole","repeatId":"1","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"everything"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"userRole","repeatId":"3603423986673","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"binaryUserRole"}]}]},{"name":"activeStatus","value":"active"},{"name":"appTokens","children":[{"name":"appToken","repeatId":"0","children":[{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"systemSecret"},{"name":"linkedRecordId","value":"systemSecret:3452556002950361"}]},{"name":"appTokenNote","value":"An updated note"}]}]},{"name":"usePassword","value":"false"}],"attributes":{"type":"systemOneUser"}} |
+| POST | /record/user/131313 | 200 | | |
+| let | appUserToken | js | var regExp = new RegExp('"An updated note"') ; regExp.test(response.body) | true |
+*!
