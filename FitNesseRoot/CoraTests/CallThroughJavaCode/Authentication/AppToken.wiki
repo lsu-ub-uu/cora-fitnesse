@@ -44,8 +44,9 @@ You can delete an appToken by simply removing its apptoken group in the user con
  * '''Case 2: ''' It should be possible to login using a created appToken.
  * '''Case 3: ''' It should be possible to read the note for an apptoken. There must be no appTokenClearText present in the data.
  * '''Case 4: ''' It should be possible to delete an appToken.
- * '''Case 5: ''' When updating an appToken and supplying an existing appToken in clear text (using appTokenClearText), appTokenClearText must never be stored and visible in the response.
- * '''Case 6: ''' It should be possible to update the note of an apptoken.
+ * '''Case 5: ''' It should be possible to update the note of an apptoken.
+ * '''Case 6: ''' When creating an appToken and supplying an appToken in clear text (using appTokenClearText), the appTokenClearText in the response must be only the newly generated one and not the supplied one.
+ * '''Case 7: ''' When updating an appToken and supplying an existing appToken in clear text (using appTokenClearText), appTokenClearText must never be stored and visible in the response.
 
 !3 User tests
 !***> '''Case 1: ''' It should be possible to create an appToken. The appTokenClearText of the apptoken should be visible at the time of its creation.
@@ -87,17 +88,7 @@ You can delete an appToken by simply removing its apptoken group in the user con
 | let | appUserTokenShouldNotExist | js | var regExp = new RegExp('"My admin device"') ; regExp.test(response.body) | false |
 *!
 
-!***> '''Case 5: ''' When updating an appToken and supplying an existing appToken in clear text (using appTokenClearText), appTokenClearText must never be stored and visible in the response. '''(disabled but should be enabled after CORA-2593 have been fixed)'''
-#!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
-#| setHeader | Accept:application/vnd.uub.record+json!-
-#-!Content-Type:application/vnd.uub.record+json!-
-#-!authToken:%appUserAuthToken% |
-#| setBody | {"name":"user","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"131313"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"userId","value":"fitnesseAdmin@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"Admin"},{"name":"userRole","repeatId":"1","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"everything"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"userRole","repeatId":"3603423986673","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"binaryUserRole"}]}]},{"name":"activeStatus","value":"active"},{"name":"appTokens","children":[{"name":"appToken","repeatId":"0","children":[{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"systemSecret"},{"name":"linkedRecordId","value":"systemSecret:3452556002950361"}]},{"name":"appTokenNote","value":"Token for development"},{"name":"appTokenClearText","value":"00000000-1111-2222-3333-444444444444"}]}]},{"name":"usePassword","value":"false"}],"attributes":{"type":"systemOneUser"}} |
-#| POST | /record/user/131313 | 200 | | |
-#| let | appTokenClearTextShouldNotExist | js | var regExp = new RegExp('"appTokenClearText"') ; regExp.test(response.body) | false |
-*!
-
-!***> '''Case 6: ''' It should be possible to update the note of an apptoken.
+!***> '''Case 5: ''' It should be possible to update the note of an apptoken.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
 | setHeader | Accept:application/vnd.uub.record+json!-
 -!Content-Type:application/vnd.uub.record+json!-
@@ -105,4 +96,41 @@ You can delete an appToken by simply removing its apptoken group in the user con
 | setBody | {"name":"user","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"131313"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"userId","value":"fitnesseAdmin@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"Admin"},{"name":"userRole","repeatId":"1","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"everything"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"userRole","repeatId":"3603423986673","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"binaryUserRole"}]}]},{"name":"activeStatus","value":"active"},{"name":"appTokens","children":[{"name":"appToken","repeatId":"0","children":[{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"systemSecret"},{"name":"linkedRecordId","value":"systemSecret:3452556002950361"}]},{"name":"appTokenNote","value":"An updated note"}]}]},{"name":"usePassword","value":"false"}],"attributes":{"type":"systemOneUser"}} |
 | POST | /record/user/131313 | 200 | | |
 | let | noteShouldHaveBeenUpdated | js | var regExp = new RegExp('"An updated note"') ; regExp.test(response.body) | true |
+*!
+
+!***> '''Case 6: ''' When creating an appToken and supplying an appToken in clear text (using appTokenClearText), the appTokenClearText in the response must be only the newly generated one and not the supplied one.
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+| setHeader | Accept:application/vnd.uub.record+json!-
+-!Content-Type:application/vnd.uub.record+json!-
+-!authToken:$adminAuthToken |
+| setBody | {"name":"user","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"131313"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"userId","value":"fitnesseAdmin@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"Admin"},{"name":"userRole","repeatId":"1","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"everything"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"userRole","repeatId":"3603423986673","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"binaryUserRole"}]}]},{"name":"activeStatus","value":"active"},{"name":"appTokens","children":[{"name":"appToken","repeatId":"0","children":[{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"systemSecret"},{"name":"linkedRecordId","value":"systemSecret:3452556002950361"}]},{"name":"appTokenNote","value":"Token for development"}]},{"name":"appToken","repeatId":"1","children":[{"name":"appTokenNote","value":"My admin device"},{"name":"appTokenClearText","value":"00000000-1111-2222-3333-444444444444"}]}]},{"name":"usePassword","value":"false"}],"attributes":{"type":"systemOneUser"}} |
+| POST | /record/user/131313 | 200 | | |
+| let | appTokenClearTextShouldOnlyExistOnce | js | var regExp = new RegExp('^(?!.*appTokenClearText.*appTokenClearText).*appTokenClearText.*$') ; regExp.test(response.body) | true |
+| let | suppliedAppTokenClearTextShouldNotExist | js | var regExp = new RegExp('"00000000-1111-2222-3333-444444444444"') ; regExp.test(response.body) | false |
+
+!5 '''Read the record again to assert appTokenClearText is not present in the data.'''
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+| setHeader | Accept:application/vnd.uub.record+json!-
+-!Content-Type:application/vnd.uub.record+json!-
+-!authToken:%appUserAuthToken% |
+| GET | /record/user/131313 | 200 | | |
+| let | appTokenClearTextShouldNotExist | js | var regExp = new RegExp('"appTokenClearText"') ; regExp.test(response.body) | false |
+*!
+
+!***> '''Case 7: ''' When updating an appToken and supplying an existing appToken in clear text (using appTokenClearText), appTokenClearText must never be stored and visible in the response.
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+| setHeader | Accept:application/vnd.uub.record+json!-
+-!Content-Type:application/vnd.uub.record+json!-
+-!authToken:%appUserAuthToken% |
+| setBody | {"name":"user","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"131313"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"userId","value":"fitnesseAdmin@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"Admin"},{"name":"userRole","repeatId":"1","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"everything"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"userRole","repeatId":"3603423986673","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"binaryUserRole"}]}]},{"name":"activeStatus","value":"active"},{"name":"appTokens","children":[{"name":"appToken","repeatId":"0","children":[{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"systemSecret"},{"name":"linkedRecordId","value":"systemSecret:3452556002950361"}]},{"name":"appTokenNote","value":"Token for development"},{"name":"appTokenClearText","value":"00000000-1111-2222-3333-444444444444"}]}]},{"name":"usePassword","value":"false"}],"attributes":{"type":"systemOneUser"}} |
+| POST | /record/user/131313 | 200 | | |
+| let | suppliedAppTokenClearTextShouldNotExist | js | var regExp = new RegExp('"appTokenClearText"') ; regExp.test(response.body) | false |
+
+!5 '''Read the record again to assert appTokenClearText is not present in the data.'''
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+| setHeader | Accept:application/vnd.uub.record+json!-
+-!Content-Type:application/vnd.uub.record+json!-
+-!authToken:%appUserAuthToken% |
+| GET | /record/user/131313 | 200 | | |
+| let | appTokenClearTextShouldNotExist | js | var regExp = new RegExp('"appTokenClearText"') ; regExp.test(response.body) | false |
 *!
