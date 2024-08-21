@@ -9,8 +9,8 @@
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadata | searchGroup | =~/"name":"linkedRecordId","value":"metadataIdLink".*"name":"linkedRecordId","value":"presentationIdLink".*"name":"linkedRecordId","value":"recordTypeToSearchInLink.*"name":"linkedRecordId","value":"searchGroupCollectionVar"/ | OK |
-| $adminAuthToken | metadata | searchNewGroup | =~/"name":"linkedRecordId","value":"metadataIdLink".*"name":"linkedRecordId","value":"presentationIdLink".*"name":"linkedRecordId","value":"recordTypeToSearchInLink.*"name":"linkedRecordId","value":"searchGroupCollectionVar"/ | OK |
+| $adminAuthToken | metadata | searchGroup | =~/"name":"linkedRecordId","value":"searchForDefinitionLink".*"name":"linkedRecordId","value":"presentationIdLink".*"name":"linkedRecordId","value":"recordTypeToSearchInLink.*"name":"linkedRecordId","value":"searchGroupCollectionVar"/ | OK |
+| $adminAuthToken | metadata | searchNewGroup | =~/"name":"linkedRecordId","value":"searchForDefinitionLink".*"name":"linkedRecordId","value":"presentationIdLink".*"name":"linkedRecordId","value":"recordTypeToSearchInLink.*"name":"linkedRecordId","value":"searchGroupCollectionVar"/ | OK |
 
 *!
 !***> List recordType search
