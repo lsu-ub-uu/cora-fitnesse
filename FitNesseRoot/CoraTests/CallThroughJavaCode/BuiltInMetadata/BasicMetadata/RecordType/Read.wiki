@@ -25,4 +25,33 @@ Metadata groups:
 
 *!
 
+!***> Validate  definition for recordTypeGroup
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? |
+| metadata | recordTypeGroup | |
 
+!| ChildComparerFixture |
+| expectedNumberOfChildren | testCheckNumberOfChildren? |
+| 18 | OK |
+
+!| MetadataLinkFixture |
+| authToken | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? | getNameInData? | getRecordPartConstraint? |
+| $adminAuthToken | metadata | recordInfoGroup | 1 | 1 | recordInfo | noRestrictions |
+| $adminAuthToken | metadata | metadataIdLink | 1 | 1 | metadataId | noRestrictions |
+| $adminAuthToken | metadata | uniqueGroup | 0 | X | unique | noRestrictions |
+| $adminAuthToken | metadata | presentationViewIdLink | 1 | 1 | presentationViewId | noRestrictions |
+| $adminAuthToken | metadata | menuPresentationViewIdLink | 1 | 1 | menuPresentationViewId | noRestrictions |
+| $adminAuthToken | metadata | listPresentationViewIdLink | 1 | 1 | listPresentationViewId | noRestrictions |
+| $adminAuthToken | metadata | userSuppliedIdCollectionVar | 1 | 1 | userSuppliedId | noRestrictions |
+| $adminAuthToken | metadata | textIdLink | 1 | 1 | textId | noRestrictions |
+| $adminAuthToken | metadata | defTextIdLink | 1 | 1 | defTextId | noRestrictions |
+| $adminAuthToken | metadata | recordTypeSearchLink | 0 | 1 | search | noRestrictions |
+| $adminAuthToken | metadata | autocompletePresentationViewLink | 0 | 1 | autocompletePresentationView | noRestrictions |
+| $adminAuthToken | metadata | groupOfRecordTypeCollectionVar | 1 | X | groupOfRecordType | noRestrictions |
+| $adminAuthToken | metadata | recordTypeFilterMetadataLink | 0 | 1 | filter | noRestrictions |
+| $adminAuthToken | metadata | recordTypeFilterPresentationLink | 0 | 1 | filterPresentation | noRestrictions |
+| $adminAuthToken | metadata | publicRecordTypeCollectionVar | 1 | 1 | public | noRestrictions |
+| $adminAuthToken | metadata | recordTypeCategoryCollectionVar | 0 | 1 | recordTypeCategory | noRestrictions |
+| $adminAuthToken | metadata | recordTypeIndexSettingsLink | 0 | 1 | indexSettings | noRestrictions |
+| $adminAuthToken | metadata | storeInArchiveCollectionVar | 1 | 1 | storeInArchive | noRestrictions |
+*!
