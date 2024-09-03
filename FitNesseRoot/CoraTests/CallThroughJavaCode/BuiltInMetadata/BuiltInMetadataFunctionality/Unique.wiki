@@ -1,0 +1,7 @@
+---
+Test
+---
+!1 Unique
+Text describing unique and its function
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Unique.Unique

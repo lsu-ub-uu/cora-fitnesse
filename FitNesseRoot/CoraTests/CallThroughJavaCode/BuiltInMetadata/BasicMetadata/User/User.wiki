@@ -21,7 +21,7 @@ Static
 
 !***> Case 2 It must not be possible to create a new user with an already existing userId due to userId is expected to be field only allowing unique values
 
-!define expectedCreateResult {BAD_REQUEST}
+!define expectedCreateResult {CONFLICT}
 !define createAnotherUserPayload {!-{"name":"user","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]}]},{"name":"userId","value":"-!${aUniqueUserId}!-"},{"name":"userFirstname","value":"anotherFirstName"},{"name":"userLastname","value":"anotherLastName"},{"name":"userRole","repeatId":"0","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"fitnesseTextAdmin"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"activeStatus","value":"active"},{"name":"usePassword","value":"false"}],"attributes":{"type":"systemOneUser"}}-!}
  
 !| RecordEndpointFixture |
