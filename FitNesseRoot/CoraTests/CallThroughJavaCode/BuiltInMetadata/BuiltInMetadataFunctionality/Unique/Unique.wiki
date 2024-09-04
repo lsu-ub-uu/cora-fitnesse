@@ -4,14 +4,22 @@ Static
 
 !2 Unique fields
 
+!5 Tests for a single unique field with no combines
  * '''Case 1''': It must not be possible to create two records of fitnesseRecordType with the same data in the unique field (fitnesseTextVar)
  * '''Case 2a''': It must be possible to update the value of a unique field
  * '''Case 2b''': It must not be possible to update the value in a unique field to a value used by another record
  * '''Case 3a''': If validating creation of a record with a unique value, its expected to pass
  * '''Case 3b''': If validating creation of a record with a an already used unique value, its expected to fail
  * '''Case 3c''': If validating update of a record with a unique value, its expected to pass
- * '''Case 3d''': If validating update of a record with a an already used unique value, its expected to fail
-
+ * '''Case 3d''': If validating update of a record with a value already used by another record, its expected to fail
+!5 Tests for a unique field with combines
+ * '''Case 4''': It must not be possible to create two records of fitnesseRecordType with the same data in the unique fields (fitnesseTextVar, xField)
+ * '''Case 5a''': It must be possible to update the value of a unique field with combines
+ * '''Case 5b''': It must not be possible to update the values in a unique fields to a values used by another record
+ * '''Case 6a''': If validating creation of a record with unique values, its expected to pass
+ * '''Case 6b''': If validating creation of a record with a an already used unique combine values, its expected to fail
+ * '''Case 6c''': If validating update of a record with unique values, its expected to pass
+ * '''Case 6d''': If validating update of a record with values already used by another record, its expected to fail
 
 !***> Setup a unique field for fitnesseRecordType (fitnesseTextVar) to use for tests
 !***> Create a CollectStorageTerm (fitnesseTextVarStorageTerm)
@@ -122,7 +130,7 @@ Static
 | $adminAuthToken | workOrder | ${updateValidationWorkOrder} | | true | OK |
 *!
 
-!***> Case 3d: If validating update of a record with a an already used unique value, its expected to fail
+!***> Case 3d: If validating update of a record with a value already used by another record, its expected to fail
 # Check update for createdRecordId1 to a value used in record from case 2b ($anUpdatedUniqueTextVar)
 # Try to validate a creation using the unique value from case 2b
 !define updateValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"existing"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId1!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!$anUpdatedUniqueTextVar!-"},{"name":"fitnesseOnlyOneTextVar","value":""}]}}-!}
