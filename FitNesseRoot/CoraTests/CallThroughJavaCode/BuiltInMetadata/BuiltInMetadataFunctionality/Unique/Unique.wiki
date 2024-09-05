@@ -215,8 +215,8 @@ Static
 
 !***> Case 5b: It must not be possible to update a field to an already set unique value. Scenario: Change createdRecordId4 fitnesseNumberVar value to value used in createdRecordId6
 !***> Setup a new record to use for test case (createdRecordId6)
-!define anotherMultipleUniqueTextValue {anotherUniqueValue}
-!define anotherMultipleUniqueNumberValue {9}
+!define anotherMultipleUniqueTextValue {anotherMultipleUniqueValue}
+!define anotherMultipleUniqueNumberValue {3}
 !define recordType {fitnesseRecordType}
 !define expectedCreateResult {CREATED}
 !define createAnotherRecordWUniqueData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${anotherMultipleUniqueTextValue}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${anotherMultipleUniqueNumberValue}!-"},{"name":"fitnesseOnlyOneTextVar","value":"hello"}]}-!}
@@ -225,7 +225,7 @@ Static
 | $adminAuthToken | ${recordType} | ${createAnotherRecordWUniqueData} |  | ${expectedCreateResult} | $createdRecordId6= |
 *!
 
-##### Set body to conflict on conflicting fitnesseNumberVar (9)
+##### Set body to conflict on conflicting fitnesseNumberVar (3)
 !define updateFitnesseRecordWithConflictingNumberVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId4!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"someNewLegitUniqueValue"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anotherMultipleUniqueNumberValue}!-"}]}-!}
 !define expectedUpdateResult {CONFLICT}
 
@@ -243,9 +243,19 @@ Static
 | authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
 | $adminAuthToken | ${recordType} | $createdRecordId4 | ${updateFitnesseRecordFieldThatisNotUnique} | $readRecordPayload= | ${expectedUpdateResult} |
 
-#Ensure unique value have not been updated and is still the value set in case 2a
+#### Ensure the value of the non unique field is updated
 !| script | ExtractSubstringUsingRegex |
 | ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseOnlyOneTextVar","value":"aTotallyLegitNewNonUniqueValue" |
+*!
+
+!***> Case 6a: If validating creation of a record with a multiple unique values, its expected to pass
+!define aUniqueTextValueForValidationWMultipleUniques {aUniqueValueForValidationCreation}
+!define aUniqueNumberValueForValidationWMultipleUniques {4}
+!define createValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueTextValueForValidationWMultipleUniques}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueNumberValueForValidationWMultipleUniques}!-"},{"name":"fitnesseOnlyOneTextVar","value":"itsValidationTime"}]}}-!}
+
+!| MetadataValidationFixture |
+| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+| $adminAuthToken | workOrder | ${createValidationWorkOrder} | | true | OK |
 *!
 *!
 
