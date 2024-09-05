@@ -4,43 +4,62 @@ Static
 
 !2 Unique fields
 
-!5 Tests for a single unique field with no combines
- * '''Case 1''': It must not be possible to create two records of fitnesseRecordType with the same data in the unique field (fitnesseTextVar)
+!5 Scenario 1 tests (single unique field)
+ * '''Case 1''': It must not be possible to create two records of fitnesseRecordType with conflicting data in the unique field (fitnesseTextVar)
  * '''Case 2a''': It must be possible to update the value of a unique field
  * '''Case 2b''': It must not be possible to update the value in a unique field to a value used by another record
+ * '''Case 2c''': It must be possible to update the value of a field that is not unique in a record with unique fields
  * '''Case 3a''': If validating creation of a record with a unique value, its expected to pass
  * '''Case 3b''': If validating creation of a record with a an already used unique value, its expected to fail
  * '''Case 3c''': If validating update of a record with a unique value, its expected to pass
  * '''Case 3d''': If validating update of a record with a value already used by another record, its expected to fail
-!5 Tests for a unique field with combines
- * '''Case 4''': It must not be possible to create two records of fitnesseRecordType with the same data in the unique fields (fitnesseTextVar, xField)
- * '''Case 5a''': It must be possible to update the value of a unique field with combines
+!5 Scenario 2 tests (multiple unique fields)
+ * '''Case 4''': It must not be possible to create two records of fitnesseRecordType with conflicting data in any of the unique fields (fitnesseTextVar, fitnesseNumberVar)
+ * '''Case 5a''': It must be possible to update the value of any of the unique fields
  * '''Case 5b''': It must not be possible to update the values in a unique fields to a values used by another record
+ * '''Case 5c''': It must be possible to update the value of a field that is not unique in a record with multiple unique fields
  * '''Case 6a''': If validating creation of a record with unique values, its expected to pass
  * '''Case 6b''': If validating creation of a record with a an already used unique combine values, its expected to fail
  * '''Case 6c''': If validating update of a record with unique values, its expected to pass
  * '''Case 6d''': If validating update of a record with values already used by another record, its expected to fail
+#!5 Scenario 3 tests (unique field with combines)
+# * '''Case 7''': It must not be possible to create two records of fitnesseRecordType with conflicting data in the unique fields (fitnesseTextVar, fitnesseNumberVar, fitnesseOnlyOneMetadataTextVar)
+# * '''Case 8a''': It must be possible to update the value of a unique field with combines
+# * '''Case 8b''': It must not be possible to update the values in a unique fields to a values used by another record
+# * '''Case 9a''': If validating creation of a record with unique values, its expected to pass
+# * '''Case 9b''': If validating creation of a record with a an already used unique combine values, its expected to fail
+# * '''Case 9c''': If validating update of a record with unique values, its expected to pass
+# * '''Case 9d''': If validating update of a record with values already used by another record, its expected to fail
 
-!***> Setup a unique field for fitnesseRecordType (fitnesseTextVar) to use for tests
-!***> Create a CollectStorageTerm (fitnesseTextVarStorageTerm)
+!***> Setup metadata needed for tests (create storageTerms, add key filters)
+!***> Create CollectStorageTerms (fitnesseTextVarStorageTerm, fitnesseNumberVarStorageTerm, fitnesseOnlyOneMetadataTextVarStorageTerm)
 !define fitnesseTextVarStorageTerm {!-{"name":"collectStorageTerm","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseTextVarStorageTerm"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"collectStorageTerm"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"extraData","children":[{"name":"storageKey","value":"fitnesseTextVar"}]}],"attributes":{"type":"storage"}}-!}
+!define fitnesseNumberVarStorageTerm {!-{"name":"collectStorageTerm","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseNumberVarStorageTerm"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"collectStorageTerm"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"extraData","children":[{"name":"storageKey","value":"fitnesseNumberVar"}]}],"attributes":{"type":"storage"}}-!}
+!define fitnesseOnlyOneMetadataTextVarStorageTerm {!-{"name":"collectStorageTerm","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseOnlyOneMetadataTextVarStorageTerm"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"collectStorageTerm"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"extraData","children":[{"name":"storageKey","value":"fitnesseOnlyOneMetadataTextVar"}]}],"attributes":{"type":"storage"}}-!}
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
 | setHeader | Accept:application/vnd.uub.record+json!-
 -!Content-Type:application/vnd.uub.record+json!-
 -!authToken:$adminAuthToken |
 | setBody | ${fitnesseTextVarStorageTerm} |
 | POST | /record/collectTerm | 201 | | |
+| setBody | ${fitnesseNumberVarStorageTerm} |
+| POST | /record/collectTerm | 201 | | |
+| setBody | ${fitnesseOnlyOneMetadataTextVarStorageTerm} |
+| POST | /record/collectTerm | 201 | | |
 *!
-!***> Add key for filtering (fitnesseTextVarStorageTerm) to fitnesseMetadataTextVar
-!define fitnesseGroupWithAddedFilterKey {!-{"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseGroup"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadata"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2024-09-03T12:06:54.365492Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T12:06:54.365492Z"}]}]},{"name":"nameInData","value":"fitnesseExample"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"childReferences","children":[{"name":"childReference","repeatId":"0","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"exampleRecordInfoGroup"}]}]},{"name":"childReference","repeatId":"1","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"20"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseMetadataTextVar"}]},{"name":"childRefCollectTerm","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseTextVarStorageTerm"}],"attributes":{"type":"storage"}}]},{"name":"childReference","repeatId":"2","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"X"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseMetadataNumberVar"}]}]},{"name":"childReference","repeatId":"3","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseCollectionVar"}]}]},{"name":"childReference","repeatId":"4","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseLink"}]}]},{"name":"childReference","repeatId":"5","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseBinaryLink"}]}]},{"name":"childReference","repeatId":"6","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseOnlyOneMetadataTextVar"}]}]}]}],"attributes":{"type":"group"}}-!}
+!***> Add the created storageTerms to some fields (fitnesseTextVar, fitnesseNumberVar and fitnesseOnlyOneMetadataTextVar)
+!define fitnesseGroupWithAddedFilterKeys {!-{"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseGroup"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadata"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2024-09-03T12:06:54.365492Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T12:06:54.365492Z"}]}]},{"name":"nameInData","value":"fitnesseExample"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"childReferences","children":[{"name":"childReference","repeatId":"0","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"exampleRecordInfoGroup"}]}]},{"name":"childReference","repeatId":"1","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"20"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseMetadataTextVar"}]},{"name":"childRefCollectTerm","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseTextVarStorageTerm"}],"attributes":{"type":"storage"}}]},{"name":"childReference","repeatId":"2","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"X"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseMetadataNumberVar"}]},{"name":"childRefCollectTerm","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseNumberVarStorageTerm"}],"attributes":{"type":"storage"}}]},{"name":"childReference","repeatId":"3","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseCollectionVar"}]}]},{"name":"childReference","repeatId":"4","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseLink"}]}]},{"name":"childReference","repeatId":"5","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseBinaryLink"}]}]},{"name":"childReference","repeatId":"6","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseOnlyOneMetadataTextVar"}]},{"name":"childRefCollectTerm","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseOnlyOneMetadataTextVarStorageTerm"}],"attributes":{"type":"storage"}}]}]}],"attributes":{"type":"group"}}-!}
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
 | setHeader | Accept:application/vnd.uub.record+json!-
 -!Content-Type:application/vnd.uub.record+json!-
 -!authToken:$adminAuthToken |
-| setBody | ${fitnesseGroupWithAddedFilterKey} |
+| setBody | ${fitnesseGroupWithAddedFilterKeys} |
 | POST | /record/metadata/fitnesseGroup | 200 | | |
 *!
-!***> Add data to make fitnesseTextVar in fitnesseRecordType unique
+*!
+
+!***> Scenario 1 (A single unique field)
+!***> Setup data to make fitnesseTextVar in fitnesseRecordType unique
 !define fitnesseRecordTypeWithUniqueTextVar {!-{"name":"recordType","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseRecordType"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"recordType"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2024-09-03T12:06:55.934541Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T12:06:55.934541Z"}]}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseGroup"}]},{"name":"presentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"menuPresentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"listPresentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"userSuppliedId","value":"false"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"autocompletePresentationView","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"groupOfRecordType","repeatId":"0","value":"metadata"},{"name":"public","value":"true"},{"name":"storeInArchive","value":"true"},{"name":"unique","repeatId":"1","children":[{"name":"uniqueTerm","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseTextVarStorageTerm"}]}]}]}-!}
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
 | setHeader | Accept:application/vnd.uub.record+json!-
@@ -51,8 +70,7 @@ Static
 | GET | /record/recordType/fitnesseRecordType | 200 | | |
 | let | uniqueStorageTermShouldExist | js | var regExp = new RegExp('"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseTextVarStorageTerm"') ; regExp.test(response.body) | true |
 *!
-*!
-
+----
 !***> Case 1: It must not be possible to create two records of fitnesseRecordType with the same data in the unique field (fitnesseTextVar)
 !define aUniqueTextVar {someUniqueTextVar}
 !define recordType {fitnesseRecordType}
@@ -66,7 +84,7 @@ Static
 | $adminAuthToken | ${recordType} | ${createRecordWUniqueData} |  | ${expectedUniqueConflict} | $createdRecordId2= |
 *!
 
-!***> Case 2a: It must be possible to update the value of a unique field. Scenario: Update createdRecordId1 with a new unique value.
+!***> Case 2a: It must be possible to update the value of a unique field. Scenario: Update createdRecordId1 (fitnesseTextVar) with a new unique value.
 !define anUpdatedUniqueTextVar {someNewUniqueTextVar}
 !define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId1!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedUniqueTextVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":""}]}-!}
 !define expectedUpdateResult {OK}
@@ -80,7 +98,7 @@ Static
 *!
 
 !***> Case 2b: It must not be possible to update a field to an already set unique value. Scenario: Change createdRecordId1 value to value used in createdRecordId3
-!***> Setup a new record to use for test case
+!***> Setup a new record to use for test case (createdRecordId3)
 !define anotherUniqueValue {anotherUniqueValue}
 !define recordType {fitnesseRecordType}
 !define expectedCreateResult {CREATED}
@@ -96,10 +114,20 @@ Static
 !| ChildComparerFixture |
 | authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
 | $adminAuthToken | ${recordType} | $createdRecordId1 | ${updateFitnesseRecordWithNewUniqueTextVar} | $readRecordPayload= | ${expectedUpdateResult} |
+*!
 
-# Ensure unique value have not been updated and is still the value set in case 2a
+!***> Case 2c: It must be possible to update the value of a field that is not unique in a record with unique fields
+##### Test retains the value from case 2a (someNewUniqueTextVar) for fitnesseTextVar and tries to update with a value for fitnesseOnlyOneTextVar
+!define updateFitnesseRecordFieldThatisNotUnique {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId1!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anotherUniqueValue}!-"},{"name":"fitnesseOnlyOneTextVar","value":"thisIsAnUpdatedField"}]}-!}
+!define expectedUpdateResult {OK}
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $adminAuthToken | ${recordType} | $createdRecordId1 | ${updateFitnesseRecordFieldThatisNotUnique} | $readRecordPayload= | ${expectedUpdateResult} |
+
+#Ensure unique value have not been updated and is still the value set in case 2a
 !| script | ExtractSubstringUsingRegex |
-| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseTextVar","value":"someNewUniqueTextVar" |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseOnlyOneTextVar","value":"thisIsAnUpdatedField" |
 *!
 
 !***> Case 3a: If validating creation of a record with a unique value, its expected to pass
@@ -139,6 +167,87 @@ Static
 | authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
 | $adminAuthToken | workOrder | ${updateValidationWorkOrder} | | false | OK |
 *!
+*!
+
+!***> Scenario 2 (multiple uniques)
+!***> Setup data to make fitnesseTextVar and fitnesseNumberVar in fitnesseRecordType unique fields
+!define fitnesseRecordTypeWithMultipleUniques {!-{"name":"recordType","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseRecordType"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"recordType"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2024-09-03T12:06:55.934541Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T12:06:55.934541Z"}]}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseGroup"}]},{"name":"presentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"menuPresentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"listPresentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"userSuppliedId","value":"false"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"autocompletePresentationView","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"groupOfRecordType","repeatId":"0","value":"metadata"},{"name":"public","value":"true"},{"name":"storeInArchive","value":"true"},{"name":"unique","repeatId":"1","children":[{"name":"uniqueTerm","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseTextVarStorageTerm"}]}]},{"name":"unique","repeatId":"2","children":[{"name":"uniqueTerm","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseNumberVarStorageTerm"}]}]}]}-!}
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
+| setHeader | Accept:application/vnd.uub.record+json!-
+-!Content-Type:application/vnd.uub.record+json!-
+-!authToken:$adminAuthToken |
+| setBody | ${fitnesseRecordTypeWithMultipleUniques} |
+| POST | /record/recordType/fitnesseRecordType | 200 | | |
+| GET | /record/recordType/fitnesseRecordType | 200 | | |
+| let | uniqueTextVarStorageTermShouldExist | js | var regExp = new RegExp('"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseTextVarStorageTerm"') ; regExp.test(response.body) | true |
+| let | uniqueNumberVarStorageTermShouldExist | js | var regExp = new RegExp('"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseNumberVarStorageTerm"') ; regExp.test(response.body) | true |
+*!
+----
+!***> Case 4: It must not be possible to create two records of fitnesseRecordType with conflicting data in any of the unique fields (fitnesseTextVar, fitnesseNumberVar)
+!define aUniqueTextVar {someUniqueTextVar}
+!define aUniqueNumberVar {1}
+!define recordType {fitnesseRecordType}
+!define expectedCreateResult {CREATED}
+!define expectedUniqueConflict {CONFLICT}
+!define createRecordWUniqueData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueNumberVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":"hello"}]}-!}
+!define createRecordWConflictingNumberVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"SomeFancyUniqueValue"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueNumberVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":"hello"}]}-!}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | ${recordType} | ${createRecordWUniqueData} |  | ${expectedCreateResult} | $createdRecordId4= |
+| $adminAuthToken | ${recordType} | ${createRecordWConflictingNumberVar} |  | ${expectedUniqueConflict} | $createdRecordId5= |
+*!
+
+!***> Case 5a: It must be possible to update the values of a unique fields. Scenario: Update createdRecordId4 (fitnesseTextVar and fitnesseNumberVar) with a new unique values.
+!define anUpdatedMultiUniqueTextVar {someNewMultiUniqueTextVar}
+!define anUpdatedMultiUniqueNumberVar {2}
+!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId4!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedMultiUniqueTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedMultiUniqueNumberVar}!-"}]}-!}
+!define expectedUpdateResult {OK}
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $adminAuthToken | ${recordType} | $createdRecordId4 | ${updateFitnesseRecordWithNewUniqueTextVar} | $readRecordPayload= | ${expectedUpdateResult} |
+
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseTextVar","value":"someNewMultiUniqueTextVar" |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseNumberVar","value":"2" |
+*!
+
+!***> Case 5b: It must not be possible to update a field to an already set unique value. Scenario: Change createdRecordId4 fitnesseNumberVar value to value used in createdRecordId6
+!***> Setup a new record to use for test case (createdRecordId6)
+!define anotherMultipleUniqueTextValue {anotherUniqueValue}
+!define anotherMultipleUniqueNumberValue {9}
+!define recordType {fitnesseRecordType}
+!define expectedCreateResult {CREATED}
+!define createAnotherRecordWUniqueData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${anotherMultipleUniqueTextValue}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${anotherMultipleUniqueNumberValue}!-"},{"name":"fitnesseOnlyOneTextVar","value":"hello"}]}-!}
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | ${recordType} | ${createAnotherRecordWUniqueData} |  | ${expectedCreateResult} | $createdRecordId6= |
+*!
+
+##### Set body to conflict on conflicting fitnesseNumberVar (9)
+!define updateFitnesseRecordWithConflictingNumberVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId4!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"someNewLegitUniqueValue"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anotherMultipleUniqueNumberValue}!-"}]}-!}
+!define expectedUpdateResult {CONFLICT}
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $adminAuthToken | ${recordType} | $createdRecordId4 | ${updateFitnesseRecordWithConflictingNumberVar} | $readRecordPayload= | ${expectedUpdateResult} |
+*!
+
+!***> Case 5c: It must be possible to update the value of a field that is not unique in a record with multiple unique fields
+##### Test retains the unique values from case 5a and tries to update with a value for fitnesseOnlyOneTextVar
+!define updateFitnesseRecordFieldThatisNotUnique {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId4!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedMultiUniqueTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedMultiUniqueNumberVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":"aTotallyLegitNewNonUniqueValue"}]}-!}
+!define expectedUpdateResult {OK}
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $adminAuthToken | ${recordType} | $createdRecordId4 | ${updateFitnesseRecordFieldThatisNotUnique} | $readRecordPayload= | ${expectedUpdateResult} |
+
+#Ensure unique value have not been updated and is still the value set in case 2a
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseOnlyOneTextVar","value":"aTotallyLegitNewNonUniqueValue" |
+*!
+*!
 
 --------
 
@@ -161,12 +270,14 @@ Static
 | setBody | ${fitnesseGroupWithoutStorageTerm} |
 | POST | /record/metadata/fitnesseGroup | 200 | | |
 *!
-!***> Delete the fitnesseTextVarStorageTerm
+!***> Delete the fitnesse StorageTerms for uniques
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
 | setHeader | Accept:application/vnd.uub.record+json!-
 -!Content-Type:application/vnd.uub.record+json!-
 -!authToken:$adminAuthToken |
 | DELETE | /record/collectTerm/fitnesseTextVarStorageTerm | 200 | | |
+| DELETE | /record/collectTerm/fitnesseNumberVarStorageTerm | 200 | | |
+| DELETE | /record/collectTerm/fitnesseOnlyOneMetadataTextVarStorageTerm | 200 | | |
 *!
 !***> Remove created records
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
@@ -176,5 +287,8 @@ Static
 | DELETE | /record/fitnesseRecordType/$createdRecordId1 | 200 | | |
 | DELETE | /record/fitnesseRecordType/$createdRecordId2 | | | |
 | DELETE | /record/fitnesseRecordType/$createdRecordId3 | 200 | | |
+| DELETE | /record/fitnesseRecordType/$createdRecordId4 | 200 | | |
+| DELETE | /record/fitnesseRecordType/$createdRecordId5 | | | |
+| DELETE | /record/fitnesseRecordType/$createdRecordId6 | 200 | | |
 *!
 *!
