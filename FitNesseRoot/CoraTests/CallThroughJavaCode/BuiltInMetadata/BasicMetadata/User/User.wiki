@@ -1,0 +1,51 @@
+---
+Static
+---
+
+!2 Create a user
+
+ * '''Case 1''': It must be possible to create a new user with a new unique userId
+ * '''Case 2''': It must not be possible to create a new user with an already existing userId due to userId is expected to be field only allowing unique values
+ * '''Case 3''': It must be possible to update a user
+
+
+!***> Case 1 It must be possible to create a new user with a new unique userId
+
+!define expectedCreateResult {CREATED}
+!define aUniqueUserId {someUniqueUserId@system.cora.uu.se}
+!define createUserPayload {!-{"name":"user","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]}]},{"name":"userId","value":"-!${aUniqueUserId}!-"},{"name":"userFirstname","value":"someFirstName"},{"name":"userLastname","value":"someLastName"},{"name":"userRole","repeatId":"0","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"fitnesseTextAdmin"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"activeStatus","value":"active"},{"name":"usePassword","value":"false"}],"attributes":{"type":"systemOneUser"}}-!}
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | user | ${createUserPayload} | | ${expectedCreateResult} | $aNewUserId= |
+*!
+
+!***> Case 2 It must not be possible to create a new user with an already existing userId due to userId is expected to be field only allowing unique values
+
+!define expectedCreateResult {CONFLICT}
+!define createAnotherUserPayload {!-{"name":"user","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]}]},{"name":"userId","value":"-!${aUniqueUserId}!-"},{"name":"userFirstname","value":"anotherFirstName"},{"name":"userLastname","value":"anotherLastName"},{"name":"userRole","repeatId":"0","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"fitnesseTextAdmin"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"activeStatus","value":"active"},{"name":"usePassword","value":"false"}],"attributes":{"type":"systemOneUser"}}-!}
+ 
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | user | ${createAnotherUserPayload} | | ${expectedCreateResult} | $aNewUserId2= |
+*!
+
+!***> Case 3 It must be possible to update a user
+
+!define expectedUpdateResult {OK}
+!define updateUserFirstNamePayload {!-{"name":"user","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$aNewUserId!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2024-09-05T08:08:52.290112Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-05T08:08:52.290112Z"}]}]},{"name":"userId","value":"someUniqueUserId@system.cora.uu.se"},{"name":"userFirstname","value":"someNewFirstName"},{"name":"userLastname","value":"someLastName"},{"name":"userRole","repeatId":"0","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"fitnesseTextAdmin"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"activeStatus","value":"active"},{"name":"usePassword","value":"false"},{"name":"tsPasswordUpdated","value":""}],"attributes":{"type":"systemOneUser"}}-!}
+ 
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $adminAuthToken | user | $aNewUserId | ${updateUserFirstNamePayload} | | ${expectedUpdateResult} |
+*!
+
+!***> Clean up data from test
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
+| setHeader | Accept:application/vnd.uub.record+json!-
+-!Content-Type:application/vnd.uub.record+json!-
+-!authToken:$adminAuthToken |
+| DELETE | /record/user/$aNewUserId | | | |
+| DELETE | /record/user/$aNewUserId2 | | | |
+*!
+
