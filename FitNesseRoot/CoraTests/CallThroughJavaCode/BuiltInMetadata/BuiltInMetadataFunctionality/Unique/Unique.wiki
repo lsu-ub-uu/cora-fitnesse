@@ -18,7 +18,9 @@ Static
 ####  * '''Case 3d''': If validating update of a record with a unique value already used by another record, its expected to fail
 !5 Scenario 2 tests (multiple unique fields)
  * '''Create'''
-  * '''Case 4''': It must not be possible to create two records of fitnesseRecordType with conflicting data in any of the unique fields (fitnesseTextVar, fitnesseNumberVar)
+  * '''Case 4a''': It must not be possible to create a record with conflicting data in one (first) of the unique fields (fitnesseTextVar)
+  * '''Case 4b''': It must not be possible to create a record with conflicting data in one (last) of the unique fields (fitnesseNumberVar)
+  * '''Case 4c''': It must not be possible to create a record with both values being conflicting data of the unique fields (fitnesseTextVar, fitnesseNumberVar)
  * '''Update'''
   * '''Case 5a''': It must be possible to update the value of any of the unique fields
   * '''Case 5b''': It must not be possible to update both values in a unique fields to a values used by another record
@@ -89,7 +91,11 @@ Static
 !| ChildComparerFixture |
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
 | $adminAuthToken | ${recordType} | ${createRecordWUniqueData} |  | ${expectedCreateResult} | $createdRecordId1= |
-| $adminAuthToken | ${recordType} | ${createRecordWUniqueData} |  | ${expectedUniqueConflict} | $createdRecordId2= |
+| $adminAuthToken | ${recordType} | ${createRecordWUniqueData} | $readRecordPayload= | ${expectedUniqueConflict} | $createdRecordId2= |
+
+#Ensure the correct field is detected as conflicting
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $readRecordPayload | and regex | 1 error messages: \[A record matching the unique rule with \[key: fitnesseTextVar, value: someUniqueTextVar\] already exists in the system |
 *!
 
 !***> Case 2a: It must be possible to update the value of a unique field. Scenario: Update createdRecordId1 (fitnesseTextVar) with a new unique value.
@@ -122,6 +128,11 @@ Static
 !| ChildComparerFixture |
 | authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
 | $adminAuthToken | ${recordType} | $createdRecordId1 | ${updateFitnesseRecordWithNewUniqueTextVar} | $readRecordPayload= | ${expectedUpdateResult} |
+
+#Ensure the correct field is detected as conflicting
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $readRecordPayload | and regex | 1 error messages: \[A record matching the unique rule with \[key: fitnesseTextVar, value: anotherUniqueValue\] already exists in the system |
+
 *!
 
 !***> Case 2c: It must be possible to update the value of a field that is not unique in a record with unique fields
@@ -176,7 +187,7 @@ Static
 ####*!
 *!
 
-!***> Scenario 2 (multiple uniques)
+!***> Scenario 2 (multiple uniques (fitnesseTextVar, fitnesseNumberVar))
 !***> Setup data to make fitnesseTextVar and fitnesseNumberVar in fitnesseRecordType unique fields
 !define fitnesseRecordTypeWithMultipleUniques {!-{"name":"recordType","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseRecordType"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"recordType"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2024-09-03T12:06:55.934541Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T12:06:55.934541Z"}]}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseGroup"}]},{"name":"presentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"menuPresentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"listPresentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"userSuppliedId","value":"false"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"autocompletePresentationView","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"groupOfRecordType","repeatId":"0","value":"metadata"},{"name":"public","value":"true"},{"name":"storeInArchive","value":"true"},{"name":"unique","repeatId":"1","children":[{"name":"uniqueTerm","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseTextVarStorageTerm"}]}]},{"name":"unique","repeatId":"2","children":[{"name":"uniqueTerm","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseNumberVarStorageTerm"}]}]}]}-!}
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
@@ -188,21 +199,57 @@ Static
 | GET | /record/recordType/fitnesseRecordType | 200 | | |
 | let | uniqueTextVarStorageTermShouldExist | js | var regExp = new RegExp('"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseTextVarStorageTerm"') ; regExp.test(response.body) | true |
 | let | uniqueNumberVarStorageTermShouldExist | js | var regExp = new RegExp('"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseNumberVarStorageTerm"') ; regExp.test(response.body) | true |
-*!
-----
-!***> Case 4: It must not be possible to create two records of fitnesseRecordType with conflicting data in any of the unique fields (fitnesseTextVar, fitnesseNumberVar)
+
+Setup and create record for tests (createdRecordId4)
+!define createRecordWUniqueData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueNumberVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":"hello"}]}-!}
 !define aUniqueTextVar {someUniqueTextVar}
 !define aUniqueNumberVar {1}
 !define recordType {fitnesseRecordType}
 !define expectedCreateResult {CREATED}
-!define expectedUniqueConflict {CONFLICT}
-!define createRecordWUniqueData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueNumberVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":"hello"}]}-!}
-!define createRecordWConflictingNumberVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"SomeFancyUniqueValue"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueNumberVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":"hello"}]}-!}
 
 !| ChildComparerFixture |
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
 | $adminAuthToken | ${recordType} | ${createRecordWUniqueData} |  | ${expectedCreateResult} | $createdRecordId4= |
-| $adminAuthToken | ${recordType} | ${createRecordWConflictingNumberVar} |  | ${expectedUniqueConflict} | $createdRecordId5= |
+*!
+----
+!***> Case 4a: It must not be possible to create a record with conflicting data in one (first) of the unique fields (fitnesseTextVar)
+!define createRecordWConflictingTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"0"},{"name":"fitnesseOnlyOneTextVar","value":"hello"}]}-!}
+!define expectedUniqueConflict {CONFLICT}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | ${recordType} | ${createRecordWConflictingTextVar} | $readRecordPayload= | ${expectedUniqueConflict} | $createdRecordId5= |
+
+#Ensure the correct field is detected as conflicting
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $readRecordPayload | and regex | 1 error messages: \[A record matching the unique rule with \[key: fitnesseTextVar, value: someUniqueTextVar\]  |
+*!
+
+!***> Case 4b: It must not be possible to create a record with conflicting data in one (last) of the unique fields (fitnesseNumberVar)
+!define createRecordWConflictingNumberVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"SomeFancyUniqueValue"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueNumberVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":"hello"}]}-!}
+!define expectedUniqueConflict {CONFLICT}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | ${recordType} | ${createRecordWConflictingNumberVar} | $readRecordPayload= | ${expectedUniqueConflict} | $createdRecordId7= |
+
+#Ensure the correct field is detected as conflicting
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $readRecordPayload | and regex | 1 error messages: \[A record matching the unique rule with \[key: fitnesseNumberVar, value: 1\]  |
+*!
+
+!***> Case 4c: It must not be possible to create a record with both values being conflicting data of the unique fields (fitnesseTextVar, fitnesseNumberVar)
+!define createRecordWBothConflictingVars {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueNumberVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":"hello"}]}-!}
+!define expectedUniqueConflict {CONFLICT}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | ${recordType} | ${createRecordWBothConflictingVars} | $readRecordPayload= | ${expectedUniqueConflict} | $createdRecordId8= |
+
+#Ensure the correct field is detected as conflicting
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseTextVar, value: someUniqueTextVar\]  |
+| ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseNumberVar, value: 1\]  |
 *!
 
 !***> Case 5a: It must be possible to update the values of a unique fields. Scenario: Update createdRecordId4 (fitnesseTextVar and fitnesseNumberVar) with a new unique values.
@@ -370,5 +417,7 @@ Static
 | DELETE | /record/fitnesseRecordType/$createdRecordId4 | 200 | | |
 | DELETE | /record/fitnesseRecordType/$createdRecordId5 | | | |
 | DELETE | /record/fitnesseRecordType/$createdRecordId6 | 200 | | |
+| DELETE | /record/fitnesseRecordType/$createdRecordId7 | | | |
+| DELETE | /record/fitnesseRecordType/$createdRecordId8 | | | |
 *!
 *!
