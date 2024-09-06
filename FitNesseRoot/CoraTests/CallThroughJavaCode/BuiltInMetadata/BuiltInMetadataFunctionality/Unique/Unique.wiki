@@ -234,7 +234,7 @@ Static
 | authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
 | $adminAuthToken | ${recordType} | $createdRecordId4 | ${updateFitnesseRecordWithConflictingNumberVar} | $readRecordPayload= | ${expectedUpdateResult} |
 
-#### Ensure the value of the non unique field is updated
+#### #### Ensure the correct conflicts are detected
 !| script | ExtractSubstringUsingRegex |
 | ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseTextVar, value: anotherMultipleUniqueValue\] already exists in the system |
 | ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseNumberVar, value: 3\] already exists in the system |
@@ -262,6 +262,10 @@ Static
 !| ChildComparerFixture |
 | authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
 | $adminAuthToken | ${recordType} | $createdRecordId4 | ${updateFitnesseRecordFieldWFirstDup} | $readRecordPayload= | ${expectedUpdateResult} |
+
+#### Ensure the correct conflict is detected
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseTextVar, value: anotherMultipleUniqueValue\] already exists in the system |
 *!
 
 !***> Case 5e: It must not be possible to update one (the second) of the unique values to a duplicate already used by another record
@@ -272,6 +276,10 @@ Static
 !| ChildComparerFixture |
 | authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
 | $adminAuthToken | ${recordType} | $createdRecordId4 | ${updateFitnesseRecordFieldWSecondDup} | $readRecordPayload= | ${expectedUpdateResult} |
+
+#### Ensure the correct conflict is detected
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseNumberVar, value: 3\] already exists in the system |
 *!
 
 ####!***> Case 6a: If validating creation of a record with a multiple unique values, its expected to pass
