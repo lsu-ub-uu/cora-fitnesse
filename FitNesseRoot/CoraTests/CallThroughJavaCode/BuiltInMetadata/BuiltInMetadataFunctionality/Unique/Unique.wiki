@@ -18,12 +18,12 @@ Static
 ####  * '''Case 3d''': If validating update of a record with a unique value already used by another record, its expected to fail
 !5 Scenario 2 tests (multiple unique fields)
  * '''Create'''
-  * '''Case 4a''': It must not be possible to create a record with conflicting data in one (first) of the unique fields (fitnesseTextVar)
-  * '''Case 4b''': It must not be possible to create a record with conflicting data in one (last) of the unique fields (fitnesseNumberVar)
-  * '''Case 4c''': It must not be possible to create a record with both values being conflicting data of the unique fields (fitnesseTextVar, fitnesseNumberVar)
+  * '''Case 4a''': It must not be possible to create a record with conflicting data in one (first) of the unique fields
+  * '''Case 4b''': It must not be possible to create a record with conflicting data in one (last) of the unique fields
+  * '''Case 4c''': It must not be possible to create a record with both values being conflicting data of the unique fields
  * '''Update'''
-  * '''Case 5a''': It must be possible to update the value of any of the unique fields
-  * '''Case 5b''': It must not be possible to update both values in a unique fields to a values used by another record
+  * '''Case 5a''': It must not be possible to update both values in a unique fields to a values used by another record
+  * '''Case 5b''': It must be possible to update the value of any of the unique fields
   * '''Case 5c''': It must be possible to update the value of a field that is not unique in a record with multiple unique fields
   * '''Case 5d''': It must not be possible to update one (the first) of the unique values to a duplicate already used by another record
   * '''Case 5e''': It must not be possible to update one (the last) of the unique values to a duplicate already used by another record
@@ -260,22 +260,7 @@ Create record for tests (createdRecordId4)
 | ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseNumberVar, value: 1\]  |
 *!
 
-!***> Case 5a: It must be possible to update the values of a unique fields. Scenario: Update createdRecordId4 (fitnesseTextVar and fitnesseNumberVar) with a new unique values.
-!define anUpdatedMultiUniqueTextVar {someNewMultiUniqueTextVar}
-!define anUpdatedMultiUniqueNumberVar {2}
-!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId4!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedMultiUniqueTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedMultiUniqueNumberVar}!-"}]}-!}
-!define expectedUpdateResult {OK}
-
-!| ChildComparerFixture |
-| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
-| $adminAuthToken | ${recordType} | $createdRecordId4 | ${updateFitnesseRecordWithNewUniqueTextVar} | $readRecordPayload= | ${expectedUpdateResult} |
-
-!| script | ExtractSubstringUsingRegex |
-| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseTextVar","value":"someNewMultiUniqueTextVar" |
-| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseNumberVar","value":"2" |
-*!
-
-!***> Case 5b: It must not be possible to update both values in a unique fields to a values used by another record. Scenario: Change createdRecordId4 values to values used in createdRecordId6
+!***> Case 5a: It must not be possible to update both values in a unique fields to a values used by another record. Scenario: Change createdRecordId4 values to values used in createdRecordId6
 !***> Setup a new record to use for test case (createdRecordId6)
 !define anotherMultipleUniqueTextValue {anotherMultipleUniqueValue}
 !define anotherMultipleUniqueNumberValue {3}
@@ -299,6 +284,22 @@ Create record for tests (createdRecordId4)
 !| script | ExtractSubstringUsingRegex |
 | ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseTextVar, value: anotherMultipleUniqueValue\] already exists in the system |
 | ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseNumberVar, value: 3\] already exists in the system |
+*!
+
+
+!***> Case 5b: It must be possible to update the values of a unique fields. Scenario: Update createdRecordId4 (fitnesseTextVar and fitnesseNumberVar) with a new unique values.
+!define anUpdatedMultiUniqueTextVar {someNewMultiUniqueTextVar}
+!define anUpdatedMultiUniqueNumberVar {2}
+!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId4!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedMultiUniqueTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedMultiUniqueNumberVar}!-"}]}-!}
+!define expectedUpdateResult {OK}
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $adminAuthToken | ${recordType} | $createdRecordId4 | ${updateFitnesseRecordWithNewUniqueTextVar} | $readRecordPayload= | ${expectedUpdateResult} |
+
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseTextVar","value":"someNewMultiUniqueTextVar" |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseNumberVar","value":"2" |
 *!
 
 !***> Case 5c: It must be possible to update the value of a field that is not unique in a record with multiple unique fields
