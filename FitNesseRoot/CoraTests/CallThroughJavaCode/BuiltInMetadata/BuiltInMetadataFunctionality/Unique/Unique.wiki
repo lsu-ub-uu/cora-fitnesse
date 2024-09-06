@@ -5,25 +5,31 @@ Static
 !2 Unique fields
 
 !5 Scenario 1 tests (single unique field)
- * '''Case 1''': It must not be possible to create two records of fitnesseRecordType with conflicting data in the unique field (fitnesseTextVar)
- * '''Case 2a''': It must be possible to update the value of a unique field
- * '''Case 2b''': It must not be possible to update the value in a unique field to a value used by another record
- * '''Case 2c''': It must be possible to update the value of a field that is not unique in a record with unique fields
-#### * '''Case 3a''': If validating creation of a record with a unique value, its expected to pass
-#### * '''Case 3b''': If validating creation of a record with a an already used unique value, its expected to fail
-#### * '''Case 3c''': If validating update of a record with a unique value, its expected to pass
-#### * '''Case 3d''': If validating update of a record with a unique value already used by another record, its expected to fail
+ * '''Create'''
+  * '''Case 1''': It must not be possible to create two records of fitnesseRecordType with conflicting data in the unique field (fitnesseTextVar)
+ * '''Update'''
+  * '''Case 2a''': It must be possible to update the value of a unique field
+  * '''Case 2b''': It must not be possible to update the value in a unique field to a value used by another record
+  * '''Case 2c''': It must be possible to update the value of a field that is not unique in a record with unique fields
+#### * '''Validate'''
+####  * '''Case 3a''': If validating creation of a record with a unique value, its expected to pass
+####  * '''Case 3b''': If validating creation of a record with a an already used unique value, its expected to fail
+####  * '''Case 3c''': If validating update of a record with a unique value, its expected to pass
+####  * '''Case 3d''': If validating update of a record with a unique value already used by another record, its expected to fail
 !5 Scenario 2 tests (multiple unique fields)
- * '''Case 4''': It must not be possible to create two records of fitnesseRecordType with conflicting data in any of the unique fields (fitnesseTextVar, fitnesseNumberVar)
- * '''Case 5a''': It must be possible to update the value of any of the unique fields
- * '''Case 5b''': It must not be possible to update both values in a unique fields to a values used by another record
- * '''Case 5c''': It must be possible to update the value of a field that is not unique in a record with multiple unique fields
- * '''Case 5d''': It must not be possible to update one (the first) of the unique values to a duplicate already used by another record
- * '''Case 5e''': It must not be possible to update one (the last) of the unique values to a duplicate already used by another record
-#### * '''Case 6a''': If validating creation of a record with unique values, its expected to pass
-#### * '''Case 6b''': If validating creation of a record with a an already used unique combine values, its expected to fail
-#### * '''Case 6c''': If validating update of a record with unique values, its expected to pass
-#### * '''Case 6d''': If validating update of a record with unique values already used by another record, its expected to fail
+ * '''Create'''
+  * '''Case 4''': It must not be possible to create two records of fitnesseRecordType with conflicting data in any of the unique fields (fitnesseTextVar, fitnesseNumberVar)
+ * '''Update'''
+  * '''Case 5a''': It must be possible to update the value of any of the unique fields
+  * '''Case 5b''': It must not be possible to update both values in a unique fields to a values used by another record
+  * '''Case 5c''': It must be possible to update the value of a field that is not unique in a record with multiple unique fields
+  * '''Case 5d''': It must not be possible to update one (the first) of the unique values to a duplicate already used by another record
+  * '''Case 5e''': It must not be possible to update one (the last) of the unique values to a duplicate already used by another record
+#### * '''Validate'''
+####  * '''Case 6a''': If validating creation of a record with unique values, its expected to pass
+####  * '''Case 6b''': If validating creation of a record with a an already used unique combine values, its expected to fail
+####  * '''Case 6c''': If validating update of a record with unique values, its expected to pass
+####  * '''Case 6d''': If validating update of a record with unique values already used by another record, its expected to fail
 #####!5 Scenario 3 tests (unique field with combines)
 ##### * '''Case 7''': It must not be possible to create two records of fitnesseRecordType with conflicting data in the unique fields (fitnesseTextVar, fitnesseNumberVar, fitnesseOnlyOneMetadataTextVar)
 ##### * '''Case 8a''': It must be possible to update the value of a unique field with combines
