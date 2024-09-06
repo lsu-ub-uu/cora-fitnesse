@@ -84,6 +84,7 @@ Make fitnesseTextVar in fitnesseRecordType unique
 Create record for tests (createdRecordId1)
 !define aUniqueTextVar {someUniqueTextVar}
 !define recordType {fitnesseRecordType}
+!define createRecordWUniqueData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueTextVar}!-"}]}-!}
 !define expectedCreateResult {CREATED}
 
 !| ChildComparerFixture |
