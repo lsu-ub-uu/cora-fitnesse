@@ -19,6 +19,7 @@ Static
  * '''Case 5b''': It must not be possible to update the values in a unique fields to a values used by another record
  * '''Case 5c''': It must be possible to update the value of a field that is not unique in a record with multiple unique fields
  * '''Case 5d''': It must not be possible to update one (the first) of the unique values to a duplicate already used by another record
+ * '''Case 5e''': It must not be possible to update one (the last) of the unique values to a duplicate already used by another record
 #### * '''Case 6a''': If validating creation of a record with unique values, its expected to pass
 #### * '''Case 6b''': If validating creation of a record with a an already used unique combine values, its expected to fail
 #### * '''Case 6c''': If validating update of a record with unique values, its expected to pass
@@ -249,13 +250,23 @@ Static
 *!
 
 !***> Case 5d: It must not be possible to update one (the first) of the unique values to a duplicate already used by another record
-##### Test tries to set the first value (fitnesseText) to the value already used by createdRecordId6 created in the setup for test 5b
-!define updateFitnesseRecordFieldThatisNotUnique {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId4!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anotherMultipleUniqueTextValue}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedMultiUniqueNumberVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":"aTotallyLegitNewNonUniqueValue"}]}-!}
+##### Test tries to set the first value (fitnesseTextVar) to the value already used by createdRecordId6 created in the setup for test 5b
+!define updateFitnesseRecordFieldWFirstDup {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId4!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anotherMultipleUniqueTextValue}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedMultiUniqueNumberVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":"aTotallyLegitNewNonUniqueValue"}]}-!}
 !define expectedUpdateResult {CONFLICT}
 
 !| ChildComparerFixture |
 | authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
-| $adminAuthToken | ${recordType} | $createdRecordId4 | ${updateFitnesseRecordFieldThatisNotUnique} | $readRecordPayload= | ${expectedUpdateResult} |
+| $adminAuthToken | ${recordType} | $createdRecordId4 | ${updateFitnesseRecordFieldWFirstDup} | $readRecordPayload= | ${expectedUpdateResult} |
+*!
+
+!***> Case 5e: It must not be possible to update one (the second) of the unique values to a duplicate already used by another record
+##### Test tries to set the second value (fitnesseNumberVar) to the value already used by createdRecordId6 created in the setup for test 5b
+!define updateFitnesseRecordFieldWSecondDup {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId4!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedMultiUniqueTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anotherMultipleUniqueNumberValue}!-"},{"name":"fitnesseOnlyOneTextVar","value":"aTotallyLegitNewNonUniqueValue"}]}-!}
+!define expectedUpdateResult {CONFLICT}
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $adminAuthToken | ${recordType} | $createdRecordId4 | ${updateFitnesseRecordFieldWSecondDup} | $readRecordPayload= | ${expectedUpdateResult} |
 *!
 
 ####!***> Case 6a: If validating creation of a record with a multiple unique values, its expected to pass
