@@ -69,7 +69,8 @@ Static
 *!
 
 !***> Scenario 1 (A single unique field)
-!***> Setup data to make fitnesseTextVar in fitnesseRecordType unique
+!***> Setup data for single unique tests
+Make fitnesseTextVar in fitnesseRecordType unique
 !define fitnesseRecordTypeWithUniqueTextVar {!-{"name":"recordType","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseRecordType"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"recordType"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2024-09-03T12:06:55.934541Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T12:06:55.934541Z"}]}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseGroup"}]},{"name":"presentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"menuPresentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"listPresentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"userSuppliedId","value":"false"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"autocompletePresentationView","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"groupOfRecordType","repeatId":"0","value":"metadata"},{"name":"public","value":"true"},{"name":"storeInArchive","value":"true"},{"name":"unique","repeatId":"1","children":[{"name":"uniqueTerm","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseTextVarStorageTerm"}]}]}]}-!}
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
 | setHeader | Accept:application/vnd.uub.record+json!-
@@ -79,18 +80,23 @@ Static
 | POST | /record/recordType/fitnesseRecordType | 200 | | |
 | GET | /record/recordType/fitnesseRecordType | 200 | | |
 | let | uniqueStorageTermShouldExist | js | var regExp = new RegExp('"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseTextVarStorageTerm"') ; regExp.test(response.body) | true |
-*!
 ----
-!***> Case 1: It must not be possible to create two records of fitnesseRecordType with the same data in the unique field (fitnesseTextVar)
+Create record for tests (createdRecordId1)
 !define aUniqueTextVar {someUniqueTextVar}
 !define recordType {fitnesseRecordType}
 !define expectedCreateResult {CREATED}
-!define expectedUniqueConflict {CONFLICT}
-!define createRecordWUniqueData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueTextVar}!-"}]}-!}
 
 !| ChildComparerFixture |
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
 | $adminAuthToken | ${recordType} | ${createRecordWUniqueData} |  | ${expectedCreateResult} | $createdRecordId1= |
+*!
+----
+!***> Case 1: It must not be possible to create two records of fitnesseRecordType with the same data in the unique field (fitnesseTextVar)
+!define createRecordWUniqueData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueTextVar}!-"}]}-!}
+!define expectedUniqueConflict {CONFLICT}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
 | $adminAuthToken | ${recordType} | ${createRecordWUniqueData} | $readRecordPayload= | ${expectedUniqueConflict} | $createdRecordId2= |
 
 #Ensure the correct field is detected as conflicting
@@ -188,7 +194,8 @@ Static
 *!
 
 !***> Scenario 2 (multiple uniques (fitnesseTextVar, fitnesseNumberVar))
-!***> Setup data to make fitnesseTextVar and fitnesseNumberVar in fitnesseRecordType unique fields
+!***> Setup data for multiple unique tests
+Setup data to make fitnesseTextVar and fitnesseNumberVar in fitnesseRecordType unique fields
 !define fitnesseRecordTypeWithMultipleUniques {!-{"name":"recordType","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseRecordType"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"recordType"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2024-09-03T12:06:55.934541Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T12:06:55.934541Z"}]}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseGroup"}]},{"name":"presentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"menuPresentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"listPresentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"userSuppliedId","value":"false"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"autocompletePresentationView","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"groupOfRecordType","repeatId":"0","value":"metadata"},{"name":"public","value":"true"},{"name":"storeInArchive","value":"true"},{"name":"unique","repeatId":"1","children":[{"name":"uniqueTerm","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseTextVarStorageTerm"}]}]},{"name":"unique","repeatId":"2","children":[{"name":"uniqueTerm","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseNumberVarStorageTerm"}]}]}]}-!}
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
 | setHeader | Accept:application/vnd.uub.record+json!-
@@ -199,8 +206,8 @@ Static
 | GET | /record/recordType/fitnesseRecordType | 200 | | |
 | let | uniqueTextVarStorageTermShouldExist | js | var regExp = new RegExp('"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseTextVarStorageTerm"') ; regExp.test(response.body) | true |
 | let | uniqueNumberVarStorageTermShouldExist | js | var regExp = new RegExp('"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseNumberVarStorageTerm"') ; regExp.test(response.body) | true |
-
-Setup and create record for tests (createdRecordId4)
+----
+Create record for tests (createdRecordId4)
 !define createRecordWUniqueData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueNumberVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":"hello"}]}-!}
 !define aUniqueTextVar {someUniqueTextVar}
 !define aUniqueNumberVar {1}
