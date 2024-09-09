@@ -38,16 +38,14 @@ Static
   * '''Case 7b''': It must be possible to create a record with one of the combines as different (A)
   * '''Case 7c''': It must be possible to create a record with one of the combines as different (B) 
   * '''Case 7d''': It must be possible to create a record with both one of the combines as different (A, B)
-#  * '''Case 7e''': It must be possible to create a record with all values as different (U, A, B)
  * '''Update'''
   * '''Case 8a''': It must not be possible to update values of the unique and its combines to values used by another record
-  * '''Case 8b''': It must be possible to update the value of a field that is not unique in a record with a unique and combines
-  * '''Case 8c''': It must be possible to update the unique value (U) of the combines values to a duplicate already used by another record
-  * '''Case 8d''': It must be possible to update one (A) of the combines values to a duplicate already used by another record
-  * '''Case 8e''': It must be possible to update one (B) of the unique values to a duplicate already used by another record
-  * '''Case 8f''': It must be possible to update two (U, A) of the unique values to a duplicate already used by another record
-  * '''Case 8g''': It must be possible to update two (U, B) of the unique values to a duplicate already used by another record
-  * '''Case 8h''': It must be possible to update all values (U, A, B) of the unique values to a duplicate already used by another record
+  * '''Case 8b''': It must be possible to update a record with a unique value for U and conflicting values for A and B
+  * '''Case 8c''': It must be possible to update a record with a unique value for A and conflicting values for U and B
+  * '''Case 8d''': It must be possible to update a record with a unique value for B and conflicting values for U and A
+  * '''Case 8e''': It must be possible to update a record with a unique value for U and A and a conflicting value for B
+  * '''Case 8f''': It must be possible to update a record with a unique value for U and B and a conflicting value for A
+  * '''Case 8g''': It must be possible to update all values (U, A, B) of the unique values not used by another record
 #### * '''Validate'''
 ##### * '''Case 9a''': If validating creation of a record with unique values, its expected to pass
 ##### * '''Case 9b''': If validating creation of a record with a an already used unique combine values, its expected to fail
@@ -455,7 +453,7 @@ Create record for tests (createdRecordId9)
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
 | $adminAuthToken | ${recordType} | ${createRecordWConflictingTextVar} | $readRecordPayload= | ${expectedUniqueConflict} | $createdRecordId10= |
 
-#Ensure the correct field is detected as conflicting
+#Ensure the fields is detected as conflicting
 !| script | ExtractSubstringUsingRegex |
 | ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseTextVar, value: aUniqueWCombineTextFor\], \[key: fitnesseNumberVar, value: 5\], \[key: fitnesseOnlyOneMetadataTextVar, value: aUniqueCombineOnlyText\] already exists in the system  |
 *!
@@ -468,7 +466,7 @@ Create record for tests (createdRecordId9)
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
 | $adminAuthToken | ${recordType} | ${createRecordWConflictingNumberVar} | $readRecordPayload= | ${expectedUniqueConflict} | $createdRecordId11= |
 
-#Ensure the correct field is detected as conflicting
+#Ensure the value was updated correctly
 !| script | ExtractSubstringUsingRegex |
 | ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseNumberVar","repeatId":"0","value":"9" |
 *!
@@ -481,7 +479,7 @@ Create record for tests (createdRecordId9)
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
 | $adminAuthToken | ${recordType} | ${createRecordWBothConflictingVars} | $readRecordPayload= | ${expectedUniqueConflict} | $createdRecordId12= |
 
-#Ensure the correct field is detected as conflicting
+#Ensure the value was updated correctly
 !| script | ExtractSubstringUsingRegex |
 | ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseOnlyOneTextVar","value":"aNewValueForCombineB" |
 *!
@@ -494,10 +492,132 @@ Create record for tests (createdRecordId9)
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
 | $adminAuthToken | ${recordType} | ${createRecordWBothConflictingVars} | $readRecordPayload= | ${expectedUniqueConflict} | $createdRecordId13= |
 
-#Ensure the correct field is detected as conflicting
+#Ensure the values were updated correctly
 !| script | ExtractSubstringUsingRegex |
 | ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseOnlyOneTextVar","value":"aNewValueForCombineB" |
 | ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseNumberVar","repeatId":"0","value":"9" |
+*!
+
+!***> Case 8a: It must not be possible to update values of the unique and its combines to values used by another record
+!***> Setup a new record to use for update test cases (createdRecordId14) to check against conflicts when updating a record (createdRecordId9)
+!define UniqueCombineU {UniqueCombineUValue}
+!define UniqueCombineA {6}
+!define UniqueCombineB {UniqueCombineBValue}
+!define recordType {fitnesseRecordType}
+!define expectedCreateResult {CREATED}
+!define createAnotherRecordWUniqueData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${UniqueCombineB}!-"}]}-!}
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | ${recordType} | ${createAnotherRecordWUniqueData} |  | ${expectedCreateResult} | $createdRecordId14= |
+*!
+
+##### Set update body of a record (createdRecordId9) to conflict with unique and combines used by another record (createdRecordId14)
+!define updateFitnesseRecordWithConflictingUniqueAndCombines {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","repeatId":"2","value":"-!${UniqueCombineB}!-"}]}-!}
+!define expectedUpdateResult {CONFLICT}
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $adminAuthToken | ${recordType} | $createdRecordId9 | ${updateFitnesseRecordWithConflictingUniqueAndCombines} | $readRecordPayload= | ${expectedUpdateResult} |
+
+#### #### Ensure the correct conflicts are detected
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseTextVar, value: UniqueCombineUValue\] already exists in the system |
+| ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseNumberVar, value: 6\] already exists in the system |
+| ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseOnlyOneTextVar, value: UniqueCombineBValue\] already exists in the system |
+*!
+
+!***> Case 8b: It must be possible to update a record with a unique value for U and conflicting values for A and B
+!define anUpdatedUniqueCombineU {anUpdateCombineUValue}
+
+!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedUniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","repeatId":"2","value":"-!${UniqueCombineB}!-"}]}-!}
+!define expectedUpdateResult {OK}
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $adminAuthToken | ${recordType} | $createdRecordId9 | ${updateFitnesseRecordWithNewUniqueTextVar} | $readRecordPayload= | ${expectedUpdateResult} |
+
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseTextVar","value":"anUpdateCombineUValue" |
+*!
+
+!***> Case 8c: It must be possible to update a record with a unique value for A and conflicting values for U and B
+!define anUpdatedUniqueCombineA {7}
+
+!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedUniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","repeatId":"2","value":"-!${UniqueCombineB}!-"}]}-!}
+!define expectedUpdateResult {OK}
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $adminAuthToken | ${recordType} | $createdRecordId9 | ${updateFitnesseRecordWithNewUniqueTextVar} | $readRecordPayload= | ${expectedUpdateResult} |
+
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseNumberVar","value":"7" |
+*!
+
+!***> Case 8d: It must be possible to update a record with a unique value for B and conflicting values for U and A
+!define anUpdatedUniqueCombineB {anUpdateCombineBValue}
+
+!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","repeatId":"2","value":"-!${anUpdatedUniqueCombineB}!-"}]}-!}
+!define expectedUpdateResult {OK}
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $adminAuthToken | ${recordType} | $createdRecordId9 | ${updateFitnesseRecordWithNewUniqueTextVar} | $readRecordPayload= | ${expectedUpdateResult} |
+
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseOnlyOneTextVar","value":"anUpdateCombineBValue" |
+*!
+
+!***> Case 8e: It must be possible to update a record with a unique value for U and A and a conflicting value for B
+!define anUpdatedUniqueCombineU {anUpdateCombineAValue}
+!define anUpdatedUniqueCombineA {8}
+
+!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedUniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedUniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","repeatId":"2","value":"-!${UniqueCombineB}!-"}]}-!}
+!define expectedUpdateResult {OK}
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $adminAuthToken | ${recordType} | $createdRecordId9 | ${updateFitnesseRecordWithNewUniqueTextVar} | $readRecordPayload= | ${expectedUpdateResult} |
+
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseTextVar","value":"anUpdateCombineAValue" |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseNumberVar","value":"8" |
+*!
+
+!***> Case 8f: It must be possible to update a record with a unique value for U and B and a conflicting value for A
+!define anUpdatedUniqueCombineU {anUpdateCombineUValue}
+!define anUpdatedUniqueCombineB {anUpdateCombineBValue}
+
+!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedUniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","repeatId":"2","value":"-!${anUpdatedUniqueCombineU}!-"}]}-!}
+!define expectedUpdateResult {OK}
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $adminAuthToken | ${recordType} | $createdRecordId9 | ${updateFitnesseRecordWithNewUniqueTextVar} | $readRecordPayload= | ${expectedUpdateResult} |
+
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseTextVar","value":"anUpdateCombineUValue" |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseOnlyOneTextVar","value":"anUpdateCombineBValue" |
+*!
+
+!***> Case 8g: It must be possible to update all values (U, A, B) of the unique values not used by another record
+!define anUpdatedUniqueCombineU {anUpdateCombineUValue}
+!define anUpdatedUniqueCombineA {9}
+!define anUpdatedUniqueCombineB {anUpdateCombineBValue}
+
+!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedUniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","repeatId":"2","value":"-!${anUpdatedUniqueCombineU}!-"}]}-!}
+!define expectedUpdateResult {OK}
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $adminAuthToken | ${recordType} | $createdRecordId9 | ${updateFitnesseRecordWithNewUniqueTextVar} | $readRecordPayload= | ${expectedUpdateResult} |
+
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseTextVar","value":"anUpdateCombineUValue" |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseNumberVar","value":"9" |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseOnlyOneTextVar","value":"anUpdateCombineBValue" |
+*!
+
 *!
 
 
@@ -512,89 +632,6 @@ Create record for tests (createdRecordId9)
 
 
 
-####!***> Case 5a: It must not be possible to update both values in a unique fields to a values used by another record. Scenario: Change createdRecordId4 values to values used in createdRecordId6
-####!***> Setup a new record to use for test case (createdRecordId6)
-####!define anotherMultipleUniqueTextValue {anotherMultipleUniqueValue}
-####!define anotherMultipleUniqueNumberValue {3}
-####!define recordType {fitnesseRecordType}
-####!define expectedCreateResult {CREATED}
-####!define createAnotherRecordWUniqueData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${anotherMultipleUniqueTextValue}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${anotherMultipleUniqueNumberValue}!-"},{"name":"fitnesseOnlyOneTextVar","value":"hello"}]}-!}
-####!| ChildComparerFixture |
-####| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
-####| $adminAuthToken | ${recordType} | ${createAnotherRecordWUniqueData} |  | ${expectedCreateResult} | $createdRecordId6= |
-####*!
-####
-######### Set body to conflict both textVar and numberVar
-####!define updateFitnesseRecordWithConflictingNumberVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId4!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anotherMultipleUniqueTextValue}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anotherMultipleUniqueNumberValue}!-"}]}-!}
-####!define expectedUpdateResult {CONFLICT}
-####
-####!| ChildComparerFixture |
-####| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
-####| $adminAuthToken | ${recordType} | $createdRecordId4 | ${updateFitnesseRecordWithConflictingNumberVar} | $readRecordPayload= | ${expectedUpdateResult} |
-####
-######## #### Ensure the correct conflicts are detected
-####!| script | ExtractSubstringUsingRegex |
-####| ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseTextVar, value: anotherMultipleUniqueValue\] already exists in the system |
-####| ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseNumberVar, value: 3\] already exists in the system |
-####*!
-####
-####
-####!***> Case 5b: It must be possible to update the values of a unique fields. Scenario: Update createdRecordId4 (fitnesseTextVar and fitnesseNumberVar) with a new unique values.
-####!define anUpdatedMultiUniqueTextVar {someNewMultiUniqueTextVar}
-####!define anUpdatedMultiUniqueNumberVar {2}
-####!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId4!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedMultiUniqueTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedMultiUniqueNumberVar}!-"}]}-!}
-####!define expectedUpdateResult {OK}
-####
-####!| ChildComparerFixture |
-####| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
-####| $adminAuthToken | ${recordType} | $createdRecordId4 | ${updateFitnesseRecordWithNewUniqueTextVar} | $readRecordPayload= | ${expectedUpdateResult} |
-####
-####!| script | ExtractSubstringUsingRegex |
-####| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseTextVar","value":"someNewMultiUniqueTextVar" |
-####| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseNumberVar","value":"2" |
-####*!
-####
-####!***> Case 5c: It must be possible to update the value of a field that is not unique in a record with multiple unique fields
-######### Test retains the unique values from case 5a and tries to update with a value for fitnesseOnlyOneTextVar
-####!define updateFitnesseRecordFieldThatisNotUnique {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId4!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedMultiUniqueTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedMultiUniqueNumberVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":"aTotallyLegitNewNonUniqueValue"}]}-!}
-####!define expectedUpdateResult {OK}
-####
-####!| ChildComparerFixture |
-####| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
-####| $adminAuthToken | ${recordType} | $createdRecordId4 | ${updateFitnesseRecordFieldThatisNotUnique} | $readRecordPayload= | ${expectedUpdateResult} |
-####
-######## Ensure the value of the non unique field is updated
-####!| script | ExtractSubstringUsingRegex |
-####| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseOnlyOneTextVar","value":"aTotallyLegitNewNonUniqueValue" |
-####*!
-####
-####!***> Case 5d: It must not be possible to update one (the first) of the unique values to a duplicate already used by another record
-######### Test tries to set the first value (fitnesseTextVar) to the value already used by createdRecordId6 created in the setup for test 5b
-####!define updateFitnesseRecordFieldWFirstDup {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId4!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anotherMultipleUniqueTextValue}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedMultiUniqueNumberVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":"aTotallyLegitNewNonUniqueValue"}]}-!}
-####!define expectedUpdateResult {CONFLICT}
-####
-####!| ChildComparerFixture |
-####| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
-####| $adminAuthToken | ${recordType} | $createdRecordId4 | ${updateFitnesseRecordFieldWFirstDup} | $readRecordPayload= | ${expectedUpdateResult} |
-####
-######## Ensure the correct conflict is detected
-####!| script | ExtractSubstringUsingRegex |
-####| ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseTextVar, value: anotherMultipleUniqueValue\] already exists in the system |
-####*!
-####
-####!***> Case 5e: It must not be possible to update one (the second) of the unique values to a duplicate already used by another record
-######### Test tries to set the second value (fitnesseNumberVar) to the value already used by createdRecordId6 created in the setup for test 5b
-####!define updateFitnesseRecordFieldWSecondDup {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId4!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedMultiUniqueTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anotherMultipleUniqueNumberValue}!-"},{"name":"fitnesseOnlyOneTextVar","value":"aTotallyLegitNewNonUniqueValue"}]}-!}
-####!define expectedUpdateResult {CONFLICT}
-####
-####!| ChildComparerFixture |
-####| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
-####| $adminAuthToken | ${recordType} | $createdRecordId4 | ${updateFitnesseRecordFieldWSecondDup} | $readRecordPayload= | ${expectedUpdateResult} |
-####
-######## Ensure the correct conflict is detected
-####!| script | ExtractSubstringUsingRegex |
-####| ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseNumberVar, value: 3\] already exists in the system |
-####*!
 
 ####!***> Case 6a: If validating creation of a record with a multiple unique values, its expected to pass
 ####!define aUniqueTextValueForValidationWMultipleUniques {aUniqueValueForValidationCreation}
@@ -645,6 +682,7 @@ Create record for tests (createdRecordId9)
 | DELETE | /record/fitnesseRecordType/$createdRecordId11 | 200 | | |
 | DELETE | /record/fitnesseRecordType/$createdRecordId12 | 200 | | |
 | DELETE | /record/fitnesseRecordType/$createdRecordId13 | 200 | | |
+| DELETE | /record/fitnesseRecordType/$createdRecordId14 | 200 | | |
 *!
 *!
 --------
