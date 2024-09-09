@@ -38,6 +38,7 @@ Static
   * '''Case 7b''': It must be possible to create a record with one of the combines as different (A)
   * '''Case 7c''': It must be possible to create a record with one of the combines as different (B) 
   * '''Case 7d''': It must be possible to create a record with both one of the combines as different (A, B)
+  * '''Case 7e''': It must be possible to create a record without the unique field but conflicting combines (A, B)
  * '''Update'''
   * '''Case 8a''': It must not be possible to update values of the unique and its combines to values used by another record
   * '''Case 8b''': It must be possible to update a record with a unique value for U and conflicting values for A and B
@@ -498,8 +499,23 @@ Create record for tests (createdRecordId9)
 | ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseNumberVar","value":"9" |
 *!
 
+!***> Case 7e: It must be possible to create a record without the unique field but conflicting combines (A, B)
+!define createRecordWBothConflictingVars {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aCombineNumberVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${aCombineOnlyTextVar}!-"}]}-!}
+!define expectedUniqueConflict {CREATED}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | ${recordType} | ${createRecordWBothConflictingVars} | $readRecordPayload= | ${expectedUniqueConflict} | $createdRecordId15= |
+
+#Ensure the values were updated correctly
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseOnlyOneTextVar","value":"aUniqueCombineOnlyText" |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseNumberVar","value":"5" |
+*!
+
 !***> Case 8a: It must not be possible to update values of the unique and its combines to values used by another record
 !***> Setup a new record to use for update test cases (createdRecordId14) to check against conflicts when updating a record (createdRecordId9)
+#### These values will be used through out as references for conflicts
 !define UniqueCombineU {UniqueCombineUValue}
 !define UniqueCombineA {6}
 !define UniqueCombineB {UniqueCombineBValue}
@@ -681,6 +697,7 @@ Create record for tests (createdRecordId9)
 | DELETE | /record/fitnesseRecordType/$createdRecordId12 | 200 | | |
 | DELETE | /record/fitnesseRecordType/$createdRecordId13 | 200 | | |
 | DELETE | /record/fitnesseRecordType/$createdRecordId14 | 200 | | |
+| DELETE | /record/fitnesseRecordType/$createdRecordId15 | 200 | | |
 *!
 --------
 
