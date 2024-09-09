@@ -460,7 +460,7 @@ Create record for tests (createdRecordId9)
 
 !***> Case 7b: It must be possible to create a record with one of the combines as different (A)
 !define createRecordWConflictingNumberVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueWCombineTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"9"},{"name":"fitnesseOnlyOneTextVar","value":"-!${aCombineOnlyTextVar}!-"}]}-!}
-!define expectedUniqueConflict {OK}
+!define expectedUniqueConflict {CREATED}
 
 !| ChildComparerFixture |
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
@@ -468,12 +468,12 @@ Create record for tests (createdRecordId9)
 
 #Ensure the value was updated correctly
 !| script | ExtractSubstringUsingRegex |
-| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseNumberVar","repeatId":"0","value":"9" |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseNumberVar","value":"9" |
 *!
 
 !***> Case 7c: It must be possible to create a record with one of the combines as different (B) 
 !define createRecordWBothConflictingVars {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueWCombineTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aCombineNumberVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":"aNewValueForCombineB"}]}-!}
-!define expectedUniqueConflict {OK}
+!define expectedUniqueConflict {CREATED}
 
 !| ChildComparerFixture |
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
@@ -486,7 +486,7 @@ Create record for tests (createdRecordId9)
 
 !***> Case 7d: It must be possible to create a record with both one of the combines as different (A, B)
 !define createRecordWBothConflictingVars {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueWCombineTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"9"},{"name":"fitnesseOnlyOneTextVar","value":"aNewValueForCombineB"}]}-!}
-!define expectedUniqueConflict {OK}
+!define expectedUniqueConflict {CREATED}
 
 !| ChildComparerFixture |
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
@@ -495,7 +495,7 @@ Create record for tests (createdRecordId9)
 #Ensure the values were updated correctly
 !| script | ExtractSubstringUsingRegex |
 | ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseOnlyOneTextVar","value":"aNewValueForCombineB" |
-| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseNumberVar","repeatId":"0","value":"9" |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseNumberVar","value":"9" |
 *!
 
 !***> Case 8a: It must not be possible to update values of the unique and its combines to values used by another record
@@ -512,7 +512,7 @@ Create record for tests (createdRecordId9)
 *!
 
 ##### Set update body of a record (createdRecordId9) to conflict with unique and combines used by another record (createdRecordId14)
-!define updateFitnesseRecordWithConflictingUniqueAndCombines {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","repeatId":"2","value":"-!${UniqueCombineB}!-"}]}-!}
+!define updateFitnesseRecordWithConflictingUniqueAndCombines {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${UniqueCombineB}!-"}]}-!}
 !define expectedUpdateResult {CONFLICT}
 
 !| ChildComparerFixture |
@@ -521,15 +521,13 @@ Create record for tests (createdRecordId9)
 
 #### #### Ensure the correct conflicts are detected
 !| script | ExtractSubstringUsingRegex |
-| ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseTextVar, value: UniqueCombineUValue\] already exists in the system |
-| ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseNumberVar, value: 6\] already exists in the system |
-| ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseOnlyOneTextVar, value: UniqueCombineBValue\] already exists in the system |
+| ensure | match found using text | $readRecordPayload | and regex | [A record matching the unique rule with \[key: fitnesseTextVar, value: UniqueCombineUValue\], \[key: fitnesseNumberVar, value: 6\], \[key: fitnesseOnlyOneMetadataTextVar, value: UniqueCombineBValue\] already exists in the system] |
 *!
 
 !***> Case 8b: It must be possible to update a record with a unique value for U and conflicting values for A and B
 !define anUpdatedUniqueCombineU {anUpdateCombineUValue}
 
-!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedUniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","repeatId":"2","value":"-!${UniqueCombineB}!-"}]}-!}
+!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedUniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${UniqueCombineB}!-"}]}-!}
 !define expectedUpdateResult {OK}
 
 !| ChildComparerFixture |
@@ -543,7 +541,7 @@ Create record for tests (createdRecordId9)
 !***> Case 8c: It must be possible to update a record with a unique value for A and conflicting values for U and B
 !define anUpdatedUniqueCombineA {7}
 
-!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedUniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","repeatId":"2","value":"-!${UniqueCombineB}!-"}]}-!}
+!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedUniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${UniqueCombineB}!-"}]}-!}
 !define expectedUpdateResult {OK}
 
 !| ChildComparerFixture |
@@ -557,7 +555,7 @@ Create record for tests (createdRecordId9)
 !***> Case 8d: It must be possible to update a record with a unique value for B and conflicting values for U and A
 !define anUpdatedUniqueCombineB {anUpdateCombineBValue}
 
-!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","repeatId":"2","value":"-!${anUpdatedUniqueCombineB}!-"}]}-!}
+!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${anUpdatedUniqueCombineB}!-"}]}-!}
 !define expectedUpdateResult {OK}
 
 !| ChildComparerFixture |
@@ -569,10 +567,10 @@ Create record for tests (createdRecordId9)
 *!
 
 !***> Case 8e: It must be possible to update a record with a unique value for U and A and a conflicting value for B
-!define anUpdatedUniqueCombineU {anUpdateCombineAValue}
+!define anUpdatedUniqueCombineU {anUpdateCombineUValue}
 !define anUpdatedUniqueCombineA {8}
 
-!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedUniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedUniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","repeatId":"2","value":"-!${UniqueCombineB}!-"}]}-!}
+!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedUniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedUniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${UniqueCombineB}!-"}]}-!}
 !define expectedUpdateResult {OK}
 
 !| ChildComparerFixture |
@@ -580,7 +578,7 @@ Create record for tests (createdRecordId9)
 | $adminAuthToken | ${recordType} | $createdRecordId9 | ${updateFitnesseRecordWithNewUniqueTextVar} | $readRecordPayload= | ${expectedUpdateResult} |
 
 !| script | ExtractSubstringUsingRegex |
-| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseTextVar","value":"anUpdateCombineAValue" |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseTextVar","value":"anUpdateCombineUValue" |
 | ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseNumberVar","value":"8" |
 *!
 
@@ -588,7 +586,7 @@ Create record for tests (createdRecordId9)
 !define anUpdatedUniqueCombineU {anUpdateCombineUValue}
 !define anUpdatedUniqueCombineB {anUpdateCombineBValue}
 
-!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedUniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","repeatId":"2","value":"-!${anUpdatedUniqueCombineU}!-"}]}-!}
+!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedUniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${anUpdatedUniqueCombineB}!-"}]}-!}
 !define expectedUpdateResult {OK}
 
 !| ChildComparerFixture |
@@ -605,7 +603,7 @@ Create record for tests (createdRecordId9)
 !define anUpdatedUniqueCombineA {9}
 !define anUpdatedUniqueCombineB {anUpdateCombineBValue}
 
-!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedUniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","repeatId":"2","value":"-!${anUpdatedUniqueCombineU}!-"}]}-!}
+!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedUniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedUniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${anUpdatedUniqueCombineB}!-"}]}-!}
 !define expectedUpdateResult {OK}
 
 !| ChildComparerFixture |
@@ -683,7 +681,6 @@ Create record for tests (createdRecordId9)
 | DELETE | /record/fitnesseRecordType/$createdRecordId12 | 200 | | |
 | DELETE | /record/fitnesseRecordType/$createdRecordId13 | 200 | | |
 | DELETE | /record/fitnesseRecordType/$createdRecordId14 | 200 | | |
-*!
 *!
 --------
 
