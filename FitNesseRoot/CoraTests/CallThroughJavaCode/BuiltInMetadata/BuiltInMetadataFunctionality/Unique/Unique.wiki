@@ -1,32 +1,34 @@
 ---
 Static
 ---
-
-!2 Unique fields
-
-!5 Scenario 1 tests (single unique field)
+!4 Scenario 1 tests (single unique field)
  * '''Create'''
   * '''Case 1''': It must not be possible to create two records of fitnesseRecordType with conflicting data in the unique field (fitnesseTextVar)
+  
  * '''Update'''
   * '''Case 2a''': It must be possible to update the value of a unique field
   * '''Case 2b''': It must not be possible to update the value in a unique field to a value used by another record
   * '''Case 2c''': It must be possible to update the value of a field that is not unique in a record with unique fields
+  
  * '''Validate'''
   * '''Case 3a''': If validating creation of a record with a unique value, its expected to pass
   * '''Case 3b''': If validating creation of a record with a an already used unique value, its expected to fail
   * '''Case 3c''': If validating update of a record with a unique value, its expected to pass
   * '''Case 3d''': If validating update of a record with a unique value already used by another record, its expected to fail
-!5 Scenario 2 tests (multiple unique fields)
+  
+!4 Scenario 2 tests (multiple unique fields)
  * '''Create'''
   * '''Case 4a''': It must not be possible to create a record with conflicting data in one (first) of the unique fields
   * '''Case 4b''': It must not be possible to create a record with conflicting data in one (last) of the unique fields
   * '''Case 4c''': It must not be possible to create a record with both values being conflicting data of the unique fields
+  
  * '''Update'''
   * '''Case 5a''': It must not be possible to update both values in a unique fields to a values used by another record
   * '''Case 5b''': It must be possible to update the values of a the unique fields.
   * '''Case 5c''': It must be possible to update the value of a field that is not unique in a record with multiple unique fields
   * '''Case 5d''': It must not be possible to update one (the first) of the unique values to a duplicate already used by another record
   * '''Case 5e''': It must not be possible to update one (the last) of the unique values to a duplicate already used by another record
+  
  * '''Validate'''
   * '''Case 6a''': If validating creation of a record with unique values, its expected to pass
   * '''Case 6b''': If validating creation of a record with conflicting data in one (first) of the unique fields, its expected to fail
@@ -36,13 +38,15 @@ Static
   * '''Case 6f''': If validating update of a record with (the first) of the unique values to a duplicate already used by another record, its expected to fail
   * '''Case 6g''': If validating update of a record with (the second) of the unique values to a duplicate already used by another record, its expected to fail
   * '''Case 6h''': If validating update of a record with both of the unique values to a duplicate already used by another record, its expected to fail
-!5 Scenario 3 tests (unique field with combines)
+  
+!4 Scenario 3 tests (unique field with combines)
  * '''Create'''
   * '''Case 7a''': It must not be possible to create a record with conflicting data for all fields simultaneously (U, A, B)
   * '''Case 7b''': It must be possible to create a record with one of the combines as different (A)
   * '''Case 7c''': It must be possible to create a record with one of the combines as different (B) 
   * '''Case 7d''': It must be possible to create a record with both one of the combines as different (A, B)
   * '''Case 7e''': It must be possible to create a record without the unique field but conflicting combines (A, B)
+  
  * '''Update'''
   * '''Case 8a''': It must not be possible to update values of the unique and its combines to values used by another record
   * '''Case 8b''': It must be possible to update a record with a unique value for U and conflicting values for A and B
@@ -51,6 +55,7 @@ Static
   * '''Case 8e''': It must be possible to update a record with a unique value for U and A and a conflicting value for B
   * '''Case 8f''': It must be possible to update a record with a unique value for U and B and a conflicting value for A
   * '''Case 8g''': It must be possible to update all values (U, A, B) of the unique values not used by another record
+  
  * '''Validate'''
   * '''Case 9a''': If validating creation of a record with all fields being unique (U, A, B), its expected to pass
   * '''Case 9b''': If validating creation of a record with all fields being in conflict (U, A, B), its expected to fail

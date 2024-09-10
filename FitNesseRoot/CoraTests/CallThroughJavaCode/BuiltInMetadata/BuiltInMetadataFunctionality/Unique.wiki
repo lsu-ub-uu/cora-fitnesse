@@ -2,6 +2,12 @@
 Test
 ---
 !1 Unique
+
+ * unique(group, 0-X, noConstraint)
+  * uniqueTerm(recordLink, 1-1, noConstraint)
+  * combineTerm(recordLink, 0-X, noConstraint)
+ 
 Text describing unique and its function
 
+----
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Unique.Unique
