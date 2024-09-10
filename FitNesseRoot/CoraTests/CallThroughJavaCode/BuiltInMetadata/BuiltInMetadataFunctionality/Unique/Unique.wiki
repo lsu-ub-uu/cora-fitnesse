@@ -231,6 +231,7 @@ Setup data to make fitnesseTextVar and fitnesseNumberVar in fitnesseRecordType u
 | let | uniqueNumberVarStorageTermShouldExist | js | var regExp = new RegExp('"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseNumberVarStorageTerm"') ; regExp.test(response.body) | true |
 ----
 Create record for tests (createdRecordId4)
+#### This record will be used throughout this scenario as the record being updated to check for conflicts
 !define createRecordWUniqueData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueNumberVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":"hello"}]}-!}
 !define aUniqueTextVar {someUniqueTextVar}
 !define aUniqueNumberVar {1}
@@ -282,8 +283,8 @@ Create record for tests (createdRecordId4)
 | ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseNumberVar, value: 1\]  |
 *!
 
-!***> Case 5a: It must not be possible to update both values in a unique fields to a values used by another record. Scenario: Change createdRecordId4 values to values used in createdRecordId6
-!***> Setup a new record to use for test case (createdRecordId6)
+!***> Case 5a: It must not be possible to update both unique field values to a values used by another record.
+!***> Setup a new record to use for test case (createdRecordId6), this records values will be used as conflicting values when we update a record (createdRecordId4) to assert conflicts are detected correctly.
 !define anotherMultipleUniqueTextValue {anotherMultipleUniqueValue}
 !define anotherMultipleUniqueNumberValue {3}
 !define recordType {fitnesseRecordType}
@@ -308,8 +309,8 @@ Create record for tests (createdRecordId4)
 | ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseNumberVar, value: 3\] already exists in the system |
 *!
 
-
-!***> Case 5b: It must be possible to update the values of a unique fields. Scenario: Update createdRecordId4 (fitnesseTextVar and fitnesseNumberVar) with a new unique values.
+!***> Case 5b: It must be possible to update the values of a unique fields.
+#### Scenario: Update createdRecordId4 (fitnesseTextVar and fitnesseNumberVar) with a new unique values.
 !define anUpdatedMultiUniqueTextVar {someNewMultiUniqueTextVar}
 !define anUpdatedMultiUniqueNumberVar {2}
 !define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId4!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedMultiUniqueTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedMultiUniqueNumberVar}!-"}]}-!}
