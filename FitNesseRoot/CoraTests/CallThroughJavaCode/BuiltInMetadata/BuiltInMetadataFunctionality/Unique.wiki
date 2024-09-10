@@ -10,4 +10,4 @@ Test
 Text describing unique and its function
 
 ----
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Unique.Unique
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Unique.UniqueTests
