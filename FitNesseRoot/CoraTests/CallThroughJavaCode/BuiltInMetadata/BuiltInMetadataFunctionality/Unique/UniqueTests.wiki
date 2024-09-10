@@ -135,7 +135,8 @@ Create record for tests (createdRecordId1)
 | ensure | match found using text | $readRecordPayload | and regex | 1 error messages: \[A record matching the unique rule with \[key: fitnesseTextVar, value: someUniqueTextVar\] already exists in the system |
 *!
 
-!***> Case 2a: It must be possible to update the value of a unique field. Scenario: Update createdRecordId1 (fitnesseTextVar) with a new unique value.
+!***> Case 2a: It must be possible to update the value of a unique field.
+#### Scenario: Update createdRecordId1 (fitnesseTextVar) with a new unique value.
 !define anUpdatedUniqueTextVar {someNewUniqueTextVar}
 !define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId1!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedUniqueTextVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":""}]}-!}
 !define expectedUpdateResult {OK}
@@ -148,7 +149,8 @@ Create record for tests (createdRecordId1)
 | ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseTextVar","value":"someNewUniqueTextVar" |
 *!
 
-!***> Case 2b: It must not be possible to update a field to an already set unique value. Scenario: Change createdRecordId1 value to value used in createdRecordId3
+!***> Case 2b: It must not be possible to update a field to an already set unique value.
+#### Scenario: Change createdRecordId1 value to value used in createdRecordId3
 !***> Setup a new record to use for test case (createdRecordId3)
 !define anotherUniqueValue {anotherUniqueValue}
 !define recordType {fitnesseRecordType}
