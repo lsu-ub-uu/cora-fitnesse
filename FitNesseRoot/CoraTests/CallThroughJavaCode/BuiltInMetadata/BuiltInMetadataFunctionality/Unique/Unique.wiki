@@ -31,9 +31,11 @@ Static
   * '''Case 6a''': If validating creation of a record with unique values, its expected to pass
   * '''Case 6b''': If validating creation of a record with conflicting data in one (first) of the unique fields, its expected to fail
   * '''Case 6c''': If validating creation of a record with conflicting data in one (last) of the unique fields, its expected to fail
-  * '''Case 6c''': If validating creation of a record with both values being conflicting data of the unique fields, its expected to fail
-  * '''Case 6d''': If validating update of a record with unique values, its expected to pass
-  * '''Case 6e''': If validating update of a record with unique values already used by another record, its expected to fail
+  * '''Case 6d''': If validating creation of a record with both values being conflicting data of the unique fields, its expected to fail
+  * '''Case 6e''': If validating update of a record with unique values, its expected to pass
+  * '''Case 6f''': If validating update of a record with (the first) of the unique values to a duplicate already used by another record, its expected to fail
+  * '''Case 6g''': If validating update of a record with (the second) of the unique values to a duplicate already used by another record, its expected to fail
+  * '''Case 6h''': If validating update of a record with both of the unique values to a duplicate already used by another record, its expected to fail
 !5 Scenario 3 tests (unique field with combines)
  * '''Create'''
   * '''Case 7a''': It must not be possible to create a record with conflicting data for all fields simultaneously (U, A, B)
@@ -49,11 +51,13 @@ Static
   * '''Case 8e''': It must be possible to update a record with a unique value for U and A and a conflicting value for B
   * '''Case 8f''': It must be possible to update a record with a unique value for U and B and a conflicting value for A
   * '''Case 8g''': It must be possible to update all values (U, A, B) of the unique values not used by another record
-#### * '''Validate'''
-##### * '''Case 9a''': If validating creation of a record with unique values, its expected to pass
-##### * '''Case 9b''': If validating creation of a record with a an already used unique combine values, its expected to fail
-##### * '''Case 9c''': If validating update of a record with unique values, its expected to pass
-##### * '''Case 9d''': If validating update of a record with values already used by another record, its expected to fail
+ * '''Validate'''
+  * '''Case 9a''': If validating creation of a record with all fields being unique (U, A, B), its expected to pass
+  * '''Case 9b''': If validating creation of a record with all fields being in conflict (U, A, B), its expected to fail
+  * '''Case 9c''': If validating creation a record with one of the combines as different (A), its expected to pass
+  * '''Case 9d''': If validating creation a record with one of the combines as different (B), its expected to pass
+  * '''Case 9e''': If validating creation a record with both one of the combines as different (A, B), its expected to pass
+  * '''Case 9f''': If validating creation a record without the unique field but conflicting combines (A, B), its expected to pass
 
 !***> Setup metadata needed for tests (create storageTerms, add key filters)
 !***> Create CollectStorageTerms (fitnesseTextVarStorageTerm, fitnesseNumberVarStorageTerm, fitnesseOnlyOneMetadataTextVarStorageTerm)
@@ -370,7 +374,9 @@ Create record for tests (createdRecordId4)
 | ensure | match found using text | $readRecordPayload | and regex | A record matching the unique rule with \[key: fitnesseNumberVar, value: 0\] already exists in the system |
 *!
 
-#### The validation tests will use the values of a record (createdRecordId6) as the conflicting / occupied values.
+#### The validation tests will use the values of a record (createdRecordId6) as the conflicting / occupied values when trying to validate creation and update of another record (createdRecordId4)
+###!define aMultipleUniqueA {aMultipleUniqueAValue}
+###!define aMultipleUniqueB {0}
 !***> Case 6a: If validating creation of a record with a multiple unique values, its expected to pass
 !define aUniqueTextValueForValidationWMultipleUniques {aUniqueValueForValidationCreation}
 !define aUniqueNumberValueForValidationWMultipleUniques {4}
@@ -382,7 +388,22 @@ Create record for tests (createdRecordId4)
 *!
 
 !***> Case 6b: If validating creation of a record with conflicting data in one (first) of the unique fields, its expected to fail
-# Try to validate a creation using the unique value from case 5b
+!define createValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aMultipleUniqueA}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueNumberValueForValidationWMultipleUniques}!-"},{"name":"fitnesseOnlyOneTextVar","value":"itsValidationTime"}]}}-!}
+
+!| MetadataValidationFixture |
+| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+| $adminAuthToken | workOrder | ${createValidationWorkOrder} | | false | OK |
+*!
+
+!***> Case 6c: If validating creation of a record with conflicting data in one (last) of the unique fields, its expected to fail
+!define createValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueTextValueForValidationWMultipleUniques}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aMultipleUniqueB}!-"},{"name":"fitnesseOnlyOneTextVar","value":"itsValidationTime"}]}}-!}
+
+!| MetadataValidationFixture |
+| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+| $adminAuthToken | workOrder | ${createValidationWorkOrder} | | false | OK |
+*!
+
+!***> Case 6d: If validating creation of a record with both values being conflicting data of the unique fields, its expected to fail
 !define createValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aMultipleUniqueA}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aMultipleUniqueB}!-"},{"name":"fitnesseOnlyOneTextVar","value":"itsValidationTime"}]}}-!}
 
 !| MetadataValidationFixture |
@@ -390,10 +411,9 @@ Create record for tests (createdRecordId4)
 | $adminAuthToken | workOrder | ${createValidationWorkOrder} | | false | OK |
 *!
 
-!***> Case 6c: If validating an update of a record with a unique values, its expected to pass
-# Check update for createdRecordId4
+!***> Case 6e: If validating an update of a record with a unique values, its expected to pass
 !define aUniqueTextValueForUpdateValidation {aUniqueTextValueForValidationMultipleUniquesUpdate}
-!define aUniqueNumberValueForUpdateValidation {0}
+!define aUniqueNumberValueForUpdateValidation {4}
 !define updateValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"existing"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId4!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${aUniqueTextValueForUpdateValidation}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${aUniqueNumberValueForUpdateValidation}!-"}]}}-!}
 
 !| MetadataValidationFixture |
@@ -401,8 +421,23 @@ Create record for tests (createdRecordId4)
 | $adminAuthToken | workOrder | ${updateValidationWorkOrder} | | true | OK |
 *!
 
-!***> Case 6d: If validating update of a record with unique values already used by another record, its expected to fail
-# Check update for createdRecordId4 to a value used in record from case 5b
+!***> Case 6f: If validating update of a record with (the first) of the unique values to a duplicate already used by another record, its expected to fail
+!define updateValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"existing"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId4!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${aMultipleUniqueA}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${aUniqueNumberValueForUpdateValidation}!-"}]}}-!}
+
+!| MetadataValidationFixture |
+| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+| $adminAuthToken | workOrder | ${updateValidationWorkOrder} | | false | OK |
+*!
+
+!***> Case 6g: If validating update of a record with (the second) of the unique values to a duplicate already used by another record, its expected to fail
+!define updateValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"existing"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId4!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${aUniqueTextValueForUpdateValidation}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${aMultipleUniqueB}!-"}]}}-!}
+
+!| MetadataValidationFixture |
+| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+| $adminAuthToken | workOrder | ${updateValidationWorkOrder} | | false | OK |
+*!
+
+!***> Case 6h: If validating update of a record with both of the unique values to a duplicate already used by another record, its expected to fail
 !define updateValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"existing"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId4!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${aMultipleUniqueA}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${aMultipleUniqueB}!-"}]}}-!}
 
 !| MetadataValidationFixture |
@@ -637,59 +672,64 @@ Create record for tests (createdRecordId9)
 | ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseOnlyOneTextVar","value":"anUpdateCombineBValue" |
 *!
 
+#### These validation tests will use values from record created in test 8a (createdRecordId14) to act as conflicting values
+### !define UniqueCombineU {UniqueCombineUValue}
+### !define UniqueCombineA {6}
+### !define UniqueCombineB {UniqueCombineBValue}
+!***> Case 9a: If validating creation of a record with all fields being unique (U, A, B), its expected to pass
+!define aUniqueValueForUniqueWithCombineU {aUniqueValueForUniqueWithCombineU}
+!define aUniqueValueForCombineWithUniqueA {5}
+!define aUniqueValueForCombineWithUniqueB {aUniqueValueForCombineWithUniqueB}
+!define createValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueValueForUniqueWithCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueValueForCombineWithUniqueA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${aUniqueValueForCombineWithUniqueB}!-"}]}}-!}
+
+!| MetadataValidationFixture |
+| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+| $adminAuthToken | workOrder | ${createValidationWorkOrder} | | true | OK |
 *!
 
+!***> Case 9b: If validating creation of a record with all fields being in conflict (U, A, B), its expected to fail
+!define createValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${UniqueCombineB}!-"}]}}-!}
 
+!| MetadataValidationFixture |
+| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+| $adminAuthToken | workOrder | ${createValidationWorkOrder} | | false | OK |
+*!
 
+!***> Case 9c: If validating creation a record with one of the combines as different (A), its expected to pass
+!define aUniqueValueForCombineWithUniqueA {5}
+!define createValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueValueForCombineWithUniqueA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${UniqueCombineB}!-"}]}}-!}
 
+!| MetadataValidationFixture |
+| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+| $adminAuthToken | workOrder | ${createValidationWorkOrder} | | true | OK |
+*!
 
+!***> Case 9d: If validating creation a record with one of the combines as different (B), its expected to pass
+!define aUniqueValueForCombineWithUniqueB {aUniqueValueForCombineWithUniqueB}
+!define createValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${aUniqueValueForCombineWithUniqueB}!-"}]}}-!}
 
+!| MetadataValidationFixture |
+| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+| $adminAuthToken | workOrder | ${createValidationWorkOrder} | | true | OK |
+*!
 
+!***> Case 9e: If validating creation a record with both one of the combines as different (A, B), its expected to pass
+!define aUniqueValueForCombineWithUniqueA {5}
+!define aUniqueValueForCombineWithUniqueB {aUniqueValueForCombineWithUniqueB}
+!define createValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueValueForCombineWithUniqueA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${aUniqueValueForCombineWithUniqueB}!-"}]}}-!}
 
+!| MetadataValidationFixture |
+| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+| $adminAuthToken | workOrder | ${createValidationWorkOrder} | | true | OK |
+*!
 
+!***> Case 9f: If validating creation a record without the unique field but conflicting combines (A, B), its expected to pass
+!define createValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${UniqueCombineB}!-"}]}}-!}
 
-
-
-
-
-####!***> Case 6a: If validating creation of a record with a multiple unique values, its expected to pass
-####!define aUniqueTextValueForValidationWMultipleUniques {aUniqueValueForValidationCreation}
-####!define aUniqueNumberValueForValidationWMultipleUniques {4}
-####!define createValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueTextValueForValidationWMultipleUniques}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueNumberValueForValidationWMultipleUniques}!-"},{"name":"fitnesseOnlyOneTextVar","value":"itsValidationTime"}]}}-!}
-####
-####!| MetadataValidationFixture |
-####| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
-####| $adminAuthToken | workOrder | ${createValidationWorkOrder} | | true | OK |
-####*!
-####
-####!***> Case 6b: If validating creation of a record with already used unique values, its expected to fail
-##### Try to validate a creation using the unique value from case 5b
-####!define createValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aMultipleUniqueA}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aMultipleUniqueB}!-"},{"name":"fitnesseOnlyOneTextVar","value":"itsValidationTime"}]}}-!}
-####
-####!| MetadataValidationFixture |
-####| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
-####| $adminAuthToken | workOrder | ${createValidationWorkOrder} | | false | OK |
-####*!
-####
-####!***> Case 6c: If validating an update of a record with a unique values, its expected to pass
-##### Check update for createdRecordId4
-####!define aUniqueTextValueForUpdateValidation {aUniqueTextValueForValidationMultipleUniquesUpdate}
-####!define aUniqueNumberValueForUpdateValidation {0}
-####!define updateValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"existing"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId4!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${aUniqueTextValueForUpdateValidation}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${aUniqueNumberValueForUpdateValidation}!-"}]}}-!}
-####
-####!| MetadataValidationFixture |
-####| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
-####| $adminAuthToken | workOrder | ${updateValidationWorkOrder} | | true | OK |
-####*!
-####
-####!***> Case 6d: If validating update of a record with unique values already used by another record, its expected to fail
-##### Check update for createdRecordId4 to a value used in record from case 5b
-####!define updateValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"existing"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId4!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${aMultipleUniqueA}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${aMultipleUniqueB}!-"}]}}-!}
-####
-####!| MetadataValidationFixture |
-####| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
-####| $adminAuthToken | workOrder | ${updateValidationWorkOrder} | | false | OK |
-####*!
+!| MetadataValidationFixture |
+| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+| $adminAuthToken | workOrder | ${createValidationWorkOrder} | | true | OK |
+*!
 
 !***> Remove created records
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
@@ -704,8 +744,8 @@ Create record for tests (createdRecordId9)
 | DELETE | /record/fitnesseRecordType/$createdRecordId14 | 200 | | |
 | DELETE | /record/fitnesseRecordType/$createdRecordId15 | 200 | | |
 *!
+*!
 --------
-
 !***> Clean up data from tests
 !***> Remove unique (fitnesseTextVarStorageTerm) from fitnesseRecordType
 !define fitnesseRecordTypeWithoutfitnesseTextVarStorageTerm {!-{"name":"recordType","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseRecordType"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"recordType"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2024-09-03T12:06:55.934541Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T12:06:55.934541Z"}]},{"name":"updated","repeatId":"1","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2024-09-03T12:16:20.446366Z"}]}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseGroup"}]},{"name":"presentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"menuPresentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"listPresentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"userSuppliedId","value":"false"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"autocompletePresentationView","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"groupOfRecordType","repeatId":"0","value":"metadata"},{"name":"public","value":"true"},{"name":"storeInArchive","value":"true"}]}-!}
