@@ -1,8 +1,8 @@
-To set up one or more fields to be ''unique'' there are a few steps to take. In this example we show how to set up a single field as a unique. 
-If you want to configure multiple uniques or unique with combines the steps are repeated for each field you want to configure. There is however a small difference in the last step if you wish to set up a combine, but it is covered below in its own example.
+To set up one or more fields to be ''unique'' there are a few steps to take. If you want to configure multiple uniques or unique with combines the steps are repeated for each field you want to configure. 
+There is however a small difference in the last step if you wish to set up a combine, but it is covered below in its own example.
 
-The first thing you want to do is to create collectStorageTerm(s) for the fields you want to be unique.
-!***> Example of a collectStorageTerm
+The first thing you want to do is to create collectStorageTerm for the field you want to be unique.
+!***> collectStorageTerm
 {{{
 {
     "name": "collectStorageTerm",
@@ -58,8 +58,8 @@ The first thing you want to do is to create collectStorageTerm(s) for the fields
 }
 }}}
 *!
-This storageTerm then needs to be added to a field you wish to be set up as unique
-!***> Example of a storageTerm added to a child reference
+This storageTerm then needs to be added to a field you wish to be set up as unique.
+!***> storageTerm added to a child reference
 {{{
 ...
     {
@@ -109,7 +109,7 @@ This storageTerm then needs to be added to a field you wish to be set up as uniq
 }}}
 *!
 Finally the storageTerm needs to be added to the postType it's intended to be used on.
-!***> Example of storageTerm added as a unique
+!***> storageTerm added as a unique
 {{{
 {
     "name": "recordType",
@@ -148,8 +148,8 @@ Finally the storageTerm needs to be added to the postType it's intended to be us
 }
 }}}
 *!
-'''Note''': This last step is slightly different if you want to add this as a combine for a unique where you would need to add it as a combineTerm instead rather than a uniqueTerm to the field where you already added the uniqueTerm.
-!***> Example of adding a combineTerm to the field where you have added a uniqueTerm
+'''Note for combine''': This last step is slightly different if you want to add this as a combine for a unique. You need to add it as a combineTerm to a field where you already added a uniqueTerm.
+!***> adding a combineTerm to the field where you have added a uniqueTerm
 {{{
 {
     "name": "recordType",
