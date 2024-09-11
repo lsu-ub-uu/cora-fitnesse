@@ -1,0 +1,204 @@
+To set up one or more fields to be ''unique'' there are a few steps to take. In this example we show how to set up a single field as a unique. 
+If you want to configure multiple uniques or unique with combines the steps are repeated for each field you want to configure. There is however a small difference in the last step if you wish to set up a combine, but it is covered below in its own example.
+
+The first thing you want to do is to create collectStorageTerm(s) for the fields you want to be unique.
+!***> Example of a collectStorageTerm
+{{{
+{
+    "name": "collectStorageTerm",
+    "children": [
+        {
+            "name": "recordInfo",
+            "children": [
+                {
+                    "name": "id",
+                    "value": "exampleTextVarStorageTerm"
+                },
+                {
+                    "name": "validationType",
+                    "children": [
+                        {
+                            "name": "linkedRecordType",
+                            "value": "validationType"
+                        },
+                        {
+                            "name": "linkedRecordId",
+                            "value": "collectStorageTerm"
+                        }
+                    ]
+                },
+                {
+                    "name": "dataDivider",
+                    "children": [
+                        {
+                            "name": "linkedRecordType",
+                            "value": "system"
+                        },
+                        {
+                            "name": "linkedRecordId",
+                            "value": "cora"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "extraData",
+            "children": [
+                {
+                    "name": "storageKey",
+                    "value": "exampleTextVar"
+                }
+            ]
+        }
+    ],
+    "attributes": {
+        "type": "storage"
+    }
+}
+}}}
+*!
+This storageTerm then needs to be added to a field you wish to be set up as unique
+!***> Example of a storageTerm added to a child reference
+{{{
+...
+    {
+        "name": "childReference",
+        "repeatId": "1",
+        "children": [
+            {
+                "name": "repeatMin",
+                "value": "0"
+            },
+            {
+                "name": "repeatMax",
+                "value": "20"
+            },
+            {
+                "name": "ref",
+                "children": [
+                    {
+                        "name": "linkedRecordType",
+                        "value": "metadata"
+                    },
+                    {
+                        "name": "linkedRecordId",
+                        "value": "exampleMetadataTextVar"
+                    }
+                ]
+            },
+            {
+                "name": "childRefCollectTerm",
+                "children": [
+                    {
+                        "name": "linkedRecordType",
+                        "value": "collectTerm"
+                    },
+                    {
+                        "name": "linkedRecordId",
+                        "value": "exampleTextVarStorageTerm"
+                    }
+                ],
+                "attributes": {
+                    "type": "storage"
+                }
+            }
+        ]
+    }
+...
+}}}
+*!
+Finally the storageTerm needs to be added to the postType it's intended to be used on.
+!***> Example of storageTerm added as a unique
+{{{
+{
+    "name": "recordType",
+    "children": [
+        {
+            "name": "recordInfo",
+            "children": [
+                {
+                    "name": "id",
+                    "value": "exampleRecordType"
+                }
+                ...
+            ]
+        },
+        ...
+        {
+            "name": "unique",
+            "repeatId": "1",
+            "children": [
+                {
+                    "name": "uniqueTerm",
+                    "children": [
+                        {
+                            "name": "linkedRecordType",
+                            "value": "collectTerm"
+                        },
+                        {
+                            "name": "linkedRecordId",
+                            "value": "exampleTextVarStorageTerm"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+}}}
+*!
+'''Note''': This last step is slightly different if you want to add this as a combine for a unique where you would need to add it as a combineTerm instead rather than a uniqueTerm to the field where you already added the uniqueTerm.
+!***> Example of adding a combineTerm to the field where you have added a uniqueTerm
+{{{
+{
+    "name": "recordType",
+    "children": [
+        {
+            "name": "recordInfo",
+            "children": [
+                {
+                    "name": "id",
+                    "value": "exampleRecordType"
+                }
+                ...
+            ]
+        },
+        ...
+        {
+            "name": "unique",
+            "repeatId": "1",
+            "children": [
+                {
+                    "name": "uniqueTerm",
+                    "children": [
+                        {
+                            "name": "linkedRecordType",
+                            "value": "collectTerm"
+                        },
+                        {
+                            "name": "linkedRecordId",
+                            "value": "exampleTextVarStorageTerm"
+                        }
+                    ]
+                },
+                {
+                    "name": "combineTerm",
+                    "repeatId": "0",
+                    "children": [
+                        {
+                            "name": "linkedRecordType",
+                            "value": "collectTerm"
+                        },
+                        {
+                            "name": "linkedRecordId",
+                            "value": "exampleNumberVarStorageTerm"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+}}}
+*!
