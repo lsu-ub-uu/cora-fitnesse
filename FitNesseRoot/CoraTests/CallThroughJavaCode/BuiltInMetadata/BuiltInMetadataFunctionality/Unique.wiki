@@ -13,9 +13,8 @@ Unique is a metadata functionality that makes it possible to configure one or mo
  * '''multiple unique fields''' (independent of each other)
   * ''When setting multiple fields as unique it would be considered a conflict if any combination of these were duplicate(s). Any action such as create, update would be denied with a reference to the conflicting data''
  * '''a unique field with combines'''
-  * ''A unique field with supporting fields (combineTerms) work together to create a combination that would be considered unique. This would create a setup where the fields would only be considered as conflicting if the value of the unique AND its supporting fields (combineTerms) are duplicated at the same time. Please note that the combines are only relevant if the unique field also contains data. ''
-Example chart of unique with combineTerms:
-!img files/Images/uniqueCombineChart.png 
+  * ''A unique field with supporting fields (combineTerms) work together to create a combination that would be considered unique. This would create a setup where the fields would only be considered as conflicting if the value of the unique AND its supporting fields (combineTerms) are duplicates at the same time. Please note that the combines are only relevant if the unique field also contains data. See chart below for examples:''
+  * !img files/Images/uniqueCombineChart.png 
 
 !***> How to set up unique(s)
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Unique.SettingUpUnique
