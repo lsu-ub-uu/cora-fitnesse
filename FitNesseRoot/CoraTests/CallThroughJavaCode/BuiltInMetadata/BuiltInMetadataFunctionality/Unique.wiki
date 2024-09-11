@@ -7,7 +7,8 @@ Test
   * '''uniqueTerm''' (recordLink, 1-1, noConstraint)
   * '''combineTerm''' (recordLink, 0-X, noConstraint)
  
-Unique is a metadata functionality that makes it possible to configure one or more fields within a post type to only accept unique values. This can be configured in a number of different ways as described below:
+Unique is a metadata functionality that makes it possible to configure one or more fields within a post type to only accept unique values. Actions such as create and update where there are any conflicting data in these fields
+would be denied with a response about the conflicting fields. This feature can be configured in a number of different ways as described below:
  * '''a single unique field'''
   * ''This would mean that only the field configured as unique would require unique values and all the others would accept duplicates.''
  * '''multiple unique fields''' (independent of each other)
