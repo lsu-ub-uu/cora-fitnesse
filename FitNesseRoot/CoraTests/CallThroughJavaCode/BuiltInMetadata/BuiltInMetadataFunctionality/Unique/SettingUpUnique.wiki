@@ -1,8 +1,10 @@
+!4 Setting up unique fields
 To set up one or more fields to be ''unique'' there are a few steps to take. If you want to configure multiple uniques or unique with combines the steps are repeated for each field you want to configure. 
 There is however a small difference in the last step if you wish to set up a combine, but it is covered below in its own example.
 
 The first thing you want to do is to create collectStorageTerm for the field you want to be unique.
-!***> collectStorageTerm
+!style_code(!style_pass[POST] /record/collectTerm)
+!***> create a collectStorageTerm
 {{{
 {
     "name": "collectStorageTerm",
@@ -58,57 +60,83 @@ The first thing you want to do is to create collectStorageTerm for the field you
 }
 }}}
 *!
-This storageTerm then needs to be added to a field you wish to be set up as unique.
+The storageTerm then needs to be added to a field you wish to be set up as unique by adding it to the correct child reference.
+!style_code(!style_pass[POST] /record/metadata/{exampleGroup}) 
 !***> storageTerm added to a child reference
 {{{
-...
-    {
-        "name": "childReference",
-        "repeatId": "1",
-        "children": [
-            {
-                "name": "repeatMin",
-                "value": "0"
-            },
-            {
-                "name": "repeatMax",
-                "value": "20"
-            },
-            {
-                "name": "ref",
-                "children": [
-                    {
-                        "name": "linkedRecordType",
-                        "value": "metadata"
-                    },
-                    {
-                        "name": "linkedRecordId",
-                        "value": "exampleMetadataTextVar"
-                    }
-                ]
-            },
-            {
-                "name": "childRefCollectTerm",
-                "children": [
-                    {
-                        "name": "linkedRecordType",
-                        "value": "collectTerm"
-                    },
-                    {
-                        "name": "linkedRecordId",
-                        "value": "exampleTextVarStorageTerm"
-                    }
-                ],
-                "attributes": {
-                    "type": "storage"
+{
+    "name": "metadata",
+    "children": [
+        {
+            "name": "recordInfo",
+            "children": [
+                {
+                    "name": "id",
+                    "value": "exampleGroup"
                 }
-            }
-        ]
+                ...
+            ]
+        },
+        ...
+        {
+            "name": "childReferences",
+            "children": [
+                ...
+                {
+                    "name": "childReference",
+                    "repeatId": "1",
+                    "children": [
+                        {
+                            "name": "repeatMin",
+                            "value": "0"
+                        },
+                        {
+                            "name": "repeatMax",
+                            "value": "20"
+                        },
+                        {
+                            "name": "ref",
+                            "children": [
+                                {
+                                    "name": "linkedRecordType",
+                                    "value": "metadata"
+                                },
+                                {
+                                    "name": "linkedRecordId",
+                                    "value": "exampleMetadataTextVar"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "childRefCollectTerm",
+                            "children": [
+                                {
+                                    "name": "linkedRecordType",
+                                    "value": "collectTerm"
+                                },
+                                {
+                                    "name": "linkedRecordId",
+                                    "value": "exampleTextVarStorageTerm"
+                                }
+                            ],
+                            "attributes": {
+                                "type": "storage"
+                            }
+                        }
+                    ]
+                }
+                ...
+            ]
+        }
+    ],
+    "attributes": {
+        "type": "group"
     }
-...
+}
 }}}
 *!
 Finally the storageTerm needs to be added to the postType it's intended to be used on.
+!style_code(!style_pass[POST] /record/recordType/{exampleRecordType})
 !***> storageTerm added as a unique
 {{{
 {
@@ -148,7 +176,8 @@ Finally the storageTerm needs to be added to the postType it's intended to be us
 }
 }}}
 *!
-'''Note for combine''': This last step is slightly different if you want to add this as a combine for a unique. You need to add it as a combineTerm to a field where you already added a uniqueTerm.
+!style_fit_label(!style_green[Note for combine:]) This last step is slightly different if you want to add this as a combine for a unique. You need to add it as a combineTerm to a field where you already added a uniqueTerm.
+!style_code(!style_pass[POST] /record/recordType/{exampleRecordType})
 !***> adding a combineTerm to the field where you have added a uniqueTerm
 {{{
 {

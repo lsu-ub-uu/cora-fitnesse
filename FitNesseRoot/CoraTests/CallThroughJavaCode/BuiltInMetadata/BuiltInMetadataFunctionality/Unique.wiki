@@ -2,25 +2,36 @@
 Test
 ---
 !1 Unique
+!3 What is it?
+Unique is a metadata functionality that makes it possible to configure one or more fields within a post type to only accept unique values. Actions such as create, update and validate where there are any conflicting data in these fields
+would be denied with a response about the conflicting fields. This feature can be configured in a number of different ways as described below:
 
+ * '''a single unique field'''
+  * ''This would mean that only the field configured with a unique would require unique values and all the others would accept already existing values.''
+ * '''multiple unique fields'''
+  * ''When setting multiple fields as uniques it would be considered a conflict if any combination of these already exists''
+ * '''a unique field with combines'''
+  * ''A unique field with supporting fields (combineTerms) that work together to create '''a unique combination of values'''. Please note that this means that the combines are only relevant if the unique field value also exist. See combination chart below for examples:''
+  * !img files/Images/uniqueCombinationChart.png
+
+!3 How does it work?
+!4 Metadata definition of unique
  * '''unique''' (group, 0-X, noConstraint)
   * '''uniqueTerm''' (recordLink, 1-1, noConstraint)
   * '''combineTerm''' (recordLink, 0-X, noConstraint)
- 
-Unique is a metadata functionality that makes it possible to configure one or more fields within a post type to only accept unique values. Actions such as create and update where there are any conflicting data in these fields
-would be denied with a response about the conflicting fields. This feature can be configured in a number of different ways as described below:
- * '''a single unique field'''
-  * ''This would mean that only the field configured as unique would require unique values and all the others would accept duplicates.''
- * '''multiple unique fields''' (independent of each other)
-  * ''When setting multiple fields as unique it would be considered a conflict if any combination of these were duplicate(s). Any action such as create, update would be denied with a reference to the conflicting data''
- * '''a unique field with combines'''
-  * ''A unique field with supporting fields (combineTerms) work together to create a combination that would be considered unique. This would create a setup where the fields would only be considered as conflicting if the value of the unique AND its supporting fields (combineTerms) are duplicates at the same time. Please note that the combines are only relevant if the unique field also contains data. See chart below for examples:''
-  * !img files/Images/uniqueCombineChart.png 
 
-!***> How to set up unique(s)
+ * '''Unique''': A group is a collection consisting of one uniqueTerm and possibly additional combineTerm(s) that defines the rule(s) for a unique rule. This group needs to be added to a recordType in order to utilize this functionality.
+ * '''UniqueTerm''': A reference to a collectStorageTerm that will act like a filter when detecting conflicts for the value of a field. This is the base rule for a unique filter.
+ * '''CombineTerm''': This is (just like uniqueTerm) also a reference to a colleceStorageTerm and also works as a filter. These can be used as additional rule(s) in combination with a uniqueTerm to create a combination of values to consider as unique.
+
+You can define unique fields within a recordType by adding a unique group to it. This unique group requires a unique term, which specifies the field that must be unique.
+Alternatively, you can further refine the unique term by linking it to additional fields. For example, you could define a userId as unique within a user recordType and use combineTerms to include restrictions based on domain.
+The base of this functionality relies on the concept of collectStorageTerms that act like a filter to detect any conflicts for the value of a field. These storage terms are what we reference in both uniqueTerms and combineTerms.
+!style_meta[Important:] StorageTerms linked in both uniqueTerm and combineTerm must be specified in the recordType definition and in the validationType definition for "new" and "update".
+
+
+!***> How to set up unique and its terms:
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Unique.SettingUpUnique
 *!
 ----
-
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Unique.UniqueTests
-
