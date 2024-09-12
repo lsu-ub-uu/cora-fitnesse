@@ -3,7 +3,7 @@ Test
 ---
 !1 Unique
 !3 What is it?
-Unique is a metadata functionality that makes it possible to configure one or more fields within a post type to only accept unique values. Actions such as create, update and validate where there are any conflicting data in these fields
+Unique is a metadata functionality that makes it possible to configure one or more fields within a record type to only accept unique values. Actions such as create, update and validate where there are any conflicting data in these fields
 would be denied with a response about the conflicting fields. This feature can be configured in a number of different ways as described below:
 
  * '''A single unique field'''
