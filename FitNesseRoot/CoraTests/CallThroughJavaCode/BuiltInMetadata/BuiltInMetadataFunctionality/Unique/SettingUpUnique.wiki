@@ -135,7 +135,7 @@ The storageTerm then needs to be added to a field you wish to be set up as uniqu
 }
 }}}
 *!
-Finally the storageTerm needs to be added to the postType it's intended to be used on.
+Finally the storageTerm needs to be added to the recordType it's intended to be used on.
 !style_code(!style_pass[POST] /record/recordType/{exampleRecordType})
 !***> storageTerm added as a unique
 {{{
