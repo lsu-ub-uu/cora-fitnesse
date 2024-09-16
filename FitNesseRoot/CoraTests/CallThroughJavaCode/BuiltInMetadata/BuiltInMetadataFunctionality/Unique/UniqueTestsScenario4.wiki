@@ -1,0 +1,353 @@
+!***> Scenario 4 tests (multiple unique fields with combine, U1 = Unique 1, A1 = Combine for U1, U2 = Unique 2, A2 = Combine for U2)
+!***> Setup fitnesseRecordType for multiple unique with combines
+Setup data to make fitnesseTextVar unique and fitnesseNumberVar & fitnesseOnlyTextVar as combines
+!define fitnesseRecordTypeWithMultiUniqueWCombines {!-{"name":"recordType","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseRecordType"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"recordType"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2024-09-03T12:06:55.934541Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T12:06:55.934541Z"}]}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseGroup"}]},{"name":"presentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"menuPresentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"listPresentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"userSuppliedId","value":"false"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"autocompletePresentationView","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"groupOfRecordType","repeatId":"0","value":"metadata"},{"name":"public","value":"true"},{"name":"storeInArchive","value":"true"},{"name":"unique","repeatId":"1","children":[{"name":"uniqueTerm","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseTextVarStorageTerm"}]},{"name":"combineTerm","repeatId":"0","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseAnotherTextVarStorageTerm"}]}]},{"name":"unique","repeatId":"2","children":[{"name":"uniqueTerm","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseNumberVarStorageTerm"}]},{"name":"combineTerm","repeatId":"1","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseOnlyOneMetadataTextVarStorageTerm"}]}]}]}-!}
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
+| setHeader | Accept:application/vnd.uub.record+json!-
+-!Content-Type:application/vnd.uub.record+json!-
+-!authToken:$adminAuthToken |
+| setBody | ${fitnesseRecordTypeWithMultiUniqueWCombines} |
+| POST | /record/recordType/fitnesseRecordType | 200 | | |
+| GET | /record/recordType/fitnesseRecordType | 200 | | |
+| let | uniqueTextVarStorageTermShouldExist | js | var regExp = new RegExp('"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseTextVarStorageTerm"') ; regExp.test(response.body) | true |
+| let | uniqueTextVarStorageTermShouldExist | js | var regExp = new RegExp('"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseAnotherTextVarStorageTerm"') ; regExp.test(response.body) | true |
+| let | uniqueNumberVarStorageTermShouldExist | js | var regExp = new RegExp('"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseNumberVarStorageTerm"') ; regExp.test(response.body) | true |
+| let | uniqueNumberVarStorageTermShouldExist | js | var regExp = new RegExp('"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseOnlyOneMetadataTextVarStorageTerm"') ; regExp.test(response.body) | true |
+*!
+----
+!***> Case 10a: It must be possible to create a record with unique values as data in fields for unique and the combines
+#### This record (createdRecordId16) will be used throughout this scenario as the record being updated to check for conflicts
+!define aUniqueWCombineTextVar {aUniqueWCombineTextFor}
+!define aCombineAnotherTextVar {aCombineAnotherTextVar}
+!define aUniqueNumberVar {1}
+!define aCombineOnlyTextVar {aUniqueCombineOnlyText}
+!define recordType {fitnesseRecordType}
+!define createRecordWMultiUniqueCombineData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueWCombineTextVar}!-"},{"name":"fitnesseAnotherTextVar","value":"-!${aCombineAnotherTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueNumberVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${aCombineOnlyTextVar}!-"}]}-!}
+!define expectedCreateResult {CREATED}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | ${recordType} | ${createRecordWMultiUniqueCombineData} |  | ${expectedCreateResult} | $createdRecordId16= |
+*!
+
+!***> Case 10b: It must not be possible to create a record with conflicting data for all fields simultaneously (U1, A1, U2, A2)
+!define createRecordWConflict {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueWCombineTextVar}!-"},{"name":"fitnesseAnotherTextVar","value":"-!${aCombineAnotherTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueNumberVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${aCombineOnlyTextVar}!-"}]}-!}
+!define expectedUniqueConflict {CONFLICT}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | ${recordType} | ${createRecordWConflict} | $readRecordPayload= | ${expectedUniqueConflict} | $createdRecordId17= |
+
+#Ensure the fields is detected as conflicting
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $readRecordPayload | and regex | 2 error messages: \[A record matching the unique rule with \[key: fitnesseTextVar, value: aUniqueWCombineTextFor\], \[key: fitnesseAnotherTextVar, value: aCombineAnotherTextVar\] already exists in the system, A record matching the unique rule with \[key: fitnesseNumberVar, value: 1\], \[key: fitnesseOnlyOneMetadataTextVar, value: aUniqueCombineOnlyText\] already exists in the system |
+*!
+
+!***> Case 10c: It must be not possible to create a record with one of the combine pairs as conflicting (U1, A1)
+!define aUniqueWCombineTextVar {aUniqueWCombineTextFor}
+!define aCombineAnotherTextVar {aCombineAnotherTextVar}
+!define aUniqueNumberVar {2}
+!define aCombineOnlyTextVar {anUpdatedUniqueCombineOnlyText}
+!define createRecordWConflictingNumberVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueWCombineTextVar}!-"},{"name":"fitnesseAnotherTextVar","value":"-!${aCombineAnotherTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueNumberVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${aCombineOnlyTextVar}!-"}]}-!}
+!define expectedUniqueConflict {CONFLICT}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | ${recordType} | ${createRecordWConflictingNumberVar} | $readRecordPayload= | ${expectedUniqueConflict} | $createdRecordId17= |
+
+#Ensure the value was updated correctly
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $readRecordPayload | and regex | 1 error messages: \[A record matching the unique rule with \[key: fitnesseTextVar, value: aUniqueWCombineTextFor\], \[key: fitnesseAnotherTextVar, value: aCombineAnotherTextVar\] already exists in the system |
+*!
+
+!***> Case 10d: It must be not possible to create a record with one of the combine pairs as conflicting (U2, A2)
+!define aUniqueWCombineTextVar {anUpdatedUniqueWCombineTextFor}
+!define aCombineAnotherTextVar {aUpdatedCombineAnotherTextVar}
+!define aUniqueNumberVar {1}
+!define aCombineOnlyTextVar {aUniqueCombineOnlyText}
+!define createRecordWConflictingNumberVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueWCombineTextVar}!-"},{"name":"fitnesseAnotherTextVar","value":"-!${aCombineAnotherTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueNumberVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${aCombineOnlyTextVar}!-"}]}-!}
+!define expectedUniqueConflict {CONFLICT}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | ${recordType} | ${createRecordWConflictingNumberVar} | $readRecordPayload= | ${expectedUniqueConflict} | $createdRecordId18= |
+
+#Ensure the value was updated correctly
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $readRecordPayload | and regex | 1 error messages: \[A record matching the unique rule with \[key: fitnesseNumberVar, value: 1\], \[key: fitnesseOnlyOneMetadataTextVar, value: aUniqueCombineOnlyText\] already exists in the system |
+*!
+
+!***> Case 10e: It must be possible to create a record with both uniques (U1, U2) as unique values and the combines (A1, A2) as conflicting values
+!define aUniqueWCombineTextVar {updatedUniqueValue}
+!define aCombineAnotherTextVar {aCombineAnotherTextVar}
+!define aUniqueNumberVar {3}
+!define aCombineOnlyTextVar {aUniqueCombineOnlyText}
+!define createRecordWConflictingNumberVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueWCombineTextVar}!-"},{"name":"fitnesseAnotherTextVar","value":"-!${aCombineAnotherTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueNumberVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${aCombineOnlyTextVar}!-"}]}-!}
+!define expectedUniqueConflict {CREATED}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | ${recordType} | ${createRecordWConflictingNumberVar} | $readRecordPayload= | ${expectedUniqueConflict} | $createdRecordId19= |
+
+#Ensure the value was updated correctly
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseTextVar","value":"updatedUniqueValue" |
+| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseNumberVar","value":"3" |
+*!
+
+#
+#!***> Case 8a: It must not be possible to update values of the unique and its combines to values used by another record
+#!***> Setup a new record to use for update test cases (createdRecordId14) to check against conflicts when updating a record (createdRecordId9)
+##### These values (defines) will be used through out as references for conflicts
+#!define UniqueCombineU {UniqueCombineUValue}
+#!define UniqueCombineA {6}
+#!define UniqueCombineB {UniqueCombineBValue}
+#!define recordType {fitnesseRecordType}
+#!define expectedCreateResult {CREATED}
+#!define createAnotherRecordWUniqueData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${UniqueCombineB}!-"}]}-!}
+#!| ChildComparerFixture |
+#| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+#| $adminAuthToken | ${recordType} | ${createAnotherRecordWUniqueData} |  | ${expectedCreateResult} | $createdRecordId14= |
+#*!
+#
+###### Set update body of a record (createdRecordId9) to conflict with unique and combines used by another record (createdRecordId14)
+#!define updateFitnesseRecordWithConflictingUniqueAndCombines {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${UniqueCombineB}!-"}]}-!}
+#!define expectedUpdateResult {CONFLICT}
+#
+#!| ChildComparerFixture |
+#| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+#| $adminAuthToken | ${recordType} | $createdRecordId9 | ${updateFitnesseRecordWithConflictingUniqueAndCombines} | $readRecordPayload= | ${expectedUpdateResult} |
+#
+##### #### Ensure the correct conflicts are detected
+#!| script | ExtractSubstringUsingRegex |
+#| ensure | match found using text | $readRecordPayload | and regex | [A record matching the unique rule with \[key: fitnesseTextVar, value: UniqueCombineUValue\], \[key: fitnesseNumberVar, value: 6\], \[key: fitnesseOnlyOneMetadataTextVar, value: UniqueCombineBValue\] already exists in the system] |
+#*!
+#
+#!***> Case 8b: It must be possible to update a record with a unique value for U and conflicting values for A and B
+#!define anUpdatedUniqueCombineU {anUpdateCombineUValue}
+#
+#!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedUniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${UniqueCombineB}!-"}]}-!}
+#!define expectedUpdateResult {OK}
+#
+#!| ChildComparerFixture |
+#| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+#| $adminAuthToken | ${recordType} | $createdRecordId9 | ${updateFitnesseRecordWithNewUniqueTextVar} | $readRecordPayload= | ${expectedUpdateResult} |
+#
+#!| script | ExtractSubstringUsingRegex |
+#| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseTextVar","value":"anUpdateCombineUValue" |
+#*!
+#
+#!***> Case 8c: It must be possible to update a record with a unique value for A and conflicting values for U and B
+#!define anUpdatedUniqueCombineA {7}
+#
+#!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedUniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${UniqueCombineB}!-"}]}-!}
+#!define expectedUpdateResult {OK}
+#
+#!| ChildComparerFixture |
+#| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+#| $adminAuthToken | ${recordType} | $createdRecordId9 | ${updateFitnesseRecordWithNewUniqueTextVar} | $readRecordPayload= | ${expectedUpdateResult} |
+#
+#!| script | ExtractSubstringUsingRegex |
+#| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseNumberVar","value":"7" |
+#*!
+#
+#!***> Case 8d: It must be possible to update a record with a unique value for B and conflicting values for U and A
+#!define anUpdatedUniqueCombineB {anUpdateCombineBValue}
+#
+#!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${anUpdatedUniqueCombineB}!-"}]}-!}
+#!define expectedUpdateResult {OK}
+#
+#!| ChildComparerFixture |
+#| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+#| $adminAuthToken | ${recordType} | $createdRecordId9 | ${updateFitnesseRecordWithNewUniqueTextVar} | $readRecordPayload= | ${expectedUpdateResult} |
+#
+#!| script | ExtractSubstringUsingRegex |
+#| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseOnlyOneTextVar","value":"anUpdateCombineBValue" |
+#*!
+#
+#!***> Case 8e: It must be possible to update a record with a unique value for U and A and a conflicting value for B
+#!define anUpdatedUniqueCombineU {anUpdateCombineUValue}
+#!define anUpdatedUniqueCombineA {8}
+#
+#!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedUniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedUniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${UniqueCombineB}!-"}]}-!}
+#!define expectedUpdateResult {OK}
+#
+#!| ChildComparerFixture |
+#| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+#| $adminAuthToken | ${recordType} | $createdRecordId9 | ${updateFitnesseRecordWithNewUniqueTextVar} | $readRecordPayload= | ${expectedUpdateResult} |
+#
+#!| script | ExtractSubstringUsingRegex |
+#| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseTextVar","value":"anUpdateCombineUValue" |
+#| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseNumberVar","value":"8" |
+#*!
+#
+#!***> Case 8f: It must be possible to update a record with a unique value for U and B and a conflicting value for A
+#!define anUpdatedUniqueCombineU {anUpdateCombineUValue}
+#!define anUpdatedUniqueCombineB {anUpdateCombineBValue}
+#
+#!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedUniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${anUpdatedUniqueCombineB}!-"}]}-!}
+#!define expectedUpdateResult {OK}
+#
+#!| ChildComparerFixture |
+#| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+#| $adminAuthToken | ${recordType} | $createdRecordId9 | ${updateFitnesseRecordWithNewUniqueTextVar} | $readRecordPayload= | ${expectedUpdateResult} |
+#
+#!| script | ExtractSubstringUsingRegex |
+#| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseTextVar","value":"anUpdateCombineUValue" |
+#| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseOnlyOneTextVar","value":"anUpdateCombineBValue" |
+#*!
+#
+#!***> Case 8g: It must be possible to update all values (U, A, B) of the unique values not used by another record
+#!define anUpdatedUniqueCombineU {anUpdateCombineUValue}
+#!define anUpdatedUniqueCombineA {9}
+#!define anUpdatedUniqueCombineB {anUpdateCombineBValue}
+#
+#!define updateFitnesseRecordWithNewUniqueTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedUniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedUniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${anUpdatedUniqueCombineB}!-"}]}-!}
+#!define expectedUpdateResult {OK}
+#
+#!| ChildComparerFixture |
+#| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+#| $adminAuthToken | ${recordType} | $createdRecordId9 | ${updateFitnesseRecordWithNewUniqueTextVar} | $readRecordPayload= | ${expectedUpdateResult} |
+#
+#!| script | ExtractSubstringUsingRegex |
+#| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseTextVar","value":"anUpdateCombineUValue" |
+#| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseNumberVar","value":"9" |
+#| ensure | match found using text | $readRecordPayload | and regex | "name":"fitnesseOnlyOneTextVar","value":"anUpdateCombineBValue" |
+#*!
+#
+##### These validation tests will use values from record created in test 8a (createdRecordId14) to act as conflicting values for creation and update of a record (createdRecordId9)
+#### !define UniqueCombineU {UniqueCombineUValue}
+#### !define UniqueCombineA {6}
+#### !define UniqueCombineB {UniqueCombineBValue}
+#!***> Case 9a: If validating creation of a record with all fields being unique (U, A, B), its expected to pass
+#!define aUniqueValueForUniqueWithCombineU {aUniqueValueForUniqueWithCombineU}
+#!define aUniqueValueForCombineWithUniqueA {5}
+#!define aUniqueValueForCombineWithUniqueB {aUniqueValueForCombineWithUniqueB}
+#!define createValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueValueForUniqueWithCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueValueForCombineWithUniqueA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${aUniqueValueForCombineWithUniqueB}!-"}]}}-!}
+#
+#!| MetadataValidationFixture |
+#| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+#| $adminAuthToken | workOrder | ${createValidationWorkOrder} | | true | OK |
+#*!
+#
+#!***> Case 9b: If validating creation of a record with all fields being in conflict (U, A, B), its expected to fail
+#!define createValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${UniqueCombineB}!-"}]}}-!}
+#
+#!| MetadataValidationFixture |
+#| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+#| $adminAuthToken | workOrder | ${createValidationWorkOrder} | | false | OK |
+#*!
+#
+#!***> Case 9c: If validating creation a record with one of the combines as different (A), its expected to pass
+#!define aUniqueValueForCombineWithUniqueA {5}
+#!define createValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueValueForCombineWithUniqueA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${UniqueCombineB}!-"}]}}-!}
+#
+#!| MetadataValidationFixture |
+#| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+#| $adminAuthToken | workOrder | ${createValidationWorkOrder} | | true | OK |
+#*!
+#
+#!***> Case 9d: If validating creation a record with one of the combines as different (B), its expected to pass
+#!define aUniqueValueForCombineWithUniqueB {aUniqueValueForCombineWithUniqueB}
+#!define createValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${aUniqueValueForCombineWithUniqueB}!-"}]}}-!}
+#
+#!| MetadataValidationFixture |
+#| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+#| $adminAuthToken | workOrder | ${createValidationWorkOrder} | | true | OK |
+#*!
+#
+#!***> Case 9e: If validating creation a record with both one of the combines as different (A, B), its expected to pass
+#!define aUniqueValueForCombineWithUniqueA {5}
+#!define aUniqueValueForCombineWithUniqueB {aUniqueValueForCombineWithUniqueB}
+#!define createValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aUniqueValueForCombineWithUniqueA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${aUniqueValueForCombineWithUniqueB}!-"}]}}-!}
+#
+#!| MetadataValidationFixture |
+#| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+#| $adminAuthToken | workOrder | ${createValidationWorkOrder} | | true | OK |
+#*!
+#
+#!***> Case 9f: If validating creation a record without the unique field but conflicting combines (A, B), its expected to pass
+#!define createValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${UniqueCombineB}!-"}]}}-!}
+#
+#!| MetadataValidationFixture |
+#| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+#| $adminAuthToken | workOrder | ${createValidationWorkOrder} | | true | OK |
+#*!
+#
+#!***> Case 9g: If validating update of a record to conflicting values (U, A, B) used by another record, its expected to fail
+#!define updateValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"existing"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${UniqueCombineB}!-"}]}}-!}
+#
+#!| MetadataValidationFixture |
+#| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+#| $adminAuthToken | workOrder | ${updateValidationWorkOrder} | | false | OK |
+#*!
+#
+#!***> Case 9h: If validating update of a record with a unique value for U and conflicting values for A and B, its expected to pass
+#!define anUpdatedValidateUniqueCombineU {anUpdatedValidateUniqueCombineU}
+#!define updateValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"existing"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedValidateUniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${UniqueCombineB}!-"}]}}-!}
+#
+#!| MetadataValidationFixture |
+#| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+#| $adminAuthToken | workOrder | ${updateValidationWorkOrder} | | true | OK |
+#*!
+#
+#!***> Case 9i: If validating update of a record with a unique value for A and conflicting values for U and B, its expected to pass
+#!define anUpdatedValidateUniqueCombineA {8}
+#!define updateValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"existing"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedValidateUniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${UniqueCombineB}!-"}]}}-!}
+#
+#!| MetadataValidationFixture |
+#| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+#| $adminAuthToken | workOrder | ${updateValidationWorkOrder} | | true | OK |
+#*!
+#
+#!***> Case 9j: If validating update of a record with a unique value for B and conflicting values for U and A, its expected to pass
+#!define anUpdatedValidateUniqueCombineB {anUpdatedValidateUniqueCombineB}
+#!define updateValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"existing"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${UniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${anUpdatedValidateUniqueCombineB}!-"}]}}-!}
+#
+#!| MetadataValidationFixture |
+#| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+#| $adminAuthToken | workOrder | ${updateValidationWorkOrder} | | true | OK |
+#*!
+#
+#!***> Case 9k: If validating update of a record with a unique value for U and A and a conflicting value for B, its expected to pass
+#!define anUpdatedValidateUniqueCombineU {anUpdatedValidateUniqueCombineU}
+#!define anUpdatedValidateUniqueCombineA {8}
+#!define updateValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"existing"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedValidateUniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedValidateUniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${UniqueCombineB}!-"}]}}-!}
+#
+#!| MetadataValidationFixture |
+#| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+#| $adminAuthToken | workOrder | ${updateValidationWorkOrder} | | true | OK |
+#*!
+#
+#!***> Case 9l: If validating update of a record with a unique value for U and B and a conflicting value for A, its expected to pass
+#!define anUpdatedValidateUniqueCombineU {anUpdatedValidateUniqueCombineU}
+#!define anUpdatedValidateUniqueCombineB {anUpdatedValidateUniqueCombineB}
+#!define updateValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"existing"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedValidateUniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${UniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${anUpdatedValidateUniqueCombineB}!-"}]}}-!}
+#
+#!| MetadataValidationFixture |
+#| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+#| $adminAuthToken | workOrder | ${updateValidationWorkOrder} | | true | OK |
+#*!
+#
+#!***> Case 9m: If validating update of all values of a record (U, A, B) with unique values not used by another record, its expected to pass
+#!define anUpdatedValidateUniqueCombineU {anUpdatedValidateUniqueCombineU}
+#!define anUpdatedValidateUniqueCombineA {8}
+#!define anUpdatedValidateUniqueCombineB {anUpdatedValidateUniqueCombineB}
+#!define updateValidationWorkOrder {!-{"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"existing"}]},"record":{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"id","value":"-!$createdRecordId9!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2024-09-03T15:04:57.859173Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-09-03T15:04:57.859173Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","repeatId":"0","value":"-!${anUpdatedValidateUniqueCombineU}!-"},{"name":"fitnesseNumberVar","repeatId":"1","value":"-!${anUpdatedValidateUniqueCombineA}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${anUpdatedValidateUniqueCombineB}!-"}]}}-!}
+#
+#!| MetadataValidationFixture |
+#| authToken | type | json | testValidateRecord? | getValid? | getStatusType? |
+#| $adminAuthToken | workOrder | ${updateValidationWorkOrder} | | true | OK |
+#*!
+
+!***> Remove created records
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
+| setHeader | Accept:application/vnd.uub.record+json!-
+-!Content-Type:application/vnd.uub.record+json!-
+-!authToken:$adminAuthToken |
+| DELETE | /record/fitnesseRecordType/$createdRecordId16 | 200 | | |
+| DELETE | /record/fitnesseRecordType/$createdRecordId17 | | | |
+| DELETE | /record/fitnesseRecordType/$createdRecordId18 | | | |
+| DELETE | /record/fitnesseRecordType/$createdRecordId19 | 200 | | |
+*!
+*!

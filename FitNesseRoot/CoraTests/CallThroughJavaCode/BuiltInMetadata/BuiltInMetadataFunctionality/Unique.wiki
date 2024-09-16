@@ -4,16 +4,18 @@ Test
 !1 Unique
 !3 What is it?
 Unique is a metadata functionality that makes it possible to configure one or more fields within a record type to only accept unique values. Actions such as create, update and validate where there are any conflicting data in these fields
-would be denied with a response about the conflicting fields. This feature can be configured in a number of different ways as described below:
+would be denied with a response about the conflicting fields. This feature can be configured in a number of different ways as described in the examples below:
 
  * '''A single unique field'''
   * ''A unique with a uniqueTerm. This would mean that only the field configured with a unique would require unique values and all the others would accept already existing values.''
  * '''Multiple unique fields'''
-  * ''Multiple uniques with a uniqueTerm each. When setting multiple fields as uniques it would be considered a conflict if any combination of these already exists''
+  * ''Multiple uniques with a uniqueTerm each. When setting multiple fields as uniques it would be considered a conflict if any combination of these already exists.''
  * '''A unique field with combines'''
   * ''A unique with a uniqueTerm plus one or more combineTerms. These work together to create '''a unique combination of values'''.''
   * ''Please note that this means that the combines are only relevant if the unique field value also exist. See combination chart below for examples:''
   * !img files/Images/uniqueCombinationChart.png
+ * '''Multiple unique fields with combines'''
+  * ''Multiple unique fields with a combination of uniqueTerm and combineTerm(s).''
 
 !3 How does it work?
 !4 Metadata definition of unique
