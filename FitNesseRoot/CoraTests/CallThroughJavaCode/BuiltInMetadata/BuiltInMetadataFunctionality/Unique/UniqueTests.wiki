@@ -13,10 +13,12 @@ Static
   * '''Case 2c''': It must be possible to update the value of a field that is not unique in a record with unique fields
   
  * '''Validate'''
-  * '''Case 3a''': If validating creation of a record with a unique value, its expected to pass
-  * '''Case 3b''': If validating creation of a record with a conflicting unique value, its expected to fail
-  * '''Case 3c''': If validating update of a record with a unique value, its expected to pass
-  * '''Case 3d''': If validating update of a record with a conflicting unique value, its expected to fail
+  * ''Create''  
+   * '''Case 3a''': If validating creation of a record with a unique value, its expected to pass
+   * '''Case 3b''': If validating creation of a record with a conflicting unique value, its expected to fail
+  * ''Update'' 
+   * '''Case 3c''': If validating update of a record with a unique value, its expected to pass
+   * '''Case 3d''': If validating update of a record with a conflicting unique value, its expected to fail
   
 !4 Scenario 2 tests (multiple unique fields)
  * '''Create'''
@@ -33,14 +35,16 @@ Static
   * '''Case 5e''': It must not be possible to update one (the last) of the unique values to a duplicate already used by another record
   
  * '''Validate'''
-  * '''Case 6a''': If validating creation of a record with unique values, its expected to pass
-  * '''Case 6b''': If validating creation of a record with conflicting data in one (first) of the unique fields, its expected to fail
-  * '''Case 6c''': If validating creation of a record with conflicting data in one (last) of the unique fields, its expected to fail
-  * '''Case 6d''': If validating creation of a record with both values being conflicting data of the unique fields, its expected to fail
-  * '''Case 6e''': If validating update of a record with unique values, its expected to pass
-  * '''Case 6f''': If validating update of a record with (the first) of the unique values to a duplicate already used by another record, its expected to fail
-  * '''Case 6g''': If validating update of a record with (the second) of the unique values to a duplicate already used by another record, its expected to fail
-  * '''Case 6h''': If validating update of a record with both of the unique values to a duplicate already used by another record, its expected to fail
+  * ''Create''  
+   * '''Case 6a''': If validating creation of a record with unique values, its expected to pass
+   * '''Case 6b''': If validating creation of a record with conflicting data in one (first) of the unique fields, its expected to fail
+   * '''Case 6c''': If validating creation of a record with conflicting data in one (last) of the unique fields, its expected to fail
+   * '''Case 6d''': If validating creation of a record with both values being conflicting data of the unique fields, its expected to fail
+  * ''Update'' 
+   * '''Case 6e''': If validating update of a record with unique values, its expected to pass
+   * '''Case 6f''': If validating update of a record with (the first) of the unique values to a duplicate already used by another record, its expected to fail
+   * '''Case 6g''': If validating update of a record with (the second) of the unique values to a duplicate already used by another record, its expected to fail
+   * '''Case 6h''': If validating update of a record with both of the unique values to a duplicate already used by another record, its expected to fail
   
 !4 Scenario 3 tests (unique field with combines)
  * '''Create'''
@@ -52,7 +56,7 @@ Static
   * '''Case 7f''': It must be possible to create a record without the unique field but conflicting combines (A, B)
   
  * '''Update'''
-  * '''Case 8a''': It must not be possible to update values of the unique and its combines (U ,A ,B) to conflicting values used by another record
+  * '''Case 8a''': It must not be possible to update values of the unique and its combines (U, A, B) to conflicting values used by another record
   * '''Case 8b''': It must be possible to update a record with a unique value for U and conflicting values for A and B
   * '''Case 8c''': It must be possible to update a record with a unique value for A and conflicting values for U and B
   * '''Case 8d''': It must be possible to update a record with a unique value for B and conflicting values for U and A
@@ -61,19 +65,21 @@ Static
   * '''Case 8g''': It must be possible to update all values (U, A, B) of the unique values not used by another record
   
  * '''Validate'''
-  * '''Case 9a''': If validating creation of a record with all fields being unique (U, A, B), its expected to pass
-  * '''Case 9b''': If validating creation of a record with all fields being in conflict (U, A, B), its expected to fail
-  * '''Case 9c''': If validating creation a record with one of the combines as different (A), its expected to pass
-  * '''Case 9d''': If validating creation a record with one of the combines as different (B), its expected to pass
-  * '''Case 9e''': If validating creation a record with both one of the combines as different (A, B), its expected to pass
-  * '''Case 9f''': If validating creation a record without the unique field but conflicting combines (A, B), its expected to pass
-  * '''Case 9g''': If validating update of a record to conflicting values (U, A, B) used by another record, its expected to fail
-  * '''Case 9h''': If validating update of a record with a unique value for U and conflicting values for A and B, its expected to pass
-  * '''Case 9i''': If validating update of a record with a unique value for A and conflicting values for U and B, its expected to pass
-  * '''Case 9j''': If validating update of a record with a unique value for B and conflicting values for U and A, its expected to pass
-  * '''Case 9k''': If validating update of a record with a unique value for U and A and a conflicting value for B, its expected to pass
-  * '''Case 9l''': If validating update of a record with a unique value for U and B and a conflicting value for A, its expected to pass
-  * '''Case 9m''': If validating update of all values of a record (U, A, B) with unique values not used by another record, its expected to pass
+  * ''Create'' 
+   * '''Case 9a''': If validating creation of a record with all fields being unique (U, A, B), its expected to pass
+   * '''Case 9b''': If validating creation of a record with all fields being in conflict (U, A, B), its expected to fail
+   * '''Case 9c''': If validating creation a record with one of the combines as different (A), its expected to pass
+   * '''Case 9d''': If validating creation a record with one of the combines as different (B), its expected to pass
+   * '''Case 9e''': If validating creation a record with both one of the combines as different (A, B), its expected to pass
+   * '''Case 9f''': If validating creation a record without the unique field but conflicting combines (A, B), its expected to pass
+  * ''Update'' 
+   * '''Case 9g''': If validating update of a record to conflicting values (U, A, B) used by another record, its expected to fail
+   * '''Case 9h''': If validating update of a record with a unique value for U and conflicting values for A and B, its expected to pass
+   * '''Case 9i''': If validating update of a record with a unique value for A and conflicting values for U and B, its expected to pass
+   * '''Case 9j''': If validating update of a record with a unique value for B and conflicting values for U and A, its expected to pass
+   * '''Case 9k''': If validating update of a record with a unique value for U and A and a conflicting value for B, its expected to pass
+   * '''Case 9l''': If validating update of a record with a unique value for U and B and a conflicting value for A, its expected to pass
+   * '''Case 9m''': If validating update of all values of a record (U, A, B) with unique values not used by another record, its expected to pass
   
 !4 Scenario 4 tests (multiple unique field with combines)
  * '''Create'''
@@ -83,8 +89,28 @@ Static
   * '''Case 10d''': It must be not possible to create a record with one of the combine pairs as conflicting (U2, A2)
   * '''Case 10e''': It must be possible to create a record with both uniques (U1, U2) as unique values and the combines (A1, A2) as conflicting values
 
-##### NOTE Regarding the tests and scenarios #####
-##### The general approach for all scenarios is that the first record created (in each scenario (1a, 4a, 7a)) act as a base for checking against conflicting data
+ * '''Update'''
+  * '''Case 11a''': It must not be possible to update values of the unique and its combines (U1, A1, U2, A2) to conflicting unique combines used by another record
+  * '''Case 11b''': It must be possible to update a record with unique values for for U1 and U2 and conflicting values for A1 and A2
+  * '''Case 11c''': It must not be possible to update a record with a unique combination for U1 and A1 but conflicting combination for U2 and A2
+  * '''Case 11d''': It must not be possible to update a record with a unique combination for U2 and A2 but conflicting combination for U1 and A1
+  * '''Case 11e''': It must be possible to update a record with unique combination values for both unique combines (U1, A1 and U2, A2)
+
+ * '''Validate'''
+  * ''Create''
+   * '''Case 12a''': If validating creation of a record when all unique combine combinations (U1, A1 & U2 and A2) already exists, its expected to fail
+   * '''Case 12b''': If validating creation of a record with all fields being unique combination (U1, A1 & U2 and A2) that does not exist, its expected to pass
+   * '''Case 12c''': If validating creation of a record with where both uniques (U1, U2) are unique values and combines (A1, A2) already exists, its expected to pass
+   * '''Case 12d''': If validating creation of a record with where one unique combine already exists (U1, A1) and the other (U2, A2) is not existing, its expected to fail
+   * '''Case 12e''': If validating creation of a record with where one unique combine already exists (U2, A2) and the other (U1, A1) is not existing, its expected to fail
+  * ''Update'' 
+   * '''Case 12f''': If validating update of a record to conflicting unique combine values (U1, A1 & U2, A2) used by another record, its expected to fail
+   * '''Case 12g''': If validating update of a record to unique combine values that does not exist (U1, A1 & U2, A2), its expected to pass
+   * '''Case 12h''': If validating update of a record to unique values that does not exist (U1, U2) and combine values (A1, A2) that does exist, its expected to pass
+   * '''Case 12i''': If validating update of a record with a unique combine that exists (U1, A1) and one that does not exist (U2, A2), its expected to fail
+   * '''Case 12j''': If validating update of a record with a unique combine that exists (U2, A2) and one that does not exist (U1, A1), its expected to fail
+  
+##### NOTE Regarding the tests and scenarios ##### 
 ##### Each scenario also clean up its created records to avoid any unexpected conflicts for the test cases
 
 !***> Setup metadata needed for tests (create storageTerms, add key filters)
