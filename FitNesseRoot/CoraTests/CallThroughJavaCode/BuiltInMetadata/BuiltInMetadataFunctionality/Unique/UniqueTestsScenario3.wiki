@@ -29,7 +29,7 @@ Setup data to make fitnesseTextVar unique and fitnesseNumberVar & fitnesseOnlyTe
 | $adminAuthToken | ${recordType} | ${createRecordWUniqueCombineData} |  | ${expectedCreateResult} | $createdRecordId9= |
 *!
 
-!***> Case 7b: It must not be possible to create a record with conflicting data for all fields simultaneously (U, A, B)
+!***> Case 7b: It must not be possible to create a record with a conflicting unique combine (U, A, B)
 !define createRecordWConflictingTextVar {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"-!${aUniqueWCombineTextVar}!-"},{"name":"fitnesseNumberVar","repeatId":"0","value":"-!${aCombineNumberVar}!-"},{"name":"fitnesseOnlyOneTextVar","value":"-!${aCombineOnlyTextVar}!-"}]}-!}
 !define expectedUniqueConflict {CONFLICT}
 

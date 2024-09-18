@@ -49,14 +49,14 @@ Static
 !4 Scenario 3 tests (unique field with combines)
  * '''Create'''
   * '''Case 7a''': It must be possible to create a record with unique values as data in fields for unique and the combines (U, A, B)
-  * '''Case 7b''': It must not be possible to create a record with conflicting data for all fields simultaneously (U, A, B)
+  * '''Case 7b''': It must not be possible to create a record with a conflicting unique combine (U, A, B)
   * '''Case 7c''': It must be possible to create a record with one of the combines as different (A)
   * '''Case 7d''': It must be possible to create a record with one of the combines as different (B) 
   * '''Case 7e''': It must be possible to create a record with both one of the combines as different (A, B)
   * '''Case 7f''': It must be possible to create a record without the unique field but conflicting combines (A, B)
   
  * '''Update'''
-  * '''Case 8a''': It must not be possible to update values of the unique and its combines (U, A, B) to conflicting values used by another record
+  * '''Case 8a''': It must not be possible to update a set of values (U, A, B) to a conflicting set of values used by another record
   * '''Case 8b''': It must be possible to update a record with a unique value for U and conflicting values for A and B
   * '''Case 8c''': It must be possible to update a record with a unique value for A and conflicting values for U and B
   * '''Case 8d''': It must be possible to update a record with a unique value for B and conflicting values for U and A
@@ -84,16 +84,16 @@ Static
 !4 Scenario 4 tests (multiple unique field with combines)
  * '''Create'''
   * '''Case 10a''': It must be possible to create a record with unique values as data in fields for unique and the combines
-  * '''Case 10b''': It must not be possible to create a record with conflicting data for all fields simultaneously (U1, A1, U2, A2)
-  * '''Case 10c''': It must be not possible to create a record with one of the combine pairs as conflicting (U1, A1)
-  * '''Case 10d''': It must be not possible to create a record with one of the combine pairs as conflicting (U2, A2)
+  * '''Case 10b''': It must not be possible to create a record with if all unique combines are conflicting  (U1, A1, U2, A2)
+  * '''Case 10c''': It must be not possible to create a record with one of the unique combines as conflicting (U1, A1)
+  * '''Case 10d''': It must be not possible to create a record with one of the unique combines as conflicting (U2, A2)
   * '''Case 10e''': It must be possible to create a record with both uniques (U1, U2) as unique values and the combines (A1, A2) as conflicting values
 
  * '''Update'''
   * '''Case 11a''': It must not be possible to update values of the unique and its combines (U1, A1, U2, A2) to conflicting unique combines used by another record
-  * '''Case 11b''': It must be possible to update a record with unique values for for U1 and U2 and conflicting values for A1 and A2
-  * '''Case 11c''': It must not be possible to update a record with a unique combination for U1 and A1 but conflicting combination for U2 and A2
-  * '''Case 11d''': It must not be possible to update a record with a unique combination for U2 and A2 but conflicting combination for U1 and A1
+  * '''Case 11b''': It must be possible to update a record with unique values for the uniques (U1 and U2) and conflicting values for the combines (A1 and A2)
+  * '''Case 11c''': It must not be possible to update a record with a unique combine (U1 and A1) but conflicting for another unique combine (U2 and A2)
+  * '''Case 11d''': It must not be possible to update a record with a unique combine (U2 and A2) but conflicting for another unique combine (U1 and A1)
   * '''Case 11e''': It must be possible to update a record with unique combination values for both unique combines (U1, A1 and U2, A2)
 
  * '''Validate'''

@@ -1,10 +1,10 @@
 !4 Setting up unique fields
-To set up one or more fields to be ''unique'' there are a few steps to take. If you want to configure multiple uniques or unique with combines the steps are repeated for each field you want to configure. 
-There is however a small difference in the last step if you wish to set up a combine, but it is covered below in its own example.
+To set up one or more fields to be ''unique'' there are a few steps to take. If you want to configure multiple uniques the steps are repeated for each field you want to configure. 
+There is however a small difference in the last step if you wish to set up a combineTerm. You need to make sure to add it to the same unique (group) as the uniqueTerm you want it to work with, see the last example.
 
-The first thing you want to do is to create collectStorageTerm for the field you want to be unique.
+The first thing you want to do is to create a collectStorageTerm that is needed for creating a uniqueTerm or a combineTerm.
 !style_code(!style_pass[POST] /record/collectTerm)
-!***> create a collectStorageTerm
+!***> Create a collectStorageTerm
 {{{
 {
     "name": "collectStorageTerm",
@@ -60,9 +60,9 @@ The first thing you want to do is to create collectStorageTerm for the field you
 }
 }}}
 *!
-The storageTerm then needs to be added to a field you wish to be set up as unique by adding it to the correct child reference.
+Then add the storageTerm to the field you wish to be set up as unique by adding it to the correct child reference.
 !style_code(!style_pass[POST] /record/metadata/{exampleGroup}) 
-!***> storageTerm added to a child reference
+!***> StorageTerm added to a child reference
 {{{
 {
     "name": "metadata",
@@ -135,9 +135,9 @@ The storageTerm then needs to be added to a field you wish to be set up as uniqu
 }
 }}}
 *!
-Finally the storageTerm needs to be added to the recordType it's intended to be used on.
+!style_fit_label(!style_darkOrange[Adding a unique:]) Finally you need to add a ''unique'' that contains the uniqueTerm (which reference the storageTerm) to the recordType you want to use it on.
 !style_code(!style_pass[POST] /record/recordType/{exampleRecordType})
-!***> storageTerm added as a unique
+!***> Add a unique to the recordType
 {{{
 {
     "name": "recordType",
@@ -176,9 +176,9 @@ Finally the storageTerm needs to be added to the recordType it's intended to be 
 }
 }}}
 *!
-!style_fit_label(!style_green[Note for combine:]) This last step is slightly different if you want to add this as a combine for a unique. You need to add it as a combineTerm to a field where you already added a uniqueTerm.
+!style_fit_label(!style_darkOrange[Adding a combineTerm to the unique:]) To create a combine you need to add it as a combineTerm to the same ''unique'' as the related uniqueTerm you wish to create a combine for.
 !style_code(!style_pass[POST] /record/recordType/{exampleRecordType})
-!***> adding a combineTerm to the field where you have added a uniqueTerm
+!***> Adding a combineTerm to the same unique (group) as the uniqueTerm you want to use it with.
 {{{
 {
     "name": "recordType",
