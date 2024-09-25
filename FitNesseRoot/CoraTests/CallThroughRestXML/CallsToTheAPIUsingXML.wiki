@@ -471,7 +471,7 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 -!<trainingProgram>!-
 -!<createdBy>asta_kask</createdBy>!-
 -!</trainingProgram></singleTrainingProgram> | Data is missing id inside trainingProgram, should not be possible to update. |
-| POST | /rest/record/singleTrainingProgram/cirkelfys | 400 | Content-Type: text\/plain;charset=utf-8| Error updating record with recordType: singleTrainingProgram and recordId: cirkelfys. Data is not valid: \[Did not find enough data children with referenceId: idTextVar\(with nameInData:id\)\., Did not find enough data children with referenceId: recordTypeLink\(with nameInData:type\)\.\]|
+| POST | /rest/record/singleTrainingProgram/cirkelfys | 400 | Content-Type: text\/plain;charset=utf-8| Error updating record with recordType: singleTrainingProgram and recordId: cirkelfys. Data is not valid: \[Did not find enough data children with referenceId: idTextVar\(with nameInData:id\)\.]|
 *!
 !***> Case 3
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
@@ -493,7 +493,7 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 -!</validationType>!-
 -!</recordInfo>!-
 -!</singleTrainingProgram> | Data is missing the entire trainingProgram group, should not be possible to update. |
-| POST | /rest/record/singleTrainingProgram/cirkelfys | 400 | Content-Type: text\/plain;charset=utf-8 |Error updating record with recordType: singleTrainingProgram and recordId: cirkelfys\. Data is not valid: \[Did not find enough data children with referenceId: trainingProgramGroup\(with nameInData:trainingProgram\)\., Did not find enough data children with referenceId: recordTypeLink\(with nameInData:type\)\.\] |
+| POST | /rest/record/singleTrainingProgram/cirkelfys | 400 | Content-Type: text\/plain;charset=utf-8 |Error updating record with recordType: singleTrainingProgram and recordId: cirkelfys\. Data is not valid: \[Did not find enough data children with referenceId: trainingProgramGroup\(with nameInData:trainingProgram\)\.] |
 *!
 !***> Case 4
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
