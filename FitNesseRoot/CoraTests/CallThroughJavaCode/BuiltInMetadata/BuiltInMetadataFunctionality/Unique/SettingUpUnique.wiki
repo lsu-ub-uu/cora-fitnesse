@@ -1,0 +1,233 @@
+!4 Setting up unique fields
+To set up one or more fields to be ''unique'' there are a few steps to take. If you want to configure multiple uniques the steps are repeated for each field you want to configure. 
+There is however a small difference in the last step if you wish to set up a combineTerm. You need to make sure to add it to the same unique (group) as the uniqueTerm you want it to work with, see the last example.
+
+The first thing you want to do is to create a collectStorageTerm that is needed for creating a uniqueTerm or a combineTerm.
+!style_code(!style_pass[POST] /record/collectTerm)
+!***> Create a collectStorageTerm
+{{{
+{
+    "name": "collectStorageTerm",
+    "children": [
+        {
+            "name": "recordInfo",
+            "children": [
+                {
+                    "name": "id",
+                    "value": "exampleTextVarStorageTerm"
+                },
+                {
+                    "name": "validationType",
+                    "children": [
+                        {
+                            "name": "linkedRecordType",
+                            "value": "validationType"
+                        },
+                        {
+                            "name": "linkedRecordId",
+                            "value": "collectStorageTerm"
+                        }
+                    ]
+                },
+                {
+                    "name": "dataDivider",
+                    "children": [
+                        {
+                            "name": "linkedRecordType",
+                            "value": "system"
+                        },
+                        {
+                            "name": "linkedRecordId",
+                            "value": "cora"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "extraData",
+            "children": [
+                {
+                    "name": "storageKey",
+                    "value": "exampleTextVar"
+                }
+            ]
+        }
+    ],
+    "attributes": {
+        "type": "storage"
+    }
+}
+}}}
+*!
+Then add the storageTerm to the field you wish to be set up as unique by adding it to the correct child reference.
+!style_code(!style_pass[POST] /record/metadata/{exampleGroup}) 
+!***> StorageTerm added to a child reference
+{{{
+{
+    "name": "metadata",
+    "children": [
+        {
+            "name": "recordInfo",
+            "children": [
+                {
+                    "name": "id",
+                    "value": "exampleGroup"
+                }
+                ...
+            ]
+        },
+        ...
+        {
+            "name": "childReferences",
+            "children": [
+                ...
+                {
+                    "name": "childReference",
+                    "repeatId": "1",
+                    "children": [
+                        {
+                            "name": "repeatMin",
+                            "value": "0"
+                        },
+                        {
+                            "name": "repeatMax",
+                            "value": "20"
+                        },
+                        {
+                            "name": "ref",
+                            "children": [
+                                {
+                                    "name": "linkedRecordType",
+                                    "value": "metadata"
+                                },
+                                {
+                                    "name": "linkedRecordId",
+                                    "value": "exampleMetadataTextVar"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "childRefCollectTerm",
+                            "children": [
+                                {
+                                    "name": "linkedRecordType",
+                                    "value": "collectTerm"
+                                },
+                                {
+                                    "name": "linkedRecordId",
+                                    "value": "exampleTextVarStorageTerm"
+                                }
+                            ],
+                            "attributes": {
+                                "type": "storage"
+                            }
+                        }
+                    ]
+                }
+                ...
+            ]
+        }
+    ],
+    "attributes": {
+        "type": "group"
+    }
+}
+}}}
+*!
+!style_fit_label(!style_darkOrange[Adding a unique:]) Finally you need to add a ''unique'' that contains the uniqueTerm (which reference the storageTerm) to the recordType you want to use it on.
+!style_code(!style_pass[POST] /record/recordType/{exampleRecordType})
+!***> Add a unique to the recordType
+{{{
+{
+    "name": "recordType",
+    "children": [
+        {
+            "name": "recordInfo",
+            "children": [
+                {
+                    "name": "id",
+                    "value": "exampleRecordType"
+                }
+                ...
+            ]
+        },
+        ...
+        {
+            "name": "unique",
+            "repeatId": "1",
+            "children": [
+                {
+                    "name": "uniqueTerm",
+                    "children": [
+                        {
+                            "name": "linkedRecordType",
+                            "value": "collectTerm"
+                        },
+                        {
+                            "name": "linkedRecordId",
+                            "value": "exampleTextVarStorageTerm"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+}}}
+*!
+!style_fit_label(!style_darkOrange[Adding a combineTerm to the unique:]) To create a combine you need to add it as a combineTerm to the same ''unique'' as the related uniqueTerm you wish to create a combine for.
+!style_code(!style_pass[POST] /record/recordType/{exampleRecordType})
+!***> Adding a combineTerm to the same unique (group) as the uniqueTerm you want to use it with.
+{{{
+{
+    "name": "recordType",
+    "children": [
+        {
+            "name": "recordInfo",
+            "children": [
+                {
+                    "name": "id",
+                    "value": "exampleRecordType"
+                }
+                ...
+            ]
+        },
+        ...
+        {
+            "name": "unique",
+            "repeatId": "1",
+            "children": [
+                {
+                    "name": "uniqueTerm",
+                    "children": [
+                        {
+                            "name": "linkedRecordType",
+                            "value": "collectTerm"
+                        },
+                        {
+                            "name": "linkedRecordId",
+                            "value": "exampleTextVarStorageTerm"
+                        }
+                    ]
+                },
+                {
+                    "name": "combineTerm",
+                    "repeatId": "0",
+                    "children": [
+                        {
+                            "name": "linkedRecordType",
+                            "value": "collectTerm"
+                        },
+                        {
+                            "name": "linkedRecordId",
+                            "value": "exampleNumberVarStorageTerm"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+}}}
+*!

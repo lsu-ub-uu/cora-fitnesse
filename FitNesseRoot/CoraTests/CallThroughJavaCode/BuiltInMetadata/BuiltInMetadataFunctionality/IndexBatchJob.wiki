@@ -27,6 +27,10 @@ Until that reimplementation is done are we using this simple test.
 | let | recordId | js | response.jsonbody.record.data.children[0].children[2].value |  |
 
 *!
+!| WaitForRegExReadResultFixture |
+| authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
+| $adminAuthToken | indexBatchJob | $recordId | 250 | 50 | \"name\":\"status\",\"value\":\"finished\" | Found |
+
 
 !***> Clean data
 
