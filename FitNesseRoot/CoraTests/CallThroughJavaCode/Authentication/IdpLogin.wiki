@@ -16,7 +16,7 @@ Test
 !***> Get authTokens from idpLogin server
 
 !| IdpLoginServletFixture |
-| EPPN | getAuthTokenForEPPN? | getIdFromLogin? | getResponseCode? | getAuthToken? | getValidForNoSeconds? | getDeleteUrl? |
+| EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getValidForNoSeconds? | getDeleteUrl? |
 | fitnesseAdmin@system.cora.uu.se | |fitnesseAdmin@system.cora.uu.se | OK | $fitnesseAdminAuthToken= | 600 | =~/131313/ |
 | fitnesseUser@system.cora.uu.se | |fitnesseUser@system.cora.uu.se | OK | $fitnesseUserAuthToken= | 600 | =~/121212/ |
 

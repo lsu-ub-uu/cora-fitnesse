@@ -12,7 +12,7 @@ Suite
 *!
 !***> Login for fitnesse guest
 !| IdpLoginServletFixture |
-| EPPN | getAuthTokenForEPPN? | getIdFromLogin? | getResponseCode? | getAuthToken? | getValidForNoSeconds? | getDeleteUrl? |
+| EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getValidForNoSeconds? | getDeleteUrl? |
 | userNotInDb@user.uu.se | |  |  | $guestAuthToken= | |  |
 *!
 
