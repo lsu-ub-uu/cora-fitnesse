@@ -21,6 +21,7 @@ Until that reimplementation is done are we using this simple test.
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeader | Content-Type:application/vnd.uub.record+json!-
+-!Accept:application/vnd.uub.record+json!-
 -!authToken:$adminAuthToken!-
 -! |
 | POST | /rest/record/index/example | 201 | | |
