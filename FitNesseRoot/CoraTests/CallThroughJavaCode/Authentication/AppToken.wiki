@@ -62,10 +62,11 @@ You can delete an appToken by simply removing its apptoken group in the user con
 !***> '''Case 2: ''' It should be possible to login using a created appToken.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${appTokenVerifierUrl}rest/ |
 | setHeader | Accept:application/vnd.uub.record+json!-
--!Content-Type:text/plain;charset=UTF-8 |
-| setBody | %appUserToken% |
-| POST | /apptoken/fitnesseAdmin@system.cora.uu.se | 201 | | |
-| let | appUserAuthToken | js | response.body.match(/"name":"id","value":"([^"]+)"}/)[1] | |
+-!Content-Type:application/vnd.uub.login |
+| setBody | fitnesseAdmin@system.cora.uu.se!-
+-!%appUserToken% |
+| POST | /apptoken | 201 | | |
+| let | appUserAuthToken | js | response.body.match(/"name":"token","value":"([^"]+)"}/)[1] | |
 *!
 
 !***> '''Case 3: ''' It should be possible to read the note for an apptoken. There must be no appTokenClearText present in the data.
