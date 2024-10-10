@@ -66,14 +66,15 @@ You can delete an appToken by simply removing its apptoken group in the user con
 | setBody | fitnesseAdmin@system.cora.uu.se!-
 -!%appUserToken% |
 | POST | /apptoken | 201 | | |
-| let | appUserAuthToken | js | response.body.match(/"name":"token","value":"([^"]+)"}/)[1] | |
+| let | generatedAuthToken | js | response.body.match(/"name":"token","value":"([^"]+)"}/)[1] | |
+| let | loginId | js | response.body.match(/"name":"loginId","value":"([^"]+)"}/)[1] | fitnesseAdmin@system.cora.uu.se |
 *!
 
 !***> '''Case 3: ''' It should be possible to read the note for an apptoken. There must be no appTokenClearText present in the data.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
 | setHeader | Accept:application/vnd.uub.record+json!-
 -!Content-Type:application/vnd.uub.record+json!-
--!authToken:%appUserAuthToken% |
+-!authToken:%generatedAuthToken% |
 | GET | /record/user/131313 | 200 | | |
 | let | noteShouldExist | js | var regExp = new RegExp('"My admin device"') ; regExp.test(response.body) | true |
 | let | appTokenClearTextShouldNotExist | js | var regExp = new RegExp('"appTokenClearText"') ; regExp.test(response.body) | false |
@@ -83,7 +84,7 @@ You can delete an appToken by simply removing its apptoken group in the user con
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
 | setHeader | Accept:application/vnd.uub.record+json!-
 -!Content-Type:application/vnd.uub.record+json!-
--!authToken:%appUserAuthToken% |
+-!authToken:%generatedAuthToken% |
 | setBody | {"name":"user","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"131313"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"userId","value":"fitnesseAdmin@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"Admin"},{"name":"userRole","repeatId":"1","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"everything"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"userRole","repeatId":"3603423986673","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"binaryUserRole"}]}]},{"name":"activeStatus","value":"active"},{"name":"appTokens","children":[{"name":"appToken","repeatId":"0","children":[{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"systemSecret"},{"name":"linkedRecordId","value":"systemSecret:3452556002950361"}]},{"name":"appTokenNote","value":"Token for development"}]}]},{"name":"usePassword","value":"false"}],"attributes":{"type":"systemOneUser"}} |
 | POST | /record/user/131313 | 200 | | |
 | let | appUserTokenShouldNotExist | js | var regExp = new RegExp('"My admin device"') ; regExp.test(response.body) | false |
@@ -93,7 +94,7 @@ You can delete an appToken by simply removing its apptoken group in the user con
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
 | setHeader | Accept:application/vnd.uub.record+json!-
 -!Content-Type:application/vnd.uub.record+json!-
--!authToken:%appUserAuthToken% |
+-!authToken:%generatedAuthToken% |
 | setBody | {"name":"user","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"131313"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"userId","value":"fitnesseAdmin@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"Admin"},{"name":"userRole","repeatId":"1","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"everything"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"userRole","repeatId":"3603423986673","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"binaryUserRole"}]}]},{"name":"activeStatus","value":"active"},{"name":"appTokens","children":[{"name":"appToken","repeatId":"0","children":[{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"systemSecret"},{"name":"linkedRecordId","value":"systemSecret:3452556002950361"}]},{"name":"appTokenNote","value":"An updated note"}]}]},{"name":"usePassword","value":"false"}],"attributes":{"type":"systemOneUser"}} |
 | POST | /record/user/131313 | 200 | | |
 | let | noteShouldHaveBeenUpdated | js | var regExp = new RegExp('"An updated note"') ; regExp.test(response.body) | true |
@@ -113,7 +114,7 @@ You can delete an appToken by simply removing its apptoken group in the user con
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
 | setHeader | Accept:application/vnd.uub.record+json!-
 -!Content-Type:application/vnd.uub.record+json!-
--!authToken:%appUserAuthToken% |
+-!authToken:%generatedAuthToken% |
 | GET | /record/user/131313 | 200 | | |
 | let | appTokenClearTextShouldNotExist | js | var regExp = new RegExp('"appTokenClearText"') ; regExp.test(response.body) | false |
 *!
@@ -122,7 +123,7 @@ You can delete an appToken by simply removing its apptoken group in the user con
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
 | setHeader | Accept:application/vnd.uub.record+json!-
 -!Content-Type:application/vnd.uub.record+json!-
--!authToken:%appUserAuthToken% |
+-!authToken:%generatedAuthToken% |
 | setBody | {"name":"user","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"131313"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"userId","value":"fitnesseAdmin@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"Admin"},{"name":"userRole","repeatId":"1","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"everything"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"userRole","repeatId":"3603423986673","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"binaryUserRole"}]}]},{"name":"activeStatus","value":"active"},{"name":"appTokens","children":[{"name":"appToken","repeatId":"0","children":[{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"systemSecret"},{"name":"linkedRecordId","value":"systemSecret:3452556002950361"}]},{"name":"appTokenNote","value":"Token for development"},{"name":"appTokenClearText","value":"00000000-1111-2222-3333-444444444444"}]}]},{"name":"usePassword","value":"false"}],"attributes":{"type":"systemOneUser"}} |
 | POST | /record/user/131313 | 200 | | |
 | let | suppliedAppTokenClearTextShouldNotExist | js | var regExp = new RegExp('"appTokenClearText"') ; regExp.test(response.body) | false |
@@ -131,7 +132,7 @@ You can delete an appToken by simply removing its apptoken group in the user con
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
 | setHeader | Accept:application/vnd.uub.record+json!-
 -!Content-Type:application/vnd.uub.record+json!-
--!authToken:%appUserAuthToken% |
+-!authToken:%generatedAuthToken% |
 | GET | /record/user/131313 | 200 | | |
 | let | appTokenClearTextShouldNotExist | js | var regExp = new RegExp('"appTokenClearText"') ; regExp.test(response.body) | false |
 *!

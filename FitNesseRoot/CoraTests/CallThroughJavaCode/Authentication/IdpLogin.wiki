@@ -17,8 +17,8 @@ Test
 
 !| IdpLoginServletFixture |
 | EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getValidForNoSeconds? | getDeleteUrl? |
-| fitnesseAdmin@system.cora.uu.se | |fitnesseAdmin@system.cora.uu.se | OK | $fitnesseAdminAuthToken= | 600 | =~/131313/ |
-| fitnesseUser@system.cora.uu.se | |fitnesseUser@system.cora.uu.se | OK | $fitnesseUserAuthToken= | 600 | =~/121212/ |
+| fitnesseAdmin@system.cora.uu.se | |fitnesseAdmin@system.cora.uu.se | OK | $fitnesseAdminAuthToken= | 600 | $fitnesseAdminAuthTokenDeleteUrl= |
+| fitnesseUser@system.cora.uu.se | |fitnesseUser@system.cora.uu.se | OK | $fitnesseUserAuthToken= | 600 | $fitnesseUserAuthTokenDeleteUrl= |
 
 *!
 !2 Test with new texts to show that we can use our authToken and be our user
@@ -32,8 +32,8 @@ Test
 !***> Logout
 
 !| AppTokenEndpointFixture |
-| userId | authTokenToLogOut | removeAuthTokenForUser? | getStatusType? |
-| 121212 | $fitnesseUserAuthToken | | OK |
+| authTokenToLogOut | deleteUrl | removeAuthTokenForUser? | getStatusType? |
+| $fitnesseUserAuthToken | $fitnesseUserAuthTokenDeleteUrl| | OK |
 
 *!
 !2 Test with new texts to show that authToken is not valid after logout
@@ -50,5 +50,9 @@ Test
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $fitnesseAdminAuthToken | text | myAuthText | | OK |
+
+!| AppTokenEndpointFixture |
+| authTokenToLogOut | deleteUrl | removeAuthTokenForUser? | getStatusType? |
+| $fitnesseAdminAuthToken | $fitnesseAdminAuthTokenDeleteUrl| | OK |
 
 *!
