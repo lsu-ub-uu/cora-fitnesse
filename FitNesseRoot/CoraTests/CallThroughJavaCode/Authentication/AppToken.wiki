@@ -67,7 +67,13 @@ You can delete an appToken by simply removing its apptoken group in the user con
 -!%appUserToken% |
 | POST | /apptoken | 201 | | |
 | let | generatedAuthToken | js | response.body.match(/"name":"token","value":"([^"]+)"}/)[1] | |
+| let | token | js | response.body.search(/name":"token","value":"([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})"}/) | 23 |
+| let | validForNoSeconds | js | response.body.match(/validForNoSeconds","value":"([^"]+)"}/)[1] | 600 |
+| let | idInUserStorage | js | response.body.match(/idInUserStorage","value":"([^"]+)"}/)[1] | 131313 |
 | let | loginId | js | response.body.match(/"name":"loginId","value":"([^"]+)"}/)[1] | fitnesseAdmin@system.cora.uu.se |
+| let | firstName | js | response.body.match(/firstName","value":"([^"]+)"}/)[1] | Fitnesse |
+| let | lastName | js | response.body.match(/lastName","value":"([^"]+)"}/)[1] | Admin |
+| let | authToken | js | response.body.match(/name":"(authToken)"}/)[1] | authToken |
 *!
 
 !***> '''Case 3: ''' It should be possible to read the note for an apptoken. There must be no appTokenClearText present in the data.
