@@ -12,7 +12,7 @@ Suite
 *!
 !***> Login for fitnesse guest
 !| IdpLoginServletFixture |
-| EPPN | getAuthTokenForEPPN? | getIdFromLogin? | getResponseCode? | getAuthToken? | getValidForNoSeconds? | getDeleteUrl? |
+| EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getValidForNoSeconds? | getDeleteUrl? |
 | userNotInDb@user.uu.se | |  |  | $guestAuthToken= | |  |
 *!
 
@@ -21,7 +21,7 @@ Suite
 
 !***> Login for fitnesse user (Related to CORA-2475. Remove when fixed)
 !| AppTokenEndpointFixture |
-| userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
+| loginId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
 | fitnesseUser@system.cora.uu.se | | | $userAuthToken= | CREATED |
 
 !| script | AuthTokenHolder |

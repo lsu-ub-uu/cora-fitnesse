@@ -28,7 +28,7 @@ Suite
 
 !***> Login for fitnesse admin
 !| AppTokenEndpointFixture |
-| userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
+| loginId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
 | fitnesseAdmin@system.cora.uu.se | | | $adminAuthToken= | CREATED |
 
 !| script | AuthTokenHolder |
