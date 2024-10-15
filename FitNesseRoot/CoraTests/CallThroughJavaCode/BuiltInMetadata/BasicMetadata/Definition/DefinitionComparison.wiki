@@ -1,3 +1,0 @@
-!| DefinitionCompareFixture |
-| authToken | recordId | getDefinitionView? |
-| $adminAuthToken | binaryGroup | ${definitionToCompare} |
