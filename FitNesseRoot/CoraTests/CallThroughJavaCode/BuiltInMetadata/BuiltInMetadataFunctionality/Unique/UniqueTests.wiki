@@ -2,6 +2,10 @@
 Static
 ---
 !2 Unique tests
+
+!4 Definition test
+ * '''Case 1''': The definition must be correct for unique
+
 !4 Scenario 1 tests (single unique field)
  * '''Create'''
   * '''Case 1a''': It must be possible to create a record with data in a unique field
@@ -143,6 +147,7 @@ Static
 *!
 *!
 
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Unique.UniqueDefinition
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Unique.UniqueTestsScenario1
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Unique.UniqueTestsScenario2
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Unique.UniqueTestsScenario3
