@@ -12,6 +12,7 @@ Suite
 | se.uu.ub.cora.fitnesseintegration.waiter.fixture |
 | se.uu.ub.cora.fitnesseintegration.server.compare.fixtures |
 | se.uu.ub.cora.fitnesseintegration.binary |
+| se.uu.ub.cora.fitnesseintegration.definitionwriter |
 
 !| script | SystemUrl |
 | setUrl | ${systemUnderTestUrl} |
