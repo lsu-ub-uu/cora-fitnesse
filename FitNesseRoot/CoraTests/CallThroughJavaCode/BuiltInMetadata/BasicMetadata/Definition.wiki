@@ -5,7 +5,7 @@ Test
 Test to compare a definition from definition viewer using the '''DefinitionCompareFixture'''.
 
 !***> definition setup
-Example of a definition to use for comparison, in this case the randomly chosen '''binaryGroup'''. Copied into the wiki test file with the indentation (tabs) kept and set as a test-define.
+Example of a definition to use for comparison, in this case the randomly chosen ''binaryGroup'', copied into the wiki test file with the indentation (tabs) kept and set as a test-define.
 This define is then used in the '''DefinitionCompareFixture''' to compare against the returned value from the fixture method ''getDefinitionView''.
 
 !define definitionToCompare {!-binary type:{generic, image, sound, video, document, text, compressed} (group)
