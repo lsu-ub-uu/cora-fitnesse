@@ -1,8 +1,8 @@
+!***> Assert that the defintion is correct
 !define uniqueDefinition {!-unique (group)
 	uniqueTerm (recordLink, 1-1, noConstraint)
 	combineTerm (recordLink, 0-X, noConstraint)-!}
 
-!***> Assert that the defintion is correct
 !| DefinitionCompareFixture |
 | authToken | recordId | getDefinitionView? |
 | $adminAuthToken | uniqueGroup | ${uniqueDefinition} |
