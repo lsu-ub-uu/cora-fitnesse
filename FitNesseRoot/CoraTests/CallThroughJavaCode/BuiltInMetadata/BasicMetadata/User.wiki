@@ -16,7 +16,7 @@ Tests related to user:
      * updated(group, 1-X, noConstraint)
        * updatedBy(recordLink, 1-1, noConstraint)
        * tsUpdated(textVariable, 1-1, noConstraint)
-   * userId(textVariable, 1-1, noConstraint, S)
+   * loginId(textVariable, 1-1, noConstraint, S)
    * userFirstname(textVariable, 1-1, noConstraint)
    * userLastname(textVariable, 1-1, noConstraint)
    * userRole(group, 1-X, noConstraint)

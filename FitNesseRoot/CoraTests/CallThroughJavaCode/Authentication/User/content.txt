@@ -6,17 +6,16 @@ A test that  reads all predefined metadata needed to be able to create a concret
 
 !| RecordEndpointFixture |
 | type | id | testReadRecordAndStoreJson? |
-| metadata | userNewGroup | |
+| metadata | coraUserNewGroup | |
 
 *!
 !***> Check children in userNewGroup
 
 !| MetadataLinkFixture |
 | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? |
-| metadata | userIdTextVar | 1 | 1 |
+| metadata | loginIdTextVar | 1 | 1 |
 | metadata | userFirstnameTextVar | 1 | 1 |
 | metadata | userLastnameTextVar | 1 | 1 |
-| metadata | userRoleRelationGroup | 1 | X |
 | metadata | activeStatusCollectionVar | 1 | 1 |
 
 *!
@@ -24,17 +23,16 @@ A test that  reads all predefined metadata needed to be able to create a concret
 
 !| RecordEndpointFixture |
 | type | id | testReadRecordAndStoreJson? |
-| metadata | userGroup | |
+| metadata | coraUserGroup | |
 
 *!
 !***> Check children in userGroup
 
 !| MetadataLinkFixture |
 | linkedRecordType | linkedRecordId | getRepeatMin? | getRepeatMax? |
-| metadata | userIdTextVar | 1 | 1 |
+| metadata | loginIdTextVar | 1 | 1 |
 | metadata | userFirstnameTextVar | 1 | 1 |
 | metadata | userLastnameTextVar | 1 | 1 |
-| metadata | userRoleRelationGroup | 1 | X |
 | metadata | activeStatusCollectionVar | 1 | 1 |
 
 *!
