@@ -19,10 +19,14 @@ would be denied with a response about the conflicting fields. This feature can b
 
 !3 How does it work?
 !4 Metadata definition of unique
- * '''unique''' (group, 0-X, noConstraint)
-  * '''uniqueTerm''' (recordLink, 1-1, noConstraint)
-  * '''combineTerm''' (recordLink, 0-X, noConstraint)
-
+!***> Set up unique definition
+!define uniqueDefinition {!-unique (group)
+	uniqueTerm (recordLink, 1-1, noConstraint)
+	combineTerm (recordLink, 0-X, noConstraint)-!}
+*!
+{{{
+${uniqueDefinition}
+}}}
  * '''Unique''': A group consisting of a uniqueTerm (''and optional combineTerms'') that define the rule(s) for a unique. This group needs to be added to a recordType in order to utilize this functionality.
  * '''UniqueTerm''': A reference to a collectStorageTerm that will act like a filter when detecting conflicts for the value of a field. This is the base rule for the ''unique'' filter.
  * '''CombineTerm''': This is (just like uniqueTerm) also a reference to a colleceStorageTerm and also works as a filter. These can be used as additional rule(s) in combination with a uniqueTerm to create a combination of values to consider as unique.
