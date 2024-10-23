@@ -23,6 +23,22 @@ The metadata for textVariable has been created during system startup, so we shou
 | $adminAuthToken | metadata | {"children":[{"children":[{"name":"id","value":"invalidPinCodeTextVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataTextVariable"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"invalidPinCode"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}],"name":"defTextId"},{"name":"regEx","value":""}],"name":"metadata","attributes":{"type":"textVariable"}} | Error creating new record for recordType: metadata. Data is not valid: [TextVariable with nameInData:regEx is NOT valid, regular expression(.+) does not match:] | BAD_REQUEST |
 
 *!
+!***> Try to create textVariable with invalid regEx, this should fail
+!define expectedError {!-Error creating new record for recordType: metadata. The supplied regEx is invalid, Unclosed group near index 9
+(badRegex-!}
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | metadata | {"children":[{"children":[{"name":"id","value":"invalidPinCodeTextVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataTextVariable"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"invalidPinCode"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}],"name":"defTextId"},{"name":"regEx","value":"(badRegex"}],"name":"metadata","attributes":{"type":"textVariable"}} | ${expectedError} | BAD_REQUEST |
+
+*!
+!***> Try to update textVariable with invalid regEx, this should fail
+!define expectedError {!-Error updating record with recordType: metadata and recordId: swedishNameTextVar. The supplied regEx is invalid, Unclosed group near index 9
+(badRegex-!}
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? | getStatusType? |
+| $adminAuthToken | metadata | swedishNameTextVar | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"swedishNameTextVar"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadata"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataTextVariable"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2024-10-23T09:26:37.924088Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-10-23T09:26:37.924088Z"}]}]},{"name":"nameInData","value":"name"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}]},{"name":"regEx","value":"(badRegex"},{"name":"attributeReferences","children":[{"name":"ref","repeatId":"0","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"systemLanguageSvCollectionVar"}]}]}],"attributes":{"type":"textVariable"}} | ${expectedError} | BAD_REQUEST |
+
+*!
 !***> Read textVariable pinCode
 
 !| RecordEndpointFixture |
