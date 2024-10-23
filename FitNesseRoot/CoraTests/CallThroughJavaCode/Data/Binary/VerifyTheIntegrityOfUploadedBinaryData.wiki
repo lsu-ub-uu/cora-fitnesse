@@ -10,7 +10,7 @@ When uploading binary files we need to validate that the integrity of the upload
 !*< Define common variables
 !define originalFileName {aText.txt}
 !define expectedUploadResult {BAD_REQUEST}
-!define expectedDownloadAnswer {An error has ocurred while downloading a resource: Could not download the stream because it could not be found in storage. Type: binary, id: $tmpRecordId1 and representation: master}
+!define expectedDownloadAnswer {An error has ocurred while downloading a resource: Could not download the stream because the binary does not have the requested representation. Type: binary, id: $tmpRecordId1 and representation: master}
 !define expectedDownloadStatus {NOT_FOUND}
 !define representation {master}
 !define recordType {binary}

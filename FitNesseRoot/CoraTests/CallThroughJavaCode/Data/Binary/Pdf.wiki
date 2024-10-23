@@ -52,7 +52,7 @@ The formats of the images are :
 !include -seamless .HelperPages.downloadResource
 
 !define expectedDownloadStatus {NOT_FOUND}
-!define expectedDownloadAnswer {An error has ocurred while downloading a resource: Could not download the stream because it could not be found in storage. Type: binary, id: $tmpRecordId1 and representation: jp2}
+!define expectedDownloadAnswer {An error has ocurred while downloading a resource: Could not download the stream because the binary does not have the requested representation. Type: binary, id: $tmpRecordId1 and representation: jp2}
 !define representation {jp2}
 !include -seamless .HelperPages.downloadResource
 
