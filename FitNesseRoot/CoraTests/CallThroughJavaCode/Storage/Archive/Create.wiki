@@ -37,6 +37,7 @@ Show file structure before storing a new record
 !include -seamless .HelperPages.showFileVersion
 
 Show file structure after storing a new record
+!define expectedRegexpArchive {=~/$tmpRecordId1/}
 !include -seamless .HelperPages.readFileSystem
 
 *!
@@ -71,12 +72,14 @@ Show file structure after storing a new record
 !include -seamless .HelperPages.uploadResource
 
 Show file structure after storing a new record
+!define expectedRegexpArchive {=~/$tmpRecordId2/}
 !include -seamless .HelperPages.readFileSystem
 
 !***> Validate metadata has been stored in the Archive
 Validate that:
  * Filesize and checksum are calculated and stored in the archive.
  * MimeType and orginalFilename are sent to the archive to be stored.
+
 	
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | http://systemone-fedora:8080/fcrepo/rest/ |
 | setHeaders | Accept: !-application/ld+json-! |

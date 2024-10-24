@@ -5,6 +5,6 @@ Help: Prints all the files from a parent path in a tree structure.
 
 !| ArchiveFile |
 |path|getTree?|
-|${archiveFileSystemPath}|${expectedRegexpArchive}|
+|${streamFileSystemPath}|${expectedRegexpStream}|
 *!
 

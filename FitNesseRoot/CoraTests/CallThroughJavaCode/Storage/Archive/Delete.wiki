@@ -1,0 +1,36 @@
+---
+Static
+---
+!2 Delete
+ * '''Case 1:''' It must be possible to delete a record stored in the archive
+ * '''Case 2:''' It must be possible to delete a binary stream stored in the archive. 
+ ** All related streams stored in streamstorage must be deleted as well.
+
+!***> '''Case 1'''
+!define expectedAnswer {}
+!define expectedCreateResult {OK}
+
+!define recordType {fitnesseRecordType}
+!define recordId {$tmpRecordId1}
+
+!include -seamless .HelperPages.deleteRecord
+
+Show file structure after storing a new record
+!define expectedRegexpArchive {=~/^(?!.*$tmpRecordId1).*/}
+!include -seamless .HelperPages.readFileSystem
+*!
+!***> '''Case 2'''
+!define expectedAnswer {}
+!define expectedCreateResult {OK}
+
+!define recordType {binary}
+!define recordId {$tmpRecordId2}
+
+!include -seamless .HelperPages.deleteRecord
+
+Show file structure after storing a new record
+!define expectedRegexpArchive {=~/^(?!.*$tmpRecordId2).*/}
+!include -seamless .HelperPages.readFileSystem
+!define expectedRegexpStream {=~/^(?!.*$tmpRecordId2).*/}
+!include -seamless .HelperPages.readStreamFileSystem
+*!

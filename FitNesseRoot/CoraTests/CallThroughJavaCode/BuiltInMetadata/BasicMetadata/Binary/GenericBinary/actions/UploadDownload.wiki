@@ -17,10 +17,28 @@ Static
 !***> '''Case 1'''
 !define uploadRecordId {$publishedRecordId}
 !include -seamless .HelperPages.uploadResource
+
+!***> Wait until images are generated
+!| WaitForRegExReadResultFixture |
+| authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
+| $adminAuthToken | binary | $publishedRecordId | 250 | 50 | \"name\":\"thumbnail\" | Found |
+*!
+
+!define expectedRegexpStream {=~/$publishedRecordId/}
+!include -seamless .HelperPages.readStreamFileSystem
 *!
 !***> '''Case 2'''
 !define uploadRecordId {$unpublishedRecordId}
 !include -seamless .HelperPages.uploadResource
+
+!***> Wait until images are generated
+!| WaitForRegExReadResultFixture |
+| authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
+| $adminAuthToken | binary | $unpublishedRecordId | 250 | 50 | \"name\":\"thumbnail\" | Found |
+*!
+
+!define expectedRegexpStream {=~/$unpublishedRecordId/}
+!include -seamless .HelperPages.readStreamFileSystem
 *!
 !***> '''Case 3'''
 !| WaitForRegExReadResultFixture                                                                                               |
