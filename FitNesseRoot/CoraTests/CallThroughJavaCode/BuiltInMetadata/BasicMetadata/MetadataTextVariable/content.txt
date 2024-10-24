@@ -109,6 +109,101 @@ The metadata for textVariable has been created during system startup, so we shou
 | $adminAuthToken | lock | {"children":[{"children":[{"name":"id","value":"lock_2"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"lock"}],"name":"validationType"}],"name":"recordInfo"},{"name":"pinCode","value":"abcde"}],"name":"lock"} | | BAD_REQUEST |
 
 *!
+
+!***> Update lock with data that cause catastrophic backtracking
+!***> Update textVariable swedishName with a risky regex and define input and expected error response
+!define riskyRegEx {!-(<br/>|.)*-!}
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? | getStatusType? |
+| $adminAuthToken | metadata | swedishNameTextVar | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"swedishNameTextVar"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadata"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataTextVariable"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2024-10-23T14:34:38.889174Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2024-10-23T14:34:38.889174Z"}]}]},{"name":"nameInData","value":"name"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}]},{"name":"regEx","value":"${riskyRegEx}"},{"name":"attributeReferences","children":[{"name":"ref","repeatId":"0","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"systemLanguageSvCollectionVar"}]}]}],"attributes":{"type":"textVariable"}} | | OK |
+
+!define inputText {Ode to the Infinite Cycle: A Regex Reverie
+
+In the land of code where logic thrives, A realm of symbols, where patterns devise. A tapestry woven with care and might, Yet beneath its beauty, shadows take flight.
+
+Oh Regex, the art of the unseen craft, With loops and bounds that dazzle and daft. From the simplest of searches to the complex array, You guide the coder, leading the way.
+
+Yet within your depths, a peril lies, A lurking beast, where the innocent dies. Catastrophic recursion, the silent snare, In Regex’s labyrinth, tread with care.
+
+Once a pattern, pure and bright, Turns to chaos in the dead of night. Nested loops and optional threads, A coder’s nightmare, the heart dreads.
+
+The stack groans with each recursive call, A whisper of doom in the logic hall. Deeper it delves, the abyss unseen, Until the system surrenders, a final scene.
+
+Infinite recursion, the coder's plight, A curse that shrouds the darkest night. Each step, each match, a perilous dive, In Regex’s grip, how can one survive?
+
+Oh how the mind twists, the logic bends, In search of a path where this curse ends. The pattern grows, so tangled and tight, An endless loop, devoid of light.
+
+Behold the stack, a weary soul, Burdened by loops that take their toll. Each call, a step into the deep, Where logic falters and errors creep.
+
+A coder's lament, a sorrowful tune, Of Regex's power, an ominous rune. Patterns twist, the symbols snare, Drawing the unwary into despair.
+
+In the depths where chaos resides, The coder's hope often subsides. Trapped within the endless night, Regex's wrath, an unseen fight.
+
+Yet in the darkness, a light persists, A glimmer of hope that logic insists. Master the flow, control the tide, And through Regex's maze, you’ll glide.
+
+For in the heart of this complex art, Lies the key to play the part. Understand the patterns, their intricate ways, And navigate through the endless maze.
+
+Regex, oh Regex, your power profound, A tool that in wisdom, vast knowledge is found. In mastery, lies the secret lore, To wield your might, forevermore.
+
+So heed this tale, dear coder wise, For within the loops, the solution lies. Tame the beast, control the flow, And through Regex’s realm, you’ll go.
+
+Infinite recursion, a coder's nemesis, A challenge fierce, not to be dismissed. But with patience and a steady hand, Regex will yield, at your command.
+
+In the end, a mere tool it may be, But used rightly, you’ll set minds free. Infinite recursion, the ultimate test, Master it, and be among the best.
+
+Oh Regex, the wizard’s chant, In symbols and spaces, you enchant. A dance of logic, a rhythmic song, In Regex’s embrace, where patterns belong.
+
+The quest for matching, an endless race, In Regex's land, a twisting chase. From simple forms to complex snares, Coders beware, of Regex’s lairs.
+
+In the vast expanse where patterns play, A subtle spell weaves night and day. Regex, the sorcerer, both friend and foe, A journey of logic, where few dare go.
+
+So let this ode, a warning be, Of Regex’s depth, and its hidden sea. A tool of power, both fierce and grand, When mastered well, it serves at hand.
+
+Regex, oh Regex, your strength untold, In patterns and loops, a story bold. With wisdom and a careful eye, Through recursion’s sky, you’ll fly.
+
+For in the code where logic twines, Regex crafts its subtle lines. A coder's art, a skill so fine, Master the patterns, make them shine.
+
+In the realm of strings where magic resides, Regex guides with silent strides. An ode to patterns, and loops so grand, In Regex’s world, we take our stand.
+
+With each new line, a test of might, In the coder's quest, both day and night. Regex, oh Regex, your secrets keep, Within your embrace, the codes sleep.
+
+Oh how the stack, under your charm, Recurses deep, without alarm. A journey long, through logic’s maze, In Regex’s world, we find our ways.
+
+Infinite recursion, a dance so wild, A coder’s test, both fierce and mild. But with knowledge and a steady heart, Regex’s magic, will play its part.
+
+So to you, oh Regex, this ode we sing, Of endless loops and patterns’ ring. In your embrace, we find the art, Of logic’s dance, and coder’s heart.
+
+Regex, oh Regex, your power vast, A coder’s tool, both slow and fast. In mastery, lies the final key, To wield your might, and set us free.
+
+Infinite recursion, the coder’s plight, A challenge great, in the dead of night. But with wisdom and a guiding hand, Regex will yield, at your command.
+
+In the end, it’s just a tool, But wielded right, it’s truly cool. Infinite recursion, the ultimate test, Master it, and be among the best.
+
+So to you, dear coder, this tale we share, Of Regex’s might, and its hidden snare. Be wise, be bold, control the flow, And through Regex’s realm, you shall go.
+
+With every line, every match, a step, In the journey of logic, where secrets are kept. Regex, oh Regex, your power unfolds, In the coder’s hand, where the story is told.
+
+In the vast expanse of logic’s land, Regex stands, a tool so grand. A coder’s art, a skill so bright, Master the patterns, conquer the night.
+
+So let this ode, a warning and guide, Of Regex’s depth, where logic resides. A tool of power, both fierce and grand, When mastered well, it serves at hand.
+
+Regex, oh Regex, your secrets profound, In patterns and loops, wisdom is found. With mastery and a careful eye, Through recursion’s sky, we’ll fly.
+
+For in the code where logic twines, Regex crafts its subtle lines. A coder's art, a skill so fine, Master the patterns, make them shine.
+
+In the realm of strings where magic resides, Regex guides with silent strides. An ode to patterns, and loops so grand, In Regex’s world, we take our stand.
+
+With each new line, a test of might, In the coder's quest, both day and night. Regex, oh Regex, your secrets keep, Within your embrace, the codes sleep.}
+
+!define expectedRegExError {!-Error updating record with recordType: lock and recordId: lock_1. Data is not valid: [DataElementValidator not created for the requested metadataId: lockGroup with error: Error while validating data. The regular expression (<br/>|.)* caused a stack overflow.]-!}
+*!
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? | getStatusType? |
+| $adminAuthToken | lock | lock_1 | {"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"lock_1"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"lock"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2022-03-03T14:08:09.081700Z"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"updatedBy"},{"name":"tsUpdated","value":"2022-03-03T14:08:09.081700Z"}],"name":"updated"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"lock"}],"name":"validationType"}],"name":"recordInfo"},{"name":"pinCode","value":"0123"},{"name":"name","attributes":{"lang":"sv"},"value":"${inputText}"},{"name":"name","attributes":{"lang":"en"},"value":"Another english name of the  lock"}],"name":"lock"} | ${expectedRegExError} | BAD_REQUEST |
+
+*!
+
+
 !2 Clean up created data
 !***> Clean up created data
 
