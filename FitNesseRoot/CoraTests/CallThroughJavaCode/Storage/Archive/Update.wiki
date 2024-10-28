@@ -30,6 +30,13 @@ Show file structure before storing a new record
 Show file structure after storing a new record
 !include -seamless .HelperPages.readFileSystem
 
+show that file exists as v1, v2 but not v3 after one update
+!| script | FileReader |
+| ensure | file name | testSystem:fitnesseRecordType:$tmpRecordId1 | exists in archive as version | v1 | under path | ${archiveFileSystemPath} |
+| ensure | file name | testSystem:fitnesseRecordType:$tmpRecordId1 | exists in archive as version | v2 | under path | ${archiveFileSystemPath} |
+| reject | file name | testSystem:fitnesseRecordType:$tmpRecordId1 | exists in archive as version | v3 | under path | ${archiveFileSystemPath} |
+
+
 !define xmlFilev1 {!-<?xml version="1.0" encoding="UTF-8"?><fitnesseExample><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><id>$tmpRecordId1</id><type><linkedRecordType>recordType</linkedRecordType><linkedRecordId>fitnesseRecordType</linkedRecordId></type><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>fitnesseValidationType</linkedRecordId></validationType><createdBy><linkedRecordType>user</linkedRecordType><linkedRecordId>131313</linkedRecordId></createdBy></recordInfo><fitnesseTextVar repeatId="0">myRecordInArchive</fitnesseTextVar></fitnesseExample>-!}
 !define xmlFilev2 {!-<?xml version="1.0" encoding="UTF-8"?><fitnesseExample><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><id>$tmpRecordId1</id><type><linkedRecordType>recordType</linkedRecordType><linkedRecordId>fitnesseRecordType</linkedRecordId></type><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>fitnesseValidationType</linkedRecordId></validationType><createdBy><linkedRecordType>user</linkedRecordType><linkedRecordId>131313</linkedRecordId></createdBy></recordInfo><fitnesseTextVar repeatId="0">myUpdatedRecordInArchive</fitnesseTextVar></fitnesseExample>-!}
 !| ArchiveFileComparer |

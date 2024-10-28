@@ -15,9 +15,14 @@ Static
 
 !include -seamless .HelperPages.deleteRecord
 
-Show file structure after storing a new record
+Show file structure after deleting a record
 !define expectedRegexpArchive {=~/^(?!.*$tmpRecordId1).*/}
 !include -seamless .HelperPages.readFileSystem
+
+Show that record is deleted from archive
+!| script | FileReader |
+| reject | file name | testSystem:fitnesseRecordType:$tmpRecordId1 | exists in archive as version | v1 | under path | ${archiveFileSystemPath} |
+
 *!
 !***> '''Case 2'''
 !define expectedAnswer {}
@@ -28,9 +33,21 @@ Show file structure after storing a new record
 
 !include -seamless .HelperPages.deleteRecord
 
-Show file structure after storing a new record
+Show file structure after deleting a record
 !define expectedRegexpArchive {=~/^(?!.*$tmpRecordId2).*/}
 !include -seamless .HelperPages.readFileSystem
 !define expectedRegexpStream {=~/^(?!.*$tmpRecordId2).*/}
 !include -seamless .HelperPages.readStreamFileSystem
+
+Show that binary record and uploaded master is deleted from archive
+!| script | FileReader |
+| reject | file name | systemOne:binary:$tmpRecordId2 | exists in archive as version | v1 | under path | ${archiveFileSystemPath} |
+| reject | file name | systemOne:binary:$tmpRecordId2-master | exists in archive as version | v1 | under path | ${archiveFileSystemPath} |
+
+Show that converted files are deleted
+!| script | FileReader |
+| reject | file name | binary:$tmpRecordId2-jp2 | exists in path | ${streamFileSystemPath}/streams/testSystem/ |
+| reject | file name | binary:$tmpRecordId2-large | exists in path | ${streamFileSystemPath}/streams/testSystem/ |
+| reject | file name | binary:$tmpRecordId2-medium | exists in path | ${streamFileSystemPath}/streams/testSystem/ |
+| reject | file name | binary:$tmpRecordId2-thumbnail | exists in path | ${streamFileSystemPath}/streams/testSystem/ |
 *!

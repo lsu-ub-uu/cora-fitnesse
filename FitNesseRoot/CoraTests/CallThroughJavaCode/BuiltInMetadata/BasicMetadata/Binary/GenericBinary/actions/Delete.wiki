@@ -13,14 +13,25 @@ Static
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | binary | $publishedRecordId | | OK |
 
-!define expectedRegexpStream {=~/^(?!.*$publishedRecordId).*/}
-!include -seamless .HelperPages.readStreamFileSystem
+Show that converted files are deleted
+!| script | FileReader |
+| reject | file name | binary:$publishedRecordId-jp2 | exists in path | ${streamFileSystemPath}/streams/testSystem/ |
+| reject | file name | binary:$publishedRecordId-large | exists in path | ${streamFileSystemPath}/streams/testSystem/ |
+| reject | file name | binary:$publishedRecordId-medium | exists in path | ${streamFileSystemPath}/streams/testSystem/ |
+| reject | file name | binary:$publishedRecordId-thumbnail | exists in path | ${streamFileSystemPath}/streams/testSystem/ |
+
+
 *!
 !***> Case 2
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | binary | $unpublishedRecordId | | OK |
 
-!define expectedRegexpStream {=~/^(?!.*$unpublishedRecordId).*/}
-!include -seamless .HelperPages.readStreamFileSystem
+Show that converted files are deleted
+!| script | FileReader |
+| reject | file name | binary:$unpublishedRecordId-jp2 | exists in path | ${streamFileSystemPath}/streams/testSystem/ |
+| reject | file name | binary:$unpublishedRecordId-large | exists in path | ${streamFileSystemPath}/streams/testSystem/ |
+| reject | file name | binary:$unpublishedRecordId-medium | exists in path | ${streamFileSystemPath}/streams/testSystem/ |
+| reject | file name | binary:$unpublishedRecordId-thumbnail | exists in path | ${streamFileSystemPath}/streams/testSystem/ |
 *!
+

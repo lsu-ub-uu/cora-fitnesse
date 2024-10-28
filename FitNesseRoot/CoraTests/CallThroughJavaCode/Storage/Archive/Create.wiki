@@ -40,6 +40,12 @@ Show file structure after storing a new record
 !define expectedRegexpArchive {=~/$tmpRecordId1/}
 !include -seamless .HelperPages.readFileSystem
 
+show that file exists as v1 but not v2 after create
+!| script | FileReader |
+| ensure | file name | testSystem:fitnesseRecordType:$tmpRecordId1 | exists in archive as version | v1 | under path | ${archiveFileSystemPath} |
+| reject | file name | testSystem:fitnesseRecordType:$tmpRecordId1 | exists in archive as version | v2 | under path | ${archiveFileSystemPath} |
+
+
 *!
 !***> '''Case 2'''
 
@@ -67,6 +73,11 @@ Show file structure after storing a new record
 !define expectedAnswer {}
 !define recordId {$createdRecordId}
 *!
+show that file exists as v1 but not v2 after create, and no uploaded master
+!| script | FileReader |
+| ensure | file name | systemOne:binary:$tmpRecordId2 | exists in archive as version | v1 | under path | ${archiveFileSystemPath} |
+| reject | file name | systemOne:binary:$tmpRecordId2 | exists in archive as version | v2 | under path | ${archiveFileSystemPath} |
+| reject | file name | systemOne:binary:$tmpRecordId2-master | exists in archive as version | v1 | under path | ${archiveFileSystemPath} |
 
 !define uploadRecordId {$tmpRecordId2}
 !include -seamless .HelperPages.uploadResource
@@ -74,6 +85,14 @@ Show file structure after storing a new record
 Show file structure after storing a new record
 !define expectedRegexpArchive {=~/$tmpRecordId2/}
 !include -seamless .HelperPages.readFileSystem
+
+show that file exists as v1, v2 but not v3 after upload, and uploaded master
+!| script | FileReader |
+| ensure | file name | systemOne:binary:$tmpRecordId2 | exists in archive as version | v1 | under path | ${archiveFileSystemPath} |
+| ensure | file name | systemOne:binary:$tmpRecordId2 | exists in archive as version | v2 | under path | ${archiveFileSystemPath} |
+| reject | file name | systemOne:binary:$tmpRecordId2 | exists in archive as version | v3 | under path | ${archiveFileSystemPath} |
+| ensure | file name | systemOne:binary:$tmpRecordId2-master | exists in archive as version | v1 | under path | ${archiveFileSystemPath} |
+
 
 !***> Validate metadata has been stored in the Archive
 Validate that:
