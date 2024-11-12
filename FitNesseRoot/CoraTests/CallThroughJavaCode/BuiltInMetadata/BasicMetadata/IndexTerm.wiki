@@ -1,0 +1,10 @@
+---
+Test
+---
+
+!1 IndexTerm
+To index data that should be searchable, you need indexing terms. In an indexing term, you specify the name of the index field and its type (String, Text, Number). In Solr, the name and type are used for the index field name. 
+For example, a text field gets the suffix _t, and a string field gets _s.
+You use indexing terms by adding them to the metadata for the field you want to index. For example, if you want to index the first and last names of a person, you locate these fields in the metadata (e.g., personGroup → personNameGroup → lastName/firstName) and enter the ID of the indexing term under "Index with." When you save or index a person record, the data for lastName and firstName is extracted and sent for indexing. Thereafter, it becomes searchable.
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.IndexTerm.RecordLink

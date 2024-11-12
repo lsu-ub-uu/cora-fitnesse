@@ -1,3 +1,64 @@
+---
+Static
+---
+!3 Metadata definition of search
+
+!***> Setup search definitions
+!define SearchGroupDefinition {!-search (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P, I)
+		createdBy (recordLink, 1-1, noConstraint)
+		permissionUnit (recordLink, 0-X, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)
+	metadataId (recordLink, 1-1, noConstraint)
+	presentationId (recordLink, 1-1, noConstraint)
+	recordTypeToSearchIn (recordLink, 1-X, noConstraint)
+	searchGroup (collectionVariable, 1-1, noConstraint)
+	textId (recordLink, 1-1, noConstraint)
+	defTextId (recordLink, 1-1, noConstraint)
+	searchResultPresentation (recordLink, 0-1, noConstraint)-!}
+	
+!define SearchNewGroupDefinition {!-search (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		validationType (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+	metadataId (recordLink, 1-1, noConstraint)
+	presentationId (recordLink, 1-1, noConstraint)
+	recordTypeToSearchIn (recordLink, 1-X, noConstraint)
+	searchGroup (collectionVariable, 1-1, noConstraint)
+	textId (recordLink, 0-1, noConstraint)
+	defTextId (recordLink, 0-1, noConstraint)
+	searchResultPresentation (recordLink, 0-1, noConstraint)-!}
+*!
+!4 Definition of search recordType
+{{{
+${SearchGroupDefinition}
+}}}
+!4 Definition of new
+{{{
+${SearchNewGroupDefinition}
+}}}
+!4 Definition of update
+{{{
+${SearchGroupDefinition}
+}}}
+!***> The validate the definitions of search
+!| DefinitionCompareFixture |
+| authToken | recordId | getDefinitionView? |
+| $adminAuthToken | searchNewGroup | ${SearchNewGroupDefinition} |
+
+!| DefinitionCompareFixture |
+| authToken | recordId | getDefinitionView? |
+| $adminAuthToken | searchGroup | ${SearchGroupDefinition} |
+*!
+
 !***> Read RecordType search
 
 !| RecordEndpointFixture |
@@ -62,3 +123,5 @@ Try create data of recodType search. Should fail since links are not correct
 | $adminAuthToken | search | {"children":[{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"NONEXISTINGmetadataGroupGroup"}],"name":"metadataId"},{"children":[{"name":"id","value":"myTestSearch"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"search"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"metadataGroupPGroup"}],"name":"presentationId"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"text"}],"name":"recordTypeToSearchIn"},{"name":"searchGroup","value":"autocomplete"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"myTestSearchText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"myTestSearchDefText"}],"name":"defTextId"}],"name":"search"} | Error creating new record for recordType: search. Data is not valid: linkedRecord does not exists in storage for recordType: metadata and recordId: NONEXISTINGmetadataGroupGroup | BAD_REQUEST |
 
 *!
+
+   
