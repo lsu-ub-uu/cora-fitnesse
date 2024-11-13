@@ -6,7 +6,7 @@ Suite
 !1 Search
 
 To create a search you need to define a [[search][.CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Search]] instance. An instance also relies on a number of other components to function properly such as [[searchTerms][.CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.SearchTerm]], [[indexTerms][.CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.IndexTerm]].
-When an instance is created you need to define which recordType(s) to search. You must also define a metadata group and a presentation group to use, the metadata group in expected to have the following structure:
+When an instance is created you need to define which [[record type][.CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.RecordType]](s) to search. You must also define a [[metadata group][.CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.MetadataGroup]] and a presentation group to use, the metadata group in expected to have the following structure:
 
 !4 Example of a person search
 {{{
