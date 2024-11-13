@@ -1,0 +1,19 @@
+---
+Static
+---
+!3 Metadata definition of IndexTerm
+
+!***> Setup IndexTerm definitions
+!define IndexTermDefinition {!-indexTerm (recordLink)-!}
+	
+!define IndexTermNewGroupDefinition {!--!}
+*!
+!4 Definition of indexTerm recordLink
+{{{
+${IndexTermDefinition}
+}}}
+!***> Validate the definition of indexTerm
+!| DefinitionCompareFixture |
+| authToken | recordId | getDefinitionView? |
+| $adminAuthToken | indexTermLink | ${IndexTermDefinition} |
+*!

@@ -1,3 +1,60 @@
+---
+Static
+---
+!3 Metadata definition of searchTerm
+
+!***> Setup searchTerm definitions
+!define SearchTermGroupDefinition {!-searchTerm (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P, I)
+		createdBy (recordLink, 1-1, noConstraint)
+		permissionUnit (recordLink, 0-X, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)
+	searchTermType (collectionVariable, 1-1, noConstraint)
+	searchInCollection (recordLink, 0-1, noConstraint)
+	searchInRecordType (recordLink, 0-1, noConstraint)
+	indexTerm (recordLink, 0-1, noConstraint)
+	linkedOn (recordLink, 0-1, noConstraint)-!}
+	
+!define SearchTermNewGroupDefinition {!-searchTerm (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		validationType (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+	searchTermType (collectionVariable, 1-1, noConstraint)
+	searchInCollection (recordLink, 0-1, noConstraint)
+	searchInRecordType (recordLink, 0-1, noConstraint)
+	indexTerm (recordLink, 0-1, noConstraint)
+	linkedOn (recordLink, 0-1, noConstraint)-!}
+*!
+!4 Definition of searchTerm recordType
+{{{
+${SearchTermGroupDefinition}
+}}}
+!4 Definition of new
+{{{
+${SearchTermNewGroupDefinition}
+}}}
+!4 Definition of update
+{{{
+${SearchTermGroupDefinition}
+}}}
+!***> Validate the definitions of searchTerm
+!| DefinitionCompareFixture |
+| authToken | recordId | getDefinitionView? |
+| $adminAuthToken | searchTermNewGroup | ${SearchTermNewGroupDefinition} |
+
+!| DefinitionCompareFixture |
+| authToken | recordId | getDefinitionView? |
+| $adminAuthToken | searchTermGroup | ${SearchTermGroupDefinition} |
+*!
+
 !***> Read RecordType searchTerm
 
 !| RecordEndpointFixture |
