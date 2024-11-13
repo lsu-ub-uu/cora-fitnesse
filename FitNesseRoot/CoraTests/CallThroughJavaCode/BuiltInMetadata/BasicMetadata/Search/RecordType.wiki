@@ -49,7 +49,7 @@ ${SearchNewGroupDefinition}
 {{{
 ${SearchGroupDefinition}
 }}}
-!***> The validate the definitions of search
+!***> Validate the definitions of search
 !| DefinitionCompareFixture |
 | authToken | recordId | getDefinitionView? |
 | $adminAuthToken | searchNewGroup | ${SearchNewGroupDefinition} |

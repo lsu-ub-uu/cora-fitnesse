@@ -45,7 +45,7 @@ ${SearchTermNewGroupDefinition}
 {{{
 ${SearchTermGroupDefinition}
 }}}
-!***> The validate the definitions of search
+!***> Validate the definitions of searchTerm
 !| DefinitionCompareFixture |
 | authToken | recordId | getDefinitionView? |
 | $adminAuthToken | searchTermNewGroup | ${SearchTermNewGroupDefinition} |

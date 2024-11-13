@@ -12,7 +12,7 @@ Static
 {{{
 ${IndexTermDefinition}
 }}}
-!***> The validate the definitions of search
+!***> Validate the definition of indexTerm
 !| DefinitionCompareFixture |
 | authToken | recordId | getDefinitionView? |
 | $adminAuthToken | indexTermLink | ${IndexTermDefinition} |

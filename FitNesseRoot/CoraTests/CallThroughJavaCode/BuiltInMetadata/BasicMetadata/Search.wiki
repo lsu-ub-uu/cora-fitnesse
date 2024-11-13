@@ -3,6 +3,6 @@ Test
 ---
 !1 Search
 
-Search is the recordType used to create search instances. To read about how this works in more detail you can go [[here][.CoraTests.CallThroughJavaCode.Data.Record.Search]]
+Search is the recordType used to create [[search][.CoraTests.CallThroughJavaCode.Data.Record.Search]] instances.
 
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.Search.RecordType
