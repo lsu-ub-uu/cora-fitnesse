@@ -2,8 +2,7 @@
 Static
 ---
 !3 Metadata definition of IndexTerm
-
-!***> Setup IndexTerm definitions
+!***< Setup IndexTerm definitions
 !define IndexTermDefinition {!-indexTerm (recordLink)-!}
 	
 !define IndexTermNewGroupDefinition {!--!}

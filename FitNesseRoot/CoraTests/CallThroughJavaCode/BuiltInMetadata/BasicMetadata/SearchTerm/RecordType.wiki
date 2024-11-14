@@ -1,9 +1,8 @@
 ---
 Static
 ---
-!3 Metadata definition of searchTerm
-
-!***> Setup searchTerm definitions
+!3 Metadata definitions of searchTerm
+!***< Setup searchTerm definitions
 !define SearchTermGroupDefinition {!-searchTerm (group)
 	recordInfo (group, 1-1, noConstraint)
 		id (textVariable, 1-1, noConstraint, I)

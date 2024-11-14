@@ -1,9 +1,7 @@
 ---
 Test
 ---
-
 !1 IndexTerm
-
 Link to the indexing term (collectIndexTerm) that has been used to extract the part of the data which this search term queries within the indexed records. 
 If the search term is used for linked data, it is the indexing term we want to search with from the linked record type specified.
 
