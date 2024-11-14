@@ -15,3 +15,4 @@ As a recordType instance
 !define recordType {recordType}
 !define recordId {validationType}
 !include -seamless .HelperPages.readRecord
+*!
