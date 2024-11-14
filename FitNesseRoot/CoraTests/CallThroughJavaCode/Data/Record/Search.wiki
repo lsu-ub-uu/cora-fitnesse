@@ -15,7 +15,7 @@ personSearchGroup → personSearchIncludeGroup → personSearchIncludePartGroup
 The idea behind this structure is that it should also be possible to add an excludeGroup where you can specify criteria to exclude matches. Within the includeGroup you can then add different includePartsGroup where OR-conditions should apply between them.
 Within the includePartGroup, you specify the variables that should be searchable. These variables must have a nameInData that matches a search term.
 
-!***> Example where publicPersonSearchTextVar, personIdSearchTextVar, and personGeneralSearchTextVar are searchable fields (a somewhat minimized version):
+!*** Example where publicPersonSearchTextVar, personIdSearchTextVar, and personGeneralSearchTextVar are searchable fields (a somewhat minimized version):
 {{{
 {
   "name": "metadata",
