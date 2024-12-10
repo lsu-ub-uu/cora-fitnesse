@@ -69,7 +69,7 @@ All cases will make sure there is no IIIF protocol information when the binary r
 *!
 !| RecordEndpointFixture |
 |authToken     |type  |id                  |testReadRecord?                                 |getStatusType?|
-|$userAuthToken|binary|${unpublishedRecordId}| =~/"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/?","identifier":"binary:\d*"/ | OK           |
+|$userAuthToken|binary|${unpublishedRecordId}| =~/"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/","identifier":"binary:\d*"/ | OK           |
 
 !| DownloadFixture |
 | authToken      | recordType | recordId         |representation |testDownload? |getStatusType? |
@@ -105,7 +105,7 @@ All cases will make sure there is no IIIF protocol information when the binary r
 !define recordId {${publishedRecordId}}
 !| ChildComparerFixture                                                                                                                                           |
 |authToken          |type         |id         |testReadAndStoreRecord?                                                                                            |
-|${currentAuthToken}|${recordType}|${recordId}| =~/^(?!.*"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/?","identifier":"binary:\d*").*/ |
+|${currentAuthToken}|${recordType}|${recordId}| =~/^(?!.*"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/","identifier":"binary:\d*").*/ |
 
 !define expectedXpath {count(//otherProtocols) = 0}
 !include -seamless .HelperPages.readRecordInXML
