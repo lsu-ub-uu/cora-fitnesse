@@ -1,0 +1,39 @@
+---
+Test
+---
+ * '''Case 1: ''' It should be possible to read public data without supplying an authToken
+ * '''Case 2: ''' An invalid token should result in an ''UNAUTHORIZED'' response from the system
+ * '''Case 3: ''' An authToken should contain all expected data attached to the token when its created
+ * '''Case 4: ''' It must be possible to renew the authToken within the ''validUntil'' time limit
+ * '''Case 5: ''' It must not be possible to renew the authToken after the ''validUntil'' time limit is reached
+ * '''Case 6: ''' It must not be possible to renew the authToken after the ''renewUntil'' time limit is reached
+ 
+ * '''Case xx: ''' Creating data using an authToken should result in the userId automatically being attached to "createdBy"
+
+!***> '''Case 1: ''' It should be possible to read public data without supplying an authToken
+!| RecordEndpointFixture |
+| authToken | type | id | testReadRecord? | getStatusType? |
+| | metadata | idTextVar | | OK |
+*!
+!***> '''Case 2: ''' An invalid token should result in an UNAUTHORIZED response from the system
+!| RecordEndpointFixture |
+| authToken | type | id | testReadRecord? | getStatusType? |
+| dummyUnauthenticatedToken | metadata | idTextVar | | UNAUTHORIZED |
+*!
+
+!***> '''Case xx: ''' Creating data using an authToken should result in the userId automatically being attached to "createdBy"
+!define expectedAdminResponse {!-{"children":[{"children":[{"name":"id","value":"myAuthText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"textSystemOne"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Min svenska text"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}}],"name":"text"}-!}
+!define expecteduserResponse {!-{"children":[{"children":[{"name":"id","value":"myAuth3Text"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"textSystemOne"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Min andra text på svenska"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"My second text in english"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"}-!}
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | text | ${expectedAdminResponse} | =~/"name":"linkedRecordId",\s*"value":"131313"/ | CREATED |
+| $userAuthToken | text | ${expecteduserResponse} | =~/"name":"linkedRecordId",\s*"value":"121212"/ | CREATED |
+*!
+
+!***> Clean up created data
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | text | myAuthText | | OK |
+| $userAuthToken | text | myAuth3Text | | OK |
+*!
