@@ -12,8 +12,8 @@ Suite
 *!
 !***> Login for fitnesse guest
 !| IdpLoginServletFixture |
-| EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getValidForNoSeconds? | getDeleteUrl? |
-| userNotInDb@user.uu.se | |  |  | $guestAuthToken= | |  |
+| EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getValidUntil? | getRenewUntil? | getDeleteUrl? |
+| userNotInDb@user.uu.se | | |  | $guestAuthToken= | | | |
 *!
 
 !***> SuiteSetUp for Fitnesse Example

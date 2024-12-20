@@ -12,11 +12,11 @@ Test
 #
 !1 !-IdpLoginTest-!
 !2 Fetch authTokens using idpLogin
-!***> Get authTokens from idpLogin server ##### '''Need to update the idplogin fixture'''
+!***> Get authTokens from idpLogin server
 !| IdpLoginServletFixture |
-| EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getValidForNoSeconds? | getDeleteUrl? |
-| fitnesseAdmin@system.cora.uu.se | |fitnesseAdmin@system.cora.uu.se | OK | $fitnesseAdminAuthToken= | 600 | $fitnesseAdminAuthTokenDeleteUrl= |
-| fitnesseUser@system.cora.uu.se | |fitnesseUser@system.cora.uu.se | OK | $fitnesseUserAuthToken= | 600 | $fitnesseUserAuthTokenDeleteUrl= |
+| EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getValidUntil? | getRenewUntil? | getDeleteUrl? |
+| fitnesseAdmin@system.cora.uu.se | |fitnesseAdmin@system.cora.uu.se | OK | $fitnesseAdminAuthToken= | =~/\d{13}/ | =~/\d{13}/ | $fitnesseAdminAuthTokenDeleteUrl= |
+| fitnesseUser@system.cora.uu.se | |fitnesseUser@system.cora.uu.se | OK | $fitnesseUserAuthToken= | =~/\d{13}/ | =~/\d{13}/ | $fitnesseUserAuthTokenDeleteUrl= |
 *!
 !2 Test with new texts to show that we can use our authToken and be our user
 !***> Create data of recordType text (textSystemOne)
