@@ -11,47 +11,53 @@ This token has a limited lifespan and must be renewed to remain active. The toke
 !4 Example of an authToken
 !***> authToken response
 {{{
- {
-    "data": {
-        "children": [
-            {
-                "name": "token",
-                "value": "a43c00c0-1296-4f7d-a04d-53387288592d"
-            },
-            {
-                "name": "validUntil",
-                "value": "1734612312"
-            },
-            {
-                "name": "renewUntil",
-                "value": "1766061912"
-            },
-            {
-                "name": "userId",
-                "value": "123123"
-            },
-            {
-                "name": "loginId",
-                "value": "someuser@someExampleSystem.com"
-            },
-            {
-                "name": "firstName",
-                "value": "someFirstName"
-            },
-            {
-                "name": "lastName",
-                "value": "someLastName"
-            }
-        ],
-        "name": "authToken"
+{
+  "data": {
+    "children": [
+      {
+        "name": "token",
+        "value": "74cdaa20-9c7c-4741-aa12-28569ef0ecf0"
+      },
+      {
+        "name": "validUntil",
+        "value": "1736761647520"
+      },
+      {
+        "name": "renewUntil",
+        "value": "1736847447520"
+      },
+      {
+        "name": "userId",
+        "value": "131313"
+      },
+      {
+        "name": "loginId",
+        "value": "someLogin@someExampleServer.com"
+      },
+      {
+        "name": "firstName",
+        "value": "Afirstname"
+      },
+      {
+        "name": "lastName",
+        "value": "Alastname"
+      }
+    ],
+    "name": "authToken"
+  },
+  "actionLinks": {
+    "renew": {
+      "requestMethod": "POST",
+      "rel": "renew",
+      "url": "http://someExampleServer.com/login/rest/authToken/c9cecda1-c492-4fbe-8cc7-d7d40543c34d",
+      "accept": "application/vnd.uub.authToken+json"
     },
-    "actionLinks": {
-        "delete": {
-            "requestMethod": "DELETE",
-            "rel": "delete",
-            "url": "http://someExampleSystem.com/login/rest/authToken/2ab6d7e3-9a8f-47bd-84e0-8567834296a4"
-        }
+    "delete": {
+      "requestMethod": "DELETE",
+      "rel": "delete",
+      "url": "http://someExampleServer.com/login/rest/authToken/c9cecda1-c492-4fbe-8cc7-d7d40543c34d"
     }
+  }
 }
 }}}
 *!
@@ -59,7 +65,7 @@ This token has a limited lifespan and must be renewed to remain active. The toke
 !3 How to renew an authToken
 In order to renew an authToken a simple call is made to the authToken endpoint with the relevant tokenId included as a header.
  * !style_code(!style_pass[POST] {systemUrl}/login/rest/authToken/{tokenId})
- * !style_code(!style_ignore[headers] renewAuthToken{tokenId})
+ * !style_code(!style_ignore[produces] application/vnd.uub.authToken+json)
 
 ----
 !3 Authtoken tests
