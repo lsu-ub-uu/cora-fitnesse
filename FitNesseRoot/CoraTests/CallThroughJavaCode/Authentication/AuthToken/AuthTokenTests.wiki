@@ -6,6 +6,7 @@ Test
  * '''Case 3: ''' An authToken should contain all expected data attached to the token when its created
  * '''Case 4: ''' It must be possible to renew the authToken within the ''validUntil'' time limit
  * '''Case 7: ''' Creating data using an authToken should result in the userId automatically being attached to "createdBy"
+ * '''Case 8: ''' It must be possible to delete an authToken
  !style_red[* '''Case 5: ''' It must not be possible to renew the authToken after the ''validUntil'' time limit is reached]
  !style_red[* '''Case 6: ''' It must not be possible to renew the authToken after the ''renewUntil'' time limit is reached]
 
