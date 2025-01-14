@@ -61,12 +61,19 @@ This token has a limited lifespan and must be renewed to remain active. The toke
 }
 }}}
 *!
+!4 How to renew an authToken
+!*** Renew an authToken
+In order to renew an authToken a simple !style_pass[POST] call is made to tokenId URL that is listed under actionLinks as ''renew'' in the authToken response.
 
-!3 How to renew an authToken
-In order to renew an authToken a simple call is made to the authToken endpoint with the relevant tokenId included as a header.
  * !style_code(!style_pass[POST] {systemUrl}/login/rest/authToken/{tokenId})
  * !style_code(!style_ignore[produces] application/vnd.uub.authToken+json)
+*!
+!4 How to delete an authToken
+!*** Delete an authToken
+In the same way as refresh a simple !style_pass[DELETE] call is made to tokenId URL that is listed under actionLinks as ''delete'' in the authToken response.
 
+ * !style_code(!style_pass[DELETE] {systemUrl}/login/rest/authToken/{tokenId})
+*!
 ----
 !3 Authtoken tests
 !include -seamless .CoraTests.CallThroughJavaCode.Authentication.AuthToken.AuthTokenTests
