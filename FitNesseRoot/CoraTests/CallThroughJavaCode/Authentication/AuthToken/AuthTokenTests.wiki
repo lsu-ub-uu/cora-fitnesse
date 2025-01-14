@@ -46,7 +46,7 @@ Test
 | let | lastName | js | response.body.match(/lastName","value":"([^"]+)"}/)[1] | User |
 | let | authToken | js | response.body.match(/name":"(authToken)"}/)[1] | authToken |
 | let | createdAuthToken | js | response.body.match(/token","value":"([^"]+)"}/)[1] | |
-| let | refreshUrl | js | response.body.match(/url":"([^"]+)"}/)[1] | |
+| let | tokenIdUrl | js | response.body.match(/url":"([^"]+)"}/)[1] | |
 
 !| script | ExtractSubstringUsingRegex |
 | ensure | match found using text | $loginResult | and regex | "token","value":"([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})" |
@@ -65,7 +65,7 @@ Test
 | setHeader | Accept:application/vnd.uub.authToken+json!-
 -!Content-Type:application/vnd.uub.login !- 
 -!authToken:!-%createdAuthToken% -!|
-| POST | %refreshUrl% | 200 | | $loginResult= |
+| POST | %tokenIdUrl% | 200 | | $loginResult= |
 | let | userId | js | response.body.match(/userId","value":"([^"]+)"}/)[1] | 121212 |
 | let | loginId | js | response.body.match(/loginId","value":"([^"]+)"}/)[1] | fitnesseUser@system.cora.uu.se |
 | let | firstName | js | response.body.match(/firstName","value":"([^"]+)"}/)[1] | Fitnesse |
@@ -94,7 +94,7 @@ Test
 | setHeader | Accept:application/vnd.uub.authToken+json!-
 -!Content-Type:application/vnd.uub.login !- 
 -!authToken:!-%renewedAuthToken% -!|
-| DELETE | %refreshUrl% | 200 | | |
+| DELETE | %tokenIdUrl% | 200 | | |
 
 '''Ensure that the renewed authToken is invalid after deletion'''
 !| RecordEndpointFixture |
