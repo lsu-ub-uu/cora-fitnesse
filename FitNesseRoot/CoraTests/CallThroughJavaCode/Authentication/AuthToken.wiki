@@ -63,16 +63,18 @@ This token has a limited lifespan and must be renewed to remain active. The toke
 *!
 !4 How to renew an authToken
 !***> Renew an authToken
-In order to renew an authToken, make a !style_pass[POST] call to tokenId URL that is listed under actionLinks as ''renew'' in the authToken response.
+Renew an authToken by using the tokenId URL that is listed under actionLinks as ''renew'' in the authToken response.
+| Renew authToken |
+| Method | URL | Produces |
+| !style_pass[POST] | {systemUrl}/login/rest/authToken/{tokenId} | application/vnd.uub.authToken+json |
 
- * !style_code(!style_pass[POST] {systemUrl}/login/rest/authToken/{tokenId})
- * !style_code(!style_ignore[produces] application/vnd.uub.authToken+json)
 *!
 !4 How to delete an authToken
 !***> Delete an authToken
-In order to delete an authToken, make a !style_pass[DELETE] call to tokenId URL that is listed under actionLinks as ''delete'' in the authToken response.
-
- * !style_code(!style_pass[DELETE] {systemUrl}/login/rest/authToken/{tokenId})
+Delete an authToken by using the tokenId URL that is listed under actionLinks as ''delete'' in the authToken response.
+| Delete authToken |
+| Method | URL |
+| !style_pass[DELETE] | {systemUrl}/login/rest/authToken/{tokenId} |
 *!
 ----
 !3 Authtoken tests
