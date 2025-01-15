@@ -15,8 +15,8 @@ Test
 !***> Get authTokens from idpLogin server
 !| IdpLoginServletFixture |
 | EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getFirstName? | getLastName? | getValidUntil? | getRenewUntil? | getTokenIdUrl? |
-| fitnesseAdmin@system.cora.uu.se | |fitnesseAdmin@system.cora.uu.se | OK | $fitnesseAdminAuthToken= | | | =~/\d{13}/ | =~/\d{13}/ | $fitnesseAdminAuthTokenIdUrl= |
-| fitnesseUser@system.cora.uu.se | |fitnesseUser@system.cora.uu.se | OK | $fitnesseUserAuthToken= | | |  =~/\d{13}/ | =~/\d{13}/ | $fitnesseUserAuthTokenIdUrl= |
+| fitnesseAdmin@system.cora.uu.se | |fitnesseAdmin@system.cora.uu.se | OK | $fitnesseAdminAuthToken= | someFirstName | someLastName | =~/\d{13}/ | =~/\d{13}/ | $fitnesseAdminAuthTokenIdUrl= |
+| fitnesseUser@system.cora.uu.se | |fitnesseUser@system.cora.uu.se | OK | $fitnesseUserAuthToken= | someFirstName | someLastName |  =~/\d{13}/ | =~/\d{13}/ | $fitnesseUserAuthTokenIdUrl= |
 *!
 !2 Test with new texts to show that we can use our authToken and be our user
 !***> Create data of recordType text (textSystemOne)
