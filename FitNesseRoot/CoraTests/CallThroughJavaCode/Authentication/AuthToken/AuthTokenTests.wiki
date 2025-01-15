@@ -1,5 +1,5 @@
 ---
-Test
+Static
 ---
  * '''Case 1: ''' It should be possible to read public data without supplying an authToken
  * '''Case 2: ''' An invalid token should result in an ''UNAUTHORIZED'' response from the system
