@@ -8,8 +8,7 @@ This token has a limited lifespan and must be renewed to remain active. The toke
  *'''validUntil''': This timestamp represents the session limit. The token must be renewed before this time expires, otherwise, it becomes invalid for renewal.
  *'''renewUntil''': This timestamp indicates the maximum allowable period for renewing the token. After this time is reached, the token cannot be renewed further, and a new token must be generated.
  
-!4 Example of an authToken
-!*** authToken response
+!*** '''authToken response example'''
 {{{
 {
   "data": {
