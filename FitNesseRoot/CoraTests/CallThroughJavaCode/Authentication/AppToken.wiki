@@ -61,13 +61,13 @@ You can delete an appToken by simply removing its apptoken group in the user con
 
 !***> '''Case 2: ''' It should be possible to login using a created appToken.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${appTokenVerifierUrl}rest/ |
-| setHeader | Accept:application/vnd.uub.authToken+json!-
+| setHeader | Accept:application/vnd.uub.authentication+json!-
 -!Content-Type:application/vnd.uub.login |
 | setBody | fitnesseAdmin@system.cora.uu.se!-
 -!%appUserToken% |
 | POST | /apptoken | 201 | | $loginResult= |
 | let | generatedAuthToken | js | response.body.match(/"name":"token","value":"([^"]+)"}/)[1] | |
-| let | token | js | response.body.search(/name":"token","value":"([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})"}/) | 23 |
+| let | token | js | response.body.search(/name":"token","value":"([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})"}/) | 41 |
 | let | userId | js | response.body.match(/userId","value":"([^"]+)"}/)[1] | 131313 |
 | let | loginId | js | response.body.match(/"name":"loginId","value":"([^"]+)"}/)[1] | fitnesseAdmin@system.cora.uu.se |
 | let | firstName | js | response.body.match(/firstName","value":"([^"]+)"}/)[1] | Fitnesse |

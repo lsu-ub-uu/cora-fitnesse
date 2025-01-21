@@ -49,7 +49,7 @@ This token has a limited lifespan and must be renewed to remain active. The toke
       "requestMethod": "POST",
       "rel": "renew",
       "url": "http://someExampleServer.com/login/rest/authToken/c9cecda1-c492-4fbe-8cc7-d7d40543c34d",
-      "accept": "application/vnd.uub.authToken+json"
+      "accept": "application/vnd.uub.authentication+json"
     },
     "delete": {
       "requestMethod": "DELETE",
@@ -64,7 +64,7 @@ This token has a limited lifespan and must be renewed to remain active. The toke
 Renew an authToken by using the tokenId URL that is listed under actionLinks as ''renew'' in the authToken response.
 
  * !style_code(!style_pass[POST] : {systemUrl}/login/rest/authToken/{tokenId})
- * !style_code(!style_ignore[produces] : application/vnd.uub.authToken+json)
+ * !style_code(!style_ignore[produces] : application/vnd.uub.authentication+json)
 *!
 !***> '''Delete an authToken'''
 Delete an authToken by using the tokenId URL that is listed under actionLinks as ''delete'' in the authToken response.
