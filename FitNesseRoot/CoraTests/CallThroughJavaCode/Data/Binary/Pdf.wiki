@@ -22,11 +22,11 @@ The formats of the images are :
 !define thumbnailMimeType {image/jpeg}
 !define thumbnailHeight {142}
 !define thumbnailWidth {100}
-!define mediumFileSize {38109}
+!define mediumFileSize {38136}
 !define mediumMimeType {image/jpeg}
 !define mediumHeight {425}
 !define mediumWidth {300}
-!define largeFileSize {100382}
+!define largeFileSize {100506}
 !define largeMimeType {image/jpeg}
 !define largeHeight {849}
 !define largeWidth {600}
