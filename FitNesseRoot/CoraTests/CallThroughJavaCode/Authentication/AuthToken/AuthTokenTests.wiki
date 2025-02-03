@@ -52,7 +52,7 @@ Static
 | ensure | match found using text | $loginResult | and regex | "token","value":"([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})" |
 | ensure | match found using text | $loginResult | and regex | "validUntil","value":"\d{13}" |
 | ensure | match found using text | $loginResult | and regex | "renewUntil","value":"\d{13}" |
-| ensure | match found using text | $loginResult | and regex | "actionLinks":\{"renew":\{"requestMethod":"POST","rel":"renew","url":"http:\/\/[a-zA-Z0-9.-]+(:[0-9]{1,5})?\/login\/rest\/authToken\/[a-f0-9\\-]{36}","accept":"application\/vnd\.uub\.authentication\+json"\},"delete":\{"requestMethod":"DELETE","rel":"delete","url":"http:\/\/[a-zA-Z0-9.-]+(:[0-9]{1,5})?\/login\/rest\/authToken\/[a-f0-9\\-]{36}"\}\}\} |
+| ensure | match found using text | $loginResult | and regex | "actionLinks":\{"renew":\{"requestMethod":"POST","rel":"renew","url":"http:\/\/[a-zA-Z0-9.-]+(:[0-9]{1,5})?(\/[a-zA-Z]+)?\/login\/rest\/authToken\/[a-f0-9\\-]{36}","accept":"application\/vnd\.uub\.authentication\+json"\},"delete":\{"requestMethod":"DELETE","rel":"delete","url":"http:\/\/[a-zA-Z0-9.-]+(:[0-9]{1,5})?(\/[a-z]+\/)?(\/[a-zA-Z]+)?\/login\/rest\/authToken\/[a-f0-9\\-]{36}"\}\}\}|
 
 '''Ensure it's possible to read a post using the created authToken'''
 !| RecordEndpointFixture |
