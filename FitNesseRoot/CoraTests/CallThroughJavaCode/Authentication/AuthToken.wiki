@@ -1,0 +1,76 @@
+---
+Test
+---
+!1 AuthToken
+The authToken is a secure key used to access the API after a successful login. When you log in to the system, the API generates and returns an authToken.
+
+This token has a limited lifespan and must be renewed to remain active. The token's validity is managed by two timestamps:
+ *'''validUntil''': This timestamp represents the session limit. The token must be renewed before this time expires, otherwise, it becomes invalid for renewal.
+ *'''renewUntil''': This timestamp indicates the maximum allowable period for renewing the token. After this time is reached, the token cannot be renewed further, and a new token must be generated.
+ 
+!*** '''authToken response example'''
+{{{
+{
+  "data": {
+    "children": [
+      {
+        "name": "token",
+        "value": "74cdaa20-9c7c-4741-aa12-28569ef0ecf0"
+      },
+      {
+        "name": "validUntil",
+        "value": "1736761647520"
+      },
+      {
+        "name": "renewUntil",
+        "value": "1736847447520"
+      },
+      {
+        "name": "userId",
+        "value": "131313"
+      },
+      {
+        "name": "loginId",
+        "value": "someLogin@someExampleServer.com"
+      },
+      {
+        "name": "firstName",
+        "value": "Afirstname"
+      },
+      {
+        "name": "lastName",
+        "value": "Alastname"
+      }
+    ],
+    "name": "authToken"
+  },
+  "actionLinks": {
+    "renew": {
+      "requestMethod": "POST",
+      "rel": "renew",
+      "url": "http://someExampleServer.com/login/rest/authToken/c9cecda1-c492-4fbe-8cc7-d7d40543c34d",
+      "accept": "application/vnd.uub.authentication+json"
+    },
+    "delete": {
+      "requestMethod": "DELETE",
+      "rel": "delete",
+      "url": "http://someExampleServer.com/login/rest/authToken/c9cecda1-c492-4fbe-8cc7-d7d40543c34d"
+    }
+  }
+}
+}}}
+*!
+!***> '''Renew an authToken'''
+Renew an authToken by using the tokenId URL that is listed under actionLinks as ''renew'' in the authToken response.
+
+ * !style_code(!style_pass[POST] : {systemUrl}/login/rest/authToken/{tokenId})
+ * !style_code(!style_ignore[produces] : application/vnd.uub.authentication+json)
+*!
+!***> '''Delete an authToken'''
+Delete an authToken by using the tokenId URL that is listed under actionLinks as ''delete'' in the authToken response.
+
+ * !style_code(!style_pass[DELETE] : {systemUrl}/login/rest/authToken/{tokenId})
+*!
+----
+!3 Authtoken tests
+!include -seamless .CoraTests.CallThroughJavaCode.Authentication.AuthToken.AuthTokenTests
