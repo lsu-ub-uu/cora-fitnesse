@@ -2,30 +2,21 @@
 Suite
 ---
 
-!***> Login for fitnesse user (Disabled. Related to CORA-2475. Enabled when fixed.)
-#!| AppTokenEndpointFixture |
-#| userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
-#| fitnesseUser@system.cora.uu.se | | | $userAuthToken= | CREATED |
-#
-#!| script | AuthTokenHolder |
-#| setUserAuthToken | $userAuthToken |
-*!
 !***> Login for fitnesse guest
-!| IdpLoginServletFixture |
-| EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getValidUntil? | getRenewUntil? | getDeleteUrl? |
-| userNotInDb@user.uu.se | | |  | $guestAuthToken= | | | |
+!| AuthenticationFixture |
+| idpLogin? | EPPN | getAuthToken? | getStatusType? |
+| | userNotInDb@user.uu.se | $guestAuthToken= | |
 *!
 
 !***> SuiteSetUp for Fitnesse Example
 !include -seamless .CoraTests.CallThroughJavaCode.SuiteSetUp.ExamplesPool
 
 !***> Login for fitnesse user (Related to CORA-2475. Remove when fixed)
-!| AppTokenEndpointFixture |
-| loginId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
-| fitnesseUser@system.cora.uu.se | | | $userAuthToken= | CREATED |
+!| AuthenticationFixture |
+| appTokenLogin? | loginId | getAuthToken? | getStatusType? |
+| | fitnesseUser@system.cora.uu.se | $userAuthToken= | CREATED |
+*!
 
 !| script | AuthTokenHolder |
 | setUserAuthToken | $userAuthToken |
-*!
-
 *!
