@@ -34,25 +34,11 @@ Static
 
 *!
 !***> '''Case 4: ''' An authToken should contain all expected data attached to the token when its created
-!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${appTokenVerifierUrl}rest |
-| setHeader | Accept:application/vnd.uub.authentication+json!-
--!Content-Type:application/vnd.uub.login|
-| setBody | fitnesseUser@system.cora.uu.se!-
--!bd699488-f9d1-419d-a79d-9fa8a0f3bb9d |
-| POST | /apptoken | 201 | | $loginResult= |
-| let | userId | js | response.body.match(/userId","value":"([^"]+)"}/)[1] | 121212 |
-| let | loginId | js | response.body.match(/loginId","value":"([^"]+)"}/)[1] | fitnesseUser@system.cora.uu.se |
-| let | firstName | js | response.body.match(/firstName","value":"([^"]+)"}/)[1] | Fitnesse |
-| let | lastName | js | response.body.match(/lastName","value":"([^"]+)"}/)[1] | User |
-| let | authToken | js | response.body.match(/name":"(authToken)"}/)[1] | authToken |
-| let | createdAuthToken | js | response.body.match(/token","value":"([^"]+)"}/)[1] | |
-| let | tokenIdUrl | js | response.body.match(/url":"([^"]+)"}/)[1] | |
+!define renewAccept {!-application/vnd.uub.authentication+json-!}
 
-!| script | ExtractSubstringUsingRegex |
-| ensure | match found using text | $loginResult | and regex | "token","value":"([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})" |
-| ensure | match found using text | $loginResult | and regex | "validUntil","value":"\d{13}" |
-| ensure | match found using text | $loginResult | and regex | "renewUntil","value":"\d{13}" |
-| ensure | match found using text | $loginResult | and regex | "actionLinks":\{"renew":\{"requestMethod":"POST","rel":"renew","url":"http:\/\/[a-zA-Z0-9.-]+(:[0-9]{1,5})?(\/[a-zA-Z]+)?\/login\/rest\/authToken\/[a-f0-9\\-]{36}","accept":"application\/vnd\.uub\.authentication\+json"\},"delete":\{"requestMethod":"DELETE","rel":"delete","url":"http:\/\/[a-zA-Z0-9.-]+(:[0-9]{1,5})?(\/[a-z]+\/)?(\/[a-zA-Z]+)?\/login\/rest\/authToken\/[a-f0-9\\-]{36}"\}\}\}|
+!| AuthenticationFixture |
+| appTokenLogin? | loginId | getStatusType? | getUserId? | getLoginId? | getFirstName? | getLastName? | getAuthToken? | getRenewUrl? | getRenewAccept? | getDeleteUrl? |
+| | fitnesseUser@system.cora.uu.se | CREATED | 121212 | fitnesseUser@system.cora.uu.se | Fitnesse | User | $createdAuthToken= | $renewAuthTokenUrl= | ${renewAccept} | $deleteAuthTokenUrl= |
 
 '''Ensure it's possible to read a post using the created authToken'''
 !| RecordEndpointFixture |
@@ -61,23 +47,9 @@ Static
 
 *!
 !***> '''Case 5: ''' It must be possible to renew the authToken within the ''validUntil'' time limit
-!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${appTokenVerifierUrl}rest |
-| setHeader | Accept:application/vnd.uub.authentication+json!-
--!Content-Type:application/vnd.uub.login !- 
--!authToken:!-%createdAuthToken% -!|
-| POST | %tokenIdUrl% | 200 | | $loginResult= |
-| let | userId | js | response.body.match(/userId","value":"([^"]+)"}/)[1] | 121212 |
-| let | loginId | js | response.body.match(/loginId","value":"([^"]+)"}/)[1] | fitnesseUser@system.cora.uu.se |
-| let | firstName | js | response.body.match(/firstName","value":"([^"]+)"}/)[1] | Fitnesse |
-| let | lastName | js | response.body.match(/lastName","value":"([^"]+)"}/)[1] | User |
-| let | authToken | js | response.body.match(/name":"(authToken)"}/)[1] | authToken |
-| let | renewedAuthToken | js | response.body.match(/token","value":"([^"]+)"}/)[1] | |
-
-!| script | ExtractSubstringUsingRegex |
-| ensure | match found using text | $loginResult | and regex | "token","value":"([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})" |
-| ensure | match found using text | $loginResult | and regex | "validUntil","value":"\d{13}" |
-| ensure | match found using text | $loginResult | and regex | "renewUntil","value":"\d{13}" |
-| ensure | match found using text | $loginResult | and regex | "actionLinks":\{"renew":\{"requestMethod":"POST","rel":"renew","url":"http:\/\/[a-zA-Z0-9.-]+(:[0-9]{1,5})?\/login\/rest\/authToken\/[a-f0-9\\-]{36}","accept":"application\/vnd\.uub\.authentication\+json"\},"delete":\{"requestMethod":"DELETE","rel":"delete","url":"http:\/\/[a-zA-Z0-9.-]+(:[0-9]{1,5})?\/login\/rest\/authToken\/[a-f0-9\\-]{36}"\}\}\} |
+!| AuthenticationFixture |
+| renewAuthToken? | authTokenRenewUrl | existingAuthToken | getStatusType? | getUserId? | getLoginId? | getFirstName? | getLastName? | getAuthToken? | getRenewUrl? | getRenewAccept? | getDeleteUrl? |
+| | $renewAuthTokenUrl | $createdAuthToken | OK | 121212 | fitnesseUser@system.cora.uu.se | Fitnesse | User | $renewedAuthToken= | $renewAuthTokenUrl= | ${renewAccept} | $deleteAuthTokenUrl= |
 
 #### The old authToken will live for the duration of "validUntil" and automatically get deleted after this.
 #### Test is set to disabled until its possible to manually override this limit to avoid a stalling test.
@@ -93,11 +65,9 @@ Static
 
 *!
 !***> '''Case 8: ''' It must be possible to delete an authToken
-!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${appTokenVerifierUrl}rest |
-| setHeader | Accept:application/vnd.uub.authentication+json!-
--!Content-Type:application/vnd.uub.login !- 
--!authToken:!-%renewedAuthToken% -!|
-| DELETE | %tokenIdUrl% | 200 | | |
+!| AuthenticationFixture |
+| deleteAuthToken? | authTokenDeleteUrl | existingAuthToken | getStatusType? |
+| | $renewAuthTokenUrl | $renewedAuthToken | OK |
 
 '''Ensure that the renewed authToken is invalid after deletion'''
 !| RecordEndpointFixture |

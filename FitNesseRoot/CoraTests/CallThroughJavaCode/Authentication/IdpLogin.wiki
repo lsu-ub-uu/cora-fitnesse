@@ -1,22 +1,18 @@
 ---
-Test
+Static
 ---
-#!| script | SystemUrl |
-#| setUrl | ${systemUnderTestUrl} |
-#| setAppTokenVerifierUrl | ${appTokenVerifierUrl} |
-#| setIdpLoginUrl | ${idpLoginUrl} |
-#| setGatekeeperServerUrl | ${gatekeeperServerUrl} |
-#
-#!| script | DependencyProvider |
-#| setHttpHandlerFactoryClassName | se.uu.ub.cora.httphandler.HttpHandlerFactoryImp |
-#
+
 !1 !-IdpLoginTest-!
 !2 Fetch authTokens using idpLogin
 !***> Get authTokens from idpLogin server
-!| IdpLoginServletFixture |
-| EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getFirstName? | getLastName? | getValidUntil? | getRenewUntil? | getDeleteUrl? |
-| fitnesseAdmin@system.cora.uu.se | |fitnesseAdmin@system.cora.uu.se | OK | $fitnesseAdminAuthToken= | someFirstName | someLastName | =~/\d{13}/ | =~/\d{13}/ | $fitnesseAdminAuthTokenDeleteUrl= |
-| fitnesseUser@system.cora.uu.se | |fitnesseUser@system.cora.uu.se | OK | $fitnesseUserAuthToken= | someFirstName | someLastName |  =~/\d{13}/ | =~/\d{13}/ | $fitnesseUserAuthTokenDeleteUrl= |
+!define actionLinkUrlRegEx {!-=~/http:\/\/[a-zA-Z0-9.-]+(:[0-9]{1,5})?\/login\/rest\/authToken\/[a-f0-9\\-]{36}/-!}
+!define renewAccept {!-application/vnd.uub.authentication+json-!}
+
+!| AuthenticationFixture |
+| idpLogin? | EPPN | getStatusType? | getUserId? | getLoginId? | getFirstName? | getLastName? | getAuthToken? | getRenewUrl? | getRenewAccept? | getDeleteUrl? |
+| | fitnesseAdmin@system.cora.uu.se | OK | 131313 | fitnesseAdmin@system.cora.uu.se | someFirstName | someLastName | $fitnesseAdminAuthToken= | ${actionLinkUrlRegEx} | ${renewAccept} | $fitnesseAdminAuthTokenDeleteUrl= |
+| | fitnesseUser@system.cora.uu.se | OK | 121212 | fitnesseUser@system.cora.uu.se | someFirstName | someLastName | $fitnesseUserAuthToken= | ${actionLinkUrlRegEx} | ${renewAccept} | $fitnesseUserAuthTokenDeleteUrl= |
+
 *!
 !2 Test with new texts to show that we can use our authToken and be our user
 !***> Create data of recordType text (textSystemOne)
@@ -27,10 +23,9 @@ Test
 
 *!
 !***> Logout
-
-!| AppTokenEndpointFixture |
-| authTokenToLogOut | deleteUrl | removeAuthTokenForUser? | getStatusType? |
-| $fitnesseUserAuthToken | $fitnesseUserAuthTokenDeleteUrl| | OK |
+!| AuthenticationFixture |
+| deleteAuthToken? | existingAuthToken | authTokenDeleteUrl | getStatusType? |
+| | $fitnesseUserAuthToken | $fitnesseUserAuthTokenDeleteUrl | OK |
 
 *!
 !2 Test with new texts to show that authToken is not valid after logout
@@ -48,8 +43,8 @@ Test
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $fitnesseAdminAuthToken | text | myAuthText | | OK |
 
-!| AppTokenEndpointFixture |
-| authTokenToLogOut | deleteUrl | removeAuthTokenForUser? | getStatusType? |
-| $fitnesseAdminAuthToken | $fitnesseAdminAuthTokenDeleteUrl| | OK |
+!| AuthenticationFixture |
+| deleteAuthToken? | existingAuthToken | authTokenDeleteUrl | getStatusType? |
+| | $fitnesseAdminAuthToken | $fitnesseAdminAuthTokenDeleteUrl | OK |
 
 *!
