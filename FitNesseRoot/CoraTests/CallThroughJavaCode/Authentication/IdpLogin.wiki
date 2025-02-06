@@ -1,14 +1,17 @@
 ---
-Test
+Static
 ---
 
 !1 !-IdpLoginTest-!
 !2 Fetch authTokens using idpLogin
 !***> Get authTokens from idpLogin server
+!define actionLinkUrlRegEx {!-=~/http:\/\/[a-zA-Z0-9.-]+(:[0-9]{1,5})?\/login\/rest\/authToken\/[a-f0-9\\-]{36}/-!}
+!define renewAccept {!-application/vnd.uub.authentication+json-!}
+
 !| AuthenticationFixture |
-| idpLogin? | EPPN | getStatusType? | getLoginId? | getAuthToken? | getFirstName? | getLastName? | getDeleteUrl? |
-| | fitnesseAdmin@system.cora.uu.se | OK | fitnesseAdmin@system.cora.uu.se | $fitnesseAdminAuthToken= | someFirstName | someLastName | $fitnesseAdminAuthTokenDeleteUrl= |
-| | fitnesseUser@system.cora.uu.se | OK | fitnesseUser@system.cora.uu.se | $fitnesseUserAuthToken= | someFirstName | someLastName | $fitnesseUserAuthTokenDeleteUrl= |
+| idpLogin? | EPPN | getStatusType? | getUserId? | getLoginId? | getFirstName? | getLastName? | getAuthToken? | getRenewUrl? | getRenewAccept? | getDeleteUrl? |
+| | fitnesseAdmin@system.cora.uu.se | OK | 131313 | fitnesseAdmin@system.cora.uu.se | someFirstName | someLastName | $fitnesseAdminAuthToken= | ${actionLinkUrlRegEx} | ${renewAccept} | $fitnesseAdminAuthTokenDeleteUrl= |
+| | fitnesseUser@system.cora.uu.se | OK | 121212 | fitnesseUser@system.cora.uu.se | someFirstName | someLastName | $fitnesseUserAuthToken= | ${actionLinkUrlRegEx} | ${renewAccept} | $fitnesseUserAuthTokenDeleteUrl= |
 
 *!
 !2 Test with new texts to show that we can use our authToken and be our user

@@ -34,9 +34,11 @@ Static
 
 *!
 !***> '''Case 4: ''' An authToken should contain all expected data attached to the token when its created
+!define renewAccept {!-application/vnd.uub.authentication+json-!}
+
 !| AuthenticationFixture |
 | appTokenLogin? | loginId | getStatusType? | getUserId? | getLoginId? | getFirstName? | getLastName? | getAuthToken? | getRenewUrl? | getRenewAccept? | getDeleteUrl? |
-| | fitnesseUser@system.cora.uu.se | CREATED | 121212 | fitnesseUser@system.cora.uu.se | Fitnesse | User | $createdAuthToken= | $renewAuthTokenUrl= | application/vnd.uub.authentication+json | $deleteAuthTokenUrl= |
+| | fitnesseUser@system.cora.uu.se | CREATED | 121212 | fitnesseUser@system.cora.uu.se | Fitnesse | User | $createdAuthToken= | $renewAuthTokenUrl= | ${renewAccept} | $deleteAuthTokenUrl= |
 
 '''Ensure it's possible to read a post using the created authToken'''
 !| RecordEndpointFixture |
@@ -47,7 +49,7 @@ Static
 !***> '''Case 5: ''' It must be possible to renew the authToken within the ''validUntil'' time limit
 !| AuthenticationFixture |
 | renewAuthToken? | authTokenRenewUrl | existingAuthToken | getStatusType? | getUserId? | getLoginId? | getFirstName? | getLastName? | getAuthToken? | getRenewUrl? | getRenewAccept? | getDeleteUrl? |
-| | $renewAuthTokenUrl | $createdAuthToken | OK | 121212 | fitnesseUser@system.cora.uu.se | Fitnesse | User | $renewedAuthToken= | $renewAuthTokenUrl= | application/vnd.uub.authentication+json | $deleteAuthTokenUrl= |
+| | $renewAuthTokenUrl | $createdAuthToken | OK | 121212 | fitnesseUser@system.cora.uu.se | Fitnesse | User | $renewedAuthToken= | $renewAuthTokenUrl= | ${renewAccept} | $deleteAuthTokenUrl= |
 
 #### The old authToken will live for the duration of "validUntil" and automatically get deleted after this.
 #### Test is set to disabled until its possible to manually override this limit to avoid a stalling test.
