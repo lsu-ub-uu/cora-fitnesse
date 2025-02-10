@@ -1,0 +1,8 @@
+---
+Test
+---
+!1 PermissionUnit
+Text about permissionUnit
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.PermissionUnit.Definition
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.PermissionUnit.ValidationTypes.Definition

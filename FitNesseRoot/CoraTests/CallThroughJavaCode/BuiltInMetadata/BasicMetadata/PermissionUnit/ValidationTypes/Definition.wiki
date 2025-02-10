@@ -1,0 +1,48 @@
+---
+Static
+---
+!***< Setup permissionUnit definition
+!define permissionUnitNewGroupDefinition {!-permissionUnit (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+		validationType (recordLink, 1-1, noConstraint)
+	name (textVariable, 1-1, noConstraint)
+	url (textVariable, 0-1, noConstraint)-!}
+	
+!define permissionUnitGroupDefinition {!-permissionUnit (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint)
+		type (recordLink, 0-1, noConstraint)
+		createdBy (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+		permissionUnit (recordLink, 0-X, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+	name (textVariable, 1-1, noConstraint)
+	url (textVariable, 0-1, noConstraint)-!}
+*!
+!4 PermissionUnit validation types
+!***> '''Definition for new'''
+{{{
+${permissionUnitNewGroupDefinition}
+}}}
+!***> permissionUnitNewGroup definition test
+!| DefinitionCompareFixture |
+| authToken | recordId | getDefinitionView? |
+| $adminAuthToken | permissionUnitNewGroup | ${permissionUnitNewGroupDefinition} |
+*!
+*!
+!***> '''Definition for update'''
+{{{
+${permissionUnitGroupDefinition}
+}}}
+!***> permissionUnitGroup definition test 
+!| DefinitionCompareFixture |
+| authToken | recordId | getDefinitionView? |
+| $adminAuthToken | permissionUnitGroup | ${permissionUnitGroupDefinition} |
+*!
+*!
