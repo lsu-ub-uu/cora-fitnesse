@@ -1,7 +1,6 @@
 ---
 Static
 ---
-!2 PermissionUnit
 !3 Definition for PermissionUnit
 !***< Setup permissionUnit definition
 !define permissionUnitDefinition {!-permissionUnit (group)
@@ -10,31 +9,33 @@ Static
 		type (recordLink, 0-1, noConstraint)
 		createdBy (recordLink, 1-1, noConstraint)
 		dataDivider (recordLink, 1-1, noConstraint, P)
-		permissionUnit (recordLink, 0-X, noConstraint)
 		tsCreated (textVariable, 1-1, noConstraint)
 		updated (group, 1-X, noConstraint)
 			updatedBy (recordLink, 1-1, noConstraint)
 			tsUpdated (textVariable, 1-1, noConstraint)
 		validationType (recordLink, 1-1, noConstraint)
-	name (textVariable, 1-1, noConstraint)
-	url (textVariable, 0-1, noConstraint)-!}
+	name (recordLink, 1-1, noConstraint)
+	urlSubDomain (textVariable, 0-1, noConstraint)
+	url (textVariable, 0-1, noConstraint)
+	note (textVariable, 0-1, noConstraint)-!}
 *!
 {{{
 ${permissionUnitDefinition}
 }}}
-!***> Test definitions for PermissionUnit
-#!***> Validate recordType Binary
-#!| RecordEndpointFixture |
-#| authToken | type | id | testReadRecord? | getStatusType? |
-#| $adminAuthToken | recordType | permissionUnit | | OK |
-#*!
-#!***> Validate  definition of Binary group
-#!| RecordEndpointFixture |
-#| type | id | testReadRecordAndStoreJson? | getStatusType? |
-#| metadata | permissionUnit | | OK |
-
+!***> PermissionUnit validation
+!***> Validate recordType PermissionUnit
+!| RecordEndpointFixture |
+| authToken | type | id | testReadRecord? | getStatusType? |
+| $adminAuthToken | recordType | permissionUnit | | OK |
+*!
+!***> Validate PermissionUnit group
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? | getStatusType? |
+| metadata | permissionUnitGroup | | OK |
+*!
+!***> Validate the definition of permissionUnit
 !| DefinitionCompareFixture |
 | authToken | recordId | getDefinitionView? |
 | $adminAuthToken | permissionUnitGroup | ${permissionUnitDefinition} |
 *!
-
+*!
