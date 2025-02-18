@@ -1,9 +1,15 @@
 ---
 Test
 ---
-!1 PermissionUnit
-The Permission Unit is a feature in Cora for segmenting data into subsets, allowing the management of permissions for each subset. 
-For all record types within a system, it is possible to determine whether records of this type should be divided into permission units.
+!1 Permission Unit
+
+Permission Unit is a standard feature for dividing data into subsets, allowing control over permissions for each subset. For every record type in a system, 
+it can be determined whether records of this type should be divided into permission units.
+
+Permission units can be used to restrict a user's ability to create and update data to one or more permission units, without impacting the ability to read and list record. 
+They can also be used as an extra filter to data searches based on a permission unit in various scenarios. Additionally, they allow clients to automatically 
+fill in the value of the permission unit in different contexts (such as creating, updating data, and searches) based on the logged-in user and their available 
+permission units.
 
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.PermissionUnit.Definition
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.PermissionUnit.ValidationTypes
