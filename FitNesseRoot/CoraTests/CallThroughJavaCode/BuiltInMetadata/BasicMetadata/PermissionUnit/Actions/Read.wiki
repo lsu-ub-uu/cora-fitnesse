@@ -1,0 +1,19 @@
+---
+Static
+---
+!3 Read tests
+  * '''Case 1''': An Admin must be able to read a permission unit
+
+!***> Case 1: An Admin must be able to read a permission unit 
+!| ComparerFixture |
+| authToken | type |idToStore| testReadRecordListAndStoreRecordById? |
+| $adminAuthToken | permissionUnit | $permissionUnitRecord |  |
+
+!***< Clean up Create test data
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
+| setHeader | Accept:application/vnd.uub.record+json!-
+-!Content-Type:application/vnd.uub.record+json!-
+-!authToken:$adminAuthToken |
+| DELETE | /record/permissionUnit/$permissionUnitRecord | 200 | | |
+*!
+*!

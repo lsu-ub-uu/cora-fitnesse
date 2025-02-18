@@ -6,15 +6,14 @@ Static
 	recordInfo (group, 1-1, noConstraint)
 		id (textVariable, 1-1, noConstraint)
 		dataDivider (recordLink, 1-1, noConstraint, P)
-		validationType (recordLink, 1-1, noConstraint)
+		validationType {permissionUnit} (recordLink, 1-1, noConstraint)
 	name (recordLink, 1-1, noConstraint)
-	urlSubDomain (textVariable, 0-1, noConstraint)
 	url (textVariable, 0-1, noConstraint)
 	note (textVariable, 0-1, noConstraint)-!}
 	
 !define permissionUnitGroupDefinition {!-permissionUnit (group)
 	recordInfo (group, 1-1, noConstraint)
-		id (textVariable, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
 		type (recordLink, 0-1, noConstraint)
 		createdBy (recordLink, 1-1, noConstraint)
 		dataDivider (recordLink, 1-1, noConstraint, P)
@@ -23,8 +22,7 @@ Static
 			updatedBy (recordLink, 1-1, noConstraint)
 			tsUpdated (textVariable, 1-1, noConstraint)
 		validationType (recordLink, 1-1, noConstraint)
-	name (recordLink, 1-1, noConstraint)
-	urlSubDomain (textVariable, 0-1, noConstraint)
+	name (recordLink, 1-1, noConstraint, I)
 	url (textVariable, 0-1, noConstraint)
 	note (textVariable, 0-1, noConstraint)-!}
 *!
