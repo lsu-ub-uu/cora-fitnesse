@@ -18,3 +18,5 @@ permission units.
 ----
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.PermissionUnit.Actions
 ----
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.PermissionUnit.User
+----

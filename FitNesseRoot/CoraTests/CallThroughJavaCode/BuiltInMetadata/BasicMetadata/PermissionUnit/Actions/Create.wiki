@@ -1,7 +1,8 @@
 ---
 Static
 ---
-!3 Create tests
+#### Permission unit created here will be used in all CRUD tests (id: "somePermissionUnit")
+!4 Create
   * '''Case 1''': An admin must be able to create a permission unit
   * '''Case 2''': A guest must not be able to create a permission unit
   

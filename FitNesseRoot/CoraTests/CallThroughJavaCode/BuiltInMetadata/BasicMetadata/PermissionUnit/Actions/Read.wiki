@@ -1,19 +1,20 @@
 ---
 Static
 ---
-!3 Read tests
+#### Using permission unit from CREATE CRUD tests (id: "somePermissionUnit")
+!4 Read
   * '''Case 1''': An Admin must be able to read a permission unit
+  * '''Case 2''': A guest must not be able to read a permission unit
 
 !***> Case 1: An Admin must be able to read a permission unit 
 !| ComparerFixture |
 | authToken | type |idToStore| testReadRecordListAndStoreRecordById? |
 | $adminAuthToken | permissionUnit | $permissionUnitRecord |  |
 
-!***< Clean up Create test data
-!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
-| setHeader | Accept:application/vnd.uub.record+json!-
--!Content-Type:application/vnd.uub.record+json!-
--!authToken:$adminAuthToken |
-| DELETE | /record/permissionUnit/$permissionUnitRecord | 200 | | |
 *!
+!***> Case 2: A guest must be able to read a permission unit 
+!| ComparerFixture |
+| authToken | type |idToStore| testReadRecordListAndStoreRecordById? |
+| $guestAuthToken | permissionUnit | $permissionUnitRecord |  |
+
 *!

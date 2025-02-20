@@ -1,6 +1,11 @@
 ---
 Static
 ---
+!3 CRUD tests
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.PermissionUnit.Actions.Create
 ----
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.PermissionUnit.Actions.Read
+----
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.PermissionUnit.Actions.Update
+----
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.PermissionUnit.Actions.Delete
