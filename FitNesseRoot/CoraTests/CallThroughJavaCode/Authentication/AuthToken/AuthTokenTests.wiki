@@ -35,10 +35,27 @@ Static
 *!
 !***> '''Case 4: ''' An authToken should contain all expected data attached to the token when its created
 !define renewAccept {!-application/vnd.uub.authentication+json-!}
+!define expectedPermissionUnits {[fitnesseUserPermissionUnit, fitnesseUserPermissionUnit2]}
 
+!***> Check apptoken login authentication content
 !| AuthenticationFixture |
-| appTokenLogin? | loginId | getStatusType? | getUserId? | getLoginId? | getFirstName? | getLastName? | getAuthToken? | getRenewUrl? | getRenewAccept? | getDeleteUrl? |
-| | fitnesseUser@system.cora.uu.se | CREATED | 121212 | fitnesseUser@system.cora.uu.se | Fitnesse | User | $createdAuthToken= | $renewAuthTokenUrl= | ${renewAccept} | $deleteAuthTokenUrl= |
+| appTokenLogin? | loginId | getStatusType? | getUserId? | getLoginId? | getFirstName? | getLastName? | getPermissionUnitIds? | getAuthToken? | getRenewUrl? | getRenewAccept? | getDeleteUrl? |
+| | fitnesseUser@system.cora.uu.se | CREATED | 121212 | fitnesseUser@system.cora.uu.se | Fitnesse | User | ${expectedPermissionUnits} | $createdAuthToken= | $renewAuthTokenUrl= | ${renewAccept} | $deleteAuthTokenUrl= |
+
+*!
+!***> Check idp login authentication content
+!define actionLinkUrlRegex {!-=~/http:\/\/[a-zA-Z0-9.-]+(:[0-9]{1,5})?\/login\/rest\/authToken\/[a-f0-9\\-]{36}/-!}
+!define authTokenRegex {!-=~/([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})/-!}
+!| AuthenticationFixture |
+| idpLogin? | EPPN | getStatusType? | getUserId? | getLoginId? | getFirstName? | getLastName? | getPermissionUnitIds? | getAuthToken? | getRenewUrl? | getRenewAccept? | getDeleteUrl? |
+| | fitnesseUser@system.cora.uu.se | OK | 121212 | fitnesseUser@system.cora.uu.se | someFirstName | someLastName | ${expectedPermissionUnits} | ${authTokenRegex} | ${actionLinkUrlRegex} | ${renewAccept} | ${actionLinkUrlRegex} |
+
+*!
+!***> Check password login authentication content
+!| AuthenticationFixture |
+| passwordLogin? | loginId | password | getStatusType? | getUserId? | getLoginId? | getFirstName? | getLastName? |  getPermissionUnitIds? | getAuthToken? | getRenewUrl? | getRenewAccept? | getDeleteUrl? |
+| | fitnesseUser@system.cora.uu.se | password | CREATED | 121212 | fitnesseUser@system.cora.uu.se | Fitnesse | User | ${expectedPermissionUnits} | ${authTokenRegex} | ${actionLinkUrlRegex} | ${renewAccept} | ${actionLinkUrlRegex} |
+*!
 
 '''Ensure it's possible to read a post using the created authToken'''
 !| RecordEndpointFixture |

@@ -12,5 +12,6 @@
 !| RecordEndpointFixture |
 |authToken|type|id|testDeleteRecord?|getStatusType?|
 |$adminAuthToken|permissionUnit|fitnesseUserPermissionUnit||OK|
+|$adminAuthToken|permissionUnit|fitnesseUserPermissionUnit2||OK|
 |$adminAuthToken|text|fitnessePermissionUnitText||OK|
 *!
