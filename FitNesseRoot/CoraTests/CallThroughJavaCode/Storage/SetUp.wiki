@@ -6,10 +6,10 @@ Suite
 !define expectedUpdateResult {OK}
 *!
 
-!***> Refresh the authTokens
-!| AuthenticationFixture |
-| renewAuthToken? | authTokenRenewUrl | existingAuthToken | getStatusType? | getAuthToken? |
-| | $adminRenewUrl | $adminAuthToken | OK |  $adminAuthToken= | 
-| | $userRenewUrl | $userAuthToken | OK |  $userAuthToken= | 
-| | $guestRenewUrl | $guestAuthToken | OK |  $guestAuthToken= | 
-*!
+#!***> Refresh the authTokens
+#!| AuthenticationFixture |
+#| renewAuthToken? | authTokenRenewUrl | existingAuthToken | getStatusType? | getAuthToken? |
+#| | $adminRenewUrl | $adminAuthToken | OK |  $adminAuthToken= | 
+#| | $userRenewUrl | $userAuthToken | OK |  $userAuthToken= | 
+#| | $guestRenewUrl | $guestAuthToken | OK |  $guestAuthToken= | 
+#*!
