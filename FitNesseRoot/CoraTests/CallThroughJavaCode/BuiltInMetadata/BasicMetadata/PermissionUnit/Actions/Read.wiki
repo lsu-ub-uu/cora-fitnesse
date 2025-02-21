@@ -1,0 +1,20 @@
+---
+Static
+---
+#### Using permission unit from CREATE CRUD tests (id: "somePermissionUnit")
+!4 Read
+  * '''Case 1''': An Admin must be able to read a permission unit
+  * '''Case 2''': A guest must not be able to read a permission unit
+
+!***> Case 1: An Admin must be able to read a permission unit 
+!| ComparerFixture |
+| authToken | type |idToStore| testReadRecordListAndStoreRecordById? |
+| $adminAuthToken | permissionUnit | $permissionUnitRecord |  |
+
+*!
+!***> Case 2: A guest must be able to read a permission unit 
+!| ComparerFixture |
+| authToken | type |idToStore| testReadRecordListAndStoreRecordById? |
+| $guestAuthToken | permissionUnit | $permissionUnitRecord |  |
+
+*!

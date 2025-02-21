@@ -1,0 +1,26 @@
+---
+Static
+---
+#### Using permission unit from CREATE CRUD tests (id: "somePermissionUnit")
+!4 Delete
+  * '''Case 1''': A guest must not be able to delete a permission unit
+  * '''Case 2''': An admin must be able to delete a permission unit
+  
+!***> '''Case 1:''' A guest must not be able to delete a permission unit
+!define recordType {permissionUnit}
+!define recordId {$permissionUnitRecord}
+!define expectedDeleteResult {FORBIDDEN}
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $guestAuthToken | ${recordType} | ${recordId} | | ${expectedDeleteResult} |
+
+*!
+!***> '''Case 2''': An admin must be able to delete a permission unit
+!define expectedDeleteResult {OK}
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | ${recordType} | ${recordId} | | ${expectedDeleteResult} |
+
+*!

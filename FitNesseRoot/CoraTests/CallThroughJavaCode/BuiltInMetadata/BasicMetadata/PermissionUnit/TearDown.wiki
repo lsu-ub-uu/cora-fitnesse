@@ -1,0 +1,7 @@
+!***> Clean up user (remove permission units)
+
+!| RecordEndpointFixture |
+|authToken|type|id|testDeleteRecord?|getStatusType?|
+|$adminAuthToken|permissionUnit|fitnesseUserPermissionUnit||OK|
+|$adminAuthToken|text|fitnessePermissionUnitText||OK|
+*!

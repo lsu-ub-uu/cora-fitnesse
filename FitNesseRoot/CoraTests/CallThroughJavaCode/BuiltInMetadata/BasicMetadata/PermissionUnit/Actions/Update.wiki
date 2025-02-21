@@ -1,0 +1,28 @@
+---
+Static
+---
+#### Using permission unit from CREATE CRUD tests (id: "somePermissionUnit")
+!4 Update
+  * '''Case 1''': An Admin must be able to update a permission unit
+  * '''Case 2''': A guest must not be able to update a permission unit
+  
+!***> '''Case 1:''' An Admin must be able to update a permission unit
+!define recordType {permissionUnit}
+!define recordId {$permissionUnitRecord}
+!define expectedUpdateResult {OK}
+!define updateData {!-{"name":"permissionUnit","children":[{"name":"recordInfo","children":[{"name":"id","value":"somePermissionUnit"},{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionUnit"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"tsCreated","value":"2025-02-20T09:48:41.716122Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2025-02-20T09:48:41.716122Z"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionUnit"}]}]},{"name":"name","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"url","value":"someUpdatedUrl"},{"name":"note","value":"someUpdatedNote"}]}-!}
+!define expectedUpdates {=~/(?=.*"name":"url","value":"someUpdatedUrl")(?=.*"name":"note","value":"someUpdatedNote")/}
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $adminAuthToken | ${recordType} | ${recordId} | ${updateData} | ${expectedUpdates} | ${expectedUpdateResult} |
+
+*!
+!***> '''Case 2:''' A guest must not be able to update a permission unit
+!define currentAuthToken {$guestAuthToken}
+!define expectedUpdateResult {FORBIDDEN}
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $guestAuthToken| ${recordType} | ${recordId} | ${updateData} | ${expectedAnswer} | ${expectedUpdateResult} |
+*!

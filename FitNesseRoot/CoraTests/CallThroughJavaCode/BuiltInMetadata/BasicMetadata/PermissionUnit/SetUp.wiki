@@ -1,0 +1,16 @@
+!***> Create permission units to use for tests
+!***> Create permission unit name text
+!define currentAuthToken {$adminAuthToken}
+!define recordType {text}
+!define createData {!-{"children":[{"children":[{"name":"id","value":"fitnessePermissionUnitText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"rättighetsEnhetsText"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"permissionUnitText"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"}-!}
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {}
+!include -seamless .HelperPages.createRecord
+
+*!
+!***> Create permission unit
+!define recordType {permissionUnit}
+!define createData {!-{"name":"permissionUnit","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseUserPermissionUnit"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionUnit"}]}]},{"name":"name","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnessePermissionUnitText"}]},{"name":"url","value":"someUrl"},{"name":"note","value":"someNote"}]}-!}
+!include -seamless .HelperPages.createRecord
+*!
+*!
