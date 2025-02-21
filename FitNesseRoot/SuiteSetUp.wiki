@@ -30,8 +30,8 @@ Suite
 
 !***> Login for fitnesse admin
 !| AuthenticationFixture |
-| appTokenLogin? | loginId | getAuthToken? | getStatusType? |
-| | fitnesseAdmin@system.cora.uu.se | $adminAuthToken= | CREATED |
+| appTokenLogin? | loginId | getAuthToken? | getStatusType? | getRenewUrl? |
+| | fitnesseAdmin@system.cora.uu.se | $adminAuthToken= | CREATED | $adminRenewUrl= |
 
 !| script | AuthTokenHolder |
 | setAdminAuthToken | $adminAuthToken |

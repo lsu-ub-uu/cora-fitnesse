@@ -1,11 +1,3 @@
----
-Suite
----
-!***> SetUp 
-!include -seamless .HelperPages.defineAdminAuthToken 
-!define expectedUpdateResult {OK}
-*!
-
 !***> Refresh the authTokens
 !| AuthenticationFixture |
 | renewAuthToken? | authTokenRenewUrl | existingAuthToken | getStatusType? | getAuthToken? |
