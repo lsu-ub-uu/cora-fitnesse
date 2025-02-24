@@ -11,52 +11,82 @@ This token has a limited lifespan and must be renewed to remain active. The toke
 !*** '''authToken response example'''
 {{{
 {
-  "data": {
-    "children": [
-      {
-        "name": "token",
-        "value": "74cdaa20-9c7c-4741-aa12-28569ef0ecf0"
-      },
-      {
-        "name": "validUntil",
-        "value": "1736761647520"
-      },
-      {
-        "name": "renewUntil",
-        "value": "1736847447520"
-      },
-      {
-        "name": "userId",
-        "value": "131313"
-      },
-      {
-        "name": "loginId",
-        "value": "someLogin@someExampleServer.com"
-      },
-      {
-        "name": "firstName",
-        "value": "Afirstname"
-      },
-      {
-        "name": "lastName",
-        "value": "Alastname"
-      }
-    ],
-    "name": "authToken"
-  },
-  "actionLinks": {
-    "renew": {
-      "requestMethod": "POST",
-      "rel": "renew",
-      "url": "http://someExampleServer.com/login/rest/authToken/c9cecda1-c492-4fbe-8cc7-d7d40543c34d",
-      "accept": "application/vnd.uub.authentication+json"
-    },
-    "delete": {
-      "requestMethod": "DELETE",
-      "rel": "delete",
-      "url": "http://someExampleServer.com/login/rest/authToken/c9cecda1-c492-4fbe-8cc7-d7d40543c34d"
+    "authentication": {
+        "data": {
+            "children": [
+                {
+                    "name": "token",
+                    "value": "ab28b7f6-75fd-418b-b6b4-f771ffaa11c0"
+                },
+                {
+                    "name": "validUntil",
+                    "value": "1740389200195"
+                },
+                {
+                    "name": "renewUntil",
+                    "value": "1740475000195"
+                },
+                {
+                    "name": "userId",
+                    "value": "SomeUserId"
+                },
+                {
+                    "name": "loginId",
+                    "value": "someLogin@someExampleServer.com"
+                },
+                {
+                    "name": "firstName",
+                    "value": "Afirstname"
+                },
+                {
+                    "name": "lastName",
+                    "value": "Somelastname"
+                },
+                {
+                    "repeatId": "1",
+                    "children": [
+                        {
+                            "name": "linkedRecordType",
+                            "value": "permissionUnit"
+                        },
+                        {
+                            "name": "linkedRecordId",
+                            "value": "somePermissionUnitId"
+                        }
+                    ],
+                    "name": "permissionUnit"
+                },
+                {
+                    "repeatId": "2",
+                    "children": [
+                        {
+                            "name": "linkedRecordType",
+                            "value": "permissionUnit"
+                        },
+                        {
+                            "name": "linkedRecordId",
+                            "value": "AnotherPermissionUnitId"
+                        }
+                    ],
+                    "name": "permissionUnit"
+                }
+            ],
+            "name": "authToken"
+        },
+        "actionLinks": {
+            "renew": {
+                "requestMethod": "POST",
+                "rel": "renew",
+                "url": "http://someExampleServer.com/login/rest/authToken/82ceefe1-04eb-4fd1-bb10-516be8df3d35",
+                "accept": "application/vnd.uub.authentication+json"
+            },
+            "delete": {
+                "requestMethod": "DELETE",
+                "rel": "delete",
+                "url": "http://someExampleServer.com/login/rest/authToken/82ceefe1-04eb-4fd1-bb10-516be8df3d35"
+            }
+        }
     }
-  }
 }
 }}}
 *!
