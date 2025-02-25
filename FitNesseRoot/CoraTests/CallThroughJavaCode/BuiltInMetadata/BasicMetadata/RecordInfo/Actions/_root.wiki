@@ -1,0 +1,4 @@
+---
+Static
+---
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.RecordInfo.Actions.Read

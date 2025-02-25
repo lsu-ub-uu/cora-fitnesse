@@ -91,10 +91,3 @@ Static
 | authToken | type | id | testReadRecord? | getStatusType? |
 | $renewedAuthToken | metadata | idTextVar | | UNAUTHORIZED |
 *!
-
-!***> Clean up created data
-!| RecordEndpointFixture |
-| authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | text | myAuthText | | OK |
-| $userAuthToken | text | myAuth3Text | | OK |
-*!

@@ -10,8 +10,9 @@ They can also be used as an extra filter to data searches based on a permission 
 fill in the value of the permission unit in different contexts (such as creating, updating data, and searches) based on the logged-in user and their available 
 permission units.
 
-'''Note!'''
-Permission unit uses extraData to make it possible for different systems built with Cora to add extra information to their permission units. Each system '''MUST''' add a metadata record with validation type group, and id extraDataPermissionUnitGroup with the systems own content. The smallest possible extraData is a group with one textVariable with a final value. As data for extraDataPermissionUnitGroup is 0-1 from permissionUnitGroup can the data be left empty.
+'''!style_meta[!style_red[Note!]]'''
+Permission unit uses extraData to make it possible for different systems built with Cora to add extra information to their permission units. Each system '''MUST''' add a metadata record with validation type group, 
+and id extraDataPermissionUnitGroup with the systems own content. The smallest possible extraData is a group with one textVariable with a final value. As data for extraDataPermissionUnitGroup is 0-1 from permissionUnitGroup can the data be left empty.
 
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.PermissionUnit.Definition
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.PermissionUnit.ValidationTypes

@@ -1,0 +1,32 @@
+---
+Static
+---
+!3 Definition for Record info
+!***< Setup record info definition
+!define recordInfoGroupDefinition {!-recordInfo (group)
+	id (textVariable, 1-1, noConstraint, I)
+	type (recordLink, 1-1, noConstraint)
+	validationType (recordLink, 1-1, noConstraint)
+	dataDivider (recordLink, 1-1, noConstraint, P, I)
+	createdBy (recordLink, 1-1, noConstraint)
+	permissionUnit (recordLink, 0-X, noConstraint)
+	tsCreated (textVariable, 1-1, noConstraint)
+	updated (group, 1-X, noConstraint)
+		updatedBy (recordLink, 1-1, noConstraint)
+		tsUpdated (textVariable, 1-1, noConstraint)-!}
+*!
+{{{
+${recordInfoGroupDefinition}
+}}}
+!***> '''Record info group validation'''
+!***> Validate record info group
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? | getStatusType? |
+| metadata | recordInfoGroup | | OK |
+*!
+!***> Validate the definition of record info group
+!| DefinitionCompareFixture |
+| authToken | recordId | getDefinitionView? |
+| $adminAuthToken | recordInfoGroup | ${recordInfoGroupDefinition} |
+*!
+*!

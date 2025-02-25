@@ -1,7 +1,0 @@
-!***> Read recordInfo
-
-!| RecordEndpointFixture |
-| authToken | id | type | testReadRecord? | getStatusType? |
-| $adminAuthToken | recordInfoGroup | metadata | =~/"name":"linkedRecordId","value":"idTextVar".*"linkedRecordId","value":"recordTypeLink".*"name":"linkedRecordId","value":"dataDividerLink".*"name":"linkedRecordId","value":"createdByLink".*"name":"linkedRecordId","value":"permissionUnitLink"/ | OK |
-
-*!
