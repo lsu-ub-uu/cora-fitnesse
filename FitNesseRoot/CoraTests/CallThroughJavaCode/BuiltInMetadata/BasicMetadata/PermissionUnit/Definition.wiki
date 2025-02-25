@@ -16,7 +16,9 @@ Static
 		validationType (recordLink, 1-1, noConstraint)
 	name (recordLink, 1-1, noConstraint, I)
 	url (textVariable, 0-1, noConstraint)
-	note (textVariable, 0-1, noConstraint)-!}
+	note (textVariable, 0-1, noConstraint)
+	extraData (group, 0-1, noConstraint)
+		notInUse {notInUse} (textVariable, 1-1, noConstraint)-!}
 *!
 {{{
 ${permissionUnitDefinition}
