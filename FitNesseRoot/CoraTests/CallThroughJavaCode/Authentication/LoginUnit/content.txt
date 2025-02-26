@@ -32,7 +32,7 @@ This is needed since loginUnit requires a link to an instance of login an a link
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecordCreatedType? | getStatusType? |
-| $adminAuthToken | login | {"children":[{"children":[{"name":"id","value":"testwr"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"loginWebRedirect"}],"name":"validationType"}],"name":"recordInfo"},{"name":"loginName","value":"Test web"},{"name":"url","value":"someUrl/something"}],"name":"login","attributes":{"type":"webRedirect"}} | login | CREATED |
+| $adminAuthToken | login | {"children":[{"children":[{"name":"id","value":"testwr"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"loginWebRedirect"}],"name":"validationType"}],"name":"recordInfo"},{"name":"loginName","value":"Test web"},{"name":"url","value":"someUrl/something"},{"name":"description","value":"someDescription"}],"name":"login","attributes":{"type":"webRedirect"}} | login | CREATED |
 
 *!
 !***> Create data of recordType text (coraText)

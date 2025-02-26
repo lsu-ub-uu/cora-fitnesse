@@ -108,7 +108,7 @@
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecordCreatedType? | getStatusType? |
-| $adminAuthToken | login | {"children":[{"children":[{"name":"id","value":"testwr"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"loginWebRedirect"}],"name":"validationType"}],"name":"recordInfo"},{"name":"loginName","value":"Test web"},{"name":"url","value":"someUrl/something"}],"name":"login","attributes":{"type":"webRedirect"}} | login | CREATED |
+| $adminAuthToken | login | {"children":[{"children":[{"name":"id","value":"testwr"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"loginWebRedirect"}],"name":"validationType"}],"name":"recordInfo"},{"name":"loginName","value":"Test web"},{"name":"url","value":"someUrl/something"},{"name":"description","value":"someDescription"}],"name":"login","attributes":{"type":"webRedirect"}} | login | CREATED |
 
 *!
 !***> Read loginWebRedirect
@@ -122,7 +122,7 @@
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | login | testwr | {"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"testwr"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"login"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"loginWebRedirect"}],"name":"validationType"}],"name":"recordInfo"},{"name":"loginName","value":"Test web"},{"name":"url","value":"someOtherUrl/something"}],"name":"login","attributes":{"type":"webRedirect"}} | =~/"name":"url","value":"someOtherUrl/something"/ | OK |
+| $adminAuthToken | login | testwr | {"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"testwr"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"login"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"loginWebRedirect"}],"name":"validationType"}],"name":"recordInfo"},{"name":"loginName","value":"Test web"},{"name":"url","value":"someOtherUrl/something"},{"name":"description","value":"someOtherDescription"}],"name":"login","attributes":{"type":"webRedirect"}} | =~/"name":"url","value":"someOtherUrl/something"/ | OK |
 
 *!
 !***> Delete created loginWebRedirect
