@@ -5,3 +5,5 @@
 |$adminAuthToken|permissionUnit|fitnesseUserPermissionUnit||OK|
 |$adminAuthToken|text|fitnessePermissionUnitText||OK|
 *!
+
+#|$adminAuthToken|binary|$createdBinaryWithPermissionUnitId||OK|

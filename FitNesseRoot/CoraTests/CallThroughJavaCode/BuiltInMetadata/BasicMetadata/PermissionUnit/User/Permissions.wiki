@@ -1,0 +1,18 @@
+---
+Static
+---
+!4 User permission unit permission(s)
+  * '''Case 1''': A user with a permission unit that match the record's permission unit must be able to ''update'' the record
+
+!***> '''Case 1''': A user with a permission unit that match the record's permission unit must be able to ''update'' the record
+!***> Create binary record with permission unit (fitnessUserPermissionUnit)
+!define addRecordInfofitnessePermissionUnit {!-,{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit"}]},-!}
+#!define binaryRecordWithPermissionunit {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"someFileName"}],"attributes":{"type":"generic"}}-!}
+#!define binaryRecordWithPermissionunit {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}-!${addRecordInfofitnessePermissionUnit}!-{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"someFileName"}],"attributes":{"type":"generic"}}-!}
+
+#!| ChildComparerFixture |
+#| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+#| $adminAuthToken | binary | ${binaryRecordWithPermissionunit} | | CREATED | $createdBinaryWithPermissionUnitId= |
+
+*!
+*!

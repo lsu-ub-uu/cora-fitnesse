@@ -3,3 +3,5 @@ Static
 ---
 !3 User
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.PermissionUnit.User.User
+----
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.PermissionUnit.User.Permissions
