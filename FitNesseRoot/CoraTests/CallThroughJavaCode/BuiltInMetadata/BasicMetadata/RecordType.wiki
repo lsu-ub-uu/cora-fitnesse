@@ -28,9 +28,8 @@ Individual instances of the record type that carry actual data are called record
 
 Record types are tested implicitly in different parts of the fitnesse test suite but the below tests intends to verify the more basic aspects of a record type.
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.RecordType.data.defaults
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.RecordType.Create
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.RecordType.List
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.RecordType.Read
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.RecordType.Update
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.RecordType.Delete
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.RecordType.Definition
+----
+!3 Record type tests
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.RecordType.Actions
+----

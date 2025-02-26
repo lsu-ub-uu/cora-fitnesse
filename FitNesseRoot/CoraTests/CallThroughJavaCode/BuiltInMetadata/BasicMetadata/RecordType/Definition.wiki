@@ -1,0 +1,58 @@
+---
+Static
+---
+!3 Definition for Record type
+!***< Setup record type definition
+!define recordTypeGroupDefinition {!-recordType (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P, I)
+		createdBy (recordLink, 1-1, noConstraint)
+		permissionUnit (recordLink, 0-X, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)
+	metadataId (recordLink, 1-1, noConstraint)
+	unique (group, 0-X, noConstraint)
+		uniqueTerm (recordLink, 1-1, noConstraint)
+		combineTerm (recordLink, 0-X, noConstraint)
+	presentationViewId (recordLink, 1-1, noConstraint)
+	menuPresentationViewId (recordLink, 1-1, noConstraint)
+	listPresentationViewId (recordLink, 1-1, noConstraint)
+	userSuppliedId (collectionVariable, 1-1, noConstraint)
+	textId (recordLink, 1-1, noConstraint)
+	defTextId (recordLink, 1-1, noConstraint)
+	search (recordLink, 0-1, noConstraint)
+	autocompletePresentationView (recordLink, 0-1, noConstraint)
+	groupOfRecordType (collectionVariable, 1-X, noConstraint)
+	filter (recordLink, 0-1, noConstraint)
+	filterPresentation (recordLink, 0-1, noConstraint)
+	public (collectionVariable, 1-1, noConstraint)
+	recordTypeCategory (collectionVariable, 0-1, noConstraint)
+	indexSettings (recordLink, 0-1, noConstraint)
+	storeInArchive (collectionVariable, 1-1, noConstraint)
+	usePermissionUnit (collectionVariable, 1-1, noConstraint)-!}
+*!
+{{{
+${recordTypeGroupDefinition}
+}}}
+!***> '''Record info group validation'''
+!***> Validate recordType record type
+!| RecordEndpointFixture |
+| authToken | type | id | testReadRecord? | getStatusType? |
+| $adminAuthToken | recordType | recordType | | OK |
+*!
+!***> Validate record type group
+!| RecordEndpointFixture |
+| type | id | testReadRecordAndStoreJson? | getStatusType? |
+| metadata | recordTypeGroup | | OK |
+*!
+!***> Validate the definition of record info group
+!| DefinitionCompareFixture |
+| authToken | recordId | getDefinitionView? |
+| $adminAuthToken | recordTypeGroup | ${recordTypeGroupDefinition} |
+*!
+*!

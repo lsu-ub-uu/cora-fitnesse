@@ -1,11 +1,10 @@
 ---
 Static
 ---
+!4 Update
+  * '''Case 1''': It should be possible to update a recordType
 
-
-!2 Update
-
-!***> It should be possible to update a recordType
+!***> '''Case 1''': It should be possible to update a recordType
 !include -seamless .HelperPages.defineAdminAuthToken
 
 !define recordType {recordType}

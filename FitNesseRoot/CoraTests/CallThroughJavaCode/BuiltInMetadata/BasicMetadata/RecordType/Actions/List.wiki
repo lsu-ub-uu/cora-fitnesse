@@ -3,9 +3,10 @@ Static
 ---
 !include -seamless .HelperPages.defineAdminAuthToken
 
-!2 List
+!4 List
+  * '''Case 1''': It should be possible to list all recordTypes in the system
 
-!***> It should be possible to list all recordTypes in the system
+!***> '''Case 1''': It should be possible to list all recordTypes in the system
 
 !include -seamless .HelperPages.defineAdminAuthToken
 

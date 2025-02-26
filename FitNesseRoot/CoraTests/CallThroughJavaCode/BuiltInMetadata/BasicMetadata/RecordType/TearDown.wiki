@@ -1,0 +1,6 @@
+!***> Clean up
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | text | fitnessStudentThesisSearchDefText | | OK |
+| $adminAuthToken | text | fitnessStudentThesisSearchText | | OK |
+*!
