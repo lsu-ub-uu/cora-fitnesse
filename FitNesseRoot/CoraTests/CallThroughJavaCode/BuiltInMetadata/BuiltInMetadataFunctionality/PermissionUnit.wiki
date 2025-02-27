@@ -1,0 +1,9 @@
+---
+Test
+---
+!1 Permission Unit
+!3 Permission unit functionality tests
+----
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.PermissionUnit.Data.SetUpTestData
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.PermissionUnit.User.Actions
+----

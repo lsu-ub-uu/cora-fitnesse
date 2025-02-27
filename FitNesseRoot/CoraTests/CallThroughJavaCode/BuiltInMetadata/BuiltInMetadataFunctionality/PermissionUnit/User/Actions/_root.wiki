@@ -1,0 +1,11 @@
+---
+Static
+---
+!4 User permission tests
+ * '''Case 1''': A user must only be able to '''create''' records with permission units matching the user itself
+ * '''Case 2''': A user must only be able to '''update''' records with permission units matching the user itself
+ 	* 2a: A user must only be able to '''update''' records with permission units matching the user itself
+ 	* 2b: A user must only be able to '''update''' records to include a permission unit matching one of the user's permission units
+ * '''Case 3''': A user must only be able to '''delete''' records with permission units matching the user itself
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.PermissionUnit.User.Actions.Create
