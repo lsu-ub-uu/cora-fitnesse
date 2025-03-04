@@ -13,24 +13,39 @@
 !***> Remove created data
 !| RecordEndpointFixture |
 | authToken|type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | presentation | fitnesseWithPermissionUnitPGroup || OK |
-| $adminAuthToken | presentation | fitnesseWithPermissionUnitNewPGroup || OK |
-| $adminAuthToken | presentation | fitnesseWithPermissionUnitOutputPGroup || OK |
-| $adminAuthToken | presentation | fitnesseWithPermissionUnitNewOutputPGroup || OK |
-| $adminAuthToken | validationType | fitnesseWithPermissionUnitValidationType || OK |
+| $adminAuthToken | fitnesseRecordTypeWithPermissionUnit | ${createdFitnesseRecordWithPermissionUnitId} || OK |
+| $adminAuthToken | validationType | fitnesseValidationTypeForRecordTypeWithPermissionUnit || OK |
+| $adminAuthToken | presentation | fitnesseWithRecordInfoPermissionUnitPGroup || OK |
+| $adminAuthToken | presentation | fitnesseWithRecordInfoPermissionUnitNewPGroup || OK |
+| $adminAuthToken | presentation | fitnesseWithRecordInfoPermissionUnitNewOutputPGroup || OK |
 | $adminAuthToken | search | fitnesseRecordTypeWithPermissionUnitSearch || OK |
 | $adminAuthToken | recordType | fitnesseRecordTypeWithPermissionUnit || OK |
 | $adminAuthToken | permissionUnit | fitnesseUserPermissionUnit || OK |
 | $adminAuthToken | permissionUnit | fitnesseUserPermissionUnit2 || OK |
+| $adminAuthToken | metadata | fitnesseWithRecordInfoPermissionUnitNewGroup || OK |
+| $adminAuthToken | text | fitnesseWithRecordInfoPermissionUnitNewGroupText || OK |
+| $adminAuthToken | text | fitnesseWithRecordInfoPermissionUnitNewGroupDefText || OK |
+| $adminAuthToken | presentation | fitnesseWithRecordInfoPermissionUnitOutputPGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordInfoWithPermissionUnitsNewPGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordInfoWithPermissionUnitsNewOutputPGroup || OK |
+| $adminAuthToken | metadata | fitnesseRecordInfoWithPermissionUnitsNewGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordTypeWithPermissionUnitMenuPGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordTypeWithPermissionUnitListPGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordTypeWithPermissionUnitAutocompletePGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordInfoWithPermissionUnitPGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordInfoWithPermissionUnitOutputPGroup || OK |
+| $adminAuthToken | metadata | fitnesseWithRecordInfoPermissionUnitGroup || OK |
+| $adminAuthToken | text | fitnesseWithRecordInfoPermissionUnitGroupText || OK |
+| $adminAuthToken | text | fitnesseWithRecordInfoPermissionUnitGroupDefText || OK |
+| $adminAuthToken | metadata | fitnesseRecordInfoWithPermissionUnitGroup || OK |
 | $adminAuthToken | text | fitnessePermissionUnitText || OK |
-| $adminAuthToken | metadata | fitnesseWithPermissionUnitGroup || OK |
-| $adminAuthToken | metadata | fitnesseWithPermissionUnitNewGroup || OK |
-| $adminAuthToken | presentation | fitnesseRecordInfoNewPGroup || OK |
-| $adminAuthToken | presentation | fitnesseRecordInfoNewOutputPGroup || OK |
-| $adminAuthToken | metadata | fitnesseRecordInfoNewGroup || OK |
-| $adminAuthToken | presentation | fitnesseRecordInfoPGroup || OK |
-| $adminAuthToken | presentation | fitnesseRecordInfoOutputPGroup || OK |
-| $adminAuthToken | metadata | fitnesseRecordInfoGroup || OK |
+| $adminAuthToken | text | fitnesseRecordTypeWithPermissionUnitDefText || OK |
+| $adminAuthToken | text | fitnesseRecordTypeWithPermissionUnitText || OK |
+| $adminAuthToken | text | fitnesseValidationTypeForRecordTypeWithPermissionUnitDefText || OK |
+| $adminAuthToken | text | fitnesseValidationTypeForRecordTypeWithPermissionUnitText || OK |
+| $adminAuthToken | text | fitnesseRecordTypeWithPermissionUnitSearchDefText || OK |
+| $adminAuthToken | text | fitnesseRecordTypeWithPermissionUnitSearchText || OK |
 
 *!
 *!
+
