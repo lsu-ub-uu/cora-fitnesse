@@ -10,7 +10,7 @@ Static
 
 !| ChildComparerFixture |
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
-| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $CREATErecordWithPermissionUnit1= |
+| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $recordShouldNotHaveBeenCreated= |
 
 *!
 !***> '''1b''': A user must be able to '''create''' records with permission units matching the user itself (fitnesseUserPermissionUnit)
@@ -21,7 +21,7 @@ Static
 !style_code(''Create a record'')
 !| ChildComparerFixture |
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
-| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $CREATErecordWithPermissionUnit2= |
+| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $CREATErecordWithPermissionUnit= |
 
 !style_code(''Assert expected actionLinks'')
 !| ActionComparerFixture |

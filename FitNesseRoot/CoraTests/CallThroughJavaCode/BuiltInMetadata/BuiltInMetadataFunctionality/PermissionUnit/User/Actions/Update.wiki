@@ -5,15 +5,15 @@ Static
 !***> '''2a''': A user must only be able to '''update''' a record with a permission unit matching one of the user's permission units
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordTypeWithPermissionUnit}
-!define updateData {!-{"name":"fitnesseWithRecordInfoPermissionUnit","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"-!$CREATErecordWithPermissionUnit2!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordTypeWithPermissionUnit"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithPermissionUnit"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"121212"}]},{"name":"tsCreated","value":"2025-03-11T14:01:38.081782Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"121212"}]},{"name":"tsUpdated","value":"2025-03-11T14:01:38.081782Z"}]}]},{"name":"fitnesseTextVar","value":"someUpdatedTextVar"}]}-!}
+!define updateData {!-{"name":"fitnesseWithRecordInfoPermissionUnit","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"-!$CREATErecordWithPermissionUnit!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordTypeWithPermissionUnit"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithPermissionUnit"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"121212"}]},{"name":"tsCreated","value":"2025-03-11T14:01:38.081782Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"121212"}]},{"name":"tsUpdated","value":"2025-03-11T14:01:38.081782Z"}]}]},{"name":"fitnesseTextVar","value":"someUpdatedTextVar"}]}-!}
 !define expectedUpdateResult {OK}
 
 !| ChildComparerFixture |
 | authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
-| ${currentAuthToken} | ${recordType} | $CREATErecordWithPermissionUnit2 | ${updateData} | $updateResponse= | ${expectedUpdateResult} |
+| ${currentAuthToken} | ${recordType} | $CREATErecordWithPermissionUnit | ${updateData} | $updateResponse= | ${expectedUpdateResult} |
 
 !| script | ExtractSubstringUsingRegex |
-| ensure | match found using text | $updateResponse | and regex | someUpdatedTextVar |
+| ensure | match found using text | $updateResponse | and regex | "name":"fitnesseTextVar","value":"someUpdatedTextVar" |
 
 *!
 *!
