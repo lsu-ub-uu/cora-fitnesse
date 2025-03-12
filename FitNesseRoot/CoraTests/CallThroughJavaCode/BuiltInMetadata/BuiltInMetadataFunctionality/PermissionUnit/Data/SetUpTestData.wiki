@@ -4,6 +4,7 @@
   * fitnessePermissionUnit1 and fitnessePermissionUnit2 will be used to test "moving" a record
   * fitnessePermissionUnit3 will be used as a non-allowed permission unit
  * Create a new record type for the test and a validation type for it (fitnesseRecordTypeWithPermissionUnit, fitnesseValidationTypeForRecordTypeWithPermissionUnit)
+  * Create an instance of this record type with a permission unit (fitnessePermissionUnit3) not allowed to the user (121212)
  
  * Update fitnesseUser (121212) to give it a permissionUnit "home" and two "allowed" permissionUnits
   * Add rule to user (update existing fitnesseTextAdminRole with the new rule)
