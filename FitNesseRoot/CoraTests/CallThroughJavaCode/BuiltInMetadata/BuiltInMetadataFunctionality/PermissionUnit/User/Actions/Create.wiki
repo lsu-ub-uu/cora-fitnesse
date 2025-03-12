@@ -17,13 +17,12 @@ Static
 !define recordType {fitnesseRecordTypeWithPermissionUnit}
 !define createData {!-{"name":"fitnesseWithRecordInfoPermissionUnit","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithPermissionUnit"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit1"}]}]},{"name":"fitnesseTextVar","value":"someTextVar"}]}-!}
 !define expectedCreateResult {CREATED}
-
-!| ChildComparerFixture |
-| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
-| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $CREATErecordWithPermissionUnit= |
+!define allActionLinks {!-{"actions":["read","update", "delete", "index", "read_incoming_links", "create", "validate", "list", "search"]}-!}
+!define expectedActionLinksResponse {!-Action read_incoming_links is missing. Action create is missing. Action validate is missing. Action list is missing. Action search is missing.-!}
 
 !| ActionComparerFixture |
-| authToken | type | id | actions | testReadAndStoreRecord? | testCheckActions? |
-| ${currentAuthToken} | ${recordType} | $CREATErecordWithPermissionUnit | {"actions":["read","update", "delete", "index"]} | | |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? | actions | testCheckActions? |
+| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $CREATErecordWithPermissionUnit= | ${allActionLinks} | ${expectedActionLinksResponse} |
+
 *!
 *!
