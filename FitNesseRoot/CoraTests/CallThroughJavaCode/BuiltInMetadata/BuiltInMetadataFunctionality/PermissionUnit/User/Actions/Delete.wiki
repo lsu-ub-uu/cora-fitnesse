@@ -2,7 +2,7 @@
 Static
 ---
 !***> '''Case 4''': Delete
-!***> '''3a''': It must not be possible to '''delete''' a record with a permission unit not matching the user itself
+!***> '''4a''': It must not be possible to '''delete''' a record with a permission unit not matching the user itself
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordTypeWithPermissionUnit}
 
