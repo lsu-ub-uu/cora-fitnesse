@@ -52,6 +52,8 @@
 | $adminAuthToken | text | fitnesseRecordTypeWithPermissionUnitSearchDefText || OK |
 | $adminAuthToken | text | fitnesseRecordTypeWithPermissionUnitSearchText || OK |
 | $adminAuthToken | permissionRule | fitnessePermissionUnitRecordRule || OK |
+| $adminAuthToken | text | fitnessePermissionUnitRecordRuleDefText || OK |
+| $adminAuthToken | text | fitnessePermissionUnitRecordRuleText || OK |
 
 *!
 *!
