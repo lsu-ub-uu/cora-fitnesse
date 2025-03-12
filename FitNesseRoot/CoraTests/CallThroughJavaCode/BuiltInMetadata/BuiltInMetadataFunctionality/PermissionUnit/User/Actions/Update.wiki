@@ -7,8 +7,8 @@ Static
 !define recordType {fitnesseRecordTypeWithPermissionUnit}
 !define updateData {!-{"name":"fitnesseWithRecordInfoPermissionUnit","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"-!$CREATErecordWithPermissionUnit!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordTypeWithPermissionUnit"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithPermissionUnit"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"121212"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit1"}]},{"name":"tsCreated","value":"2025-03-12T07:48:58.665110Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"121212"}]},{"name":"tsUpdated","value":"2025-03-12T07:48:58.665110Z"}]}]},{"name":"fitnesseTextVar","value":"someUpdatedTextVar"}]}-!}
 !define expectedUpdateResult {OK}
-!define allActionLinks {!-{"actions":["read","update", "delete", "index", "read_incoming_links", "create", "validate", "list", "search"]}-!}
-!define expectedActionLinksResponse {!-Action read_incoming_links is missing. Action create is missing. Action validate is missing. Action list is missing. Action search is missing.-!}
+!define allActionLinks {!-{"actions":["read","update", "delete", "index"]}-!}
+!define expectedActionLinksResponse {OK}
 
 !| ActionComparerFixture |
 | authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? | actions | testCheckActions? |
@@ -24,8 +24,8 @@ Static
 !define recordType {fitnesseRecordTypeWithPermissionUnit}
 !define updateData {!-{"name":"fitnesseWithRecordInfoPermissionUnit","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"-!$CREATErecordWithPermissionUnit!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordTypeWithPermissionUnit"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithPermissionUnit"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"121212"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit2"}]},{"name":"tsCreated","value":"2025-03-12T07:48:58.665110Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"121212"}]},{"name":"tsUpdated","value":"2025-03-12T07:48:58.665110Z"}]}]},{"name":"fitnesseTextVar","value":"someUpdatedTextVar"}]}-!}
 !define expectedUpdateResult {OK}
-!define allActionLinks {!-{"actions":["read","update", "delete", "index", "read_incoming_links", "create", "validate", "list", "search"]}-!}
-!define expectedActionLinksResponse {!-Action read_incoming_links is missing. Action create is missing. Action validate is missing. Action list is missing. Action search is missing.-!}
+!define allActionLinks {!-{"actions":["read","update", "delete", "index"]}-!}
+!define expectedActionLinksResponse {OK}
 
 !| ActionComparerFixture |
 | authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? | actions | testCheckActions? |

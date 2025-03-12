@@ -5,8 +5,8 @@ Static
 !***> '''2a''': A user should only get actionLinks to read when reading a record that have a permission unit not allowed to the user
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordTypeWithPermissionUnit}
-!define allActionLinks {!-{"actions":["read","update", "delete", "index", "read_incoming_links", "create", "validate", "list", "search"]}-!}
-!define expectedActionLinksResponse {!-Action update is missing. Action delete is missing. Action index is missing. Action read_incoming_links is missing. Action create is missing. Action validate is missing. Action list is missing. Action search is missing.-!}
+!define allActionLinks {!-{"actions":["read","update", "delete", "index"]}-!}
+!define expectedActionLinksResponse {!-Action update is missing. Action delete is missing. Action index is missing.-!}
 
 !| ActionComparerFixture |
 | authToken | type | id | testReadAndStoreRecord? | actions | testCheckActions? |
@@ -14,7 +14,7 @@ Static
 
 *!
 !***> '''2b''': A user should get all expected actionLinks when readin a record that the user have permission to
-!define expectedActionLinksResponse {!-Action read_incoming_links is missing. Action create is missing. Action validate is missing. Action list is missing. Action search is missing.-!}
+!define expectedActionLinksResponse {OK}
 
 !| ActionComparerFixture |
 | authToken | type | id | testReadAndStoreRecord? | actions | testCheckActions? |
