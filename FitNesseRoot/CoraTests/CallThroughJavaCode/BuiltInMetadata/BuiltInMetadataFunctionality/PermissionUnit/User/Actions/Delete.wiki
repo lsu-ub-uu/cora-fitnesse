@@ -1,0 +1,21 @@
+---
+Static
+---
+!***> '''Case 4''': Delete
+!***> '''3a''': It must not be possible to '''delete''' a record with a permission unit not matching the user itself
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordTypeWithPermissionUnit}
+
+!| RecordEndpointFixture |
+| authToken|type | id | testDeleteRecord? | getStatusType? |
+| ${currentAuthToken} | fitnesseRecordTypeWithPermissionUnit | $nonAllowedFitnesseRecordWithPermissionUnitId || FORBIDDEN |
+
+*!
+!***> '''4b''': It must be possible to '''delete''' a record with a permission unit matching the user itself
+!define recordType {fitnesseRecordTypeWithPermissionUnit}
+
+!| RecordEndpointFixture |
+| authToken|type | id | testDeleteRecord? | getStatusType? |
+| ${currentAuthToken} | fitnesseRecordTypeWithPermissionUnit | $CREATErecordWithPermissionUnit || OK |
+*!
+*!

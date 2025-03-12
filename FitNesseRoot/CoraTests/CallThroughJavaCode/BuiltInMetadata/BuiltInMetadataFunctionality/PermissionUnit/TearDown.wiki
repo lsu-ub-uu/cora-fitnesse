@@ -20,8 +20,9 @@
 !***> Remove created data
 !| RecordEndpointFixture |
 | authToken|type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | fitnesseRecordTypeWithPermissionUnit | $nonAllowedFitnesseRecordWithPermissionUnitId |||
 | $adminAuthToken | fitnesseRecordTypeWithPermissionUnit | $recordShouldNotHaveBeenCreated |||
-| $adminAuthToken | fitnesseRecordTypeWithPermissionUnit | $CREATErecordWithPermissionUnit || OK |
+| $adminAuthToken | fitnesseRecordTypeWithPermissionUnit | $CREATErecordWithPermissionUnit |||
 | $adminAuthToken | validationType | fitnesseValidationTypeForRecordTypeWithPermissionUnit || OK |
 | $adminAuthToken | presentation | fitnesseWithRecordInfoPermissionUnitPGroup || OK |
 | $adminAuthToken | presentation | fitnesseWithRecordInfoPermissionUnitNewPGroup || OK |

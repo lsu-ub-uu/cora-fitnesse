@@ -82,8 +82,9 @@ Suite
 |$adminAuthToken|permissionRole|fitnesseBinaryReadOnAllVisibilitiesRole||OK|
 |$adminAuthToken|permissionRule|fitnesseBinaryReadOnAllVisibilitiesRule||OK|
 |$adminAuthToken|text|fitnesseText||OK|
-| $adminAuthToken | permissionUnit | fitnesseUserPermissionUnit || OK |
+| $adminAuthToken | permissionUnit | fitnesseUserPermissionUnit1 || OK |
 | $adminAuthToken | permissionUnit | fitnesseUserPermissionUnit2 || OK |
+| $adminAuthToken | permissionUnit | fitnesseUserPermissionUnit3 || OK |
 | $adminAuthToken | text | fitnessePermissionUnitText || OK |
 
  #Not needed presentations because we are using excludePGroupCreation flag

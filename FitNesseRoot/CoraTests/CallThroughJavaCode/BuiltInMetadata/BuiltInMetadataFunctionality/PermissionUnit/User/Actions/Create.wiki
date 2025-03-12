@@ -2,10 +2,10 @@
 Static
 ---
 !***> '''Case 1''': Create
-!***> '''1a''': A user must not be able to '''create''' records with permission units not matching the user itself (fitnesseUserPermissionUnit2)
+!***> '''1a''': A user must not be able to '''create''' records with permission units not matching the user itself (fitnesseUserPermissionUnit3)
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordTypeWithPermissionUnit}
-!define createData {!-{"name":"fitnesseWithRecordInfoPermissionUnit","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithPermissionUnit"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit2"}]}]},{"name":"fitnesseTextVar","value":"someTextVar"}]}-!}
+!define createData {!-{"name":"fitnesseWithRecordInfoPermissionUnit","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithPermissionUnit"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit3"}]}]},{"name":"fitnesseTextVar","value":"someTextVar"}]}-!}
 !define expectedCreateResult {FORBIDDEN}
 
 !| ChildComparerFixture |
@@ -13,19 +13,17 @@ Static
 | ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $recordShouldNotHaveBeenCreated= |
 
 *!
-!***> '''1b''': A user must be able to '''create''' records with permission units matching the user itself (fitnesseUserPermissionUnit)
+!***> '''1b''': A user must be able to '''create''' records with permission units matching the user itself (fitnesseUserPermissionUnit1)
 !define recordType {fitnesseRecordTypeWithPermissionUnit}
-!define createData {!-{"name":"fitnesseWithRecordInfoPermissionUnit","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithPermissionUnit"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit"}]}]},{"name":"fitnesseTextVar","value":"someTextVar"}]}-!}
+!define createData {!-{"name":"fitnesseWithRecordInfoPermissionUnit","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithPermissionUnit"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit1"}]}]},{"name":"fitnesseTextVar","value":"someTextVar"}]}-!}
 !define expectedCreateResult {CREATED}
 
-!style_code(''Create a record'')
 !| ChildComparerFixture |
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
 | ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $CREATErecordWithPermissionUnit= |
 
-!style_code(''Assert expected actionLinks'')
 !| ActionComparerFixture |
 | authToken | type | id | actions | testReadAndStoreRecord? | testCheckActions? |
-| ${currentAuthToken} | ${recordType} | $CREATErecordWithPermissionUnit2 | {"actions":["read","update", "delete", "index", "read_incoming_links", "create", "validate", "list", "search"]} | | |
+| ${currentAuthToken} | ${recordType} | $CREATErecordWithPermissionUnit | {"actions":["read","update", "delete", "index"]} | | |
 *!
 *!

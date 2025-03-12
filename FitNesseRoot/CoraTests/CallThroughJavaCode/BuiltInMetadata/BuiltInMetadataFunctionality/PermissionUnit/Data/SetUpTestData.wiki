@@ -1,4 +1,14 @@
 !***> Setup test data
+ * Create a new Rule (fitnessePermissionUnitRecordRule) that makes it possible to crud the record type created in these tests (fitnesseRecordTypeWithPermissionUnit)
+ * Create three permission units (fitnessePermissionUnit1, fitnessePermissionUnit2, fitnessePermissionUnit3)
+  * fitnessePermissionUnit1 and fitnessePermissionUnit2 will be used to test "moving" a record
+  * fitnessePermissionUnit3 will be used as a non-allowed permission unit
+ * Create a new record type for the test and a validation type for it (fitnesseRecordTypeWithPermissionUnit, fitnesseValidationTypeForRecordTypeWithPermissionUnit)
+ 
+ * Update fitnesseUser (121212) to give it a permissionUnit "home" and two "allowed" permissionUnits
+  * Add rule to user (update existing fitnesseTextAdminRole with the new rule)
+  * Add fitnessePermissionUnit1 to the user's recordInfo
+  * Add fitnessePermissionUnit1 and fitnessePermissionUnit2 to the users "allowed" permissionUnits
 
 !***> Creation of rule fitnessePermissionUnitRecordRule, making it possible to create, read, update and delete the new record type (fitnesseRecordTypeWithPermissionUnit)
 !define currentAuthToken {$adminAuthToken}
@@ -37,7 +47,7 @@
 #!define addfitnessePermissionUnit {!-,{"name":"permissionUnit","repeatId":"123123","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit"}]}-!}
 !define addfitnessePermissionUnit {!-,{"name":"permissionUnit","repeatId":"123123","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit1"}]},{"name":"permissionUnit","repeatId":"456456","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit2"}]},-!}
 
-!define fitnesseUserWithPermissionUnits {!-{"attributes":{"type":"systemOneUser"},"name":"user","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"}-!${addRecordInfofitnessePermissionUnit}!-{"name":"id","value":"121212"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2024-09-25T07:11:16.388968Z"},{"repeatId":"0","children":[{"name":"tsUpdated","value":"2024-09-25T07:11:16.388968Z"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"updatedBy"}],"name":"updated"}]},{"name":"loginId","value":"fitnesseUser@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"User"},{"name":"userRole","repeatId":"7175775086411621","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"fitnesseTextAdmin"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"activeStatus","value":"active"},{"name":"usePassword","value":"true"},{"name":"plainTextPassword","value":"password"}-!${addfitnessePermissionUnit}!-,{"name":"appTokens","children":[{"name":"appToken","children":[{"name":"appTokenNote","value":"Tokenfordevelopment"},{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"systemSecret"},{"name":"linkedRecordId","value":"systemSecret:3452520491234582"}]}],"repeatId":"0"}]}]}-!}
+!define fitnesseUserWithPermissionUnits {!-{"attributes":{"type":"systemOneUser"},"name":"user","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"}-!${addRecordInfofitnessePermissionUnit}!-{"name":"id","value":"121212"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2024-09-25T07:11:16.388968Z"},{"repeatId":"0","children":[{"name":"tsUpdated","value":"2024-09-25T07:11:16.388968Z"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"updatedBy"}],"name":"updated"}]},{"name":"loginId","value":"fitnesseUser@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"User"},{"name":"userRole","repeatId":"7175775086411621","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"fitnesseTextAdmin"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"activeStatus","value":"active"},{"name":"usePassword","value":"true"},{"name":"plainTextPassword","value":"password"}-!${addfitnessePermissionUnit}!-{"name":"appTokens","children":[{"name":"appToken","children":[{"name":"appTokenNote","value":"Tokenfordevelopment"},{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"systemSecret"},{"name":"linkedRecordId","value":"systemSecret:3452520491234582"}]}],"repeatId":"0"}]}]}-!}
 
 !define recordType {user}
 !define recordId {121212}
@@ -80,7 +90,7 @@
 
 ----
 
-!***> Creation of a fitnesse with permission unit recordType (fitnesseRecordTypeWithPermissionUnit)
+!***> Creation of a fitnesse record type with permission unit recordType (fitnesseRecordTypeWithPermissionUnit)
 !define recordType {recordType}
 !define createData {!-{"name":"recordType","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseRecordTypeWithPermissionUnit"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"userSuppliedId","value":"false"},{"name":"groupOfRecordType","repeatId":"0","value":"metadata"},{"name":"public","value":"false"},{"name":"storeInArchive","value":"true"},{"name":"usePermissionUnit","value":"true"},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseWithRecordInfoPermissionUnitGroup"}]},{"name":"presentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnesseWithRecordInfoPermissionUnitOutputPGroup"}]}]}-!}
 
@@ -98,13 +108,13 @@
 
 ----
 
-#!***> Create instance of a fitnesseRecordTypeWithPermissionUnit (fitnesseWithRecordInfoPermissionUnit)
-#!define recordType {fitnesseRecordTypeWithPermissionUnit}
-#!define createData {!-{"name":"fitnesseWithRecordInfoPermissionUnit","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithPermissionUnit"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit"}]}]},{"name":"fitnesseTextVar","value":"someTextVar"}]}-!}
-#
-#!| ChildComparerFixture |
-#| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
-#| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $createdFitnesseRecordWithPermissionUnitId= |
-#*!
+!***> Create instance of a fitnesseRecordTypeWithPermissionUnit (fitnesseWithRecordInfoPermissionUnit) using a permissionUnit that fitnesseUser wont have permission for (fitnessePermissionUnit3)
+!define recordType {fitnesseRecordTypeWithPermissionUnit}
+!define createData {!-{"name":"fitnesseWithRecordInfoPermissionUnit","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithPermissionUnit"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit3"}]}]},{"name":"fitnesseTextVar","value":"someTextVar"}]}-!}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $nonAllowedFitnesseRecordWithPermissionUnitId= |
+*!
 *!
 *!
