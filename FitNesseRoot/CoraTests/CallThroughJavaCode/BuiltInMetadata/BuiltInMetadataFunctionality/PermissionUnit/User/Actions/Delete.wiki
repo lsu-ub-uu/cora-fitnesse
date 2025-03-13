@@ -6,6 +6,7 @@ Static
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordTypeWithPermissionUnit}
 
+!style_note[Try to delete a record and assert it's forbidden]
 !| RecordEndpointFixture |
 | authToken|type | id | testDeleteRecord? | getStatusType? |
 | ${currentAuthToken} | fitnesseRecordTypeWithPermissionUnit | $nonAllowedFitnesseRecordWithPermissionUnitId || FORBIDDEN |
@@ -14,6 +15,7 @@ Static
 !***> '''4b''': It must be possible to '''delete''' a record with a permission unit matching the user itself
 !define recordType {fitnesseRecordTypeWithPermissionUnit}
 
+!style_note[Delete record and assert it's allowed]
 !| RecordEndpointFixture |
 | authToken|type | id | testDeleteRecord? | getStatusType? |
 | ${currentAuthToken} | fitnesseRecordTypeWithPermissionUnit | $CREATErecordWithPermissionUnit || OK |

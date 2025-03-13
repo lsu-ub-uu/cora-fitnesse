@@ -8,6 +8,7 @@ Static
 !define createData {!-{"name":"fitnesseWithRecordInfoPermissionUnit","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithPermissionUnit"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit3"}]}]},{"name":"fitnesseTextVar","value":"someTextVar"}]}-!}
 !define expectedCreateResult {FORBIDDEN}
 
+!style_note[Try to create record and assert it's forbidden due to supplied permission unit not matching the user]
 !| ChildComparerFixture |
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
 | ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $recordShouldNotHaveBeenCreated= |
@@ -20,6 +21,7 @@ Static
 !define allActionLinks {!-{"actions":["read","update", "delete", "index"]}-!}
 !define expectedActionLinksResponse {OK}
 
+!style_note[Create record and assert expected action links]
 !| ActionComparerFixture |
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? | actions | testCheckActions? |
 | ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $CREATErecordWithPermissionUnit= | ${allActionLinks} | ${expectedActionLinksResponse} |

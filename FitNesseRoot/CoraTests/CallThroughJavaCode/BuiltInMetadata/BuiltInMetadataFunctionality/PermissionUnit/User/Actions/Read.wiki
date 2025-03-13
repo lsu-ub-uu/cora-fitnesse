@@ -8,6 +8,7 @@ Static
 !define allActionLinks {!-{"actions":["read","update", "delete", "index"]}-!}
 !define expectedActionLinksResponse {!-Action update is missing. Action delete is missing. Action index is missing.-!}
 
+!style_note[Read record and assert expected action links are restricted due to permission unit not matching the user]
 !| ActionComparerFixture |
 | authToken | type | id | testReadAndStoreRecord? | actions | testCheckActions? |
 | ${currentAuthToken} | ${recordType} | $nonAllowedFitnesseRecordWithPermissionUnitId | | ${allActionLinks} | ${expectedActionLinksResponse} |
@@ -16,6 +17,7 @@ Static
 !***> '''2b''': A user should get all expected actionLinks when readin a record that the user have permission to
 !define expectedActionLinksResponse {OK}
 
+!style_note[Read record and assert expected action links]
 !| ActionComparerFixture |
 | authToken | type | id | testReadAndStoreRecord? | actions | testCheckActions? |
 | ${currentAuthToken} | ${recordType} | $CREATErecordWithPermissionUnit | | ${allActionLinks} | ${expectedActionLinksResponse} |
