@@ -34,7 +34,8 @@ Static
 	recordTypeCategory (collectionVariable, 0-1, noConstraint)
 	indexSettings (recordLink, 0-1, noConstraint)
 	storeInArchive (collectionVariable, 1-1, noConstraint)
-	usePermissionUnit (collectionVariable, 1-1, noConstraint)-!}
+	usePermissionUnit (collectionVariable, 1-1, noConstraint)
+	useVisibility (collectionVariable, 1-1, noConstraint)-!}
 *!
 {{{
 ${recordTypeGroupDefinition}
