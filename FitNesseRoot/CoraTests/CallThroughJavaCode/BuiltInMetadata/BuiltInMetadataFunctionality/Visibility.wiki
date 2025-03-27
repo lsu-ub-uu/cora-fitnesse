@@ -1,0 +1,7 @@
+---
+Test
+---
+!1 Visibility
+Some text about visibility
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.UseVisibility
