@@ -2,7 +2,7 @@
 Static
 ---
 !***> '''Case 3''': Update
-!***> '''3a''': A user must be able to '''update''' a record with a permission unit matching one of the user's permission units
+!***> '''3a''': A user must be able to update a record when both the stored and the updated permission unit is matching one of the user's permission units
 !style_note[User tries to update a fitnesseTextVar to a new value]
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordTypeWithPermissionUnit}
@@ -20,7 +20,7 @@ Static
 | ensure | match found using text | $updateResponse | and regex | "name":"fitnesseTextVar","value":"someUpdatedTextVar" |
 
 *!
-!***> '''3b''': A user must be able to '''update''' records to ''move'' a record from one permission unit to another one matching one of the user's permission units
+!***> '''3b''': A user must be able to update a record to move a record from one permission unit to another one when both the stored and the updated permission unit is matching one of the user's permission units
 !style_note[User tries to move the record from fitnessePermissionUnit1 to fitnessePermissionUnit2]
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordTypeWithPermissionUnit}
@@ -38,7 +38,7 @@ Static
 | ensure | match found using text | $updateResponse | and regex | "name":"linkedRecordType","value":"permissionUnit"},\{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit2" |
 
 *!
-!***> '''3c''': A user must '''not''' be able to '''update''' records to ''move'' a record from one permission unit to another one '''not''' matching one of the user's permission units
+!***> '''3c''': A user must not be able to update a record when the stored permission unit matches one of the user's permission units but the update permission unit does not
 !style_note[User tries to move the record from fitnessePermissionUnit2 to fitnessePermissionUnit3]
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordTypeWithPermissionUnit}
@@ -51,7 +51,7 @@ Static
 | ${currentAuthToken} | ${recordType} | $CREATErecordWithPermissionUnit | ${updateData} | $updateResponse= | ${expectedUpdateResult} |
 
 *!
-!***> '''3d''': A user must '''not''' be able to '''update''' records with permission units '''not''' matching the user itself
+!***> '''3d''': A user must not be able to update a record when the stored permission unit does not match one of the user's permission units.
 !style_note[User tries to update a record with fitnessePermissionUnit3 (which the user does not have access to)]
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordTypeWithPermissionUnit}

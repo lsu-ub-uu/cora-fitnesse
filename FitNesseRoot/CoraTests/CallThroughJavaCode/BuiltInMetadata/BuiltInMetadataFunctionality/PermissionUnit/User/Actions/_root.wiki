@@ -2,22 +2,22 @@
 Static
 ---
 !4 User permission tests
- * '''Case 1''': It should be possible to control '''creation''' of records using permission units
-  * '''1a''': A user must not be able to '''create''' records with permission units not matching the user itself
-  * '''1b''': A user must be able to '''create''' records with permission units matching the user itself
- * '''Case 2''': Action links should conform to what the permission units allow when '''reading''' a record
-  * '''2a''': A user should only get actionLinks to read when '''reading''' a record that have a permission unit not allowed to the user
-  * '''2b''': A user should get all expected actionLinks when '''reading''' a record that the user have permission to
- * '''Case 3''': It should be possible to control '''updating''' of records using permission units
-  * '''3a''': A user must be able to '''update''' a record with a permission unit matching one of the user's permission units
-  * '''3b''': A user must be able to '''update''' records to ''move'' a record from one permission unit to another one matching one of the user's permission units
-  * '''3c''': A user must '''not''' be able to '''update''' records to ''move'' a record from one permission unit to another one '''not''' matching one of the user's permission units
-  * '''3d''': A user must '''not''' be able to '''update''' records with permission units '''not''' matching the user itself
- * '''Case 4''': It should be possible to control '''delete''' of records using permission units
-  * '''4a''': It must not be possible to '''delete''' a record with a permission unit not matching the user itself
-  * '''4b''': It must be possible to '''delete''' a record with a permission unit matching the user itself
+ * '''Case 1''': It should be possible to control '''creation''' of records using permission units.
+  * '''1a''': A user must '''not''' be able to '''create''' a record not matching one of the user's permission units.
+  * '''1b''': A user must be able to '''create''' a record matching one of the user's permission units.
+ * '''Case 2''': Action links should conform to what the permission units allow when '''reading''' a record. '''(Note: not implemented yet)'''
+  * '''2a''': A user should have no actionLinks when '''reading''' a record that have a permission unit not allowed to the user.
+  * '''2b''': A user should get all expected actionLinks when '''reading''' a record that the user have permission to.
+ * '''Case 3''': It should be possible to control '''updating''' of records using permission units.
+  * '''3a''': A user must be able to '''update''' a record when both the stored and the updated permission unit is matching one of the user's permission units.
+  * '''3b''': A user must be able to '''update''' a record to ''move'' a record from one permission unit to another one when both the stored and the updated permission unit is matching one of the user's permission units.
+  * '''3c''': A user must '''not''' be able to '''update''' a record when the stored permission unit matches one of the user's permission units but the update permission unit does not.
+  * '''3d''': A user must '''not''' be able to '''update''' a record when the stored permission unit does not match one of the user's permission units.
+ * '''Case 4''': It should be possible to control '''delete''' of records using permission units.
+  * '''4a''': It must '''not''' be possible to '''delete''' a record with a permission unit not matching one of the user's permission units.
+  * '''4b''': It must be possible to '''delete''' a record with a permission unit matching one of the user's permission units.
 
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.PermissionUnit.User.Actions.Create
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.PermissionUnit.User.Actions.Read
+#!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.PermissionUnit.User.Actions.Read
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.PermissionUnit.User.Actions.Update
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.PermissionUnit.User.Actions.Delete

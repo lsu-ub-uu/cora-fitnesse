@@ -2,7 +2,7 @@
 Static
 ---
 !***> '''Case 1''': Create
-!***> '''1a''': A user must not be able to '''create''' records with permission units not matching the user itself (fitnesseUserPermissionUnit3)
+!***> '''1a''': A user must not be able to create a record not matching one of the user's permission units. (fitnesseUserPermissionUnit3)
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordTypeWithPermissionUnit}
 !define createData {!-{"name":"fitnesseWithRecordInfoPermissionUnit","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithPermissionUnit"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit3"}]}]},{"name":"fitnesseTextVar","value":"someTextVar"}]}-!}
@@ -10,11 +10,11 @@ Static
 
 !style_note[Try to create record and assert it's forbidden due to supplied permission unit not matching the user]
 !| ChildComparerFixture |
-| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
-| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $recordShouldNotHaveBeenCreated= |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? |
+| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} |
 
 *!
-!***> '''1b''': A user must be able to '''create''' records with permission units matching the user itself (fitnesseUserPermissionUnit1)
+!***> '''1b''': A user must be able to create a record matching one of the user's permission units.(fitnesseUserPermissionUnit1)
 !define recordType {fitnesseRecordTypeWithPermissionUnit}
 !define createData {!-{"name":"fitnesseWithRecordInfoPermissionUnit","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithPermissionUnit"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit1"}]}]},{"name":"fitnesseTextVar","value":"someTextVar"}]}-!}
 !define expectedCreateResult {CREATED}

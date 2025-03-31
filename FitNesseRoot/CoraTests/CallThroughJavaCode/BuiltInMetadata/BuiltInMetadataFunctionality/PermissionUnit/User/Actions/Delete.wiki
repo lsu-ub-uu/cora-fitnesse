@@ -2,7 +2,7 @@
 Static
 ---
 !***> '''Case 4''': Delete
-!***> '''4a''': It must not be possible to '''delete''' a record with a permission unit not matching the user itself
+!***> '''4a''': It must not be possible to delete a record with a permission unit not matching one of the user's permission units
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordTypeWithPermissionUnit}
 
@@ -12,7 +12,7 @@ Static
 | ${currentAuthToken} | fitnesseRecordTypeWithPermissionUnit | $nonAllowedFitnesseRecordWithPermissionUnitId || FORBIDDEN |
 
 *!
-!***> '''4b''': It must be possible to '''delete''' a record with a permission unit matching the user itself
+!***> '''4b''': It must be possible to delete a record with a permission unit matching one of the user's permission units
 !define recordType {fitnesseRecordTypeWithPermissionUnit}
 
 !style_note[Delete record and assert it's allowed]
