@@ -83,5 +83,6 @@ Suite
 |$adminAuthToken|permissionRule|fitnesseBinaryReadOnAllVisibilitiesRule||OK|
 |$adminAuthToken|text|fitnesseText||OK|
 
+
  #Not needed presentations because we are using excludePGroupCreation flag
 *!

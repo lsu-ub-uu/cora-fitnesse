@@ -1,0 +1,67 @@
+---
+Static
+---
+!***> '''Case 3''': Update
+!***> '''3a''': A user must be able to update a record when both the stored and the updated permission unit is matching one of the user's permission units
+!style_note[User tries to update a fitnesseTextVar to a new value]
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordTypeWithPermissionUnit}
+!define updateData {!-{"name":"fitnesseWithRecordInfoPermissionUnit","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"-!$createdRecordIdWithPermissionUnit!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordTypeWithPermissionUnit"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithPermissionUnit"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"121212"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit1"}]},{"name":"tsCreated","value":"2025-03-12T07:48:58.665110Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"121212"}]},{"name":"tsUpdated","value":"2025-03-12T07:48:58.665110Z"}]}]},{"name":"fitnesseTextVar","value":"someUpdatedTextVar"}]}-!}
+!define expectedUpdateResult {OK}
+!define allActionLinks {!-{"actions":["read","update", "delete", "index"]}-!}
+!define expectedActionLinksResponse {OK}
+
+!style_note[Update record and assert expected action links]
+!| ActionComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? | actions | testCheckActions? |
+| ${currentAuthToken} | ${recordType} | $createdRecordIdWithPermissionUnit | ${updateData} | $updateResponse= | ${expectedUpdateResult} | ${allActionLinks} | ${expectedActionLinksResponse} |
+
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $updateResponse | and regex | "name":"fitnesseTextVar","value":"someUpdatedTextVar" |
+
+*!
+!***> '''3b''': A user must be able to update a record to move a record from one permission unit to another one when both the stored and the updated permission unit is matching one of the user's permission units
+!style_note[User tries to move the record from fitnessePermissionUnit1 to fitnessePermissionUnit2]
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordTypeWithPermissionUnit}
+!define updateData {!-{"name":"fitnesseWithRecordInfoPermissionUnit","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"-!$createdRecordIdWithPermissionUnit!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordTypeWithPermissionUnit"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithPermissionUnit"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"121212"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit2"}]},{"name":"tsCreated","value":"2025-03-12T07:48:58.665110Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"121212"}]},{"name":"tsUpdated","value":"2025-03-12T07:48:58.665110Z"}]}]},{"name":"fitnesseTextVar","value":"someUpdatedTextVar"}]}-!}
+!define expectedUpdateResult {OK}
+!define allActionLinks {!-{"actions":["read","update", "delete", "index"]}-!}
+!define expectedActionLinksResponse {OK}
+
+!style_note[Update record and assert expected action links]
+!| ActionComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? | actions | testCheckActions? |
+| ${currentAuthToken} | ${recordType} | $createdRecordIdWithPermissionUnit | ${updateData} | $updateResponse= | ${expectedUpdateResult} | ${allActionLinks} | ${expectedActionLinksResponse} |
+
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $updateResponse | and regex | "name":"linkedRecordType","value":"permissionUnit"},\{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit2" |
+
+*!
+!***> '''3c''': A user must not be able to update a record when the stored permission unit matches one of the user's permission units but the update permission unit does not
+!style_note[User tries to move the record from fitnessePermissionUnit2 to fitnessePermissionUnit3]
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordTypeWithPermissionUnit}
+!define updateData {!-{"name":"fitnesseWithRecordInfoPermissionUnit","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"-!$createdRecordIdWithPermissionUnit!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordTypeWithPermissionUnit"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithPermissionUnit"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"121212"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit3"}]},{"name":"tsCreated","value":"2025-03-12T07:48:58.665110Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"121212"}]},{"name":"tsUpdated","value":"2025-03-12T07:48:58.665110Z"}]}]},{"name":"fitnesseTextVar","value":"someUpdatedTextVar"}]}-!}
+!define expectedUpdateResult {FORBIDDEN}
+
+!style_note[Try to update record and assert it's forbidden due to updating the permission unit of the record to one not allowed by the user]
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| ${currentAuthToken} | ${recordType} | $createdRecordIdWithPermissionUnit | ${updateData} | $updateResponse= | ${expectedUpdateResult} |
+
+*!
+!***> '''3d''': A user must not be able to update a record when the stored permission unit does not match one of the user's permission units.
+!style_note[User tries to update a record with fitnessePermissionUnit3 (which the user does not have access to)]
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordTypeWithPermissionUnit}
+!define updateData {!-{"name":"fitnesseWithRecordInfoPermissionUnit","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"-!$nonAllowedFitnesseRecordWithPermissionUnitId!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordTypeWithPermissionUnit"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithPermissionUnit"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"121212"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit3"}]},{"name":"tsCreated","value":"2025-03-12T07:48:58.665110Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"121212"}]},{"name":"tsUpdated","value":"2025-03-12T07:48:58.665110Z"}]}]},{"name":"fitnesseTextVar","value":"someUpdatedTextVar"}]}-!}
+!define expectedUpdateResult {FORBIDDEN}
+
+!style_note[Try to update record and assert it's forbidden due to the records permission unit not matching the user]
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| ${currentAuthToken} | ${recordType} | $nonAllowedFitnesseRecordWithPermissionUnitId | ${updateData} | $updateResponse= | ${expectedUpdateResult} |
+
+*!
+*!

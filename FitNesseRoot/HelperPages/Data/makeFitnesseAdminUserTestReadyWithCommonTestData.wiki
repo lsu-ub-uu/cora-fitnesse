@@ -1,0 +1,13 @@
+!***> Update fitnesse user. Add fitnesseBinaryReadOnAllVisibilitiesRole role.
+
+!define fitnesseAdminOriginalData {!-{"name":"user","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"131313"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"loginId","value":"fitnesseAdmin@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"Admin"},{"name":"userRole","repeatId":"1","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"everything"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"userRole","repeatId":"3603423986673","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"binaryUserRole"}]}]},{"name":"activeStatus","value":"active"},{"name":"appTokens","children":[{"name":"appToken","repeatId":"0","children":[{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"systemSecret"},{"name":"linkedRecordId","value":"systemSecret:3452556002950361"}]},{"name":"appTokenNote","value":"Token for development"}]}]},{"name":"usePassword","value":"false"}],"attributes":{"type":"systemOneUser"}}-!}
+
+!define currentAuthToken {$adminAuthToken}
+!define recordType {user}
+!define recordId {131313}
+!define updateData {${fitnesseAdminOriginalData}}
+!define expectedAnswer {}
+!define expectedUpdateResult {OK}
+
+!include -seamless .HelperPages.updateRecord
+*!
