@@ -24,7 +24,7 @@ Static
 !style_note[Create record and assert expected action links]
 !| ActionComparerFixture |
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? | actions | testCheckActions? |
-| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $CREATErecordWithPermissionUnit= | ${allActionLinks} | ${expectedActionLinksResponse} |
+| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $createdRecordIdWithPermissionUnit= | ${allActionLinks} | ${expectedActionLinksResponse} |
 
 *!
 *!

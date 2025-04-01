@@ -18,6 +18,6 @@ Static
 !style_note[Delete record and assert it's allowed]
 !| RecordEndpointFixture |
 | authToken|type | id | testDeleteRecord? | getStatusType? |
-| ${currentAuthToken} | fitnesseRecordTypeWithPermissionUnit | $CREATErecordWithPermissionUnit || OK |
+| ${currentAuthToken} | fitnesseRecordTypeWithPermissionUnit | $createdRecordIdWithPermissionUnit || OK |
 *!
 *!

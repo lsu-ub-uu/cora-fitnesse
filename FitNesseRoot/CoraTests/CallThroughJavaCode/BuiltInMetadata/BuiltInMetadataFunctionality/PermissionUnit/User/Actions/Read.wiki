@@ -20,6 +20,6 @@ Static
 !style_note[Read record and assert expected action links]
 !| ActionComparerFixture |
 | authToken | type | id | testReadAndStoreRecord? | actions | testCheckActions? |
-| ${currentAuthToken} | ${recordType} | $CREATErecordWithPermissionUnit | | ${allActionLinks} | ${expectedActionLinksResponse} |
+| ${currentAuthToken} | ${recordType} | $createdRecordIdWithPermissionUnit | | ${allActionLinks} | ${expectedActionLinksResponse} |
 *!
 *!
