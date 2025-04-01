@@ -54,7 +54,10 @@
 | $adminAuthToken | permissionRule | fitnessePermissionUnitRecordRule || OK |
 | $adminAuthToken | text | fitnessePermissionUnitRecordRuleDefText || OK |
 | $adminAuthToken | text | fitnessePermissionUnitRecordRuleText || OK |
-
+| $adminAuthToken | permissionUnit | fitnesseUserPermissionUnit1 || OK |
+| $adminAuthToken | permissionUnit | fitnesseUserPermissionUnit2 || OK |
+| $adminAuthToken | permissionUnit | fitnesseUserPermissionUnit3 || OK |
+| $adminAuthToken | text | fitnessePermissionUnitText || OK |
 *!
 *!
 
