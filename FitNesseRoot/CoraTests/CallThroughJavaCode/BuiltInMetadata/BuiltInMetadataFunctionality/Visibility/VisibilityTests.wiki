@@ -1,0 +1,48 @@
+---
+Static
+---
+!2 Visibility tests
+
+'''TODO:''' 
+1. add variable with record part read constraint to record type
+2. add permissionTerm
+
+ * '''Case 1''': A recordType 
+
+recordType.useVisibility == true
+
+!3 Level 1, no permission units and no record part constraint for visibility
+
+!4 Create
+ data utan visibility, ok
+ data med visibility, ok
+ data utan visibility, ej rättighet
+ data med visibility, ej rättighet
+ 
+!4 Update
+ data utan visibility, du får föregående visibility
+ data med visibility, ok
+ data utan visibility, ej rättighet
+ data med visibility, ej rättighet
+
+!4 Read
+
+!4 List
+ data utan visibility, du får föregående visibility
+ data med visibility, ok
+ data utan visibility, ej rättighet
+ data med visibility, ej rättighet
+
+!4 Search
+
+
+!3 Level 2, permission units and no record part constraint for visibility
+
+!3 Level 3, write record part constraint for visibility
+
+!3 Level 4, visibility and permissionUnits
+
+!3 Level 5, write record part constraint for visibility and permissionUnits
+
+
+!4 Extra test: test if a record is published, eventual readRecorPartPermissions are take it into account.
