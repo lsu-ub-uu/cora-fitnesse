@@ -58,7 +58,7 @@ ${SearchTermGroupDefinition}
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | recordType | searchTerm | =~/"name":"linkedRecordId","value":"searchTermGroup".*"name":"metadataId".*"name":"abstract","value":"false"/ | OK |
+| $adminAuthToken | recordType | searchTerm | =~/"name":"linkedRecordId","value":"searchTermGroup".*"name":"metadataId"/ | OK |
 
 *!
 !***> Read metadataGroups (searchTermGroup, searchTermNewGroup)

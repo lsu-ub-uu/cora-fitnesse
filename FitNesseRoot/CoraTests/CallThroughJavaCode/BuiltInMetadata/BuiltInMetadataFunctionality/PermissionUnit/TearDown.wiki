@@ -1,0 +1,58 @@
+!***> Clean up test
+!***> Remove permission units from fitnesseUser
+!define currentAuthToken {$adminAuthToken}
+!include -seamless .HelperPages.Data.makeFitnesseUserTestReadyWithCommonTestData
+
+!| RecordEndpointFixture |
+| authToken|type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | fitnesseRecordTypeWithPermissionUnit | $nonAllowedFitnesseRecordWithPermissionUnitId ||OK|
+
+!include -seamless .HelperPages.Data.makeFitnesseAdminUserTestReadyWithCommonTestData
+
+# Restore textAdminRule (remove permission created in test)
+!define recordType {permissionRole}
+!define recordId {fitnesseTextAdmin}
+!define updateData {!-{"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"fitnesseTextAdmin"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"createdBy"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"updatedBy"},{"name":"tsUpdated","value":"2017-11-0117:51:52.0"}],"name":"updated"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"validationType"}],"name":"recordInfo"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"textAdmin"}],"name":"permissionRuleLink"},{"repeatId":"1","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"nothing"}],"name":"permissionRuleLink"},{"name":"activeStatus","value":"active"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleDefText"}],"name":"defTextId"}],"name":"permissionRole"}-!}
+!include -seamless .HelperPages.updateRecord
+
+*!
+!***> Remove created data
+!| RecordEndpointFixture |
+| authToken|type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | validationType | fitnesseValidationTypeForRecordTypeWithPermissionUnit || OK |
+| $adminAuthToken | presentation | fitnesseWithRecordInfoPermissionUnitPGroup || OK |
+| $adminAuthToken | presentation | fitnesseWithRecordInfoPermissionUnitNewPGroup || OK |
+| $adminAuthToken | presentation | fitnesseWithRecordInfoPermissionUnitNewOutputPGroup || OK |
+| $adminAuthToken | search | fitnesseRecordTypeWithPermissionUnitSearch || OK |
+| $adminAuthToken | recordType | fitnesseRecordTypeWithPermissionUnit || OK |
+| $adminAuthToken | metadata | fitnesseWithRecordInfoPermissionUnitNewGroup || OK |
+| $adminAuthToken | text | fitnesseWithRecordInfoPermissionUnitNewGroupText || OK |
+| $adminAuthToken | text | fitnesseWithRecordInfoPermissionUnitNewGroupDefText || OK |
+| $adminAuthToken | presentation | fitnesseWithRecordInfoPermissionUnitOutputPGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordInfoWithPermissionUnitsNewPGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordInfoWithPermissionUnitsNewOutputPGroup || OK |
+| $adminAuthToken | metadata | fitnesseRecordInfoWithPermissionUnitsNewGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordTypeWithPermissionUnitMenuPGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordTypeWithPermissionUnitListPGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordTypeWithPermissionUnitAutocompletePGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordInfoWithPermissionUnitPGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordInfoWithPermissionUnitOutputPGroup || OK |
+| $adminAuthToken | metadata | fitnesseWithRecordInfoPermissionUnitGroup || OK |
+| $adminAuthToken | text | fitnesseWithRecordInfoPermissionUnitGroupText || OK |
+| $adminAuthToken | text | fitnesseWithRecordInfoPermissionUnitGroupDefText || OK |
+| $adminAuthToken | metadata | fitnesseRecordInfoWithPermissionUnitGroup || OK |
+| $adminAuthToken | text | fitnesseRecordTypeWithPermissionUnitDefText || OK |
+| $adminAuthToken | text | fitnesseRecordTypeWithPermissionUnitText || OK |
+| $adminAuthToken | text | fitnesseValidationTypeForRecordTypeWithPermissionUnitDefText || OK |
+| $adminAuthToken | text | fitnesseValidationTypeForRecordTypeWithPermissionUnitText || OK |
+| $adminAuthToken | text | fitnesseRecordTypeWithPermissionUnitSearchDefText || OK |
+| $adminAuthToken | text | fitnesseRecordTypeWithPermissionUnitSearchText || OK |
+| $adminAuthToken | permissionRule | fitnessePermissionUnitRecordRule || OK |
+| $adminAuthToken | text | fitnessePermissionUnitRecordRuleDefText || OK |
+| $adminAuthToken | text | fitnessePermissionUnitRecordRuleText || OK |
+| $adminAuthToken | permissionUnit | fitnesseUserPermissionUnit1 || OK |
+| $adminAuthToken | permissionUnit | fitnesseUserPermissionUnit2 || OK |
+| $adminAuthToken | permissionUnit | fitnesseUserPermissionUnit3 || OK |
+| $adminAuthToken | text | fitnessePermissionUnitText || OK |
+*!
+*!

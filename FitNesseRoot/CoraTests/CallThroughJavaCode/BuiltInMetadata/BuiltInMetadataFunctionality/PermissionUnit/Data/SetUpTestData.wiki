@@ -1,0 +1,138 @@
+---
+Static
+---
+!***> Setup test data
+ * Create a new Rule (fitnessePermissionUnitRecordRule) that makes it possible to crud the record type created in these tests (fitnesseRecordTypeWithPermissionUnit)
+  * Update fitnesseTextAdminRole to use this new rule (this role is already attached to the fitnesse user 121212)
+ * Create three permission units (fitnessePermissionUnit1, fitnessePermissionUnit2, fitnessePermissionUnit3)
+  * fitnessePermissionUnit1 and fitnessePermissionUnit2 will be used to test "moving" a record
+  * fitnessePermissionUnit3 will be used as a non-allowed permission unit
+ * Update fitnesseUser (121212) to give it a permission unit "home" and two "allowed" permission units
+  * Add fitnessePermissionUnit1 to the user's recordInfo
+  * Add fitnessePermissionUnit1 and fitnessePermissionUnit2 to the users "allowed" permissionUnits
+ * Create a new record type for the test and a validation type for it (fitnesseRecordTypeWithPermissionUnit, fitnesseValidationTypeForRecordTypeWithPermissionUnit)
+   * Create an instance of this record type with a permission unit (fitnessePermissionUnit3) not allowed to the user (121212)
+
+!***> Creation of rule fitnessePermissionUnitRecordRule, making it possible to create, read, update and delete the new record type (fitnesseRecordTypeWithPermissionUnit)
+!define currentAuthToken {$adminAuthToken}
+!define recordType {permissionRule}
+!define createData {!-{"name":"permissionRule","children":[{"children":[{"name":"id","value":"fitnessePermissionUnitRecordRule"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRule"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"repeatId":"0","name":"permissionRulePartValue","value":"system.*"}],"name":"permissionRulePart","attributes":{"type":"action"}},{"children":[{"repeatId":"0","name":"permissionRulePartValue","value":"system.fitnesseRecordTypeWithPermissionUnit"}],"name":"permissionRulePart","attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"}]}-!}
+!define expectedAnswer {}
+!define expectedCreateResult {CREATED}
+
+!include -seamless .HelperPages.createRecord
+#
+!***> Update fitnesseTextAdmin with new rule for the new record type (fitnesseRecordTypeWithPermissionUnit)
+!define recordType {permissionRole}
+!define recordId {fitnesseTextAdmin}
+!define updateData {!-{"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"fitnesseTextAdmin"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"createdBy"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"updatedBy"},{"name":"tsUpdated","value":"2017-11-0117:51:52.0"}],"name":"updated"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"validationType"}],"name":"recordInfo"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"textAdmin"}],"name":"permissionRuleLink"},{"repeatId":"1","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"nothing"}],"name":"permissionRuleLink"},{"repeatId":"2","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"fitnessePermissionUnitRecordRule"}],"name":"permissionRuleLink"},{"name":"activeStatus","value":"active"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleDefText"}],"name":"defTextId"}],"name":"permissionRole"}-!}
+!define expectedUpdateResult {OK}
+
+!include -seamless .HelperPages.updateRecord
+
+*!
+*!
+!***> Create three permissionUnits (fitnessePermissionUnit1, fitnessePermissionUnit2 and fitnessePermissionUnit3) and add two to the fitnesseUser (fitnessePermissionUnit1 & fitnessePermissionUnit2)
+!define recordType {text}
+!define createData {!-{"children":[{"children":[{"name":"id","value":"fitnessePermissionUnitText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"rättighetsEnhetsText"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"permissionUnitText"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"}-!}
+!include -seamless .HelperPages.createRecord
+
+!define recordType {permissionUnit}
+!define createData {!-{"name":"permissionUnit","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseUserPermissionUnit1"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionUnit"}]}]},{"name":"name","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnessePermissionUnitText"}]},{"name":"url","value":"someUrl1"},{"name":"note","value":"permission unit 1 for user"}]}-!}
+!include -seamless .HelperPages.createRecord
+
+!define createData {!-{"name":"permissionUnit","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseUserPermissionUnit2"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionUnit"}]}]},{"name":"name","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnessePermissionUnitText"}]},{"name":"url","value":"someUrl2"},{"name":"note","value":"permission unit 2 for user"}]}-!}
+!include -seamless .HelperPages.createRecord
+
+!define createData {!-{"name":"permissionUnit","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseUserPermissionUnit3"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionUnit"}]}]},{"name":"name","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnessePermissionUnitText"}]},{"name":"url","value":"someUrl3"},{"name":"note","value":"some other permission unit"}]}-!}
+!include -seamless .HelperPages.createRecord
+*!
+!***> Update fitnesseUser (131313) with the expected permission units (fitnessePermissionUnit1 & fitnessePermissionUnit2)
+!define addRecordInfofitnessePermissionUnit {!-,{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit1"}]},-!}
+!define addfitnessePermissionUnit {!-,{"name":"permissionUnit","repeatId":"123123","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit1"}]},{"name":"permissionUnit","repeatId":"456456","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit2"}]},-!}
+
+!define fitnesseAdmiUserWithPermissionUnits {!-{"name":"user","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"131313"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"loginId","value":"fitnesseAdmin@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"Admin"},{"name":"userRole","repeatId":"1","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"everything"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"userRole","repeatId":"3603423986673","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"binaryUserRole"}]}]},{"name":"activeStatus","value":"active"},{"name":"permissionUnit","repeatId":"1","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit3"}]},{"name":"appTokens","children":[{"name":"appToken","repeatId":"0","children":[{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"systemSecret"},{"name":"linkedRecordId","value":"systemSecret:3452556002950361"}]},{"name":"appTokenNote","value":"Token for development"}]}]},{"name":"usePassword","value":"false"}],"attributes":{"type":"systemOneUser"}}-!}
+
+!define recordType {user}
+!define recordId {131313}
+!define updateData {${fitnesseAdmiUserWithPermissionUnits}}
+!define expectedUpdateResult {OK}
+
+!include -seamless .HelperPages.updateRecord
+
+*!
+!***> Update fitnesseUser (121212) with the expected permission units (fitnessePermissionUnit1 & fitnessePermissionUnit2)
+!define addRecordInfofitnessePermissionUnit {!-,{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit1"}]},-!}
+!define addfitnessePermissionUnit {!-,{"name":"permissionUnit","repeatId":"123123","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit1"}]},{"name":"permissionUnit","repeatId":"456456","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit2"}]},-!}
+
+!define fitnesseUserWithPermissionUnits {!-{"attributes":{"type":"systemOneUser"},"name":"user","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"}-!${addRecordInfofitnessePermissionUnit}!-{"name":"id","value":"121212"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2024-09-25T07:11:16.388968Z"},{"repeatId":"0","children":[{"name":"tsUpdated","value":"2024-09-25T07:11:16.388968Z"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"updatedBy"}],"name":"updated"}]},{"name":"loginId","value":"fitnesseUser@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"User"},{"name":"userRole","repeatId":"7175775086411621","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"fitnesseTextAdmin"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"activeStatus","value":"active"},{"name":"usePassword","value":"true"},{"name":"plainTextPassword","value":"password"}-!${addfitnessePermissionUnit}!-{"name":"appTokens","children":[{"name":"appToken","children":[{"name":"appTokenNote","value":"Tokenfordevelopment"},{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"systemSecret"},{"name":"linkedRecordId","value":"systemSecret:3452520491234582"}]}],"repeatId":"0"}]}]}-!}
+
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${fitnesseUserWithPermissionUnits}}
+!define expectedUpdateResult {OK}
+
+!include -seamless .HelperPages.updateRecord
+
+*!
+!***> Create a recordType with permission units
+!***> Create record info group with permission units (fitnesseRecordInfoWithPermissionUnitGroup)
+!define recordType {metadata}
+!define createData {!-{"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseRecordInfoWithPermissionUnitGroup"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"recordInfo"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"recordInfoText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"recordInfoDefText"}]},{"name":"childReferences","children":[{"name":"childReference","repeatId":"1","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"idTextVar"}]},{"name":"childRefCollectTerm","repeatId":"0","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"recordIdCollectIndexTerm"}],"attributes":{"type":"index"}}]},{"name":"childReference","repeatId":"5","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"recordTypeLink"}]}]},{"name":"childReference","repeatId":"11","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"validationTypeLink"}]}]},{"name":"childReference","repeatId":"4","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"dataDividerLink"}]},{"name":"childRefCollectTerm","repeatId":"0","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"dataDividerIndexTerm"}],"attributes":{"type":"index"}},{"name":"childRefCollectTerm","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}],"attributes":{"type":"permission"}}]},{"name":"childReference","repeatId":"3","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"createdByLink"}]}]},{"name":"childReference","repeatId":"6","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"permissionUnitLink"}]}]},{"name":"childReference","repeatId":"8","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"tsCreatedTextVar"}]}]},{"name":"childReference","repeatId":"10","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"X"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"updatedGroup"}]}]}]}],"attributes":{"type":"group"}}-!}
+
+!include -seamless .HelperPages.createRecord
+
+*!
+!***> Create record info new group with permission units (fitnesseRecordInfoWithPermissionUnitsNewGroup)
+!define recordType {metadata}
+!define createData {!-{"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseRecordInfoWithPermissionUnitsNewGroup"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"recordInfo"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"recordInfoText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"recordInfoDefText"}]},{"name":"childReferences","children":[{"name":"childReference","repeatId":"0","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"dataDividerLink"}]},{"name":"childRefCollectTerm","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}],"attributes":{"type":"permission"}}]},{"name":"childReference","repeatId":"111","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"validationTypeLink"}]}]},{"name":"childReference","repeatId":"112","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"permissionUnitLink"}]}]}]}],"attributes":{"type":"group"}}-!}
+
+!include -seamless .HelperPages.createRecord
+*!
+
+----
+
+!***> Creation of a fitnesse metadataGroup with permissionUnit, definition for recordtype and update (fitnesseWithRecordInfoPermissionUnitGroup, NID: fitnesseWithRecordInfoPermissionUnit)
+!define recordType {metadata}
+!define createData {!-{"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseWithRecordInfoPermissionUnitGroup"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"fitnesseWithRecordInfoPermissionUnit"},{"name":"childReferences","children":[{"name":"childReference","repeatId":"0","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseRecordInfoWithPermissionUnitGroup"}]}]},{"name":"childReference","repeatId":"2","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseMetadataTextVar"}]}]}]}],"attributes":{"type":"group"}}-!}
+
+!include -seamless .HelperPages.createRecord
+
+*!
+!***> Creation of a metadataGroup with permissionUnits, definition for new (fitnesseWithRecordInfoPermissionUnitNewGroup, NID: fitnesseWithRecordInfoPermissionUnit)
+!define recordType {metadata}
+!define createData {!-{"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseWithRecordInfoPermissionUnitNewGroup"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"fitnesseWithRecordInfoPermissionUnit"},{"name":"childReferences","children":[{"name":"childReference","repeatId":"1","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseRecordInfoWithPermissionUnitsNewGroup"}]}]},{"name":"childReference","repeatId":"2","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseMetadataTextVar"}]}]}]}],"attributes":{"type":"group"}}-!}
+
+!include -seamless .HelperPages.createRecord
+*!
+
+----
+
+!***> Creation of a fitnesse record type with permission unit recordType (fitnesseRecordTypeWithPermissionUnit)
+!define recordType {recordType}
+!define createData {!-{"name":"recordType","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseRecordTypeWithPermissionUnit"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"userSuppliedId","value":"false"},{"name":"groupOfRecordType","repeatId":"0","value":"metadata"},{"name":"public","value":"false"},{"name":"storeInArchive","value":"true"},{"name":"usePermissionUnit","value":"true"},{"name":"useVisibility","value":"false"},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseWithRecordInfoPermissionUnitGroup"}]},{"name":"presentationViewId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnesseWithRecordInfoPermissionUnitOutputPGroup"}]}]}-!}
+
+!include -seamless .HelperPages.createRecord
+*!
+
+----
+
+!***> Creation of a fitnesse with permission unit validationType (fitnesseValidationTypeForRecordTypeWithPermissionUnit)
+!define recordType {validationType}
+!define createData {!-{"name":"validationType","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseValidationTypeForRecordTypeWithPermissionUnit"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"validatesRecordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordTypeWithPermissionUnit"}]},{"name":"newMetadataId","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseWithRecordInfoPermissionUnitNewGroup"}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseWithRecordInfoPermissionUnitGroup"}]},{"name":"newPresentationFormId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnesseWithRecordInfoPermissionUnitNewPGroup"}]},{"name":"presentationFormId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnesseWithRecordInfoPermissionUnitPGroup"}]}]}-!}
+
+!include -seamless .HelperPages.createRecord
+*!
+
+----
+
+!***> Create instance of a fitnesseRecordTypeWithPermissionUnit (fitnesseWithRecordInfoPermissionUnit) using a permissionUnit that fitnesseUser wont have permission for (fitnessePermissionUnit3)
+!define recordType {fitnesseRecordTypeWithPermissionUnit}
+!define createData {!-{"name":"fitnesseWithRecordInfoPermissionUnit","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithPermissionUnit"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit3"}]}]},{"name":"fitnesseTextVar","value":"someTextVar"}]}-!}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| ${currentAuthToken} | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $nonAllowedFitnesseRecordWithPermissionUnitId= |
+*!
+*!
+*!

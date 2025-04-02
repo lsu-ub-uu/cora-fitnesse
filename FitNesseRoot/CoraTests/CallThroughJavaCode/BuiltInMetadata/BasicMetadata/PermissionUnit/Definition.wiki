@@ -1,7 +1,7 @@
 ---
 Static
 ---
-!3 Definition for Permission unit
+!3 Permission unit definition
 !***< Setup permissionUnit definition
 !define permissionUnitDefinition {!-permissionUnit (group)
 	recordInfo (group, 1-1, noConstraint)
@@ -20,9 +20,11 @@ Static
 	extraData (group, 0-1, noConstraint)
 		notInUse {notInUse} (textVariable, 1-1, noConstraint)-!}
 *!
+!*** '''permissionUnitGroup'''
 {{{
 ${permissionUnitDefinition}
 }}}
+*!
 !***> '''Permission unit validation'''
 !***> Validate recordType Permission unit
 !| RecordEndpointFixture |
