@@ -9,7 +9,7 @@ Static
 		id (textVariable, 0-1, noConstraint, I)
 		type (recordLink, 0-1, noConstraint)
 		validationType (recordLink, 1-1, noConstraint)
-		dataDivider (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, I)
 		createdBy (recordLink, 0-1, noConstraint)
 		permissionUnit (recordLink, 0-X, noConstraint)
 		tsCreated (textVariable, 0-1, noConstraint)

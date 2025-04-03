@@ -4,7 +4,7 @@ Static
 !***< Setup binary definition
 !define genericBinaryNewGroupDefinition {!-binary type:{generic, image, sound, video, document, text, compressed} (group)
 	recordInfo (group, 1-1, noConstraint)
-		dataDivider (recordLink, 1-1, noConstraint, P)
+		dataDivider (recordLink, 1-1, noConstraint)
 		validationType (recordLink, 1-1, noConstraint)
 		visibility (collectionVariable, 1-1, noConstraint, P)
 		tsVisibility (textVariable, 0-1, write)
@@ -16,7 +16,7 @@ Static
 		id (textVariable, 1-1, noConstraint, I)
 		type (recordLink, 1-1, noConstraint)
 		validationType (recordLink, 1-1, noConstraint)
-		dataDivider (recordLink, 1-1, noConstraint, P, I)
+		dataDivider (recordLink, 1-1, noConstraint, I)
 		createdBy (recordLink, 1-1, noConstraint)
 		permissionUnit (recordLink, 0-X, noConstraint)
 		tsCreated (textVariable, 1-1, noConstraint)
