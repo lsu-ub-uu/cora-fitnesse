@@ -16,7 +16,6 @@ Static
 		updated (group, 0-X, noConstraint)
 			updatedBy (recordLink, 1-1, noConstraint)
 			tsUpdated (textVariable, 1-1, noConstraint)
-	adminInfo (group, 1-1, noConstraint)
 		visibility (collectionVariable, 1-1, noConstraint, P)
 		tsVisibility (textVariable, 0-1, write)
 	master (group, 0-1, write)
