@@ -1,7 +1,7 @@
 ---
 Static
 ---
-!***> Create example pool for fitnesse
+!1 Create example pool for fitnesse
 It should be possible to create new validation types
 
 

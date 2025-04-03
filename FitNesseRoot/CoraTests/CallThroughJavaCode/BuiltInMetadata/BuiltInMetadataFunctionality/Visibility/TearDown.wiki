@@ -1,0 +1,33 @@
+!***> Remove created data
+!| RecordEndpointFixture |
+| authToken|type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $fitnesseWithRecordInfoVisibilityPublishedRecordId |||
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $fitnesseWithRecordInfoVisibilityMissingRecordId |||
+| $adminAuthToken | validationType | fitnesseValidationTypeForRecordTypeWithVisibility || OK |
+| $adminAuthToken | search | fitnesseRecordTypeWithVisibilitySearch || OK |
+| $adminAuthToken | recordType | fitnesseRecordTypeWithVisibility || OK |
+| $adminAuthToken | presentation | fitnesseGroupWithRecordInfoVisibilityPGroup || OK |
+| $adminAuthToken | presentation | fitnesseGroupWithRecordInfoVisibilityOutputPGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordTypeWithVisibilityMenuPGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordTypeWithVisibilityListPGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordTypeWithVisibilityAutocompletePGroup || OK |
+| $adminAuthToken | presentation | fitnesseGroupWithRecordInfoVisibilityNewPGroup || OK |
+| $adminAuthToken | presentation | fitnesseGroupWithRecordInfoVisibilityNewOutputPGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordInfoWithVisibilityOutputPGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordInfoWithVisibilityPGroup || OK |
+| $adminAuthToken | metadata | fitnesseGroupWithRecordInfoVisibilityNewGroup || OK |
+| $adminAuthToken | metadata | fitnesseGroupWithRecordInfoVisibilityGroup || OK |
+| $adminAuthToken | metadata | fitnesseRecordInfoWithVisibilityGroup || OK |
+| $adminAuthToken | text | fitnesseGroupWithRecordInfoVisibilityNewGroupDefText || OK |
+| $adminAuthToken | text | fitnesseGroupWithRecordInfoVisibilityNewGroupText || OK |
+| $adminAuthToken | text | fitnesseGroupWithRecordInfoVisibilityGroupDefText || OK |
+| $adminAuthToken | text | fitnesseGroupWithRecordInfoVisibilityGroupText || OK |
+| $adminAuthToken | text | fitnesseRecordTypeWithVisibilityDefText || OK |
+| $adminAuthToken | text | fitnesseRecordTypeWithVisibilityText || OK |
+| $adminAuthToken | text | fitnesseValidationTypeForRecordTypeWithVisibilityDefText || OK |
+| $adminAuthToken | text | fitnesseValidationTypeForRecordTypeWithVisibilityText || OK |
+| $adminAuthToken | text | fitnesseRecordTypeWithVisibilitySearchDefText || OK |
+| $adminAuthToken | text | fitnesseRecordTypeWithVisibilitySearchText || OK |
+
+
+*!
