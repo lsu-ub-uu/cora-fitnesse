@@ -27,17 +27,3 @@
 !| ChildComparerFixture |
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
 | $adminAuthToken | ${recordType} | ${validationTypeForRecordWithVisibility} |  | ${expectedCreateResult} | $validationTypeForRecordWithVisibilityId= |
-
-# Instance with visibility set to published
-!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
-!define recordType {fitnesseRecordTypeWithVisibility}
-!| ChildComparerFixture |
-| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
-| $adminAuthToken | ${recordType} | ${createData} |  | ${expectedCreateResult} | $fitnesseWithRecordInfoVisibilityPublishedRecordId= |
-
-# Instance with missing visibility field
-!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]}]},{"name":"fitnesseTextVar","value":"en annan text"}]}-!}
-!define recordType {fitnesseRecordTypeWithVisibility}
-!| ChildComparerFixture |
-| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
-| $adminAuthToken | ${recordType} | ${createData} |  | ${expectedCreateResult} | $fitnesseWithRecordInfoVisibilityMissingRecordId= |
