@@ -3,6 +3,8 @@
 | authToken|type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | fitnesseRecordTypeWithVisibility | $fitnesseWithRecordInfoVisibilityPublishedRecordId |||
 | $adminAuthToken | fitnesseRecordTypeWithVisibility | $fitnesseWithRecordInfoVisibilityMissingRecordId |||
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $fitnesseGuestWithRecordInfoVisibilityPublishedRecordId |||
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $fitnesseGuestWithRecordInfoVisibilityMissingRecordId |||
 | $adminAuthToken | validationType | fitnesseValidationTypeForRecordTypeWithVisibility || OK |
 | $adminAuthToken | search | fitnesseRecordTypeWithVisibilitySearch || OK |
 | $adminAuthToken | recordType | fitnesseRecordTypeWithVisibility || OK |
