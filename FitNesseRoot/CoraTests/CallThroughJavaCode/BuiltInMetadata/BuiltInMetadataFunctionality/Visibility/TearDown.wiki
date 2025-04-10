@@ -3,8 +3,8 @@
 | authToken|type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | fitnesseRecordTypeWithVisibility | $fitnesseWithRecordInfoVisibilityPublishedRecordId |||
 | $adminAuthToken | fitnesseRecordTypeWithVisibility | $fitnesseWithRecordInfoVisibilityMissingRecordId |||
-| $adminAuthToken | fitnesseRecordTypeWithVisibility | $fitnesseGuestWithRecordInfoVisibilityPublishedRecordId |||
-| $adminAuthToken | fitnesseRecordTypeWithVisibility | $fitnesseGuestWithRecordInfoVisibilityMissingRecordId |||
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $fitnesseUserWithRecordInfoVisibilityPublishedRecordId |||
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $fitnesseUserWithRecordInfoVisibilityMissingRecordId |||
 | $adminAuthToken | validationType | fitnesseValidationTypeForRecordTypeWithVisibility || OK |
 | $adminAuthToken | search | fitnesseRecordTypeWithVisibilitySearch || OK |
 | $adminAuthToken | recordType | fitnesseRecordTypeWithVisibility || OK |
@@ -30,6 +30,8 @@
 | $adminAuthToken | text | fitnesseValidationTypeForRecordTypeWithVisibilityText || OK |
 | $adminAuthToken | text | fitnesseRecordTypeWithVisibilitySearchDefText || OK |
 | $adminAuthToken | text | fitnesseRecordTypeWithVisibilitySearchText || OK |
+| $adminAuthToken | permissionRole | fitnesseVisibilityRole || OK |
+| $adminAuthToken | permissionRule | fitnesseUserVisibilityRule || OK |
 
 
 *!
