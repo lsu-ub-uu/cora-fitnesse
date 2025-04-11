@@ -20,6 +20,7 @@
 | $adminAuthToken | metadata | fitnesseGroupWithRecordInfoVisibilityNewGroup || OK |
 | $adminAuthToken | metadata | fitnesseGroupWithRecordInfoVisibilityGroup || OK |
 | $adminAuthToken | metadata | fitnesseRecordInfoWithVisibilityGroup || OK |
+| $adminAuthToken | metadata | fitnesseRecordInfoWithVisibilityNewGroup || OK |
 | $adminAuthToken | text | fitnesseGroupWithRecordInfoVisibilityNewGroupDefText || OK |
 | $adminAuthToken | text | fitnesseGroupWithRecordInfoVisibilityNewGroupText || OK |
 | $adminAuthToken | text | fitnesseGroupWithRecordInfoVisibilityGroupDefText || OK |
