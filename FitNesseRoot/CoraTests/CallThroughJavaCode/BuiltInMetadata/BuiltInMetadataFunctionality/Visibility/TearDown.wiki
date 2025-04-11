@@ -20,6 +20,8 @@
 | $adminAuthToken | metadata | fitnesseGroupWithRecordInfoVisibilityNewGroup || OK |
 | $adminAuthToken | metadata | fitnesseGroupWithRecordInfoVisibilityGroup || OK |
 | $adminAuthToken | metadata | fitnesseRecordInfoWithVisibilityGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordInfoWithVisibilityNewPGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordInfoWithVisibilityNewOutputPGroup || OK |
 | $adminAuthToken | metadata | fitnesseRecordInfoWithVisibilityNewGroup || OK |
 | $adminAuthToken | text | fitnesseGroupWithRecordInfoVisibilityNewGroupDefText || OK |
 | $adminAuthToken | text | fitnesseGroupWithRecordInfoVisibilityNewGroupText || OK |
@@ -31,8 +33,12 @@
 | $adminAuthToken | text | fitnesseValidationTypeForRecordTypeWithVisibilityText || OK |
 | $adminAuthToken | text | fitnesseRecordTypeWithVisibilitySearchDefText || OK |
 | $adminAuthToken | text | fitnesseRecordTypeWithVisibilitySearchText || OK |
-| $adminAuthToken | permissionRole | fitnesseVisibilityRole || OK |
+| $adminAuthToken | permissionRole | fitnesseUserVisibilityRole || OK |
 | $adminAuthToken | permissionRule | fitnesseUserVisibilityRule || OK |
+| $adminAuthToken | text | fitnesseUserVisibilityRuleDefText || OK |
+| $adminAuthToken | text | fitnesseUserVisibilityRuleText || OK |
+| $adminAuthToken | permissionRole | fitnesseAdminVisibilityRole || OK |
+| $adminAuthToken | permissionRule | fitnesseAdminVisibilityRule || OK |
 
 
 *!
