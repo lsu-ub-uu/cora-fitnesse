@@ -2,7 +2,6 @@
 Test
 ---
 !2 Visibility tests
-!style_note[Scenario: Visibility is set up to have ''recordPartConstraint'' set to '''WRITE''' and Admin have write permissions for visibility whereas User does not]
 
 !3 CRUD tests
 !style_note[Ensure that the visibility setting behavior relies on the currently active permissions.]
