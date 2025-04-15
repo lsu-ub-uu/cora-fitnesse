@@ -1,0 +1,14 @@
+---
+Static
+---
+!4 Delete
+TODO...
+
+!***< Clean up created records in scenario
+!| RecordEndpointFixture |
+| authToken|type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $fitnesseWithRecordInfoVisibilityPublishedRecordId |||
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $fitnesseWithRecordInfoVisibilityMissingRecordId |||
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $fitnesseUserWithRecordInfoVisibilityPublishedRecordId |||
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $fitnesseUserWithRecordInfoVisibilityMissingRecordId |||
+*!

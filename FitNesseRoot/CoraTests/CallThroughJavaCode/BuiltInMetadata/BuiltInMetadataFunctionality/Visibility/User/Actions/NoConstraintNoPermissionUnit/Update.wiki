@@ -22,7 +22,7 @@ Static
 
 *!
 !***> '''Case 2''' An admin updating a record with a new visibility value, the update should successfully apply the provided value and the timestamp should be updated.
-!define updateData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"hidden"},{"name":"tsVisibility","value":"2025-04-14T08:53:03.010225Z"},{"name":"id","value":"-!$fitnesseWithRecordInfoVisibilityPublishedRecordId!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordTypeWithVisibility"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2025-04-14T08:53:03.010323Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2025-04-14T08:53:03.010323Z"}]}]},{"name":"fitnesseTextVar","value":"entext"}]}-!}
+!define updateData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"unpublished"},{"name":"tsVisibility","value":"2025-04-14T08:53:03.010225Z"},{"name":"id","value":"-!$fitnesseWithRecordInfoVisibilityPublishedRecordId!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordTypeWithVisibility"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2025-04-14T08:53:03.010323Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2025-04-14T08:53:03.010323Z"}]}]},{"name":"fitnesseTextVar","value":"entext"}]}-!}
 !define recordType {fitnesseRecordTypeWithVisibility}
 
 !| RecordEndpointFixture |
@@ -33,8 +33,8 @@ Static
 !| script | ExtractSubstringUsingRegex |
 | $updatedTsVisibility= | get substring using text | $newVisibilityReponse | and regex | "name":"tsVisibility","value":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z" |
 
-#### Assert visibility and tsVisibility is changed when updating with a new visibility value (hidden)
-!define expectedUpdatedHiddenResponseRegex {"name":"visibility","value":"hidden" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z AND NOT !-$originalTsVisibility-!}
+#### Assert visibility and tsVisibility is changed when updating with a new visibility value (unpublished)
+!define expectedUpdatedHiddenResponseRegex {"name":"visibility","value":"unpublished" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z AND NOT !-$originalTsVisibility-!}
 !| script | ExtractSubstringUsingRegex |
 | ensure | match found using text | $newVisibilityReponse | and includes and not excludes | ${expectedUpdatedHiddenResponseRegex} |
 
@@ -47,13 +47,13 @@ Static
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
 | $userAuthToken | ${recordType} | $fitnesseWithRecordInfoVisibilityPublishedRecordId | ${updateData} | $userNoVisibilityUpdateResponse= | OK |
 
-#### Assert visibility and tsVisibility is unchanged when updating with the already existing visibility value (published)
-!define expectedUserNoVisibilityUpdateResponseRegex {"name":"visibility","value":"hidden" AND !-$updatedTsVisibility-!}
+#### Assert visibility and tsVisibility is unchanged when updating with the already existing visibility value (unpublished)
+!define expectedUserNoVisibilityUpdateResponseRegex {"name":"visibility","value":"unpublished" AND !-$updatedTsVisibility-!}
 !| script | ExtractSubstringUsingRegex |
 | ensure | match found using text | $userNoVisibilityUpdateResponse | and includes and not excludes | ${expectedUserNoVisibilityUpdateResponseRegex} |
 
 *!
-!***> '''Case 4''' A user updating a record with a visibility value different from the existing one (published), the update should not alter the current visibility value (hidden) or the timestamp.
+!***> '''Case 4''' A user should be able to update a record with a visibility value different from the existing one (unpublished) to another one it can access (published) and time stamp should be updated as well.
 !define updateData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"},{"name":"tsVisibility","value":"2025-04-14T08:53:03.010225Z"},{"name":"id","value":"-!$fitnesseWithRecordInfoVisibilityPublishedRecordId!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordTypeWithVisibility"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2025-04-14T08:53:03.010323Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2025-04-14T08:53:03.010323Z"}]}]},{"name":"fitnesseTextVar","value":"entext"}]}-!}
 !define recordType {fitnesseRecordTypeWithVisibility}
 
@@ -62,7 +62,7 @@ Static
 | $userAuthToken | ${recordType} | $fitnesseWithRecordInfoVisibilityPublishedRecordId | ${updateData} | $userTriesToUpdateVisibilityUpdateResponse= | OK |
 
 #### Assert visibility and tsVisibility is unchanged when updating with the already existing visibility value (hidden)
-!define expectedUserTriesToUpdateResponseRegex {"name":"visibility","value":"hidden" AND !-$updatedTsVisibility-!}
+!define expectedUserTriesToUpdateResponseRegex {"name":"visibility","value":"published" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z" AND NOT !-$updatedTsVisibility-!}
 !| script | ExtractSubstringUsingRegex |
 | ensure | match found using text | $userTriesToUpdateVisibilityUpdateResponse | and includes and not excludes | ${expectedUserTriesToUpdateResponseRegex} |
 *!

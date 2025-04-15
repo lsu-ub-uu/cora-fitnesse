@@ -1,0 +1,18 @@
+---
+Static
+---
+!4 Read
+ * '''Case 1''': An admin should be able to read records with any visibility
+ * '''Case 2''': A user should be able to read records with any visibility
+!define recordType {fitnesseRecordTypeWithVisibility}
+
+!***> ABC
+!| ChildComparerFixture |
+| authToken | type | id | testReadAndStoreRecord? |
+| $adminAuthToken | ${recordType} | $commonUnpublishedRecordId | |
+| $adminAuthToken | ${recordType} | $commonPublishedRecordId | |
+| $adminAuthToken | ${recordType} | $commonHiddenRecordId | |
+| $userAuthToken | ${recordType} | $commonUnpublishedRecordId | |
+| $userAuthToken | ${recordType} | $commonPublishedRecordId | |
+| $userAuthToken | ${recordType} | $commonHiddenRecordId | |
+*!

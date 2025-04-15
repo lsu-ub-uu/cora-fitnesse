@@ -1,0 +1,66 @@
+---
+Static
+---
+!4 Create
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.ScenarioConfigs.WithConstraints
+
+ * '''Case 1''': An admin creating a record with no visibility value should set visibility to its default value (unpublished)
+ * '''Case 2''': An admin creating a record with a visibility value should have this value in its data after creation
+ * '''Case 3''': A user creating a record with no visibility value should set visibility to its default value (unpublished)
+ * '''Case 4''': A user creating a record with a visibility value other than ''unpublished'' should have this value reverted to the default (unpublished)
+
+
+!***> '''Case 1''' Creating a record with no visibility value should set visibility to its default value (unpublished)
+# Instance with missing visibility field
+!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]}]},{"name":"fitnesseTextVar","value":"en annan text"}]}-!}
+!define recordType {fitnesseRecordTypeWithVisibility}
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | ${recordType} | ${createData} | $unpublishedResponseBody= | ${expectedCreateResult} | $fitnesseWithRecordInfoVisibilityMissingRecordId= |
+
+!define expectedUnpublishedResponseRegex {"name":"visibility","value":"unpublished" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $unpublishedResponseBody | and includes and not excludes | ${expectedUnpublishedResponseRegex} |
+
+*!
+!***> '''Case 2''' Creating a record with a visibility value should have this value in its data after creation
+# Instance with visibility set to published
+!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
+!define recordType {fitnesseRecordTypeWithVisibility}
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | ${recordType} | ${createData} | $publishedResponseBody= | ${expectedCreateResult} | $fitnesseWithRecordInfoVisibilityPublishedRecordId= |
+
+#### Save the original timestamp so it can be used to assert update does not change this value
+!| script | ExtractSubstringUsingRegex |
+| $originalTsVisibility= | get substring using text | $publishedResponseBody | and regex | "name":"tsVisibility","value":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z" |
+
+!define expectedPublishedResponseRegex {"name":"visibility","value":"published" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $publishedResponseBody | and includes and not excludes | ${expectedPublishedResponseRegex} |
+
+*!
+!***> '''Case 3''' A user creating a record with no visibility value should set visibility to its default value (unpublished)
+!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]}]},{"name":"fitnesseTextVar","value":"en annan text"}]}-!}
+!define recordType {fitnesseRecordTypeWithVisibility}
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| $userAuthToken | ${recordType} | ${createData} | $unpublishedUserResponseBody= | ${expectedCreateResult} | $fitnesseUserWithRecordInfoVisibilityMissingRecordId= |
+
+!define expectedUserUnpublishedResponseRegex {"name":"visibility","value":"unpublished" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $unpublishedUserResponseBody | and includes and not excludes | ${expectedUserUnpublishedResponseRegex} |
+
+*!
+!***> '''Case 4''' A user creating a record with a visibility value other than ''unpublished'' should have this value reverted to the default (unpublished)
+!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
+!define recordType {fitnesseRecordTypeWithVisibility}
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| $userAuthToken | ${recordType} | ${createData} | $publishedUserResponseBody= | ${expectedCreateResult} | $fitnesseUserWithRecordInfoVisibilityPublishedRecordId= |
+
+!define expectedUserPublishedResponseRegex {"name":"visibility","value":"unpublished" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $publishedUserResponseBody | and includes and not excludes | ${expectedUserPublishedResponseRegex} |
+
+*!
