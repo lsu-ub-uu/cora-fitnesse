@@ -2,4 +2,22 @@
 Static
 ---
 !4 Read
-TODO...
+ * '''Case 1''': An admin should be able to read records with any visibility
+ * '''Case 2''': A user should only be able to read records it is allowed by visibility permission term (published, unpublished)
+
+!***> '''Case 1''': An admin should be able to read records with any visibility
+!define recordType {fitnesseRecordTypeWithVisibility}
+!| ChildComparerFixture |
+| authToken | type | id | testReadAndStoreRecord? | getStatusType? |
+| $adminAuthToken | ${recordType} | $commonUnpublishedRecordId | | OK |
+| $adminAuthToken | ${recordType} | $commonPublishedRecordId | | OK |
+| $adminAuthToken | ${recordType} | $commonHiddenRecordId | | OK |
+
+*!
+!***> '''Case 2''': A user should only be able to read records it is allowed by visibility permission term (published, unpublished)
+!| ChildComparerFixture |
+| authToken | type | id | testReadAndStoreRecord? | getStatusType? |
+| $userAuthToken | ${recordType} | $commonUnpublishedRecordId | | OK |
+| $userAuthToken | ${recordType} | $commonPublishedRecordId | | OK |
+| $userAuthToken | ${recordType} | $commonHiddenRecordId | | FORBIDDEN |
+*!
