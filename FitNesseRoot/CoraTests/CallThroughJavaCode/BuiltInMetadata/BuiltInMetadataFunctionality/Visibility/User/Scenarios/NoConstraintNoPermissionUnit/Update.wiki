@@ -6,9 +6,10 @@ Static
  * '''Case 2''': An admin updating a record with a new visibility value, the update should successfully apply the provided value and the timestamp should be updated.
  * '''Case 3''': A user updating a record without providing a visibility value, the visibility value should remain unchanged, retaining the value from the previous version.
  * '''Case 4''': A user updating a record with a visibility value different from the existing one, the update should not alter the current visibility value.
+#
 !***< Update test data
 
-### NOTE: Timestamps are verified within the tests to assert they are updated accordingly or not
+### NOTE: The time stamps used for asserting tsVisibility changes are assigned in Create and Update tests (createCase2TsVisibility and updateCase2TsVisibility)
 
 !***> '''Case 1''' An admin updating a record without providing a visibility value, the visibility value should remain unchanged, retaining the value from the previous version and the timestamp should not be updated.
 !define case1UpdateData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"},{"name":"tsVisibility","value":"2025-04-14T08:53:03.010225Z"},{"name":"id","value":"-!$fitnesseWithRecordInfoVisibilityPublishedRecordId!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordTypeWithVisibility"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2025-04-14T08:53:03.010323Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2025-04-14T08:53:03.010323Z"}]}]},{"name":"fitnesseTextVar","value":"entext"}]}-!}

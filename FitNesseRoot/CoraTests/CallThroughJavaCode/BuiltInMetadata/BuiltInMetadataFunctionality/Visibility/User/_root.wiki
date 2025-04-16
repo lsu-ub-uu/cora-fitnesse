@@ -7,6 +7,7 @@ Test
 !style_note[Ensure that the visibility setting behavior relies on the currently active permissions.]
 
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.ScenarioConfigs.NoConstraints
+!***> Test scenario: ${scenario}
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.NoConstraintNoPermissionUnit.Create
 ----
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.NoConstraintNoPermissionUnit.Read
@@ -14,8 +15,10 @@ Test
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.NoConstraintNoPermissionUnit.Update
 ----
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.NoConstraintNoPermissionUnit.Delete
-----
+*!
+
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.ScenarioConfigs.WithConstraints
+!***> Test scenario: ${scenario}
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.WithConstraintNoPermissionUnit.Create
 ----
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.WithConstraintNoPermissionUnit.Read
@@ -23,6 +26,7 @@ Test
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.WithConstraintNoPermissionUnit.Update
 ----
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.WithConstraintNoPermissionUnit.Delete
+*!
 ----
 !***> TODO STUFF
 '''TODO:''' 
