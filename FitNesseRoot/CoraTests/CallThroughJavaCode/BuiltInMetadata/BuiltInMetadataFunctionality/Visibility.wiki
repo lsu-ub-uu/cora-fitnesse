@@ -11,4 +11,4 @@ This functionality allows to set individual records of the record type to an spe
  
 Whenever the visibility value is changed a field tsVisibility will be updated with the current timestamp.
  
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User

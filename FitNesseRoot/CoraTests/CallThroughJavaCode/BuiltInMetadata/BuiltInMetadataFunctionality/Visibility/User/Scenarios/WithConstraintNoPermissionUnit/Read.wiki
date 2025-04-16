@@ -1,0 +1,21 @@
+---
+Static
+---
+!4 Read
+ * '''Case 1''': An admin should be able to read records with any visibility
+ * '''Case 2''': A user should only be able to read records it is allowed by visibility permission term (published, unpublished)
+!***< Read test data
+!***> '''Case 1''': An admin should be able to read records with any visibility
+!define expectedAdminUnpublishedStatus {OK}
+!define expectedAdminPublishedStatus {OK}
+!define expectedAdminHiddenStatus {OK}
+
+*!
+!***> '''Case 2''': A user should only be able to read records it is allowed by visibility permission term (published, unpublished)
+!define expectedUserUnpublishedStatus {OK}
+!define expectedUserPublishedStatus {OK}
+!define expectedUserHiddenStatus {FORBIDDEN}
+
+*!
+*!
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.Read

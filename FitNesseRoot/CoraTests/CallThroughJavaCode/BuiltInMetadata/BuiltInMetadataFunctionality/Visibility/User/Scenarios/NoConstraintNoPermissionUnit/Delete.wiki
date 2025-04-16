@@ -1,0 +1,7 @@
+---
+Static
+---
+!4 Delete
+Some other cases
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.Delete
