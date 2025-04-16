@@ -4,7 +4,7 @@ Static
 # * '''Case 1''': An admin updating a record without providing a visibility value, the visibility value should remain unchanged, retaining the value from the previous version and the timestamp should not be updated.
 # * '''Case 2''': An admin updating a record with a new visibility value, the update should successfully apply the provided value and the timestamp should be updated.
 # * '''Case 3''': A user updating a record without providing a visibility value, the visibility value should remain unchanged, retaining the value from the previous version.
-# * '''Case 4''': A user updating a record with a visibility value different from the existing one, the update should not alter the current visibility value.
+# * '''Case 4''': A user updating a record with a visibility value different from the existing one, the update should behave according to permissions
 #
 !***> '''Case 1''' An admin updating a record without providing a visibility value, the visibility value should remain unchanged, retaining the value from the previous version and the timestamp should not be updated.
 !define recordType {fitnesseRecordTypeWithVisibility}
