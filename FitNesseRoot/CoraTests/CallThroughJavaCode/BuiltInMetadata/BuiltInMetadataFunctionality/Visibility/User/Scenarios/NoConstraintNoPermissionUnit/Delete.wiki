@@ -2,6 +2,23 @@
 Static
 ---
 !4 Delete
-Some other cases
+#
+ * '''Case 1''': An admin should be able to delete records with any visibility
+ * '''Case 2''': A user should only be allowed to delete records with visibility it is allowed to access (published, unpublished)
+#
+!***< Create test data
+!***> '''Case 1''' An admin should be able to delete records with any visibility
+!define expectedAdminUnpublishedDelete {OK}
+!define expectedAdminPublishedDelete {OK}
+!define expectedAdminHiddenDelete {OK}
 
+*!
+!***> '''Case 2''' A user should only be allowed to delete records with visibility it is allowed to access
+# Instance with visibility set to published
+!define expectedUserUnpublishedDelete {OK}
+!define expectedUserPublishedDelete {OK}
+!define expectedUserHiddenDelete {FORBIDDEN}
+
+*!
+*!
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.Delete

@@ -1,12 +1,45 @@
 ---
 Static
 ---
-#Delete
-!***> Clean up created records in scenario
+!***< Create posts for delete test
+!define unpublishedRecordId {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"unpublished"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
+!define publishedRecordId {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
+!define hiddenRecordId {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"hidden"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
+!define recordType {fitnesseRecordTypeWithVisibility}
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | ${recordType} | ${unpublishedRecordId} | $publishedResponseBody= | ${expectedCreateResult} | $adminDeleteUnpublishedRecordId= |
+| $adminAuthToken | ${recordType} | ${publishedRecordId} | $publishedResponseBody= | ${expectedCreateResult} | $adminDeletePublishedRecordId= |
+| $adminAuthToken | ${recordType} | ${hiddenRecordId} | $publishedResponseBody= | ${expectedCreateResult} | $adminDeleteHiddenRecordId= |
+| $adminAuthToken | ${recordType} | ${unpublishedRecordId} | $publishedResponseBody= | ${expectedCreateResult} | $userDeleteUnpublishedRecordId= |
+| $adminAuthToken | ${recordType} | ${publishedRecordId} | $publishedResponseBody= | ${expectedCreateResult} | $userDeletePublishedRecordId= |
+| $adminAuthToken | ${recordType} | ${hiddenRecordId} | $publishedResponseBody= | ${expectedCreateResult} | $userDeleteHiddenRecordId= |
+
+*!
+!***> An admin should be able to delete records any records regardless of visibility
+!| RecordEndpointFixture |
+| authToken|type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $adminDeleteUnpublishedRecordId || ${expectedAdminUnpublishedDelete} |
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $adminDeletePublishedRecordId || ${expectedAdminPublishedDelete} |
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $adminDeleteHiddenRecordId || ${expectedAdminHiddenDelete} |
+
+*!
+!***> A user should only be able to delete records its allowed to
+!| RecordEndpointFixture |
+| authToken|type | id | testDeleteRecord? | getStatusType? |
+| $userAuthToken | fitnesseRecordTypeWithVisibility | $userDeleteUnpublishedRecordId || ${expectedUserUnpublishedDelete} |
+| $userAuthToken | fitnesseRecordTypeWithVisibility | $userDeletePublishedRecordId || ${expectedUserPublishedDelete} |
+| $userAuthToken | fitnesseRecordTypeWithVisibility | $userDeleteHiddenRecordId || ${expectedUserHiddenDelete} |
+
+*!
+
+!***< Clean up created records in scenario
 !| RecordEndpointFixture |
 | authToken|type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | fitnesseRecordTypeWithVisibility | $createCase1RecordId |||
 | $adminAuthToken | fitnesseRecordTypeWithVisibility | $createCase2RecordId |||
 | $adminAuthToken | fitnesseRecordTypeWithVisibility | $createCase3RecordId |||
 | $adminAuthToken | fitnesseRecordTypeWithVisibility | $createCase4RecordId |||
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $userDeleteHiddenRecordId |||
+
 *!

@@ -6,7 +6,7 @@ Test
 !3 CRUD tests
 !style_note[Ensure that the visibility setting behavior relies on the currently active permissions.]
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.ScenarioConfigs.NoConstraints
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.NoConstraintNoPermissionUnit.Configuration
 !***> Test scenario: ${scenario}
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.NoConstraintNoPermissionUnit.Create
 ----
@@ -17,7 +17,7 @@ Test
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.NoConstraintNoPermissionUnit.Delete
 *!
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.ScenarioConfigs.WithConstraints
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.WithConstraintNoPermissionUnit.Configuration
 !***> Test scenario: ${scenario}
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.WithConstraintNoPermissionUnit.Create
 ----
@@ -29,30 +29,19 @@ Test
 *!
 ----
 !***> TODO STUFF
-'''TODO:''' 
-1. add variable with record part read constraint to record type
-2. add permissionTerm
+!5 List
 
-!4 Read
+!5 Search
 
-!4 List
- data utan visibility, du får föregående visibility
- data med visibility, ok
- data utan visibility, ej rättighet
- data med visibility, ej rättighet
+!5 Level 2, permission units and no record part constraint for visibility
 
-!4 Search
+!5 Level 3, write record part constraint for visibility
+
+!5 Level 4, visibility and permissionUnits
+
+!5 Level 5, write record part constraint for visibility and permissionUnits
 
 
-!3 Level 2, permission units and no record part constraint for visibility
-
-!3 Level 3, write record part constraint for visibility
-
-!3 Level 4, visibility and permissionUnits
-
-!3 Level 5, write record part constraint for visibility and permissionUnits
-
-
-!4 Extra test: test if a record is published, eventual readRecorPartPermissions are take it into account.
+!5 Extra test: test if a record is published, eventual readRecorPartPermissions are take it into account.
 
 *!
