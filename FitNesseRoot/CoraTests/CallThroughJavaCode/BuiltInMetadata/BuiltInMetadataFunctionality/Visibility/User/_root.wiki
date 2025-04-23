@@ -15,6 +15,7 @@ Test
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.NoConstraintNoPermissionUnit.Update
 ----
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.NoConstraintNoPermissionUnit.Delete
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.CleanUp
 *!
 
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.WithConstraintNoPermissionUnit.Configuration
@@ -26,6 +27,7 @@ Test
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.WithConstraintNoPermissionUnit.Update
 ----
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.WithConstraintNoPermissionUnit.Delete
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.CleanUp
 *!
 ----
 !***> TODO STUFF

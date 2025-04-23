@@ -7,29 +7,60 @@ Static
  * '''Case 2''': An admin creating a record with a visibility value should have this value in its data after creation
  * '''Case 3''': A user creating a record with no visibility value should set visibility to its default value (unpublished)
  * '''Case 4''': A user creating a record should be able to set visibility status
+ * '''Case 5''': A guest should not be able to create a record regardless of visibility status due to permissionTerm limitation
 #
-!***< Create test data
-!***> '''Case 1''' Creating a record with no visibility value should set visibility to its default value (unpublished)
-# Instance with missing visibility field
-!define case1CreateData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]}]},{"name":"fitnesseTextVar","value":"en annan text"}]}-!}
-!define expectedCase1ResponseRegex {"name":"visibility","value":"unpublished" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
+
+!***> '''Case 1''' An admin creating a record with no visibility value should set visibility to its default value (unpublished)
+!define currentAuthToken {$adminAuthToken}
+!define recordType {fitnesseRecordTypeWithVisibility}
+!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]}]},{"name":"fitnesseTextVar","value":"en annan text"}]}-!}
+!define expectedResponseRegex {"name":"visibility","value":"unpublished" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
+!define expectedCreateResult {CREATED}
+!define createdRecordId {$createCase1RecordId}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.CreateRecordAndEnsureResponse
+
+#### NOTE: Save the original timestamp so it can be used to assert update timestamps on this record (createCase1RecordId)
+#
+!| script | ExtractSubstringUsingRegex |
+| $createdTsVisibility= | get substring using text | $createResponseBody | and regex | "name":"tsVisibility","value":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z" |
 
 *!
-!***> '''Case 2''' Creating a record with a visibility value should have this value in its data after creation
-# Instance with visibility set to published
-!define case2CreateData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
-!define expectedCase2ResponseRegex {"name":"visibility","value":"published" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
+!***> '''Case 2''' An admin creating a record with a visibility value should have this value in its data after creation
+!define currentAuthToken {$adminAuthToken}
+!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
+!define expectedResponseRegex {"name":"visibility","value":"published" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
+!define expectedCreateResult {CREATED}
+!define createdRecordId {$createCase2RecordId}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.CreateRecordAndEnsureResponse
 
 *!
 !***> '''Case 3''' A user creating a record with no visibility value should set visibility to its default value (unpublished)
-!define case3CreateData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]}]},{"name":"fitnesseTextVar","value":"en annan text"}]}-!}
-!define expectedCase3ResponseRegex {"name":"visibility","value":"unpublished" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
+!define currentAuthToken {$userAuthToken}
+!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]}]},{"name":"fitnesseTextVar","value":"en annan text"}]}-!}
+!define expectedResponseRegex {"name":"visibility","value":"unpublished" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
+!define expectedCreateResult {CREATED}
+!define createdRecordId {$createCase3RecordId}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.CreateRecordAndEnsureResponse
 
 *!
-!***> '''Case 4''' A user should be able to set visibility status
-!define case4CreateData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
-!define expectedCase4ResponseRegex {"name":"visibility","value":"published" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
+!***> '''Case 4''' A user creating a record should be able to set visibility status
+!define currentAuthToken {$userAuthToken}
+!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
+!define expectedResponseRegex {"name":"visibility","value":"published" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
+!define expectedCreateResult {CREATED}
+!define createdRecordId {$createCase4RecordId}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.CreateRecordAndEnsureResponse
 
 *!
+!***> '''Case 5''' A guest should not be able to create a record regardless of visibility status due to permissionTerm limitation
+!define currentAuthToken {$guestAuthToken}
+!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
+!define expectedCreateResult {FORBIDDEN}
+!define createdRecordId {$createCase5RecordId}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.CreateRecord
 *!
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.Create

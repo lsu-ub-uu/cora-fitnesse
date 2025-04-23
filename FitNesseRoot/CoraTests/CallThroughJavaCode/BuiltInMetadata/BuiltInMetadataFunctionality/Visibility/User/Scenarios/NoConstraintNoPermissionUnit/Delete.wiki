@@ -5,20 +5,39 @@ Static
 #
  * '''Case 1''': An admin should be able to delete records with any visibility
  * '''Case 2''': A user should only be allowed to delete records with visibility it is allowed to access (published, unpublished)
+ * '''Case 3''': A guest should not be able to delete any records with visibility its does not have delete permission for
 #
-!***< Create test data
+!***< Create records for tests data
+!define recordType {fitnesseRecordTypeWithVisibility}
+!define unpublishedRecordData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"unpublished"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
+!define publishedRecordData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
+!define hiddenRecordData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"hidden"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
+*!
+
 !***> '''Case 1''' An admin should be able to delete records with any visibility
-!define expectedAdminUnpublishedDelete {OK}
-!define expectedAdminPublishedDelete {OK}
-!define expectedAdminHiddenDelete {OK}
+!define currentAuthToken {$adminAuthToken}
+!define expectedUnpublishedDelete {OK}
+!define expectedPublishedDelete {OK}
+!define expectedHiddenDelete {OK}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.DeleteRecord
 
 *!
 !***> '''Case 2''' A user should only be allowed to delete records with visibility it is allowed to access
-# Instance with visibility set to published
-!define expectedUserUnpublishedDelete {OK}
-!define expectedUserPublishedDelete {OK}
-!define expectedUserHiddenDelete {FORBIDDEN}
+!define currentAuthToken {$userAuthToken}
+!define expectedUnpublishedDelete {OK}
+!define expectedPublishedDelete {OK}
+!define expectedHiddenDelete {FORBIDDEN}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.DeleteRecord
 
 *!
+!***> '''Case 3''' A guest should not be allowed to delete records with visibility it is allowed to access
+!define currentAuthToken {$guestAuthToken}
+!define expectedUnpublishedDelete {FORBIDDEN}
+!define expectedPublishedDelete {FORBIDDEN}
+!define expectedHiddenDelete {FORBIDDEN}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.DeleteRecord
+
 *!
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.Delete

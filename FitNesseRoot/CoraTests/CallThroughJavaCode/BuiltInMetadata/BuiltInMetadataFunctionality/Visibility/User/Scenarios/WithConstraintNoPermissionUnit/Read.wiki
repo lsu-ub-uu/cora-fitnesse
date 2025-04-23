@@ -4,18 +4,32 @@ Static
 !4 Read
  * '''Case 1''': An admin should be able to read records with any visibility
  * '''Case 2''': A user should only be able to read records it is allowed by visibility permission term (published, unpublished)
-!***< Read test data
+ * '''Case 3''': A guest should only be able to read records it is allowed by visibility permission term (published)
+
 !***> '''Case 1''': An admin should be able to read records with any visibility
-!define expectedAdminUnpublishedStatus {OK}
-!define expectedAdminPublishedStatus {OK}
-!define expectedAdminHiddenStatus {OK}
+!define currentAuthToken {$adminAuthToken}
+!define expectedUnpublishedStatus {OK}
+!define expectedPublishedStatus {OK}
+!define expectedHiddenStatus {OK}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.ReadRecord
 
 *!
 !***> '''Case 2''': A user should only be able to read records it is allowed by visibility permission term (published, unpublished)
-!define expectedUserUnpublishedStatus {OK}
-!define expectedUserPublishedStatus {OK}
-!define expectedUserHiddenStatus {FORBIDDEN}
+!define currentAuthToken {$userAuthToken}
+!define expectedUnpublishedStatus {OK}
+!define expectedPublishedStatus {OK}
+!define expectedHiddenStatus {FORBIDDEN}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.ReadRecord
 
 *!
+!***> '''Case 3''': A guest should only be able to read published records
+!define currentAuthToken {$guestAuthToken}
+!define expectedUnpublishedStatus {FORBIDDEN}
+!define expectedPublishedStatus {OK}
+!define expectedHiddenStatus {FORBIDDEN}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.ReadRecord
+
 *!
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.Read
