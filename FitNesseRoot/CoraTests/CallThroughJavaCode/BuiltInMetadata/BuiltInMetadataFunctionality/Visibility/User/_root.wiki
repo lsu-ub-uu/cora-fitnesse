@@ -18,7 +18,7 @@ Test
 ----
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.NoConstraintNoPermissionUnit.List
 ----
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.NoConstraintNoPermissionUnit.Search
+#!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.NoConstraintNoPermissionUnit.Search
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.CleanUp
 *!
 
@@ -31,22 +31,25 @@ Test
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.WithConstraintNoPermissionUnit.Update
 ----
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.WithConstraintNoPermissionUnit.Delete
+----
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.WithConstraintNoPermissionUnit.List
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.CleanUp
+*!
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.NoConstraintWithPermissionUnit.Configuration
+!***> Test scenario: ${scenario}
+
 *!
 ----
 !***> TODO STUFF
-!5 List
 
 !5 Search
 
-!5 Level 2, permission units and no record part constraint for visibility
+!5 Level 2, permission units and NO record part constraint for visibility
 
-!5 Level 3, write record part constraint for visibility
+!5 Level 5, permission units WITH write record part constraint for visibility
 
-!5 Level 4, visibility and permissionUnits
-
-!5 Level 5, write record part constraint for visibility and permissionUnits
-
+!5 -- Level 4, visibility and permissionUnits - same as 2? --
 
 !5 Extra test: test if a record is published, eventual readRecorPartPermissions are take it into account.
 

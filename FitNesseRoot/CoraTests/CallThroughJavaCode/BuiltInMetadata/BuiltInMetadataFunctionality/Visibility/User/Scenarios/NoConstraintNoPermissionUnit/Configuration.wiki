@@ -2,7 +2,7 @@
 #
 !define scenario {'''No constraints, no permission units.'''
 
-Visibility is set up to have ''recordPartConstraint'' set to '''WRITE''' on only tsVisibility.
+Visibility is set up to have ''recordPartConstraint'' set to '''WRITE''' on '''only''' tsVisibility.
 Admin have '''no write permissions''' for visibility and visibilityPermissionTerm *
 User have '''no write permissions''' for visibility and visibilityPermissionTerm ''published'' and ''unpublished''
 Guest have only been given read and list access to the test's own record type (fitnesseRecordTypeWithVisibility) via permissionRule}
