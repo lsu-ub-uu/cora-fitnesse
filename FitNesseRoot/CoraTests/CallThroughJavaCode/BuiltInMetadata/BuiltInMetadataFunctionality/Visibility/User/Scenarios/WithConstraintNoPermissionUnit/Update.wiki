@@ -7,9 +7,8 @@ Static
  * '''Case 3''': A user updating a record without providing a visibility value, the visibility value should remain unchanged, retaining the value from the previous version.
  * '''Case 4''': A user updating a record with a visibility value different from the existing one, the update should not alter the current visibility value.
 #
-
 ### NOTE: Using timestamp captured in create test here!
-
+#
 !***> '''Case 1''' An admin updating a record without providing a visibility value, the visibility value should remain unchanged, retaining the value from the previous version and the timestamp should not be updated.
 !define currentAuthToken {$adminAuthToken}
 !define recordId {$createCase1RecordId}

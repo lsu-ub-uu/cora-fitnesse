@@ -58,7 +58,8 @@ Static
 *!
 !***> '''Case 5''' A guest should not be able to create a record regardless of visibility status due to permissionTerm limitation
 !define currentAuthToken {$guestAuthToken}
-!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
+!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"unpublished"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
+!define expectedResponseRegex {}
 !define expectedCreateResult {FORBIDDEN}
 !define createdRecordId {$createCase5RecordId}
 

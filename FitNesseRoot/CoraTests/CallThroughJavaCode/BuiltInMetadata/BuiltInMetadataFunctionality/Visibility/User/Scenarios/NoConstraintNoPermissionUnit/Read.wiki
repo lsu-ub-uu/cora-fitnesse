@@ -4,8 +4,8 @@ Static
 !4 Read
  * '''Case 1''': An admin should be able to read records with any visibility
  * '''Case 2''': A user should only be able to read records it is allowed by visibility permission term (published, unpublished)
- * '''Case 3''': A guest should only be able to read records it is allowed by visibility permission term (published)
-
+ * '''Case 3''': A guest should only be able to read published records
+#
 !***> '''Case 1''': An admin should be able to read records with any visibility
 !define currentAuthToken {$adminAuthToken}
 !define expectedUnpublishedStatus {OK}
