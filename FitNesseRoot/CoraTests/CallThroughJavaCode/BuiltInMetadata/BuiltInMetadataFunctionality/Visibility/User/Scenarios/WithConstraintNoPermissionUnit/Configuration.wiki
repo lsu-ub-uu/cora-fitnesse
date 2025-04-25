@@ -1,10 +1,9 @@
 !***< Setup data for scenario (Constraint on both visibility and tsVisibility)
 #
-!define scenario {'''With constraints, no permission units.'''
-
+!define scenario {
 Visibility is set up to have ''recordPartConstraint'' set to '''WRITE''' on '''both''' visibility and tsVisibility
-Admin have '''write permission''' for visibility and visibilityPermissionTerm *
-User have '''no write permission''' for visibility and visibilityPermissionTerm ''published'' and ''unpublished''
+User1 have '''write permission''' for visibility and visibilityPermissionTerm *
+User2 have '''no write permission''' for visibility and visibilityPermissionTerm ''published'' and ''unpublished''
 Guest have only been given read and list access to the test's own record type (fitnesseRecordTypeWithVisibility) via permissionRule}}
 #
 !***> Update record info and add constraints to both visibility and tsVisibility
