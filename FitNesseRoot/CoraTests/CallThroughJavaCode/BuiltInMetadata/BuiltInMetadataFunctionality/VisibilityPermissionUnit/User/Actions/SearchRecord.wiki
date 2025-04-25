@@ -1,0 +1,3 @@
+!| RecordEndpointFixture |
+| authToken | searchId | json | testSearchRecord? | getStatusType? |
+| $adminAuthToken | fitnesseRecordTypeWithVisibilitySearch | ${searchQueryData} | $searchResult= | OK |

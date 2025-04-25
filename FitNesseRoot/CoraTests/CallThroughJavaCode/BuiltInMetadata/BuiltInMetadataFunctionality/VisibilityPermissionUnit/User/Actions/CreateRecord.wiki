@@ -1,0 +1,3 @@
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| ${currentAuthToken} | ${recordType} | ${createData} | $createResponseBody= | ${expectedCreateResult} | ${createdRecordId}= |

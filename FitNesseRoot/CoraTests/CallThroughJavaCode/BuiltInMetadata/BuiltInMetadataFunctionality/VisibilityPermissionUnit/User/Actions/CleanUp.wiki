@@ -1,0 +1,8 @@
+!***< Clean up created records in scenario
+!| RecordEndpointFixture |
+| authToken|type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $createCase1RecordId |||
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $createCase2RecordId |||
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $createCase3RecordId |||
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $createCase4RecordId |||
+*!

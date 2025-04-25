@@ -1,0 +1,5 @@
+!| ChildComparerFixture |
+| authToken | type | id | testReadAndStoreRecord? | getStatusType? |
+| ${currentAuthToken} | ${recordType} | $commonUnpublishedRecordId | | ${expectedUnpublishedStatus} |
+| ${currentAuthToken} | ${recordType} | $commonPublishedRecordId | | ${expectedPublishedStatus} |
+| ${currentAuthToken} | ${recordType} | $commonHiddenRecordId | | ${expectedHiddenStatus} |

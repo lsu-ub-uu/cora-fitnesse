@@ -1,0 +1,61 @@
+!***> Remove created data
+!| RecordEndpointFixture |
+| authToken|type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $commonUnpublishedRecordId |||
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $commonPublishedRecordId |||
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $commonHiddenRecordId |||
+| $adminAuthToken | validationType | fitnesseValidationTypeForRecordTypeWithVisibility || OK |
+| $adminAuthToken | search | fitnesseRecordTypeWithVisibilitySearch || OK |
+| $adminAuthToken | recordType | fitnesseRecordTypeWithVisibility || OK |
+| $adminAuthToken | presentation | fitnesseGroupWithRecordInfoVisibilityPGroup || OK |
+| $adminAuthToken | presentation | fitnesseGroupWithRecordInfoVisibilityOutputPGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordTypeWithVisibilityMenuPGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordTypeWithVisibilityListPGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordTypeWithVisibilityAutocompletePGroup || OK |
+| $adminAuthToken | presentation | fitnesseGroupWithRecordInfoVisibilityNewPGroup || OK |
+| $adminAuthToken | presentation | fitnesseGroupWithRecordInfoVisibilityNewOutputPGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordInfoWithVisibilityOutputPGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordInfoWithVisibilityPGroup || OK |
+| $adminAuthToken | metadata | fitnesseGroupWithRecordInfoVisibilityNewGroup || OK |
+| $adminAuthToken | metadata | fitnesseGroupWithRecordInfoVisibilityGroup || OK |
+| $adminAuthToken | metadata | fitnesseRecordInfoWithVisibilityGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordInfoWithVisibilityNewPGroup || OK |
+| $adminAuthToken | presentation | fitnesseRecordInfoWithVisibilityNewOutputPGroup || OK |
+| $adminAuthToken | metadata | fitnesseRecordInfoWithVisibilityNewGroup || OK |
+| $adminAuthToken | text | fitnesseGroupWithRecordInfoVisibilityNewGroupDefText || OK |
+| $adminAuthToken | text | fitnesseGroupWithRecordInfoVisibilityNewGroupText || OK |
+| $adminAuthToken | text | fitnesseGroupWithRecordInfoVisibilityGroupDefText || OK |
+| $adminAuthToken | text | fitnesseGroupWithRecordInfoVisibilityGroupText || OK |
+| $adminAuthToken | text | fitnesseRecordTypeWithVisibilityDefText || OK |
+| $adminAuthToken | text | fitnesseRecordTypeWithVisibilityText || OK |
+| $adminAuthToken | text | fitnesseValidationTypeForRecordTypeWithVisibilityDefText || OK |
+| $adminAuthToken | text | fitnesseValidationTypeForRecordTypeWithVisibilityText || OK |
+| $adminAuthToken | text | fitnesseRecordTypeWithVisibilitySearchDefText || OK |
+| $adminAuthToken | text | fitnesseRecordTypeWithVisibilitySearchText || OK |
+*!
+
+!***> Restore user and admin with a common test data configuration
+!define currentAuthToken {$adminAuthToken}
+!include -seamless .HelperPages.Data.makeFitnesseAdminUserTestReadyWithCommonTestData
+!include -seamless .HelperPages.Data.makeFitnesseUserTestReadyWithCommonTestData
+*!
+
+!***> Restore guestRule to to original state without access to test's recordType
+!define restoreGuestRule {!-{"name":"permissionRule","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"guestRule"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRule"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRule"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsCreated","value":"2018-05-08T18:07:34.734000Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2025-04-23T08:56:52.565249Z"}]}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","repeatId":"0","value":"system.read"},{"name":"permissionRulePartValue","repeatId":"1","value":"system.list"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","repeatId":"3","value":"system.example"},{"name":"permissionRulePartValue","repeatId":"4","value":"system.demo"}],"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"guestRulePermissionRuleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"guestRulePermissionRuleDefText"}]}]}-!}
+
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? | getStatusType? |
+| $adminAuthToken | permissionRule | guestRule | ${restoreGuestRule} || OK |
+*!
+
+!***> Delete obsolete rules and roles
+!| RecordEndpointFixture |
+| authToken|type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | permissionRole | fitnesseUserVisibilityRole || OK |
+| $adminAuthToken | permissionRule | fitnesseUserVisibilityRule || OK |
+| $adminAuthToken | text | fitnesseUserVisibilityRuleDefText || OK |
+| $adminAuthToken | text | fitnesseUserVisibilityRuleText || OK |
+| $adminAuthToken | permissionRole | fitnesseAdminVisibilityRole || OK |
+| $adminAuthToken | permissionRule | fitnesseAdminVisibilityRule || OK |
+
+*!
