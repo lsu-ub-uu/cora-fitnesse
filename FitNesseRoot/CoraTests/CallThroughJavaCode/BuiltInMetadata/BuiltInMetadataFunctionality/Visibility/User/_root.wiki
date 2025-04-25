@@ -39,7 +39,7 @@ Test
 #!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.NoConstraintWithPermissionUnit.Configuration
 #!***> Test scenario: ${scenario}
 
-*!
+#*!
 ----
 !***> TODO STUFF
 

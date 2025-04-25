@@ -32,6 +32,7 @@
 | $adminAuthToken | text | fitnesseValidationTypeForRecordTypeWithVisibilityText || OK |
 | $adminAuthToken | text | fitnesseRecordTypeWithVisibilitySearchDefText || OK |
 | $adminAuthToken | text | fitnesseRecordTypeWithVisibilitySearchText || OK |
+
 *!
 
 !***> Restore user and admin with a common test data configuration
