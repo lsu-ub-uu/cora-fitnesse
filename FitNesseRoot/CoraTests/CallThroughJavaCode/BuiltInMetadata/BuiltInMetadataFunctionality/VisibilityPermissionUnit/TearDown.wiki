@@ -4,6 +4,10 @@
 | $adminAuthToken | fitnesseRecordTypeWithVisibility | $commonUnpublishedRecordId |||
 | $adminAuthToken | fitnesseRecordTypeWithVisibility | $commonPublishedRecordId |||
 | $adminAuthToken | fitnesseRecordTypeWithVisibility | $commonHiddenRecordId |||
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $createCase1RecordId |||
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $createCase2RecordId |||
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $createCase3RecordId |||
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $createCase4RecordId |||
 | $adminAuthToken | validationType | fitnesseValidationTypeForRecordTypeWithVisibility || OK |
 | $adminAuthToken | search | fitnesseRecordTypeWithVisibilitySearch || OK |
 | $adminAuthToken | recordType | fitnesseRecordTypeWithVisibility || OK |
