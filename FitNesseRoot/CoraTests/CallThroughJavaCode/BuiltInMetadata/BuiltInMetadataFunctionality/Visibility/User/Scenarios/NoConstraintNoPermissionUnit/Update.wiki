@@ -2,14 +2,14 @@
 Static
 ---
 !4 Update
- * '''Case 1''': An admin updating a record without providing a visibility value, the visibility value should remain unchanged, retaining the value from the previous version and the timestamp should not be updated.
- * '''Case 2''': An admin updating a record with a new visibility value, the update should successfully apply the provided value and the timestamp should be updated.
- * '''Case 3''': A user updating a record without providing a visibility value, the visibility value should remain unchanged, retaining the value from the previous version.
- * '''Case 4''': A user should be able to update a record with a visibility value different from the existing one (unpublished) to another one it can access (published) and time stamp should be updated as well.
+ * '''Case 1''': User1 updating a record without providing a visibility value, the visibility value should remain unchanged, retaining the value from the previous version and the timestamp should not be updated.
+ * '''Case 2''': User1 updating a record with a new visibility value, the update should successfully apply the provided value and the timestamp should be updated.
+ * '''Case 3''': User2 updating a record without providing a visibility value, the visibility value should remain unchanged, retaining the value from the previous version.
+ * '''Case 4''': User2 should be able to update a record with a visibility value different from the existing one (unpublished) to another one it can access (published) and time stamp should be updated as well.
 #
 ### NOTE: Using timestamp captured in create test here!
 #
-!***> '''Case 1''' An admin updating a record without providing a visibility value, the visibility value should remain unchanged, retaining the value from the previous version and the timestamp should not be updated.
+!***> '''Case 1''' User1 updating a record without providing a visibility value, the visibility value should remain unchanged, retaining the value from the previous version and the timestamp should not be updated.
 !define currentAuthToken {$adminAuthToken}
 !define recordId {$createCase1RecordId}
 !define updateData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"id","value":"-!$fitnesseWithRecordInfoVisibilityPublishedRecordId!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordTypeWithVisibility"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2025-04-14T08:53:03.010323Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2025-04-14T08:53:03.010323Z"}]}]},{"name":"fitnesseTextVar","value":"entext"}]}-!}
@@ -18,7 +18,7 @@ Static
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.UpdateRecordAndEnsureResponse
 
 *!
-!***> '''Case 2''' An admin updating a record with a new visibility value, the update should successfully apply the provided value and the timestamp should be updated.
+!***> '''Case 2''' User1 updating a record with a new visibility value, the update should successfully apply the provided value and the timestamp should be updated.
 !define currentAuthToken {$adminAuthToken}
 !define recordId {$createCase1RecordId}
 !define updateData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"},{"name":"tsVisibility","value":"2025-04-14T08:53:03.010225Z"},{"name":"id","value":"-!$fitnesseWithRecordInfoVisibilityPublishedRecordId!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordTypeWithVisibility"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2025-04-14T08:53:03.010323Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2025-04-14T08:53:03.010323Z"}]}]},{"name":"fitnesseTextVar","value":"entext"}]}-!}
@@ -31,7 +31,7 @@ Static
 | $updateTsVisibility= | get substring using text | $updateResponse | and regex | "name":"tsVisibility","value":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z" |
 
 *!
-!***> '''Case 3''' A user updating a record without providing a visibility value, the visibility value should remain unchanged, retaining the value from the previous version.
+!***> '''Case 3''' User2 updating a record without providing a visibility value, the visibility value should remain unchanged, retaining the value from the previous version.
 !define currentAuthToken {$userAuthToken}
 !define recordId {$createCase1RecordId}
 !define updateData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"tsVisibility","value":"2025-04-14T08:53:03.010225Z"},{"name":"id","value":"-!$fitnesseWithRecordInfoVisibilityPublishedRecordId!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordTypeWithVisibility"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2025-04-14T08:53:03.010323Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2025-04-14T08:53:03.010323Z"}]}]},{"name":"fitnesseTextVar","value":"entext"}]}-!}
@@ -40,7 +40,7 @@ Static
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.UpdateRecordAndEnsureResponse
 
 *!
-!***> '''Case 4''' A user should be able to update a record with a visibility value different from the existing one (published) to another one it can access (unpublished) and time stamp should be updated as well.
+!***> '''Case 4''' User2 should be able to update a record with a visibility value different from the existing one (published) to another one it can access (unpublished) and time stamp should be updated as well.
 !define currentAuthToken {$userAuthToken}
 !define recordId {$createCase1RecordId}
 !define updateData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"unpublished"},{"name":"tsVisibility","value":"2025-04-14T08:53:03.010225Z"},{"name":"id","value":"-!$fitnesseWithRecordInfoVisibilityPublishedRecordId!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordTypeWithVisibility"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2025-04-14T08:53:03.010323Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2025-04-14T08:53:03.010323Z"}]}]},{"name":"fitnesseTextVar","value":"entext"}]}-!}

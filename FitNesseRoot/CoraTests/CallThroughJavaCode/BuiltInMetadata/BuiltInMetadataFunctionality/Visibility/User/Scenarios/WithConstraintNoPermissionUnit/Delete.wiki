@@ -3,8 +3,8 @@ Static
 ---
 !4 Delete
 #
- * '''Case 1''': An admin should be able to delete records with any visibility
- * '''Case 2''': A user should only be allowed to delete records with visibility it is allowed to access (published, unpublished)
+ * '''Case 1''': User1 should be able to delete records with any visibility
+ * '''Case 2''': User2 should only be allowed to delete records with visibility it is allowed to access (published, unpublished)
 #
 !***< Create records for tests data
 !define recordType {fitnesseRecordTypeWithVisibility}
@@ -13,7 +13,7 @@ Static
 !define hiddenRecordData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"hidden"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
 *!
 
-!***> '''Case 1''' An admin should be able to delete records with any visibility
+!***> '''Case 1''' User1 should be able to delete records with any visibility
 !define currentAuthToken {$adminAuthToken}
 !define expectedUnpublishedDelete {OK}
 !define expectedPublishedDelete {OK}
@@ -22,7 +22,7 @@ Static
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.DeleteRecord
 
 *!
-!***> '''Case 2''' A user should only be allowed to delete records with visibility it is allowed to access
+!***> '''Case 2''' User2 should only be allowed to delete records with visibility it is allowed to access
 !define currentAuthToken {$userAuthToken}
 !define expectedUnpublishedDelete {OK}
 !define expectedPublishedDelete {OK}
