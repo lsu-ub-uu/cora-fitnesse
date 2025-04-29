@@ -1,6 +1,0 @@
-!| ComparerFixture |
-| authToken | type |idToStore| testReadRecordListAndStoreRecordById? |
-| ${currentAuthToken} | ${recordType} | | $listResponseBody= |
-
-!| script | ExtractSubstringUsingRegex |
-| ensure | match found using text | $listResponseBody | and includes and not excludes | ${expectedResponseRegex} |

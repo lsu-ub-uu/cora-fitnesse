@@ -1,6 +1,0 @@
-!| ChildComparerFixture |
-| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
-| ${currentAuthToken} | ${recordType} | ${createData} | $createResponseBody= | ${expectedCreateResult} | ${createdRecordId}= |
-
-!| script | ExtractSubstringUsingRegex |
-| ensure | match found using text | $createResponseBody | and includes and not excludes | ${expectedResponseRegex} |

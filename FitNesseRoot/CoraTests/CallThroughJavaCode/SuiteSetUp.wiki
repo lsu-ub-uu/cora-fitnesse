@@ -11,6 +11,12 @@ Suite
 !***> SuiteSetUp for Fitnesse Example
 !include -seamless .CoraTests.CallThroughJavaCode.SuiteSetUp.ExamplesPool
 
+!***> Login for fitnesse user (Related to CORA-2475. Remove when fixed)
+!| AuthenticationFixture |
+| appTokenLogin? | loginId | getAuthToken? | getStatusType? | getRenewUrl? |
+| | fitnesseUser@system.cora.uu.se | $userAuthToken= | CREATED | $userRenewUrl= |
+*!
+
 !| script | AuthTokenHolder |
 | setUserAuthToken | $userAuthToken |
 *!

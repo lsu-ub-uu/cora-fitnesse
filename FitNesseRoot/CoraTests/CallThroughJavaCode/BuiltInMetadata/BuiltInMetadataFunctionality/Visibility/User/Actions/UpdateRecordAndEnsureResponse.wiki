@@ -1,8 +1,0 @@
-define recordType {fitnesseRecordTypeWithVisibility}
-
-!| RecordEndpointFixture |
-| authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| ${currentAuthToken} | ${recordType} | ${recordId} | ${updateData} | $updateResponse= | OK |
-
-!| script | ExtractSubstringUsingRegex |
-| ensure | match found using text | $updateResponse | and includes and not excludes | ${expectedupdateResponseRegex} |
