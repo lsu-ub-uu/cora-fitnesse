@@ -1,0 +1,24 @@
+---
+Static
+---
+!***< Create posts for delete test
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | ${recordType} | ${unpublishedRecordData} | $publishedResponseBody= | | $deleteUnpublishedRecordId= |
+| $adminAuthToken | ${recordType} | ${publishedRecordData} | $publishedResponseBody= | | $deletePublishedRecordId= |
+| $adminAuthToken | ${recordType} | ${hiddenRecordData} | $publishedResponseBody= | | $deleteHiddenRecordId= |
+*!
+
+!| RecordEndpointFixture |
+| authToken|type | id | testDeleteRecord? | getStatusType? |
+| ${currentAuthToken} | ${recordType} | $deleteUnpublishedRecordId || ${expectedUnpublishedDelete} |
+| ${currentAuthToken} | ${recordType} | $deletePublishedRecordId || ${expectedPublishedDelete} |
+| ${currentAuthToken} | ${recordType} | $deleteHiddenRecordId || ${expectedHiddenDelete} |
+
+!***< Try to delete all, to make sure they are all cleaned away
+!| RecordEndpointFixture |
+| authToken|type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $deleteUnpublishedRecordId |||
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $deletePublishedRecordId |||
+| $adminAuthToken | fitnesseRecordTypeWithVisibility | $deleteHiddenRecordId |||
+*!

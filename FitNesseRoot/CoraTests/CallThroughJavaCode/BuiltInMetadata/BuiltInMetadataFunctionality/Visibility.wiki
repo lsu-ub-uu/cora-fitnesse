@@ -3,7 +3,7 @@ Test
 ---
 !1 Visibility
 Visibility is a optional functionality included in Cora which can be activated per record type.
-This functionality allows to set individual records of the record type to an specific visibility status (publihed, unpublished and hidden).
+This functionality allows to set individual records of the record type to an specific visibility status (published, unpublished and hidden).
 
  * '''Published''' Published defines that a record is public. the record is public without requiring any other permissions.
  * '''Unpublished''' Unpublished defines that a record is not public.  The record can only be seen if the user has the corresponding permissionTerm associated to its user.
@@ -11,4 +11,4 @@ This functionality allows to set individual records of the record type to an spe
  
 Whenever the visibility value is changed a field tsVisibility will be updated with the current timestamp.
  
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.VisibilityTests
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User

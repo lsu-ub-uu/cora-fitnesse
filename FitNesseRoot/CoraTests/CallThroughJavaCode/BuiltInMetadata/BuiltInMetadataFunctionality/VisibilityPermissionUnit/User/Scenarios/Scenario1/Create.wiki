@@ -1,0 +1,61 @@
+---
+Static
+---
+!4 Create
+#
+ * '''Case 1''': User1 should be able to create a published record with a permission unit they have access to (fitnessePermissionUnit1), fitnesseText should be visible in response
+ * '''Case 2''': User1 should not be able to create a published record with a permission unit they do not have access to (fitnessePermissionUnit3)
+ * '''Case 3''': User2 should be able to create a published record with a permission unit they have access to (fitnessePermissionUnit2), fitnesseText should not be visibile in response
+ * '''Case 4''': User2 should not be able to create a published record with a permission unit they do not have access to (fitnessePermissionUnit1)
+ * '''Case 5''': A guest should be not able to create a published record with a permission unit they do not have access to (fitnessePermissionUnit1)
+#
+!***> '''Case 1''' User1 should be able to create a published record with a permission unit they have access to (fitnessePermissionUnit1)
+!define currentAuthToken {$adminAuthToken}
+!define recordType {fitnesseRecordTypeWithVisibility}
+!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnessePermissionUnit1"}]}]},{"name":"fitnesseTextVar","value":"entext"}]}-!}
+!define expectedResponseRegex {"name":"visibility","value":"published" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!" AND "name":"fitnesseTextVar","value":"entext"}
+!define expectedCreateResult {CREATED}
+!define createdRecordId {$createCase1RecordId}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Actions.CreateRecordAndEnsureResponse
+
+*!
+!***> '''Case 2''' User1 should not be able to create a published record with a permission unit they do not have access to (fitnessePermissionUnit3)
+!define recordType {fitnesseRecordTypeWithVisibility}
+!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnessePermissionUnit3"}]}]},{"name":"fitnesseTextVar","value":"entext"}]}-!}
+!define createdRecordId {$shouldFailId}
+!define expectedCreateResult {FORBIDDEN}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Actions.CreateRecord
+
+*!
+!***> '''Case 3''' User2 should be able to create a published record with a permission unit they have access to (fitnessePermissionUnit1)
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordTypeWithVisibility}
+!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnessePermissionUnit2"}]}]},{"name":"fitnesseTextVar","value":"entext"}]}-!}
+!define expectedResponseRegex {"name":"visibility","value":"published" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!" AND NOT "name":"fitnesseTextVar","value":"entext"}
+!define expectedCreateResult {CREATED}
+!define createdRecordId {$createCase3RecordId}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Actions.CreateRecordAndEnsureResponse
+
+*!
+!***> '''Case 4''' User2 should not be able to create a published record with a permission unit they do not have access to (fitnessePermissionUnit1)
+!define recordType {fitnesseRecordTypeWithVisibility}
+!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnessePermissionUnit1"}]}]},{"name":"fitnesseTextVar","value":"entext"}]}-!}
+!define createdRecordId {$shouldFailId}
+!define expectedCreateResult {FORBIDDEN}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Actions.CreateRecord
+
+*!
+!***> '''Case 5''' A guest should be not able to create a published record with a permission unit they do not have access to (fitnessePermissionUnit1)
+!define currentAuthToken {$guestAuthToken}
+!define recordType {fitnesseRecordTypeWithVisibility}
+!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnessePermissionUnit1"}]}]},{"name":"fitnesseTextVar","value":"entext"}]}-!}
+!define createdRecordId {$shouldFailId}
+!define expectedCreateResult {FORBIDDEN}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Actions.CreateRecord
+
+*!
