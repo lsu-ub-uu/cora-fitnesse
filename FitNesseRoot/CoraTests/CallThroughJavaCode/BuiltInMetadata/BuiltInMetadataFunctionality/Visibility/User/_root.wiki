@@ -35,12 +35,3 @@ Test
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Scenarios.Scenario2.List
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.CleanUp
 *!
-
-----
-!***> TODO STUFF
-
-!5 Search
-
-!5 Extra test: test if a record is published, eventual readRecorPartPermissions are take it into account.
-
-*!
