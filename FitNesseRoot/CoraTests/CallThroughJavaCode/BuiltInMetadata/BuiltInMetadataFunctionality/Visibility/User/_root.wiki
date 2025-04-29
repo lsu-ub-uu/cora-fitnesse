@@ -41,10 +41,6 @@ Test
 
 !5 Search
 
-!5 Level 2, permission units and NO record part constraint for visibility
-
-!5 Level 5, permission units WITH write record part constraint for visibility
-
 !5 Extra test: test if a record is published, eventual readRecorPartPermissions are take it into account.
 
 *!

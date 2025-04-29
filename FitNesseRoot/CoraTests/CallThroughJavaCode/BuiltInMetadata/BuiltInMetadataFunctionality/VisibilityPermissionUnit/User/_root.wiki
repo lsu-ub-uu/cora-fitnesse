@@ -9,7 +9,26 @@ Test
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Scenarios.Scenario1.Configuration
 !***> Test scenario: ${scenario}
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Scenarios.Scenario1.Create
-#!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Actions.CleanUp
+----
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Scenarios.Scenario1.Read
+----
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Scenarios.Scenario1.Update
+----
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Scenarios.Scenario1.Delete
+----
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Scenarios.Scenario1.List
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Actions.CleanUp
 
 *!
 ----
+!***> TODO STUFF
+
+!5 Search
+
+!5 Level 2, permission units and NO record part constraint for visibility
+
+!5 Level 5, permission units WITH write record part constraint for visibility
+
+!5 Extra test: test if a record is published, eventual readRecorPartPermissions are take it into account.
+
+*!

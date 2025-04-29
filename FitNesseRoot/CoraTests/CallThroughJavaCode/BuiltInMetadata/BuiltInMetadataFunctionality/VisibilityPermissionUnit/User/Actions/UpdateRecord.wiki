@@ -1,0 +1,5 @@
+define recordType {fitnesseRecordTypeWithVisibility}
+
+!| RecordEndpointFixture |
+| authToken | type | id | json | testUpdateRecord? | getStatusType? |
+| ${currentAuthToken} | ${recordType} | ${recordId} | ${updateData} | $updateResponse= | ${expectedUpdateResult} |

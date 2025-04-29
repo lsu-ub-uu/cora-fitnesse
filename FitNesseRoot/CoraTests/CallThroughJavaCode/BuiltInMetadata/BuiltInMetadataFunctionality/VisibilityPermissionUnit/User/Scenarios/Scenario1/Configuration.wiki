@@ -3,7 +3,7 @@
 !define scenario {
 FitnesseTextVar is set to readWrite constraint on record type
 Visibility is set up to have ''recordPartConstraint'' set to '''WRITE''' on '''only''' tsVisibility.
-User1 have '''no write permissions''' for visibility, visibilityPermissionTerm *, write permission for fitnesseTextVar, two allowed permission units (fitnessePermissionUnit1 and fitnessePermissionUnit2)
+User1 have '''no write permissions''' for visibility, visibilityPermissionTerm *, write permission for fitnesseTextVar, one allowed permission units (fitnessePermissionUnit1 and fitnessePermissionUnit2)
 User2 have '''no write permissions''' for visibility, visibilityPermissionTerm ''published'' and ''unpublished'', one allowed permission units (fitnessePermissionUnit2)
 Guest have only been given read and list access to the test's own record type (fitnesseRecordTypeWithVisibility) via permissionRule} with no permission units
 #
