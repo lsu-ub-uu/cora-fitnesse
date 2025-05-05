@@ -1,0 +1,67 @@
+---
+Static
+---
+!4 Create
+#
+ * '''Case 1''': User1 creating a record with no visibility value should set visibility to its default value (unpublished), fitnesseTextVar should be visible in the response
+ * '''Case 2''': User1 creating a record with a visibility value should have this value in its data after creation, fitnesseTextVar should be visible in the response
+ * '''Case 3''': User2 creating a record with no visibility value should set visibility to its default value (unpublished), fitnesseTextVar should not be visible in the response
+ * '''Case 4''': User2 creating a record should be able to set visibility status, fitnesseTextVar should not be visible in the response
+ * '''Case 5''': A guest should not be able to create a record regardless of visibility status due to permissionTerm limitation
+#
+
+!***> '''Case 1''' User1 creating a record with no visibility value should set visibility to its default value (unpublished)
+!define currentAuthToken {$adminAuthToken}
+!define recordType {fitnesseRecordTypeWithVisibility}
+!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]}]},{"name":"fitnesseTextVar","value":"en annan text"}]}-!}
+!define expectedResponseRegex {"name":"visibility","value":"unpublished" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!" AND "name":"fitnesseTextVar","value":"en annan text"}
+!define expectedCreateResult {CREATED}
+!define createdRecordId {$createCase1RecordId}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.CreateRecordAndEnsureResponse
+
+#### NOTE: Save the original timestamp so it can be used to assert update timestamps on this record (createCase1RecordId)
+#
+!| script | ExtractSubstringUsingRegex |
+| $createdTsVisibility= | get substring using text | $createResponseBody | and regex | "name":"tsVisibility","value":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z" |
+
+*!
+!***> '''Case 2''' User1 creating a record with a visibility value should have this value in its data after creation
+!define currentAuthToken {$adminAuthToken}
+!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
+!define expectedResponseRegex {"name":"visibility","value":"published" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!" AND "name":"fitnesseTextVar","value":"en text"}
+!define expectedCreateResult {CREATED}
+!define createdRecordId {$createCase2RecordId}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.CreateRecordAndEnsureResponse
+
+*!
+!***> '''Case 3''' User2 creating a record with no visibility value should set visibility to its default value (unpublished)
+!define currentAuthToken {$userAuthToken}
+!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]}]},{"name":"fitnesseTextVar","value":"en annan text"}]}-!}
+!define expectedResponseRegex {"name":"visibility","value":"unpublished" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!" AND NOT "name":"fitnesseTextVar","value":"en annan text"}
+!define expectedCreateResult {CREATED}
+!define createdRecordId {$createCase3RecordId}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.CreateRecordAndEnsureResponse
+
+*!
+!***> '''Case 4''' User2 creating a record should be able to set visibility status
+!define currentAuthToken {$userAuthToken}
+!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
+!define expectedResponseRegex {"name":"visibility","value":"published" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!" AND NOT "name":"fitnesseTextVar","value":"en text"}
+!define expectedCreateResult {CREATED}
+!define createdRecordId {$createCase4RecordId}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.CreateRecordAndEnsureResponse
+
+*!
+!***> '''Case 5''' A guest should not be able to create a record regardless of visibility status due to permissionTerm limitation
+!define currentAuthToken {$guestAuthToken}
+!define createData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"unpublished"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
+!define expectedResponseRegex {}
+!define expectedCreateResult {FORBIDDEN}
+!define createdRecordId {$createCase5RecordId}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.CreateRecord
+*!

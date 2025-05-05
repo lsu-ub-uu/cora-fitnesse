@@ -1,0 +1,22 @@
+---
+Test
+---
+!2 Visibility with permission units tests
+
+!3 CRUD tests
+!style_note[Ensure that the visibility and permission unit behavior works as expected.]
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Scenarios.Scenario1.Configuration
+!***> Test scenario: ${scenario}
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Scenarios.Scenario1.Create
+----
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Scenarios.Scenario1.Read
+----
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Scenarios.Scenario1.Update
+----
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Scenarios.Scenario1.Delete
+----
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Scenarios.Scenario1.List
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Actions.CleanUp
+
+*!

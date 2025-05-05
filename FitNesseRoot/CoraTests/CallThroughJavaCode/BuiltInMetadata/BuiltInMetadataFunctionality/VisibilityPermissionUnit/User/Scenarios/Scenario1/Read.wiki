@@ -1,0 +1,52 @@
+---
+Static
+---
+!4 Read
+ * '''Case 1''': User1 should be able to read records with any visibility with a permission unit they have access to (fitnessePermissionUnit1), fitnesseTextVar should be visible
+ * '''Case 2''': User2 should be able to read a record with a permission unit they have access to (fitnessePermissionUnit2) and published records with non-matching permission unit (fitnessePermissionUnit1), fitnesseTextVar should not be visible
+ * '''Case 3''': A guest should be able to read a published record with a permission unit they do not have access to (fitnessePermissionUnit1), fitnesseTextVar should not be visible
+#
+!***> '''Case 1''': User1 should be able to read records with any visibility with a permission unit they have access to (fitnessePermissionUnit1), fitnesseTextVar should be visible
+!define currentAuthToken {$adminAuthToken}
+!define expectedUnpublishedStatus {OK}
+!define expectedPublishedStatus {OK}
+!define expectedHiddenStatus {OK}
+!define expectedUnpublishedResponseRegex {"name":"fitnesseTextVar","value":"entext" AND "name":"visibility","value":"unpublished" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
+!define expectedPublishedResponseRegex {"name":"fitnesseTextVar","value":"entext" AND "name":"visibility","value":"published" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
+!define expectedHiddenResponseRegex {"name":"fitnesseTextVar","value":"entext" AND "name":"visibility","value":"hidden" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Actions.ReadRecord
+
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $unpublishedResponseBody | and includes and not excludes | ${expectedUnpublishedResponseRegex} |
+| ensure | match found using text | $publishedResponseBody | and includes and not excludes | ${expectedPublishedResponseRegex} |
+| ensure | match found using text | $hiddenResponseBody | and includes and not excludes | ${expectedHiddenResponseRegex} |
+
+*!
+!***> '''Case 2''': User2 should be able to read a record with a permission unit they have access to (fitnessePermissionUnit2) and published records with non-matching permission unit (fitnessePermissionUnit1), fitnesseTextVar should not be visible
+!define currentAuthToken {$userAuthToken}
+!define expectedUnpublishedStatus {OK}
+!define expectedPublishedStatus {OK}
+!define expectedHiddenStatus {FORBIDDEN}
+!define expectedUnpublishedResponseRegex {NOT "name":"fitnesseTextVar","value":"entext" AND "name":"visibility","value":"unpublished" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
+!define expectedPublishedResponseRegex {NOT "name":"fitnesseTextVar","value":"entext" AND "name":"visibility","value":"published" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Actions.ReadRecord
+
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $publishedResponseBody | and includes and not excludes | ${expectedPublishedResponseRegex} |
+
+*!
+!***> '''Case 3''': A guest should be able to read a published record with a permission unit they do not have access to (fitnessePermissionUnit1), fitnesseTextVar should not be visible
+!define currentAuthToken {$guestAuthToken}
+!define expectedUnpublishedStatus {FORBIDDEN}
+!define expectedPublishedStatus {OK}
+!define expectedHiddenStatus {FORBIDDEN}
+!define expectedPublishedResponseRegex {NOT "name":"fitnesseTextVar","value":"entext" AND "name":"visibility","value":"published" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Actions.ReadRecord
+
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $publishedResponseBody | and includes and not excludes | ${expectedPublishedResponseRegex} |
+
+*!

@@ -1,0 +1,13 @@
+#---
+#Static
+#---
+#!4 Search
+# * Case 1 search
+# 
+#!***> Case 1
+#!define currentAuthToken {$adminAuthToken}
+#!define searchQueryData {!-{"name":"textSearch","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"recordIdSearchTerm","value":"someId"}]}]}]}-!}
+#
+#!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.SearchRecord
+#
+#*!
