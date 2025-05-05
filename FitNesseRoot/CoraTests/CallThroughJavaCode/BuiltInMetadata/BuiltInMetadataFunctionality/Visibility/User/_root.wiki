@@ -1,5 +1,5 @@
 ---
-Test
+Static
 ---
 !2 Visibility tests
 
