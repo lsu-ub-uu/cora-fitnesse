@@ -35,5 +35,22 @@ Suite
 
 !| script | AuthTokenHolder |
 | setAdminAuthToken | $adminAuthToken |
+
+*!
+!***> Login for fitnesse user
+!| AuthenticationFixture |
+| appTokenLogin? | loginId | getAuthToken? | getStatusType? | getRenewUrl? |
+| | fitnesseUser@system.cora.uu.se | $userAuthToken= | CREATED | $userRenewUrl= |
+
+
+!| script | AuthTokenHolder |
+| setUserAuthToken | $userAuthToken |
+
+*!
+!***> Login for fitnesse guest
+!| AuthenticationFixture |
+| idpLogin? | EPPN | getAuthToken? | getStatusType? | getRenewUrl? |
+| | userNotInDb@user.uu.se | $guestAuthToken= | | $guestRenewUrl= |
+
 *!
 *!

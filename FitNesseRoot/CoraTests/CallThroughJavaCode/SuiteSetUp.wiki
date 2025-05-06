@@ -2,21 +2,7 @@
 Suite
 ---
 
-!***> Login for fitnesse guest
-!| AuthenticationFixture |
-| idpLogin? | EPPN | getAuthToken? | getStatusType? | getRenewUrl? |
-| | userNotInDb@user.uu.se | $guestAuthToken= | | $guestRenewUrl= |
-*!
-
 !***> SuiteSetUp for Fitnesse Example
 !include -seamless .CoraTests.CallThroughJavaCode.SuiteSetUp.ExamplesPool
 
-!***> Login for fitnesse user (Related to CORA-2475. Remove when fixed)
-!| AuthenticationFixture |
-| appTokenLogin? | loginId | getAuthToken? | getStatusType? | getRenewUrl? |
-| | fitnesseUser@system.cora.uu.se | $userAuthToken= | CREATED | $userRenewUrl= |
-*!
-
-!| script | AuthTokenHolder |
-| setUserAuthToken | $userAuthToken |
 *!
