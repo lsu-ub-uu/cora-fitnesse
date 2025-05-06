@@ -7,16 +7,13 @@ Test that sending a valid authToken gives additional permissions compared to gue
 !***> Configure !-RestFixture-!
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
-| restfixture.default.headers | Content-Type: application/vnd.cora.record+xml!-
--! Accept: application/vnd.cora.record+xml!-
--!authToken:$adminAuthToken|
 | restfixture.content.handlers.map | application/vnd.cora.record+xml=XML |
 
 *!
 !***> Test create without token, should not be allowed (401)
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setHeader | Content-Type:application/vnd.cora.record+xml!-
+| setHeader | Content-Type:application/vnd.cora.recordgroup+xml!-
 -! |
 | setBody | <?xml version="1.0" encoding="UTF-8"?>!-
 -!<text>!-
@@ -44,7 +41,7 @@ Test that sending a valid authToken gives additional permissions compared to gue
 !***> Test create without invalid token, should not be allowed (401)
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setHeader | Content-Type:application/vnd.cora.record+xml !-
+| setHeader | Content-Type:application/vnd.cora.recordgroup+xml !-
 -!authToken:!-invalidToken
 -! |
 | setBody | <?xml version="1.0" encoding="UTF-8"?>!-
@@ -73,7 +70,7 @@ Test that sending a valid authToken gives additional permissions compared to gue
 !***> Test create without invalid token, should not be allowed (403)
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setHeader | Content-Type:application/vnd.cora.record+xml !-
+| setHeader | Content-Type:application/vnd.cora.recordgroup+xml !-
 -!authToken:!-fitnesseUserToken-!!-
 -! |
 | setBody |  <?xml version="1.0" encoding="UTF-8"?>!-
@@ -102,7 +99,7 @@ Test that sending a valid authToken gives additional permissions compared to gue
 !***> Test create with token, should  be allowed
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setHeader | Content-Type:application/vnd.cora.record+xml!-
+| setHeader | Content-Type:application/vnd.cora.recordgroup+xml!-
 -!Accept: application/vnd.cora.record+xml !-
 -!authToken:$adminAuthToken|
 | setBody |  <?xml version="1.0" encoding="UTF-8"?>!-
@@ -131,9 +128,7 @@ Test that sending a valid authToken gives additional permissions compared to gue
 !***> Remove text
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setHeader | Content-Type:application/vnd.cora.record+xml!-
--!authToken:$adminAuthToken!-
--! | | | |
+| setHeader |authToken:$adminAuthToken | | | |
 | DELETE | /rest/record/text/authTokenTestingText | 200 | | |
 
 *!

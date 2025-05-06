@@ -2,7 +2,7 @@
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
 | restfixture.default.headers | Accept:application/vnd.cora.record+xml!-
--!Content-Type:application/vnd.cora.record+xml!-
+-!Content-Type:application/vnd.cora.recordgroup+xml!-
 -!authToken:$adminAuthToken|
 | restfixture.content.handlers.map | application/vnd.cora.record+xml=XML!-
 -!default=XML |

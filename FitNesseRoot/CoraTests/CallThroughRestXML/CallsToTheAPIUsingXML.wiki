@@ -44,7 +44,7 @@ Create needed metadata
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
 | restfixture.default.headers | Accept: application/vnd.cora.record+xml!-
--!Content-Type: application/vnd.cora.record+xml!-
+-!Content-Type: application/vnd.cora.recordgroup+xml!-
 -!authToken:$adminAuthToken |
 | restfixture.content.handlers.map | application/vnd.cora.record+xml=XML |
 | http.client.connection.timeout | 7000 |
@@ -62,7 +62,7 @@ Create collectIndexTerms trainingIdIndexTerm
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | Accept: application/vnd.cora.record+xml!-
--!Content-Type: application/vnd.cora.record+xml!-
+-!Content-Type: application/vnd.cora.recordgroup+xml!-
 -!authToken:$adminAuthToken  |
 | setBody | <?xml version="1.0" encoding="UTF-8"?>!-
 -!<metadata type="group">!-
@@ -239,7 +239,7 @@ We will create a trainingProgram using the metadata groups specified. We can onl
 !***> Case 1
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Content-Type: application/vnd.cora.record+xml!-
+-!Content-Type: application/vnd.cora.recordgroup+xml!-
 -!Accept: application/vnd.cora.record+xml|
 | setBody | <?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
@@ -263,7 +263,7 @@ We will create a trainingProgram using the metadata groups specified. We can onl
 !***> Case 2
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Content-Type: application/vnd.cora.record+xml!-
+-!Content-Type: application/vnd.cora.recordgroup+xml!-
 -!Accept: application/vnd.cora.record+xml|
 | setBody | <?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
@@ -286,7 +286,7 @@ We will create a trainingProgram using the metadata groups specified. We can onl
 !***> Case 3
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Content-Type: application/vnd.cora.record+xml!-
+-!Content-Type: application/vnd.cora.recordgroup+xml!-
 -!Accept: application/vnd.cora.record+xml|
 | setBody | <?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
@@ -307,7 +307,7 @@ We will create a trainingProgram using the metadata groups specified. We can onl
 !***> Case 4
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Content-Type: application/vnd.cora.record+xml!-
+-!Content-Type: application/vnd.cora.recordgroup+xml!-
 -!Accept: application/vnd.cora.record+xml|
 | setBody |<?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
@@ -334,7 +334,7 @@ We will create a trainingProgram using the metadata groups specified. We can onl
 !***> Case 5
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Content-Type: application/vnd.cora.record+xml!-
+-!Content-Type: application/vnd.cora.recordgroup+xml!-
 -!Accept: application/vnd.cora.record+xml|
 | setBody |<?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
@@ -358,7 +358,6 @@ We will create a trainingProgram using the metadata groups specified. We can onl
 -!Location:/rest/record/singleTrainingProgram/spinning| /record/data/singleTrainingProgram/trainingProgram/id[text()='anka1']!-
 -!/record/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'kalle_anka'] |
 
-#-!Content-Type: application/vnd.cora.record+xml!-
 *!
 
 !2 Read record
@@ -428,7 +427,7 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 !***> Case 1
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Content-Type: application/vnd.cora.record+xml!-
+-!Content-Type: application/vnd.cora.recordgroup+xml!-
 -!Accept: application/vnd.cora.record+xml|
 | setBody | <?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
@@ -452,7 +451,7 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 !***> Case 2
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Content-Type: application/vnd.cora.record+xml!-
+-!Content-Type: application/vnd.cora.recordgroup+xml!-
 -!Accept: application/vnd.cora.record+xml|
 | setBody | <?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
@@ -476,7 +475,7 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 !***> Case 3
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Content-Type: application/vnd.cora.record+xml!-
+-!Content-Type: application/vnd.cora.recordgroup+xml!-
 -!Accept: application/vnd.cora.record+xml|
 | setBody | <?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
@@ -498,7 +497,7 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 !***> Case 4
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Content-Type: application/vnd.cora.record+xml!-
+-!Content-Type: application/vnd.cora.recordgroup+xml!-
 -!Accept: application/vnd.cora.record+xml|
 | setBody |<?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
@@ -529,7 +528,7 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 !***> Case 5
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Content-Type: application/vnd.cora.record+xml!-
+-!Content-Type: application/vnd.cora.recordgroup+xml!-
 -!Accept: application/vnd.cora.record+xml|
 | setBody |<?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
@@ -557,7 +556,7 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 | POST | /rest/record/singleTrainingProgram/spinning | 200 | Content-Type: application\/vnd\.cora\.record\+xml| /record/data/singleTrainingProgram/trainingProgram/id[text()='anka12']!-
 -!/record/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'kalle_anka2'] |
 
-#-!Content-Type: application/vnd.cora.record+xml!-
+#-!Content-Type: application/vnd.cora.recordgroup+xml!-
 *!
 
 !2 Search records

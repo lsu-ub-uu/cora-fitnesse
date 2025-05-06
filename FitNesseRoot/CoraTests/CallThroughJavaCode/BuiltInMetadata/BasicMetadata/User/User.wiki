@@ -27,7 +27,7 @@ Static
  
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
-| $adminAuthToken | user | ${createAnotherUserPayload} | | ${expectedCreateResult} | $aNewUserId2= |
+| $adminAuthToken | user | ${createAnotherUserPayload} | | ${expectedCreateResult} |  |
 *!
 
 !***> Case 3 It must be possible to update a user
@@ -41,11 +41,8 @@ Static
 *!
 
 !***> Clean up data from test
-!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
-| setHeader | Accept:application/vnd.cora.record+json!-
--!Content-Type:application/vnd.cora.record+json!-
--!authToken:$adminAuthToken |
-| DELETE | /record/user/$aNewUserId | | | |
-| DELETE | /record/user/$aNewUserId2 | | | |
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | user | $aNewUserId  | | OK |
 *!
 

@@ -279,13 +279,6 @@ Using same valid data as case 3a but this time it is valid since the record exis
 
 *!
 !***> '''Case 4a''' A record containing all required data for creation should validate as true using '''xml'''
-#!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
-#| setHeader | Accept:application/vnd.cora.record+xml!-
-#-!Content-Type:application/vnd.cora.record+json!-
-#-!authToken:$adminAuthToken |
-#| setBody | {"name":"testStudentThesis","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"studentThesis1"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testStudentThesis"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsCreated","value":"2019-02-22T08:04:33.131000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2019-02-22T08:04:33.131000Z"}],"repeatId":"0"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"testStudentThesis"}]}]},{"name":"testTitle","value":"Entitel"},{"name":"publishedStatus","value":"notPublished"}]} |
-#| POST | /record/testStudentThesis/studentThesis1 | | | |
-
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
 | setHeader | Accept:application/vnd.cora.record+xml!-
 -!Content-Type:application/vnd.cora.workorder+xml!-
