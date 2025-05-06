@@ -6,7 +6,7 @@ Help: Read a record
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken: ${currentAuthToken}!-
 -!Accept: application/vnd.cora.record+xml|
-| GET | /rest/record/${recordType}/${recordId} | ${httpCode} | Content-Type: application\/vnd\.uub\.record\+xml | ${expectedXpath} |
+| GET | /rest/record/${recordType}/${recordId} | ${httpCode} | Content-Type: application\/vnd\.cora\.record\+xml | ${expectedXpath} |
 
 
 *!

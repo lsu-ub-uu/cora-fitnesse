@@ -109,7 +109,7 @@ Create collectIndexTerms trainingIdIndexTerm
 -!</childReference>!-
 -!</childReferences>!-
 -!</metadata> |
-| POST | /rest/record/metadata | 201 |Content-Type: application\/vnd\.uub\.record\+xml | /record/data/metadata[@type = 'group'] |
+| POST | /rest/record/metadata | 201 |Content-Type: application\/vnd\.cora\.record\+xml | /record/data/metadata[@type = 'group'] |
 
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
@@ -327,7 +327,7 @@ We will create a trainingProgram using the metadata groups specified. We can onl
 -!<createdBy>asta_kask</createdBy>!-
 -!</trainingProgram>!-
 -!</singleTrainingProgram>| Data is correct, should be possible to create. |
-| POST | /rest/record/singleTrainingProgram | 201 | Content-Type: application\/vnd\.uub\.record\+xml!-
+| POST | /rest/record/singleTrainingProgram | 201 | Content-Type: application\/vnd\.cora\.record\+xml!-
 -!Location:/rest/record/singleTrainingProgram/cirkelfys| /record/data/singleTrainingProgram/trainingProgram/id[text()='x1']!-
 -!/record/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'asta_kask'] |
 *!
@@ -354,7 +354,7 @@ We will create a trainingProgram using the metadata groups specified. We can onl
 -!<createdBy>kalle_anka</createdBy>!-
 -!</trainingProgram>!-
 -!</singleTrainingProgram>| Data is correct, should be possible to create. |
-| POST | /rest/record/singleTrainingProgram | 201 | Content-Type: application\/vnd\.uub\.record\+xml!-
+| POST | /rest/record/singleTrainingProgram | 201 | Content-Type: application\/vnd\.cora\.record\+xml!-
 -!Location:/rest/record/singleTrainingProgram/spinning| /record/data/singleTrainingProgram/trainingProgram/id[text()='anka1']!-
 -!/record/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'kalle_anka'] |
 
@@ -384,7 +384,7 @@ We will read a trainingProgram.
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
 -!Accept: application/vnd.cora.record+xml|
-| GET | /rest/record/singleTrainingProgram/cirkelfys | 200 | Content-Type: application\/vnd\.uub\.record\+xml| /record/data/singleTrainingProgram/trainingProgram/id[text()='x1']!-
+| GET | /rest/record/singleTrainingProgram/cirkelfys | 200 | Content-Type: application\/vnd\.cora\.record\+xml| /record/data/singleTrainingProgram/trainingProgram/id[text()='x1']!-
 -!/record/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'asta_kask']!-
 -!//actionLinks/read/requestMethod[text() = 'GET']!-
 -!//actionLinks/update/requestMethod[text() = 'POST']!-
@@ -408,7 +408,7 @@ We will read a list of trainingPrograms.
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
 -!Accept: application/vnd.cora.recordList+xml|
-| GET | /rest/record/singleTrainingProgram/ | 200 | Content-Type: application\/vnd\.uub\.recordList\+xml| /dataList/containDataOfType[text()='singleTrainingProgram']!-
+| GET | /rest/record/singleTrainingProgram/ | 200 | Content-Type: application\/vnd\.cora\.recordList\+xml| /dataList/containDataOfType[text()='singleTrainingProgram']!-
 -!/dataList/data/record[1]/data/singleTrainingProgram/trainingProgram/id[text()='anka1']!-
 -!/dataList/data/record[1]/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'kalle_anka'] !-
 -!/dataList/data/record[2]/data/singleTrainingProgram/trainingProgram/id[text()='x1']!-
@@ -523,7 +523,7 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 -!<createdBy>asta_kask2</createdBy>!-
 -!</trainingProgram>!-
 -!</singleTrainingProgram>| Data is correct, should be possible to update. |
-| POST | /rest/record/singleTrainingProgram/cirkelfys | 200 | Content-Type: application\/vnd\.uub\.record\+xml| /record/data/singleTrainingProgram/trainingProgram/id[text()='x12']!-
+| POST | /rest/record/singleTrainingProgram/cirkelfys | 200 | Content-Type: application\/vnd\.cora\.record\+xml| /record/data/singleTrainingProgram/trainingProgram/id[text()='x12']!-
 -!/record/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'asta_kask2'] |
 *!
 !***> Case 5
@@ -554,7 +554,7 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 -!<createdBy>kalle_anka2</createdBy>!-
 -!</trainingProgram>!-
 -!</singleTrainingProgram>| Data is correct, should be possible to update. |
-| POST | /rest/record/singleTrainingProgram/spinning | 200 | Content-Type: application\/vnd\.uub\.record\+xml| /record/data/singleTrainingProgram/trainingProgram/id[text()='anka12']!-
+| POST | /rest/record/singleTrainingProgram/spinning | 200 | Content-Type: application\/vnd\.cora\.record\+xml| /record/data/singleTrainingProgram/trainingProgram/id[text()='anka12']!-
 -!/record/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'kalle_anka2'] |
 
 #-!Content-Type: application/vnd.cora.record+xml!-
@@ -610,7 +610,7 @@ url encode, use this in the query:
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
 -!Accept: application/vnd.cora.recordList+xml|
-| GET | /rest/record/searchResult/trainingSearch?searchData=%3C%3Fxml+version%3D%221.0%22+encoding%3D%22UTF-8%22%3F%3E%3CtrainingSearch%3E%3Cinclude%3E%3CincludePart%3E%3CtrainingIdSearchTerm%3E%2A%2A%3C%2FtrainingIdSearchTerm%3E%3C%2FincludePart%3E%3C%2Finclude%3E%3C%2FtrainingSearch%3E | 200 | Content-Type: application\/vnd\.uub\.recordList\+xml | /dataList/totalNo[text()='2']!-
+| GET | /rest/record/searchResult/trainingSearch?searchData=%3C%3Fxml+version%3D%221.0%22+encoding%3D%22UTF-8%22%3F%3E%3CtrainingSearch%3E%3Cinclude%3E%3CincludePart%3E%3CtrainingIdSearchTerm%3E%2A%2A%3C%2FtrainingIdSearchTerm%3E%3C%2FincludePart%3E%3C%2Finclude%3E%3C%2FtrainingSearch%3E | 200 | Content-Type: application\/vnd\.cora\.recordList\+xml | /dataList/totalNo[text()='2']!-
 -!/dataList/data/record[2]/data/singleTrainingProgram/trainingProgram/id[text()='anka12']!-
 -!/dataList/data/record[2]/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'kalle_anka2'] !-
 -!/dataList/data/record[1]/data/singleTrainingProgram/trainingProgram/id[text()='x12']!-
