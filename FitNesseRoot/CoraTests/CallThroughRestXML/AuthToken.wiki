@@ -7,16 +7,16 @@ Test that sending a valid authToken gives additional permissions compared to gue
 !***> Configure !-RestFixture-!
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
-| restfixture.default.headers | Content-Type: application/vnd.uub.record+xml!-
--! Accept: application/vnd.uub.record+xml!-
+| restfixture.default.headers | Content-Type: application/vnd.cora.record+xml!-
+-! Accept: application/vnd.cora.record+xml!-
 -!authToken:$adminAuthToken|
-| restfixture.content.handlers.map | application/vnd.uub.record+xml=XML |
+| restfixture.content.handlers.map | application/vnd.cora.record+xml=XML |
 
 *!
 !***> Test create without token, should not be allowed (401)
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setHeader | Content-Type:application/vnd.uub.record+xml!-
+| setHeader | Content-Type:application/vnd.cora.record+xml!-
 -! |
 | setBody | <?xml version="1.0" encoding="UTF-8"?>!-
 -!<text>!-
@@ -44,7 +44,7 @@ Test that sending a valid authToken gives additional permissions compared to gue
 !***> Test create without invalid token, should not be allowed (401)
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setHeader | Content-Type:application/vnd.uub.record+xml !-
+| setHeader | Content-Type:application/vnd.cora.record+xml !-
 -!authToken:!-invalidToken
 -! |
 | setBody | <?xml version="1.0" encoding="UTF-8"?>!-
@@ -73,7 +73,7 @@ Test that sending a valid authToken gives additional permissions compared to gue
 !***> Test create without invalid token, should not be allowed (403)
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setHeader | Content-Type:application/vnd.uub.record+xml !-
+| setHeader | Content-Type:application/vnd.cora.record+xml !-
 -!authToken:!-fitnesseUserToken-!!-
 -! |
 | setBody |  <?xml version="1.0" encoding="UTF-8"?>!-
@@ -102,8 +102,8 @@ Test that sending a valid authToken gives additional permissions compared to gue
 !***> Test create with token, should  be allowed
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setHeader | Content-Type:application/vnd.uub.record+xml!-
--!Accept: application/vnd.uub.record+xml !-
+| setHeader | Content-Type:application/vnd.cora.record+xml!-
+-!Accept: application/vnd.cora.record+xml !-
 -!authToken:$adminAuthToken|
 | setBody |  <?xml version="1.0" encoding="UTF-8"?>!-
 -!<text>!-
@@ -131,7 +131,7 @@ Test that sending a valid authToken gives additional permissions compared to gue
 !***> Remove text
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setHeader | Content-Type:application/vnd.uub.record+xml!-
+| setHeader | Content-Type:application/vnd.cora.record+xml!-
 -!authToken:$adminAuthToken!-
 -! | | | |
 | DELETE | /rest/record/text/authTokenTestingText | 200 | | |

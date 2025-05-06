@@ -1,10 +1,10 @@
 !***> Configure !-RestFixture-!
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
-| restfixture.default.headers | Accept:application/vnd.uub.record+xml!-
--!Content-Type:application/vnd.uub.record+xml!-
+| restfixture.default.headers | Accept:application/vnd.cora.record+xml!-
+-!Content-Type:application/vnd.cora.record+xml!-
 -!authToken:$adminAuthToken|
-| restfixture.content.handlers.map | application/vnd.uub.record+xml=XML!-
+| restfixture.content.handlers.map | application/vnd.cora.record+xml=XML!-
 -!default=XML |
 
 *!
@@ -12,7 +12,7 @@
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setBody | <?xml version="1.0" encoding="UTF-8"?><metadata type="group"><recordInfo><id>generatedIdGroup</id><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>metadataGroup</linkedRecordId></validationType><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider></recordInfo><nameInData>generatedId</nameInData><excludePGroupCreation>true</excludePGroupCreation><textId><linkedRecordType>text</linkedRecordType><linkedRecordId>someTestText</linkedRecordId></textId><defTextId><linkedRecordType>text</linkedRecordType><linkedRecordId>someTestDefText</linkedRecordId></defTextId><childReferences><childReference repeatId="1"><ref><linkedRecordType>metadata</linkedRecordType><linkedRecordId>recordInfoGroup</linkedRecordId></ref><repeatMin>1</repeatMin><repeatMax>1</repeatMax></childReference><childReference repeatId="2"><ref><linkedRecordType>metadata</linkedRecordType><linkedRecordId>idTextVar</linkedRecordId></ref><repeatMin>1</repeatMin><repeatMax>1</repeatMax></childReference></childReferences></metadata> |
-| POST | /rest/record/metadata | 201 | Content-Type : application/vnd.uub.record\+xml |!-
+| POST | /rest/record/metadata | 201 | Content-Type : application/vnd.cora.record\+xml |!-
 -!/record/data/metadata/recordInfo/id[text()='generatedIdGroup']!-
 -!/record/actionLinks/read/requestMethod[text()='GET']!-
 -!/record/actionLinks/update/requestMethod[text()='POST']!-

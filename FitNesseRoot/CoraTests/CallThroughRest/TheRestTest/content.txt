@@ -8,11 +8,11 @@
 !***> Configure !-RestFixture-!
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
-| restfixture.default.headers | Accept:application/vnd.uub.record+json!-
--!Content-Type:application/vnd.uub.record+json!-
+| restfixture.default.headers | Accept:application/vnd.cora.record+json!-
+-!Content-Type:application/vnd.cora.record+json!-
 -!authToken:$adminAuthToken !-
 -! |
-| restfixture.content.handlers.map | application/vnd.uub.record+json=JSON!-
+| restfixture.content.handlers.map | application/vnd.cora.record+json=JSON!-
 -!default=JSON |
 
 *!
@@ -20,7 +20,7 @@
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setBody | {"name":"metadata","attributes":{"type":"group"},"children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}]},{"name":"id","value":"generatedIdGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"nameInData","value":"generatedId"},{"name":"excludePGroupCreation","value":"true"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}]},{"name":"childReferences","children":[{"name":"childReference","repeatId":"1","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"recordInfoGroup"}]},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}]},{"name":"childReference","repeatId":"2","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"idTextVar"}]},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}]}]}]} |
-| POST | /rest/record/metadata | 201 | Content-Type : application/vnd.uub.record\+json | /* javascript */ !-
+| POST | /rest/record/metadata | 201 | Content-Type : application/vnd.cora.record\+json | /* javascript */ !-
 -!!-
 -!jsonbody.record.data.children[0].children[1].value == 'generatedIdGroup' &&!-
 -!jsonbody.record.actionLinks.read.requestMethod == 'GET' &&!-

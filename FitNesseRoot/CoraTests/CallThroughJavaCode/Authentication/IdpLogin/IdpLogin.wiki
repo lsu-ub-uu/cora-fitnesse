@@ -6,7 +6,7 @@ Static
 !2 Fetch authTokens using idpLogin
 !***> Get authTokens from idpLogin server
 !define actionLinkUrlRegEx {!-=~/^(https?):\/\/.*\/[a-f0-9\\-]{36}$/-!}
-!define renewAccept {!-application/vnd.uub.authentication+json-!}
+!define renewAccept {!-application/vnd.cora.authentication+json-!}
 
 !| AuthenticationFixture |
 | idpLogin? | EPPN | getStatusType? | getUserId? | getLoginId? | getFirstName? | getLastName? | getAuthToken? | getRenewUrl? | getRenewAccept? | getDeleteUrl? |

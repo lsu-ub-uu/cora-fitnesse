@@ -42,8 +42,8 @@ Static
 
 !***> Clean up data from test
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
-| setHeader | Accept:application/vnd.uub.record+json!-
--!Content-Type:application/vnd.uub.record+json!-
+| setHeader | Accept:application/vnd.cora.record+json!-
+-!Content-Type:application/vnd.cora.record+json!-
 -!authToken:$adminAuthToken |
 | DELETE | /record/user/$aNewUserId | | | |
 | DELETE | /record/user/$aNewUserId2 | | | |

@@ -34,7 +34,7 @@ Static
 
 *!
 !***> '''Case 4: ''' An authToken should contain all expected data attached to the token when its created
-!define renewAccept {!-application/vnd.uub.authentication+json-!}
+!define renewAccept {!-application/vnd.cora.authentication+json-!}
 !define expectedPermissionUnits {[fitnesseUserPermissionUnit, fitnesseUserPermissionUnit2]}
 
 !***> Check apptoken login authentication content

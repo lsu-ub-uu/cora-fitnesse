@@ -172,7 +172,7 @@ Example of validationResult below as json.
             <requestMethod>GET</requestMethod>
             <rel>read</rel>
             <url>http://somesystem:8080/somewhere/rest/record/validationOrder/validationOrder:1218302590797777</url>
-            <accept>application/vnd.uub.record+xml</accept>
+            <accept>application/vnd.cora.record+xml</accept>
         </read>
     </actionLinks>
 </record>
@@ -280,15 +280,15 @@ Using same valid data as case 3a but this time it is valid since the record exis
 *!
 !***> '''Case 4a''' A record containing all required data for creation should validate as true using '''xml'''
 #!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
-#| setHeader | Accept:application/vnd.uub.record+xml!-
-#-!Content-Type:application/vnd.uub.record+json!-
+#| setHeader | Accept:application/vnd.cora.record+xml!-
+#-!Content-Type:application/vnd.cora.record+json!-
 #-!authToken:$adminAuthToken |
 #| setBody | {"name":"testStudentThesis","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"studentThesis1"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"testStudentThesis"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsCreated","value":"2019-02-22T08:04:33.131000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"141414"}]},{"name":"tsUpdated","value":"2019-02-22T08:04:33.131000Z"}],"repeatId":"0"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"testStudentThesis"}]}]},{"name":"testTitle","value":"Entitel"},{"name":"publishedStatus","value":"notPublished"}]} |
 #| POST | /record/testStudentThesis/studentThesis1 | | | |
 
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
-| setHeader | Accept:application/vnd.uub.record+xml!-
--!Content-Type:application/vnd.uub.workorder+xml!-
+| setHeader | Accept:application/vnd.cora.record+xml!-
+-!Content-Type:application/vnd.cora.workorder+xml!-
 -!authToken:$adminAuthToken|
 | setBody | <?xml version="1.0" encoding="UTF-8"?><workOrder><order><validationOrder><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>validationOrder</linkedRecordId></validationType></recordInfo><recordType><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></recordType><validateLinks>true</validateLinks><metadataToValidate>new</metadataToValidate></validationOrder></order><record><testStudentThesis><recordInfo><id>studentThesis1</id><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></validationType></recordInfo><testTitle>Entitel</testTitle><publishedStatus>notPublished</publishedStatus></testStudentThesis></record></workOrder> |
 | POST | /record/workOrder | 200 | | //validationResult/valid[text()='true'] |
@@ -296,8 +296,8 @@ Using same valid data as case 3a but this time it is valid since the record exis
 *!
 !***> '''Case 4b''' A record containing missing data should validate as false, using '''xml'''
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
-| setHeader | Accept:application/vnd.uub.record+xml!-
--!Content-Type:application/vnd.uub.workorder+xml!-
+| setHeader | Accept:application/vnd.cora.record+xml!-
+-!Content-Type:application/vnd.cora.workorder+xml!-
 -!authToken:$adminAuthToken|
 | setBody | <?xml version="1.0" encoding="UTF-8"?><workOrder><order><validationOrder><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>validationOrder</linkedRecordId></validationType></recordInfo><recordType><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></recordType><validateLinks>false</validateLinks><metadataToValidate>existing</metadataToValidate></validationOrder></order><record><testStudentThesis><recordInfo><id>studentThesis1</id><type><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></type><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></validationType></recordInfo><testTitle>Entitel</testTitle><publishedStatus>notPublished</publishedStatus></testStudentThesis></record></workOrder> |
 | POST | /record/workOrder | 200 | | //validationResult/valid[text()='false'] |
@@ -305,32 +305,32 @@ Using same valid data as case 3a but this time it is valid since the record exis
 *!
 !***> '''Case 5a: ''' A record with a missing validationOrder should cause bad request, using '''xml'''.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
-| setHeader | Accept:application/vnd.uub.record+xml!-
--!Content-Type:application/vnd.uub.workorder+xml!-
+| setHeader | Accept:application/vnd.cora.record+xml!-
+-!Content-Type:application/vnd.cora.workorder+xml!-
 -!authToken:$adminAuthToken|
 | setBody | <?xml version="1.0" encoding="UTF-8"?><workOrder><order></order><record><testStudentThesis><recordInfo><id>studentThesis1</id><type><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></type><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></validationType></recordInfo><testTitle>Entitel</testTitle><publishedStatus>notPublished</publishedStatus></testStudentThesis></record></workOrder> |
 | POST | /record/workOrder | 400 | | Validation failed due to: WorkOrder part 'order' not found. |
 *!
 !***> '''Case 5b: ''' A record with a missing record should cause bad request, using '''xml'''.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
-| setHeader | Accept:application/vnd.uub.record+xml!-
--!Content-Type:application/vnd.uub.workorder+xml!-
+| setHeader | Accept:application/vnd.cora.record+xml!-
+-!Content-Type:application/vnd.cora.workorder+xml!-
 -!authToken:$adminAuthToken|
 | setBody | <?xml version="1.0" encoding="UTF-8"?><workOrder><order><validationOrder><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>validationOrder</linkedRecordId></validationType></recordInfo><recordType><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></recordType><validateLinks>false</validateLinks><metadataToValidate>new</metadataToValidate></validationOrder></order><record></record></workOrder> |
 | POST | /record/workOrder | 400 | | Validation failed due to: WorkOrder part 'record' not found. |
 *!
 !***> '''Case 5c: ''' A record containing multiple validationOrders should cause bad request, using '''xml'''.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
-| setHeader | Accept:application/vnd.uub.record+xml!-
--!Content-Type:application/vnd.uub.workorder+xml!-
+| setHeader | Accept:application/vnd.cora.record+xml!-
+-!Content-Type:application/vnd.cora.workorder+xml!-
 -!authToken:$adminAuthToken|
 | setBody | <?xml version="1.0" encoding="UTF-8"?><workOrder><order><validationOrder><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>validationOrder</linkedRecordId></validationType></recordInfo><recordType><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></recordType><validateLinks>false</validateLinks><metadataToValidate>existing</metadataToValidate></validationOrder><validationOrder><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>validationOrder</linkedRecordId></validationType></recordInfo><recordType><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></recordType><validateLinks>false</validateLinks><metadataToValidate>existing</metadataToValidate></validationOrder></order><record><testStudentThesis><recordInfo><id>studentThesis1</id><type><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></type><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></validationType></recordInfo><testTitle>Entitel</testTitle><publishedStatus>notPublished</publishedStatus></testStudentThesis></record></workOrder> |
 | POST | /record/workOrder | 400 | | Validation failed due to: Too many children in workOrder part. |
 *!
 !***> '''Case 5d: ''' A record containing multiple records should cause bad request, using '''xml'''.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
-| setHeader | Accept:application/vnd.uub.record+xml!-
--!Content-Type:application/vnd.uub.workorder+xml!-
+| setHeader | Accept:application/vnd.cora.record+xml!-
+-!Content-Type:application/vnd.cora.workorder+xml!-
 -!authToken:$adminAuthToken|
 | setBody | <?xml version="1.0" encoding="UTF-8"?><workOrder><order><validationOrder><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>validationOrder</linkedRecordId></validationType></recordInfo><recordType><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></recordType><validateLinks>false</validateLinks><metadataToValidate>existing</metadataToValidate></validationOrder></order><record><testStudentThesis><recordInfo><id>studentThesis1</id><type><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></type><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></validationType></recordInfo><testTitle>Entitel</testTitle><publishedStatus>notPublished</publishedStatus></testStudentThesis><testStudentThesis><recordInfo><id>studentThesis1</id><type><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></type><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></validationType></recordInfo><testTitle>Entitel</testTitle><publishedStatus>notPublished</publishedStatus></testStudentThesis></record></workOrder> |
 | POST | /record/workOrder | 400 | | Validation failed due to: Too many children in workOrder part. |
@@ -338,16 +338,16 @@ Using same valid data as case 3a but this time it is valid since the record exis
 *!
 !***> '''Case 6a: ''' A recordType of record that does not match the recordType specified in the validationOrder should validate as false, using '''json'''.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
-| setHeader | Accept:application/vnd.uub.record+xml!-
--!Content-Type:application/vnd.uub.workorder+json!-
+| setHeader | Accept:application/vnd.cora.record+xml!-
+-!Content-Type:application/vnd.cora.workorder+json!-
 -!authToken:$adminAuthToken|
 | setBody | {"order":{"name":"validationOrder","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationOrder"}]}]},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"binary"}]},{"name":"validateLinks","value":"true"},{"name":"metadataToValidate","value":"new"}]},"record":{"name":"testStudentThesis","children":[{"name":"recordInfo","children":[{"name":"id","value":"studentThesis1"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"testStudentThesis"}]}]},{"name":"testTitle","value":"Entitel"},{"name":"publishedStatus","value":"notPublished"}]}} |
 | POST | /record/workOrder | 200 | | //validationResult/valid[text()='false'] |
 *!
 !***> '''Case 6b: ''' A recordType of record that does not match the recordType specified in the validationOrder should validate as false, using '''xml'''.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
-| setHeader | Accept:application/vnd.uub.record+xml!-
--!Content-Type:application/vnd.uub.workorder+xml!-
+| setHeader | Accept:application/vnd.cora.record+xml!-
+-!Content-Type:application/vnd.cora.workorder+xml!-
 -!authToken:$adminAuthToken|
 | setBody | <?xml version="1.0" encoding="UTF-8"?><workOrder><order><validationOrder><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>validationOrder</linkedRecordId></validationType></recordInfo><recordType><linkedRecordType>recordType</linkedRecordType><linkedRecordId>binary</linkedRecordId></recordType><validateLinks>false</validateLinks><metadataToValidate>new</metadataToValidate></validationOrder></order><record><testStudentThesis><recordInfo><id>studentThesis1</id><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></validationType></recordInfo><testTitle>Entitel</testTitle><publishedStatus>notPublished</publishedStatus></testStudentThesis></record></workOrder> |
 | POST | /record/workOrder | 200 | | //validationResult/valid[text()='false'] |

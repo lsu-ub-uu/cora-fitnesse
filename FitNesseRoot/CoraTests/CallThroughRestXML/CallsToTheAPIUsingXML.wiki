@@ -43,10 +43,10 @@ Create needed metadata
 !***> Configure !-RestFixture-!
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
-| restfixture.default.headers | Accept: application/vnd.uub.record+xml!-
--!Content-Type: application/vnd.uub.record+xml!-
+| restfixture.default.headers | Accept: application/vnd.cora.record+xml!-
+-!Content-Type: application/vnd.cora.record+xml!-
 -!authToken:$adminAuthToken |
-| restfixture.content.handlers.map | application/vnd.uub.record+xml=XML |
+| restfixture.content.handlers.map | application/vnd.cora.record+xml=XML |
 | http.client.connection.timeout | 7000 |
 | restfixture.display.toggle.for.cells.larger.than | 10 |
 
@@ -61,8 +61,8 @@ Create collectIndexTerms trainingIdIndexTerm
 | $adminAuthToken | collectTerm | {"name":"collectTerm","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"collectIndexTerm"}]},{"name":"id","value":"trainingIdIndexTerm"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"trainingIdIndexTerm"},{"name":"extraData","children":[{"name":"indexFieldName","value":"trainingId"},{"name":"indexType","value":"indexTypeText"}]}],"attributes":{"type":"index"}} | | CREATED |
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setHeaders | Accept: application/vnd.uub.record+xml!-
--!Content-Type: application/vnd.uub.record+xml!-
+| setHeaders | Accept: application/vnd.cora.record+xml!-
+-!Content-Type: application/vnd.cora.record+xml!-
 -!authToken:$adminAuthToken  |
 | setBody | <?xml version="1.0" encoding="UTF-8"?>!-
 -!<metadata type="group">!-
@@ -239,8 +239,8 @@ We will create a trainingProgram using the metadata groups specified. We can onl
 !***> Case 1
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Content-Type: application/vnd.uub.record+xml!-
--!Accept: application/vnd.uub.record+xml|
+-!Content-Type: application/vnd.cora.record+xml!-
+-!Accept: application/vnd.cora.record+xml|
 | setBody | <?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
 -!<recordInfo>!-
@@ -263,8 +263,8 @@ We will create a trainingProgram using the metadata groups specified. We can onl
 !***> Case 2
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Content-Type: application/vnd.uub.record+xml!-
--!Accept: application/vnd.uub.record+xml|
+-!Content-Type: application/vnd.cora.record+xml!-
+-!Accept: application/vnd.cora.record+xml|
 | setBody | <?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
 -!<recordInfo>!-
@@ -286,8 +286,8 @@ We will create a trainingProgram using the metadata groups specified. We can onl
 !***> Case 3
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Content-Type: application/vnd.uub.record+xml!-
--!Accept: application/vnd.uub.record+xml|
+-!Content-Type: application/vnd.cora.record+xml!-
+-!Accept: application/vnd.cora.record+xml|
 | setBody | <?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
 -!<recordInfo>!-
@@ -307,8 +307,8 @@ We will create a trainingProgram using the metadata groups specified. We can onl
 !***> Case 4
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Content-Type: application/vnd.uub.record+xml!-
--!Accept: application/vnd.uub.record+xml|
+-!Content-Type: application/vnd.cora.record+xml!-
+-!Accept: application/vnd.cora.record+xml|
 | setBody |<?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
 -!<recordInfo>!-
@@ -334,8 +334,8 @@ We will create a trainingProgram using the metadata groups specified. We can onl
 !***> Case 5
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Content-Type: application/vnd.uub.record+xml!-
--!Accept: application/vnd.uub.record+xml|
+-!Content-Type: application/vnd.cora.record+xml!-
+-!Accept: application/vnd.cora.record+xml|
 | setBody |<?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
 -!<recordInfo>!-
@@ -358,7 +358,7 @@ We will create a trainingProgram using the metadata groups specified. We can onl
 -!Location:/rest/record/singleTrainingProgram/spinning| /record/data/singleTrainingProgram/trainingProgram/id[text()='anka1']!-
 -!/record/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'kalle_anka'] |
 
-#-!Content-Type: application/vnd.uub.record+xml!-
+#-!Content-Type: application/vnd.cora.record+xml!-
 *!
 
 !2 Read record
@@ -371,19 +371,19 @@ We will read a trainingProgram.
 !***> Case 1
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Accept: application/vnd.uub.record+xml|
+-!Accept: application/vnd.cora.record+xml|
 | GET | /rest/record/singleTrainingProgramNOT/cirkelfys | 404 | Content-Type: text\/plain;charset=utf-8| Error reading record with recordType: singleTrainingProgramNOT and recordId: cirkelfys. No record exists with recordId: singleTrainingProgramNOT|
 *!
 !***> Case 2
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Accept: application/vnd.uub.record+xml|
+-!Accept: application/vnd.cora.record+xml|
 | GET | /rest/record/singleTrainingProgram/cirkelfysNOT | 404 | Content-Type: text\/plain;charset=utf-8| Error reading record with recordType: singleTrainingProgram and recordId: cirkelfysNOT. No record exists with recordId: cirkelfysNOT |
 *!
 !***> Case 3
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Accept: application/vnd.uub.record+xml|
+-!Accept: application/vnd.cora.record+xml|
 | GET | /rest/record/singleTrainingProgram/cirkelfys | 200 | Content-Type: application\/vnd\.uub\.record\+xml| /record/data/singleTrainingProgram/trainingProgram/id[text()='x1']!-
 -!/record/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'asta_kask']!-
 -!//actionLinks/read/requestMethod[text() = 'GET']!-
@@ -401,13 +401,13 @@ We will read a list of trainingPrograms.
 !***> Case 1
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Accept: application/vnd.uub.recordList+xml|
+-!Accept: application/vnd.cora.recordList+xml|
 | GET | /rest/record/singleTrainingProgramNOT/ | 404 | Content-Type: text\/plain;charset=utf-8| Error reading records with recordType: singleTrainingProgramNOT. No record exists with recordId: singleTrainingProgramNOT |
 *!
 !***> Case 2
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Accept: application/vnd.uub.recordList+xml|
+-!Accept: application/vnd.cora.recordList+xml|
 | GET | /rest/record/singleTrainingProgram/ | 200 | Content-Type: application\/vnd\.uub\.recordList\+xml| /dataList/containDataOfType[text()='singleTrainingProgram']!-
 -!/dataList/data/record[1]/data/singleTrainingProgram/trainingProgram/id[text()='anka1']!-
 -!/dataList/data/record[1]/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'kalle_anka'] !-
@@ -428,8 +428,8 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 !***> Case 1
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Content-Type: application/vnd.uub.record+xml!-
--!Accept: application/vnd.uub.record+xml|
+-!Content-Type: application/vnd.cora.record+xml!-
+-!Accept: application/vnd.cora.record+xml|
 | setBody | <?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
 -!<recordInfo>!-
@@ -452,8 +452,8 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 !***> Case 2
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Content-Type: application/vnd.uub.record+xml!-
--!Accept: application/vnd.uub.record+xml|
+-!Content-Type: application/vnd.cora.record+xml!-
+-!Accept: application/vnd.cora.record+xml|
 | setBody | <?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
 -!<recordInfo>!-
@@ -476,8 +476,8 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 !***> Case 3
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Content-Type: application/vnd.uub.record+xml!-
--!Accept: application/vnd.uub.record+xml|
+-!Content-Type: application/vnd.cora.record+xml!-
+-!Accept: application/vnd.cora.record+xml|
 | setBody | <?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
 -!<recordInfo>!-
@@ -498,8 +498,8 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 !***> Case 4
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Content-Type: application/vnd.uub.record+xml!-
--!Accept: application/vnd.uub.record+xml|
+-!Content-Type: application/vnd.cora.record+xml!-
+-!Accept: application/vnd.cora.record+xml|
 | setBody |<?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
 -!<recordInfo>!-
@@ -529,8 +529,8 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 !***> Case 5
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Content-Type: application/vnd.uub.record+xml!-
--!Accept: application/vnd.uub.record+xml|
+-!Content-Type: application/vnd.cora.record+xml!-
+-!Accept: application/vnd.cora.record+xml|
 | setBody |<?xml version="1.0" encoding="UTF-8"?>!-
 -!<singleTrainingProgram>!-
 -!<recordInfo>!-
@@ -557,7 +557,7 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 | POST | /rest/record/singleTrainingProgram/spinning | 200 | Content-Type: application\/vnd\.uub\.record\+xml| /record/data/singleTrainingProgram/trainingProgram/id[text()='anka12']!-
 -!/record/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'kalle_anka2'] |
 
-#-!Content-Type: application/vnd.uub.record+xml!-
+#-!Content-Type: application/vnd.cora.record+xml!-
 *!
 
 !2 Search records
@@ -570,21 +570,21 @@ We will update a trainingProgram using the metadata groups specified. We can onl
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Accept: application/vnd.uub.recordList+xml|
+-!Accept: application/vnd.cora.recordList+xml|
 | GET | /rest/record/searchResult/trainingNOTexistsSearch?searchData=%3C%3Fxml+version%3D%221.0%22+encoding%3D%22UTF-8%22%3F%3E%3CtrainingSearch%3E%3Cinclude%3E%3CincludePart%3E%3CtrainingIdSearchTerm%3E%2A%2A%3C%2FtrainingIdSearchTerm%3E%3C%2FincludePart%3E%3C%2Finclude%3E%3C%2FtrainingSearch%3E | 404 | Content-Type: text/plain;charset=utf-8 | Error searching record with searchId: trainingNOTexistsSearch. No record exists with recordId: trainingNOTexistsSearch |
 *!
 !***> Case 2
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Accept: application/vnd.uub.recordList+xml|
+-!Accept: application/vnd.cora.recordList+xml|
 | GET | /rest/record/searchResult/trainingSearch?searchData=%3C%3Fxml+version%3D%221.0%22+encoding%3D%22UTF-8%22%3F%3E%3CtrainingOTHERSearch%3E%3Cinclude%3E%3CincludePart%3E%3CtrainingIdSearchTerm%3E%2A%2A%3C%2FtrainingIdSearchTerm%3E%3C%2FincludePart%3E%3C%2Finclude%3E%3C%2FtrainingOTHERSearch%3E | 400 | Content-Type: text/plain;charset=utf-8 | Error searching record with searchId: trainingSearch. Data is not valid: |
 *!
 !***> Case 3
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Accept: application/vnd.uub.recordList+xml|
+-!Accept: application/vnd.cora.recordList+xml|
 | GET | /rest/record/searchResult/trainingSearch?searchData=%3C%3Fxml+version%3D%221.0%22+encoding%3D%22UTF-8%22%3F%3E%3CtrainingWRONGSearch%3E%3Cinclude%3E%3CincludePart%3E%3CtrainingIdSearchTerm%3E%2A%2A%3C%2FtrainingIdSearchTerm%3E%3C%2FincludePart%3E%3C%2Finclude%3E%3C%2FtrainingSearch%3E | 400 | Content-Type: text/plain;charset=utf-8 | Error searching record with searchId: trainingSearch. Unable to convert from xml to dataElement due to malformed XML |
 *!
 !***> Case 4
@@ -609,7 +609,7 @@ url encode, use this in the query:
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Accept: application/vnd.uub.recordList+xml|
+-!Accept: application/vnd.cora.recordList+xml|
 | GET | /rest/record/searchResult/trainingSearch?searchData=%3C%3Fxml+version%3D%221.0%22+encoding%3D%22UTF-8%22%3F%3E%3CtrainingSearch%3E%3Cinclude%3E%3CincludePart%3E%3CtrainingIdSearchTerm%3E%2A%2A%3C%2FtrainingIdSearchTerm%3E%3C%2FincludePart%3E%3C%2Finclude%3E%3C%2FtrainingSearch%3E | 200 | Content-Type: application\/vnd\.uub\.recordList\+xml | /dataList/totalNo[text()='2']!-
 -!/dataList/data/record[2]/data/singleTrainingProgram/trainingProgram/id[text()='anka12']!-
 -!/dataList/data/record[2]/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'kalle_anka2'] !-

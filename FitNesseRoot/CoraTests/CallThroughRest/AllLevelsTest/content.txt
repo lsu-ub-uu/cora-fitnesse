@@ -9,17 +9,17 @@ Last, we will create a trainingProgram using the metadata groups specified. We c
 !***> Configure !-RestFixture-!
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
-| restfixture.default.headers | Accept: application/vnd.uub.record+json!-
--!Content-Type: application/vnd.uub.record+json!-
+| restfixture.default.headers | Accept: application/vnd.cora.record+json!-
+-!Content-Type: application/vnd.cora.record+json!-
 -!authToken:$adminAuthToken |
-| restfixture.content.handlers.map | application/vnd.uub.record+json=JSON |
+| restfixture.content.handlers.map | application/vnd.cora.record+json=JSON |
 | http.client.connection.timeout | 7000 |
 
 *!
 !***> Create Metadata
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setHeader | Content-Type:application/vnd.uub.record+json!-
+| setHeader | Content-Type:application/vnd.cora.record+json!-
 -!authToken:$adminAuthToken |
 | setBody | {"name":"metadata","attributes":{"type":"group"},"children":[{"name":"recordInfo","children":[{"name":"id","value":"trainingProgramGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}]}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"someTestDefText"}]},{"name":"nameInData","value":"trainingProgram"},{"name":"excludePGroupCreation","value":"true"},{"name":"childReferences","children":[{"name":"childReference","repeatId":"1","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"idTextVar"}]},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}]},{"name":"childReference","repeatId":"2","children":[{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"createdByTextVar"}]},{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"}]}]}]} |
 | POST | /rest/record/metadata | 201 | | |
