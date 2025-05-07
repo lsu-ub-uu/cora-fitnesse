@@ -5,7 +5,21 @@
 | $adminAuthToken | fitnesseRecordTypeWithVisibility | $commonPublishedRecordId |||
 | $adminAuthToken | fitnesseRecordTypeWithVisibility | $commonHiddenRecordId |||
 | $adminAuthToken | validationType | fitnesseValidationTypeForRecordTypeWithVisibility || OK |
+| $adminAuthToken | searchTerm | fitnesseRecordIdSearchTerm || OK |
+| $adminAuthToken | collectTerm | fitnesseRecordIdCollectIndexTerm || OK |
 | $adminAuthToken | search | fitnesseRecordTypeWithVisibilitySearch || OK |
+| $adminAuthToken | presentation | fitnesseTextSearchPGroup || OK |
+| $adminAuthToken | presentation | fitnesseTextSearchIncludePGroup || OK |
+| $adminAuthToken | presentation | fitnesseTextSearchIncludePartPGroup || OK |
+| $adminAuthToken | presentation | fitnesseSearchRecordIdPVar || OK |
+| $adminAuthToken | presentation | fitnesseTextSearchOutputPGroup || OK |
+| $adminAuthToken | metadata | fitnesseTextSearchGroup || OK |
+| $adminAuthToken | presentation | fitnesseTextSearchIncludeOutputPGroup || OK |
+| $adminAuthToken | presentation | fitnesseTextSearchIncludePartOutputPGroup || OK |
+| $adminAuthToken | metadata | fitnesseTextSearchIncludeGroup || OK |
+| $adminAuthToken | presentation | fitnesseSearchRecordIdOutputPVar || OK |
+| $adminAuthToken | metadata | fitnesseTextSearchIncludePartGroup || OK |
+| $adminAuthToken | metadata | fitnesseSearchRecordIdTextVar || OK |
 | $adminAuthToken | recordType | fitnesseRecordTypeWithVisibility || OK |
 | $adminAuthToken | presentation | fitnesseGroupWithRecordInfoVisibilityPGroup || OK |
 | $adminAuthToken | presentation | fitnesseGroupWithRecordInfoVisibilityOutputPGroup || OK |

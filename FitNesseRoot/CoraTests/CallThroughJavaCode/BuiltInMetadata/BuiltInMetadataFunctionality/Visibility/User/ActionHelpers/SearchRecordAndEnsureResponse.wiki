@@ -1,0 +1,6 @@
+!| RecordEndpointFixture |
+| authToken | searchId | json | testSearchRecord? | getStatusType? |
+| ${currentAuthToken} | fitnesseRecordTypeWithVisibilitySearch | ${searchQueryData} | $searchResult= | OK |
+
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $searchResult | and includes and not excludes | ${expectedResponseRegex} |

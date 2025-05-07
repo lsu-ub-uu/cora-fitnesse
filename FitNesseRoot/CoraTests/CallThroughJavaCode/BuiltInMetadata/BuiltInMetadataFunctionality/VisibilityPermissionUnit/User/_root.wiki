@@ -17,6 +17,8 @@ Static
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Scenarios.Scenario1.Delete
 ----
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Scenarios.Scenario1.List
+----
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.Scenarios.Scenario1.Search
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.ActionHelpers.CleanUp
 
 *!
