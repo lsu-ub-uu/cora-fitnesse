@@ -2,11 +2,11 @@
 Static
 ---
 !4 Search
- * '''Case 1''' User 1 search should get hits on all visibility types and fitnesseTextVar should be visible in the response
- * '''Case 2''' User 2 search should get hits published and unpublished records and fitnesseTextVar should not be visible in the response
- * '''Case 3''' Guest search should get hits on published records and fitnesseTextVar should not be visible in the response
+ * '''Case 1''' User 1 search should get hits on all records with any visibility with a permission unit they have access to (permissionUnit1) and fitnesseTextVar should be visible in the response
+ * '''Case 2''' User 2 search should get hits on records it is allowed by visibility permission term (published, unpublished) with a permission unit they have access to ($commonUnpublishedRecordId - permissionUnit2) and fitnesseTextVar should not be visible in the response
+ * '''Case 3''' Guest search should get hits on published records regardless of permission unit they have access to (none) and fitnesseTextVar should not be visible in the response
  
-!***> '''Case 1''' User 1 search should get hits on all visibility types and fitnesseTextVar should be visible in the response
+!***> '''Case 1''' User 1 search should get hits on all records with any visibility with a permission unit they have access to (permissionUnit1) and fitnesseTextVar should be visible in the response
 !define currentAuthToken {$adminAuthToken}
 !define searchQueryData {!-{"name":"textSearch","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"fitnesseRecordIdSearchTerm","value":"-!$commonUnpublishedRecordId $commonPublishedRecordId $commonHiddenRecordId!-"}]}]}]}-!}
 !define expectedResponseRegex {$commonUnpublishedRecordId AND $commonPublishedRecordId AND $commonHiddenRecordId AND "name":"fitnesseTextVar","value":"entext"}
@@ -14,7 +14,7 @@ Static
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.ActionHelpers.SearchRecordAndEnsureResponse
 
 *!
-!***> '''Case 2''' User 2 search should get hits published and unpublished records and fitnesseTextVar should not be visible in the response
+!***> '''Case 2''' User 2 search should get hits on records it is allowed by visibility permission term (published, unpublished) with a permission unit they have access to ($commonUnpublishedRecordId - permissionUnit2) and fitnesseTextVar should not be visible in the response
 !define currentAuthToken {$userAuthToken}
 !define searchQueryData {!-{"name":"textSearch","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"fitnesseRecordIdSearchTerm","value":"-!$commonUnpublishedRecordId $commonPublishedRecordId $commonHiddenRecordId!-"}]}]}]}-!}
 !define expectedResponseRegex {$commonUnpublishedRecordId AND $commonPublishedRecordId AND NOT $commonHiddenRecordId AND NOT "name":"fitnesseTextVar","value":"entext"}
