@@ -15,7 +15,7 @@ Static
 !define expectedPublishedResponseRegex {"name":"fitnesseTextVar","value":"en text" AND "name":"visibility","value":"published" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
 !define expectedHiddenResponseRegex {"name":"fitnesseTextVar","value":"en text" AND "name":"visibility","value":"hidden" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.ReadRecord
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.ActionHelpers.ReadRecord
 
 !| script | ExtractSubstringUsingRegex |
 | ensure | match found using text | $unpublishedResponseBody | and includes and not excludes | ${expectedUnpublishedResponseRegex} |
@@ -31,7 +31,7 @@ Static
 !define expectedUnpublishedResponseRegex {NOT "name":"fitnesseTextVar","value":"en text" AND "name":"visibility","value":"unpublished" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
 !define expectedPublishedResponseRegex {NOT "name":"fitnesseTextVar","value":"en text" AND "name":"visibility","value":"published" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.ReadRecord
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.ActionHelpers.ReadRecord
 
 !| script | ExtractSubstringUsingRegex |
 | ensure | match found using text | $unpublishedResponseBody | and includes and not excludes | ${expectedUnpublishedResponseRegex} |
@@ -46,7 +46,7 @@ Static
 !define expectedHiddenStatus {FORBIDDEN}
 !define expectedPublishedResponseRegex {NOT "name":"fitnesseTextVar","value":"en text" AND "name":"visibility","value":"published" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!"}
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.ReadRecord
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.ActionHelpers.ReadRecord
 
 !| script | ExtractSubstringUsingRegex |
 | ensure | match found using text | $publishedResponseBody | and includes and not excludes | ${expectedPublishedResponseRegex} |

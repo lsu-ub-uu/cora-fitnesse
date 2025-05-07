@@ -19,7 +19,7 @@ Static
 !define expectedPublishedDelete {OK}
 !define expectedHiddenDelete {OK}
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.DeleteRecord
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.ActionHelpers.DeleteRecord
 
 *!
 !***> '''Case 2''' User2 should only be allowed to delete records with visibility it is allowed to access
@@ -28,7 +28,7 @@ Static
 !define expectedPublishedDelete {OK}
 !define expectedHiddenDelete {FORBIDDEN}
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.DeleteRecord
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.ActionHelpers.DeleteRecord
 
 *!
 !***> '''Case 3''' A guest should not be allowed to delete records with visibility it is allowed to access
@@ -37,6 +37,6 @@ Static
 !define expectedPublishedDelete {FORBIDDEN}
 !define expectedHiddenDelete {FORBIDDEN}
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.DeleteRecord
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.ActionHelpers.DeleteRecord
 
 *!

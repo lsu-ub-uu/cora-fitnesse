@@ -17,7 +17,7 @@ Static
 !define expectedCreateResult {CREATED}
 !define createdRecordId {$createCase1RecordId}
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.CreateRecordAndEnsureResponse
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.ActionHelpers.CreateRecordAndEnsureResponse
 
 #### NOTE: Save the original timestamp so it can be used to assert update timestamps on this record (createCase1RecordId)
 #
@@ -32,7 +32,7 @@ Static
 !define expectedCreateResult {CREATED}
 !define createdRecordId {$createCase2RecordId}
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.CreateRecordAndEnsureResponse
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.ActionHelpers.CreateRecordAndEnsureResponse
 
 *!
 !***> '''Case 3''' User2 creating a record with no visibility value should set visibility to its default value (unpublished)
@@ -42,7 +42,7 @@ Static
 !define expectedCreateResult {CREATED}
 !define createdRecordId {$createCase3RecordId}
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.CreateRecordAndEnsureResponse
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.ActionHelpers.CreateRecordAndEnsureResponse
 
 *!
 !***> '''Case 4''' User2 creating a record with a visibility value other than ''unpublished'' should have this value reverted to the default (unpublished)
@@ -52,7 +52,7 @@ Static
 !define expectedCreateResult {CREATED}
 !define createdRecordId {$createCase4RecordId}
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.CreateRecordAndEnsureResponse
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.ActionHelpers.CreateRecordAndEnsureResponse
 
 *!
 !***> '''Case 5''' A guest should not be able to create a record regardless of visibility status due to permissionTerm limitation
@@ -61,5 +61,5 @@ Static
 !define expectedCreateResult {FORBIDDEN}
 !define createdRecordId {$createCase5RecordId}
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.CreateRecord
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.ActionHelpers.CreateRecord
 *!

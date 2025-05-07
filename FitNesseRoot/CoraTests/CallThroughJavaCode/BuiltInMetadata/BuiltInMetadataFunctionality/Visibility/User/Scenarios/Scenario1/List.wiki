@@ -11,19 +11,19 @@ Static
 !define recordType {fitnesseRecordTypeWithVisibility}
 !define expectedResponseRegex {$commonUnpublishedRecordId AND $commonPublishedRecordId AND $commonHiddenRecordId AND "name":"fitnesseTextVar","value":"entext"}
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.ListRecordsAndEnsureResponse
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.ActionHelpers.ListRecordsAndEnsureResponse
 
 *!
 !***> '''Case 2''' User2 should only be able to list records it is allowed by visibility permission term (published, unpublished)
 !define currentAuthToken {$userAuthToken}
 !define expectedResponseRegex {$commonUnpublishedRecordId AND $commonPublishedRecordId AND NOT $commonHiddenRecordId AND "name":"visibility","value":"unpublished" AND NOT "name":"visibility","value":"hidden" AND NOT "name":"fitnesseTextVar","value":"entext"}
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.ListRecordsAndEnsureResponse
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.ActionHelpers.ListRecordsAndEnsureResponse
 
 *!
 !***> '''Case 3''' A guest should only be able to list published records
 !define currentAuthToken {$guestAuthToken}
 !define expectedResponseRegex {$commonPublishedRecordId AND NOT $commonUnpublishedRecordId AND NOT $commonHiddenRecordId AND NOT "name":"visibility","value":"unpublished" AND NOT "name":"visibility","value":"hidden" AND NOT "name":"fitnesseTextVar","value":"entext"}
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.Actions.ListRecordsAndEnsureResponse
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.ActionHelpers.ListRecordsAndEnsureResponse
 *!
