@@ -391,6 +391,24 @@ We will read a trainingProgram.
 -!//actionLinks/index/requestMethod[text() = 'POST'] |
 *!
 
+
+!2 Read record decorated
+We will read a trainingProgram.
+
+ * '''Case 1:''' Reads using an existing recordType and recordId, using decorated. Verify actionLinks exists.
+
+!***> Case 1
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeaders | authToken:$adminAuthToken!-
+-!Accept: application/vnd.cora.record-decorated+xml|
+| GET | /rest/record/singleTrainingProgram/cirkelfys | 200 | Content-Type: application\/vnd\.cora\.record-decorated\+xml| /record/data/singleTrainingProgram/trainingProgram/id[text()='x1']!-
+-!/record/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'asta_kask']!-
+-!//actionLinks/read/requestMethod[text() = 'GET']!-
+-!//actionLinks/update/requestMethod[text() = 'POST']!-
+-!//actionLinks/delete/requestMethod[text() = 'DELETE']!-
+-!//actionLinks/index/requestMethod[text() = 'POST'] |
+*!
+
 !2 Read record list
 We will read a list of trainingPrograms.
 
