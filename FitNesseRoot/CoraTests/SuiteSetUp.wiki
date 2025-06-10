@@ -1,0 +1,8 @@
+---
+Suite
+---
+
+!***> SuiteSetUp for Fitnesse Example
+!include -seamless .HelperPages.Data.ExamplesPool
+
+*!

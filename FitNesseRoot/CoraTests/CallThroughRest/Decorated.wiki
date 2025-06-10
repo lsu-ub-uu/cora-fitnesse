@@ -5,40 +5,27 @@ Test
 The '''Decorated''' option is available when reading or searching a record using the Cora REST API. This option enriches the response with metadata and linked content to help clients interpret the record more easily.
 
 When using this option:
-
- * The response includes *definitions* for each field in the record.
+ * The response includes '''definitions''' for each field in the record.
  * Linked records* (up to a depth of 2) within the data part are included.
  * All definitions and enriched metadata are added as attributes, using a naming convention where attribute names start with an underscore (_).
 
-!3 Examples
- * For field definitions: "_sv": "Datadelare"
- * For collection variables, the parent element includes the display value as attributes: "_value_en": "Blue"
+!2 Examples
+ * For field definitions: ''' "_sv" ''': "Datadelare"
+ * For collection variables, the parent element includes the display value as attributes: ''' "_value_en" ''': "Blue"
 
-!3 Usage
-To enable this option, set the `Accept` header in your request to one of the following media types:
+!2 Usage
+To enable this option, set the '''Accept''' header in your request to one of the following media types:
 
-!code xml
-application/vnd.cora.record-decorated+xml
-application/vnd.cora.record-decorated+json
+''application/vnd.cora.record'''-decorated'''+xml''
+''application/vnd.cora.record'''-decorated'''+json''
 
-!3 Important Notes
- * '''Only''' linked records found in the `data` section are included.
+!2 Deviations
+ * Linked records in '''recordInfo''' are '''not''' included.
+ * If the user does '''not''' have permission to read a linked record, it will be '''omitted''' from the response.
 
-Linked records in `recordInfo` are *not* decorated or included.
+-----
 
- * If the user does *not* have permission to read a linked record, it will be *omitted* from the response.
-
-!***> Setup
-
-Create needed metadata
-
-!note !-Please note, setup is not used as example of how to do things-!
- * '''Setup 0:''' Login this is currently a call made using a java fixture
- * '''Setup 1:''' Create the metadatagroup trainingProgram, containing two fields, id and createdBy. they are both mandatory (min 1, max 1)
- * '''Setup 2:''' Create a metadatagroup called singleTrainingProgram which must contain one trainingProgram, no less, no more.
- * '''Setup 3:''' Create a recordType which describes a singleTrainingProgram.
-
-!***> Configure !-RestFixture-!
+!***< Configure !-RestFixture-!
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
 | restfixture.default.headers | Accept: application/vnd.cora.record+xml!-
@@ -49,100 +36,35 @@ Create needed metadata
 | restfixture.display.toggle.for.cells.larger.than | 10 |
 
 *!
-!***> Create Metadata
-
-Create collectIndexTerms trainingIdIndexTerm
-
-!| RecordEndpointFixture |
-| authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | collectTerm | {"name":"collectTerm","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"collectIndexTerm"}]},{"name":"id","value":"trainingIdIndexTerm"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"trainingIdIndexTerm"},{"name":"extraData","children":[{"name":"indexFieldName","value":"trainingId"},{"name":"indexType","value":"indexTypeText"}]}],"attributes":{"type":"index"}} | | CREATED |
-
+!***> Setup
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | Accept: application/vnd.cora.record+xml!-
 -!Content-Type: application/vnd.cora.recordgroup+xml!-
--!authToken:$adminAuthToken |
-| setBody | <?xml version="1.0" encoding="UTF-8"?>!- |
-
--!<metadata type="group">!--!<recordInfo><id>trainingProgramGroup</id>!--!<dataDivider>!--!<linkedRecordType>system</linkedRecordType>!--!<linkedRecordId>cora</linkedRecordId>!--!</dataDivider>!--!<validationType>!--!<linkedRecordType>validationType</linkedRecordType>!--!<linkedRecordId>metadataGroup</linkedRecordId>!--!</validationType>!--!</recordInfo>!--!<textId>!--!<linkedRecordType>text</linkedRecordType>!--!<linkedRecordId>someTestText</linkedRecordId>!--!</textId>!--!<defTextId>!--!<linkedRecordType>text</linkedRecordType>!--!<linkedRecordId>someTestDefText</linkedRecordId>!--!</defTextId>!--!<nameInData>trainingProgram</nameInData>!--!<excludePGroupCreation>true</excludePGroupCreation>!--!<childReferences>!--!<childReference repeatId="1">!--!<ref>!--!<linkedRecordType>metadata</linkedRecordType>!--!<linkedRecordId>idTextVar</linkedRecordId>!--!</ref>!--!<childRefCollectTerm repeatId="0" type="index">!--!<linkedRecordType>collectTerm</linkedRecordType>!--!<linkedRecordId>trainingIdIndexTerm</linkedRecordId>!--!</childRefCollectTerm>!--!<repeatMin>1</repeatMin>!--!<repeatMax>1</repeatMax>!--!</childReference>!--!<childReference repeatId="2">!--!<ref>!--!<linkedRecordType>metadata</linkedRecordType>!--!<linkedRecordId>createdByTextVar</linkedRecordId>!--!</ref>!--!<repeatMin>1</repeatMin>!--!<repeatMax>1</repeatMax>!--!</childReference>!--!</childReferences>!--!</metadata> |
->!--
-
-| POST | /rest/record/metadata | 201 | Content-Type: application\/vnd\.cora\.record\+xml | /record/data/metadata[@type = 'group'] |
-
-| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setBody | <?xml version="1.0" encoding="UTF-8"?>!- |
-
--!<metadata type="group">!--!<recordInfo>!--!<id>singleTrainingProgramNewGroup</id>!--!<dataDivider>!--!<linkedRecordType>system</linkedRecordType>!--!<linkedRecordId>cora</linkedRecordId>!--!</dataDivider>!--!<validationType>!--!<linkedRecordType>validationType</linkedRecordType>!--!<linkedRecordId>metadataGroup</linkedRecordId>!--!</validationType>!--!</recordInfo>!--!<textId>!--!<linkedRecordType>text</linkedRecordType>!--!<linkedRecordId>someTestText</linkedRecordId>!--!</textId>!--!<defTextId>!--!<linkedRecordType>text</linkedRecordType>!--!<linkedRecordId>someTestDefText</linkedRecordId>!--!</defTextId>!--!<nameInData>singleTrainingProgram</nameInData>!--!<excludePGroupCreation>true</excludePGroupCreation>!--!<childReferences>!--!<childReference repeatId="3">!--!<ref>!--!<linkedRecordType>metadata</linkedRecordType>!--!<linkedRecordId>recordInfoNewGroup</linkedRecordId>!--!</ref>!--!<repeatMin>1</repeatMin>!--!<repeatMax>1</repeatMax>!--!</childReference>!--!<childReference repeatId="1">!--!<ref>!--!<linkedRecordType>metadata</linkedRecordType>!--!<linkedRecordId>trainingProgramGroup</linkedRecordId>!--!</ref>!--!<repeatMin>1</repeatMin>!--!<repeatMax>1</repeatMax>!--!</childReference>!--!</childReferences>!--!</metadata> |
->!
-
-| POST | /rest/record/metadata | 201 | | |
-
-| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setBody | <?xml version="1.0" encoding="UTF-8"?><metadata type="group"><recordInfo><id>singleTrainingProgramGroup</id><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>metadataGroup</linkedRecordId></validationType><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider></recordInfo><textId><linkedRecordType>text</linkedRecordType><linkedRecordId>someTestText</linkedRecordId></textId><defTextId><linkedRecordType>text</linkedRecordType><linkedRecordId>someTestDefText</linkedRecordId></defTextId><nameInData>singleTrainingProgram</nameInData><excludePGroupCreation>true</excludePGroupCreation><childReferences><childReference repeatId="1"><ref><linkedRecordType>metadata</linkedRecordType><linkedRecordId>trainingProgramGroup</linkedRecordId></ref><repeatMin>1</repeatMin><repeatMax>1</repeatMax></childReference><childReference repeatId="2"><ref><linkedRecordType>metadata</linkedRecordType><linkedRecordId>recordInfoGroup</linkedRecordId></ref><repeatMin>1</repeatMin><repeatMax>1</repeatMax></childReference></childReferences></metadata> |
-| POST | /rest/record/metadata | 201 | | |
-
-| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setBody | <?xml version="1.0" encoding="UTF-8"?><presentation type="pGroup"><recordInfo><id>someFitnesseViewPGroup</id><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>presentationGroup</linkedRecordId></validationType><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider></recordInfo><presentationOf><linkedRecordType>metadata</linkedRecordType><linkedRecordId>singleTrainingProgramGroup</linkedRecordId></presentationOf><childReferences><childReference repeatId="0"><refGroup repeatId="0"><ref type="presentation"><linkedRecordType>presentation</linkedRecordType><linkedRecordId>recordInfoOutputPGroup</linkedRecordId></ref></refGroup></childReference></childReferences><mode>output</mode></presentation> |
-| POST | /rest/record/presentation | 201 | | |
-
-| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setBody | <?xml version="1.0" encoding="UTF-8"?><presentation type="pGroup"><recordInfo><id>someFitnesseFormPGroup</id><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>presentationGroup</linkedRecordId></validationType><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider></recordInfo><presentationOf><linkedRecordType>metadata</linkedRecordType><linkedRecordId>singleTrainingProgramGroup</linkedRecordId></presentationOf><childReferences><childReference repeatId="0"><refGroup repeatId="0"><ref type="presentation"><linkedRecordType>presentation</linkedRecordType><linkedRecordId>recordInfoPGroup</linkedRecordId></ref></refGroup></childReference></childReferences><mode>output</mode></presentation> |
-| POST | /rest/record/presentation | 201 | | |
-
-| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setBody | <?xml version="1.0" encoding="UTF-8"?><presentation type="pGroup"><recordInfo><id>someFitnesseFormNewPGroup</id><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>presentationGroup</linkedRecordId></validationType><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider></recordInfo><presentationOf><linkedRecordType>metadata</linkedRecordType><linkedRecordId>singleTrainingProgramNewGroup</linkedRecordId></presentationOf><childReferences><childReference repeatId="0"><refGroup repeatId="0"><ref type="presentation"><linkedRecordType>presentation</linkedRecordType><linkedRecordId>recordInfoNewPGroup</linkedRecordId></ref></refGroup></childReference></childReferences><mode>output</mode></presentation> |
-| POST | /rest/record/presentation | 201 | | |
-
+-!authToken:$adminAuthToken  |
+| setBody | <?xml version="1.0" encoding="UTF-8"?>!- 
+-!<fitnesseExample>!-
+-!<recordInfo>!-
+-!<dataDivider>!-
+-!<linkedRecordType>system</linkedRecordType>!-
+-!<linkedRecordId>testSystem</linkedRecordId>!-
+-!</dataDivider>!-
+-!<validationType>!-
+-!<linkedRecordType>validationType</linkedRecordType>!-
+-!<linkedRecordId>fitnesseValidationType</linkedRecordId>!-
+-!</validationType>!-
+-!</recordInfo>!-
+-!<fitnesseTextVar>someText</fitnesseTextVar>!-
+-!<fitnesseAnotherTextVar>omeAnother</fitnesseAnotherTextVar>!-
+-!<demo>!-
+-!<linkedRecordType>demo</linkedRecordType>!-
+-!<linkedRecordId>asdf</linkedRecordId>!-
+-!</demo>!-
+-!<colour>blue</colour>!-
+-!</fitnesseExample> |
+| POST | /rest/record/fitnesseRecordType | 201 |Content-Type: application\/vnd\.cora\.record\+xml | |
+| let | recordId | js | response.body.match(/<id>(.*?)<\/id>/)[1] |  |
 *!
-!***> Create texts needed when creating recordType
 
-| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setBody | <?xml version="1.0" encoding="UTF-8"?><text><recordInfo><id>someFitnesseText</id><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>coraText</linkedRecordId></validationType><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider></recordInfo><textPart lang="sv" type="default"><text>En text</text></textPart></text> |
-| POST | /rest/record/text | 201 | | |
-| setBody | <?xml version="1.0" encoding="UTF-8"?><text><recordInfo><id>someFitnesseDefText</id><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>coraText</linkedRecordId></validationType><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider></recordInfo><textPart lang="sv" type="default"><text>En deftext</text></textPart><textPart lang="en" type="alternative"><text>A defText</text></textPart></text> |
-| POST | /rest/record/text | 201 | | |
-
-*!
-!***> Create recordType
-
-| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setBody | <?xml version="1.0" encoding="UTF-8"?><recordType><recordInfo><id>singleTrainingProgram</id><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>recordType</linkedRecordId></validationType><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider></recordInfo><metadataId><linkedRecordType>metadata</linkedRecordType><linkedRecordId>singleTrainingProgramGroup</linkedRecordId></metadataId><presentationViewId><linkedRecordType>presentation</linkedRecordType><linkedRecordId>someFitnesseViewPGroup</linkedRecordId></presentationViewId><menuPresentationViewId><linkedRecordType>presentation</linkedRecordType><linkedRecordId>someFitnesseViewPGroup</linkedRecordId></menuPresentationViewId><listPresentationViewId><linkedRecordType>presentation</linkedRecordType><linkedRecordId>someFitnesseViewPGroup</linkedRecordId></listPresentationViewId><autocompletePresentationView><linkedRecordType>presentation</linkedRecordType><linkedRecordId>someFitnesseViewPGroup</linkedRecordId></autocompletePresentationView><userSuppliedId>true</userSuppliedId><textId><linkedRecordType>text</linkedRecordType><linkedRecordId>someFitnesseText</linkedRecordId></textId><defTextId><linkedRecordType>text</linkedRecordType><linkedRecordId>someFitnesseDefText</linkedRecordId></defTextId><search><linkedRecordType>search</linkedRecordType><linkedRecordId>recordTypeSearch</linkedRecordId></search><groupOfRecordType repeatId="0">metadata</groupOfRecordType><public>false</public><storeInArchive>false</storeInArchive><usePermissionUnit>false</usePermissionUnit><useVisibility>false</useVisibility></recordType> |
-| POST | /rest/record/recordType | 201 | | |
-
-*!
-!***> Create validationType
-
-| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setBody | <?xml version="1.0" encoding="UTF-8"?><validationType><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>cora</linkedRecordId></dataDivider><id>singleTrainingProgramValidationType</id><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>validationType</linkedRecordId></validationType></recordInfo><textId><linkedRecordType>text</linkedRecordType><linkedRecordId>someFitnesseText</linkedRecordId></textId><defTextId><linkedRecordType>text</linkedRecordType><linkedRecordId>someFitnesseDefText</linkedRecordId></defTextId><newMetadataId><linkedRecordType>metadata</linkedRecordType><linkedRecordId>singleTrainingProgramNewGroup</linkedRecordId></newMetadataId><metadataId><linkedRecordType>metadata</linkedRecordType><linkedRecordId>singleTrainingProgramGroup</linkedRecordId></metadataId><newPresentationFormId><linkedRecordType>presentation</linkedRecordType><linkedRecordId>someFitnesseFormNewPGroup</linkedRecordId></newPresentationFormId><presentationFormId><linkedRecordType>presentation</linkedRecordType><linkedRecordId>someFitnesseFormPGroup</linkedRecordId></presentationFormId><validatesRecordType><linkedRecordType>recordType</linkedRecordType><linkedRecordId>singleTrainingProgram</linkedRecordId></validatesRecordType></validationType> |
-| POST | /rest/record/validationType | 201 | | |
-
-*!
-Create trainingIdSearchTextVar textVariable for search form
-
-!| RecordEndpointFixture |
-| authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | metadata | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataTextVariable"}]},{"name":"id","value":"trainingIdSearchTextVar"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"trainingIdSearchTerm"},{"name":"regEx","value":".*"}],"attributes":{"type":"textVariable"}} | | CREATED |
-
-Create trainingSearch groups for search form
-
-!| RecordEndpointFixture |
-| authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | metadata | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}]},{"name":"id","value":"trainingSearchIncludePartGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"nameInData","value":"includePart"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"trainingIdSearchTextVar"}]}],"repeatId":"0"}]}],"attributes":{"type":"group"}} | | CREATED |
-| $adminAuthToken | metadata | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}]},{"name":"id","value":"trainingSearchIncludeGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"nameInData","value":"include"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"trainingSearchIncludePartGroup"}]}],"repeatId":"0"}]}],"attributes":{"type":"group"}} | | CREATED |
-| $adminAuthToken | metadata | {"name":"metadata","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}]},{"name":"id","value":"trainingSearchGroup"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"nameInData","value":"trainingSearch"},{"name":"childReferences","children":[{"name":"childReference","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"name":"ref","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"trainingSearchIncludeGroup"}]}],"repeatId":"0"}]}],"attributes":{"type":"group"}} | | CREATED |
-
-create searchTerm
-
-!| RecordEndpointFixture |
-| authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | searchTerm | {"name":"searchTerm","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"searchTerm"}]},{"name":"id","value":"trainingIdSearchTerm"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"searchTermType","value":"final"},{"name":"indexTerm","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"trainingIdIndexTerm"}]}]} | | CREATED |
-
-Create trainingSearch
-
-!| RecordEndpointFixture |
-| authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | search | {"name":"search","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"search"}]},{"name":"id","value":"trainingSearch"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"trainingSearchGroup"}]},{"name":"presentationId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"trainingSearchPGroup"}]},{"name":"recordTypeToSearchIn","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"singleTrainingProgram"}],"repeatId":"0"},{"name":"searchGroup","value":"autocomplete"}]} | | CREATED |
-
-*!
 !2 Read record decorated
 We will read a trainingProgram.
 
@@ -150,21 +72,34 @@ We will read a trainingProgram.
  * '''Case 2:''' Reads record using decorated option, in JSON
 
 !***> Case 1
-
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
 -!Accept: application/vnd.cora.record-decorated+xml |
-| GET | /rest/record/singleTrainingProgram/cirkelfys | 200 | Content-Type: application\/vnd\.cora\.record-decorated\+xml | /record/data/singleTrainingProgram/trainingProgram/id[text()='x1']!- |
-
--!/record/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'asta_kask']!--!//actionLinks/read/requestMethod[text() = 'GET']!--!//actionLinks/update/requestMethod[text() = 'POST']!--!//actionLinks/delete/requestMethod[text() = 'DELETE']!--!//actionLinks/index/requestMethod[text() = 'POST'] |
+| GET | /rest/record/fitnesseRecordType/$recordId | 200 | Content-Type: application\/vnd\.cora\.record-decorated\+xml |  |
+| let | linkedRecordTitleEnglish | js | response.body.match(/fitnesseTextVar _en="([^"]*)" _sv="([^"]*)"/)[1] | a text |
+| let | linkedRecordTitleSwedish | js | response.body.match(/fitnesseTextVar _en="([^"]*)" _sv="([^"]*)"/)[2] | en text |
+| let | linkedRecordTitleEnglish | js | response.body.match(/bookTitle _en="([^"]*)" _sv="([^"]*)"/)[1] | Title for the book |
+| let | linkedRecordTitleSwedish | js | response.body.match(/bookTitle _en="([^"]*)" _sv="([^"]*)"/)[2] | Boktitel |
+| let | linkedRecordTitleSwedish | js | response.body.match(/_value_en="([^"]+)"/)[1] | blue |
+| let | linkedRecordTitleSwedish | js | response.body.match(/_value_sv="([^"]+)"/)[1] | blå |
 *!
-!***> Case 2
 
+!***> Case 2
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
 -!Accept: application/vnd.cora.record-decorated+json |
-| GET | /rest/record/singleTrainingProgram/cirkelfys | 200 | Content-Type: application\/vnd\.cora\.record-decorated\+xml | /record/data/singleTrainingProgram/trainingProgram/id[text()='x1']!- |
+| GET | /rest/record/fitnesseRecordType/$recordId | 200 | Content-Type: application\/vnd\.cora\.record-decorated\+json | |
+| let | linkedRecordTitleSwedish | js | response.body.match(/"fitnesseTextVar","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}/)[1] | en text |
+| let | linkedRecordTitleEnglish | js | response.body.match(/"fitnesseTextVar","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}/)[2] | a text |
+| let | linkedRecordTitleSwedish | js | response.body.match(/"bookTitle","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}/)[1] | Boktitel |
+| let | linkedRecordTitleEnglish | js | response.body.match(/"bookTitle","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}/)[2] | Title for the book |
+| let | collectionItemBlueSwedish | js | response.body.match(/"_value_sv":"([^"]+)"/)[1] | blå |
+| let | collectionItemBlueEnglish | js | response.body.match(/"_value_en":"([^"]+)"/)[1] | blue |
+*!
 
--!/record/data/singleTrainingProgram/trainingProgram/createdBy[text() = 'asta_kask']!--!//actionLinks/read/requestMethod[text() = 'GET']!--!//actionLinks/update/requestMethod[text() = 'POST']!--!//actionLinks/delete/requestMethod[text() = 'DELETE']!--!//actionLinks/index/requestMethod[text() = 'POST'] |
+!***> Clean up
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeaders | authToken:$adminAuthToken |
+| DELETE | /rest/record/fitnesseRecordType/$recordId | 200 |  |  |
 *!
-*!
+
