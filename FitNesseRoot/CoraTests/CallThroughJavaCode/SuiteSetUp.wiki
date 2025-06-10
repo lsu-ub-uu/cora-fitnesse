@@ -1,8 +1,0 @@
----
-Suite
----
-
-!***> SuiteSetUp for Fitnesse Example
-!include -seamless .CoraTests.CallThroughJavaCode.SuiteSetUp.ExamplesPool
-
-*!

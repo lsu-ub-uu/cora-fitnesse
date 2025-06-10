@@ -1,0 +1,105 @@
+---
+Test
+---
+!1 Decorated
+The '''Decorated''' option is available when reading or searching a record using the Cora REST API. This option enriches the response with metadata and linked content to help clients interpret the record more easily.
+
+When using this option:
+ * The response includes '''definitions''' for each field in the record.
+ * Linked records* (up to a depth of 2) within the data part are included.
+ * All definitions and enriched metadata are added as attributes, using a naming convention where attribute names start with an underscore (_).
+
+!2 Examples
+ * For field definitions: ''' "_sv" ''': "Datadelare"
+ * For collection variables, the parent element includes the display value as attributes: ''' "_value_en" ''': "Blue"
+
+!2 Usage
+To enable this option, set the '''Accept''' header in your request to one of the following media types:
+
+''application/vnd.cora.record'''-decorated'''+xml''
+''application/vnd.cora.record'''-decorated'''+json''
+
+!2 Deviations
+ * Linked records in '''recordInfo''' are '''not''' included.
+ * If the user does '''not''' have permission to read a linked record, it will be '''omitted''' from the response.
+
+-----
+
+!***< Configure !-RestFixture-!
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
+| restfixture.default.headers | Accept: application/vnd.cora.record+xml!-
+-!Content-Type: application/vnd.cora.recordgroup+xml!-
+-!authToken:$adminAuthToken |
+| restfixture.content.handlers.map | application/vnd.cora.record+xml=XML |
+| http.client.connection.timeout | 7000 |
+| restfixture.display.toggle.for.cells.larger.than | 10 |
+
+*!
+!***> Setup
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeaders | Accept: application/vnd.cora.record+xml!-
+-!Content-Type: application/vnd.cora.recordgroup+xml!-
+-!authToken:$adminAuthToken  |
+| setBody | <?xml version="1.0" encoding="UTF-8"?>!- 
+-!<fitnesseExample>!-
+-!<recordInfo>!-
+-!<dataDivider>!-
+-!<linkedRecordType>system</linkedRecordType>!-
+-!<linkedRecordId>testSystem</linkedRecordId>!-
+-!</dataDivider>!-
+-!<validationType>!-
+-!<linkedRecordType>validationType</linkedRecordType>!-
+-!<linkedRecordId>fitnesseValidationType</linkedRecordId>!-
+-!</validationType>!-
+-!</recordInfo>!-
+-!<fitnesseTextVar>someText</fitnesseTextVar>!-
+-!<fitnesseAnotherTextVar>omeAnother</fitnesseAnotherTextVar>!-
+-!<demo>!-
+-!<linkedRecordType>demo</linkedRecordType>!-
+-!<linkedRecordId>asdf</linkedRecordId>!-
+-!</demo>!-
+-!<colour>blue</colour>!-
+-!</fitnesseExample> |
+| POST | /rest/record/fitnesseRecordType | 201 |Content-Type: application\/vnd\.cora\.record\+xml | |
+| let | recordId | js | response.body.match(/<id>(.*?)<\/id>/)[1] |  |
+*!
+
+!2 Read record decorated
+We will read a trainingProgram.
+
+ * '''Case 1:''' Reads record using decorated option, in XML
+ * '''Case 2:''' Reads record using decorated option, in JSON
+
+!***> Case 1
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeaders | authToken:$adminAuthToken!-
+-!Accept: application/vnd.cora.record-decorated+xml |
+| GET | /rest/record/fitnesseRecordType/$recordId | 200 | Content-Type: application\/vnd\.cora\.record-decorated\+xml |  |
+| let | linkedRecordTitleEnglish | js | response.body.match(/fitnesseTextVar _en="([^"]*)" _sv="([^"]*)"/)[1] | a text |
+| let | linkedRecordTitleSwedish | js | response.body.match(/fitnesseTextVar _en="([^"]*)" _sv="([^"]*)"/)[2] | en text |
+| let | linkedRecordTitleEnglish | js | response.body.match(/bookTitle _en="([^"]*)" _sv="([^"]*)"/)[1] | Title for the book |
+| let | linkedRecordTitleSwedish | js | response.body.match(/bookTitle _en="([^"]*)" _sv="([^"]*)"/)[2] | Boktitel |
+| let | linkedRecordTitleSwedish | js | response.body.match(/_value_en="([^"]+)"/)[1] | blue |
+| let | linkedRecordTitleSwedish | js | response.body.match(/_value_sv="([^"]+)"/)[1] | blå |
+*!
+
+!***> Case 2
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeaders | authToken:$adminAuthToken!-
+-!Accept: application/vnd.cora.record-decorated+json |
+| GET | /rest/record/fitnesseRecordType/$recordId | 200 | Content-Type: application\/vnd\.cora\.record-decorated\+json | |
+| let | linkedRecordTitleSwedish | js | response.body.match(/"fitnesseTextVar","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}/)[1] | en text |
+| let | linkedRecordTitleEnglish | js | response.body.match(/"fitnesseTextVar","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}/)[2] | a text |
+| let | linkedRecordTitleSwedish | js | response.body.match(/"bookTitle","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}/)[1] | Boktitel |
+| let | linkedRecordTitleEnglish | js | response.body.match(/"bookTitle","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}/)[2] | Title for the book |
+| let | collectionItemBlueSwedish | js | response.body.match(/"_value_sv":"([^"]+)"/)[1] | blå |
+| let | collectionItemBlueEnglish | js | response.body.match(/"_value_en":"([^"]+)"/)[1] | blue |
+*!
+
+!***> Clean up
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeaders | authToken:$adminAuthToken |
+| DELETE | /rest/record/fitnesseRecordType/$recordId | 200 |  |  |
+*!
+

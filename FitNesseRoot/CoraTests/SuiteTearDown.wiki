@@ -77,6 +77,7 @@ Suite
 |$adminAuthToken|metadata|fitnesseBlueItem||OK|
 |$adminAuthToken|metadata|fitnesseLink||OK|
 |$adminAuthToken|metadata|fitnesseBinaryLink||OK|
+|$adminAuthToken|text|fitnesseBlueText||OK|
 |$adminAuthToken|text|fitnesseRecordTypeSearchDefText||OK|
 |$adminAuthToken|text|fitnesseRecordTypeSearchText||OK|
 |$adminAuthToken|permissionRole|fitnesseBinaryReadOnAllVisibilitiesRole||OK|

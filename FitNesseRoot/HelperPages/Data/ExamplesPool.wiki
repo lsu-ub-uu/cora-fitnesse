@@ -20,7 +20,7 @@ It should be possible to create new validation types
 !***> Creation of a standard fitnesse text
 
 !define recordType {text}
-!define createData {!-{"children":[{"children":[{"name":"id","value":"fitnesseText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"fitnesseText"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"fitnesseText"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"}-!}
+!define createData {!-{"children":[{"children":[{"name":"id","value":"fitnesseText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"en text"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"a text"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"}-!}
 
 !include -seamless .HelperPages.createRecord
 *!
@@ -54,8 +54,17 @@ It should be possible to create new validation types
 *!
 
 !***> Creation of a standard fitnesse genericCollectionItem
+
+!***> Creation of a standard fitnesseBlueText text
+
+!define recordType {text}
+!define createData {!-{"children":[{"children":[{"name":"id","value":"fitnesseBlueText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"blå"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"blue"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"}-!}
+
+!include -seamless .HelperPages.createRecord
+*!
+
 !define recordType {metadata}
-!define createData {!-{"children":[{"children":[{"name":"id","value":"fitnesseBlueItem"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericCollectionItem"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"blue"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"}],"name":"metadata","attributes":{"type":"collectionItem"}}-!}
+!define createData {!-{"children":[{"children":[{"name":"id","value":"fitnesseBlueItem"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericCollectionItem"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"blue"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseBlueText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseBlueText"}],"name":"defTextId"}],"name":"metadata","attributes":{"type":"collectionItem"}}-!}
 
 !include -seamless .HelperPages.createRecord
 *!
