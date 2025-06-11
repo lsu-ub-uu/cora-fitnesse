@@ -1,7 +1,7 @@
 ---
 Static
 ---
-!***< Setup permissionUnit definition
+!***> Setup permissionUnit definition
 !define permissionUnitNewGroupDefinition {!-permissionUnit (group)
 	recordInfo (group, 1-1, noConstraint)
 		id (textVariable, 1-1, noConstraint)

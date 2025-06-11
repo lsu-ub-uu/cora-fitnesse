@@ -2,7 +2,7 @@
 Static
 ---
 !***> Create record, for recordType ${recordType}
-!***< definition
+!***> definition
 !define expectedCreateResult {CREATED}
 *!
 Check there is no mention of iiif in the answer when creating a binary

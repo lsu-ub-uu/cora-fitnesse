@@ -3,7 +3,7 @@ Static
 ---
 !2 Metadata
 !3 Definitions for validationType
-!***< Setup validationType definitions
+!***> Setup validationType definitions
 !define validationTypeNewGroupDefinition {!-validationType (group)
 	recordInfo (group, 1-1, noConstraint)
 		id (textVariable, 1-1, noConstraint, I)

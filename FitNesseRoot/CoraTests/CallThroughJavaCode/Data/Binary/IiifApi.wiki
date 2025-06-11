@@ -40,7 +40,7 @@ Three calls are made:
 *!
 !***> '''Case 2''' 
 In this case we create a binary record with visibility "published", then we upload a '''compressed''' file and we wait it is stored in cora. Once this is done we try to get info.json from that file. This should not work. Expecting '''Content-Type : text/html;charset=utf-8''' means that we epect a response from Cora an not from iipsrv.
-!***< definition
+!***> definition
 !define originalFileName {aZip.zip}
 !define expectedFileSize {144}
 !define createData publishedBinary

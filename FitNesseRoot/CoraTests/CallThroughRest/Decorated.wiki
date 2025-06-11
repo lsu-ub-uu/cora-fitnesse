@@ -25,7 +25,7 @@ To enable this option, set the '''Accept''' header in your request to one of the
 
 -----
 
-!***< Configure !-RestFixture-!
+!***> Configure !-RestFixture-!
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
 | restfixture.default.headers | Accept: application/vnd.cora.record+xml!-

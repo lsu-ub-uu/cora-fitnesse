@@ -2,7 +2,7 @@
 Static
 ---
 !3 Definition for Record info
-!***< Setup record info definition
+!***> Setup record info definition
 !define recordInfoGroupDefinition {!-recordInfo (group)
 	id (textVariable, 1-1, noConstraint, I)
 	type (recordLink, 1-1, noConstraint)

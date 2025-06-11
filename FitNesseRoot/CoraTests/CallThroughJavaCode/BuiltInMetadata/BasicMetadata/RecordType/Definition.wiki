@@ -2,7 +2,7 @@
 Static
 ---
 !3 Definition for Record type
-!***< Setup record type definition
+!***> Setup record type definition
 !define recordTypeGroupDefinition {!-recordType (group)
 	recordInfo (group, 1-1, noConstraint)
 		id (textVariable, 1-1, noConstraint, I)

@@ -7,7 +7,7 @@ Static
  * '''Case 2''': User2 should only be allowed to delete records with visibility it is allowed to access (published, unpublished) with a permission unit they have access to (fitnessePermissionUnit2)
  * '''Case 3''': A guest should not be allowed to delete records with visibility it is allowed to access with a permission unit
 #
-!***< Create records for tests data
+!***> Create records for tests data
 # unpublished (permissionUnit1)
 # published (permissionUnit2)
 # hidden (permissionUnit1)

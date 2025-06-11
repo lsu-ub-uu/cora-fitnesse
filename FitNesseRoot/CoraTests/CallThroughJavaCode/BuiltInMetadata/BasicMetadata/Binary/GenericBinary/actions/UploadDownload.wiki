@@ -8,7 +8,7 @@ Static
  * '''Case 4''': It should be possible to download the master resource and all its representations from an '''unpublished''' binary record.
  * '''Case 5''': TO BE DISCUSSED! When uploading a file to a binary that already has a resource, we will get an internal server error. 
 '''We need to add tests that make sure there is no upload on an updated binary as that will not work, or think about another solution....'''
-!***< Set common variables
+!***> Set common variables
 !define originalFileName {aTiff.tiff}
 !define expectedUploadAnswer {}
 !define expectedDownloadAnswer {}
@@ -128,7 +128,7 @@ has read on unpublished, and download on each representation in turn master, thu
  * '''Case 4''': FitnesseUser user should have a link to read large representation and download it, but not other representaitons from an unpublished binary record.
  * '''Case 5''': FitnesseUser user should have a link to read jp2 representation and download it, but not other representaitons from an unpublished binary record.
  
-!***< SetUp 
+!***> SetUp 
 !define representation {master}
 !define recordType {permissionRule}
 !define recordId {fitnesseBinaryReadOnAllVisibilitiesRule}

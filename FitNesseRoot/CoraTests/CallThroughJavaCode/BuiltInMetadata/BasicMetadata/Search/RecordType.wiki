@@ -2,7 +2,7 @@
 Static
 ---
 !3 Metadata definitions of search
-!***< Setup search definitions
+!***> Setup search definitions
 !define SearchGroupDefinition {!-search (group)
 	recordInfo (group, 1-1, noConstraint)
 		id (textVariable, 1-1, noConstraint, I)

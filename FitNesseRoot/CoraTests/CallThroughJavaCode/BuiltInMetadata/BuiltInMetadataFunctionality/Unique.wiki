@@ -19,7 +19,7 @@ would be denied with a response about the conflicting fields. This feature can b
 
 !2 How does it work?
 !3 Metadata definition of unique
-!***< Set up unique definition
+!***> Set up unique definition
 !define uniqueDefinition {!-unique (group)
 	uniqueTerm (recordLink, 1-1, noConstraint)
 	combineTerm (recordLink, 0-X, noConstraint)-!}

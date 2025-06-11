@@ -1,4 +1,4 @@
-!***< Setup data for scenario (Constraint on both visibility and tsVisibility)
+!***> Setup data for scenario (Constraint on both visibility and tsVisibility)
 #
 !define scenario {
 FitnesseTextVar is set to readWrite constraint on record type

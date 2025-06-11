@@ -1,7 +1,7 @@
 ---
 Static
 ---
-!***< Create posts for delete test
+!***> Create posts for delete test
 !| ChildComparerFixture |
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
 | $adminAuthToken | ${recordType} | ${unpublishedRecordData} | $publishedResponseBody= | | $deleteUnpublishedRecordId= |

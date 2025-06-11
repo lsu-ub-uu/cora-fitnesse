@@ -3,7 +3,7 @@ Static
 ---
 !2 Binary record type
 !3 Definition for Binary
-!***< Setup binary definition
+!***> Setup binary definition
 !define binaryRecordTypeDefinition {!-binary type:{generic, image, sound, video, document, text, compressed} (group)
 	recordInfo (group, 1-1, noConstraint)
 		id (textVariable, 0-1, noConstraint, I)

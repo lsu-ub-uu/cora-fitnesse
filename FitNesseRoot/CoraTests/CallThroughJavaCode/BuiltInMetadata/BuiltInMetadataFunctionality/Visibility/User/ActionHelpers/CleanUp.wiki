@@ -1,4 +1,4 @@
-!***< Clean up created records to avoid conflicts between scenarios 
+!***> Clean up created records to avoid conflicts between scenarios 
 !| RecordEndpointFixture |
 | authToken|type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | fitnesseRecordTypeWithVisibility | $createCase1RecordId |||

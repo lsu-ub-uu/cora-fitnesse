@@ -1,7 +1,7 @@
 ---
 Static
 ---
-!***< Setup binary definition
+!***> Setup binary definition
 !define genericBinaryNewGroupDefinition {!-binary type:{generic, image, sound, video, document, text, compressed} (group)
 	recordInfo (group, 1-1, noConstraint)
 		dataDivider (recordLink, 1-1, noConstraint)

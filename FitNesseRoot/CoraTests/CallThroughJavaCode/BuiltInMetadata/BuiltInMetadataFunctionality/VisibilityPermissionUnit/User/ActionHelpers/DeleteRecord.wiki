@@ -1,7 +1,7 @@
 ---
 Static
 ---
-!***< Create posts for delete test
+!***> Create posts for delete test
 !| ChildComparerFixture |
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
 | $adminAuthToken | ${recordType} | ${unpublishedRecordData} | $publishedResponseBody= | | $deleteUnpublishedRecordId= |
@@ -15,7 +15,7 @@ Static
 | ${currentAuthToken} | ${recordType} | $deletePublishedRecordId || ${expectedPublishedDelete} |
 | ${currentAuthToken} | ${recordType} | $deleteHiddenRecordId || ${expectedHiddenDelete} |
 
-!***< Try to delete all, to make sure they are all cleaned away
+!***> Try to delete all, to make sure they are all cleaned away
 !| RecordEndpointFixture |
 | authToken|type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | fitnesseRecordTypeWithVisibility | $deleteUnpublishedRecordId |||
