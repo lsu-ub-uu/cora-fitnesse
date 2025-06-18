@@ -6,7 +6,7 @@ Static
 !***> Setup binary definition
 !define binaryRecordTypeDefinition {!-binary type:{generic, image, sound, video, document, text, compressed} (group)
 	recordInfo (group, 1-1, noConstraint)
-		id (textVariable, 0-1, noConstraint, I)
+		id (textVariable, 1-1, noConstraint, I)
 		type (recordLink, 0-1, noConstraint)
 		validationType (recordLink, 1-1, noConstraint)
 		dataDivider (recordLink, 1-1, noConstraint, I)
