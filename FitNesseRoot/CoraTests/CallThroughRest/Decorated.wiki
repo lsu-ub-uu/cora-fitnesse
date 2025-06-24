@@ -37,6 +37,62 @@ To enable this option, set the '''Accept''' header in your request to one of the
 
 *!
 !***> Setup
+!***> '''Case 2''' Jpeg
+
+!define currentAuthToken {$adminAuthToken}
+!define expectedAnswer {}
+!define expectedUploadAnswer {}
+!define expectedActionsForRecord {!-{"actions":["read","update","delete","index","read_incoming_links"]}-!}
+!define expectedActionResult {!-Action read_incoming_links is missing.-!}
+!define originalFileName {aJpg.jpg}
+!define expectedChecksumSha512 {8121447df8b82183f181611f23234247a026d0d66fda7bc421686b96c0cd66c11415f396cf7574dccd86815c26979234f74e64d3a82c6696f1dcfcc6b6bf070e}
+!define expectedMimeType {image/jpeg}
+!define expectedFileSize {347554}
+!define expectedHeight {1690}
+!define expectedWidth {1795}
+!define expectedResolution {300x300}
+!define recordType {binary}
+!define thumbnailFileSize {38944}
+!define thumbnailMimeType {image/jpeg}
+!define thumbnailHeight {94}
+!define thumbnailWidth {100}
+!define mediumFileSize {64902}
+!define mediumMimeType {image/jpeg}
+!define mediumHeight {283}
+!define mediumWidth {300}
+!define largeFileSize {148597}
+!define largeMimeType {image/jpeg}
+!define largeHeight {565}
+!define largeWidth {600}
+!define jp2FileSize {1297962}
+!define jp2MimeType {image/jp2}
+!define jp2Height {1690}
+!define jp2Width {1795}
+!define binaryType {image}
+
+!include -seamless .CoraTests.CallThroughJavaCode.Data.Binary.UploadImageValidateAnalysisAndConvertion
+
+!define binaryRecordId $tmpRecordId1
+*!
+
+
+
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeaders | Accept: application/vnd.cora.record+json!-
+-!Content-Type: application/vnd.cora.recordgroup+json!-
+-!authToken:$adminAuthToken  |
+| setBody | {"name":"book","children":[{"name":"recordInfo","children":[{"name":"id","value":"demoForFitnesse"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"demo"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"bookTitle","value":"demoTitle"}]} |
+| POST | /rest/record/demo | 201 |Content-Type: application\/vnd\.cora\.record\+json | |
+| let | demoTsUpdate | js | response.body.match(/{"name":"tsUpdated","value":"([^"]*)"}/)[1] |  |
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeaders | Accept: application/vnd.cora.record+json!-
+-!Content-Type: application/vnd.cora.recordgroup+json!-
+-!authToken:$adminAuthToken  |
+| setBody | {"name":"book","children":[{"name":"recordInfo","children":[{"repeatId":"0","children":[{"repeatId":"0","children":[{"name":"tsUpdated","value":"$demoTsUpdate"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"updatedBy"}],"name":"updated"},{"name":"id","value":"demoForFitnesse"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"demo"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"bookTitle","value":"demoTitle"},{"name":"keeptHis","value":"4"},{"name":"bookCover","repeatId":"0","children":[{"name":"linkedRecordType","value":"binary"},{"name":"linkedRecordId","value":"$tmpRecordId1"}]},{"name":"url","value":""}]} |
+| POST | /rest/record/demo | 200 |Content-Type: application\/vnd\.cora\.record\+json | |
+
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | Accept: application/vnd.cora.record+xml!-
 -!Content-Type: application/vnd.cora.recordgroup+xml!-
@@ -57,7 +113,7 @@ To enable this option, set the '''Accept''' header in your request to one of the
 -!<fitnesseAnotherTextVar>omeAnother</fitnesseAnotherTextVar>!-
 -!<demo>!-
 -!<linkedRecordType>demo</linkedRecordType>!-
--!<linkedRecordId>asdf</linkedRecordId>!-
+-!<linkedRecordId>demoForFitnesse</linkedRecordId>!-
 -!</demo>!-
 -!<colour>blue</colour>!-
 -!</fitnesseExample> |
@@ -125,5 +181,7 @@ We will read a trainingProgram.
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken |
 | DELETE | /rest/record/fitnesseRecordType/$recordId | 200 |  |  |
+| DELETE | /rest/record/demo/demoForFitnesse | 200 |  |  |
+| DELETE | /rest/record/binary/$tmpRecordId1 | 200 |  |  |
 *!
 
