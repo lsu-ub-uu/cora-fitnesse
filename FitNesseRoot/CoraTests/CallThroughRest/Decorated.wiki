@@ -37,6 +37,48 @@ To enable this option, set the '''Accept''' header in your request to one of the
 
 *!
 !***> Setup
+!***> Create Binary record and upload an image
+!define createBinaryGeneric {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]},{"name":"visibility","value":"unpublished"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
+!define recordType {binary}
+!define createData createBinaryGeneric
+!define expectedCreateResult {CREATED}
+
+!define originalFileName {aJpg.jpg}
+!define expectedFileSize {347554}
+!define expectedAnswer {}
+!define expectedUploadAnswer {}
+!***> Create record, for recordType ${recordType}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | ${recordType} | ${createData} | ${expectedAnswer} | ${expectedCreateResult} | $binaryRecordId= |
+
+!define uploadRecordId {$binaryRecordId}
+!include -seamless .HelperPages.uploadResource
+*!
+!***> Wait and validate record has been updated using image analyzer and converted to the different representations
+!| WaitForRegExReadResultFixture |
+| authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
+| $adminAuthToken | binary | $binaryRecordId | 250 | 50 | \"name\":\"jp2\" | Found |
+*!
+*!
+!***> Create Demo record with a link to the binary record
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeaders | Accept: application/vnd.cora.record+json!-
+-!Content-Type: application/vnd.cora.recordgroup+json!-
+-!authToken:$adminAuthToken  |
+| setBody | {"name":"book","children":[{"name":"recordInfo","children":[{"name":"id","value":"demoForFitnesse"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"demo"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"bookTitle","value":"demoTitle"}]} |
+| POST | /rest/record/demo | 201 |Content-Type: application\/vnd\.cora\.record\+json | |
+| let | demoTsUpdate | js | response.body.match(/{"name":"tsUpdated","value":"([^"]*)"}/)[1] |  |
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeaders | Accept: application/vnd.cora.record+json!-
+-!Content-Type: application/vnd.cora.recordgroup+json!-
+-!authToken:$adminAuthToken  |
+| setBody | {"children":[{"children":[{"name":"id","value":"demoForFitnesse"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"demo"}],"name":"validationType"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"demo"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"name":"tsCreated","value":"2025-06-25T07:16:09.483816Z"},{"repeatId":"0","children":[{"name":"tsUpdated","value":"$demoTsUpdate"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"updatedBy"}],"name":"updated"}],"name":"recordInfo"},{"name":"bookTitle","value":"demoTitle"},{"name":"bookCover","repeatId":"0","children":[{"name":"linkedRecordType","value":"binary"},{"name":"linkedRecordId","value":"$binaryRecordId"}]},{"name":"keeptHis","value":"4"}],"name":"book"} |
+| POST | /rest/record/demo/demoForFitnesse | 200 |Content-Type: application\/vnd\.cora\.record\+json | |
+*!
+!***> Creates a FitnesseRecordType record with a link to the demo record
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | Accept: application/vnd.cora.record+xml!-
 -!Content-Type: application/vnd.cora.recordgroup+xml!-
@@ -57,12 +99,13 @@ To enable this option, set the '''Accept''' header in your request to one of the
 -!<fitnesseAnotherTextVar>omeAnother</fitnesseAnotherTextVar>!-
 -!<demo>!-
 -!<linkedRecordType>demo</linkedRecordType>!-
--!<linkedRecordId>asdf</linkedRecordId>!-
+-!<linkedRecordId>demoForFitnesse</linkedRecordId>!-
 -!</demo>!-
 -!<colour>blue</colour>!-
 -!</fitnesseExample> |
 | POST | /rest/record/fitnesseRecordType | 201 |Content-Type: application\/vnd\.cora\.record\+xml | |
 | let | recordId | js | response.body.match(/<id>(.*?)<\/id>/)[1] |  |
+*!
 *!
 
 !2 Read record decorated
@@ -70,6 +113,12 @@ We will read a trainingProgram.
 
  * '''Case 1:''' Reads record using decorated option, in XML
  * '''Case 2:''' Reads record using decorated option, in JSON
+
+The test setup creates a fitnesseRecord that links to a demo record which have a link to a binary with an uploaded image. 
+The tests validates
+ * fields now have attributes with its releated text in all the languages
+ * validates depth 2
+ * validates resourceLinks on level 2
 
 !***> Case 1
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
@@ -88,11 +137,11 @@ We will read a trainingProgram.
 | let | linkedRecordTitleSwedish | js | response.body.match(/<master _en="([^"]*)" _sv="([^"]*)"><linkedRecordType>([^"]*)<\/linkedRecordType><linkedRecordId>([^"]*)<\/linkedRecordId><mimeType>([^"]*)<\/mimeType><actionLinks><read><requestMethod>([^"]*)<\/requestMethod><rel>([^"]*)<\/rel><url>([^"]*)<\/url><accept>([^"]*)<\/accept><\/read><\/actionLinks><\/master>/)[1] | Resource link |
 | let | linkedRecordTitleSwedish | js | response.body.match(/<master _en="([^"]*)" _sv="([^"]*)"><linkedRecordType>([^"]*)<\/linkedRecordType><linkedRecordId>([^"]*)<\/linkedRecordId><mimeType>([^"]*)<\/mimeType><actionLinks><read><requestMethod>([^"]*)<\/requestMethod><rel>([^"]*)<\/rel><url>([^"]*)<\/url><accept>([^"]*)<\/accept><\/read><\/actionLinks><\/master>/)[2] | Resurslänk |
 | let | linkedRecordTitleSwedish | js | response.body.match(/<master _en="([^"]*)" _sv="([^"]*)"><linkedRecordType>([^"]*)<\/linkedRecordType><linkedRecordId>([^"]*)<\/linkedRecordId><mimeType>([^"]*)<\/mimeType><actionLinks><read><requestMethod>([^"]*)<\/requestMethod><rel>([^"]*)<\/rel><url>([^"]*)<\/url><accept>([^"]*)<\/accept><\/read><\/actionLinks><\/master>/)[3] | binary |
-| let | linkedRecordTitleSwedish | js | response.body.match(/<master _en="([^"]*)" _sv="([^"]*)"><linkedRecordType>([^"]*)<\/linkedRecordType><linkedRecordId>([^"]*)<\/linkedRecordId><mimeType>([^"]*)<\/mimeType><actionLinks><read><requestMethod>([^"]*)<\/requestMethod><rel>([^"]*)<\/rel><url>([^"]*)<\/url><accept>([^"]*)<\/accept><\/read><\/actionLinks><\/master>/)[4] | binary:29475728554942 |
+| let | linkedRecordTitleSwedish | js | response.body.match(/<master _en="([^"]*)" _sv="([^"]*)"><linkedRecordType>([^"]*)<\/linkedRecordType><linkedRecordId>([^"]*)<\/linkedRecordId><mimeType>([^"]*)<\/mimeType><actionLinks><read><requestMethod>([^"]*)<\/requestMethod><rel>([^"]*)<\/rel><url>([^"]*)<\/url><accept>([^"]*)<\/accept><\/read><\/actionLinks><\/master>/)[4] | $binaryRecordId |
 | let | linkedRecordTitleSwedish | js | response.body.match(/<master _en="([^"]*)" _sv="([^"]*)"><linkedRecordType>([^"]*)<\/linkedRecordType><linkedRecordId>([^"]*)<\/linkedRecordId><mimeType>([^"]*)<\/mimeType><actionLinks><read><requestMethod>([^"]*)<\/requestMethod><rel>([^"]*)<\/rel><url>([^"]*)<\/url><accept>([^"]*)<\/accept><\/read><\/actionLinks><\/master>/)[5] | image/jpeg |
 | let | linkedRecordTitleSwedish | js | response.body.match(/<master _en="([^"]*)" _sv="([^"]*)"><linkedRecordType>([^"]*)<\/linkedRecordType><linkedRecordId>([^"]*)<\/linkedRecordId><mimeType>([^"]*)<\/mimeType><actionLinks><read><requestMethod>([^"]*)<\/requestMethod><rel>([^"]*)<\/rel><url>([^"]*)<\/url><accept>([^"]*)<\/accept><\/read><\/actionLinks><\/master>/)[6] | GET |
 | let | linkedRecordTitleSwedish | js | response.body.match(/<master _en="([^"]*)" _sv="([^"]*)"><linkedRecordType>([^"]*)<\/linkedRecordType><linkedRecordId>([^"]*)<\/linkedRecordId><mimeType>([^"]*)<\/mimeType><actionLinks><read><requestMethod>([^"]*)<\/requestMethod><rel>([^"]*)<\/rel><url>([^"]*)<\/url><accept>([^"]*)<\/accept><\/read><\/actionLinks><\/master>/)[7] | read |
-| let | linkedRecordTitleSwedish | js | response.body.match(/<master _en="([^"]*)" _sv="([^"]*)"><linkedRecordType>([^"]*)<\/linkedRecordType><linkedRecordId>([^"]*)<\/linkedRecordId><mimeType>([^"]*)<\/mimeType><actionLinks><read><requestMethod>([^"]*)<\/requestMethod><rel>([^"]*)<\/rel><url>([^"]*)<\/url><accept>([^"]*)<\/accept><\/read><\/actionLinks><\/master>/)[8] | !-http://localhost:8080/systemone/rest/record/binary/binary:29475728554942/master-! |
+| let | linkedRecordTitleSwedish | js | response.body.match(/<master _en="([^"]*)" _sv="([^"]*)"><linkedRecordType>([^"]*)<\/linkedRecordType><linkedRecordId>([^"]*)<\/linkedRecordId><mimeType>([^"]*)<\/mimeType><actionLinks><read><requestMethod>([^"]*)<\/requestMethod><rel>([^"]*)<\/rel><url>([^"]*)<\/url><accept>([^"]*)<\/accept><\/read><\/actionLinks><\/master>/)[8] | !-http://localhost:8080/systemone/rest/record/binary/-!$binaryRecordId!-/master-! |
 | let | linkedRecordTitleSwedish | js | response.body.match(/<master _en="([^"]*)" _sv="([^"]*)"><linkedRecordType>([^"]*)<\/linkedRecordType><linkedRecordId>([^"]*)<\/linkedRecordId><mimeType>([^"]*)<\/mimeType><actionLinks><read><requestMethod>([^"]*)<\/requestMethod><rel>([^"]*)<\/rel><url>([^"]*)<\/url><accept>([^"]*)<\/accept><\/read><\/actionLinks><\/master>/)[9] | image/jpeg |
 *!
 
@@ -111,19 +160,21 @@ We will read a trainingProgram.
 | let | linkedRecordTitleSwedish | js | response.body.match(/{"name":"colour","attributes":{"_value_en":"([^"]*)","_sv":"([^"]*)","_value_sv":"([^"]*)","_en":"([^"]*)"},"value":"([^"]*)"}/)[4] | Text for:fitnesseCollectionVarText |
 | let | linkedRecordTitleSwedish | js | response.body.match(/{"name":"colour","attributes":{"_value_en":"([^"]*)","_sv":"([^"]*)","_value_sv":"([^"]*)","_en":"([^"]*)"},"value":"([^"]*)"}/)[5] | blue |
 | let | linkedRecordTitleSwedish | js | response.body.match(/{"children":\[{"name":"linkedRecordType","value":"([^"]*)"},{"name":"linkedRecordId","value":"([^"]*)"},{"name":"mimeType","value":"([^"]*)"}\],"actionLinks":{"read":{"requestMethod":"([^"]*)","rel":"([^"]*)","url":"([^"]*)","accept":"([^"]*)"}},"name":"master","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}}/)[1] | binary |
-| let | linkedRecordTitleSwedish | js | response.body.match(/{"children":\[{"name":"linkedRecordType","value":"([^"]*)"},{"name":"linkedRecordId","value":"([^"]*)"},{"name":"mimeType","value":"([^"]*)"}\],"actionLinks":{"read":{"requestMethod":"([^"]*)","rel":"([^"]*)","url":"([^"]*)","accept":"([^"]*)"}},"name":"master","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}}/)[2] | binary:29475728554942 |
+| let | linkedRecordTitleSwedish | js | response.body.match(/{"children":\[{"name":"linkedRecordType","value":"([^"]*)"},{"name":"linkedRecordId","value":"([^"]*)"},{"name":"mimeType","value":"([^"]*)"}\],"actionLinks":{"read":{"requestMethod":"([^"]*)","rel":"([^"]*)","url":"([^"]*)","accept":"([^"]*)"}},"name":"master","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}}/)[2] | $binaryRecordId |
 | let | linkedRecordTitleSwedish | js | response.body.match(/{"children":\[{"name":"linkedRecordType","value":"([^"]*)"},{"name":"linkedRecordId","value":"([^"]*)"},{"name":"mimeType","value":"([^"]*)"}\],"actionLinks":{"read":{"requestMethod":"([^"]*)","rel":"([^"]*)","url":"([^"]*)","accept":"([^"]*)"}},"name":"master","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}}/)[3] | image/jpeg |
 | let | linkedRecordTitleSwedish | js | response.body.match(/{"children":\[{"name":"linkedRecordType","value":"([^"]*)"},{"name":"linkedRecordId","value":"([^"]*)"},{"name":"mimeType","value":"([^"]*)"}\],"actionLinks":{"read":{"requestMethod":"([^"]*)","rel":"([^"]*)","url":"([^"]*)","accept":"([^"]*)"}},"name":"master","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}}/)[4] | GET |
 | let | linkedRecordTitleSwedish | js | response.body.match(/{"children":\[{"name":"linkedRecordType","value":"([^"]*)"},{"name":"linkedRecordId","value":"([^"]*)"},{"name":"mimeType","value":"([^"]*)"}\],"actionLinks":{"read":{"requestMethod":"([^"]*)","rel":"([^"]*)","url":"([^"]*)","accept":"([^"]*)"}},"name":"master","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}}/)[5] | read |
-| let | linkedRecordTitleSwedish | js | response.body.match(/{"children":\[{"name":"linkedRecordType","value":"([^"]*)"},{"name":"linkedRecordId","value":"([^"]*)"},{"name":"mimeType","value":"([^"]*)"}\],"actionLinks":{"read":{"requestMethod":"([^"]*)","rel":"([^"]*)","url":"([^"]*)","accept":"([^"]*)"}},"name":"master","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}}/)[6] | !-http://localhost:8080/systemone/rest/record/binary/binary:29475728554942/master-! |
+| let | linkedRecordTitleSwedish | js | response.body.match(/{"children":\[{"name":"linkedRecordType","value":"([^"]*)"},{"name":"linkedRecordId","value":"([^"]*)"},{"name":"mimeType","value":"([^"]*)"}\],"actionLinks":{"read":{"requestMethod":"([^"]*)","rel":"([^"]*)","url":"([^"]*)","accept":"([^"]*)"}},"name":"master","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}}/)[6] | !-http://localhost:8080/systemone/rest/record/binary/-!$binaryRecordId!-/master-! |
 | let | linkedRecordTitleSwedish | js | response.body.match(/{"children":\[{"name":"linkedRecordType","value":"([^"]*)"},{"name":"linkedRecordId","value":"([^"]*)"},{"name":"mimeType","value":"([^"]*)"}\],"actionLinks":{"read":{"requestMethod":"([^"]*)","rel":"([^"]*)","url":"([^"]*)","accept":"([^"]*)"}},"name":"master","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}}/)[7] | image/jpeg |
 | let | linkedRecordTitleSwedish | js | response.body.match(/{"children":\[{"name":"linkedRecordType","value":"([^"]*)"},{"name":"linkedRecordId","value":"([^"]*)"},{"name":"mimeType","value":"([^"]*)"}\],"actionLinks":{"read":{"requestMethod":"([^"]*)","rel":"([^"]*)","url":"([^"]*)","accept":"([^"]*)"}},"name":"master","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}}/)[8] | Resurslänk |
 | let | linkedRecordTitleSwedish | js | response.body.match(/{"children":\[{"name":"linkedRecordType","value":"([^"]*)"},{"name":"linkedRecordId","value":"([^"]*)"},{"name":"mimeType","value":"([^"]*)"}\],"actionLinks":{"read":{"requestMethod":"([^"]*)","rel":"([^"]*)","url":"([^"]*)","accept":"([^"]*)"}},"name":"master","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}}/)[9] | Resource link |
 *!
 
 !***> Clean up
-| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
-| setHeaders | authToken:$adminAuthToken |
-| DELETE | /rest/record/fitnesseRecordType/$recordId | 200 |  |  |
+!| RecordEndpointFixture |
+|authToken|type|id|testDeleteRecord?|getStatusType?|
+|$adminAuthToken|fitnesseRecordType|$recordId||OK|
+|$adminAuthToken|demo|demoForFitnesse||OK|
+|$adminAuthToken|binary|$binaryRecordId||OK|
 *!
 
