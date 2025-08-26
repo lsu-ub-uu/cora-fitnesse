@@ -26,8 +26,8 @@ Static
 *!
 !***> Assert permission units are added to the user
 !define fitnesseUser {121212}
-!define recordInfoPermissionUnit {!-\{"children":\[\{"name":"linkedRecordType","value":"permissionUnit"},\{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit"}],"actionLinks":\{"read":\{"requestMethod":"GET","rel":"read","url":"https?:\/\/[^\/]+(:\d+)?\/.*/rest/record/permissionUnit/fitnesseUserPermissionUnit","accept":"application/vnd\.cora\.record\+json"}},"name":"permissionUnit"}-!}
-!define permissionUnit {!-\{"repeatId":"123123","children":\[\{"name":"linkedRecordType","value":"permissionUnit"},\{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit"}],"actionLinks":\{"read":\{"requestMethod":"GET","rel":"read","url":"https?:\/\/[^\/]+(:\d+)?\/.*/rest/record/permissionUnit/fitnesseUserPermissionUnit","accept":"application/vnd\.cora\.record\+json"}},"name":"permissionUnit"}-!}
+!define recordInfoPermissionUnit {!-\{"children":\[\{"name":"linkedRecordType","value":"permissionUnit"},\{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit"}],"actionLinks":\{"read":\{"requestMethod":"GET","rel":"read","url":"https?:\/\/[^\/]+(:\d+)?(\/.*)?/rest/record/permissionUnit/fitnesseUserPermissionUnit","accept":"application/vnd\.cora\.record\+json"}},"name":"permissionUnit"}-!}
+!define permissionUnit {!-\{"repeatId":"123123","children":\[\{"name":"linkedRecordType","value":"permissionUnit"},\{"name":"linkedRecordId","value":"fitnesseUserPermissionUnit"}],"actionLinks":\{"read":\{"requestMethod":"GET","rel":"read","url":"https?:\/\/[^\/]+(:\d+)?(\/.*)?/rest/record/permissionUnit/fitnesseUserPermissionUnit","accept":"application/vnd\.cora\.record\+json"}},"name":"permissionUnit"}-!}
 !define expectedPermissionUnits {=~/(?=.*${recordInfoPermissionUnit})(?=.*${permissionUnit})/}
 
 !| RecordEndpointFixture |
