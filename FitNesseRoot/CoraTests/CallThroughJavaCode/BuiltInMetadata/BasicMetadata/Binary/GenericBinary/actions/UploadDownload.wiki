@@ -143,11 +143,11 @@ has read on unpublished, and download on each representation in turn master, thu
 !define permissionRulePartReadOnAllVisibilitiesRule {!-[{"name":"permissionRulePartValue","repeatId":"1","value":"system.binary"},{"name":"permissionRulePartValue","repeatId":"2","value":"system.binary.master"}]-!}
 !define updateData {${fitnesseBinaryReadOnAllVisibilitiesRuleMetaData}}
 !include -seamless .HelperPages.updateRecord
-!define regexpRepresentationMaster {!-"actionLinks":\{"read":\{"requestMethod":"GET","rel":"read","url":"http:.*-!$unpublishedRecordId!-\/master","accept":"image\/tiff"\}\}-!}
-!define regexpRepresentationThumbnail {!-"actionLinks":\{"read":\{"requestMethod":"GET","rel":"read","url":"http:.*-!$unpublishedRecordId!-\/thumbnail","accept":"image\/jpeg"\}\}-!}
-!define regexpRepresentationMedium {!-"actionLinks":\{"read":\{"requestMethod":"GET","rel":"read","url":"http:.*-!$unpublishedRecordId!-\/medium","accept":"image\/jpeg"\}\}-!}
-!define regexpRepresentationLarge {!-"actionLinks":\{"read":\{"requestMethod":"GET","rel":"read","url":"http:.*-!$unpublishedRecordId!-\/large","accept":"image\/jpeg"\}\}-!}
-!define regexpRepresentationJp2 {!-"actionLinks":\{"read":\{"requestMethod":"GET","rel":"read","url":"http:.*-!$unpublishedRecordId!-\/jp2","accept":"image\/jp2"\}\}-!}
+!define regexpRepresentationMaster {!-"actionLinks":\{"read":\{"requestMethod":"GET","rel":"read","url":"https?:.*-!$unpublishedRecordId!-\/master","accept":"image\/tiff"\}\}-!}
+!define regexpRepresentationThumbnail {!-"actionLinks":\{"read":\{"requestMethod":"GET","rel":"read","url":"https?:.*-!$unpublishedRecordId!-\/thumbnail","accept":"image\/jpeg"\}\}-!}
+!define regexpRepresentationMedium {!-"actionLinks":\{"read":\{"requestMethod":"GET","rel":"read","url":"https?:.*-!$unpublishedRecordId!-\/medium","accept":"image\/jpeg"\}\}-!}
+!define regexpRepresentationLarge {!-"actionLinks":\{"read":\{"requestMethod":"GET","rel":"read","url":"https?:.*-!$unpublishedRecordId!-\/large","accept":"image\/jpeg"\}\}-!}
+!define regexpRepresentationJp2 {!-"actionLinks":\{"read":\{"requestMethod":"GET","rel":"read","url":"https?:.*-!$unpublishedRecordId!-\/jp2","accept":"image\/jp2"\}\}-!}
 
 #Define several regexp in order to match the actionLinks related to the representations without permissions. Better solution would be using a Fixture.
 !define regexpAllRepresentationMissingButMaster {!-^(?!.*(-!$unpublishedRecordId!-\/thumbnail|-!$unpublishedRecordId!-\/medium|-!$unpublishedRecordId!-\/large|-!$unpublishedRecordId!-\/jp2).*).+$-!}
