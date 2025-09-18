@@ -28,11 +28,16 @@ Static
 *!
 
 Show that converted files are created
+#!| script | FileReader |
+#| ensure | file name | binary:$publishedRecordId-jp2 | exists in path | ${streamFileSystemPath}/streams/testSystem/ |
+#| ensure | file name | binary:$publishedRecordId-large | exists in path | ${streamFileSystemPath}/streams/testSystem/ |
+#| ensure | file name | binary:$publishedRecordId-medium | exists in path | ${streamFileSystemPath}/streams/testSystem/ |
+#| ensure | file name | binary:$publishedRecordId-thumbnail | exists in path | ${streamFileSystemPath}/streams/testSystem/ |
 !| script | FileReader |
-| ensure | file name | binary:$publishedRecordId-jp2 | exists in path | ${streamFileSystemPath}/streams/testSystem/ |
-| ensure | file name | binary:$publishedRecordId-large | exists in path | ${streamFileSystemPath}/streams/testSystem/ |
-| ensure | file name | binary:$publishedRecordId-medium | exists in path | ${streamFileSystemPath}/streams/testSystem/ |
-| ensure | file name | binary:$publishedRecordId-thumbnail | exists in path | ${streamFileSystemPath}/streams/testSystem/ |
+| ensure | file exists in path | binary:$publishedRecordId-jp2 |
+| ensure | file exists in path | binary:$publishedRecordId-large |
+| ensure | file exists in path | binary:$publishedRecordId-medium |
+| ensure | file exists in path | binary:$publishedRecordId-thumbnail |
 
 
 *!
