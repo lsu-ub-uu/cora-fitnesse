@@ -29,6 +29,15 @@ Suite
 !include -seamless .HelperPages.updateRecord
 *!
 
+!***> Update fitnesseSearch to point metadata in order to be able to delete it
+!define recordType {search}
+!define recordId {fitnesseSearch}
+!define expectedAnswer {}
+!define expectedUpdateResult {OK}
+!define updateData {!-{"name":"search","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"fitnesseSearch"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"search"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"search"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseSearchGroup"}]},{"name":"presentationId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnesseSearchPGroup"}]},{"name":"recordTypeToSearchIn","repeatId":"7","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadata"}]},{"name":"searchGroup","value":"publicSearch"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]}]}-!}
+!include -seamless .HelperPages.updateRecord
+*!
+
 !| RecordEndpointFixture |
 |authToken|type|id|testDeleteRecord?|getStatusType?|
 |$adminAuthToken|validationType|fitnesseValidationType||OK|
@@ -61,18 +70,24 @@ Suite
 |$adminAuthToken|presentation|fitnesseOutputPCollVar||OK|
 |$adminAuthToken|presentation|fitnesseBinaryPLink||OK|
 |$adminAuthToken|presentation|fitnesseBinaryOutputPLink||OK|
-|$adminAuthToken|presentation|fitnesseSearchPGroup||OK|
 |$adminAuthToken|presentation|fitnesseRecordInfoNewPGroup||OK|
 |$adminAuthToken|presentation|fitnesseRecordInfoNewOutputPGroup||OK|
 |$adminAuthToken|presentation|fitnesseRecordInfoPGroup||OK|
 |$adminAuthToken|presentation|fitnesseRecordInfoOutputPGroup||OK|
+|$adminAuthToken|search|fitnesseSearch||OK|
+|$adminAuthToken|presentation|fitnesseSearchPGroup||OK|
 |$adminAuthToken|presentation|fitnesseSearchOutputPGroup||OK|
 |$adminAuthToken|metadata|fitnesseSearchGroup||OK|
 |$adminAuthToken|metadata|fitnesseSearchIncludeGroup||OK|
 |$adminAuthToken|metadata|fitnesseSearchIncludePartGroup||OK|
+|$adminAuthToken|searchTerm|fitnesseSearchTerm||OK|
+|$adminAuthToken|presentation|fitnesseSearchOutputPVar||OK|
+|$adminAuthToken|presentation|fitnesseSearchPVar||OK|
+|$adminAuthToken|metadata|fitnesseSearchTextVar||OK|
 |$adminAuthToken|metadata|fitnesseGroup||OK|
 |$adminAuthToken|metadata|fitnesseRecordInfoGroup||OK|
 |$adminAuthToken|metadata|fitnesseNewGroup||OK|
+|$adminAuthToken|collectTerm|fitnesseCollectIndexTerm||OK|
 |$adminAuthToken|metadata|fitnesseRecordInfoNewGroup||OK|
 |$adminAuthToken|metadata|fitnesseMetadataTextVar||OK|
 |$adminAuthToken|metadata|fitnesseAnotherMetadataTextVar||OK|
