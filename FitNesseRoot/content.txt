@@ -4,3 +4,4 @@
 # TODO: Move archiveFileSystemPath more near to Archive Tests
 !define archiveFileSystemPath {/tmp/sharedArchiveReadable/systemOne}
 !define streamFileSystemPath {/tmp/sharedFileStorage/systemOne}
+!include -c .HelperPages.Data.GlobalFitnesseVariables
