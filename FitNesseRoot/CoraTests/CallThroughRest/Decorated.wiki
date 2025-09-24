@@ -4,20 +4,20 @@ Test
 !1 Decorated
 The '''Decorated''' option is available when reading or searching a record using the Cora REST API. This option enriches the response with metadata and linked content to help clients interpret the record more easily.
 
-When using this option:
+When this option is used:
  * The response includes '''definitions''' for each field in the record.
- * Linked records* (up to a depth of 2) within the data part are included.
+ * Linked records (up to a depth of 2) within the data section are included.
  * All definitions and enriched metadata are added as attributes, using a naming convention where attribute names start with an underscore (_).
 
 !2 Examples
- * For field definitions: ''' "_sv" ''': "Datadelare"
- * For collection variables, the parent element includes the display value as attributes: ''' "_value_en" ''': "Blue"
+ * For field definitions: '''"_sv"''': "Datadelare"
+ * For collection variables, the parent element includes the display value as an attribute: '''"_value_en"''': "Blue"
 
 !2 Usage
 To enable this option, set the '''Accept''' header in your request to one of the following media types:
 
-''application/vnd.cora.record'''-decorated'''+xml''
-''application/vnd.cora.record'''-decorated'''+json''
+ * application/vnd.cora.record'''-decorated'''+xml
+ * application/vnd.cora.record'''-decorated'''+json
 
 !2 Deviations
  * Linked records in '''recordInfo''' are '''not''' included.
@@ -114,11 +114,11 @@ We will read a fitnesseRecord.
  * '''Case 1:''' Reads record using decorated option, in XML
  * '''Case 2:''' Reads record using decorated option, in JSON
 
-The test setup creates a fitnesseRecord that links to a demo record which have a link to a binary with an uploaded image. 
-The tests validates
- * fields now have attributes with its releated text in all the languages
- * validates depth 2
- * validates resourceLinks on level 2
+The test setup creates a fitnesseRecord that links to a demo record which has a link to a binary record with an uploaded image.
+The tests validate:
+ * Fields now have attributes with their related text in all languages.
+ * Validates inclusion of linked records up to depth 2.
+ * Validates resource links at level 2.
 
 !***> Case 1
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
@@ -171,17 +171,17 @@ The tests validates
 *!
 
 !2 Search record decorated
-We will search for the fitnesseRecord created on the setup.
+We will search for the fitnesseRecord created in the setup.
 
  * '''Case 1:''' Searches record using decorated option, in XML
  * '''Case 2:''' Searches record using decorated option, in JSON
 
-The test setup creates a fitnesseRecord that links to a demo record which have a link to a binary with an uploaded image. 
-The tests validates
- * search has the possiblity to show records using decorated
- * fields now have attributes with its releated text in all the languages
- * validates depth 2
- * validates resourceLinks on level 2
+The test setup creates a fitnesseRecord that links to a demo record which has a link to a binary record with an uploaded image.
+The tests validate:
+ * Search has the possibility to show records using the decorated option.
+ * Fields now have attributes with their related text in all languages.
+ * Validates inclusion of linked records up to depth 2.
+ * Validates resource links at level 2.
 
 !***> Case 1
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
