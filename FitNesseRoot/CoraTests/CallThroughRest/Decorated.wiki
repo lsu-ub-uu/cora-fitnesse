@@ -171,13 +171,14 @@ The tests validates
 *!
 
 !2 Search record decorated
-We will search for fitnesseRecords.
+We will search for the fitnesseRecord created on the setup.
 
- * '''Case 1:''' Reads record using decorated option, in XML
- * '''Case 2:''' Reads record using decorated option, in JSON
+ * '''Case 1:''' Searches record using decorated option, in XML
+ * '''Case 2:''' Searches record using decorated option, in JSON
 
 The test setup creates a fitnesseRecord that links to a demo record which have a link to a binary with an uploaded image. 
 The tests validates
+ * search has the possiblity to show records using decorated
  * fields now have attributes with its releated text in all the languages
  * validates depth 2
  * validates resourceLinks on level 2
@@ -186,7 +187,7 @@ The tests validates
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
 -!Accept: application/vnd.cora.recordList-decorated+xml |
-| GET | rest/record/searchResult/fitnesseSearch?searchData=%7B%22name%22%3A%22fitnesseSearch%22%2C%22children%22%3A%5B%7B%22name%22%3A%22include%22%2C%22children%22%3A%5B%7B%22name%22%3A%22includePart%22%2C%22children%22%3A%5B%7B%22name%22%3A%22fitnesseSearchTerm%22%2C%22value%22%3A%22**%22%7D%5D%7D%5D%7D%5D%7D | 200 | Content-Type: application\/vnd\.cora\.recordList-decorated\+xml |  |
+| GET | /rest/record/searchResult/fitnesseSearch?searchData=%7B%22name%22%3A%22fitnesseSearch%22%2C%22children%22%3A%5B%7B%22name%22%3A%22include%22%2C%22children%22%3A%5B%7B%22name%22%3A%22includePart%22%2C%22children%22%3A%5B%7B%22name%22%3A%22fitnesseSearchTerm%22%2C%22value%22%3A%22**%22%7D%5D%7D%5D%7D%5D%7D | 200 | Content-Type: application\/vnd\.cora\.recordList-decorated\+xml |  |
 | let | linkedRecordTitleEnglish | js | response.body.match(/fitnesseTextVar _en="([^"]*)" _sv="([^"]*)"/)[1] | a text |
 | let | linkedRecordTitleSwedish | js | response.body.match(/fitnesseTextVar _en="([^"]*)" _sv="([^"]*)"/)[2] | en text |
 | let | linkedRecordTitleEnglish | js | response.body.match(/bookTitle _en="([^"]*)" _sv="([^"]*)"/)[1] | Title for the book |
@@ -210,8 +211,8 @@ The tests validates
 !***> Case 2
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
--!Accept: application/vnd.cora.record-decorated+json |
-| GET | /rest/record/fitnesseRecordType/$recordId | 200 | Content-Type: application\/vnd\.cora\.record-decorated\+json | |
+-!Accept: application/vnd.cora.recordList-decorated+json |
+| GET | /rest/record/searchResult/fitnesseSearch?searchData=%7B%22name%22%3A%22fitnesseSearch%22%2C%22children%22%3A%5B%7B%22name%22%3A%22include%22%2C%22children%22%3A%5B%7B%22name%22%3A%22includePart%22%2C%22children%22%3A%5B%7B%22name%22%3A%22fitnesseSearchTerm%22%2C%22value%22%3A%22**%22%7D%5D%7D%5D%7D%5D%7D | 200 | Content-Type: application\/vnd\.cora\.recordList-decorated\+json |  |
 | let | linkedRecordTitleSwedish | js | response.body.match(/"fitnesseTextVar","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}/)[1] | en text |
 | let | linkedRecordTitleEnglish | js | response.body.match(/"fitnesseTextVar","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}/)[2] | a text |
 | let | linkedRecordTitleSwedish | js | response.body.match(/"bookTitle","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}/)[1] | Boktitel |
@@ -232,6 +233,8 @@ The tests validates
 | let | linkedRecordTitleSwedish | js | response.body.match(/{"children":\[{"name":"linkedRecordType","value":"([^"]*)"},{"name":"linkedRecordId","value":"([^"]*)"},{"name":"mimeType","value":"([^"]*)"}\],"actionLinks":{"read":{"requestMethod":"([^"]*)","rel":"([^"]*)","url":"[^"]*\/rest\/record\/([^"]*)","accept":"([^"]*)"}},"name":"master","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}}/)[9] | Resource link |
 *!
 
+-----
+
 !***> Clean up
 !| RecordEndpointFixture |
 |authToken|type|id|testDeleteRecord?|getStatusType?|
@@ -239,4 +242,3 @@ The tests validates
 |$adminAuthToken|demo|demoForFitnesse||OK|
 |$adminAuthToken|binary|$binaryRecordId||OK|
 *!
-
