@@ -10,6 +10,7 @@ Use cases for the '''Incremental ID Generator''' record type:
  * '''Case 3:''' It must be possible to view the current value of the generator.  
 
 Use cases when a record type uses the *Incremental ID Generator*:
- * '''Case 4:''' The generated ID must be unique.  
- * '''Case 5:''' The generated ID must increment by one for each new record.  
+ * '''Case 4:''' It must be possible to link in an incremental Id Generator.
+ * '''Case 5:''' The generated ID must be unique.  
+ * '''Case 6:''' The generated ID must increment by one for each new record.  
  
