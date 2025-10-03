@@ -21,7 +21,7 @@ As a validationType instance:
 Metadata groups:
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadata | recordTypeGroup | =~/"name":"linkedRecordId","value":"recordInfoGroup".*"name":"linkedRecordId","value":"metadataIdLink".*"name":"linkedRecordId","value":"uniqueGroup".*"name":"linkedRecordId","value":"presentationViewIdLink".*"name":"linkedRecordId","value":"menuPresentationViewIdLink".*"name":"linkedRecordId","value":"listPresentationViewIdLink".*"name":"linkedRecordId","value":"userSuppliedIdCollectionVar".*"name":"linkedRecordId","value":"recordTypeSearchLink".*"name":"linkedRecordId","value":"autocompletePresentationViewLink".*"value":"groupOfRecordTypeCollectionVar".*"value":"recordTypeFilterMetadataLink".*"value":"recordTypeFilterPresentationLink"/ | OK |
-| $adminAuthToken | metadata | recordTypeNewGroup | =~/"name":"linkedRecordId","value":"recordInfoNewGroup".*"name":"linkedRecordId","value":"metadataIdLink".*"name":"linkedRecordId","value":"uniqueGroup".*"name":"linkedRecordId","value":"presentationViewIdLink".*"name":"linkedRecordId","value":"menuPresentationViewIdLink".*"name":"linkedRecordId","value":"listPresentationViewIdLink".*"name":"linkedRecordId","value":"userSuppliedIdCollectionVar".*"name":"linkedRecordId","value":"recordTypeSearchLink".*"name":"linkedRecordId","value":"autocompletePresentationViewLink".*"value":"groupOfRecordTypeCollectionVar".*"value":"recordTypeFilterMetadataLink".*"value":"recordTypeFilterPresentationLink"/ | OK |
+| $adminAuthToken | metadata | recordTypeGroup | | OK |
+| $adminAuthToken | metadata | recordTypeNewGroup | | OK |
 
 *!

@@ -3,6 +3,34 @@ Static
 ---
 !3 Definition for Record type
 !***> Setup record type definition
+!define recordTypeNewGroupDefinition {!-recordType (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		validationType (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+	metadataId (recordLink, 0-1, noConstraint)
+	unique (group, 0-X, noConstraint)
+		uniqueTerm (recordLink, 1-1, noConstraint)
+		combineTerm (recordLink, 0-X, noConstraint)
+	presentationViewId (recordLink, 0-1, noConstraint)
+	menuPresentationViewId (recordLink, 0-1, noConstraint)
+	listPresentationViewId (recordLink, 0-1, noConstraint)
+	textId (recordLink, 0-1, noConstraint)
+	defTextId (recordLink, 0-1, noConstraint)
+	search (recordLink, 0-1, noConstraint)
+	userSuppliedId (collectionVariable, 1-1, noConstraint)
+	idSource (collectionVariable, 0-1, noConstraint)
+	sequence (recordLink, 0-1, noConstraint)
+	autocompletePresentationView (recordLink, 0-1, noConstraint)
+	groupOfRecordType (collectionVariable, 1-X, noConstraint)
+	filter (recordLink, 0-1, noConstraint)
+	filterPresentation (recordLink, 0-1, noConstraint)
+	public (collectionVariable, 1-1, noConstraint)
+	recordTypeCategory (collectionVariable, 0-1, noConstraint)
+	indexSettings (recordLink, 0-1, noConstraint)
+	storeInArchive (collectionVariable, 1-1, noConstraint)
+	usePermissionUnit (collectionVariable, 1-1, noConstraint)
+	useVisibility (collectionVariable, 1-1, noConstraint)-!}
 !define recordTypeGroupDefinition {!-recordType (group)
 	recordInfo (group, 1-1, noConstraint)
 		id (textVariable, 1-1, noConstraint, I)
@@ -25,9 +53,9 @@ Static
 	textId (recordLink, 1-1, noConstraint)
 	defTextId (recordLink, 1-1, noConstraint)
 	search (recordLink, 0-1, noConstraint)
-	userSuppliedId(collectionVariable, 1-1, noConstraint)
-	idSource(collectionVariable, 0-1, noConstraint)
-	sequence(recordLink, 0-1, noConstraint)
+	userSuppliedId (collectionVariable, 1-1, noConstraint)
+	idSource (collectionVariable, 0-1, noConstraint)
+	sequence (recordLink, 0-1, noConstraint)
 	autocompletePresentationView (recordLink, 0-1, noConstraint)
 	groupOfRecordType (collectionVariable, 1-X, noConstraint)
 	filter (recordLink, 0-1, noConstraint)
@@ -56,6 +84,7 @@ ${recordTypeGroupDefinition}
 !***> Validate the definition of record info group
 !| DefinitionCompareFixture |
 | authToken | recordId | getDefinitionView? |
+| $adminAuthToken | recordTypeNewGroup | ${recordTypeNewGroupDefinition} |
 | $adminAuthToken | recordTypeGroup | ${recordTypeGroupDefinition} |
 *!
 *!
