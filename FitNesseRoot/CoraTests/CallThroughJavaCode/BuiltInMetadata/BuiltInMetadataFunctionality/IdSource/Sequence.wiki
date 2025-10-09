@@ -1,0 +1,68 @@
+---
+Test
+---
+!2 Sequence ID
+
+Use cases for the '''Incremental ID Generator''' record type:
+ * '''Case 1:''' It must be possible to create a sequence.  
+ * '''Case 1.1:''' It must be only possible to set a start value equal or grater than 0.
+ * '''Case 1.2:''' It must be possible to update the current value to another value.
+ * '''Case 2:''' It must be possible to read the current value of a sequence.  
+ * '''Case 3:''' It must be possible to remove a sequence.  
+
+Use cases when a record type uses a *sequence*:
+ * '''Case 4:''' Record type must be possible to link to a sequence.
+ * '''Case 4.1:''' If sequence chosen then a sequence link must exists in the record type
+ * '''Case 4.2:''' A sequence must be only used by one recordType (Not implemented, we should be able to use Unique function) 
+ * '''Case 5:''' The generated ID must be unique.  
+ * '''Case 6:''' The generated ID must increment by one for each new record.  
+ 
+!define currentAuthToken {$adminAuthToken}
+ 
+!***> Case 1  
+We create a sequence with currentNumber = 0
+!define recordType {sequence}
+!define expectedAnswer {}
+!define expectedCreateResult {CREATED}
+!define createData {!-{"name":"sequence","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesse001Sequence"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"sequence"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"currentNumber","value":"0"}]}-!}
+
+!include -seamless .HelperPages.createRecord
+*!
+
+!***> Case 1.1 
+We create a sequence with currentNumber = -1. We expecte id to ends with Sequence, another id is given. It should not be possible
+!define recordType {sequence}
+!define expectedAnswer {Error creating new record for recordType: sequence. Data is not valid: [TextVariable with nameInData:id is NOT valid, regular expression(.+Sequence) does not match:sequence002, NumberVariable with nameInData: currentNumber is NOT valid, value -1 is outside range of 0 - 99,999,999,999,999]}
+!define expectedCreateResult {BAD_REQUEST}
+!define createData {!-{"name":"sequence","children":[{"name":"recordInfo","children":[{"name":"id","value":"sequence002"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"sequence"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"currentNumber","value":"-1"}]}-!}
+
+!include -seamless .HelperPages.createRecord
+*!
+!***> Case 1.2 
+We update a sequence with currentNumber = 0 to 500.
+!define recordType {sequence}
+!define recordId {fitnesse001Sequence}
+!define expectedAnswer {}
+!define expectedUpdateResult {OK}
+!define updateData {!-{"name":"sequence","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"someSequence"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"sequence"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"sequence"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"currentNumber","value":"500"}]}-!}
+
+!include -seamless .HelperPages.updateRecord
+*!
+!***> Case 2 
+ We read a sequence.
+!define recordType {sequence}
+!define recordId {fitnesse001Sequence}
+
+!include -seamless .HelperPages.readRecord
+*!
+!***> Case 3 
+We remove a sequence.
+!define recordType {sequence}
+!define recordId {fitnesse001Sequence}
+
+!include -seamless .HelperPages.deleteRecord
+*!
+
+----
+!***> Clean up
+*!

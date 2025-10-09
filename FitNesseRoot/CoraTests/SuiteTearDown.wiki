@@ -48,6 +48,7 @@ Suite
 |$adminAuthToken|search|fitnesseRecordTypeSearch||OK|
 |$adminAuthToken|recordType|trainingClassLeaflet||OK|
 |$adminAuthToken|recordType|fitnesseRecordType||OK|
+|$adminAuthToken|sequence|fitnesseSequence||OK|
 |$adminAuthToken|metadata|circuitTrainingLeafletGroup||OK|
 |$adminAuthToken|metadata|circuitTrainingLeafletNewGroup||OK|
 |$adminAuthToken|metadata|bigCircuitTrainingLeafletGroup||OK|

@@ -1,7 +1,7 @@
 ---
 Test
 ---
-!2  Timestamp id generator
+!2  Timestamp id source
 If the recordType definition states that id of a created record is not supplied by the user, the id should be generated. If a user provides an id, it should be ignored.
 
 !***> Setup test

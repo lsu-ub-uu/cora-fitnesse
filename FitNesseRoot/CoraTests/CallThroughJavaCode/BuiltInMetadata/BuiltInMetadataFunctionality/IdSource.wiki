@@ -1,0 +1,17 @@
+---
+Test
+---
+!1 Id Source
+The Cora system supports three different types of Id Sources.  
+Each generator ensures that records can be uniquely identified, but they differ in how the ID is created.
+
+!2 Types of Id Sources
+ * '''User-supplied''' The ID is explicitly provided by the user when creating a record. This works like a normal data field and gives the user full control.
+ * '''Timestamp''' The ID is automatically generated using a timestamp function. This ensures uniqueness without requiring user input.
+ * '''Sequence''' The ID is generated sequentially, starting from a given number. Each new record increments the ID value by one.
+
+!2 Tests
+The following tests demonstrate the behavior of the built-in Id Sources:
+
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.IdSource.Timestamp
+!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.IdSource.Sequence
