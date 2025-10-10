@@ -14,8 +14,7 @@ Use cases when a record type uses a *sequence*:
  * '''Case 4:''' Record type must be possible to link to a sequence.
  * '''Case 4.1:''' If sequence chosen then a sequence link must exists in the record type
  * '''Case 4.2:''' A sequence must be only used by one recordType (Not implemented, we should be able to use Unique function) 
- * '''Case 5:''' The generated ID must be unique.  
- * '''Case 6:''' The generated ID must increment by one for each new record.  
+ * '''Case 5:''' The generated ID must be unique, and must increment by one for each new record.  
  
 !define currentAuthToken {$adminAuthToken}
  
@@ -62,7 +61,78 @@ We remove a sequence.
 
 !include -seamless .HelperPages.deleteRecord
 *!
+!***> Case 4  
+We set the recordtyp to use sequence and we link it to a sequence
+!***> Create sequence
+We create a sequence with currentNumber = 0
+!define recordType {sequence}
+!define expectedAnswer {}
+!define expectedCreateResult {CREATED}
+!define createData {!-{"name":"sequence","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesse001Sequence"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"sequence"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"currentNumber","value":"0"}]}-!}
+
+!include -seamless .HelperPages.createRecord
+*!
+!***> Creation of a standard fitnesse recordType
+!define recordType {recordType}
+!define expectedCreateResult {CREATED}
+!define createData {!-{"children":[{"children":[{"name":"id","value":"fitnesseWithSequenceRecordType"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseGroup"}],"name":"metadataId"},{"name":"search","children":[{"name":"linkedRecordType","value":"search"},{"name":"linkedRecordId","value":"fitnesseSearch"}]},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"presentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"menuPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"listPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"autocompletePresentationView"},{"name":"public","value":"true"},{"name":"userSuppliedId","value":"false"},{"name":"idSource","value":"sequence"},{"name":"storeInArchive","value":"true"},{"repeatId":"0","name":"groupOfRecordType","value":"metadata"},{"name":"usePermissionUnit","value":"false"},{"name":"useVisibility","value":"false"},{"name":"sequence","children":[{"name":"linkedRecordType","value":"sequence"},{"name":"linkedRecordId","value":"fitnesse001Sequence"}]}],"name":"recordType"}-!}
+
+!include -seamless .HelperPages.createRecord
+*!
+*!
+!***> Case 4.1  
+We chose sequence but no sequence link is set. It must not work.
+!***> Create sequence
+We create a sequence with currentNumber = 0
+!define recordType {sequence}
+!define expectedAnswer {}
+!define expectedCreateResult {CREATED}
+!define createData {!-{"name":"sequence","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesse002Sequence"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"sequence"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"currentNumber","value":"0"}]}-!}
+
+!include -seamless .HelperPages.createRecord
+*!
+!***> Creation of a standard fitnesse recordType
+!define recordType {recordType}
+!define expectedCreateResult {INTERNAL_SERVER_ERROR}
+!define createData {!-{"children":[{"children":[{"name":"id","value":"fitnesseWithNoSequenceRecordType"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseGroup"}],"name":"metadataId"},{"name":"search","children":[{"name":"linkedRecordType","value":"search"},{"name":"linkedRecordId","value":"fitnesseSearch"}]},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"presentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"menuPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"listPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"autocompletePresentationView"},{"name":"public","value":"true"},{"name":"userSuppliedId","value":"false"},{"name":"idSource","value":"sequence"},{"name":"storeInArchive","value":"true"},{"repeatId":"0","name":"groupOfRecordType","value":"metadata"},{"name":"usePermissionUnit","value":"false"},{"name":"useVisibility","value":"false"}],"name":"recordType"}-!}
+
+!include -seamless .HelperPages.createRecord
+*!
+*!
+
+!***> Case 5  
+!***> Creation of a standard fitnesse validationType
+!define recordType {validationType}
+!define expectedCreateResult {CREATED}
+!define createData {!-{"name":"validationType","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseWithSequenceValidationType"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"validationType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"newMetadataId","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseNewGroup"}]},{"name":"newPresentationFormId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseGroup"}]},{"name":"presentationFormId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}]},{"name":"validatesRecordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseWithSequenceRecordType"}]}]}-!}
+
+!include -seamless .HelperPages.createRecord
+*!
+!***> Creation of record 1
+!define recordType {fitnesseWithSequenceRecordType}
+!define expectedCreateResult {CREATED}
+!define createData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseWithSequenceValidationType"}]}]},{"name":"fitnesseTextVar","value":"someValue1"}]}-!}
+
+!include -seamless .HelperPages.createRecord
+*!
+!***> Creation of record 2
+!define recordType {fitnesseWithSequenceRecordType}
+!define expectedCreateResult {CREATED}
+!define createData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseWithSequenceValidationType"}]}]},{"name":"fitnesseTextVar","value":"someValue2"}]}-!}
+
+!include -seamless .HelperPages.createRecord
+*!
+*!
 
 ----
 !***> Clean up
+!| RecordEndpointFixture |
+|authToken|type|id|testDeleteRecord?|getStatusType?|
+|$adminAuthToken|fitnesseWithSequenceRecordType|1||OK|
+|$adminAuthToken|fitnesseWithSequenceRecordType|2||OK|
+|$adminAuthToken|validationType|fitnesseWithSequenceValidationType||OK|
+|$adminAuthToken|search|fitnesseWithSequenceRecordTypeSearch||OK|
+|$adminAuthToken|recordType|fitnesseWithSequenceRecordType||OK|
+|$adminAuthToken|sequence|fitnesse001Sequence||OK|
+|$adminAuthToken|sequence|fitnesse002Sequence||OK|
 *!
