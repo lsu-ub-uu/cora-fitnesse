@@ -1,8 +1,35 @@
-!1 Acceptance tests and documentation for Cora
+!1 Cora FitNesse Repository Overview
+
+This repository hosts the FitNesse test suite and documentation for the :contentReference[oaicite:0]{index=0} system.  
+It is designed to provide executable acceptance tests, system behavior documentation, and test organization for the Cora platform and its use in services like :contentReference[oaicite:1]{index=1}. :contentReference[oaicite:2]{index=2}
+
+!2 Repository Structure
+
+* **Root directory**  
+  Contains project configuration files, top-level test suites, and README documentation.
+
+* **Test Suites**  
+  Acceptance tests organized by functional areas such as:
+  * Location management (create, read, update, delete)
+  * Metadata handling and record types
+  * Login and authentication (IDP)
+  * REST API interactions
+
+* **Fixtures**  
+  Java fixture classes linking tests to the Cora system under test. These classes perform the actions and check the outcomes.
+
+* **Test Utilities**  
+  Helpers and utility fixtures supporting common test tasks across suites.
+
+!2 Purpose of the Repository
+
+The repository serves as both:
+* **Test Execution Platform** – Enable direct execution of acceptance tests via FitNesse.
+* **Living Documentation** – Provide a readable specification of system behavior accessible to both developers and stakeholders.
+* **Quality Assurance** – Ensure consistency between system implementation and expected functionality.
+
 
 CoraTests
-
-JsClient
 
 DocumentationPage
 
