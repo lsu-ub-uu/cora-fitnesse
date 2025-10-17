@@ -3,7 +3,6 @@
 | authToken|type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | fitnesseRecordTypeWithVisibility | $commonUnpublishedRecordId |||
 | $adminAuthToken | fitnesseRecordTypeWithVisibility | $commonPublishedRecordId |||
-| $adminAuthToken | fitnesseRecordTypeWithVisibility | $commonHiddenRecordId |||
 | $adminAuthToken | validationType | fitnesseValidationTypeForRecordTypeWithVisibility || OK |
 | $adminAuthToken | searchTerm | fitnesseRecordIdSearchTerm || OK |
 | $adminAuthToken | collectTerm | fitnesseRecordIdCollectIndexTerm || OK |

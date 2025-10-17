@@ -29,7 +29,8 @@ Static
 	indexSettings (recordLink, 0-1, noConstraint)
 	storeInArchive (collectionVariable, 1-1, noConstraint)
 	usePermissionUnit (collectionVariable, 1-1, noConstraint)
-	useVisibility (collectionVariable, 1-1, noConstraint)-!}
+	useVisibility (collectionVariable, 1-1, noConstraint)
+	useTrashBin (collectionVariable, 1-1, noConstraint)-!}
 !define recordTypeGroupDefinition {!-recordType (group)
 	recordInfo (group, 1-1, noConstraint)
 		id (textVariable, 1-1, noConstraint, I)
@@ -63,7 +64,8 @@ Static
 	indexSettings (recordLink, 0-1, noConstraint)
 	storeInArchive (collectionVariable, 1-1, noConstraint)
 	usePermissionUnit (collectionVariable, 1-1, noConstraint)
-	useVisibility (collectionVariable, 1-1, noConstraint)-!}
+	useVisibility (collectionVariable, 1-1, noConstraint)
+	useTrashBin (collectionVariable, 1-1, noConstraint)-!}
 *!
 {{{
 ${recordTypeGroupDefinition}

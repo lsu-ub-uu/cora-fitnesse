@@ -6,7 +6,6 @@ Remove binary records
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | binary | $unpublishedRecordId | | OK |
 | $adminAuthToken | binary | $publishedRecordId | | OK |
-| $adminAuthToken | binary | $hiddenRecordId | | OK |
 
 Reset headers for smartrics fixture
 | Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |

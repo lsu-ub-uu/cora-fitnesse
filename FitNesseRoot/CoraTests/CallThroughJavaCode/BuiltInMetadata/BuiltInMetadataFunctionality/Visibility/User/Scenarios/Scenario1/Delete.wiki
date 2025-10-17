@@ -11,14 +11,12 @@ Static
 !define recordType {fitnesseRecordTypeWithVisibility}
 !define unpublishedRecordData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"unpublished"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
 !define publishedRecordData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
-!define hiddenRecordData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"hidden"}]},{"name":"fitnesseTextVar","value":"en text"}]}-!}
 *!
 
 !***> '''Case 1''' User1 should be able to delete records with any visibility
 !define currentAuthToken {$adminAuthToken}
 !define expectedUnpublishedDelete {OK}
 !define expectedPublishedDelete {OK}
-!define expectedHiddenDelete {OK}
 
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.ActionHelpers.DeleteRecord
 
@@ -27,7 +25,6 @@ Static
 !define currentAuthToken {$userAuthToken}
 !define expectedUnpublishedDelete {OK}
 !define expectedPublishedDelete {OK}
-!define expectedHiddenDelete {FORBIDDEN}
 
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.ActionHelpers.DeleteRecord
 
@@ -36,7 +33,6 @@ Static
 !define currentAuthToken {$guestAuthToken}
 !define expectedUnpublishedDelete {FORBIDDEN}
 !define expectedPublishedDelete {FORBIDDEN}
-!define expectedHiddenDelete {FORBIDDEN}
 
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.Visibility.User.ActionHelpers.DeleteRecord
 

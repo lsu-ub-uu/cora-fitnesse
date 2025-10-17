@@ -2,4 +2,3 @@
 | authToken | type | id | testReadAndStoreRecord? | getStatusType? |
 | ${currentAuthToken} | ${recordType} | $commonUnpublishedRecordId | $unpublishedResponseBody= | ${expectedUnpublishedStatus} |
 | ${currentAuthToken} | ${recordType} | $commonPublishedRecordId | $publishedResponseBody= | ${expectedPublishedStatus} |
-| ${currentAuthToken} | ${recordType} | $commonHiddenRecordId | $hiddenResponseBody= | ${expectedHiddenStatus} |

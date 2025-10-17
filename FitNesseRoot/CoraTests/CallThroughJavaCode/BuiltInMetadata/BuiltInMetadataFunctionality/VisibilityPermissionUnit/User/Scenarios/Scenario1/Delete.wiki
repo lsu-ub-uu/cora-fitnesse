@@ -10,18 +10,15 @@ Static
 !***> Create records for tests data
 # unpublished (permissionUnit1)
 # published (permissionUnit2)
-# hidden (permissionUnit1)
 !define recordType {fitnesseRecordTypeWithVisibility}
 !define unpublishedRecordData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnessePermissionUnit1"}]}]},{"name":"fitnesseTextVar","value":"entext"}]}-!}
 !define publishedRecordData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"unpublished"},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnessePermissionUnit2"}]}]},{"name":"fitnesseTextVar","value":"entext"}]}-!}
-!define hiddenRecordData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"hidden"},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"fitnessePermissionUnit1"}]}]},{"name":"fitnesseTextVar","value":"entext"}]}-!}
 *!
 
 !***> '''Case 1''' User1 should be able to delete records with any visibility
 !define currentAuthToken {$adminAuthToken}
 !define expectedUnpublishedDelete {OK}
 !define expectedPublishedDelete {OK}
-!define expectedHiddenDelete {OK}
 
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.ActionHelpers.DeleteRecord
 
@@ -30,7 +27,6 @@ Static
 !define currentAuthToken {$userAuthToken}
 !define expectedUnpublishedDelete {FORBIDDEN}
 !define expectedPublishedDelete {OK}
-!define expectedHiddenDelete {FORBIDDEN}
 
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.ActionHelpers.DeleteRecord
 
@@ -39,7 +35,6 @@ Static
 !define currentAuthToken {$guestAuthToken}
 !define expectedUnpublishedDelete {FORBIDDEN}
 !define expectedPublishedDelete {FORBIDDEN}
-!define expectedHiddenDelete {FORBIDDEN}
 
 !include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.VisibilityPermissionUnit.User.ActionHelpers.DeleteRecord
 

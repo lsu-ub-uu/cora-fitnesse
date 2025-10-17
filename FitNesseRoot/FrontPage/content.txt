@@ -5,28 +5,28 @@ It is designed to provide executable acceptance tests, system behavior documenta
 
 !2 Repository Structure
 
-* **Root directory**  
+* '''Root directory'''  
   Contains project configuration files, top-level test suites, and README documentation.
 
-* **Test Suites**  
+* '''Test Suites'''  
   Acceptance tests organized by functional areas such as:
   * Location management (create, read, update, delete)
   * Metadata handling and record types
   * Login and authentication (IDP)
   * REST API interactions
 
-* **Fixtures**  
+* '''Fixtures'''  
   Java fixture classes linking tests to the Cora system under test. These classes perform the actions and check the outcomes.
 
-* **Test Utilities**  
+* '''Test Utilities'''  
   Helpers and utility fixtures supporting common test tasks across suites.
 
 !2 Purpose of the Repository
 
 The repository serves as both:
-* **Test Execution Platform** – Enable direct execution of acceptance tests via FitNesse.
-* **Living Documentation** – Provide a readable specification of system behavior accessible to both developers and stakeholders.
-* **Quality Assurance** – Ensure consistency between system implementation and expected functionality.
+* '''Test Execution Platform''' – Enable direct execution of acceptance tests via FitNesse.
+* '''Living Documentation''' – Provide a readable specification of system behavior accessible to both developers and stakeholders.
+* '''Quality Assurance''' – Ensure consistency between system implementation and expected functionality.
 
 
 CoraTests
