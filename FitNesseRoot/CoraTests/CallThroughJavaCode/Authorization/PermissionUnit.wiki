@@ -1,0 +1,10 @@
+---
+Test
+---
+!1 Permission Unit
+Information about permission units and its functionality can be found [[here][.CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.PermissionUnit]].
+!3 Permission unit functionality tests
+----
+!include -seamless .CoraTests.CallThroughJavaCode.Authorization.PermissionUnit.Data.SetUpTestData
+!include -seamless .CoraTests.CallThroughJavaCode.Authorization.PermissionUnit.User.Actions
+----

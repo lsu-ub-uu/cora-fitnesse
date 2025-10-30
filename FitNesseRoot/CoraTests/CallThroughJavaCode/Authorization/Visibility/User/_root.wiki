@@ -1,0 +1,39 @@
+---
+Static
+---
+!2 Visibility tests
+
+!3 CRUD tests
+!style_note[Ensure that the visibility setting behavior relies on the currently active permissions.]
+
+!include -seamless User.Scenarios.Scenario1.Configuration
+!***> Test scenario: ${scenario}
+!include -seamless User.Scenarios.Scenario1.Create
+----
+!include -seamless User.Scenarios.Scenario1.Read
+----
+!include -seamless User.Scenarios.Scenario1.Update
+----
+!include -seamless User.Scenarios.Scenario1.Delete
+----
+!include -seamless User.Scenarios.Scenario1.List
+----
+!include -seamless User.Scenarios.Scenario1.Search
+!include -seamless User.ActionHelpers.CleanUp
+*!
+
+!include -seamless User.Scenarios.Scenario2.Configuration
+!***> Test scenario: ${scenario}
+!include -seamless User.Scenarios.Scenario2.Create
+----
+!include -seamless User.Scenarios.Scenario2.Read
+----
+!include -seamless User.Scenarios.Scenario2.Update
+----
+!include -seamless User.Scenarios.Scenario2.Delete
+----
+!include -seamless User.Scenarios.Scenario2.List
+----
+!include -seamless User.Scenarios.Scenario2.Search
+!include -seamless User.ActionHelpers.CleanUp
+*!

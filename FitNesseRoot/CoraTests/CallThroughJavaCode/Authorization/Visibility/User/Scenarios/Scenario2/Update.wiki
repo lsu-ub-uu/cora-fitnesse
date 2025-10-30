@@ -1,0 +1,51 @@
+---
+Static
+---
+!4 Update
+ * '''Case 1''': User1 updating a record without providing a visibility value, the visibility value should remain unchanged, retaining the value from the previous version and the timestamp should not be updated.
+ * '''Case 2''': User1 updating a record with a new visibility value, the update should successfully apply the provided value and the timestamp should be updated.
+ * '''Case 3''': User2 updating a record without providing a visibility value, the visibility value should remain unchanged, retaining the value from the previous version.
+ * '''Case 4''': User2 updating a record with a visibility value different from the existing one, the update should not alter the current visibility value.
+#
+### NOTE: Using timestamp captured in create test here!
+#
+!***> '''Case 1''' User1 updating a record without providing a visibility value, the visibility value should remain unchanged, retaining the value from the previous version and the timestamp should not be updated.
+!define currentAuthToken {$adminAuthToken}
+!define recordId {$createCase1RecordId}
+!define updateData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"tsVisibility","value":"2025-04-14T08:53:03.010225Z"},{"name":"id","value":"-!$createCase1RecordId!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordTypeWithVisibility"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2025-04-14T08:53:03.010323Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2025-04-14T08:53:03.010323Z"}]}]},{"name":"fitnesseTextVar","value":"entext"}]}-!}
+!define expectedupdateResponseRegex {"name":"visibility","value":"unpublished" AND !-$createdTsVisibility-!}
+
+!include -seamless <User.ActionHelpers.UpdateRecordAndEnsureResponse
+
+*!
+!***> '''Case 2''' User1 updating a record with a new visibility value, the update should successfully apply the provided value and the timestamp should be updated.
+!define currentAuthToken {$adminAuthToken}
+!define recordId {$createCase1RecordId}
+!define updateData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"published"},{"name":"tsVisibility","value":"2025-04-14T08:53:03.010225Z"},{"name":"id","value":"-!$createCase1RecordId!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordTypeWithVisibility"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2025-04-14T08:53:03.010323Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2025-04-14T08:53:03.010323Z"}]}]},{"name":"fitnesseTextVar","value":"entext"}]}-!}
+!define expectedupdateResponseRegex {"name":"visibility","value":"published" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-! AND NOT !-$createCase2TsVisibility-!}
+
+!include -seamless <User.ActionHelpers.UpdateRecordAndEnsureResponse
+
+#### Save the updated timestamp so it can be used to assert update does not change this value
+!| script | ExtractSubstringUsingRegex |
+| $updateTsVisibility= | get substring using text | $updateResponse | and regex | "name":"tsVisibility","value":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z" |
+
+*!
+!***> '''Case 3''' User2 updating a record without providing a visibility value, the visibility value should remain unchanged, retaining the value from the previous version.
+!define currentAuthToken {$userAuthToken}
+!define recordId {$createCase1RecordId}
+!define updateData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"tsVisibility","value":"2025-04-14T08:53:03.010225Z"},{"name":"id","value":"-!$createCase1RecordId!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordTypeWithVisibility"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2025-04-14T08:53:03.010323Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2025-04-14T08:53:03.010323Z"}]}]},{"name":"fitnesseTextVar","value":"entext"}]}-!}
+!define expectedupdateResponseRegex {"name":"visibility","value":"published" AND !-$updateTsVisibility-!}
+
+!include -seamless <User.ActionHelpers.UpdateRecordAndEnsureResponse
+
+*!
+!***> '''Case 4''' User2 updating a record with a visibility value different from the existing one, the update should not alter the current visibility value (published) or the timestamp.
+!define currentAuthToken {$userAuthToken}
+!define recordId {$createCase1RecordId}
+!define updateData {!-{"name":"fitnesseGroupWithRecordInfoVisibility","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationTypeForRecordTypeWithVisibility"}]},{"name":"visibility","value":"unpublished"},{"name":"tsVisibility","value":"2025-04-14T08:53:03.010225Z"},{"name":"id","value":"-!$createCase1RecordId!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordTypeWithVisibility"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsCreated","value":"2025-04-14T08:53:03.010323Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}]},{"name":"tsUpdated","value":"2025-04-14T08:53:03.010323Z"}]}]},{"name":"fitnesseTextVar","value":"entext"}]}-!}
+!define expectedupdateResponseRegex {"name":"visibility","value":"published" AND "name":"tsVisibility","value":"!-\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z-!" AND !-$updateTsVisibility-!}
+
+!include -seamless <User.ActionHelpers.UpdateRecordAndEnsureResponse
+
+*!
