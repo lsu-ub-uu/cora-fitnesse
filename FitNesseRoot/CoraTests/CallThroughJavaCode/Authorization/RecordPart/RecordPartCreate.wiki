@@ -16,7 +16,7 @@ There are a few different cases for create that can happen, when there are write
 !define currentAuthToken {$adminAuthToken}
 !-Create a new testWorkout record as fitnesseAdmin, adding unrestricted and all restricted data parts-!
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys1
+!include -seamless dataCirkelfysCirkelfys1
 !define expectedCreateResult {CREATED}
 !define expectedAnswer {}
 !define expectedCompareResult {OK}
@@ -31,7 +31,7 @@ There are a few different cases for create that can happen, when there are write
 !define currentAuthToken {$userAuthToken}
 !-Create a new testWorkout record as fitnesseUser, the record will contain only parts that the user has write permissions for.-!
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys2
+!include -seamless dataCirkelfysCirkelfys2
 !define expectedCreateResult {CREATED}
 !define expectedAnswer {}
 !define expectedCompareResult {OK}
@@ -43,7 +43,7 @@ There are a few different cases for create that can happen, when there are write
 
 !-Create a new testWorkout record as fitnesseUser, the record contains all the parts including those which the user has no write permissions for. Only the parts that the user has write permissions will be created-!
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys3
+!include -seamless dataCirkelfysCirkelfys3
 !define expectedCreateResult {CREATED}
 !define expectedAnswer {}
 !define expectedCompareResult {Did not find a match for child with nameInData numOfParticipants2 and value 42. Did not find a match for child with nameInData selectableAttribute2 and value valueTwo and attributes [exampleAttributeChoice:two]. Did not find a match for child with nameInData selectableAttribute3 and value valueThree and attributes [exampleAttributeChoice:three]. Did not find a match for child with nameInData instructorId2 and value 3562. Did not find a match for child with nameInData instructorId3 and value 3563. Did not find a match for child with nameInData laps1_2 and value 10. Did not find a match for child with nameInData duration1_2 and value 5h. Did not find a match for child with nameInData duration1_3 and value 6h. Did not find a match for child with nameInData firstName1_2 and value Maria. Did not find a match for child with nameInData lastName1_2 and value Chef. Did not find a match for child with nameInData lastName1_3 and value Boss. Child with nameInData instructorName2 and type group is missing. Did not find a match for child with nameInData ratingDate1_2 and value 2021-01-13. Did not find a match for child with nameInData voteCount1_2 and value 4341223. Did not find a match for child with nameInData voteCount1_3 and value 4341233. Child with nameInData popularity2 and type group is missing. Child with nameInData popularity3 and type group is missing.}
@@ -54,28 +54,28 @@ There are a few different cases for create that can happen, when there are write
 
 !-Remove the permission on popularity1-!
 
-!include -seamless <RecordPart.RecordPartRemoveWritePermissionOnPopularity
+!include -seamless RecordPartRemoveWritePermissionOnPopularity
 !-Try to create a new testWorkout record with fitnesseUser. The data used will be the same as Cirkelfys2. Note that popularity1 is sent but we do not have permissions to write on that part.-!
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys2
+!include -seamless dataCirkelfysCirkelfys2
 !define expectedCreateResult {BAD_REQUEST}
 !define expectedAnswer {Error creating new record for recordType: testWorkout. Data is not valid: [Did not find enough data children with referenceId: testPopularity1Group(with nameInData:popularity1).]}
 !define expectedPermissionResult {popularity1}
 
 !include -seamless .HelperPages.createRecord
-!include -seamless <RecordPart.RecordPartRestoreWritePermissionLimitedForTestWorkoutCreateRule
+!include -seamless RecordPartRestoreWritePermissionLimitedForTestWorkoutCreateRule
 *!
 !***> Case 4b
 
 !-Remove the permission on firstName1_1-!
 
-!include -seamless <RecordPart.RecordPartRemoveWritePermissionOnFirstName1_1
+!include -seamless RecordPartRemoveWritePermissionOnFirstName1_1
 !-Try to create a new testWorkout record with fitnesseUser. The data used will be the same as Cirkelfys2. Note that popularity1 is sent but we do not have permissions to write on that part.-!
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.dataCirkelfysCirkelfys2
+!include -seamless dataCirkelfysCirkelfys2
 !define expectedCreateResult {BAD_REQUEST}
 !define expectedAnswer {Error creating new record for recordType: testWorkout. Data is not valid: [Did not find enough data children with referenceId: testInstructorFirstName1_1TextVar(with nameInData:firstName1_1).]}
 !define expectedPermissionResult {firstName1_1}
 !include -seamless .HelperPages.createRecord
-!include -seamless <RecordPart.RecordPartRestoreWritePermissionLimitedForTestWorkoutCreateRule
+!include -seamless RecordPartRestoreWritePermissionLimitedForTestWorkoutCreateRule
 *!

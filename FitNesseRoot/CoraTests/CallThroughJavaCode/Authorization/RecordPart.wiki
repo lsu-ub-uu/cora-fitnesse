@@ -18,7 +18,7 @@ Although the server uses the recordPartRestrictions set up in the metadataDefini
 
 !***> Why restrictions are only allowed on groups with repeatMax = 1
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.WhyOnlyTopLevelOrRepeatMax1
+!include -seamless RecordPart.WhyOnlyTopLevelOrRepeatMax1
 *!
 !2 Restrictions
 There are two types of restrictions, read and write. A read restriction prevents data from leaving the server and a write restriction prevents data from beeing updated on the server.
@@ -30,10 +30,10 @@ Permissions are given in rules, later connected to users through roles. There ar
 
 A given write permission implies a read permission on the same record part, because a user must be able to read the information it is allowed to change.
 
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.RecordPartMetadata
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.RecordPartCreate
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.RecordPartRead
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.RecordPartUpdate
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.RecordPartList
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.RecordPartSearch
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BuiltInMetadataFunctionality.RecordPart.RecordPartCleanup
+!include -seamless RecordPart.RecordPartMetadata
+!include -seamless RecordPart.RecordPartCreate
+!include -seamless RecordPart.RecordPartRead
+!include -seamless RecordPart.RecordPartUpdate
+!include -seamless RecordPart.RecordPartList
+!include -seamless RecordPart.RecordPartSearch
+!include -seamless RecordPart.RecordPartCleanup
