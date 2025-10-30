@@ -1,0 +1,8 @@
+---
+Test
+---
+!1 SearchTerm
+For each field in a [[search][.CoraTests.Data.Record.Search]], you need to define a search term (searchTerm). In the search term, you specify its type (final, Text in collection, Multiquery, or Linked data), the [[record type][.CoraTests.BuiltInMetadata.BasicMetadata.RecordType]] it is used for, and the corresponding indexing term ([[indexTerm][.CoraTests.BuiltInMetadata.BasicMetadata.IndexTerm]]).
+For example, the search term personIdSearchTerm has an indexing term counterpart in personIdSearchTerm. The ID of the search term is then used as the nameInData for the metadata text variable that corresponds to the search term in the search query.
+
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.SearchTerm.RecordType

@@ -1,0 +1,6 @@
+---
+Static
+---
+!4 Validation types for permission unit
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.PermissionUnit.ValidationTypes.Definitions
+----

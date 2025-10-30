@@ -1,5 +1,0 @@
----
-Test
----
-
-!include -seamless .CoraTests.CallThroughJavaCode.Authentication.IdpLogin.IdpLogin

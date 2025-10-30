@@ -1,0 +1,38 @@
+---
+Test
+---
+!1 User
+Tests related to user:
+
+ * user(group)
+   * recordInfo(group, 1-1, noConstraint)
+     * id(textVariable, 1-1, noConstraint, I)
+     * type(recordLink, 1-1, noConstraint)
+     * validationType(recordLink, 1-1, noConstraint)
+     * dataDivider(recordLink, 1-1, noConstraint, P, I)
+     * createdBy(recordLink, 1-1, noConstraint)
+     * permissionUnit(recordLink, 0-X, noConstraint)
+     * tsCreated(textVariable, 1-1, noConstraint)
+     * updated(group, 1-X, noConstraint)
+       * updatedBy(recordLink, 1-1, noConstraint)
+       * tsUpdated(textVariable, 1-1, noConstraint)
+   * loginId(textVariable, 1-1, noConstraint, S)
+   * userFirstname(textVariable, 1-1, noConstraint)
+   * userLastname(textVariable, 1-1, noConstraint)
+   * userRole(group, 1-X, noConstraint)
+     * userRole(recordLink, 1-1, noConstraint)
+     * permissionTermRulePart(group, 0-X, noConstraint)
+       * rule(recordLink, 1-1, noConstraint)
+       * value(textVariable, 1-X, noConstraint)
+   * activeStatus(collectionVariable, 1-1, noConstraint)
+   * appTokens(group, 0-1, noConstraint)
+     * appToken(group, 1-X, noConstraint)
+       * appTokenLink(recordLink, 0-1, noConstraint)
+       * appTokenNote(textVariable, 1-1, noConstraint)
+       * appTokenClearText(textVariable, 0-1, noConstraint)
+   * usePassword(collectionVariable, 1-1, write)
+   * plainTextPassword(textVariable, 0-1, readWrite)
+   * tsPasswordUpdated(textVariable, 0-1, write)
+   * passwordLink(recordLink, 0-1, readWrite)
+
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.User.User

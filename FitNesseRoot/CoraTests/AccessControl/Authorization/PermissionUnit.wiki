@@ -1,0 +1,17 @@
+---
+Test
+---
+!1 Permission Unit
+Permission Unit is a standard feature for dividing data into subsets, allowing control over permissions for each subset. For every record type in a system, can it be determined whether records of this type should be divided into permission units.
+
+Permission units can be used to restrict a user's ability to create, update and delete data to one or more permission units, without impacting the ability to read and list record. They can also be used as an extra filter to data searches based on a permission unit in various scenarios. Additionally, they allow clients to automatically fill in the value of the permission unit in different contexts (such as creating, updating data, and searches) based on the logged-in user and their available permission units.
+
+'''!style_meta[!style_red[Note!]]'''
+Permission unit uses extraData to make it possible for different systems built with Cora to add extra information to their permission units. Each system '''MUST''' add a metadata record with validation type group, 
+and id extraDataPermissionUnitGroup with the systems own content. The smallest possible extraData is a group with one textVariable with a final value. As data for extraDataPermissionUnitGroup is 0-1 from permissionUnitGroup can the data be left empty.
+
+!3 Permission unit functionality tests
+----
+!include -seamless PermissionUnit.Data.SetUpTestData
+!include -seamless PermissionUnit.User.Actions
+----

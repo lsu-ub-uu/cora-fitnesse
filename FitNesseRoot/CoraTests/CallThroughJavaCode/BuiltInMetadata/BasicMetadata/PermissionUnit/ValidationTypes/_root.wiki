@@ -1,6 +1,0 @@
----
-Static
----
-!4 Validation types for permission unit
-!include -seamless .CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.PermissionUnit.ValidationTypes.Definitions
-----

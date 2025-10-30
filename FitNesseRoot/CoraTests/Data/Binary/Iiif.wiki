@@ -1,0 +1,117 @@
+---
+Static
+---
+!2 IIIF protocol in binary for images
+A binary record for an image has information about how to access the image using the IIIF protocol. This information can be found as IIIF in the top level element otherProtocols. 
+Other protocols contain information about how to access the image using the IIIF protocol, if:
+ * a JP2 representation has been generated for the uploaded file
+ and 
+ * the user has the required permissions to read it
+ or 
+ * the binary is published. 
+All cases will make sure there is no IIIF protocol information when the binary record is created, or when the file is first uploaded.
+ * '''Case 1:''' IIIF protocol information must be present with a user that has permissions to read the jp2 representation. Information must contain a server and identifier properties. 
+ * '''Case 2:''' IIIF protocol information must '''not''' be present with a user that has '''no''' permissions to read the jp2 representation.
+ * '''Case 3:''' IIIF protocol information must be present for an '''unpublished''' binary if the user has permissions to read the jp2 representation.
+ * '''Case 4:''' When reading an any other binary that is not an image then IIIF protocol information should not be present.
+ 
+!***> Setup
+!define unpublishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]},{"name":"visibility","value":"unpublished"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
+!define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]},{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"-!${originalFileName}!-"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
+!define ignoreOverwriteProtectionReadOnAllVisibilitiesRule {!-{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRule"}]},-!}
+!define fitnesseBinaryReadOnAllVisibilitiesRuleMetaData {!-{"name":"permissionRule","children":[{"name":"recordInfo","children":[-!${ignoreOverwriteProtectionReadOnAllVisibilitiesRule}!-{"name":"id","value":"fitnesseBinaryReadOnAllVisibilitiesRule"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRule"}]}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","repeatId":"0","value":"system.read"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":-!${permissionRulePartReadOnAllVisibilitiesRule}!-,"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"visibilityPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]}]}-!}
+*!
+!***> Create unpublished binary record and upload an image to it, to use in tests 1-3
+!define originalFileName {aTiff.tiff}
+!define expectedFileSize {1938386}
+!define createData unpublishedBinary
+!include -seamless .CoraTests.Data.Binary.CreateBinaryUploadImageAndWait
+!define unpublishedRecordId {$tmpRecordId1}
+*!
+!***> '''Case 1''' We use adminAuthToken to read an unpublished binary record
+!*< definition
+*!
+
+!| ChildComparerFixture                                                                                                                                  |
+|authToken          |type         |id         |testReadAndStoreRecord?                                                                                   |
+|${currentAuthToken}|${recordType}|${recordId}|=~/"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/","identifier":"binary:\d*"/ |
+
+!define iiifServerUrl (${systemUnderTestUrl}iiif/)
+
+!define expectedXpath {//otherProtocols/iiif/server[text() = '${iiifServerUrl}']
+//otherProtocols/iiif/identifier[text() = '${recordId}']}
+!include -seamless .HelperPages.readRecordInXML
+
+*!
+!***> '''Case 2''' We use userAuthToken to read an unpublished binary record
+!define currentAuthToken {$userAuthToken}
+
+!| ChildComparerFixture |
+| authToken | type | id | testReadAndStoreRecord? |
+| ${currentAuthToken} | ${recordType} | ${recordId} |=~/!-^(?!.*(iiif).*).+$-!/ |
+
+!define iiifServerUrl (${systemUnderTestUrl}iiif/)
+
+!define expectedXpath {count(//otherProtocols) = 0}
+!include -seamless .HelperPages.readRecordInXML
+*!
+!***> '''Case 3''' IIIF protocol information must be present for an unpublished binary if the user has permissions to read the jp2 representation.
+!***> Update fitnesse user rule. Add credential to read '''jp2'''
+!define permissionRulePartReadOnAllVisibilitiesRule {!-[{"name":"permissionRulePartValue","repeatId":"1","value":"system.binary"},{"name":"permissionRulePartValue","repeatId":"2","value":"system.binary.jp2"}]-!}
+!define currentAuthToken {$adminAuthToken}
+!define recordType {permissionRule}
+!define recordId {fitnesseBinaryReadOnAllVisibilitiesRule}
+!define expectedAnswer {}
+!define expectedUpdateResult {OK}
+!define updateData {${fitnesseBinaryReadOnAllVisibilitiesRuleMetaData}}
+!include -seamless .HelperPages.updateRecord
+!define currentAuthToken {$userAuthToken}
+*!
+!| RecordEndpointFixture |
+|authToken     |type  |id                  |testReadRecord?                                 |getStatusType?|
+|$userAuthToken|binary|${unpublishedRecordId}| =~/"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/","identifier":"binary:\d*"/ | OK           |
+
+!| DownloadFixture |
+| authToken      | recordType | recordId         |representation |testDownload? |getStatusType? |
+| $userAuthToken | binary | ${unpublishedRecordId} | jp2 | |OK|
+!define iiifServerUrl (${systemUnderTestUrl}iiif/)
+
+!define recordType {binary}
+!define recordId {${unpublishedRecordId}}
+!define expectedXpath {//otherProtocols/iiif/server[text() = '${iiifServerUrl}']
+//otherProtocols/iiif/identifier[text() = '${recordId}']}
+!include -seamless .HelperPages.readRecordInXML
+*!
+!***> Cleanup case 1-3
+!include -seamless .HelperPages.deleteRecord
+!***> Clean up fitnesse user rule
+!define currentAuthToken {$adminAuthToken}
+!define recordType {permissionRule}
+!define recordId {fitnesseBinaryReadOnAllVisibilitiesRule}
+!define permissionRulePartReadOnAllVisibilitiesRule {!-[{"name":"permissionRulePartValue","repeatId":"1","value":"system.binary"}]-!}
+!define updateData {${fitnesseBinaryReadOnAllVisibilitiesRuleMetaData}}
+!include -seamless .HelperPages.updateRecord
+*!
+*!
+!***> '''Case 4'''
+!include -seamless .HelperPages.defineAdminAuthToken
+!define recordType {binary}
+!define originalFileName {aZip.zip}
+!define expectedFileSize {144}
+!define createData publishedBinary
+
+!include -seamless .CoraTests.Data.Binary.CreateBinaryAndUploadFile
+!define publishedRecordId {$tmpRecordId1}
+!define recordId {${publishedRecordId}}
+!| ChildComparerFixture                                                                                                                                           |
+|authToken          |type         |id         |testReadAndStoreRecord?                                                                                            |
+|${currentAuthToken}|${recordType}|${recordId}| =~/^(?!.*"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/","identifier":"binary:\d*").*/ |
+
+!define expectedXpath {count(//otherProtocols) = 0}
+!include -seamless .HelperPages.readRecordInXML
+
+!***> Cleanup case 4
+!include -seamless .HelperPages.deleteRecord
+*!
+*!
+

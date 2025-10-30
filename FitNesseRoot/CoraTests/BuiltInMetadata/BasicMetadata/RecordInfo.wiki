@@ -1,0 +1,12 @@
+---
+Test
+---
+!1 Record info
+Record info is a top-level group that contains information about the record such as '''id''', '''type''', '''data divider''' etc.
+
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.RecordInfo.Definition
+
+!3 Record info tests
+----
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.RecordInfo.Actions
+----

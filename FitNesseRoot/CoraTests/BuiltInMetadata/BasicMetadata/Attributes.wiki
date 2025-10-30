@@ -1,0 +1,10 @@
+---
+Test
+---
+!1 Attributes
+!style_blue[Add here some description about attributes.] 
+
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.Attributes.AttributesMetadata
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.Attributes.AttributesCreate
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.Attributes.AttributesUpdate
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.Attributes.AttributesCleanUp

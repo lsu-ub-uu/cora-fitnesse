@@ -1,0 +1,11 @@
+---
+Static
+---
+!3 CRUD tests
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.PermissionUnit.Actions.Create
+----
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.PermissionUnit.Actions.Read
+----
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.PermissionUnit.Actions.Update
+----
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.PermissionUnit.Actions.Delete

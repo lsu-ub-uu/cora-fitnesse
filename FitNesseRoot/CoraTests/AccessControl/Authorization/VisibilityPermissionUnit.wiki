@@ -1,0 +1,7 @@
+---
+Test
+---
+!1 Visibility with permission unit tests
+Testing the combination of visibility and permission units
+ 
+!include -seamless VisibilityPermissionUnit.User

@@ -1,0 +1,10 @@
+---
+Test
+---
+!1 CollectionVariable
+!style_blue[Add here some description about CollectionVariable.] 
+
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.CollectionVariable.CollectionVariableMetadata
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.CollectionVariable.CollectionVariableCreate
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.CollectionVariable.CollectionVariableUpdate
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.CollectionVariable.CollectionVariableCleanUp

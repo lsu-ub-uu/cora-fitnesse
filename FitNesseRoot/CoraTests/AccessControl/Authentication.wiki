@@ -1,0 +1,11 @@
+---
+Help: Authentication is how systems confirm that a person or system is really who they say they are.
+Suite
+---
+!1 Authentication
+Users in a Cora based system can be authenticated through a few different methods:
+ * IDP, Identity Provider based login, through a single sign on solution such as SAML2
+ * Password, Login based on password stored for the user
+ * !-AppToken-!, Application token created for a specific user
+!contents -R2 -g -p -f -h
+----

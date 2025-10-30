@@ -1,0 +1,35 @@
+---
+Test
+---
+!1 Record Type
+
+!img files/Images/recordType.png
+
+The Record Type is a basic entity  in Cora. Everything in Cora is a record type, including all the metadata types that make up the system, including the record type itself.
+When you create a record type, you define what should apply when instances of that record type are created.
+
+The Record type references the following groups that makes up a majority of the functionality:
+
+ * Metadata groups. These are used to define the individual fields in records instanstiated by the record type such as their data type (number, text, etc) and number of occurrences for the respective fields (if they are mandatory or not). Note that metadata groups can be nested in other groups.
+
+ * Presentation groups. There are a number of presentation groups defined in the record type. They are used to describe how the data in a record is supposed to be presented in different contexts for example during creation of new or updated records and in menus or lists.
+
+To validate a record type, [[a validation type is used and described in detail here][<CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType]].
+At least one validation type is mandatory for each record type.
+
+The Cora system also informs, via action links, what you can do with records instantiated from the record type (based on the rights of the current user).
+E.g. create, list, update and delete instances/records of the record type.
+
+There are also a number of other attributes on a record type related to batch indexing, searching based on a record type
+
+Finally, something called texts is used to describe the record type in different languages.
+
+Individual instances of the record type that carry actual data are called records.
+
+Record types are tested implicitly in different parts of the fitnesse test suite but the below tests intends to verify the more basic aspects of a record type.
+
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.RecordType.Definition
+----
+!3 Record type tests
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.RecordType.Actions
+----

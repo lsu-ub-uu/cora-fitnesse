@@ -1,0 +1,14 @@
+---
+Test
+---
+!1 Permission Unit
+Information about permission units and its functionality can be found [[here][.CoraTests.AccessControl.Authorization.PermissionUnit]].
+
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.PermissionUnit.Definition
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.PermissionUnit.ValidationTypes
+!3 Permission unit tests
+----
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.PermissionUnit.Actions
+----
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.PermissionUnit.User
+----

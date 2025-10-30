@@ -1,0 +1,57 @@
+---
+Static
+---
+
+!2 Update
+!style_red[Update tests not added yet!] 
+ * '''Case 1''': It must be possible to update an instance of a record that has finalValue and choosable attributes.
+ * '''Case 2''': It should not be possible to update an instance of a record that has wrong attribute values, errors should be returned.
+ * '''Case 3''': It should not be possible to update an instance of a record that has wrong attribute names, errors should be returned.
+ * '''Case 4''': It should not be possible to update an instance of a record that has missing attributes, errors should be returned.
+
+#!***> Case 1
+#
+#!define currentAuthToken {$adminAuthToken}
+#
+#!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.Attributes.data.exampleAttributes1
+#!define expectedUpdateResult {OK}
+#!define expectedAnswer {}
+#!define expectedCompareResult {OK}
+#!define expectedActionResult {Action read_incoming_links is missing.}
+#!define expectedPermissionResult {OK}
+#!include -seamless .HelperPages.updateCheckReadCheckReadCheckReset
+#
+#*!
+#!***> Case 2
+#
+#!define currentAuthToken {$adminAuthToken}
+#
+#!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.Attributes.data.exampleAttributes2
+#!define recordId {exampleAttribute1}
+#!define expectedUpdateResult {BAD_REQUEST}
+#!define expectedAnswer {Error updating record with recordType: exampleAttribute and recordId: exampleAttribute1. Data is not valid: [Could not find metadata for child with nameInData: textVarOneAttributeFinal and attributes: exampleAttributeFinal:ten, Could not find metadata for child with nameInData: textVarOneAttributeChoice and attributes: exampleAttributeChoice:ten, Could not find metadata for child with nameInData: textVarTwoAttributes and attributes: exampleAttributeChoice:ten, exampleAttributeFinal:ten, Could not find metadata for child with nameInData: numberVarOneAttributeChoice and attributes: exampleAttributeChoice:ten, Could not find metadata for child with nameInData: exampleOneAttributesLink and attributes: exampleAttributeChoice:ten, Could not find metadata for child with nameInData: exampleOneAttributeGroup and attributes: exampleAttributeChoice:ten, Could not find metadata for child with nameInData: collectionVarOneAttributeChoice and attributes: exampleAttributeChoice:ten]}
+#!include -seamless .HelperPages.updateRecord
+#
+#*!
+#!***> Case 3
+#
+#!define currentAuthToken {$adminAuthToken}
+#
+#!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.Attributes.data.exampleAttributes3
+#!define recordId {exampleAttribute1}
+#!define expectedUpdateResult {BAD_REQUEST}
+#!define expectedAnswer {Error updating record with recordType: exampleAttribute and recordId: exampleAttribute1. Data is not valid: [Could not find metadata for child with nameInData: textVarOneAttributeFinal and attributes: anotherAttributeFinal:two, Could not find metadata for child with nameInData: textVarOneAttributeChoice and attributes: anotherAttributeChoice:one, Could not find metadata for child with nameInData: textVarTwoAttributes and attributes: anotherAttributeChoice:three, anotherAttributeFinal:two, Could not find metadata for child with nameInData: numberVarOneAttributeChoice and attributes: anotherAttributeChoice:one, Could not find metadata for child with nameInData: exampleOneAttributesLink and attributes: anotherAttributeChoice:one, Could not find metadata for child with nameInData: exampleOneAttributeGroup and attributes: anotherAttributeChoice:one, Could not find metadata for child with nameInData: collectionVarOneAttributeChoice and attributes: anotherAttributeChoice:three]}
+#!include -seamless .HelperPages.updateRecord
+#
+#*!
+#!***> Case 4
+#
+#!define currentAuthToken {$adminAuthToken}
+#
+#!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.Attributes.data.exampleAttributes4
+#!define recordId {exampleAttribute1}
+#!define expectedUpdateResult {BAD_REQUEST}
+#!define expectedAnswer {Error updating record with recordType: exampleAttribute and recordId: exampleAttribute1. Data is not valid: [Could not find metadata for child with nameInData: textVarOneAttributeFinal, Could not find metadata for child with nameInData: textVarOneAttributeChoice, Could not find metadata for child with nameInData: textVarTwoAttributes and attributes: exampleAttributeFinal:two, Could not find metadata for child with nameInData: numberVarOneAttributeChoice, Could not find metadata for child with nameInData: exampleOneAttributesLink, Could not find metadata for child with nameInData: exampleOneAttributeGroup, Could not find metadata for child with nameInData: collectionVarOneAttributeChoice]}
+#!include -seamless .HelperPages.updateRecord
+#
+#*!

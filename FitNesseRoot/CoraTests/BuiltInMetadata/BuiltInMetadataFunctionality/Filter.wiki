@@ -1,0 +1,28 @@
+---
+Suite
+---
+!1 Filter
+Filter is used to filter out a subset of data when listing data for a recordType. 
+A filter has three main parts:
+ * Range (fromNo, toNo)
+ * Include
+ * Exclude
+!2 Range
+A range is defined using fromNo and toNo. Matches outside this range will be excluded. Matches start with 1 and are inclusive, so that 1-1 would result in returning only the first match. 1-10 would return the first ten matches.
+
+ * '''fromNo''': The first match position to be included in the result, 1 is the first match.
+ * '''toNo''': The last match position to be included in the result.
+!2 Include, exclude
+There are two main settings to filter the results, include and exclude. Parts defined in include are included in the result and parts defined in exclude are excluded from the results. Include and exclude are built using the same logic and are list of Parts.
+
+A record is considered a match if it matches any condition constructed from the different parts, therefore an OR is used between these conditions. Both include and exclude are composed of Parts. These Parts defines a list of conditions which all must be true in order to match, therefore an AND is used between these conditions.
+
+{{{
+Results are matches as follows:
+(include) AND NOT (exclude)
+include and exclude is matched as:
+(part OR part)
+each part is:
+(key operator value AND key operator value)
+}}}
+!include -seamless .CoraTests.BuiltInMetadata.BuiltInMetadataFunctionality.Filter.FilterTest
