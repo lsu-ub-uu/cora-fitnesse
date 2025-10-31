@@ -3,15 +3,28 @@ Help: Authorization, decides what the user is allowed to do after it has been au
 Suite
 ---
 !1 Authorization
-What an authenticated user in a Cora based system is allowed to do is built up through relations between some key concepts:
+What an authenticated user in a Cora based system is allowed to do is built up through relations between different parts of the system.
 
- * !-RecordType-!, the record type the current record belongs to and also settings for the specific recordType
-   * public, if all data for the type is public to read or not
-   * permissionUnit, if data is divided between different permission units to control update
-   * visibility, if data is published or not
- * Action, the action the user is trying to perform such as CREATE, READ, UPDATE, DELETE, etc.
- * !-PermissionTerms-!, data collected from the current record and used to match rules and roles on
- * !-RecordParts-!, limitations on read and write on parts of a record
+!2 Setting restrictions
+Restrictions are set up based on the record type the data belongs to. The restrictions controlling which user can edit a certain record is, built up through a combination of built in support, settings for the recordType and settings in the metadata definition for the record type.
+
+!3 Actions
+An action is what the user whats to do with a record (or serveral) in the system, such as CREATE, READ, UPDATE, etc. There is built in restrictions to use all actions in the system and permission must explicitly be given (with a few exceptions) for the user to be able to do one of the actions.
+
+!3 Record type
+The record type has settings that controls restrictions
+ * public, if all data for the type is public to read or not
+ * permissionUnit, if data is divided between different permission units to control update
+ * visibility, if data is published or not
+
+!3 Permission terms
+It is possible to mark that an data value from the record should be extracted from the data and used in the authorization system to control access to records of this record type. Permission terms are set up as part of the metadata definition for the record type, once they are defined must a user be given explicit permissions to the specific data to be able to perform actions on the record.
+
+!3 Record parts
+Record parts limits read and write access to parts of a record, the settings has no effect on the restrictions on the entire record but they control access to parts of it. Record part restrictions are also set up as part of the metadata definition for the record type, and restricts read or read/write to parts of the record. 
+See [[record part][Authorization.RecordPart]] for details.
+
+!2 Giving permissions
  * Rules, connects recordTypes, actions, permissionTerms and recordPartPermissions as a rule
  * Roles, connects different rules together as a role
  * User, has permission units permission has one or more roles, each role can get extra permissionTerms when connected to the user
