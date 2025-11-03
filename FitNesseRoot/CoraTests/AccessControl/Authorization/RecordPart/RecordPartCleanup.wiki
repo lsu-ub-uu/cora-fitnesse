@@ -12,6 +12,7 @@ Reset, the role fitnesseTextAdmin to not use the new rule, limitedForTestWorkout
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
 | $adminAuthToken | permissionRole | fitnesseTextAdmin | ${FITNESSE_TEXT_ADMIN_ROLE} | | OK |
+| $adminAuthToken | permissionRule | fitnesseTextAdminRule | ${FITNESSE_TEXT_ADMIN_RULE} | | OK |
 
 Delete newly created rules
 
