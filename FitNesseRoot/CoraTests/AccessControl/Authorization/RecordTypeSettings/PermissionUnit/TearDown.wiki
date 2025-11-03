@@ -9,10 +9,10 @@
 
 !include -seamless .HelperPages.Data.makeFitnesseAdminUserTestReadyWithCommonTestData
 
-# Restore textAdminRule (remove permission created in test)
+# Restore fitnesseTextAdmin (remove permission created in test)
 !define recordType {permissionRole}
 !define recordId {fitnesseTextAdmin}
-!define updateData {!-{"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"fitnesseTextAdmin"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"createdBy"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"updatedBy"},{"name":"tsUpdated","value":"2017-11-0117:51:52.0"}],"name":"updated"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"validationType"}],"name":"recordInfo"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"textAdmin"}],"name":"permissionRuleLink"},{"repeatId":"1","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"nothing"}],"name":"permissionRuleLink"},{"name":"activeStatus","value":"active"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleDefText"}],"name":"defTextId"}],"name":"permissionRole"}-!}
+!define updateData {${FITNESSE_TEXT_ADMIN_ROLE}}
 !include -seamless .HelperPages.updateRecord
 
 *!

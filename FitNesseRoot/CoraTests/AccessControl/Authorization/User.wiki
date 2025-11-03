@@ -75,9 +75,9 @@ Create a new text to show that it is '''NOT''' allowed:
 
 *!
 !2 User change rule part(organisation) when connecting role to user (currently not active)
-Update users, connected rule textAdmin to have a specific userId (system.aUserIdThatHasNotCreatedAnything)
+Update users, connected rule fitnesseTextAdminRule to have a specific userId (system.aUserIdThatHasNotCreatedAnything)
 
-!***> Update user, fitnesse, setting userId for connected role textAdmin (system.aUserIdThatHasNotCreatedAnything)
+!***> Update user, fitnesse, setting userId for connected role fitnesseTextAdmin (system.aUserIdThatHasNotCreatedAnything)
 
 !| comment |
 | Should be updated to a test that uses organisation in the connection to a role |

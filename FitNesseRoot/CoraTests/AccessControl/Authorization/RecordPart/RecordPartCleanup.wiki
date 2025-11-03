@@ -11,7 +11,7 @@ Reset, the role fitnesseTextAdmin to not use the new rule, limitedForTestWorkout
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | permissionRole | fitnesseTextAdmin | {"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"fitnesseTextAdmin"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"validationType"}],"name":"recordInfo"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"textAdmin"}],"name":"permissionRuleLink"},{"repeatId":"1","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"nothing"}],"name":"permissionRuleLink"},{"name":"activeStatus","value":"active"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleDefText"}],"name":"defTextId"}],"name":"permissionRole"} | | OK |
+| $adminAuthToken | permissionRole | fitnesseTextAdmin | ${FITNESSE_TEXT_ADMIN_ROLE} | | OK |
 
 Delete newly created rules
 

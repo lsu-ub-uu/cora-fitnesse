@@ -12,7 +12,7 @@ The system has two roles used by the fitnesse user (121212), they are called fit
 | $adminAuthToken | permissionRole | fitnesseTextAdmin | | OK |
 
 *!
-The role fitnesseTextAdmin has one rules textAdmin.
+The role fitnesseTextAdmin has one rules fitnesseTextAdminRule.
 
 To show that changes to roles changes what is allowed, will we use texts as an example:
 
@@ -32,7 +32,7 @@ Update role, set status to inactive
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | permissionRole | fitnesseTextAdmin | {"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"fitnesseTextAdmin"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"validationType"}],"name":"recordInfo"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"textAdmin"}],"name":"permissionRuleLink"},{"name":"activeStatus","value":"inactive"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleDefText"}],"name":"defTextId"}],"name":"permissionRole"} | | OK |
+| $adminAuthToken | permissionRole | fitnesseTextAdmin | {"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"fitnesseTextAdmin"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"validationType"}],"name":"recordInfo"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"fitnesseTextAdminRule"}],"name":"permissionRuleLink"},{"name":"activeStatus","value":"inactive"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleDefText"}],"name":"defTextId"}],"name":"permissionRole"} | | OK |
 
 *!
 Create a new text to show that it is '''NOT''' allowed:
@@ -47,7 +47,7 @@ Create a new text to show that it is '''NOT''' allowed:
 !2 Role removed rule
 Update role, to only have one rule (systemOneUser), a role must have at least one rule, explains why the rule nothing is there
 
-!***> Update permissionRole, removing rule textAdmin
+!***> Update permissionRole, removing rule fitnesseTextAdminRule
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
@@ -64,13 +64,13 @@ Create a new text to show that it is '''NOT''' allowed:
 
 *!
 !2 Role added rule
-Update role, to have one rule (textAdmin, nothing)
+Update role, to have one rule (fitnesseTextAdminRule, nothing)
 
 !***> Update permissionRole, adding rule fitnesse
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | permissionRole | fitnesseTextAdmin | {"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"fitnesseTextAdmin"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"validationType"}],"name":"recordInfo"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"textAdmin"}],"name":"permissionRuleLink"},{"repeatId":"1","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"nothing"}],"name":"permissionRuleLink"},{"name":"activeStatus","value":"active"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleDefText"}],"name":"defTextId"}],"name":"permissionRole"} | | OK |
+| $adminAuthToken | permissionRole | fitnesseTextAdmin | {"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"fitnesseTextAdmin"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"validationType"}],"name":"recordInfo"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"fitnesseTextAdminRule"}],"name":"permissionRuleLink"},{"repeatId":"1","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"nothing"}],"name":"permissionRuleLink"},{"name":"activeStatus","value":"active"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleDefText"}],"name":"defTextId"}],"name":"permissionRole"} | | OK |
 
 *!
 Create a new text to show that it '''is''' allowed:
@@ -95,6 +95,6 @@ Create a new text to show that it '''is''' allowed:
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | permissionRole | fitnesseTextAdmin | {"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"fitnesseTextAdmin"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"createdBy"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"validationType"}],"name":"recordInfo"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"textAdmin"}],"name":"permissionRuleLink"},{"repeatId":"1","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"nothing"}],"name":"permissionRuleLink"},{"name":"activeStatus","value":"active"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleDefText"}],"name":"defTextId"}],"name":"permissionRole"} | | OK |
+| $adminAuthToken | permissionRole | fitnesseTextAdmin | ${FITNESSE_TEXT_ADMIN_ROLE} | | OK |
 
 *!

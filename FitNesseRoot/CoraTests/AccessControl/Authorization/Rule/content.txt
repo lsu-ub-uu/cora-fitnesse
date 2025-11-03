@@ -17,7 +17,7 @@ The simplest possible rule to give access to everything is:
  * delete (system.)
  * publish (system.)
 
-The user(121212) using token fitnesseUser, has one role (textAdmin), that has two rules (metadataUser, textAdmin). We are going to add a new record type and add a new rule for that record type to!-
+The user(121212) using token fitnesseUser, has one role (fitnesseTextAdmin), that has two rules (metadataUser, fitnesseTextAdminRule). We are going to add a new record type and add a new rule for that record type to!-
 -!fitnesseUser
 
 !2 Creating recordType testStudentThesis and metadata that is needed
@@ -62,11 +62,11 @@ The user(121212) using token fitnesseUser, has one role (textAdmin), that has tw
 | $adminAuthToken | permissionRule | {"children":[{"children":[{"name":"id","value":"testStudentThesisRule"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRule"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"repeatId":"0","name":"permissionRulePartValue","value":"system.*"}],"name":"permissionRulePart","attributes":{"type":"action"}},{"children":[{"repeatId":"0","name":"permissionRulePartValue","value":"system.testStudentThesis"}],"name":"permissionRulePart","attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"}],"name":"permissionRule"} | | CREATED |
 
 *!
-!***> Update permissionRole, textAdmin, adding new rule testStudentThesisRule
+!***> Update permissionRole, fitnesseTextAdmin, adding new rule testStudentThesisRule
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | permissionRole | fitnesseTextAdmin | {"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"fitnesseTextAdmin"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"createdBy"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"updatedBy"},{"name":"tsUpdated","value":"2017-11-01 17:51:52.0"}],"name":"updated"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"validationType"}],"name":"recordInfo"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"textAdmin"}],"name":"permissionRuleLink"},{"repeatId":"1","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"nothing"}],"name":"permissionRuleLink"},{"repeatId":"2","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"testStudentThesisRule"}],"name":"permissionRuleLink"},{"name":"activeStatus","value":"active"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleDefText"}],"name":"defTextId"}],"name":"permissionRole"} | | OK |
+| $adminAuthToken | permissionRole | fitnesseTextAdmin | {"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"fitnesseTextAdmin"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"createdBy"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"updatedBy"},{"name":"tsUpdated","value":"2017-11-01 17:51:52.0"}],"name":"updated"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"validationType"}],"name":"recordInfo"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"fitnesseTextAdminRule"}],"name":"permissionRuleLink"},{"repeatId":"1","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"nothing"}],"name":"permissionRuleLink"},{"repeatId":"2","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"testStudentThesisRule"}],"name":"permissionRuleLink"},{"name":"activeStatus","value":"active"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleDefText"}],"name":"defTextId"}],"name":"permissionRole"} | | OK |
 
 *!
 To show that changes to rules changes what is allowed, will we use testStudentThesis as an example:
@@ -149,7 +149,7 @@ Try to read created testStudentThesis to see that it is '''NOT''' allowed
 *!
 Update rule, set action to allow create and read (system.create, system.read)
 
-!***> Update permissionRule, textAdmin, setting action to system.create, system.read
+!***> Update permissionRule, testStudentThesisRule, setting action to system.create, system.read
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
@@ -168,7 +168,7 @@ Try to read created testStudentThesis to see that it is '''IS''' allowed
 !3 Update
 Try to update created text to see that it is '''NOT''' allowed
 
-!***> Update  data of recordType text (textSystemOne){"name":"permissionRole","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseTextAdmin"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}]},{"name":"tsUpdated","value":"2017-11-01 17:51:52.0"}],"repeatId":"0"}]},{"name":"permissionRuleLink","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"textAdmin"}],"repeatId":"0"},{"name":"permissionRuleLink","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"nothing"}],"repeatId":"1"},{"name":"activeStatus","value":"active"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleDefText"}]}]}
+!***> Update  data of recordType text (textSystemOne){"name":"permissionRole","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnesseTextAdmin"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"name":"updated","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}]},{"name":"tsUpdated","value":"2017-11-01 17:51:52.0"}],"repeatId":"0"}]},{"name":"permissionRuleLink","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"fitnesseTextAdminRule"}],"repeatId":"0"},{"name":"permissionRuleLink","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"nothing"}],"repeatId":"1"},{"name":"activeStatus","value":"active"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleDefText"}]}]}
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
@@ -224,7 +224,7 @@ Try to delete created text to see that it is '''is '''allowed
 !2 Rule part recordType
 Update rule, set recordType to only allow book (system.book)
 
-!***> Update permissionRule, textAdmin, setting recordType to system.book
+!***> Update permissionRule, testStudentThesisRule, setting recordType to system.book
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
@@ -255,11 +255,11 @@ Update rule, to allow everything
 needs to be developed
 
 !2 Clean up created data
-!***> Update permissionRole textAdmin, as before test
+!***> Reset permissionRole fitnesseTextAdmin, as before test
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | permissionRole | fitnesseTextAdmin | {"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"fitnesseTextAdmin"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"createdBy"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"updatedBy"},{"name":"tsUpdated","value":"2017-11-01 17:51:52.0"}],"name":"updated"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"validationType"}],"name":"recordInfo"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"textAdmin"}],"name":"permissionRuleLink"},{"repeatId":"1","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"nothing"}],"name":"permissionRuleLink"},{"name":"activeStatus","value":"active"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseTextAdminRoleDefText"}],"name":"defTextId"}],"name":"permissionRole"} | | OK |
+| $adminAuthToken | permissionRole | fitnesseTextAdmin | ${FITNESSE_TEXT_ADMIN_ROLE} | | OK |
 
 *!
 !2 Clean up created data

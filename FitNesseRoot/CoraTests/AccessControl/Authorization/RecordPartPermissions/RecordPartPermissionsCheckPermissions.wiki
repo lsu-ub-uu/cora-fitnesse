@@ -132,12 +132,12 @@ När man söker efter poster så ska varje post i resultatet bara innehålla de 
 
 *!
 !2 Clean up created data
-!***> Återställ regel everything
+!***> Återställ regel everything, fitnesseTextAdminRule
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
 | $adminAuthToken | permissionRule | everything | ${everythingRuleForFitnesseAdminUser} | | OK |
-| $adminAuthToken | permissionRule | textAdmin | {"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"textAdmin"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRule"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"updatedBy"},{"name":"tsUpdated","value":"2017-11-01T17:53:01.000000Z"}],"name":"updated"},{"repeatId":"1","children":[{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"updatedBy"},{"name":"tsUpdated","value":"2020-02-20T14:24:05.497330Z"}],"name":"updated"},{"repeatId":"2","children":[{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"updatedBy"},{"name":"tsUpdated","value":"2020-02-20T14:24:09.597702Z"}],"name":"updated"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRule"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"repeatId":"0","name":"permissionRulePartValue","value":"system.*"},{"repeatId":"1","name":"permissionRulePartValue","value":"system.search"}],"name":"permissionRulePart","attributes":{"type":"action"}},{"children":[{"repeatId":"0","name":"permissionRulePartValue","value":"system.text"},{"repeatId":"1","name":"permissionRulePartValue","value":"system.textSystemOne"},{"repeatId":"2","name":"permissionRulePartValue","value":"system.coraText"}],"name":"permissionRulePart","attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"textAdminRuleText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"textAdminRuleDefText"}],"name":"defTextId"}],"name":"permissionRule"} | | |
+# | $adminAuthToken | permissionRule | fitnesseTextAdminRule | ${FITNESSE_TEXT_ADMIN_RULE} | | |
 
 *!
 !***> Clean up created data

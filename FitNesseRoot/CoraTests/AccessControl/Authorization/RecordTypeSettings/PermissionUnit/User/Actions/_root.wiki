@@ -9,7 +9,7 @@ Static
 #  * '''2a''': A user should have no actionLinks when '''reading''' a record that have a permission unit not allowed to the user.
 #  * '''2b''': A user should get all expected actionLinks when '''reading''' a record that the user have permission to.
  * '''Case 2''': Reading records with permission units
-  * '''2a''': Reading a record with only (no visibility) permission unit should not impact reading of records.
+  * '''2a''': Reading a record with only (no visibility) permission unit should not impact reading of records, but links.
  * '''Case 3''': It should be possible to control '''updating''' of records using permission units.
   * '''3a''': A user must be able to '''update''' a record when both the stored and the updated permission unit is matching one of the user's permission units.
   * '''3b''': A user must be able to '''update''' a record to ''move'' a record from one permission unit to another one when both the stored and the updated permission unit is matching one of the user's permission units.
