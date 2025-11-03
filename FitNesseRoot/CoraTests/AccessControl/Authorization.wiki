@@ -13,9 +13,9 @@ An action is what the user whats to do with a record (or serveral) in the system
 
 !3 Record type settings
 The record type has settings that controls restrictions
- * public, if all data for the type is public to read or not
- * permissionUnit, if data is divided between different permission units to control update
- * visibility, if data is published or not
+ * public, if all data for the type is public to read or not, see [[public][Authorization.RecordTypeSettings.Public]]
+ * permissionUnit, if data is divided between different permission units to control update, see [[permission unit][Authorization.RecordTypeSettings.PermissionUnit]]
+ * visibility, if data is published or not, see [[visibility][Authorization.RecordTypeSettings.Visibility]]
 
 !3 Permission terms
 It is possible to mark that an data value from the record should be extracted from the data and used in the authorization system to control access to records of this record type. Permission terms are set up as part of the metadata definition for the record type, once they are defined must a user be given explicit permissions to the specific data to be able to perform actions on the record.
