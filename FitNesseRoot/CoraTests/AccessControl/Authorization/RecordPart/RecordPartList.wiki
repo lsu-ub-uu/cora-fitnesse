@@ -8,7 +8,7 @@ There are a few different cases for list that can happen, when there are write r
 
 List testWorkout as fitnesseAdmin
 !define currentAuthToken {$adminAuthToken}
-!include -seamless .dataCirkelfysCirkelfys1
+!include -seamless dataCirkelfysCirkelfys1
 !define expectedListResult {=~/^(?=.*"name":"linkedRecordId","value":"testWorkout").*$/}
 !include -seamless .HelperPages.listStoreRecord
 
@@ -21,7 +21,7 @@ List testWorkout as fitnesseAdmin
 !***> Case 2
 List testWorkout as fitnesseUser
 !define currentAuthToken {$userAuthToken}
-!include -seamless .dataCirkelfysCirkelfys1
+!include -seamless dataCirkelfysCirkelfys1
 !define expectedListResult {=~/^(?=.*"name":"linkedRecordId","value":"testWorkout").*$/}
 !include -seamless .HelperPages.listStoreRecord
 
