@@ -11,7 +11,7 @@ Restrictions are set up based on the record type the data belongs to. The restri
 !3 Actions
 An action is what the user whats to do with a record (or serveral) in the system, such as CREATE, READ, UPDATE, etc. There is built in restrictions to use all actions in the system and permission must explicitly be given (with a few exceptions) for the user to be able to do one of the actions.
 
-!3 Record type
+!3 Record type settings
 The record type has settings that controls restrictions
  * public, if all data for the type is public to read or not
  * permissionUnit, if data is divided between different permission units to control update

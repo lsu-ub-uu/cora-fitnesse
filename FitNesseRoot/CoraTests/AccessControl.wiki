@@ -4,4 +4,4 @@ Suite
 ---
 !1 Access Control
 Test Cora for everything needed authentication and authorization.
-!contents -R3 -g -p -f -h
+!contents -R2 -g -p -f -h

@@ -1,6 +1,6 @@
 ---
 Test
 ---
-!1 Record type
+!1 Record type settings
 Tests for settings on the record type impacting authorization for the records of that type.  
 !contents -R2 -g -p -f -h
