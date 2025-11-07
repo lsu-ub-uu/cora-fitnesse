@@ -31,7 +31,7 @@ Static
 	nameInData (textVariable, 1-1, noConstraint)
 	extraData (group, 1-1, noConstraint)
 		permissionKey (textVariable, 1-1, noConstraint)
-		mode (collectionVariable, 0-1, noConstraint)-!}
+		mode (collectionVariable, 1-1, noConstraint)-!}
 		
 !define collectPermissionTermGroupDefinition {!-collectPermissionTerm type:{permission} (group)
 	recordInfo (group, 1-1, noConstraint)
@@ -48,11 +48,59 @@ Static
 	nameInData (textVariable, 1-1, noConstraint)
 	extraData (group, 1-1, noConstraint)
 		permissionKey (textVariable, 1-1, noConstraint)
-		mode (collectionVariable, 0-1, noConstraint)-!}
+		mode (collectionVariable, 1-1, noConstraint)-!}
+
+!define collectIndexTermNewGroupDefinition {!-collectTerm type:{index} (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		validationType (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+	nameInData (textVariable, 1-1, noConstraint)
+	extraData (group, 1-1, noConstraint)
+		indexFieldName (textVariable, 1-1, noConstraint)
+		indexType (collectionVariable, 1-1, noConstraint)-!}
+		
+!define collectIndexTermGroupDefinition {!-collectTerm type:{index} (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P, I)
+		createdBy (recordLink, 1-1, noConstraint)
+		permissionUnit (recordLink, 0-X, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)
+	nameInData (textVariable, 1-1, noConstraint)
+	extraData (group, 1-1, noConstraint)
+		indexFieldName (textVariable, 1-1, noConstraint)
+		indexType (collectionVariable, 1-1, noConstraint)-!}
+
+!define collectStorageTermNewGroupDefinition {!-collectStorageTerm type:{storage} (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		validationType (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+	extraData (group, 1-1, noConstraint)
+		storageKey (textVariable, 1-1, noConstraint)-!}
+		
+!define collectStorageTermGroupDefinition {!-collectStorageTerm type:{storage} (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P, I)
+		createdBy (recordLink, 1-1, noConstraint)
+		permissionUnit (recordLink, 0-X, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)
+	extraData (group, 1-1, noConstraint)
+		storageKey (textVariable, 1-1, noConstraint)-!}
 *!
-{{{
-${collectTermGroupDefinition}
-}}}
+{{{ ${collectTermGroupDefinition} }}}
 !***> '''Validate record type collectTerm'''
 !***> Validate record type exists
 !| RecordEndpointFixture |
@@ -67,11 +115,10 @@ ${collectTermGroupDefinition}
 *!
 
 !2 Collect permission term
-
-| create | update |
-| "${collectPermissionTermNewGroupDefinition}" | "${collectPermissionTermGroupDefinition}" |
-
-| {{{ ${collectPermissionTermNewGroupDefinition} }}} | {{{ ${collectPermissionTermGroupDefinition} }}} |
+create
+{{{ ${collectPermissionTermNewGroupDefinition} }}}
+update
+{{{ ${collectPermissionTermGroupDefinition} }}}
 !***> '''Validate validation type collectPermissionTerm'''
 !***> Validate validaton type exists
 !| RecordEndpointFixture |
@@ -87,7 +134,10 @@ ${collectTermGroupDefinition}
 *!
 
 !2 Collect index term
-| {{{ ${collectIndexTermNewGroupDefinition} }}} | {{{ ${collectIndexTermGroupDefinition} }}} |
+create
+{{{ ${collectIndexTermNewGroupDefinition} }}}
+update
+{{{ ${collectIndexTermGroupDefinition} }}}
 !***> '''Validate validation type collectIndexTerm'''
 !***> Validate validaton type exists
 !| RecordEndpointFixture |
@@ -97,13 +147,16 @@ ${collectTermGroupDefinition}
 !***> Validate the definition of metadata
 !| DefinitionCompareFixture |
 | authToken | recordId | getDefinitionView? |
-| $adminAuthToken | collectIndexTermNewGroup | ${collectPermissionTermNewGroupDefinition} |
-| $adminAuthToken | collectIndexTermGroup | ${collectPermissionTermGroupDefinition} |
+| $adminAuthToken | collectIndexTermNewGroup | ${collectIndexTermNewGroupDefinition} |
+| $adminAuthToken | collectIndexTermGroup | ${collectIndexTermGroupDefinition} |
 *!
 *!
 
 !2 Collect storage term
-| {{{ ${collectStorageTermNewGroupDefinition} }}} | {{{ ${collectStorageTermGroupDefinition} }}} |
+create
+{{{ ${collectStorageTermNewGroupDefinition} }}}
+update
+{{{ ${collectStorageTermGroupDefinition} }}}
 !***> '''Validate validation type collectStorageTerm'''
 !***> Validate validaton type exists
 !| RecordEndpointFixture |
@@ -113,8 +166,8 @@ ${collectTermGroupDefinition}
 !***> Validate the definition of metadata
 !| DefinitionCompareFixture |
 | authToken | recordId | getDefinitionView? |
-| $adminAuthToken | collectStorageTermNewGroup | ${collectPermissionTermNewGroupDefinition} |
-| $adminAuthToken | collectStorageTermGroup | ${collectPermissionTermGroupDefinition} |
+| $adminAuthToken | collectStorageTermNewGroup | ${collectStorageTermNewGroupDefinition} |
+| $adminAuthToken | collectStorageTermGroup | ${collectStorageTermGroupDefinition} |
 *!
 *!
 
