@@ -14,7 +14,7 @@ The Record type references the following groups that makes up a majority of the 
 
  * Presentation groups. There are a number of presentation groups defined in the record type. They are used to describe how the data in a record is supposed to be presented in different contexts for example during creation of new or updated records and in menus or lists.
 
-To validate a record type, [[a validation type is used and described in detail here][<CoraTests.CallThroughJavaCode.BuiltInMetadata.BasicMetadata.ValidationType]].
+To validate a record type, a validation type is used and described in detail [[here][<BasicMetadata.ValidationType]].
 At least one validation type is mandatory for each record type.
 
 The Cora system also informs, via action links, what you can do with records instantiated from the record type (based on the rights of the current user).
@@ -28,8 +28,8 @@ Individual instances of the record type that carry actual data are called record
 
 Record types are tested implicitly in different parts of the fitnesse test suite but the below tests intends to verify the more basic aspects of a record type.
 
-!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.RecordType.Definition
+!include -seamless RecordType.Definition
 ----
 !3 Record type tests
-!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.RecordType.Actions
+!include -seamless RecordType.Actions
 ----
