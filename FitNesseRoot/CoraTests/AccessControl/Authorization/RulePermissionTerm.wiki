@@ -30,7 +30,7 @@ If persmission terms are used in metadata for a record type, the user must have 
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | collectTerm | {"children":[{"children":[{"name":"id","value":"testPublishedStatusPermissionTerm"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"collectPermissionTerm"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"publishedStatusPermission"},{"children":[{"name":"permissionKey","value":"PUBLISHED_STATUS"}],"name":"extraData"}],"name":"collectPermissionTerm","attributes":{"type":"permission"}} | | CREATED |
+| $adminAuthToken | collectTerm | {"children":[{"children":[{"name":"id","value":"testPublishedStatusPermissionTerm"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"collectPermissionTerm"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"publishedStatusPermission"},{"children":[{"name":"permissionKey","value":"PUBLISHED_STATUS"},{"name":"mode","value":"standard"}],"name":"extraData"}],"name":"collectPermissionTerm","attributes":{"type":"permission"}} | | CREATED |
 
 *!
 !***> Create metadataGroups to use in recordType

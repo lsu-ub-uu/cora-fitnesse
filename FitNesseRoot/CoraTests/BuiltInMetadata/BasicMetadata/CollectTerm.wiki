@@ -1,0 +1,16 @@
+---
+Test
+---
+!1 Collect Term
+Collection terms are used to tell the system from the relationship between a metadata group and its children that the data that the child has should be picked out for further processing. 
+There are three types of collection terms. 
+
+!2 Collect Permission Term
+Permission terms are used to pick out data to use it to control which users are allowed to do what with the current record.
+!2 Collect Index Term
+Indexing terms are used to index the designated data for use in searches.
+!2 Collect Storage Term
+Storage terms are used to filter data when listing data.
+
+!include -seamless CollectTerm.Definition
+----

@@ -65,7 +65,7 @@ A test that first reads all predefined metadata needed to be able to create user
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecordCreatedType? | getStatusType? |
-| $adminAuthToken | collectTerm | {"children":[{"children":[{"name":"id","value":"testOrganisationPermissionTerm"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"collectPermissionTerm"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"testOrganisationPermissionTerm"},{"children":[{"name":"permissionKey","value":"SOME_KEY"}],"name":"extraData"}],"name":"collectPermissionTerm","attributes":{"type":"permission"}} | collectTerm | CREATED |
+| $adminAuthToken | collectTerm | {"children":[{"children":[{"name":"id","value":"testOrganisationPermissionTerm"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"collectPermissionTerm"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"testOrganisationPermissionTerm"},{"children":[{"name":"permissionKey","value":"SOME_KEY"},{"name":"mode","value":"standard"}],"name":"extraData"}],"name":"collectPermissionTerm","attributes":{"type":"permission"}} | collectTerm | CREATED |
 
 *!
 !***> Create data of recordType systemOneUser
