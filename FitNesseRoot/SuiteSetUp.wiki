@@ -15,6 +15,12 @@ Suite
 | se.uu.ub.cora.fitnesseintegration.definitionwriter |
 | se.uu.ub.cora.fitnesseintegration.authentication |
 
+!| script | LoginToken |
+| setFitnesseAdminLoginId | ${fitnesseAdminLoginId} |
+| setFitnesseAdminAppToken | ${fitnesseAdminAppToken} |
+| setFitnesseUserLoginId | ${fitnesseUserLoginId} |
+| setFitnesseUserAppToken | ${fitnesseUserAppToken} |
+
 !| script | SystemUrl |
 | setUrl | ${systemUnderTestUrl} |
 | setAppTokenVerifierUrl | ${appTokenVerifierUrl} |
