@@ -102,6 +102,11 @@ Static
 *!
 {{{ ${collectTermGroupDefinition} }}}
 !***> '''Validate record type collectTerm'''
+!| CheckRecordTypeFixture |
+| id | assertDefinitionIs? |
+| collectTerm | ${collectTermGroupDefinition} |
+
+
 !***> Validate record type exists
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecordAndStoreJson? | getStatusType? |
