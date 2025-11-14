@@ -1,0 +1,71 @@
+---
+Test
+---
+!1 System
+System is the base for data divider that is used in a Cora based application to divide data into subgroups depending on where and how the data is expected to be used.
+
+!2 System
+There is only one validation type for system.
+
+!*< Setup record type definition
+
+!define recordTypeId {system}
+!define recordTypeDefinition {!-system (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P, I)
+		createdBy (recordLink, 1-1, noConstraint)
+		permissionUnit (recordLink, 0-X, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)
+	systemName (textVariable, 1-1, noConstraint)
+	textId (recordLink, 0-1, noConstraint)
+	defTextId (recordLink, 0-1, noConstraint)-!}
+
+#idSource (userSupplied/timestamp/sequence) others true/false
+!define recordTypeIdSource {userSupplied}
+!define recordTypeIsPublic {false}
+!define recordTypeUsePermissionUnit {false}
+!define recordTypeUseVisibility {false}
+!define recordTypeUseTrashBin {false}
+!define recordTypeStoreInArchive {false}
+
+*!
+!include -seamless .HelperPages.checkRecordType
+
+!*< Setup validation type definition
+
+!define validationTypeId {system}
+!define recordTypeId {system}
+!define createValidationTypeDefinition {!-system (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		validationType (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+	systemName (textVariable, 1-1, noConstraint)
+	textId (recordLink, 0-1, noConstraint)
+	defTextId (recordLink, 0-1, noConstraint)-!}
+!define updateValidationTypeDefinition {!-system (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P, I)
+		createdBy (recordLink, 1-1, noConstraint)
+		permissionUnit (recordLink, 0-X, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)
+	systemName (textVariable, 1-1, noConstraint)
+	textId (recordLink, 0-1, noConstraint)
+	defTextId (recordLink, 0-1, noConstraint)-!}
+
+*!
+!include -seamless .HelperPages.checkValidationType
+
+----

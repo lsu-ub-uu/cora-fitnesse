@@ -38,7 +38,7 @@ ${permissionUnitDefinition}
 *!
 !***> Validate the definition of permission unit
 !| DefinitionCompareFixture |
-| authToken | recordId | getDefinitionView? |
-| $adminAuthToken | permissionUnitGroup | ${permissionUnitDefinition} |
+| recordId | getDefinitionView? |
+| permissionUnitGroup | ${permissionUnitDefinition} |
 *!
 *!

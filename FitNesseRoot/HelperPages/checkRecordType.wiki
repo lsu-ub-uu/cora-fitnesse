@@ -1,0 +1,13 @@
+!3 Definition for record type: ${recordTypeId}
+Metadata:
+{{{ ${recordTypeDefinition} }}}Uses idSource: '''${recordTypeIdSource}'''
+Is public: '''${recordTypeIsPublic}'''
+Uses permission unit: '''${recordTypeUsePermissionUnit}'''
+Uses visibility: '''${recordTypeUseVisibility}'''
+Uses trash bin: '''${recordTypeUseTrashBin}'''
+Stores records in archive: '''${recordTypeStoreInArchive}'''
+!***> '''Test record type ${recordTypeId}'''
+!| CheckRecordType |
+| id | definitionIs? | idSourceIs? | isPublic? | usePermissionUnit? | useVisibility? | useTrashBin? | storeInArchive? |
+| ${recordTypeId} | ${recordTypeDefinition} | ${recordTypeIdSource} | ${recordTypeIsPublic} | ${recordTypeUsePermissionUnit} | ${recordTypeUseVisibility} | ${recordTypeUseTrashBin} | ${recordTypeStoreInArchive} |
+*!

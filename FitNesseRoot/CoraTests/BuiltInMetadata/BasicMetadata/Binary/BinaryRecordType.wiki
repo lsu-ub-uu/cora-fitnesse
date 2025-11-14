@@ -76,7 +76,7 @@ ${binaryRecordTypeDefinition}
 | metadata | binaryGroup | | OK |
 
 !| DefinitionCompareFixture |
-| authToken | recordId | getDefinitionView? |
-| $adminAuthToken | binaryGroup | ${binaryRecordTypeDefinition} |
+| recordId | getDefinitionView? |
+| binaryGroup | ${binaryRecordTypeDefinition} |
 *!
 *!

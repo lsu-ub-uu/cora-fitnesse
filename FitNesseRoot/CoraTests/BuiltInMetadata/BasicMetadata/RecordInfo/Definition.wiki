@@ -26,7 +26,7 @@ ${recordInfoGroupDefinition}
 *!
 !***> Validate the definition of record info group
 !| DefinitionCompareFixture |
-| authToken | recordId | getDefinitionView? |
-| $adminAuthToken | recordInfoGroup | ${recordInfoGroupDefinition} |
+| recordId | getDefinitionView? |
+| recordInfoGroup | ${recordInfoGroupDefinition} |
 *!
 *!

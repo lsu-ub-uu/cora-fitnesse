@@ -81,12 +81,12 @@ ${genericBinaryUpdateGroupDefinition}
 *!
 !***> Validate  definition for '''new''' GenericBinaryNewGroup
 !| DefinitionCompareFixture |
-| authToken | recordId | getDefinitionView? |
-| $adminAuthToken | genericBinaryNewGroup | ${genericBinaryNewGroupDefinition} |
+| recordId | getDefinitionView? |
+| genericBinaryNewGroup | ${genericBinaryNewGroupDefinition} |
 *!
 !***> Validate  definition for '''update''' GenericBinaryUpdateGroup
 !| DefinitionCompareFixture |
-| authToken | recordId | getDefinitionView? |
-| $adminAuthToken | genericBinaryUpdateGroup | ${genericBinaryUpdateGroupDefinition} |
+| recordId | getDefinitionView? |
+| genericBinaryUpdateGroup | ${genericBinaryUpdateGroupDefinition} |
 *!
 *!
