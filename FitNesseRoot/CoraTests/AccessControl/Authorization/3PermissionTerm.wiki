@@ -1,0 +1,185 @@
+---
+Test
+---
+!1 Permission terms
+Permission terms restricts access to records based on specific values in a field. By designating certain data fields as permission terms, the authorization system enforces access control on records that contain those specific values.
+
+Permission terms are defined as part of the record type’s metadata. Once set up, users or rules must be explicitly granted permission for the relevant data values to view, modify, or perform other actions on the corresponding records.
+
+!2 How to set restrictions
+To restrict a record using a permission term, you first need to create a permission term. When creating a permission term, you must provide:
+ * nameInData – Permission terms name?
+ * permissionKey – a unique identifier for the permission term.
+ * mode – defines how the permission is applied.
+Once created, the permission term can be linked to any field in a record type definition. Simply associate the permission term with the field you want to restrict.
+
+!2 How to grant access
+It is possible to grant access by adding a permission term either to a rule or a user record:
+ * In a rule, the permission term is added directly in the Permission Term field.
+ * When granting from a user, the permission term is added via the link to a role.
+Each permission unit must be accompanied by a value that defines the scope of access. See below for details.
+
+!3 Examples of granting access using permission terms
+
+Using the value * means that any user or role granted this permission term can access all values. In other words, the user or role will be able to view all records restricted by this permission term.
+{{{system.*}}}
+Using a specific value grants access only to records matching that value, in this case the value '''red'''.
+{{{system.red}}}
+Using a prefix with red* grants access to all values that start with '''red'''
+{{{system.red*}}}
+A permission term can have two modes: '''standard''' or '''state'''.
+
+ * A permission term in '''standard''' mode restricts access to a record based on a specific value. If a user does not have a permission rule that grants access to that value, the user cannot view records that have that value, nor can the user set the field to that value.
+
+ * A permission term in '''state''' mode also restricts access to records in the same way. However, it allows users to set the field to the restricted value even if they do not have the permission rule for it. This mode is particularly useful for workflows where changing the value represents a transition to the next step. For example, when a user sets the field to a certain value, the record moves forward in the process, and the user may lose access to it as a result.
+
+!***> Define and prepare test data
+!***> Define variables
+!define fitnessePermissionTermRule {!-{"name":"permissionRule","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnessePermissionTermRule"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRule"}]}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","repeatId":"0","value":"system.*"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","repeatId":"0","value":"system.fitnesseRecordType"}],"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"}]}-!}
+
+!define fitnessePermissionTermRole {!-{"name":"permissionRole","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnessePermissionTermRole"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRole"}]}]},{"name":"permissionRuleLink","repeatId":"0","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"fitnessePermissionTermRule"}]},{"name":"activeStatus","value":"active"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]}]}-!}
+
+!define addFitnessePermissionTerm {!-,{"name":"userRole","repeatId":"7175775086411622","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"fitnessePermissionTermRole"}]},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}],"name":"rule"},{"repeatId":"0","name":"value","value":"system.*"}],"name":"permissionTermRulePart"},{"repeatId":"430","children":[{"children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"-!${fitnessePermissionTermName}!-"}],"name":"rule"},{"repeatId":"0","name":"value","value":"-!${fitnessePermissionTermValue}!-"}],"name":"permissionTermRulePart"}]}-!}
+
+!define fitnesseRecordPermissionTerm {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"fitnesseOnlyOneTextVar","value":"!-${fitnesseRecordPermissionTermValue}-!"}]}-!}
+
+!define fitnesseGroupPermissionTerm {!-{"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"fitnesseGroup"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"fitnesseExample"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"repeatId":"0","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseRecordInfoGroup"}],"name":"ref"}],"name":"childReference"},{"repeatId":"1","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"20"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseMetadataTextVar"}],"name":"ref"},{"name":"childRefCollectTerm","repeatId":"0","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"fitnesseCollectIndexTerm"}],"attributes":{"type":"index"}}],"name":"childReference"},{"repeatId":"7","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"20"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseAnotherMetadataTextVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"2","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"X"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseMetadataNumberVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"3","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseCollectionVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"4","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseLink"}],"name":"ref"}],"name":"childReference"},{"repeatId":"5","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseBinaryLink"}],"name":"ref"}],"name":"childReference"},{"repeatId":"6","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseOnlyOneMetadataTextVar"}],"name":"ref"},{"name":"childRefCollectTerm","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"-!${fitnessePermissionTermName}!-"}],"attributes":{"type":"permission"}}],"name":"childReference"}],"name":"childReferences"}],"name":"metadata","attributes":{"type":"group"}}-!}
+*!
+!***> Create rules and roles
+!define currentAuthToken {$adminAuthToken}
+!define expectedAnswer {}
+
+!define recordType {permissionRule}
+!define createData {${fitnessePermissionTermRule}}
+!define expectedCreateResult {CREATED}
+!include -seamless .HelperPages.createRecord
+
+!define recordType {permissionRole}
+!define createData {${fitnessePermissionTermRole}}
+!define expectedCreateResult {CREATED}
+!include -seamless .HelperPages.createRecord
+*!
+*!
+
+!2 Test for permission terms using '''standard''' mode
+ *'''Case 1: Create a permission term''' – Verify that a permission term can be created with mode standard, including nameInData, permissionKey, and mode.
+ *'''Case 2: Grant access to a specific value''' – Verify that a user with a permission term for a specific value (e.g., system.red) cannot create records with that value.
+ *'''Case 3: Grant access to a specific value''' – Verify that a user with a permission term for a specific value (e.g., system.red) can access records with that value.
+ *'''Case 4: Deny access to unauthorized value''' – Verify that a user without a permission term for a specific value (e.g., system.blue) cannot view or modify records containing that value.
+ *'''Case 5: Deny setting unauthorized value''' – Verify that a user cannot set a field to a value for which they do not have a standard permission term.
+
+!***> Case 1
+!define currentAuthToken {$adminAuthToken}
+!define recordType {collectTerm}
+!define createData {!-{"children":[{"children":[{"name":"id","value":"standardPermissionTerm"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"collectPermissionTerm"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"publishedStatusPermission"},{"children":[{"name":"permissionKey","value":"PUBLISHED_STATUS"},{"name":"mode","value":"standard"}],"name":"extraData"}],"name":"collectPermissionTerm","attributes":{"type":"permission"}}-!}
+!define expectedCreateResult {CREATED}
+!include -seamless .HelperPages.createRecord
+*!
+
+!***> Case 2
+!***> Update fitnesse user with permissionTerm standardPermissionTerm and system.red
+!define fitnessePermissionTermName {standardPermissionTerm}
+!define fitnessePermissionTermValue {system.red}
+
+!***> Update fitnesseGroup. Set permission term to fitnesseOnlyOneMetadataTextVar
+!define recordType {metadata}
+!define recordId {fitnesseGroup}
+!define updateData {${fitnesseGroupPermissionTerm}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> Update user. Give access to system.red
+!define addFitnesseRole {${addFitnessePermissionTerm}}
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+*!
+!***> Create fitnesseRecord
+!define fitnesseRecordPermissionTermValue {red}
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define createData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"fitnesseOnlyOneTextVar","value":"red"}]}-!}
+!define expectedCreateResult {FORBIDDEN}
+!define expectedAnswer {}
+!include -seamless .HelperPages.createRecord
+*!
+*!
+
+!***> Case 3
+!***> Update user. Give access to system.*
+!define fitnessePermissionTermValue {system.*}
+
+!define currentAuthToken {$adminAuthToken}
+!define addFitnesseRole {${addFitnessePermissionTerm}}
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+
+!define fitnessePermissionTermValue {system.red}
+!***> Create fitnesseRecord
+!define fitnesseRecordPermissionTermValue {red}
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define createData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"fitnesseOnlyOneTextVar","value":"red"}]}-!}
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {}
+!include -seamless .HelperPages.createRecord
+*!
+*!
+
+!2 Test for permission terms using '''state''' mode
+ * '''Case 1: Create a permission term''' – Verify that a permission term can be created with mode state, including nameInData, permissionKey, and mode.
+ *'''Case 2: Grant access to a specific value''' – Verify that a user with a permission term for a specific value (e.g., system.red) can access records with that value.
+ *'''Case 3: Allow setting restricted value''' – Verify that a user can set the field to a value they do not have access to if the permission term is in state mode.
+ *'''Case 4: Enforce subsequent restriction''' – Verify that after changing a field to a restricted value, the user may lose access to the record if they do not have permission for the new value.
+ 
+!***> Case 1
+!define currentAuthToken {$adminAuthToken}
+!define recordType {collectTerm}
+!define createData {!-{"children":[{"children":[{"name":"id","value":"statePermissionTerm"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"collectPermissionTerm"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"publishedStatusPermission"},{"children":[{"name":"permissionKey","value":"PUBLISHED_STATUS"},{"name":"mode","value":"state"}],"name":"extraData"}],"name":"collectPermissionTerm","attributes":{"type":"permission"}}-!}
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {}
+!include -seamless .HelperPages.createRecord
+*!
+
+!***> Clean up created data, metadata and texts
+!define currentAuthToken {$adminAuthToken}
+!***> Clean up changes on fitnesseGroup
+!define recordType {metadata}
+!define recordId {fitnesseGroup}
+!define updateData {${FITNESSE_GROUP_UPDATE}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> Clean changes on user
+!define recordType {user}
+!define recordId {121212}
+!define addFitnesseRole {!--!}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | fitnesseRecordType | 1 | | OK |
+| $adminAuthToken | fitnesseRecordType | 2 | | OK |
+| $adminAuthToken | fitnesseRecordType | 3 | | OK |
+| $adminAuthToken | permissionRole | fitnessePermissionTermRole | | OK |
+| $adminAuthToken | permissionRule | fitnessePermissionTermRule | | OK |
+| $adminAuthToken | collectTerm | standardPermissionTerm | | OK |
+| $adminAuthToken | collectTerm | statePermissionTerm | | OK |
+
+*!
+ 

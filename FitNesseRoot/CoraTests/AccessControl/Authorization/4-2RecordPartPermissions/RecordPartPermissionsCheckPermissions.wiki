@@ -1,7 +1,7 @@
 ---
 Test
 ---
-!include -c <RecordPartPermissions.RecordPartPermissionsSetUp
+!include -c <4-2RecordPartPermissions.RecordPartPermissionsSetUp
 !2 Record part permissions
 Det ska vara möjligt att i en post, för ett barn på översta nivån, säga att barnet kräver läs- och/eller skrivrättighet. När en post returneras från servern ska den innehålla en del som talar om vilka eventuella läs- och/eller skrivrättigheter den aktuella
 användaren har.

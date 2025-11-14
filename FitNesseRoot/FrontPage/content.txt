@@ -1,36 +1,19 @@
-!1 Cora FitNesse Repository Overview
+!1 Cora FitNesse
+This repository hosts the FitNesse '''test suite''' and '''documentation''' for the Cora platform.
+It is designed to provide executable acceptance tests and comprehensive system documentation.
 
-This repository hosts the FitNesse test suite and documentation for the :contentReference[oaicite:0]{index=0} system.  
-It is designed to provide executable acceptance tests, system behavior documentation, and test organization for the Cora platform and its use in services like :contentReference[oaicite:1]{index=1}. :contentReference[oaicite:2]{index=2}
-
-!2 Repository Structure
-
-* '''Root directory'''  
-  Contains project configuration files, top-level test suites, and README documentation.
-
-* '''Test Suites'''  
-  Acceptance tests organized by functional areas such as:
-  * Location management (create, read, update, delete)
-  * Metadata handling and record types
-  * Login and authentication (IDP)
-  * REST API interactions
-
-* '''Fixtures'''  
-  Java fixture classes linking tests to the Cora system under test. These classes perform the actions and check the outcomes.
-
-* '''Test Utilities'''  
-  Helpers and utility fixtures supporting common test tasks across suites.
-
-!2 Purpose of the Repository
-
+!2 Purpose
 The repository serves as both:
-* '''Test Execution Platform''' – Enable direct execution of acceptance tests via FitNesse.
-* '''Living Documentation''' – Provide a readable specification of system behavior accessible to both developers and stakeholders.
-* '''Quality Assurance''' – Ensure consistency between system implementation and expected functionality.
+ * '''Living Documentation''' – Provides a readable specification of system behavior accessible to both developers and stakeholders.
+ * '''Quality Assurance''' – Ensures consistency between the system implementation and the expected functionality.
+ * '''Test Execution Platform''' – Enables direct execution of acceptance tests.
 
+!3 Intention
+The intention is to create pages that explain specific functions. Each page should describe the purpose of the function, define the acceptance criteria, and include tests for metadata definitions as well as tests for the function itself, covering all relevant actions.
 
-CoraTests
-
-DocumentationPage
+!3 FitNesse Structure
+ * '''CoraTests''' – Contains all documentation and tests.
+ * '''DocumentationPage''' – Legacy documentation that will be integrated into '''!-CoraTests-!'''.
+ * '''HelperPages''' – Helper and utility fixtures supporting common test tasks across the test suites.
 
 !note FitNesse ${FITNESSE_VERSION}

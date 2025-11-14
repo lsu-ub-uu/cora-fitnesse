@@ -1,8 +1,7 @@
 ---
 Suite
 ---
-
-!***> SuiteSetUp for Fitnesse Example
+!***> Set up FitNesse test data
 !include -seamless .HelperPages.Data.ExamplesPool
 
 *!
