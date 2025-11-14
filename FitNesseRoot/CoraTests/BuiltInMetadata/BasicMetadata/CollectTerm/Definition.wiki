@@ -105,18 +105,6 @@ Static
 !| CheckRecordTypeFixture |
 | id | assertDefinitionIs? |
 | collectTerm | ${collectTermGroupDefinition} |
-
-
-!***> Validate record type exists
-!| RecordEndpointFixture |
-| authToken | type | id | testReadRecordAndStoreJson? | getStatusType? |
-| $adminAuthToken | recordType | collectTerm | | OK |
-*!
-!***> Validate the definition of metadata
-!| DefinitionCompareFixture |
-| authToken | recordId | getDefinitionView? |
-| $adminAuthToken | collectTermGroup | ${collectTermGroupDefinition} |
-*!
 *!
 
 !2 Collect permission term
@@ -132,9 +120,9 @@ update
 *!
 !***> Validate the definition of metadata
 !| DefinitionCompareFixture |
-| authToken | recordId | getDefinitionView? |
-| $adminAuthToken | collectPermissionTermNewGroup | ${collectPermissionTermNewGroupDefinition} |
-| $adminAuthToken | collectPermissionTermGroup | ${collectPermissionTermGroupDefinition} |
+| recordId | getDefinitionView? |
+| collectPermissionTermNewGroup | ${collectPermissionTermNewGroupDefinition} |
+| collectPermissionTermGroup | ${collectPermissionTermGroupDefinition} |
 *!
 *!
 
@@ -151,9 +139,9 @@ update
 *!
 !***> Validate the definition of metadata
 !| DefinitionCompareFixture |
-| authToken | recordId | getDefinitionView? |
-| $adminAuthToken | collectIndexTermNewGroup | ${collectIndexTermNewGroupDefinition} |
-| $adminAuthToken | collectIndexTermGroup | ${collectIndexTermGroupDefinition} |
+| recordId | getDefinitionView? |
+| collectIndexTermNewGroup | ${collectIndexTermNewGroupDefinition} |
+| collectIndexTermGroup | ${collectIndexTermGroupDefinition} |
 *!
 *!
 
@@ -170,9 +158,9 @@ update
 *!
 !***> Validate the definition of metadata
 !| DefinitionCompareFixture |
-| authToken | recordId | getDefinitionView? |
-| $adminAuthToken | collectStorageTermNewGroup | ${collectStorageTermNewGroupDefinition} |
-| $adminAuthToken | collectStorageTermGroup | ${collectStorageTermGroupDefinition} |
+| recordId | getDefinitionView? |
+| collectStorageTermNewGroup | ${collectStorageTermNewGroupDefinition} |
+| collectStorageTermGroup | ${collectStorageTermGroupDefinition} |
 *!
 *!
 

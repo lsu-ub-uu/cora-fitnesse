@@ -1,5 +1,5 @@
 !***> The definition must be correct for unique
 !| DefinitionCompareFixture |
-| authToken | recordId | getDefinitionView? |
-| $adminAuthToken | uniqueGroup | ${uniqueDefinition} |
+| recordId | getDefinitionView? |
+| uniqueGroup | ${uniqueDefinition} |
 *!
