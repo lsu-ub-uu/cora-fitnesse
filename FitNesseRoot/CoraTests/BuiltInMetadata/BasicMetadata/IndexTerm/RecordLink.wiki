@@ -13,6 +13,6 @@ ${IndexTermDefinition}
 }}}
 !***> Validate the definition of indexTerm
 !| DefinitionCompareFixture |
-| authToken | recordId | getDefinitionView? |
-| $adminAuthToken | indexTermLink | ${IndexTermDefinition} |
+| recordId | getDefinitionView? |
+| indexTermLink | ${IndexTermDefinition} |
 *!

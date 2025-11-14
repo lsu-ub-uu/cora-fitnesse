@@ -1,0 +1,10 @@
+!3 Definition for validation type: ${validationTypeId}
+Validates record type: '''${recordTypeId}'''
+Metadata for create:
+{{{ ${createValidationTypeDefinition} }}}Metadata for update:
+{{{ ${updateValidationTypeDefinition} }}}
+!***> '''Test validation type ${validationTypeId}'''
+!| CheckValidationType |
+| id | validatesRecordType? | createDefinitionIs? | updateDefinitionIs? |
+| ${validationTypeId} | ${recordTypeId} | ${createValidationTypeDefinition} | ${updateValidationTypeDefinition} |
+*!

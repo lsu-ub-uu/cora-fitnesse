@@ -72,8 +72,8 @@ Read the metadatagroup for later verification
 | metadata | validationTypeNewGroup | |
 
 !| DefinitionCompareFixture |
-| authToken | recordId | getDefinitionView? |
-| $adminAuthToken | validationTypeNewGroup | ${validationTypeNewGroupDefinition} |
+| recordId | getDefinitionView? |
+| validationTypeNewGroup | ${validationTypeNewGroupDefinition} |
 *!
 
 !***> Verify definition of validationTypeGroup
@@ -85,7 +85,7 @@ Read the metadatagroup for later verification
 | metadata | validationTypeGroup | |
 
 !| DefinitionCompareFixture |
-| authToken | recordId | getDefinitionView? |
-| $adminAuthToken | validationTypeGroup | ${validationTypeGroupDefinition} |
+| recordId | getDefinitionView? |
+| validationTypeGroup | ${validationTypeGroupDefinition} |
 *!
 *!

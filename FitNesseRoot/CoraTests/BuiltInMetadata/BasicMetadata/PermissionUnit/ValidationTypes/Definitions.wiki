@@ -36,8 +36,8 @@ ${permissionUnitNewGroupDefinition}
 }}}
 !***> permissionUnitNewGroup definition test
 !| DefinitionCompareFixture |
-| authToken | recordId | getDefinitionView? |
-| $adminAuthToken | permissionUnitNewGroup | ${permissionUnitNewGroupDefinition} |
+| recordId | getDefinitionView? |
+| permissionUnitNewGroup | ${permissionUnitNewGroupDefinition} |
 *!
 *!
 !***> '''Definition for update'''
@@ -46,7 +46,7 @@ ${permissionUnitGroupDefinition}
 }}}
 !***> permissionUnitGroup definition test 
 !| DefinitionCompareFixture |
-| authToken | recordId | getDefinitionView? |
-| $adminAuthToken | permissionUnitGroup | ${permissionUnitGroupDefinition} |
+| recordId | getDefinitionView? |
+| permissionUnitGroup | ${permissionUnitGroupDefinition} |
 *!
 *!

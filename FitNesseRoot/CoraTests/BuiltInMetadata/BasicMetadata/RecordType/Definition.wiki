@@ -83,8 +83,8 @@ ${recordTypeGroupDefinition}
 *!
 !***> Validate the definition of record info group
 !| DefinitionCompareFixture |
-| authToken | recordId | getDefinitionView? |
-| $adminAuthToken | recordTypeNewGroup | ${recordTypeNewGroupDefinition} |
-| $adminAuthToken | recordTypeGroup | ${recordTypeGroupDefinition} |
+| recordId | getDefinitionView? |
+| recordTypeNewGroup | ${recordTypeNewGroupDefinition} |
+| recordTypeGroup | ${recordTypeGroupDefinition} |
 *!
 *!

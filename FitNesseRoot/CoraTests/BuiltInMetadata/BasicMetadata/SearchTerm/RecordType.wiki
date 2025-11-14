@@ -46,12 +46,12 @@ ${SearchTermGroupDefinition}
 }}}
 !***> Validate the definitions of searchTerm
 !| DefinitionCompareFixture |
-| authToken | recordId | getDefinitionView? |
-| $adminAuthToken | searchTermNewGroup | ${SearchTermNewGroupDefinition} |
+| recordId | getDefinitionView? |
+| searchTermNewGroup | ${SearchTermNewGroupDefinition} |
 
 !| DefinitionCompareFixture |
-| authToken | recordId | getDefinitionView? |
-| $adminAuthToken | searchTermGroup | ${SearchTermGroupDefinition} |
+| recordId | getDefinitionView? |
+| searchTermGroup | ${SearchTermGroupDefinition} |
 *!
 
 !***> Read RecordType searchTerm
