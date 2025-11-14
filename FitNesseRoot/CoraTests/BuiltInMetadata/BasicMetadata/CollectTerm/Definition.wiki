@@ -1,28 +1,9 @@
 ---
 Static
 ---
-!3 Definition for Record type
-!*< Setup record type definition
-!define collectTermGroupDefinition {!-collectTerm type:{index, permission, storage} (group)
-	recordInfo (group, 1-1, noConstraint)
-		id (textVariable, 1-1, noConstraint, I)
-		type (recordLink, 1-1, noConstraint)
-		validationType (recordLink, 1-1, noConstraint)
-		dataDivider (recordLink, 1-1, noConstraint, P, I)
-		createdBy (recordLink, 1-1, noConstraint)
-		permissionUnit (recordLink, 0-X, noConstraint)
-		tsCreated (textVariable, 1-1, noConstraint)
-		updated (group, 1-X, noConstraint)
-			updatedBy (recordLink, 1-1, noConstraint)
-			tsUpdated (textVariable, 1-1, noConstraint)
-	nameInData (textVariable, 0-1, noConstraint)
-	extraData (group, 1-1, noConstraint)
-		indexFieldName (textVariable, 0-1, noConstraint)
-		indexType (collectionVariable, 0-1, noConstraint)
-		permissionKey (textVariable, 0-1, noConstraint)
-		mode (collectionVariable, 0-1, noConstraint)
-		storageKey (textVariable, 0-1, noConstraint)-!}
-		
+
+!*< Setup validation type definition
+	
 !define collectPermissionTermNewGroupDefinition {!-collectPermissionTerm type:{permission} (group)
 	recordInfo (group, 1-1, noConstraint)
 		id (textVariable, 1-1, noConstraint, I)
@@ -100,13 +81,6 @@ Static
 	extraData (group, 1-1, noConstraint)
 		storageKey (textVariable, 1-1, noConstraint)-!}
 *!
-{{{ ${collectTermGroupDefinition} }}}
-!***> '''Validate record type collectTerm'''
-!| CheckRecordTypeFixture |
-| id | assertDefinitionIs? |
-| collectTerm | ${collectTermGroupDefinition} |
-*!
-
 !2 Collect permission term
 create
 {{{ ${collectPermissionTermNewGroupDefinition} }}}
