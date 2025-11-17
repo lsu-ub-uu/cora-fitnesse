@@ -63,10 +63,16 @@ A permission term can have two modes: '''standard''' or '''state'''.
 
 !2 Test for permission terms using '''standard''' mode
  *'''Case 1: Create a permission term''' – Verify that a permission term can be created with mode standard, including nameInData, permissionKey, and mode.
- *'''Case 2: Grant access to a specific value''' – Verify that a user with a permission term for a specific value (e.g., system.red) cannot create records with that value.
- *'''Case 3: Grant access to a specific value''' – Verify that a user with a permission term for a specific value (e.g., system.red) can access records with that value.
- *'''Case 4: Deny access to unauthorized value''' – Verify that a user without a permission term for a specific value (e.g., system.blue) cannot view or modify records containing that value.
- *'''Case 5: Deny setting unauthorized value''' – Verify that a user cannot set a field to a value for which they do not have a standard permission term.
+ *'''Case 2: Deny create record without granted access''' – Verify that a user without permission on specific term cannot create any record.
+ *'''Case 3: Deny create record without granted access''' – Verify that a user with permission term for '''system.red''' cannot create a record with value '''blue'''.
+ *'''Case 4: Allow create record with granted access''' – Verify that a user with a permission term set to '''system.red''' can create records with that value.
+ *'''Case 6: Deny read without granted access''' – Verify that a user without a permission term '''system.blue''' cannot read records containing that value.
+ *'''Case 5: Allow read with granted access''' – Verify that a user with a permission term '''system.red''' can read records with that value.
+ *'''Case 7: Deny update without granted access''' – Verify that a user without any permission term set cannot update records containing that value.
+ *'''Case 8: Deny update without granted access''' – Verify that a user without a permission term '''system.blue''' cannot update records containing that value.
+ *'''Case 9: Deny delete without appropiate access''' – Verify that a user without any permission term cannot delete the record.
+ *'''Case 10: Deny delete without appropiate access''' – Verify that a user without a permission term '''system.red''' cannot delete the record.
+ *'''Case 11: Allow delete with appropiate access''' – Verify that a user with a permission term '''system.red''' can delete the record.
 
 !***> Case 1
 !define currentAuthToken {$adminAuthToken}
@@ -77,11 +83,69 @@ A permission term can have two modes: '''standard''' or '''state'''.
 *!
 
 !***> Case 2
+!***> Update fitnesseGroup. Set permission term to fitnesseOnlyOneMetadataTextVar
+!define fitnessePermissionTermName {standardPermissionTerm}
+!define fitnessePermissionTermValue {system.red}
+!define currentAuthToken {$adminAuthToken}
+!define recordType {metadata}
+!define recordId {fitnesseGroup}
+!define updateData {${fitnesseGroupPermissionTerm}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+!***> Create fitnesseRecord
+!define fitnesseRecordPermissionTermValue {red}
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define createData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"fitnesseOnlyOneTextVar","value":"red"}]}-!}
+!define expectedCreateResult {FORBIDDEN}
+!define expectedAnswer {}
+!include -seamless .HelperPages.createRecord
+*!
+*!
+
+!***> Case 3
 !***> Update fitnesse user with permissionTerm standardPermissionTerm and system.red
 !define fitnessePermissionTermName {standardPermissionTerm}
 !define fitnessePermissionTermValue {system.red}
 
 !***> Update fitnesseGroup. Set permission term to fitnesseOnlyOneMetadataTextVar
+!define currentAuthToken {$adminAuthToken}
+!define recordType {metadata}
+!define recordId {fitnesseGroup}
+!define updateData {${fitnesseGroupPermissionTerm}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> Update user. Give access to system.red
+!define addFitnesseRole {${addFitnessePermissionTerm}}
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+*!
+
+!***> Try to create fitnesseRecord with value '''blue'''
+!define fitnesseRecordPermissionTermValue {red}
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define createData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"fitnesseOnlyOneTextVar","value":"blue"}]}-!}
+!define expectedCreateResult {FORBIDDEN}
+!define expectedAnswer {}
+!include -seamless .HelperPages.createRecord
+*!
+*!
+
+!***> Case 4
+!***> Update fitnesse user with permissionTerm standardPermissionTerm and system.red
+!define fitnessePermissionTermName {standardPermissionTerm}
+!define fitnessePermissionTermValue {system.red}
+
+!***> Update fitnesseGroup. Set permission term to fitnesseOnlyOneMetadataTextVar
+!define currentAuthToken {$adminAuthToken}
 !define recordType {metadata}
 !define recordId {fitnesseGroup}
 !define updateData {${fitnesseGroupPermissionTerm}}
@@ -103,13 +167,14 @@ A permission term can have two modes: '''standard''' or '''state'''.
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordType}
 !define createData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"fitnesseOnlyOneTextVar","value":"red"}]}-!}
-!define expectedCreateResult {FORBIDDEN}
+!define expectedCreateResult {CREATED}
 !define expectedAnswer {}
 !include -seamless .HelperPages.createRecord
+!define fitnesseRecordIdToBeDeleted {$createdRecordId}
 *!
 *!
 
-!***> Case 3
+!***> Case 11
 !***> Update user. Give access to system.*
 !define fitnessePermissionTermValue {system.*}
 
@@ -122,17 +187,12 @@ A permission term can have two modes: '''standard''' or '''state'''.
 !include -seamless .HelperPages.updateRecord
 *!
 
-
-!define fitnessePermissionTermValue {system.red}
-!***> Create fitnesseRecord
-!define fitnesseRecordPermissionTermValue {red}
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordType}
-!define createData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"fitnesseOnlyOneTextVar","value":"red"}]}-!}
-!define expectedCreateResult {CREATED}
+!define recordId {$createdRecordId}
+!define expectedDeleteResult {OK}
 !define expectedAnswer {}
-!include -seamless .HelperPages.createRecord
-*!
+!include -seamless .HelperPages.deleteRecord
 *!
 
 !2 Test for permission terms using '''state''' mode
@@ -169,17 +229,11 @@ A permission term can have two modes: '''standard''' or '''state'''.
 !include -seamless .HelperPages.updateRecord
 *!
 
-
-
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | fitnesseRecordType | 1 | | OK |
-| $adminAuthToken | fitnesseRecordType | 2 | | OK |
-| $adminAuthToken | fitnesseRecordType | 3 | | OK |
 | $adminAuthToken | permissionRole | fitnessePermissionTermRole | | OK |
 | $adminAuthToken | permissionRule | fitnessePermissionTermRule | | OK |
 | $adminAuthToken | collectTerm | standardPermissionTerm | | OK |
 | $adminAuthToken | collectTerm | statePermissionTerm | | OK |
-
 *!
  
