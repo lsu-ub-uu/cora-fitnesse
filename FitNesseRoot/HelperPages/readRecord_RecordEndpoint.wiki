@@ -1,0 +1,8 @@
+---
+Static
+---
+!***> Read record for type: ${recordType} and id: ${recordId}
+!| RecordEndpointFixture |
+| authToken | type | id | testReadRecord? | getStatusType? |
+| ${currentAuthToken} | ${recordType} | ${recordId} | | ${expectedReadResult} |
+*!
