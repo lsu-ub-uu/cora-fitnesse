@@ -1,0 +1,180 @@
+---
+Test
+---
+!1 Trash bin
+
+The '''Trash bin''' function is a built-in feature in Cora that enables '''soft deletion''' of records.  
+When a record is placed “Trash bin”, it can no longer be used in the system, but '''!-MemberAdmins-!''' can still view it and restore it if needed.
+
+!2 What the function does
+ * Allows individual records of a record type to be marked as '''trashed'''.
+ * A trashed record has '''"useTrashBin" = true''' and is treated as deleted, but can be restored by setting the value to '''false'''.
+ * Typically, only privileged users may view, restore, or permanently remove trashed records.
+ * If the record type also uses the '''Visibility''' function, visibility is automatically set to '''unpublished''' when the record is trashed.
+ * A '''trashed''' record continues to be linked to other records, but:
+  * The '''unique''' function will ignore trashed records to keep the system consistent.
+  * When removing a record that a trashed record points to (incoming link), the system will ignore the incoming links from trashed records.
+
+!2 Why use the '''Trash bin''' function
+This function fulfills two key requirements:
+
+ * '''Retention of all records''' – No data is ever permanently removed unless explicitly purged.
+ * '''Safe deletion''' – Mistaken deletions can be easily recovered.
+
+'''Important:''' When restoring a trashed record, some links may be lost if those linked records do not use the same *Trash bin* function.
+
+!2 How to enable '''Trash bin''' on a record type
+ * Activate the function in the record type’s configuration (set "useTrashBin" = true).
+ * Ensure that the field '''trashBinCollectionVar''' exists '''exactly once (1–1)''' in the '''recordInfo''' definition for that record type. The field is already available in the system and can be reused.
+ * Grant the appropriate users privileges through the permission term '''trashBinPermissionTerm'''.
+
+Once enabled, the system automatically manages trashing, restoring, and any related visibility changes.
+
+!1 Use Cases for Trash bin
+
+The following use cases describe how the **Trash bin** function behaves in typical scenarios.
+They are written in the same structure as other Cora Access Control and Metadata tests.
+
+!2 Use Case 1: Move a record to Trash
+A user with the required privileges marks a record as '''useTrashBin = true'''.
+
+!3 Preconditions
+ * The record type has the '''Trash bin''' function enabled.
+ * The record contains the field '''trashBinCollectionVar''' in its recordInfo.
+ * The user has been granted the permission term '''trashBinPermissionTerm'''.
+
+!3 Expected Result
+ * The record is no longer available for normal system operations.
+ * The record’s visibility is automatically set to '''unpublished''' (if Visibility is used).
+ * The record remains stored and can be restored.
+ * The record is ignored by unique-checking functions.
+ * Incoming links from this record are ignored when the target record is deleted.
+
+----
+
+!2 Use Case 2: Restore a record from Trash
+A privileged user restores a previously trashed record.
+
+!3 Preconditions
+ * The record is marked with '''useTrashBin = true'''.
+ * The user has permission through '''trashBinPermissionTerm'''.
+
+!3 Expected Result
+ * Setting '''useTrashBin = false''' restores the record.
+ * The record becomes available again for system operations.
+ * Unique-checking logic will once again consider this record.
+ * Linked data is restored except for links that were removed while the record was trashed.
+ * If visibility was unpublished by the trashing event, it must be manually adjusted if needed.
+
+----
+
+!2 Use Case 3: View trashed records
+Only specific users may see records marked as trashed.
+
+!3 Preconditions
+ * The record is marked with '''useTrashBin = true'''.
+ * The user must have the permission term '''trashBinPermissionTerm'''.
+
+!3 Expected Result
+ * Users with permission can list, inspect, and restore trashed records.
+ * Users without permission cannot see trashed records at all.
+
+----
+
+!2 Use Case 4: Remove a record referenced by a trashed record
+A record that is referenced by a trashed record is removed from the system.
+
+!3 Preconditions
+ * Record A is trashed ('''useTrashBin = true''').
+ * Record A links to Record B through an incomingLink.
+ * Record B is being removed.
+
+!3 Expected Result
+ * The system ignores the incoming link from Record A because the source is trashed.
+ * Record B can be safely removed without dependency errors.
+ * No warnings or errors are produced due to the trashed record.
+
+----
+
+!2 Use Case 5: Check uniqueness when trashed records exist
+The system must only enforce uniqueness based on non-trashed records.
+
+!3 Preconditions
+ * Two records have the same value in a field that must be unique.
+ * One record is trashed ('''useTrashBin = true''').
+
+!3 Expected Result
+ * The unique constraint only applies to the non-trashed record.
+ * The system allows creation or update of another record with the same value.
+ * If a trashed record is restored, the system may raise a uniqueness conflict.
+
+----
+
+!2 Use Case 6: System behaviour when restoring leads to lost links
+A restored record may lose some relationships if those linked records use different deletion logic.
+
+!3 Preconditions
+ * A record is trashed.
+ * It links to other records that do not use the '''Trash bin''' function.
+ * Some of those linked records were removed while the record was trashed.
+
+!3 Expected Result
+ * The record can be restored.
+ * Links to removed records cannot be recovered.
+ * The restored record is still valid but may have missing relationships.
+
+!***> Prepare tests
+!define currentAuthToken {$adminAuthToken}
+
+!define fitnesseRecordTypeUsesTrashBin {!-{"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"fitnesseRecordType"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}],"name":"validationType"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"recordType"}],"name":"type"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseGroup"}],"name":"metadataId"},{"children":[{"name":"linkedRecordType","value":"search"},{"name":"linkedRecordId","value":"fitnesseSearch"}],"name":"search"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"presentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"menuPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"listPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"autocompletePresentationView"},{"name":"public","value":"false"},{"name":"idSource","value":"sequence"},{"name":"storeInArchive","value":"false"},{"repeatId":"0","name":"groupOfRecordType","value":"metadata"},{"name":"usePermissionUnit","value":"false"},{"name":"useTrashBin","value":"true"},{"name":"useVisibility","value":"false"},{"children":[{"name":"linkedRecordType","value":"sequence"},{"name":"linkedRecordId","value":"fitnesseSequence"}],"name":"sequence"}],"name":"recordType"}-!}
+Set use useTrashBin
+!define recordType {recordType}
+!define recordId {fitnesseRecordType}
+!define expectedAnswer {}
+!define updateData {${fitnesseRecordTypeUsesTrashBin}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+
+!define fitnesseRecordInfoGroupUsesTrashBin {!-{"children":[{"children":[{"name":"id","value":"fitnesseRecordInfoGroup"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadata"}],"name":"type"}],"name":"recordInfo"},{"name":"nameInData","value":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"recordInfoText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"recordInfoDefText"}],"name":"defTextId"},{"children":[{"repeatId":"1","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"idTextVar"}],"name":"ref"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"recordIdCollectIndexTerm"}],"name":"childRefCollectTerm","attributes":{"type":"index"}}],"name":"childReference"},{"repeatId":"5","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"recordTypeLink"}],"name":"ref"}],"name":"childReference"},{"repeatId":"3","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"createdByLink"}],"name":"ref"}],"name":"childReference"},{"repeatId":"4","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"dataDividerLink"}],"name":"ref"},{"children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}],"name":"childRefCollectTerm","attributes":{"type":"permission"}}],"name":"childReference"},{"repeatId":"6","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"X"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"permissionUnitLink"}],"name":"ref"}],"name":"childReference"},{"repeatId":"8","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"tsCreatedTextVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"10","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"X"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"updatedGroup"}],"name":"ref"}],"name":"childReference"},{"repeatId":"111","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"validationTypeLink"}],"name":"ref"}],"name":"childReference"}],"name":"childReferences"}],"name":"metadata","attributes":{"type":"group"}}-!}
+
+Set up trashBinCollectionVar  on fitnesseRecordInfoGroupUsesTrashBin
+!define recordType {metadata}
+!define recordId {fitnesseRecordInfoGroup}
+!define updateData {${fitnesseRecordInfoGroupUsesTrashBin}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> Clean up created data, metadata and texts
+!define currentAuthToken {$adminAuthToken}
+!***> Clean up changes on fitnesseRecordType
+!define recordType {recordType}
+!define recordId {fitnesseRecordType}
+!define updateData {${FITNESSE_RECORD_TYPE_UPDATE}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+!***> Clean up changes on fitnesseRecordInfoGroup
+!define recordType {metadata}
+!define recordId {fitnesseRecordInfoGroup}
+!define updateData {${FITNESSE_RECORDINFO_UPDATE}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+#!***> Clean changes on user
+#!define recordType {user}
+#!define recordId {121212}
+#!define addFitnesseRole {!--!}
+#!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+#!define expectedUpdateResult {OK}
+#!include -seamless .HelperPages.updateRecord
+#*!
+#
+#!| RecordEndpointFixture |
+#| authToken | type | id | testDeleteRecord? | getStatusType? |
+#| $adminAuthToken | permissionRole | fitnessePermissionTermRole | | OK |
+#| $adminAuthToken | permissionRule | fitnessePermissionTermRule | | OK |
+#| $adminAuthToken | collectTerm | standardPermissionTerm | | OK |
+#| $adminAuthToken | collectTerm | statePermissionTerm | | OK |
+*!
