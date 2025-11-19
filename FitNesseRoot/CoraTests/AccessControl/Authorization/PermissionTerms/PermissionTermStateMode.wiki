@@ -206,6 +206,7 @@ Static
 *!
 
 !***> Case 11
+The record is updated to blue, which the user has not grant. Then we try to read but it should be forbidden.
 !***> Update user. Give access to system.red
 !define fitnessePermissionTermValue {system.red}
 
@@ -223,8 +224,15 @@ Static
 !define recordId {$createdRecordId}
 !define updateData {${fitnessePermissionTermUpdateToBlueRecord}}
 !define expectedUpdateResult {OK}
-!define expectedAnswer {}
+!define expectedAnswer {!-=~/\{"name":"fitnesseOnlyOneTextVar","value":"blue"\}/-!}
 !include -seamless .HelperPages.updateRecord
+
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define recordId {$createdRecordId}
+!define expectedReadResult {FORBIDDEN}
+!define expectedAnswer {}
+!include -seamless .HelperPages.readRecord_RecordEndpoint
 *!
 
 !***> Prepare next test: Set value to red again.

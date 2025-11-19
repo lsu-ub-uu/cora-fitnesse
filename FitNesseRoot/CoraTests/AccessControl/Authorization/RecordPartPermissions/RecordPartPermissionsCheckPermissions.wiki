@@ -137,7 +137,6 @@ När man söker efter poster så ska varje post i resultatet bara innehålla de 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
 | $adminAuthToken | permissionRule | everything | ${everythingRuleForFitnesseAdminUser} | | OK |
-# | $adminAuthToken | permissionRule | fitnesseTextAdminRule | ${FITNESSE_TEXT_ADMIN_RULE} | | |
 
 *!
 !***> Clean up created data

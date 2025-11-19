@@ -100,7 +100,7 @@ A permission term can have two modes: '''standard''' or '''state'''.
  *'''Case 21: Allow update without granted access''' – Verify that a user with a permission term '''system.re*''' can update records containing '''red''' value.
  *'''Case 22: Allow delete with appropiate access''' – Verify that a user with a permission term '''system.re*''' can delete the record.
  
-!2 OBS MORE TESTS
+!2 OBS add more tests
  * Multiple values.
 
 !***> Tests
@@ -108,12 +108,6 @@ A permission term can have two modes: '''standard''' or '''state'''.
 *!
 
 !2 Use cases for permission terms using '''state''' mode
- * '''Case 1: Create a permission term''' – Verify that a permission term can be created with mode state, including nameInData, permissionKey, and mode.
- *'''Case 2: Grant access to a specific value''' – Verify that a user with a permission term for a specific value (e.g., system.red) can access records with that value.
- *'''Case 3: Allow setting restricted value''' – Verify that a user can set the field to a value they do not have access to if the permission term is in state mode.
- *'''Case 4: Enforce subsequent restriction''' – Verify that after changing a field to a restricted value, the user may lose access to the record if they do not have permission for the new value.
-
-!2 Use cases for permission terms using '''standard''' mode
  *'''Case 1: Create a permission term''' – Verify that a permission term can be created with mode state, including nameInData, permissionKey, and mode.
  *'''Case 2: Deny create record without granted access''' – Verify that a user '''without permission''' cannot create any record.
  *'''Case 3: Deny create record without granted access''' – Verify that a user with permission term for '''system.blue''' cannot create a record with value '''red'''.
