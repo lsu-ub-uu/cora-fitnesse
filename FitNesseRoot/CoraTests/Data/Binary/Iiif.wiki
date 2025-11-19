@@ -83,9 +83,9 @@ All cases will make sure there is no IIIF protocol information when the binary r
 !include -seamless .HelperPages.readRecordInXML
 *!
 !***> Cleanup case 1-3
+!define currentAuthToken {$adminAuthToken}
 !include -seamless .HelperPages.deleteRecord
 !***> Clean up fitnesse user rule
-!define currentAuthToken {$adminAuthToken}
 !define recordType {permissionRule}
 !define recordId {fitnesseBinaryReadOnAllVisibilitiesRule}
 !define permissionRulePartReadOnAllVisibilitiesRule {!-[{"name":"permissionRulePartValue","repeatId":"1","value":"system.binary"}]-!}

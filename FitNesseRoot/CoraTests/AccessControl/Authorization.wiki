@@ -18,16 +18,17 @@ The record type has settings that controls restrictions
  * visibility, if data is published or not, see [[visibility][Authorization.RecordTypeSettings.Visibility]]
 
 !3 Permission terms
-It is possible to mark that an data value from the record should be extracted from the data and used in the authorization system to control access to records of this record type. Permission terms are set up as part of the metadata definition for the record type, once they are defined must a user be given explicit permissions to the specific data to be able to perform actions on the record.
+It is possible to specify a data value from a record to be used by the authorization system to control access to records that contain a specific value in that field. Permission terms are defined as part of the record type’s metadata. Once defined, users must be explicitly granted permission for the relevant data values in order to perform actions on the corresponding records. [[Learn more][Authorization.3_PermissionTerm]]
+
 
 !3 Record parts
 Record parts limits read and write access to parts of a record, the settings has no effect on the restrictions on the entire record but they control access to parts of it. Record part restrictions are also set up as part of the metadata definition for the record type, and restricts read or read/write to parts of the record. 
-See [[record part][Authorization.RecordPart]] for details.
+See [[record part][Authorization.4_1_RecordPart]] for details.
 
 !2 Giving permissions
  * Rules, connects recordTypes, actions, permissionTerms and recordPartPermissions as a rule
  * Roles, connects different rules together as a role
  * User, has permission units permission has one or more roles, each role can get extra permissionTerms when connected to the user
 
-!contents -R2 -g -p -f -h
+!contents -R1 -g -p -f -h
 ----

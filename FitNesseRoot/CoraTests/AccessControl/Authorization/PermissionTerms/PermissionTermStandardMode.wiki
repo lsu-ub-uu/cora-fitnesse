@@ -1,0 +1,387 @@
+---
+Static
+---
+!***> Case 1
+!define currentAuthToken {$adminAuthToken}
+!define recordType {collectTerm}
+!define createData {${fitnessePermissionTermStandardMode}}
+!define expectedCreateResult {CREATED}
+!include -seamless .HelperPages.createRecord
+*!
+
+!***> Prepare next tests: Add permission term standardPermissionTerm on fitnesseOnlyOneMetadataTextVar (fitnesseGroup)
+!define fitnessePermissionTermName {standardPermissionTerm}
+!define currentAuthToken {$adminAuthToken}
+!define recordType {metadata}
+!define recordId {fitnesseGroup}
+!define updateData {${fitnesseGroupPermissionTerm}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> Case 2
+!***> Update user. No granted permission
+!define currentAuthToken {$adminAuthToken}
+!define addFitnesseRole {!--!}
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define createData {${fitnessePermissionTermCreateRecord}}
+!define expectedCreateResult {FORBIDDEN}
+!define expectedAnswer {}
+!include -seamless .HelperPages.createRecord
+*!
+
+!***> Case 3
+!***> Update user. Give access to system.blue
+!define fitnessePermissionTermValue {system.blue}
+
+!define currentAuthToken {$adminAuthToken}
+!define addFitnesseRole {${addFitnessePermissionTerm}}
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define createData {${fitnessePermissionTermCreateRecord}}
+!define expectedCreateResult {FORBIDDEN}
+!define expectedAnswer {}
+!include -seamless .HelperPages.createRecord
+*!
+
+!***> Case 4
+!***> Update user. Give access to system.red
+!define fitnessePermissionTermValue {system.red}
+
+!define currentAuthToken {$adminAuthToken}
+!define addFitnesseRole {${addFitnessePermissionTerm}}
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define createData {${fitnessePermissionTermCreateRecord}}
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {}
+!include -seamless .HelperPages.createRecord
+*!
+
+!***> Case 5
+!***> Update user. No granted permission
+!define currentAuthToken {$adminAuthToken}
+!define addFitnesseRole {!--!}
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define recordId {$createdRecordId}
+!define expectedReadResult {FORBIDDEN}
+!define expectedAnswer {}
+!include -seamless .HelperPages.readRecord_RecordEndpoint
+*!
+
+!***> Case 6
+!***> Update user. Give access to system.blue
+!define fitnessePermissionTermValue {system.blue}
+
+!define currentAuthToken {$adminAuthToken}
+!define addFitnesseRole {${addFitnessePermissionTerm}}
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define recordId {$createdRecordId}
+!define expectedReadResult {FORBIDDEN}
+!define expectedAnswer {}
+!include -seamless .HelperPages.readRecord_RecordEndpoint
+*!
+
+!***> Case 7
+!***> Update user. Give access to system.red
+!define fitnessePermissionTermValue {system.red}
+
+!define currentAuthToken {$adminAuthToken}
+!define addFitnesseRole {${addFitnessePermissionTerm}}
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define recordId {$createdRecordId}
+!define expectedReadResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.readRecord_RecordEndpoint
+*!
+
+!***> Case 8
+!***> Update user. No granted permission
+!define currentAuthToken {$adminAuthToken}
+!define addFitnesseRole {!--!}
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define recordId {$createdRecordId}
+!define updateData {${fitnessePermissionTermUpdateeRecord}}
+!define expectedUpdateResult {FORBIDDEN}
+!define expectedAnswer {}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> Case 9
+!***> Update user. Give access to system.blue
+!define fitnessePermissionTermValue {system.blue}
+
+!define currentAuthToken {$adminAuthToken}
+!define addFitnesseRole {${addFitnessePermissionTerm}}
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define recordId {$createdRecordId}
+!define updateData {${fitnessePermissionTermUpdateeRecord}}
+!define expectedUpdateResult {FORBIDDEN}
+!define expectedAnswer {}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> Case 10
+!***> Update user. Give access to system.red
+!define fitnessePermissionTermValue {system.red}
+
+!define currentAuthToken {$adminAuthToken}
+!define addFitnesseRole {${addFitnessePermissionTerm}}
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define recordId {$createdRecordId}
+!define updateData {${fitnessePermissionTermUpdateeRecord}}
+!define expectedUpdateResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> Case 11
+!***> Update user. Give access to system.red
+!define fitnessePermissionTermValue {system.red}
+
+!define currentAuthToken {$adminAuthToken}
+!define addFitnesseRole {${addFitnessePermissionTerm}}
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define recordId {$createdRecordId}
+!define updateData {${fitnessePermissionTermUpdateToBlueRecord}}
+!define expectedUpdateResult {FORBIDDEN}
+!define expectedAnswer {}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> Case 12
+!***> Update user. No granted permission
+!define currentAuthToken {$adminAuthToken}
+!define addFitnesseRole {!--!}
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define recordId {$createdRecordId}
+!define expectedDeleteResult {FORBIDDEN}
+!define expectedAnswer {}
+!include -seamless .HelperPages.deleteRecord
+*!
+
+!***> Case 13
+!***> Update user. Give access to system.blue
+!define fitnessePermissionTermValue {system.blue}
+
+!define currentAuthToken {$adminAuthToken}
+!define addFitnesseRole {${addFitnessePermissionTerm}}
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define recordId {$createdRecordId}
+!define expectedDeleteResult {FORBIDDEN}
+!define expectedAnswer {}
+!include -seamless .HelperPages.deleteRecord
+*!
+
+!***> Case 14
+!***> Update user. Give access to system.red
+!define fitnessePermissionTermValue {system.red}
+
+!define currentAuthToken {$adminAuthToken}
+!define addFitnesseRole {${addFitnessePermissionTerm}}
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define recordId {$createdRecordId}
+!define expectedDeleteResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.deleteRecord
+*!
+
+!***> Prepare next tests: Update user. Give access to system.*
+!define fitnessePermissionTermValue {system.*}
+
+!define currentAuthToken {$adminAuthToken}
+!define addFitnesseRole {${addFitnessePermissionTerm}}
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> Case 15
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define createData {${fitnessePermissionTermCreateRecord}}
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {}
+!include -seamless .HelperPages.createRecord
+*!
+
+!***> Case 16
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define recordId {$createdRecordId}
+!define expectedReadResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.readRecord_RecordEndpoint
+*!
+
+!***> Case 17
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define recordId {$createdRecordId}
+!define updateData {${fitnessePermissionTermUpdateeRecord}}
+!define expectedUpdateResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> Case 18
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define recordId {$createdRecordId}
+!define expectedDeleteResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.deleteRecord
+*!
+
+!***> Prepare next tests: Update user. Give access to system.re*
+!define fitnessePermissionTermValue {system.re*}
+
+!define currentAuthToken {$adminAuthToken}
+!define addFitnesseRole {${addFitnessePermissionTerm}}
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> Case 19
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define createData {${fitnessePermissionTermCreateRecord}}
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {}
+!include -seamless .HelperPages.createRecord
+*!
+
+!***> Case 20
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define recordId {$createdRecordId}
+!define expectedReadResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.readRecord_RecordEndpoint
+*!
+
+!***> Case 21
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define recordId {$createdRecordId}
+!define updateData {${fitnessePermissionTermUpdateeRecord}}
+!define expectedUpdateResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> Case 22
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define recordId {$createdRecordId}
+!define expectedDeleteResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.deleteRecord
+*!
