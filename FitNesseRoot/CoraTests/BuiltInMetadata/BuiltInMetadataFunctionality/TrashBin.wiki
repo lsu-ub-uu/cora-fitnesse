@@ -1,0 +1,67 @@
+---
+Test
+---
+!1 Trash bin
+
+The '''Trash bin''' function is a built-in feature in Cora that provides a mechanism for '''soft deletion''' of records.  
+When a record is moved to the Trash bin, it is excluded from normal system operations, while '''privileged users''' retain the ability to view and restore it when required.
+
+!2 What the function does
+ * Enables individual records of a record type to be marked as '''trashed'''.
+ * A trashed record has '''inTrashBin = true''' and is treated as deleted, but can be restored by setting the value to '''false'''.
+ * Access to trashed records—viewing, restoration, or permanent removal—is typically restricted to privileged users.
+ * If the record type also uses the '''Visibility''' function, visibility is automatically updated to '''unpublished''' when the record is trashed.
+ * A '''trashed''' record maintains its links to other records, but:
+  * The '''unique''' function excludes trashed records to ensure consistent uniqueness validation.
+  * When deleting a target record, incoming links from trashed records are ignored.
+
+!2 Why use the '''Trash bin''' function
+The function supports two essential objectives:
+
+ * '''Record retention''' – All records remain preserved for audit, recovery, or administrative review until explicitly purged.
+ * '''Safe deletion''' – Unintended deletions can be reversed without permanent data loss.
+
+'''Important:''' When restoring a trashed record, some links may be missing if the referenced records do not also support the '''Trash bin''' function.
+
+!2 How to enable '''Trash bin''' on a record type
+ * Enable the function in the '''record type''' configuration by setting '''useTrashBin = true'''.
+ * Confirm that the field '''trashBinCollectionVar''' is present '''exactly once (1–1)''' within the '''recordInfo''' definition for the record type. The field is predefined and can be reused without modification.
+ * Provide the necessary permissions to users via the permission term '''trashBinPermissionTerm'''.
+
+After activation, the system automatically handles trashing, restoration, and any associated updates to visibility and linked-record behavior.
+
+!2 Use cases
+ *'''Case 1: Deny create when not meeting the requirements''' – Creation is rejected when mandatory metadata for trash-bin functionality is missing.
+ *'''Case 2: Deny create record to trash bin''' – A record cannot be created directly in the trash bin, even when the user holds the grant '''system.*'''.
+ *'''Case 3: Allow create record''' – Creation is permitted when the record is not marked as in trash.
+ *⚠️'''Case 4: Deny set record to trash''' – A record cannot be set to in trash if it has incoming links.
+ *'''Case 5: Allow set record to trash''' – A record may be moved to the trash bin when permitted.
+  * '''Case 5.1:''' Users with the grant '''system.*''' are allowed to set a record in trash.
+  * '''Case 5.2:''' Users with the grant '''system.false''' are allowed to set a record in trash.
+ *'''Case 6: The record is no longer available for normal system operations''' – Standard users have no access to the record once it is in trash.
+  * '''Case 6.1:''' The record is inaccessible to users with the grant '''system.false'''.
+  * '''Case 6.2:''' Only users with the grant '''system.*''' may view or handle the record.
+  * '''Case 6.3:''' Incoming links pointing to this record are ignored when the target record is deleted.
+ *'''Case 7: Allow to restore record. No longer in trash''' – Only explicitly authorized users may restore a record from the trash bin.
+  * '''Case 7.1:''' The restored record becomes fully accessible again.
+  * ⚠️'''Case 7.4:''' Incoming links from this record are no longer ignored when the target record is deleted.
+  
+!2 Combo tests
+ *⚠️'''Case X: Record unpublished when record set into trash bin''' – Visibility and tsVisibility are automatically set to unpublished with updated timestamp.
+  * ⚠️'''Case X.Y:''' The record is excluded from unique-checking functions.
+  * ⚠️'''Case X.Z:''' The record is again considered by unique-checking functions.
+  
+'''OBS:''' The ⚠️ label indicates that no automated test has been implemented for the corresponding case.  
+
+
+!***> Prepare tests
+!include -seamless TrashBin.TrashBinSetup
+*!
+
+!***> Tests
+!include -seamless TrashBin.TrashBinTests
+*!
+
+!***> Clean up created data
+!include -seamless TrashBin.TrashBinCleanUp
+*!
