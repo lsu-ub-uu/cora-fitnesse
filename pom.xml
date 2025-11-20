@@ -19,7 +19,7 @@
 
 	<artifactId>fitnesse</artifactId>
 	<packaging>jar</packaging>
-	<version>2.70-SNAPSHOT</version>
+	<version>2.71-SNAPSHOT</version>
 	<name>Fitnesse</name>
 
 	<properties>
