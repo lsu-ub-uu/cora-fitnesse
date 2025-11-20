@@ -1,0 +1,148 @@
+---
+Static
+---
+!***> Case 1
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define createData {${fitnessePermissionTermCreateRecord}}
+!define expectedCreateResult {BAD_REQUEST}
+!define expectedAnswer {Error creating new record for recordType: fitnesseRecordType. The isInTrashBin field must be set when using the trash bin functionality.}
+!include -seamless .HelperPages.createRecord
+*!
+
+!***> Case 2
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define fitnesseTrashBinValue {true}
+!define createData {${fitnessePermissionTermCreateRecordWithTrashBin}}
+!define expectedCreateResult {BAD_REQUEST}
+!define expectedAnswer {Error creating new record for recordType: fitnesseRecordType. Setting a record as “in the trash bin” during creation is not allowed.}
+!include -seamless .HelperPages.createRecord
+*!
+
+!***> Case 3
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define fitnesseTrashBinValue {false}
+!define createData {${fitnessePermissionTermCreateRecordWithTrashBin}}
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {}
+!include -seamless .HelperPages.createRecord
+*!
+
+!***> Case 5.1
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define fitnesseTrashBinValue {true}
+!define updateData {${fitnessePermissionTermUpdateRecordWithTrashBin}}
+!define expectedUpdateResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> Case 5.2
+!***> Prepare test
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define fitnesseTrashBinValue {false}
+!define updateData {${fitnessePermissionTermUpdateRecordWithTrashBin}}
+!define expectedUpdateResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> Grant user with trashBinPermissionTerm = system.false
+!define currentAuthToken {$adminAuthToken}
+!define recordType {user}
+!define recordId {121212}
+!define fitnessePermissionTermName {trashBinPermissionTerm}
+!define fitnessePermissionTermValue {system.false}
+!define addFitnesseRole {${addFitnessePermissionTerm}}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define fitnesseTrashBinValue {true}
+!define recordId {$createdRecordId}
+!define updateData {${fitnessePermissionTermUpdateRecordWithTrashBin}}
+!define expectedUpdateResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> Case 6.1
+!define currentAuthToken {$adminAuthToken}
+!define recordType {user}
+!define recordId {121212}
+!define expectedReadResult {}
+!define expectedAnswer {}
+!include -seamless .HelperPages.readRecord_RecordEndpoint
+
+!define currentAuthToken {$adminAuthToken}
+!define recordType {recordType}
+!define recordId {fitnesseRecordType}
+!define expectedReadResult {}
+!define expectedAnswer {}
+!include -seamless .HelperPages.readRecord_RecordEndpoint
+
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define recordId {$createdRecordId}
+!define expectedReadResult {FORBIDDEN}
+!define expectedAnswer {}
+!include -seamless .HelperPages.readRecord_RecordEndpoint
+*!
+
+!***> Case 6.2
+!***> Grant user with trashBinPermissionTerm = system.*
+!define currentAuthToken {$adminAuthToken}
+!define recordType {user}
+!define recordId {121212}
+!define fitnessePermissionTermName {trashBinPermissionTerm}
+!define fitnessePermissionTermValue {system.*}
+!define addFitnesseRole {${addFitnessePermissionTerm}}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define recordId {$createdRecordId}
+!define expectedReadResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.readRecord_RecordEndpoint
+*!
+
+!***> Case 7.1
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define fitnesseTrashBinValue {false}
+!define recordId {$createdRecordId}
+!define updateData {${fitnessePermissionTermUpdateRecordWithTrashBin}}
+!define expectedUpdateResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.updateRecord
+
+!***> Grant user with trashBinPermissionTerm = system.false
+!define currentAuthToken {$adminAuthToken}
+!define recordType {user}
+!define recordId {121212}
+!define fitnessePermissionTermName {trashBinPermissionTerm}
+!define fitnessePermissionTermValue {system.false}
+!define addFitnesseRole {${addFitnessePermissionTerm}}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define recordId {$createdRecordId}
+!define expectedReadResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.readRecord_RecordEndpoint
+*!

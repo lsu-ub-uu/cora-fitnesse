@@ -1,0 +1,72 @@
+---
+Static
+---
+!***> Define variables
+!define fitnesseRecordTypeUsesTrashBin {!-{"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"fitnesseRecordType"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}],"name":"validationType"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"recordType"}],"name":"type"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseGroup"}],"name":"metadataId"},{"children":[{"name":"linkedRecordType","value":"search"},{"name":"linkedRecordId","value":"fitnesseSearch"}],"name":"search"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"presentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"menuPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"listPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"autocompletePresentationView"},{"name":"public","value":"false"},{"name":"idSource","value":"sequence"},{"name":"storeInArchive","value":"false"},{"repeatId":"0","name":"groupOfRecordType","value":"metadata"},{"name":"usePermissionUnit","value":"false"},{"name":"useTrashBin","value":"true"},{"name":"useVisibility","value":"false"},{"children":[{"name":"linkedRecordType","value":"sequence"},{"name":"linkedRecordId","value":"fitnesseSequence"}],"name":"sequence"}],"name":"recordType"}-!}
+
+!define fitnesseRecordInfoGroupUsesTrashBin {!-{"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"fitnesseRecordInfoGroup"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadata"}],"name":"type"}],"name":"recordInfo"},{"name":"nameInData","value":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"recordInfoText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"recordInfoDefText"}],"name":"defTextId"},{"children":[{"repeatId":"1","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"idTextVar"}],"name":"ref"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"recordIdCollectIndexTerm"}],"name":"childRefCollectTerm","attributes":{"type":"index"}}],"name":"childReference"},{"repeatId":"5","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"recordTypeLink"}],"name":"ref"}],"name":"childReference"},{"repeatId":"3","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"createdByLink"}],"name":"ref"}],"name":"childReference"},{"repeatId":"4","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"dataDividerLink"}],"name":"ref"},{"children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}],"name":"childRefCollectTerm","attributes":{"type":"permission"}}],"name":"childReference"},{"repeatId":"6","children":[{"name":"repeatMin","value":"0"},{"name":"repeatMax","value":"X"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"permissionUnitLink"}],"name":"ref"}],"name":"childReference"},{"repeatId":"8","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"tsCreatedTextVar"}],"name":"ref"}],"name":"childReference"},{"repeatId":"10","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"X"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"updatedGroup"}],"name":"ref"}],"name":"childReference"},{"repeatId":"111","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"validationTypeLink"}],"name":"ref"}],"name":"childReference"},{"repeatId":"222","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"trashBinCollectionVar"}],"name":"ref"},{"name":"childRefCollectTerm","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"-!${fitnessePermissionTermName}!-"}],"attributes":{"type":"permission"}}],"name":"childReference"}],"name":"childReferences"}],"name":"metadata","attributes":{"type":"group"}}-!}
+
+!define fitnesseRecordInfoNewGroupUsesTrashBin {!-{"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"fitnesseRecordInfoNewGroup"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataGroup"}],"name":"validationType"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadata"}],"name":"type"}],"name":"recordInfo"},{"name":"nameInData","value":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"recordInfoText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"recordInfoDefText"}],"name":"defTextId"},{"children":[{"repeatId":"2","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"dataDividerLink"}],"name":"ref"},{"children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}],"name":"childRefCollectTerm","attributes":{"type":"permission"}}],"name":"childReference"},{"repeatId":"111","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"validationTypeLink"}],"name":"ref"}],"name":"childReference"},{"repeatId":"222","children":[{"name":"repeatMin","value":"1"},{"name":"repeatMax","value":"1"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"trashBinCollectionVar"}],"name":"ref"}],"name":"childReference"}],"name":"childReferences"}],"name":"metadata","attributes":{"type":"group"}}-!}
+
+!define fitnessePermissionTermRule {!-{"name":"permissionRule","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnessePermissionTermRule"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRule"}]}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","repeatId":"0","value":"system.*"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","repeatId":"0","value":"system.fitnesseRecordType"}],"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"}]}-!}
+
+!define fitnessePermissionTermRole {!-{"name":"permissionRole","children":[{"name":"recordInfo","children":[{"name":"id","value":"fitnessePermissionTermRole"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRole"}]}]},{"name":"permissionRuleLink","repeatId":"0","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"fitnessePermissionTermRule"}]},{"name":"activeStatus","value":"active"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]}]}-!}
+
+!define addFitnessePermissionTerm {!-,{"name":"userRole","repeatId":"7175775086411622","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"fitnessePermissionTermRole"}]},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}],"name":"rule"},{"repeatId":"0","name":"value","value":"system.*"}],"name":"permissionTermRulePart"},{"repeatId":"430","children":[{"children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"-!${fitnessePermissionTermName}!-"}],"name":"rule"},{"repeatId":"0","name":"value","value":"-!${fitnessePermissionTermValue}!-"}],"name":"permissionTermRulePart"}]}-!}
+
+!define fitnessePermissionTermCreateRecord {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"fitnesseOnlyOneTextVar","value":"someValue"}]}-!}
+
+!define fitnessePermissionTermCreateRecordWithTrashBin {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"inTrashBin","value":"-!${fitnesseTrashBinValue}!-"}]},{"name":"fitnesseOnlyOneTextVar","value":"someValue"}]}-!}
+
+!define fitnessePermissionTermUpdateRecordWithTrashBin {!-{"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}],"name":"validationType"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"name":"id","value":"1"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}],"name":"type"},{"name":"inTrashBin","value":"-!${fitnesseTrashBinValue}!-"}],"name":"recordInfo"},{"name":"fitnesseOnlyOneTextVar","value":"someValue"}],"name":"fitnesseExample"}-!}
+*!
+
+!define currentAuthToken {$adminAuthToken}
+
+Set use useTrashBin
+!define recordType {recordType}
+!define recordId {fitnesseRecordType}
+!define expectedAnswer {}
+!define updateData {${fitnesseRecordTypeUsesTrashBin}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+
+
+Set up trashBinCollectionVar on fitnesseRecordInfoGroupUsesTrashBin
+!define recordType {metadata}
+!define recordId {fitnesseRecordInfoNewGroup}
+!define updateData {${fitnesseRecordInfoNewGroupUsesTrashBin}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+
+!define recordType {metadata}
+!define recordId {fitnesseRecordInfoGroup}
+!define fitnessePermissionTermName {trashBinPermissionTerm}
+!define updateData {${fitnesseRecordInfoGroupUsesTrashBin}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+
+!***> Create rules and roles
+
+!define currentAuthToken {$adminAuthToken}
+!define recordType {permissionRule}
+!define createData {${fitnessePermissionTermRule}}
+!define expectedCreateResult {CREATED}
+!include -seamless .HelperPages.createRecord
+
+!define recordType {permissionRole}
+!define createData {${fitnessePermissionTermRole}}
+!define expectedCreateResult {CREATED}
+!include -seamless .HelperPages.createRecord
+*!
+
+!***> Grant user with trashBinPermissionTerm = system.*
+!define recordType {user}
+!define recordId {121212}
+!define fitnessePermissionTermName {trashBinPermissionTerm}
+!define fitnessePermissionTermValue {system.*}
+!define addFitnesseRole {${addFitnessePermissionTerm}}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!

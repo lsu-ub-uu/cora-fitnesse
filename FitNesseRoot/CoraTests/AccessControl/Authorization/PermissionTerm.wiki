@@ -100,9 +100,6 @@ A permission term can have two modes: '''standard''' or '''state'''.
  *'''Case 21: Allow update without granted access''' – Verify that a user with a permission term '''system.re*''' can update records containing '''red''' value.
  *'''Case 22: Allow delete with appropiate access''' – Verify that a user with a permission term '''system.re*''' can delete the record.
  
-!2 OBS add more tests
- * Multiple values.
-
 !***> Tests
 !include -seamless PermissionTerms.PermissionTermStandardMode
 *!
@@ -140,8 +137,11 @@ A permission term can have two modes: '''standard''' or '''state'''.
 !include -seamless PermissionTerms.PermissionTermStateMode
 *!
 
-!2 OBS Use cases combos
- * '''Case 1''' – When the record type is set to '''isPublic''' then any user can read the record eventhough permissionTerms are set. It does not apply for '''create''', '''update''' and '''delete''', the user still need to be granted. TO_BE_TESTED_SOMEWHERE_ELSE 
+!2 ⚠️ Add extra tests
+ * Multiple values.
+ * '''Combo case''' – When the record type is set to '''isPublic''' then any user can read the record eventhough permissionTerms are set. It does not apply for '''create''', '''update''' and '''delete''', the user still need to be granted. TO_BE_TESTED_SOMEWHERE_ELSE 
+
+ '''OBS:''' The ⚠️ label indicates that no automated test has been implemented for the corresponding case.
 
 !***> Clean up created data, metadata and texts
 !define currentAuthToken {$adminAuthToken}
