@@ -10,3 +10,13 @@ Remove binary records
 Reset headers for smartrics fixture
 | Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
 | restfixture.default.headers | |
+
+!***> Clean changes on user
+!define currentAuthToken {$adminAuthToken}
+!define recordType {user}
+!define recordId {121212}
+!define addFitnesseRole {!--!}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
