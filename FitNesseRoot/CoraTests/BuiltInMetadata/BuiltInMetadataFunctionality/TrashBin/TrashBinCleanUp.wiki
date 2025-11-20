@@ -21,6 +21,24 @@ Static
 !include -seamless .HelperPages.deleteRecord
 *!
 
+!***> Clean up changes on fitnesseRecordInfoGroup
+!define currentAuthToken {$adminAuthToken}
+!define recordType {metadata}
+!define recordId {fitnesseRecordInfoGroup}
+!define updateData {${FITNESSE_RECORDINFO_UPDATE}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> Clean up changes on fitnesseRecordInfoNewGroup
+!define currentAuthToken {$adminAuthToken}
+!define recordType {metadata}
+!define recordId {fitnesseRecordInfoGroup}
+!define updateData {${FITNESSE_RECORDINFO_NEW_GROUP_UPDATE}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
 !***> Clean up changes on fitnesseRecordType
 !define currentAuthToken {$adminAuthToken}
 !define recordType {recordType}
@@ -30,23 +48,8 @@ Static
 !include -seamless .HelperPages.updateRecord
 *!
 
-!***> Clean up changes on fitnesseRecordInfoGroup
-!define recordType {metadata}
-!define recordId {fitnesseRecordInfoGroup}
-!define updateData {${FITNESSE_RECORDINFO_UPDATE}}
-!define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
-*!
-
-!***> Clean up changes on fitnesseRecordInfoNewGroup
-!define recordType {metadata}
-!define recordId {fitnesseRecordInfoGroup}
-!define updateData {${FITNESSE_RECORDINFO_NEW_GROUP_UPDATE}}
-!define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
-*!
-
 !***> Clean changes on user
+!define currentAuthToken {$adminAuthToken}
 !define recordType {user}
 !define recordId {121212}
 !define addFitnesseRole {!--!}
