@@ -1,7 +1,7 @@
 ---
 Test
 ---
-!1 Trash bin
+!1 🗑 Trash bin 
 
 The '''Trash bin''' function is a built-in feature in Cora that provides a mechanism for '''soft deletion''' of records.  
 When a record is moved to the Trash bin, it is excluded from normal system operations, while '''privileged users''' retain the ability to view and restore it when required.
@@ -31,8 +31,8 @@ The function supports two essential objectives:
 After activation, the system automatically handles trashing, restoration, and any associated updates to visibility and linked-record behavior.
 
 !2 Use cases
- *'''Case 1: Deny create when not meeting the requirements''' – Creation is rejected when mandatory metadata for trash-bin functionality is missing.
- *'''Case 2: Deny create record to trash bin''' – A record cannot be created directly in the trash bin, even when the user holds the grant '''system.*'''.
+ *'''Case 1: Deny create when not meeting the requirements''' – If the definition has isInTrashBin but the recordType is set to not use in trash.
+ *'''Case 2: Default "not in trash" when creatin a record''' – When creating a record missing isInTrashBin value, then it is defaulted to false.
  *'''Case 3: Allow create record''' – Creation is permitted when the record is not marked as in trash.
  *⚠️'''Case 4: Deny set record to trash''' – A record cannot be set to in trash if it has incoming links.
  *'''Case 5: Allow set record to trash''' – A record may be moved to the trash bin when permitted.

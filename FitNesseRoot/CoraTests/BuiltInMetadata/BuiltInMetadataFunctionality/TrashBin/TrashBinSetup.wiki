@@ -18,25 +18,19 @@ Static
 
 !define fitnessePermissionTermCreateRecordWithTrashBin {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"inTrashBin","value":"-!${fitnesseTrashBinValue}!-"}]},{"name":"fitnesseOnlyOneTextVar","value":"someValue"}]}-!}
 
+!define fitnessePermissionTermCreateRecordWithoutTrashBin {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"fitnesseOnlyOneTextVar","value":"someValue"}]}-!}
+
 !define fitnessePermissionTermUpdateRecordWithTrashBin {!-{"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}],"name":"validationType"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"name":"id","value":"1"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}],"name":"type"},{"name":"inTrashBin","value":"-!${fitnesseTrashBinValue}!-"}],"name":"recordInfo"},{"name":"fitnesseOnlyOneTextVar","value":"someValue"}],"name":"fitnesseExample"}-!}
 *!
 
 !define currentAuthToken {$adminAuthToken}
-
-Set use useTrashBin
-!define recordType {recordType}
-!define recordId {fitnesseRecordType}
-!define expectedAnswer {}
-!define updateData {${fitnesseRecordTypeUsesTrashBin}}
-!define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
-
 
 Set up trashBinCollectionVar on fitnesseRecordInfoGroupUsesTrashBin
 !define recordType {metadata}
 !define recordId {fitnesseRecordInfoNewGroup}
 !define updateData {${fitnesseRecordInfoNewGroupUsesTrashBin}}
 !define expectedUpdateResult {OK}
+!define expectedAnswer {}
 !include -seamless .HelperPages.updateRecord
 
 !define recordType {metadata}

@@ -4,19 +4,30 @@ Static
 !***> Case 1
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordType}
-!define createData {${fitnessePermissionTermCreateRecord}}
+!define fitnesseTrashBinValue {false}
+!define createData {${fitnessePermissionTermCreateRecordWithTrashBin}}
 !define expectedCreateResult {BAD_REQUEST}
-!define expectedAnswer {Error creating new record for recordType: fitnesseRecordType. The isInTrashBin field must be set when using the trash bin functionality.}
+!define expectedAnswer {Error creating new record for recordType: fitnesseRecordType. To use the trash bin function, you must first activate it on the record type.}
 !include -seamless .HelperPages.createRecord
+*!
+
+!***> Prepare next following test: Set fitnesseRecordType to useTrashBin
+Set use useTrashBin
+!define currentAuthToken {$adminAuthToken}
+!define recordType {recordType}
+!define recordId {fitnesseRecordType}
+!define expectedAnswer {}
+!define updateData {${fitnesseRecordTypeUsesTrashBin}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
 *!
 
 !***> Case 2
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordType}
-!define fitnesseTrashBinValue {true}
-!define createData {${fitnessePermissionTermCreateRecordWithTrashBin}}
-!define expectedCreateResult {BAD_REQUEST}
-!define expectedAnswer {Error creating new record for recordType: fitnesseRecordType. Setting a record as “in the trash bin” during creation is not allowed.}
+!define createData {${fitnessePermissionTermCreateRecordWithoutTrashBin}}
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {}
 !include -seamless .HelperPages.createRecord
 *!
 
