@@ -12,19 +12,11 @@ Static
 !define expectedUpdateResult {OK}
 !include -seamless .HelperPages.updateRecord
 *!
-!***> Clean up fitnesseRecordType instance
-!define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
-!define recordId {${firstCreatedId}}
-!define expectedDeleteResult {OK}
-!define expectedAnswer {}
-!include -seamless .HelperPages.deleteRecord
-*!
-!***> Delete record for type: ${recordType} and id: ${recordId}
+
 !| DeleteRecord |
-| recordType |  deleteRecord?  |
-| fitnesseRecordType | |
-*!
+| recordType |  deleteAllRecordsForRecordType?  |
+| fitnesseRecordType | OK |
+
 !***> Clean up fitnesseRecordType instance
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordType}
