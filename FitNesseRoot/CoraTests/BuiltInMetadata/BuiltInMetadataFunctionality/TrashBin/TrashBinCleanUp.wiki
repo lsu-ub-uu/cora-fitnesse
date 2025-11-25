@@ -18,7 +18,7 @@ Static
 !***> Clean up changes on fitnesseRecordInfoNewGroup
 !define currentAuthToken {$adminAuthToken}
 !define recordType {metadata}
-!define recordId {fitnesseRecordInfoGroup}
+!define recordId {fitnesseRecordInfoNewGroup}
 !define updateData {${FITNESSE_RECORDINFO_NEW_GROUP_UPDATE}}
 !define expectedUpdateResult {OK}
 !include -seamless .HelperPages.updateRecord
