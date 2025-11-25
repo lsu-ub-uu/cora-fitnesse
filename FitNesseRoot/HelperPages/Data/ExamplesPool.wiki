@@ -109,7 +109,7 @@ It creates a complete suite of test data. The goal is to generate all the test d
 
 !***> Creation of a standard fitnesse metadataGroup, definition for recordtype and update
 !define recordType {metadata}
-!define createData {${FITNESSE_GROUP_NEW}}
+!define createData {${FITNESSE_UPDATE_GROUP_ON_CREATE}}
 
 !include -seamless .HelperPages.createRecord
 *!

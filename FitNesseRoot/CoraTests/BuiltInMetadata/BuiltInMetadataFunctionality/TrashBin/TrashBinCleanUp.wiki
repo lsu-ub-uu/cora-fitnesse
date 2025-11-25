@@ -1,30 +1,10 @@
 ---
 Static
 ---
-!***> Grant user with trashBinPermissionTerm = system.*
-!define currentAuthToken {$adminAuthToken}
-!define recordType {user}
-!define recordId {121212}
-!define fitnessePermissionTermName {trashBinPermissionTerm}
-!define fitnessePermissionTermValue {system.*}
-!define addFitnesseRole {${addFitnessePermissionTerm}}
-!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
-!define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
-*!
-
 !| DeleteRecord |
 | recordType |  deleteAllRecordsForRecordType?  |
-| fitnesseRecordType | OK |
+| fitnesseRecordType | =~/OK/ |
 
-!***> Clean up fitnesseRecordType instance
-!define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
-!define recordId {$createdRecordId}
-!define expectedDeleteResult {OK}
-!define expectedAnswer {}
-!include -seamless .HelperPages.deleteRecord
-*!
 
 !***> Clean up changes on fitnesseRecordInfoGroup
 !define currentAuthToken {$adminAuthToken}
@@ -40,6 +20,15 @@ Static
 !define recordType {metadata}
 !define recordId {fitnesseRecordInfoGroup}
 !define updateData {${FITNESSE_RECORDINFO_NEW_GROUP_UPDATE}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> Clean up changes on fitnesseRecordInfoNewGroup
+!define currentAuthToken {$adminAuthToken}
+!define recordType {metadata}
+!define recordId {fitnesseGroup}
+!define updateData {${FITNESSE_UPDATE_GROUP_ON_UPDATE}}
 !define expectedUpdateResult {OK}
 !include -seamless .HelperPages.updateRecord
 *!
@@ -63,7 +52,12 @@ Static
 !include -seamless .HelperPages.updateRecord
 *!
 
-!| RecordEndpointFixture |
-| authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | permissionRole | fitnessePermissionTermRole | | OK |
-| $adminAuthToken | permissionRule | fitnessePermissionTermRule | | OK |
+!| DeleteRecord |
+| recordType | recordId | deleteRecord? |
+| permissionRole | fitnessePermissionTermRole | OK |
+| permissionRule | fitnessePermissionTermRule | OK |
+| presentation | fitnesseToFitnessePLink | OK |
+| presentation | fitnesseToFitnesseOutputPLink | OK |
+| metadata | fitnesseToFitnesseLink | OK |
+
+

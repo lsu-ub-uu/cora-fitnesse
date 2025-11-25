@@ -15,5 +15,10 @@ The intention is to create pages that explain specific functions. Each page shou
  * '''CoraTests''' – Contains all documentation and tests.
  * '''DocumentationPage''' – Legacy documentation that will be integrated into '''!-CoraTests-!'''.
  * '''HelperPages''' – Helper and utility fixtures supporting common test tasks across the test suites.
+ 
+ 
+!4 Interessting links
+[[User guide][https://fitnesse.org/FitNesse/UserGuide.html]]
+[[Debug mode][https://fitnesse.org/FitNesse/UserGuide/WritingAcceptanceTests/DebuggingFixtureCode.html]]
 
 !note FitNesse ${FITNESSE_VERSION}
