@@ -148,7 +148,7 @@ A permission term can have two modes: '''standard''' or '''state'''.
 !***> Clean up changes on fitnesseGroup
 !define recordType {metadata}
 !define recordId {fitnesseGroup}
-!define updateData {${FITNESSE_GROUP_UPDATE}}
+!define updateData {${FITNESSE_UPDATE_GROUP_ON_UPDATE}}
 !define expectedUpdateResult {OK}
 !include -seamless .HelperPages.updateRecord
 *!

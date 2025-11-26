@@ -169,7 +169,7 @@ Static
 | setHeader | Accept:application/vnd.cora.record+json!-
 -!Content-Type:application/vnd.cora.recordgroup+json!-
 -!authToken:$adminAuthToken |
-| setBody | ${FITNESSE_GROUP_UPDATE} |
+| setBody | ${FITNESSE_UPDATE_GROUP_ON_UPDATE} |
 | POST | /record/metadata/fitnesseGroup | 200 | | |
 *!
 !***> Delete the fitnesse StorageTerms for uniques

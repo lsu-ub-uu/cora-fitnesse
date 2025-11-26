@@ -1,25 +1,40 @@
 ---
 Static
 ---
+We expect not to be able to use the trash bin functionality, as it has not yet been configured for the record type, even though the definition includes the isInTrashBin field.
 !***> Case 1
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordType}
-!define createData {${fitnessePermissionTermCreateRecord}}
+!define fitnesseTrashBinValue {false}
+!define createData {${fitnessePermissionTermCreateRecordWithTrashBin}}
 !define expectedCreateResult {BAD_REQUEST}
-!define expectedAnswer {Error creating new record for recordType: fitnesseRecordType. The isInTrashBin field must be set when using the trash bin functionality.}
+!define expectedAnswer {Error creating new record for recordType: fitnesseRecordType. To use the trash bin function, you must first activate it on the record type.}
 !include -seamless .HelperPages.createRecord
 *!
 
+!***> Prepare next following test: Set fitnesseRecordType to useTrashBin
+!| UpdateRecordType |
+| id | idSource | public | usePermissionUnit | useVisibility | useTrashBin | storeInArchive | update? |
+| fitnesseRecordType | sequence | false | false | false | true | false | OK |
+*!
+
+We expect the system to default isInTrash to false when the field is not provided during record creation.
 !***> Case 2
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordType}
-!define fitnesseTrashBinValue {true}
-!define createData {${fitnessePermissionTermCreateRecordWithTrashBin}}
-!define expectedCreateResult {BAD_REQUEST}
-!define expectedAnswer {Error creating new record for recordType: fitnesseRecordType. Setting a record as “in the trash bin” during creation is not allowed.}
+!define createData {${fitnessePermissionTermCreateRecordWithoutTrashBin}}
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {}
 !include -seamless .HelperPages.createRecord
 *!
 
+!***> Prepare following tests: Store id from record A
+!| script | StringSupport |
+|note|store value from record created on case2|
+|$recordAId=|getValueFromVariable;|${recordId}|
+*!
+
+We expect to be able to create record B outside of the trash. Since the trash bin functionality relies on permission terms, we will not test creating records with different credentials. See [[Permission Terms][.CoraTests.AccessControl.Authorization.PermissionTerm]]
 !***> Case 3
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordType}
@@ -30,6 +45,48 @@ Static
 !include -seamless .HelperPages.createRecord
 *!
 
+!***> Prepare following tests: Store id from record B 
+!| script | StringSupport |
+|note|store value from record created on case3|
+|$recordBId=|getValueFromVariable;|${recordId}|
+*!
+
+!***> Prepare following tests: Link record A to link record B
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define fitnesseTrashBinValue {false}
+!define recordId {$recordAId}
+!define recordIdToLink {$recordBId}
+!define updateData {${fitnesseUpdateFitnesseRecordToLinkToAnotherFitnesseRecord}}
+!define expectedUpdateResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.updateRecord
+*!
+
+We expect the record B to not be moved to trash since it has incomming links from record A.
+!***> Case 4
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define fitnesseTrashBinValue {true}
+!define recordId {$recordBId}
+!define updateData {${fitnessePermissionTermUpdateRecordWithTrashBin}}
+!define expectedUpdateResult {METHOD_NOT_ALLOWED}
+!define expectedAnswer {!-Record with type: fitnesseRecordType and id: -!$recordBId!- could not be put in trash bin since other records are linking to it-!}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> Prepare following tests: Restore record A to NOT point record B anymore.
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define fitnesseTrashBinValue {false}
+!define recordId {$recordAId}
+!define updateData {${fitnessePermissionTermUpdateRecordWithTrashBin}}
+!define expectedUpdateResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.updateRecord
+*!
+
+We expect to be able to move the record B to trash since user has enough grants, '''system.*'''.
 !***> Case 5.1
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordType}
@@ -40,8 +97,7 @@ Static
 !include -seamless .HelperPages.updateRecord
 *!
 
-!***> Case 5.2
-!***> Prepare test
+!***> Prepare following tests: Restore record B, NOT in trash anymore, and grant user to system.false using premission term in mode '''state'''
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordType}
 !define fitnesseTrashBinValue {false}
@@ -49,7 +105,6 @@ Static
 !define expectedUpdateResult {OK}
 !define expectedAnswer {}
 !include -seamless .HelperPages.updateRecord
-*!
 
 !***> Grant user with trashBinPermissionTerm = system.false
 !define currentAuthToken {$adminAuthToken}
@@ -62,7 +117,10 @@ Static
 !define expectedUpdateResult {OK}
 !include -seamless .HelperPages.updateRecord
 *!
+*!
 
+We expect to be able to move the record B to trash since user has enough credentials system.false, but using a permission term in mode '''state'''.
+!***> Case 5.2
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordType}
 !define fitnesseTrashBinValue {true}
@@ -73,21 +131,8 @@ Static
 !include -seamless .HelperPages.updateRecord
 *!
 
+We expect that a user with the '''system.false''' grant cannot see record B in the trash, as they do not have sufficient credentials.
 !***> Case 6.1
-!define currentAuthToken {$adminAuthToken}
-!define recordType {user}
-!define recordId {121212}
-!define expectedReadResult {}
-!define expectedAnswer {}
-!include -seamless .HelperPages.readRecord_RecordEndpoint
-
-!define currentAuthToken {$adminAuthToken}
-!define recordType {recordType}
-!define recordId {fitnesseRecordType}
-!define expectedReadResult {}
-!define expectedAnswer {}
-!include -seamless .HelperPages.readRecord_RecordEndpoint
-
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordType}
 !define recordId {$createdRecordId}
@@ -96,8 +141,7 @@ Static
 !include -seamless .HelperPages.readRecord_RecordEndpoint
 *!
 
-!***> Case 6.2
-!***> Grant user with trashBinPermissionTerm = system.*
+!***> Prepare following tests: Grant user with trashBinPermissionTerm = system.*
 !define currentAuthToken {$adminAuthToken}
 !define recordType {user}
 !define recordId {121212}
@@ -109,6 +153,8 @@ Static
 !include -seamless .HelperPages.updateRecord
 *!
 
+We expect that the user can now see record B in the trash, as they have sufficient credentials.
+!***> Case 6.2
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordType}
 !define recordId {$createdRecordId}
@@ -117,7 +163,43 @@ Static
 !include -seamless .HelperPages.readRecord_RecordEndpoint
 *!
 
-!***> Case 7.1
+!***> Prepare following tests: Link record created on case 3 to link record created on case 2
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define fitnesseTrashBinValue {true}
+!define recordId {$recordBId}
+!define recordIdToLink {$recordAId}
+!define updateData {${fitnesseUpdateFitnesseRecordToLinkToAnotherFitnesseRecord}}
+!define expectedUpdateResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.updateRecord
+*!
+
+We expect that it should be possible to move record A to the trash even though it has incoming links from record B, because record B is in trash, which means that its link is not counted.
+!***> Case 6.3
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define fitnesseTrashBinValue {true}
+!define updateData {${fitnessePermissionTermUpdateRecordWithTrashBin}}
+!define recordId {$recordAId}
+!define expectedUpdateResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> Prepare following tests: Restore case 3 record
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define fitnesseTrashBinValue {true}
+!define updateData {${fitnessePermissionTermUpdateRecordWithTrashBin}}
+!define recordId {$recordBId}
+!define expectedUpdateResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.updateRecord
+*!
+
+We expect to be able to restore record B from the trash. After restoration, record B can be read by users who are granted permission to see only records outside the trash bin '''system.false'''  
+!***> Case 7
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordType}
 !define fitnesseTrashBinValue {false}
