@@ -2,6 +2,22 @@
 Suite
 ---
 !***> Set up FitNesse test data
+
+!| RememberRecordState |
+| forgetAllRecords? |
+| OK |
+
+!| RememberRecordState |
+| type           | id                | version    | remember? |
+| user           | 121212            | beforeTest | OK        |
+| user           | 131313            | beforeTest | OK        |
+| permissionRole | fitnesseTextAdmin | beforeTest | OK        |
+
 !include -seamless .HelperPages.Data.ExamplesPool
 
+!| RememberRecordState |
+| type | id     | version | remember? |
+| user | 121212 | test    | OK        |
+| user | 131313 | test    | OK        |
 *!
+

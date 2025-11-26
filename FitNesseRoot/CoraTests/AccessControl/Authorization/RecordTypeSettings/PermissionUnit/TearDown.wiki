@@ -1,19 +1,17 @@
 !***> Clean up test
 !***> Remove permission units from fitnesseUser
 !define currentAuthToken {$adminAuthToken}
-!include -seamless .HelperPages.Data.makeFitnesseUserTestReadyWithCommonTestData
+#!include -seamless .HelperPages.Data.makeFitnesseUserTestReadyWithCommonTestData
 
 !| RecordEndpointFixture |
 | authToken|type | id | testDeleteRecord? | getStatusType? |
 | $adminAuthToken | fitnesseRecordTypeWithPermissionUnit | $nonAllowedFitnesseRecordWithPermissionUnitId ||OK|
 
-!include -seamless .HelperPages.Data.makeFitnesseAdminUserTestReadyWithCommonTestData
-
-# Restore fitnesseTextAdmin (remove permission created in test)
-!define recordType {permissionRole}
-!define recordId {fitnesseTextAdmin}
-!define updateData {${FITNESSE_TEXT_ADMIN_ROLE}}
-!include -seamless .HelperPages.updateRecord
+!| RememberRecordState |
+| type           | id                | version    | memoryToStorage? |
+| permissionRole | fitnesseTextAdmin | beforeTest | OK               |
+| user           | 121212            | test       | OK               |
+| user           | 131313            | beforeTest | OK               |
 
 *!
 !***> Remove created data

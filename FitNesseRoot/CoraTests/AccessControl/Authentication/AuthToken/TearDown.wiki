@@ -1,4 +1,8 @@
-!include -seamless .HelperPages.Data.makeFitnesseUserTestReadyWithCommonTestData
+#!include -seamless .HelperPages.Data.makeFitnesseUserTestReadyWithCommonTestData
+!| RememberRecordState |
+| type | id     | version | memoryToStorage? |
+| user | 121212 | test    | OK               |
+
 !***> Clean up created data
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |

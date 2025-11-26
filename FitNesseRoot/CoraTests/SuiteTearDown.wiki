@@ -2,26 +2,13 @@
 Suite
 ---
 !***> Clean up example fitnesse pool
-!***> Update fitnesse user. Add fitnesseBinaryReadOnAllVisibilitiesRole role.
 
-!define addfitnesseBinaryReadOnAllVisibilitiesRole {!--!}
+!| RememberRecordState |
+| type | id     | version    | memoryToStorage? |
+| user | 121212 | beforeTest | OK               |
+| user | 131313 | beforeTest | OK               |
 
 !define currentAuthToken {$adminAuthToken}
-
-!define recordType {user}
-!define recordId {121212}
-!define updateData {${FITNESSE_USER_ORIGINAL_DATA}}
-!define expectedAnswer {}
-!define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
-
-!define recordType {user}
-!define recordId {131313}
-!define updateData {${FITNESSE_ADMIN_USER_ORIGINAL_DATA}}
-!define expectedAnswer {}
-!define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
-*!
 
 !***> Update fitnesseSearch to point metadata in order to be able to delete it
 !define recordType {search}
