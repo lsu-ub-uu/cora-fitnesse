@@ -34,12 +34,9 @@ Static
 *!
 
 !***> Clean up changes on fitnesseRecordType
-!define currentAuthToken {$adminAuthToken}
-!define recordType {recordType}
-!define recordId {fitnesseRecordType}
-!define updateData {${FITNESSE_RECORD_TYPE_UPDATE}}
-!define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!| UpdateRecordType |
+| id | idSource | public | usePermissionUnit | useVisibility | useTrashBin | storeInArchive | update? |
+| fitnesseRecordType | sequence | false | false | false | false | false | OK |
 *!
 
 !***> Clean changes on user

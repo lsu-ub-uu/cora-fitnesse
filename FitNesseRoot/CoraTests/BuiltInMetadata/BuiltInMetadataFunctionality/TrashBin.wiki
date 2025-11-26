@@ -47,14 +47,6 @@ Most of the functionality uses permission term in mode '''state'''. Please see [
   * '''Case 6.3:''' Incoming links pointing to this record are ignored when the target record is deleted.
  *'''Case 7: Allow to restore record. No longer in trash''' – Only explicitly authorized users may restore a record from the trash bin.
   
-!2 Combo tests
- *⚠️'''Case X: Record unpublished when record set into trash bin''' – Visibility and tsVisibility are automatically set to unpublished with updated timestamp.
-  * ⚠️'''Case X.Y:''' The record is excluded from unique-checking functions.
-  * ⚠️'''Case X.Z:''' The record is again considered by unique-checking functions.
-  
-'''OBS:''' The ⚠️ label indicates that no automated test has been implemented for the corresponding case.  
-
-
 !***> Prepare tests
 !include -seamless TrashBin.TrashBinSetup
 *!

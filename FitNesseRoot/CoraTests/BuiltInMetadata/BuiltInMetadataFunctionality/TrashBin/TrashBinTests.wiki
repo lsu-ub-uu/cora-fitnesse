@@ -13,14 +13,9 @@ We expect not to be able to use the trash bin functionality, as it has not yet b
 *!
 
 !***> Prepare next following test: Set fitnesseRecordType to useTrashBin
-Set use useTrashBin
-!define currentAuthToken {$adminAuthToken}
-!define recordType {recordType}
-!define recordId {fitnesseRecordType}
-!define expectedAnswer {}
-!define updateData {${fitnesseRecordTypeUsesTrashBin}}
-!define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!| UpdateRecordType |
+| id | idSource | public | usePermissionUnit | useVisibility | useTrashBin | storeInArchive | update? |
+| fitnesseRecordType | sequence | false | false | false | true | false | OK |
 *!
 
 We expect the system to default isInTrash to false when the field is not provided during record creation.
@@ -61,7 +56,8 @@ We expect to be able to create record B outside of the trash. Since the trash bi
 !define recordType {fitnesseRecordType}
 !define fitnesseTrashBinValue {false}
 !define recordId {$recordAId}
-!define updateData {!-{"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}],"name":"validationType"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"name":"id","value":"1"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}],"name":"type"},{"name":"inTrashBin","value":"-!${fitnesseTrashBinValue}!-"}],"name":"recordInfo"},{"name":"fitnesseOnlyOneTextVar","value":"someValue"},{"children":[{"name":"linkedRecordType","value":"fitnesseRecordType"},{"name":"linkedRecordId","value":"-!$recordBId!-"}],"name":"anotherFitnesse"}],"name":"fitnesseExample"}-!}
+!define recordIdToLink {$recordBId}
+!define updateData {${fitnesseUpdateFitnesseRecordToLinkToAnotherFitnesseRecord}}
 !define expectedUpdateResult {OK}
 !define expectedAnswer {}
 !include -seamless .HelperPages.updateRecord
@@ -172,7 +168,8 @@ We expect that the user can now see record B in the trash, as they have sufficie
 !define recordType {fitnesseRecordType}
 !define fitnesseTrashBinValue {true}
 !define recordId {$recordBId}
-!define updateData {!-{"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}],"name":"validationType"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"name":"id","value":"1"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}],"name":"type"},{"name":"inTrashBin","value":"-!${fitnesseTrashBinValue}!-"}],"name":"recordInfo"},{"name":"fitnesseOnlyOneTextVar","value":"someValue"},{"children":[{"name":"linkedRecordType","value":"fitnesseRecordType"},{"name":"linkedRecordId","value":"-!$recordAId!-"}],"name":"anotherFitnesse"}],"name":"fitnesseExample"}-!}
+!define recordIdToLink {$recordAId}
+!define updateData {${fitnesseUpdateFitnesseRecordToLinkToAnotherFitnesseRecord}}
 !define expectedUpdateResult {OK}
 !define expectedAnswer {}
 !include -seamless .HelperPages.updateRecord
