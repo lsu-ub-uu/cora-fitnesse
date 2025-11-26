@@ -1,0 +1,478 @@
+---
+Test
+---
+!1 presentation
+Presentation is the record type for the high level presentations that a Cora based system offers to present the data in the system.
+
+There are a total of 8 validation types for this record type.
+
+!2 presentationCollectionVar
+Presents collection variables
+
+!2 presentationGroup
+Presents groups
+
+!2 presentationNumberVar
+Presents number variables
+
+!2 presentationRecordLink
+Presents record links
+
+!2 presentationRepeatingContainer
+Makes it possible to add more information to each repeating element.
+
+!2 presentationResourceLink
+Presents resource links, used for binary data
+
+!2 presentationSurroundingContainer
+Makes it possible to present the data in other ways than just following the metadata structure
+
+!2 presentationVar
+Presents a text variable
+
+!*< Setup record type definition
+
+!define recordTypeId {presentation}
+!define recordTypeDefinition {!-presentation type:{pGroup, pVar, pNumVar, container, pRecordLink, pCollVar, pResourceLink} (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P, I)
+		createdBy (recordLink, 1-1, noConstraint)
+		permissionUnit (recordLink, 0-X, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)
+	presentationsOf (group, 0-1, noConstraint)
+		presentationOf (recordLink, 1-X, noConstraint)
+	attributesToShow (collectionVariable, 0-1, noConstraint)
+	presentationOf (recordLink, 0-1, noConstraint)
+	mode (collectionVariable, 0-1, noConstraint)
+	repeat (collectionVariable, 0-1, noConstraint)
+	childReferences (group, 0-1, noConstraint)
+		childReference (group, 1-X, noConstraint)
+			textStyle (collectionVariable, 0-1, noConstraint)
+			childStyle (collectionVariable, 0-X, noConstraint)
+			refGroup (group, 1-2, noConstraint)
+				ref type:{text} (recordLink, 0-1, noConstraint)
+				ref type:{presentation} (recordLink, 0-1, noConstraint)
+				ref type:{guiElement} (recordLink, 0-1, noConstraint)
+			minNumberOfRepeatingToShow (textVariable, 0-1, noConstraint)
+			presentationSize (collectionVariable, 0-1, noConstraint)
+			title (recordLink, 0-1, noConstraint)
+			titleHeadlineLevel (collectionVariable, 0-1, noConstraint)
+			addText (recordLink, 0-1, noConstraint)
+	presentationStyle (collectionVariable, 0-1, noConstraint)
+	emptyTextId (recordLink, 0-1, noConstraint)
+	outputFormat (collectionVariable, 0-1, noConstraint)
+	inputType (collectionVariable, 0-1, noConstraint)
+	inputFormat (collectionVariable, 0-1, noConstraint)
+	linkedRecordPresentations (group, 0-1, noConstraint)
+		linkedRecordPresentation (group, 1-X, noConstraint)
+			presentedRecordType (recordLink, 1-1, noConstraint)
+			presentation (recordLink, 1-1, noConstraint)
+	search (recordLink, 0-1, noConstraint)
+	presentAs (collectionVariable, 0-1, noConstraint)
+	showLabel (collectionVariable, 0-1, noConstraint)
+	specifiedLabelText (recordLink, 0-1, noConstraint)
+	showHeadline (collectionVariable, 0-1, noConstraint)
+	specifiedHeadlineText (recordLink, 0-1, noConstraint)
+	specifiedHeadlineLevel (collectionVariable, 0-1, noConstraint)-!}
+
+#idSource (userSupplied/timestamp/sequence) others true/false
+!define recordTypeIdSource {userSupplied}
+!define recordTypeIsPublic {true}
+!define recordTypeUsePermissionUnit {false}
+!define recordTypeUseVisibility {false}
+!define recordTypeUseTrashBin {false}
+!define recordTypeStoreInArchive {false}
+*!
+!include -seamless .HelperPages.checkRecordType
+
+!*< Setup validation type definition
+
+!define validationTypeId {presentationCollectionVar}
+!define recordTypeId {presentation}
+!define createValidationTypeDefinition {!-presentation type:{pCollVar} (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+		validationType (recordLink, 1-1, noConstraint)
+	presentationOf (recordLink, 1-1, noConstraint)
+	attributesToShow (collectionVariable, 0-1, noConstraint)
+	mode (collectionVariable, 1-1, noConstraint)
+	emptyTextId (recordLink, 0-1, noConstraint)
+	showLabel (collectionVariable, 0-1, noConstraint)
+	specifiedLabelText (recordLink, 0-1, noConstraint)-!}
+
+!define updateValidationTypeDefinition {!-presentation type:{pCollVar} (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 0-1, noConstraint)
+		createdBy (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+		permissionUnit (recordLink, 0-X, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+	presentationOf (recordLink, 1-1, noConstraint)
+	attributesToShow (collectionVariable, 0-1, noConstraint)
+	mode (collectionVariable, 1-1, noConstraint)
+	emptyTextId (recordLink, 0-1, noConstraint)
+	showLabel (collectionVariable, 0-1, noConstraint)
+	specifiedLabelText (recordLink, 0-1, noConstraint)-!}
+
+*!
+!include -seamless .HelperPages.checkValidationType
+
+!*< Setup validation type definition
+
+!define validationTypeId {presentationGroup}
+!define recordTypeId {presentation}
+!define createValidationTypeDefinition {!-presentation type:{pGroup} (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+		validationType (recordLink, 1-1, noConstraint)
+	presentationOf (recordLink, 1-1, noConstraint)
+	attributesToShow (collectionVariable, 0-1, noConstraint)
+	childReferences (group, 1-1, noConstraint)
+		childReference (group, 1-X, noConstraint)
+			textStyle (collectionVariable, 0-1, noConstraint)
+			childStyle (collectionVariable, 0-X, noConstraint)
+			refGroup (group, 1-2, noConstraint)
+				ref type:{text} (recordLink, 0-1, noConstraint)
+				ref type:{presentation} (recordLink, 0-1, noConstraint)
+				ref type:{guiElement} (recordLink, 0-1, noConstraint)
+			minNumberOfRepeatingToShow (textVariable, 0-1, noConstraint)
+			presentationSize (collectionVariable, 0-1, noConstraint)
+			title (recordLink, 0-1, noConstraint)
+			titleHeadlineLevel (collectionVariable, 0-1, noConstraint)
+			addText (recordLink, 0-1, noConstraint)
+	presentationStyle (collectionVariable, 0-1, noConstraint)
+	presentAs (collectionVariable, 0-1, noConstraint)
+	mode (collectionVariable, 1-1, noConstraint)
+	showHeadline (collectionVariable, 0-1, noConstraint)
+	specifiedHeadlineText (recordLink, 0-1, noConstraint)
+	specifiedHeadlineLevel (collectionVariable, 0-1, noConstraint)-!}
+
+!define updateValidationTypeDefinition {!-presentation type:{pGroup} (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 0-1, noConstraint)
+		createdBy (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+		permissionUnit (recordLink, 0-X, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+	presentationOf (recordLink, 1-1, noConstraint)
+	attributesToShow (collectionVariable, 0-1, noConstraint)
+	childReferences (group, 1-1, noConstraint)
+		childReference (group, 1-X, noConstraint)
+			textStyle (collectionVariable, 0-1, noConstraint)
+			childStyle (collectionVariable, 0-X, noConstraint)
+			refGroup (group, 1-2, noConstraint)
+				ref type:{text} (recordLink, 0-1, noConstraint)
+				ref type:{presentation} (recordLink, 0-1, noConstraint)
+				ref type:{guiElement} (recordLink, 0-1, noConstraint)
+			minNumberOfRepeatingToShow (textVariable, 0-1, noConstraint)
+			presentationSize (collectionVariable, 0-1, noConstraint)
+			title (recordLink, 0-1, noConstraint)
+			titleHeadlineLevel (collectionVariable, 0-1, noConstraint)
+			addText (recordLink, 0-1, noConstraint)
+	presentationStyle (collectionVariable, 0-1, noConstraint)
+	presentAs (collectionVariable, 0-1, noConstraint)
+	mode (collectionVariable, 1-1, noConstraint)
+	showHeadline (collectionVariable, 0-1, noConstraint)
+	specifiedHeadlineText (recordLink, 0-1, noConstraint)
+	specifiedHeadlineLevel (collectionVariable, 0-1, noConstraint)-!}
+
+*!
+!include -seamless .HelperPages.checkValidationType
+
+!*< Setup validation type definition
+
+!define validationTypeId {presentationNumberVar}
+!define recordTypeId {presentation}
+!define createValidationTypeDefinition {!-presentation type:{pNumVar} (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+		validationType (recordLink, 1-1, noConstraint)
+	presentationOf (recordLink, 1-1, noConstraint)
+	attributesToShow (collectionVariable, 0-1, noConstraint)
+	mode (collectionVariable, 1-1, noConstraint)
+	emptyTextId (recordLink, 0-1, noConstraint)
+	showLabel (collectionVariable, 0-1, noConstraint)
+	specifiedLabelText (recordLink, 0-1, noConstraint)-!}
+
+!define updateValidationTypeDefinition {!-presentation type:{pNumVar} (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P, I)
+		createdBy (recordLink, 1-1, noConstraint)
+		permissionUnit (recordLink, 0-X, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)
+	presentationOf (recordLink, 1-1, noConstraint)
+	attributesToShow (collectionVariable, 0-1, noConstraint)
+	mode (collectionVariable, 1-1, noConstraint)
+	emptyTextId (recordLink, 0-1, noConstraint)
+	showLabel (collectionVariable, 0-1, noConstraint)
+	specifiedLabelText (recordLink, 0-1, noConstraint)-!}
+
+*!
+!include -seamless .HelperPages.checkValidationType
+
+!*< Setup validation type definition
+
+!define validationTypeId {presentationRecordLink}
+!define recordTypeId {presentation}
+!define createValidationTypeDefinition {!-presentation type:{pRecordLink} (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+		validationType (recordLink, 1-1, noConstraint)
+	presentationOf (recordLink, 1-1, noConstraint)
+	attributesToShow (collectionVariable, 0-1, noConstraint)
+	mode (collectionVariable, 1-1, noConstraint)
+	linkedRecordPresentations (group, 0-1, noConstraint)
+		linkedRecordPresentation (group, 1-X, noConstraint)
+			presentedRecordType (recordLink, 1-1, noConstraint)
+			presentation (recordLink, 1-1, noConstraint)
+	search (recordLink, 0-1, noConstraint)
+	showLabel (collectionVariable, 0-1, noConstraint)
+	specifiedLabelText (recordLink, 0-1, noConstraint)
+	presentAs (collectionVariable, 0-1, noConstraint)-!}
+
+!define updateValidationTypeDefinition {!-presentation type:{pRecordLink} (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 0-1, noConstraint)
+		createdBy (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+		permissionUnit (recordLink, 0-X, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+	presentationOf (recordLink, 1-1, noConstraint)
+	attributesToShow (collectionVariable, 0-1, noConstraint)
+	mode (collectionVariable, 1-1, noConstraint)
+	linkedRecordPresentations (group, 0-1, noConstraint)
+		linkedRecordPresentation (group, 1-X, noConstraint)
+			presentedRecordType (recordLink, 1-1, noConstraint)
+			presentation (recordLink, 1-1, noConstraint)
+	search (recordLink, 0-1, noConstraint)
+	showLabel (collectionVariable, 0-1, noConstraint)
+	specifiedLabelText (recordLink, 0-1, noConstraint)
+	presentAs (collectionVariable, 0-1, noConstraint)-!}
+
+*!
+!include -seamless .HelperPages.checkValidationType
+
+!*< Setup validation type definition
+
+!define validationTypeId {presentationRepeatingContainer}
+!define recordTypeId {presentation}
+!define createValidationTypeDefinition {!-presentation type:{container}, repeat:{this} (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+		validationType (recordLink, 1-1, noConstraint)
+	presentationOf (recordLink, 1-1, noConstraint)
+	childReferences (group, 1-1, noConstraint)
+		childReference (group, 1-X, noConstraint)
+			textStyle (collectionVariable, 0-1, noConstraint)
+			childStyle (collectionVariable, 0-X, noConstraint)
+			refGroup (group, 1-2, noConstraint)
+				ref type:{text} (recordLink, 0-1, noConstraint)
+				ref type:{presentation} (recordLink, 0-1, noConstraint)
+				ref type:{guiElement} (recordLink, 0-1, noConstraint)
+			minNumberOfRepeatingToShow (textVariable, 0-1, noConstraint)
+			presentationSize (collectionVariable, 0-1, noConstraint)
+			title (recordLink, 0-1, noConstraint)
+			titleHeadlineLevel (collectionVariable, 0-1, noConstraint)
+			addText (recordLink, 0-1, noConstraint)-!}
+
+!define updateValidationTypeDefinition {!-presentation type:{container}, repeat:{this} (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 0-1, noConstraint)
+		createdBy (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+		permissionUnit (recordLink, 0-X, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+	presentationOf (recordLink, 1-1, noConstraint)
+	childReferences (group, 1-1, noConstraint)
+		childReference (group, 1-X, noConstraint)
+			textStyle (collectionVariable, 0-1, noConstraint)
+			childStyle (collectionVariable, 0-X, noConstraint)
+			refGroup (group, 1-2, noConstraint)
+				ref type:{text} (recordLink, 0-1, noConstraint)
+				ref type:{presentation} (recordLink, 0-1, noConstraint)
+				ref type:{guiElement} (recordLink, 0-1, noConstraint)
+			minNumberOfRepeatingToShow (textVariable, 0-1, noConstraint)
+			presentationSize (collectionVariable, 0-1, noConstraint)
+			title (recordLink, 0-1, noConstraint)
+			titleHeadlineLevel (collectionVariable, 0-1, noConstraint)
+			addText (recordLink, 0-1, noConstraint)-!}
+
+*!
+!include -seamless .HelperPages.checkValidationType
+
+!*< Setup validation type definition
+
+!define validationTypeId {presentationResourceLink}
+!define recordTypeId {presentation}
+!define createValidationTypeDefinition {!-presentation type:{pResourceLink} (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+		validationType (recordLink, 1-1, noConstraint)
+	presentationOf (recordLink, 1-1, noConstraint)
+	outputFormat (collectionVariable, 0-1, noConstraint)
+	showLabel (collectionVariable, 0-1, noConstraint)
+	specifiedLabelText (recordLink, 0-1, noConstraint)-!}
+
+!define updateValidationTypeDefinition {!-presentation type:{pResourceLink} (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 0-1, noConstraint)
+		createdBy (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+		permissionUnit (recordLink, 0-X, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+	presentationOf (recordLink, 1-1, noConstraint)
+	outputFormat (collectionVariable, 0-1, noConstraint)
+	showLabel (collectionVariable, 0-1, noConstraint)
+	specifiedLabelText (recordLink, 0-1, noConstraint)-!}
+
+*!
+!include -seamless .HelperPages.checkValidationType
+
+!*< Setup validation type definition
+
+!define validationTypeId {presentationSurroundingContainer}
+!define recordTypeId {presentation}
+!define createValidationTypeDefinition {!-presentation type:{container}, repeat:{children} (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+		validationType (recordLink, 1-1, noConstraint)
+	presentationsOf (group, 1-1, noConstraint)
+		presentationOf (recordLink, 1-X, noConstraint)
+	childReferences (group, 1-1, noConstraint)
+		childReference (group, 1-X, noConstraint)
+			textStyle (collectionVariable, 0-1, noConstraint)
+			childStyle (collectionVariable, 0-X, noConstraint)
+			refGroup (group, 1-2, noConstraint)
+				ref type:{text} (recordLink, 0-1, noConstraint)
+				ref type:{presentation} (recordLink, 0-1, noConstraint)
+				ref type:{guiElement} (recordLink, 0-1, noConstraint)
+			minNumberOfRepeatingToShow (textVariable, 0-1, noConstraint)
+			presentationSize (collectionVariable, 0-1, noConstraint)
+			title (recordLink, 0-1, noConstraint)
+			titleHeadlineLevel (collectionVariable, 0-1, noConstraint)
+			addText (recordLink, 0-1, noConstraint)
+	presentationStyle (collectionVariable, 0-1, noConstraint)
+	mode (collectionVariable, 1-1, noConstraint)-!}
+
+!define updateValidationTypeDefinition {!-presentation type:{container}, repeat:{children} (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 0-1, noConstraint)
+		createdBy (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+		permissionUnit (recordLink, 0-X, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+	presentationsOf (group, 1-1, noConstraint)
+		presentationOf (recordLink, 1-X, noConstraint)
+	childReferences (group, 1-1, noConstraint)
+		childReference (group, 1-X, noConstraint)
+			textStyle (collectionVariable, 0-1, noConstraint)
+			childStyle (collectionVariable, 0-X, noConstraint)
+			refGroup (group, 1-2, noConstraint)
+				ref type:{text} (recordLink, 0-1, noConstraint)
+				ref type:{presentation} (recordLink, 0-1, noConstraint)
+				ref type:{guiElement} (recordLink, 0-1, noConstraint)
+			minNumberOfRepeatingToShow (textVariable, 0-1, noConstraint)
+			presentationSize (collectionVariable, 0-1, noConstraint)
+			title (recordLink, 0-1, noConstraint)
+			titleHeadlineLevel (collectionVariable, 0-1, noConstraint)
+			addText (recordLink, 0-1, noConstraint)
+	presentationStyle (collectionVariable, 0-1, noConstraint)
+	mode (collectionVariable, 1-1, noConstraint)-!}
+
+*!
+!include -seamless .HelperPages.checkValidationType
+
+!*< Setup validation type definition
+
+!define validationTypeId {presentationVar}
+!define recordTypeId {presentation}
+!define createValidationTypeDefinition {!-presentation type:{pVar} (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+		validationType (recordLink, 1-1, noConstraint)
+	presentationOf (recordLink, 1-1, noConstraint)
+	attributesToShow (collectionVariable, 0-1, noConstraint)
+	mode (collectionVariable, 1-1, noConstraint)
+	emptyTextId (recordLink, 0-1, noConstraint)
+	outputFormat (collectionVariable, 0-1, noConstraint)
+	inputType (collectionVariable, 1-1, noConstraint)
+	inputFormat (collectionVariable, 0-1, noConstraint)
+	showLabel (collectionVariable, 0-1, noConstraint)
+	specifiedLabelText (recordLink, 0-1, noConstraint)-!}
+
+!define updateValidationTypeDefinition {!-presentation type:{pVar} (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 1-1, noConstraint)
+		createdBy (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+		permissionUnit (recordLink, 0-X, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+	presentationOf (recordLink, 1-1, noConstraint)
+	attributesToShow (collectionVariable, 0-1, noConstraint)
+	mode (collectionVariable, 1-1, noConstraint)
+	emptyTextId (recordLink, 0-1, noConstraint)
+	outputFormat (collectionVariable, 0-1, noConstraint)
+	inputType (collectionVariable, 1-1, noConstraint)
+	inputFormat (collectionVariable, 0-1, noConstraint)
+	showLabel (collectionVariable, 0-1, noConstraint)
+	specifiedLabelText (recordLink, 0-1, noConstraint)-!}
+
+*!
+!include -seamless .HelperPages.checkValidationType
+
+----

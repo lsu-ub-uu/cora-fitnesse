@@ -1,0 +1,119 @@
+---
+Test
+---
+!1 text
+The recordType text holds records with all translated texts in the system.
+
+There are a total of 2 validation types for this record type.
+
+!2 coraText
+Cora text is the standard text for a cora system that has sv, en, and no texts.
+
+!2 textSystemOne
+SystemOne texts are texts for the systemOne system.
+
+!*< Setup record type definition
+
+!define recordTypeId {text}
+!define recordTypeDefinition {!-text (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 0-1, noConstraint)
+		createdBy (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P, I)
+		permissionUnit (recordLink, 0-X, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+	textPart type:{default, alternative}, lang:{sv, en, no} (group, 1-X, noConstraint)
+		text (textVariable, 1-1, noConstraint, I)-!}
+
+#idSource (userSupplied/timestamp/sequence) others true/false
+!define recordTypeIdSource {userSupplied}
+!define recordTypeIsPublic {true}
+!define recordTypeUsePermissionUnit {false}
+!define recordTypeUseVisibility {false}
+!define recordTypeUseTrashBin {false}
+!define recordTypeStoreInArchive {false}
+*!
+!include -seamless .HelperPages.checkRecordType
+
+!*< Setup validation type definition
+
+!define validationTypeId {coraText}
+!define recordTypeId {text}
+!define createValidationTypeDefinition {!-text (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+		validationType (recordLink, 1-1, noConstraint)
+	textPart type:{default}, lang:{sv} (group, 1-1, noConstraint)
+		text (textVariable, 1-1, noConstraint)
+	textPart type:{alternative}, lang:{en} (group, 0-1, noConstraint)
+		text (textVariable, 1-1, noConstraint)
+	textPart type:{alternative}, lang:{no} (group, 0-1, noConstraint)
+		text (textVariable, 1-1, noConstraint)-!}
+
+!define updateValidationTypeDefinition {!-text (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 0-1, noConstraint)
+		createdBy (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P, I)
+		permissionUnit (recordLink, 0-X, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+	textPart type:{default}, lang:{sv} (group, 1-1, noConstraint)
+		text (textVariable, 1-1, noConstraint)
+	textPart type:{alternative}, lang:{en} (group, 0-1, noConstraint)
+		text (textVariable, 1-1, noConstraint)
+	textPart type:{alternative}, lang:{no} (group, 0-1, noConstraint)
+		text (textVariable, 1-1, noConstraint)-!}
+
+*!
+!include -seamless .HelperPages.checkValidationType
+
+!*< Setup validation type definition
+
+!define validationTypeId {textSystemOne}
+!define recordTypeId {text}
+!define createValidationTypeDefinition {!-text (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		dataDivider (recordLink, 1-1, noConstraint, P)
+		validationType (recordLink, 1-1, noConstraint)
+	textPart type:{default}, lang:{sv} (group, 1-1, noConstraint)
+		text (textVariable, 1-1, noConstraint)
+	textPart type:{alternative}, lang:{en} (group, 0-1, noConstraint)
+		text (textVariable, 1-1, noConstraint)
+	textPart type:{alternative}, lang:{no} (group, 0-1, noConstraint)
+		text (textVariable, 1-1, noConstraint)-!}
+
+!define updateValidationTypeDefinition {!-text (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 0-1, noConstraint)
+		createdBy (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint, P, I)
+		permissionUnit (recordLink, 0-X, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+	textPart type:{default}, lang:{sv} (group, 1-1, noConstraint)
+		text (textVariable, 1-1, noConstraint)
+	textPart type:{alternative}, lang:{en} (group, 0-1, noConstraint)
+		text (textVariable, 1-1, noConstraint)
+	textPart type:{alternative}, lang:{no} (group, 0-1, noConstraint)
+		text (textVariable, 1-1, noConstraint)-!}
+
+*!
+!include -seamless .HelperPages.checkValidationType
+
+----
