@@ -16,8 +16,12 @@ Suite
 !include -seamless .HelperPages.Data.ExamplesPool
 
 !| RememberRecordState |
-| type | id     | version | remember? |
-| user | 121212 | test    | OK        |
-| user | 131313 | test    | OK        |
+| type       | id                         | version  | remember? |
+| user       | 121212                     | test     | OK        |
+| user       | 131313                     | test     | OK        |
+| recordType | fitnesseRecordType         | original | OK        |
+| metadata   | fitnesseGroup              | original | OK        |
+| metadata   | fitnesseRecordInfoGroup    | original | OK        |
+| metadata   | fitnesseRecordInfoNewGroup | original | OK        |
 *!
 
