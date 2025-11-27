@@ -1,6 +1,10 @@
 ---
 Static
 ---
+!| RememberRecordState |
+| type | id     | version    | memoryToStorage? |
+| user | 131313 | test | OK               |
+
 !| DeleteRecord |
 | recordType |  deleteAllRecordsForRecordType?  |
 | fitnesseRecordType | =~/OK/ |
