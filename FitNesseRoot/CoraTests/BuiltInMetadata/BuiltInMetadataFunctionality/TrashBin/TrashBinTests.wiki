@@ -261,7 +261,6 @@ Setup unique rule in record type
 
 We expecet that unique works normally. We create record C and the another record with same value, and we get unique conflict. Then we move record C into trash and we try to create a new record with the same value, here we expecet to be able to create the record, since record C is in trash bin. 
 !***> Case 8
-
 Create record C
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordType}
@@ -304,4 +303,17 @@ We create new record with same vaule than record C, we should be able to create 
 !define expectedCreateResult {CREATED}
 !define expectedAnswer {}
 !include -seamless .HelperPages.createRecord
+*!
+
+!***> Prepare following tests: fitnesseRecordType uses visibility.
+!| RememberRecordState |
+| type       | id                         | version  | memoryToStorage? |
+| recordType | fitnesseRecordType         | original | OK               |
+
+!| UpdateRecordType |
+| id                 | idSource | public | usePermissionUnit | useVisibility | useTrashBin | storeInArchive | update? |
+| fitnesseRecordType | sequence | false  | false             | true          | true        | false          | OK      |
+*!
+
+!***> Case 9
 *!
