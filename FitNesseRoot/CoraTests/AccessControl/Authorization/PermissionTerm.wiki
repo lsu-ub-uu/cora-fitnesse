@@ -99,10 +99,6 @@ A permission term can have two modes: '''standard''' or '''state'''.
  *'''Case 20: Allow read with granted access''' – Verify that a user with a permission term '''system.re*''' can read a record with the value '''red'''.
  *'''Case 21: Allow update without granted access''' – Verify that a user with a permission term '''system.re*''' can update records containing '''red''' value.
  *'''Case 22: Allow delete with appropiate access''' – Verify that a user with a permission term '''system.re*''' can delete the record.
- 
-!***> Tests
-!include -seamless PermissionTerms.PermissionTermStandardMode
-*!
 
 !2 Use cases for permission terms using '''state''' mode
  *'''Case 1: Create a permission term''' – Verify that a permission term can be created with mode state, including nameInData, permissionKey, and mode.
@@ -133,40 +129,33 @@ A permission term can have two modes: '''standard''' or '''state'''.
  *'''Case 21: Allow update without granted access''' – Verify that a user with a permission term '''system.re*''' can update records containing '''red''' value.
  *'''Case 22: Allow delete with appropiate access''' – Verify that a user with a permission term '''system.re*''' can delete the record.
 
-!***> Tests
+!2  Combination tests
+ * '''Case 23: When record is public, then permission term do no restric on "read"''' – When the record type is set to '''isPublic''' then any user can read the record eventhough permissionTerms are set. It does not apply for '''create''', '''update''' and '''delete'''.
+
+!***> Tests: Permission terms using '''standard mode'''
+!include -seamless PermissionTerms.PermissionTermStandardMode
+*!
+
+!***> Tests: Permission terms using '''state mode'''
 !include -seamless PermissionTerms.PermissionTermStateMode
 *!
 
-!2 ⚠️ Add extra tests
- * Multiple values.
- * '''Combo case''' – When the record type is set to '''isPublic''' then any user can read the record eventhough permissionTerms are set. It does not apply for '''create''', '''update''' and '''delete''', the user still need to be granted. TO_BE_TESTED_SOMEWHERE_ELSE 
-
- '''OBS:''' The ⚠️ label indicates that no automated test has been implemented for the corresponding case.
-
-!***> Clean up created data, metadata and texts
-!define currentAuthToken {$adminAuthToken}
-!***> Clean up changes on fitnesseGroup
-!define recordType {metadata}
-!define recordId {fitnesseGroup}
-!define updateData {${FITNESSE_UPDATE_GROUP_ON_UPDATE}}
-!define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!***> Tests: Combination when record is '''public'''
+!include -seamless PermissionTerms.PermissionTermAndIsPublic
 *!
 
-!***> Clean changes on user
-!define recordType {user}
-!define recordId {121212}
-!define addFitnesseRole {!--!}
-!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
-!define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!***> Restore metadata and users
+!| RememberRecordState |
+| type       | id                         | version  | memoryToStorage? |
+| metadata   | fitnesseGroup              | original | OK               |
+| user       | 121212                     | test     | OK               |
 *!
 
-!| RecordEndpointFixture |
-| authToken | type | id | testDeleteRecord? | getStatusType? |
-| $adminAuthToken | permissionRole | fitnessePermissionTermRole | | OK |
-| $adminAuthToken | permissionRule | fitnessePermissionTermRule | | OK |
-| $adminAuthToken | collectTerm | standardPermissionTerm | | OK |
-| $adminAuthToken | collectTerm | statePermissionTerm | | OK |
+!| DeleteRecord |
+| recordType     | recordId                   | deleteRecord? |
+| permissionRole | fitnessePermissionTermRole | OK            |
+| permissionRule | fitnessePermissionTermRule | OK            |
+| collectTerm    | standardPermissionTerm     | OK            |
+| collectTerm    | statePermissionTerm        | OK            |
 *!
  

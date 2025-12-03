@@ -4,7 +4,7 @@ Static
 !| RememberRecordState |
 | type       | id                         | version  | memoryToStorage? |
 | user       | 131313                     | test     | OK               |
-#| user       | 121212                     | test     | OK               |
+| user       | 121212                     | test     | OK               |
 
 !| DeleteRecord |
 | recordType |  deleteAllRecordsForRecordType?  |
@@ -17,16 +17,6 @@ Static
 | metadata   | fitnesseRecordInfoGroup    | original | OK               |
 | metadata   | fitnesseRecordInfoNewGroup | original | OK               |
 
-
-!***> Clean changes on user
-!define currentAuthToken {$adminAuthToken}
-!define recordType {user}
-!define recordId {121212}
-!define addFitnesseRole {!--!}
-!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
-!define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
-*!
 
 !| DeleteRecord |
 | recordType     | recordId                      | deleteRecord? |
