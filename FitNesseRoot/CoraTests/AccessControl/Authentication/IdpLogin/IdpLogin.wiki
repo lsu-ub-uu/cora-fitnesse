@@ -10,8 +10,8 @@ Static
 
 !| AuthenticationFixture |
 | idpLogin? | EPPN | getStatusType? | getUserId? | getLoginId? | getFirstName? | getLastName? | getAuthToken? | getRenewUrl? | getRenewAccept? | getDeleteUrl? |
-| | fitnesseAdmin@system.cora.uu.se | OK | 131313 | fitnesseAdmin@system.cora.uu.se | someFirstName | someLastName | $fitnesseAdminAuthToken= | ${actionLinkUrlRegEx} | ${renewAccept} | $fitnesseAdminAuthTokenDeleteUrl= |
-| | fitnesseUser@system.cora.uu.se | OK | 121212 | fitnesseUser@system.cora.uu.se | someFirstName | someLastName | $fitnesseUserAuthToken= | ${actionLinkUrlRegEx} | ${renewAccept} | $fitnesseUserAuthTokenDeleteUrl= |
+| | fitnesseAdmin@system.cora.uu.se | OK | 131313 | fitnesseAdmin@system.cora.uu.se | Fitnesse | Admin | $fitnesseAdminAuthToken= | ${actionLinkUrlRegEx} | ${renewAccept} | $fitnesseAdminAuthTokenDeleteUrl= |
+| | fitnesseUser@system.cora.uu.se | OK | 121212 | fitnesseUser@system.cora.uu.se | Fitnesse | User | $fitnesseUserAuthToken= | ${actionLinkUrlRegEx} | ${renewAccept} | $fitnesseUserAuthTokenDeleteUrl= |
 
 *!
 !2 Test with new texts to show that we can use our authToken and be our user
