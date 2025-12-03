@@ -23,7 +23,7 @@
 	<name>Fitnesse</name>
 
 	<properties>
-		<fitnesseintegration.version>6.7.0</fitnesseintegration.version>
+		<fitnesseintegration.version>6.8-SNAPSHOT</fitnesseintegration.version>
 		<coralog4j.version>2.16.0</coralog4j.version>
 		<basicdata.version>7.1.0</basicdata.version>
 		<xmlconverter.version>3.7.0</xmlconverter.version>
@@ -37,7 +37,6 @@
 		<url>https://github.com/lsu-ub-uu/cora-fitnesse.git</url>
 		<tag>HEAD</tag>
 	</scm>
-
 
 	<dependencies>
 		<dependency>

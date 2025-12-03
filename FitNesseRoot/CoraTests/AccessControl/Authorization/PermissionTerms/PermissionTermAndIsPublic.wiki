@@ -1,0 +1,86 @@
+---
+Static
+---
+!***> Prepare the test:
+!***> Setup fitnesseRecordType to be '''public''' 
+!| UpdateRecordType |
+| id                 | idSource | public | usePermissionUnit | useVisibility | useTrashBin | storeInArchive | update? |
+| fitnesseRecordType | sequence | true  | false             | false          | false        | false          | OK      |
+*!
+!***> Add permission term statePermissionTerm on fitnesseOnlyOneMetadataTextVar (fitnesseGroup)
+!define fitnessePermissionTermName {standardPermissionTerm}
+!define currentAuthToken {$adminAuthToken}
+!define recordType {metadata}
+!define recordId {fitnesseGroup}
+!define updateData {${fitnesseGroupPermissionTerm}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!***> Create test record with value '''red'''
+!***> Update user. Grant permission term to '''system.*'''
+!define fitnessePermissionTermValue {system.*}
+
+!define currentAuthToken {$adminAuthToken}
+!define addFitnesseRole {${addFitnessePermissionTerm}}
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define createData {${fitnessePermissionTermCreateRecord}}
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {}
+!include -seamless .HelperPages.createRecord
+*!
+*!
+
+We expect to be able to read the record even though the value is red and not blue. Our user is only permitted to handle blue values, but since the record type is public, the record should still be readable.
+!***> Case 23
+!***> Update user. Give access to system.blue
+!define fitnessePermissionTermValue {system.blue}
+
+!define currentAuthToken {$adminAuthToken}
+!define addFitnesseRole {${addFitnessePermissionTerm}}
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define recordId {$createdRecordId}
+!define expectedReadResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.readRecord_RecordEndpoint
+
+!define expectedActionsForRecord {!-{"actions":["read","update", "delete", "index", "read_incoming_links", "create", "validate", "list", "search"]}-!}
+!define expectedActionResult {Action delete is missing. Action create is missing. Action validate is missing. Action list is missing. Action search is missing.}
+!include -seamless .HelperPages.checkActionsForRecord
+*!
+
+!***> Clean up
+!***> Update user. Give access to system.*
+!define fitnessePermissionTermValue {system.*}
+
+!define currentAuthToken {$adminAuthToken}
+!define addFitnesseRole {${addFitnessePermissionTerm}}
+!define recordType {user}
+!define recordId {121212}
+!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define expectedUpdateResult {OK}
+!include -seamless .HelperPages.updateRecord
+*!
+
+!define currentAuthToken {$userAuthToken}
+!define recordType {fitnesseRecordType}
+!define recordId {$createdRecordId}
+!define expectedDeleteResult {OK}
+!define expectedAnswer {}
+!include -seamless .HelperPages.deleteRecord
+*!

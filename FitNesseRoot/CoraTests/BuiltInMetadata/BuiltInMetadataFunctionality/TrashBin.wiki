@@ -34,25 +34,49 @@ After activation, the system automatically handles trashing, restoration, and an
 Most of the functionality uses permission term in mode '''state'''. Please see [[permission terms][.CoraTests.AccessControl.Authorization.PermissionTerm]] page for more information. 
 
 !2 Use cases
- *'''Case 1: Deny create when not meeting the requirements''' – If the definition has isInTrashBin but the recordType is set to not use in trash.
- *'''Case 2: Default "not in trash" when creatin a record''' – When creating a record missing isInTrashBin value, then it is defaulted to false.
- *'''Case 3: Allow create record''' – Creation is permitted with any value in '''in trash bin'''.
- *'''Case 4: Deny set record to trash''' – A record cannot be set to in trash if it has incoming links.
- *'''Case 5: Allow set record to trash''' – A record may be moved to the trash bin when permitted.
-  * '''Case 5.1:''' Users with the grant '''system.*''' are allowed to set a record in trash.
-  * '''Case 5.2:''' Users with the grant '''system.false''' are allowed to set a record in trash.
- *'''Case 6: The record is no longer available for normal system operations''' – Standard users have no access to the record once it is in trash.
+ *'''Case 1: Deny creation when requirements are not met''' – Creation is denied if the definition includes isInTrashBin but the recordType is configured not to use the trash bin.
+ *'''Case 2: Default “not in trash” when creating a record''' – When creating a record without an isInTrashBin value, the value defaults to false.
+ *'''Case 3: Allow record creation''' – Creation is permitted with any value in '''inTrashBin'''.
+ *'''Case 4: Deny moving a record to trash''' – A record cannot be moved to the trash bin if it has incoming links.
+ *'''Case 5: Allow moving a record to trash''' – A record may be moved to the trash bin when permitted.
+  * '''Case 5.1:''' Users with the grant '''system.*''' are allowed to move a record to the trash bin.
+  * '''Case 5.2:''' Users with the grant '''system.false''' are allowed to move a record to the trash bin.
+ *'''Case 6: The record is no longer available for normal system operations''' – Standard users cannot access the record once it is in the trash bin.
   * '''Case 6.1:''' The record is inaccessible to users with the grant '''system.false'''.
-  * '''Case 6.2:''' Only users with the grant '''system.*''' may view or handle the record.
-  * '''Case 6.3:''' Incoming links pointing to this record are ignored when the target record is deleted.
- *'''Case 7: Allow to restore record. No longer in trash''' – Only explicitly authorized users may restore a record from the trash bin.
-  
+  * '''Case 6.2:''' Only users with the grant '''system.*''' may view or manage the record.
+  * '''Case 6.3:''' Incoming links pointing to the record are ignored when the target record is deleted.
+ *'''Case 7: Allow restoring a record (no longer in trash)''' – Only explicitly authorized users may restore a record from the trash bin.
+
+!2 🔀 Combination tests
+!3 Unique:
+ *'''Case 8: Records in the trash bin are ignored by the unique function''' – When a record is in the trash bin, the unique function ignores it.
+
+!3 Visibility:
+ *'''Case 9: Record unpublished when record moved to trash bin''' – When a '''published''' record of a record type that uses '''visibility''' is moved to trash the visibility of the record must be '''unpublished'''.
+
+
+!***> Tests: '''Trash bin'''
 !***> Prepare tests
 !include -seamless TrashBin.TrashBinSetup
 *!
 
-!***> Tests
 !include -seamless TrashBin.TrashBinTests
+*!
+
+!***> Tests: '''Combination with unique'''
+!***> Prepare trash bin and unique tests
+!include -seamless TrashBin.TrashBinAndUniqueSetup
+*!
+
+!include -seamless TrashBin.TrashBinAndUniqueTests
+*!
+
+!***> Tests: '''Combination with visibility'''
+!***> Prepare trash bin and visibility tests
+!include -seamless TrashBin.TrashBinAndVisibilitySetup
+*!
+
+!include -seamless TrashBin.TrashBinAndVisibilityTests
 *!
 
 !***> Clean up created data

@@ -2,63 +2,27 @@
 Static
 ---
 !| RememberRecordState |
-| type | id     | version    | memoryToStorage? |
-| user | 131313 | test | OK               |
+| type       | id                         | version  | memoryToStorage? |
+| user       | 131313                     | test     | OK               |
+| user       | 121212                     | test     | OK               |
 
 !| DeleteRecord |
 | recordType |  deleteAllRecordsForRecordType?  |
 | fitnesseRecordType | =~/OK/ |
 
+!| RememberRecordState |
+| type       | id                         | version  | memoryToStorage? |
+| recordType | fitnesseRecordType         | original | OK               |
+| metadata   | fitnesseGroup              | original | OK               |
+| metadata   | fitnesseRecordInfoGroup    | original | OK               |
+| metadata   | fitnesseRecordInfoNewGroup | original | OK               |
 
-!***> Clean up changes on fitnesseRecordInfoGroup
-!define currentAuthToken {$adminAuthToken}
-!define recordType {metadata}
-!define recordId {fitnesseRecordInfoGroup}
-!define updateData {${FITNESSE_RECORDINFO_UPDATE}}
-!define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
-*!
-
-!***> Clean up changes on fitnesseRecordInfoNewGroup
-!define currentAuthToken {$adminAuthToken}
-!define recordType {metadata}
-!define recordId {fitnesseRecordInfoNewGroup}
-!define updateData {${FITNESSE_RECORDINFO_NEW_GROUP_UPDATE}}
-!define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
-*!
-
-!***> Clean up changes on fitnesseRecordInfoNewGroup
-!define currentAuthToken {$adminAuthToken}
-!define recordType {metadata}
-!define recordId {fitnesseGroup}
-!define updateData {${FITNESSE_UPDATE_GROUP_ON_UPDATE}}
-!define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
-*!
-
-!***> Clean up changes on fitnesseRecordType
-!| UpdateRecordType |
-| id | idSource | public | usePermissionUnit | useVisibility | useTrashBin | storeInArchive | update? |
-| fitnesseRecordType | sequence | false | false | false | false | false | OK |
-*!
-
-!***> Clean changes on user
-!define currentAuthToken {$adminAuthToken}
-!define recordType {user}
-!define recordId {121212}
-!define addFitnesseRole {!--!}
-!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
-!define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
-*!
 
 !| DeleteRecord |
-| recordType | recordId | deleteRecord? |
-| permissionRole | fitnessePermissionTermRole | OK |
-| permissionRule | fitnessePermissionTermRule | OK |
-| presentation | fitnesseToFitnessePLink | OK |
-| presentation | fitnesseToFitnesseOutputPLink | OK |
-| metadata | fitnesseToFitnesseLink | OK |
-
-
+| recordType     | recordId                      | deleteRecord? |
+| collectTerm    | fitnesseTextVarStorageTerm    | OK            |
+| permissionRole | fitnessePermissionTermRole    | OK            |
+| permissionRule | fitnessePermissionTermRule    | OK            |
+| presentation   | fitnesseToFitnessePLink       | OK            |
+| presentation   | fitnesseToFitnesseOutputPLink | OK            |
+| metadata       | fitnesseToFitnesseLink        | OK            |

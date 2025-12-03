@@ -228,3 +228,9 @@ We expect to be able to restore record B from the trash. After restoration, reco
 !define expectedAnswer {}
 !include -seamless .HelperPages.readRecord_RecordEndpoint
 *!
+
+!***> CleanUp all data and restore metadata.
+!| DeleteRecord |
+| recordType |  deleteAllRecordsForRecordType?  |
+| fitnesseRecordType | =~/OK/ |
+*!
