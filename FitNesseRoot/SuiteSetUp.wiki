@@ -18,9 +18,7 @@ Suite
 
 !| script | LoginToken |
 | setFitnesseAdminLoginId | ${fitnesseAdminLoginId} |
-| setFitnesseAdminAppToken | ${fitnesseAdminAppToken} |
 | setFitnesseUserLoginId | ${fitnesseUserLoginId} |
-| setFitnesseUserAppToken | ${fitnesseUserAppToken} |
 
 !| script | SystemUrl |
 | setUrl | ${systemUnderTestUrl} |
@@ -34,27 +32,32 @@ Suite
 
 !define TEST_SYSTEM {slim}
 
-!***> Login for fitnesse admin
+!***> Login for fitnesse admin, user and guest
 !| AuthenticationFixture |
-| appTokenLogin? | loginId | getAuthToken? | getStatusType? | getRenewUrl? |
-| | fitnesseAdmin@system.cora.uu.se | $adminAuthToken= | CREATED | $adminRenewUrl= |
+|  EPPN                           | idpLogin? | getStatusType? |getAuthToken?     | getRenewUrl?    |
+| fitnesseAdmin@system.cora.uu.se |           | OK             | $adminAuthToken= | $adminRenewUrl= |
+| fitnesseUser@system.cora.uu.se  |           | OK             | $userAuthToken=  | $userRenewUrl=  |
+| userNotInDb@user.uu.se          |           | OK             | $guestAuthToken= | $guestRenewUrl= |
 
 !| script | AuthTokenHolder |
 | setAdminAuthToken | $adminAuthToken |
-*!
+| setUserAuthToken  | $userAuthToken  |
 
-!***> Login for fitnesse user
-!| AuthenticationFixture |
-| appTokenLogin? | loginId | getAuthToken? | getStatusType? | getRenewUrl? |
-| | fitnesseUser@system.cora.uu.se | $userAuthToken= | CREATED | $userRenewUrl= |
+#Ta bort när vi har fixat ett sätt att skapa appTokens från ett befintlig användare. Vi vill kunna läsa nuvarande användare och få ett apptoken från den. Att använda rest anropet löser inte riktigt våran problem.
+!| script | LoginToken |
+| setFitnesseAdminAppToken | ${fitnesseAdminAppToken} |
+| setFitnesseUserAppToken | ${fitnesseUserAppToken} |
 
-!| script | AuthTokenHolder |
-| setUserAuthToken | $userAuthToken |
-*!
 
-!***> Login for fitnesse guest
-!| AuthenticationFixture |
-| idpLogin? | EPPN | getAuthToken? | getStatusType? | getRenewUrl? |
-| | userNotInDb@user.uu.se | $guestAuthToken= | | $guestRenewUrl= |
+#!| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl}rest/ |
+#| setHeader | Accept:application/vnd.cora.record+json!-
+#-!Content-Type:application/vnd.cora.recordgroup+json!-
+#-!authToken:$adminAuthToken |
+#| setBody | {"name":"user","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"131313"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"loginId","value":"fitnesseAdmin@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"Admin"},{"name":"userRole","repeatId":"1","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"everything"}]},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]}]},{"name":"userRole","repeatId":"3603423986673","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"binaryUserRole"}]}]},{"name":"activeStatus","value":"active"},{"name":"appTokens","children":[{"name":"appToken","repeatId":"0","children":[{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"systemSecret"},{"name":"linkedRecordId","value":"systemSecret:3452556002950361"}]},{"name":"appTokenNote","value":"Token for development"}]},{"name":"appToken","repeatId":"1","children":[{"name":"appTokenNote","value":"My admin device"}]}]},{"name":"usePassword","value":"false"}],"attributes":{"type":"systemOneUser"}} |
+#| POST | /record/user/131313 | 200 | | |
+#| let | adminAppToken | js | response.body.match(/"appTokenClearText","value":"([^"]+)"}/)[1] | $adminAppToken= |
+#
+#!| script | LoginToken |
+#| setFitnesseAdminAppToken | $adminAppToken |
 *!
 *!
