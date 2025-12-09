@@ -48,7 +48,7 @@ Static
 !define authTokenRegex {!-=~/([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})/-!}
 !| AuthenticationFixture |
 | idpLogin? | EPPN | getStatusType? | getUserId? | getLoginId? | getFirstName? | getLastName? | getPermissionUnitIds? | getAuthToken? | getRenewUrl? | getRenewAccept? | getDeleteUrl? |
-| | fitnesseUser@system.cora.uu.se | OK | 121212 | fitnesseUser@system.cora.uu.se | someFirstName | someLastName | ${expectedPermissionUnits} | ${authTokenRegex} | ${actionLinkUrlRegex} | ${renewAccept} | ${actionLinkUrlRegex} |
+| | fitnesseUser@system.cora.uu.se | OK | 121212 | fitnesseUser@system.cora.uu.se | Fitnesse | User | ${expectedPermissionUnits} | ${authTokenRegex} | ${actionLinkUrlRegex} | ${renewAccept} | ${actionLinkUrlRegex} |
 
 *!
 !***> Check password login authentication content
