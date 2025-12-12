@@ -1,0 +1,97 @@
+---
+Test
+---
+!1 Deployment Info
+
+Deployment Info serves as a landing endpoint for the REST API.
+It provides metadata describing the current deployment, including:
+
+ *'''applicationName''' – The name of the application. Example: systemOne, alvin, diva.
+ *'''deploymentName''' – The name of the deployment environment. Examples: dev-dator, utveckling, preview, …
+ *'''coraVersion''' – The version of Cora used in the deployment (semver).
+ *'''applicationVersion''' – The version of the application (semver).
+ 
+ URL information:
+ *'''REST''' – The API REST endpoint.
+ *'''appTokenLogin''' – Login url when using appToken.
+ *'''passwordLogin''' – Login url when using password.
+ *'''record''' – The REST endpoint when handling records.
+ *'''iiif''' – The url when using iiif protocol on binaries.
+ 
+ Then it contains a list of exampleUsers. Those users are availabe to be used on that deployment:
+ *'''name''' – The exampleUsers name.
+ *'''text''' – A text that labels the user.
+ *'''type''' – Describes the role or context
+ *'''loginId''' – LoginId of the user.
+ *'''appToken''' – Working apptoken of the user.
+
+To retrieve the Deployment Info, use an HTTP GET request at:
+
+!style_code(!style_pass[GET] /rest/)
+
+with one of the following media types:
+
+'''application/vnd.cora.deploymentInfo+json'''
+'''application/vnd.cora.deploymentInfo+xml'''
+
+These headers determine whether the response is JSON or XML.
+
+ *'''Case 1:''' – It must be possible to read all the information described above using JSON
+ *'''Case 2:''' – It must be possible to read all the information described above using XML
+
+!***> Prepare tests: Create example user
+!define createExampleUser {!-{"name":"exampleUser","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"exampleUser"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"coraData"}]}]},{"name":"name","value":"someName"},{"name":"text","value":"someText"},{"name":"type","value":"someType"},{"name":"loginId","value":"some@mail.test"},{"name":"apptoken","value":"12345678-1234-1234-1234-123456789abc"}]}-!}
+
+!define currentAuthToken {$adminAuthToken}
+!define recordType {exampleUser}
+!define createData {${createExampleUser}}
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {}
+!include -seamless .HelperPages.createRecord
+*!
+
+!***> Case 1
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeaders | Accept: application/vnd.cora.deploymentInfo+json|
+| GET | /rest | 200 |Content-Type: application\/vnd\.cora\.deploymentInfo\+json | |
+| let | match | js | response.body.match(/"applicationName":\s*"(.*)"/)[1] | systemOne |
+| let | match | js | response.body.match(/"deploymentName":\s*"(.*)"/)[1] | |
+| let | match | js | response.body.match(/"coraVersion":\s*"(.*)"/)[1] | 0.1.0 |
+| let | match | js | response.body.match(/"applicationVersion":\s*"(.*)"/)[1] | 0.1.0 |
+| let | match | js | response.body.match(/"REST":\s*"http.*(rest\/)"/)[1] | rest/ |
+| let | match | js | response.body.match(/"appTokenLogin":\s*"http.*(login\/rest\/apptoken)"/)[1] | login/rest/apptoken |
+| let | match | js | response.body.match(/"passwordLogin":\s*"http.*(login\/rest\/password)"/)[1] | login/rest/password |
+| let | match | js | response.body.match(/"record":\s*"http.*(rest\/record\/)"/)[1] | rest/record/ |
+| let | match | js | response.body.match(/"iiif":\s*"http.*(iiif\/)"/)[1] | iiif/ |
+| let | match | js | response.body.match(/"name":\s*"(.*)"/)[1] | someName |
+| let | match | js | response.body.match(/"text":\s*"(.*)"/)[1] | someText |
+| let | match | js | response.body.match(/"type":\s*"(.*)"/)[1] | someType |
+| let | match | js | response.body.match(/"loginId":\s*".*(mail.test)"/)[1] | mail.test |
+| let | match | js | response.body.match(/"appToken":\s*"(.*)"/)[1] | 12345678-1234-1234-1234-123456789abc |
+*!
+
+!***> Case 2
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
+| setHeaders | Accept: application/vnd.cora.deploymentInfo+xml|
+| GET | /rest | 200 |Content-Type: application\/vnd\.cora\.deploymentInfo\+xml                               | |
+| let | match | js | response.body.match(/<applicationName>(.*)<\/applicationName>/)[1]                      | systemOne |
+| let | match | js | response.body.match(/<deploymentName>(.*)<\/deploymentName>/)[1]                        | |
+| let | match | js | response.body.match(/<coraVersion>(.*)<\/coraVersion>/)[1]                              | 0.1.0 |
+| let | match | js | response.body.match(/<applicationVersion>(.*)<\/applicationVersion>/)[1]                | 0.1.0 |
+| let | match | js | response.body.match(/<REST>http.*(rest\/)<\/REST>/)[1]                                  | rest/ |
+| let | match | js | response.body.match(/<appTokenLogin>http.*(login\/rest\/apptoken)<\/appTokenLogin>/)[1] | login/rest/apptoken |
+| let | match | js | response.body.match(/<passwordLogin>http.*(login\/rest\/password)<\/passwordLogin>/)[1] | login/rest/password |
+| let | match | js | response.body.match(/<record>http.*(rest\/record\/)<\/record>/)[1]                      | rest/record/  |
+| let | match | js | response.body.match(/<iiif>http.*(iiif\/)<\/iiif>/)[1]                                  | iiif/ |
+| let | match | js | response.body.match(/<name>(.*)<\/name>/)[1]                                            | someName |
+| let | match | js | response.body.match(/<text>(.*)<\/text>/)[1]                                            | someText |
+| let | match | js | response.body.match(/<type>(.*)<\/type>/)[1]                                            | someType |
+| let | match | js | response.body.match(/<loginId>.*(mail.test)<\/loginId>/)[1]                             | mail.test |
+| let | match | js | response.body.match(/<appToken>(.*)<\/appToken>/)[1]                                    | 12345678-1234-1234-1234-123456789abc |
+*!
+-----
+!***> Clean up
+!| DeleteRecord |
+| recordType  | deleteAllRecordsForRecordType? |
+| exampleUser | =~/OK/|
+*!

@@ -10,7 +10,6 @@ Static
 		validationType (recordLink, 1-1, noConstraint)
 		dataDivider (recordLink, 1-1, noConstraint, P, I)
 		createdBy (recordLink, 1-1, noConstraint)
-		permissionUnit (recordLink, 0-X, noConstraint)
 		tsCreated (textVariable, 1-1, noConstraint)
 		updated (group, 1-X, noConstraint)
 			updatedBy (recordLink, 1-1, noConstraint)

@@ -5,7 +5,7 @@ Static
   * '''Case 1''': An Admin must be able to read a record info
   
 !***> '''Case 1''': An Admin must be able to read a record info
-!define expectedRecordInfo {=~/"name":"linkedRecordId","value":"idTextVar".*"linkedRecordId","value":"recordTypeLink".*"name":"linkedRecordId","value":"dataDividerLink".*"name":"linkedRecordId","value":"createdByLink".*"name":"linkedRecordId","value":"permissionUnitLink"/}
+!define expectedRecordInfo {=~/"name":"linkedRecordId","value":"idTextVar".*"linkedRecordId","value":"recordTypeLink".*"name":"linkedRecordId","value":"dataDividerLink".*"name":"linkedRecordId","value":"createdByLink"/}
 
 !| RecordEndpointFixture |
 | authToken | id | type | testReadRecord? | getStatusType? |
