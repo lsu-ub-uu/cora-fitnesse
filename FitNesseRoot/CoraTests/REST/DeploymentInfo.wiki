@@ -16,6 +16,7 @@ It provides metadata describing the current deployment, including:
  *'''appTokenLogin''' – Login url when using appToken.
  *'''passwordLogin''' – Login url when using password.
  *'''record''' – The REST endpoint when handling records.
+ *'''recordType''' – The endpoint to be able to list record types.
  *'''iiif''' – The url when using iiif protocol on binaries.
  
  Then it contains a list of exampleUsers. Those users are availabe to be used on that deployment:
@@ -62,6 +63,7 @@ These headers determine whether the response is JSON or XML.
 | let | match | js | response.body.match(/"appTokenLogin":\s*"http.*(login\/rest\/apptoken)"/)[1] | login/rest/apptoken |
 | let | match | js | response.body.match(/"passwordLogin":\s*"http.*(login\/rest\/password)"/)[1] | login/rest/password |
 | let | match | js | response.body.match(/"record":\s*"http.*(rest\/record\/)"/)[1] | rest/record/ |
+| let | match | js | response.body.match(/"recordType":\s*"http.*(rest\/record\/recordType)"/)[1] | rest/record/recordType |
 | let | match | js | response.body.match(/"iiif":\s*"http.*(iiif\/)"/)[1] | iiif/ |
 | let | match | js | response.body.match(/"name":\s*"(.*)"/)[1] | someName |
 | let | match | js | response.body.match(/"text":\s*"(.*)"/)[1] | someText |
@@ -81,7 +83,8 @@ These headers determine whether the response is JSON or XML.
 | let | match | js | response.body.match(/<REST>http.*(rest\/)<\/REST>/)[1]                                  | rest/ |
 | let | match | js | response.body.match(/<appTokenLogin>http.*(login\/rest\/apptoken)<\/appTokenLogin>/)[1] | login/rest/apptoken |
 | let | match | js | response.body.match(/<passwordLogin>http.*(login\/rest\/password)<\/passwordLogin>/)[1] | login/rest/password |
-| let | match | js | response.body.match(/<record>http.*(rest\/record\/)<\/record>/)[1]                      | rest/record/  |
+| let | match | js | response.body.match(/<record>http.*(rest\/record\/)<\/record>/)[1]                      | rest/record/ |
+| let | match | js | response.body.match(/<recordType>http.*(rest\/record\/recordType)<\/recordType>/)[1]                      | rest/record/recordType |
 | let | match | js | response.body.match(/<iiif>http.*(iiif\/)<\/iiif>/)[1]                                  | iiif/ |
 | let | match | js | response.body.match(/<name>(.*)<\/name>/)[1]                                            | someName |
 | let | match | js | response.body.match(/<text>(.*)<\/text>/)[1]                                            | someText |
