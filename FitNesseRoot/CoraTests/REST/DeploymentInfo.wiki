@@ -54,7 +54,7 @@ These headers determine whether the response is JSON or XML.
 !***> Case 1
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | Accept: application/vnd.cora.deploymentInfo+json|
-| GET | /rest | 200 |Content-Type: application\/vnd\.cora\.deploymentInfo\+json | |
+| GET | /rest/ | 200 |Content-Type: application\/vnd\.cora\.deploymentInfo\+json | |
 | let | match | js | response.body.match(/"applicationName":\s*"(.*)"/)[1] | systemOne |
 | let | match | js | response.body.match(/"deploymentName":\s*"(.*)"/)[1] | |
 | let | match | js | response.body.match(/"coraVersion":\s*"(.*)"/)[1] | 0.1.0 |
@@ -75,7 +75,7 @@ These headers determine whether the response is JSON or XML.
 !***> Case 2
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | Accept: application/vnd.cora.deploymentInfo+xml|
-| GET | /rest | 200 |Content-Type: application\/vnd\.cora\.deploymentInfo\+xml                               | |
+| GET | /rest/ | 200 |Content-Type: application\/vnd\.cora\.deploymentInfo\+xml                               | |
 | let | match | js | response.body.match(/<applicationName>(.*)<\/applicationName>/)[1]                      | systemOne |
 | let | match | js | response.body.match(/<deploymentName>(.*)<\/deploymentName>/)[1]                        | |
 | let | match | js | response.body.match(/<coraVersion>(.*)<\/coraVersion>/)[1]                              | 0.1.0 |
