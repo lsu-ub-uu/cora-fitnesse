@@ -1,14 +1,9 @@
 !***> Update fitnesse user for tests.
 !define addfitnesseBinaryReadOnAllVisibilitiesRole {!-,{"name":"userRole","repeatId":"7175775086411622","children":[{"name":"userRole","children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"fitnesseBinaryReadOnAllVisibilitiesRole"}]},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}],"name":"rule"},{"repeatId":"0","name":"value","value":"system.*"}],"name":"permissionTermRulePart"}]}-!}
 
-!| script | StringSupport |
-|$fitnesseUserWithData=|replaceAll;|${FITNESSE_USER_ORIGINAL_DATA}| FITNESSE_USER_APPTOKEN_SECRET_ID | $fitnesseUserApptokenSecretId | 
-
-
-!define recordType {user}
-!define recordId {121212}
-!define updateData {$fitnesseUserWithData}
+!define currentAuthToken {$adminAuthToken}
+!define updateData {${FITNESSE_USER_ORIGINAL_DATA}}
 !define expectedUpdateResult {OK}
-
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
+*!
 *!

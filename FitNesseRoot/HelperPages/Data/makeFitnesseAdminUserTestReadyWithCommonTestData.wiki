@@ -1,14 +1,8 @@
 !***> Update fitnesse user. Add fitnesseBinaryReadOnAllVisibilitiesRole role.
 
-!| script | StringSupport |
-|$fitnesseAdminWithData=|replaceAll;|${FITNESSE_ADMIN_USER_ORIGINAL_DATA}| FITNESSE_ADMIN_APPTOKEN_SECRET_ID | $fitnesseAdminApptokenSecretId | 
-
 !define currentAuthToken {$adminAuthToken}
-!define recordType {user}
-!define recordId {131313}
-!define updateData {$fitnesseAdminWithData}
-!define expectedAnswer {}
+!define updateData {${FITNESSE_ADMIN_USER_ORIGINAL_DATA}}
 !define expectedUpdateResult {OK}
-
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseAdmin
+*!
 *!

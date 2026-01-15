@@ -57,7 +57,7 @@ These headers determine whether the response is JSON or XML.
 | GET | /rest/ | 200 |Content-Type: application\/vnd\.cora\.deploymentInfo\+json | |
 | let | match | js | response.body.match(/"applicationName":\s*"(.*)"/)[1] | systemOne |
 | let | match | js | response.body.match(/"deploymentName":\s*"(.*)"/)[1] | |
-| let | match | js | response.body.match(/"coraVersion":\s*"(.*)"/)[1] | 0.1.0 |
+| let | match | js | response.body.match(/"coraVersion":\s*"(.*)"/)[1] |  |
 | let | match | js | response.body.match(/"applicationVersion":\s*"(.*)"/)[1] | 0.1.0 |
 | let | match | js | response.body.match(/"REST":\s*"http.*(rest\/)"/)[1] | rest/ |
 | let | match | js | response.body.match(/"appTokenLogin":\s*"http.*(login\/rest\/apptoken)"/)[1] | login/rest/apptoken |

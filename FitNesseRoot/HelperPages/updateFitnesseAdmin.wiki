@@ -1,0 +1,14 @@
+---
+Help: Update a record according to variables
+---
+!***> Update fitnesseAdmin
+
+!| script | StringSupport |
+|$fitnesseAdminWithData=|replaceAll;|${updateData}| FITNESSE_ADMIN_APPTOKEN_SECRET_ID | $fitnesseAdminApptokenSecretId | 
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $adminAuthToken | user | 131313 | $fitnesseAdminWithData | | OK |
+
+!define expectedAnswer {}
+*!
