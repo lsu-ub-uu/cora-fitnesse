@@ -95,6 +95,6 @@ These headers determine whether the response is JSON or XML.
 -----
 !***> Clean up
 !| DeleteRecord |
-| recordType  | deleteAllRecordsForRecordType? |
-| exampleUser | =~/OK/|
+| recordType  | recordId         | deleteRecord? |
+| exampleUser | $createdRecordId | =~/OK/        |
 *!
