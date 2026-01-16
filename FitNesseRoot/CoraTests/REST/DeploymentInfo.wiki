@@ -65,11 +65,11 @@ These headers determine whether the response is JSON or XML.
 | let | match | js | response.body.match(/"record":\s*"http.*(rest\/record\/)"/)[1] | rest/record/ |
 | let | match | js | response.body.match(/"recordType":\s*"http.*(rest\/record\/recordType)"/)[1] | rest/record/recordType |
 | let | match | js | response.body.match(/"iiif":\s*"http.*(iiif\/)"/)[1] | iiif/ |
-| let | match | js | response.body.match(/"name":\s*"(.*)"/)[1] | someName |
-| let | match | js | response.body.match(/"text":\s*"(.*)"/)[1] | someText |
-| let | match | js | response.body.match(/"type":\s*"(.*)"/)[1] | someType |
-| let | match | js | response.body.match(/"loginId":\s*".*(mail.test)"/)[1] | mail.test |
-| let | match | js | response.body.match(/"appToken":\s*"(.*)"/)[1] | 12345678-1234-1234-1234-123456789abc |
+| let | match | js | response.body.exampleUsers[1].name | someName |
+| let | match | js | response.body.match(/"text":\s*"(.*)"/)[2] | someText |
+| let | match | js | response.body.match(/"type":\s*"(.*)"/)[2] | someType |
+| let | match | js | response.body.match(/"loginId":\s*".*(mail.test)"/)[2] | mail.test |
+| let | match | js | response.body.match(/"appToken":\s*"(.*)"/)[2] | 12345678-1234-1234-1234-123456789abc |
 *!
 
 !***> Case 2
@@ -86,11 +86,11 @@ These headers determine whether the response is JSON or XML.
 | let | match | js | response.body.match(/<record>http.*(rest\/record\/)<\/record>/)[1]                      | rest/record/ |
 | let | match | js | response.body.match(/<recordType>http.*(rest\/record\/recordType)<\/recordType>/)[1]                      | rest/record/recordType |
 | let | match | js | response.body.match(/<iiif>http.*(iiif\/)<\/iiif>/)[1]                                  | iiif/ |
-| let | match | js | response.body.match(/<name>(.*)<\/name>/)[1]                                            | someName |
-| let | match | js | response.body.match(/<text>(.*)<\/text>/)[1]                                            | someText |
-| let | match | js | response.body.match(/<type>(.*)<\/type>/)[1]                                            | someType |
-| let | match | js | response.body.match(/<loginId>.*(mail.test)<\/loginId>/)[1]                             | mail.test |
-| let | match | js | response.body.match(/<appToken>(.*)<\/appToken>/)[1]                                    | 12345678-1234-1234-1234-123456789abc |
+| let | match | js | response.body.match(/<name>(.*)<\/name>/)[2]                                            | someName |
+| let | match | js | response.body.match(/<text>(.*)<\/text>/)[2]                                            | someText |
+| let | match | js | response.body.match(/<type>(.*)<\/type>/)[2]                                            | someType |
+| let | match | js | response.body.match(/<loginId>.*(mail.test)<\/loginId>/)[2]                             | mail.test |
+| let | match | js | response.body.match(/<appToken>(.*)<\/appToken>/)[2]                                    | 12345678-1234-1234-1234-123456789abc |
 *!
 -----
 !***> Clean up
