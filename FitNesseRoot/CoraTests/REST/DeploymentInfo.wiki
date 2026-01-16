@@ -58,39 +58,39 @@ These headers determine whether the response is JSON or XML.
 | let | match | js | response.body.match(/"applicationName":\s*"(.*)"/)[1] | systemOne |
 | let | match | js | response.body.match(/"deploymentName":\s*"(.*)"/)[1] | |
 | let | match | js | response.body.match(/"coraVersion":\s*"(.*)"/)[1] |  |
-| let | match | js | response.body.match(/"applicationVersion":\s*"(.*)"/)[1] | 0.1.0 |
+| let | match | js | response.body.match(/"applicationVersion":\s*"(.*)"/)[1] | |
 | let | match | js | response.body.match(/"REST":\s*"http.*(rest\/)"/)[1] | rest/ |
 | let | match | js | response.body.match(/"appTokenLogin":\s*"http.*(login\/rest\/apptoken)"/)[1] | login/rest/apptoken |
 | let | match | js | response.body.match(/"passwordLogin":\s*"http.*(login\/rest\/password)"/)[1] | login/rest/password |
 | let | match | js | response.body.match(/"record":\s*"http.*(rest\/record\/)"/)[1] | rest/record/ |
 | let | match | js | response.body.match(/"recordType":\s*"http.*(rest\/record\/recordType)"/)[1] | rest/record/recordType |
 | let | match | js | response.body.match(/"iiif":\s*"http.*(iiif\/)"/)[1] | iiif/ |
-| let | match | js | response.body.exampleUsers[1].name | someName |
-| let | match | js | response.body.match(/"text":\s*"(.*)"/)[2] | someText |
-| let | match | js | response.body.match(/"type":\s*"(.*)"/)[2] | someType |
-| let | match | js | response.body.match(/"loginId":\s*".*(mail.test)"/)[2] | mail.test |
-| let | match | js | response.body.match(/"appToken":\s*"(.*)"/)[2] | 12345678-1234-1234-1234-123456789abc |
+| let | match | js | response.body.match(/"name":\s*"(someName)"/)[1] | someName |
+| let | match | js | response.body.match(/"text":\s*"(someText)"/)[1] | someText |
+| let | match | js | response.body.match(/"type":\s*"(someType)"/)[1] | someType |
+| let | match | js | response.body.match(/"loginId":\s*".*(mail.test)"/)[1] | mail.test |
+| let | match | js | response.body.match(/"appToken":\s*"(12345678-1234-1234-1234-123456789abc)"/)[1] | 12345678-1234-1234-1234-123456789abc |
 *!
 
 !***> Case 2
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | Accept: application/vnd.cora.deploymentInfo+xml|
-| GET | /rest/ | 200 |Content-Type: application\/vnd\.cora\.deploymentInfo\+xml                               | |
+| GET | /rest/ | 200 |Content-Type: application\/vnd\.cora\.deploymentInfo\+xml                              | |
 | let | match | js | response.body.match(/<applicationName>(.*)<\/applicationName>/)[1]                      | systemOne |
 | let | match | js | response.body.match(/<deploymentName>(.*)<\/deploymentName>/)[1]                        | |
-| let | match | js | response.body.match(/<coraVersion>(.*)<\/coraVersion>/)[1]                              | 0.1.0 |
-| let | match | js | response.body.match(/<applicationVersion>(.*)<\/applicationVersion>/)[1]                | 0.1.0 |
+| let | match | js | response.body.match(/<coraVersion>(.*)<\/coraVersion>/)[1]                              | |
+| let | match | js | response.body.match(/<applicationVersion>(.*)<\/applicationVersion>/)[1]                | |
 | let | match | js | response.body.match(/<REST>http.*(rest\/)<\/REST>/)[1]                                  | rest/ |
 | let | match | js | response.body.match(/<appTokenLogin>http.*(login\/rest\/apptoken)<\/appTokenLogin>/)[1] | login/rest/apptoken |
 | let | match | js | response.body.match(/<passwordLogin>http.*(login\/rest\/password)<\/passwordLogin>/)[1] | login/rest/password |
 | let | match | js | response.body.match(/<record>http.*(rest\/record\/)<\/record>/)[1]                      | rest/record/ |
-| let | match | js | response.body.match(/<recordType>http.*(rest\/record\/recordType)<\/recordType>/)[1]                      | rest/record/recordType |
+| let | match | js | response.body.match(/<recordType>http.*(rest\/record\/recordType)<\/recordType>/)[1]    | rest/record/recordType |
 | let | match | js | response.body.match(/<iiif>http.*(iiif\/)<\/iiif>/)[1]                                  | iiif/ |
-| let | match | js | response.body.match(/<name>(.*)<\/name>/)[2]                                            | someName |
-| let | match | js | response.body.match(/<text>(.*)<\/text>/)[2]                                            | someText |
-| let | match | js | response.body.match(/<type>(.*)<\/type>/)[2]                                            | someType |
-| let | match | js | response.body.match(/<loginId>.*(mail.test)<\/loginId>/)[2]                             | mail.test |
-| let | match | js | response.body.match(/<appToken>(.*)<\/appToken>/)[2]                                    | 12345678-1234-1234-1234-123456789abc |
+| let | match | js | response.body.match(/<name>(someName)<\/name>/)[1]                                      | someName |
+| let | match | js | response.body.match(/<text>(someText)<\/text>/)[1]                                      | someText |
+| let | match | js | response.body.match(/<type>(someType)<\/type>/)[1]                                      | someType |
+| let | match | js | response.body.match(/<loginId>.*(mail.test)<\/loginId>/)[1]                             | mail.test |
+| let | match | js | response.body.match(/<appToken>(12345678-1234-1234-1234-123456789abc)<\/appToken>/)[1]  | 12345678-1234-1234-1234-123456789abc |
 *!
 -----
 !***> Clean up
