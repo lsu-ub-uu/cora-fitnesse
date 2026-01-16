@@ -64,14 +64,12 @@ Set up trashBinCollectionVar on fitnesseRecordInfoGroupUsesTrashBin
 *!
 
 !***> Grant user with trashBinPermissionTerm = system.*
-!define recordType {user}
-!define recordId {121212}
 !define fitnessePermissionTermName {trashBinPermissionTerm}
 !define fitnessePermissionTermValue {system.*}
 !define addFitnesseRole {${addFitnessePermissionTerm}}
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 
 !***> Creation of a standard fitnesse metadataRecordLink that points to another fitnesseRecord

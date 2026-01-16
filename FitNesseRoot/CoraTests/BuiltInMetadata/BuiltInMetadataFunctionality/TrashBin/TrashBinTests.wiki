@@ -108,14 +108,12 @@ We expect to be able to move the record B to trash since user has enough grants,
 
 !***> Grant user with trashBinPermissionTerm = system.false
 !define currentAuthToken {$adminAuthToken}
-!define recordType {user}
-!define recordId {121212}
 !define fitnessePermissionTermName {trashBinPermissionTerm}
 !define fitnessePermissionTermValue {system.false}
 !define addFitnesseRole {${addFitnessePermissionTerm}}
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 *!
 
@@ -143,14 +141,12 @@ We expect that a user with the '''system.false''' grant cannot see record B in t
 
 !***> Prepare following tests: Grant user with trashBinPermissionTerm = system.*
 !define currentAuthToken {$adminAuthToken}
-!define recordType {user}
-!define recordId {121212}
 !define fitnessePermissionTermName {trashBinPermissionTerm}
 !define fitnessePermissionTermValue {system.*}
 !define addFitnesseRole {${addFitnessePermissionTerm}}
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 
 We expect that the user can now see record B in the trash, as they have sufficient credentials.
@@ -211,14 +207,12 @@ We expect to be able to restore record B from the trash. After restoration, reco
 
 !***> Grant user with trashBinPermissionTerm = system.false
 !define currentAuthToken {$adminAuthToken}
-!define recordType {user}
-!define recordId {121212}
 !define fitnessePermissionTermName {trashBinPermissionTerm}
 !define fitnessePermissionTermValue {system.false}
 !define addFitnesseRole {${addFitnessePermissionTerm}}
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 
 !define currentAuthToken {$userAuthToken}

@@ -20,14 +20,11 @@ Static
 !***> Create test record with value '''red'''
 !***> Update user. Grant permission term to '''system.*'''
 !define fitnessePermissionTermValue {system.*}
-
 !define currentAuthToken {$adminAuthToken}
 !define addFitnesseRole {${addFitnessePermissionTerm}}
-!define recordType {user}
-!define recordId {121212}
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 
 !define currentAuthToken {$userAuthToken}
@@ -46,11 +43,9 @@ We expect to be able to read the record even though the value is red and not blu
 
 !define currentAuthToken {$adminAuthToken}
 !define addFitnesseRole {${addFitnessePermissionTerm}}
-!define recordType {user}
-!define recordId {121212}
-!define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
+!define updateData {$fitnesseUserWithData}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 !define currentAuthToken {$userAuthToken}
 !define recordType {fitnesseRecordType}
@@ -70,11 +65,9 @@ We expect to be able to read the record even though the value is red and not blu
 
 !define currentAuthToken {$adminAuthToken}
 !define addFitnesseRole {${addFitnessePermissionTerm}}
-!define recordType {user}
-!define recordId {121212}
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 
 !define currentAuthToken {$userAuthToken}

@@ -11,7 +11,7 @@
 | type           | id                | version    | memoryToStorage? |
 | permissionRole | fitnesseTextAdmin | beforeTest | OK               |
 | user           | 121212            | test       | OK               |
-| user           | 131313            | beforeTest | OK               |
+| user           | 131313            | test       | OK               |
 
 *!
 !***> Remove created data

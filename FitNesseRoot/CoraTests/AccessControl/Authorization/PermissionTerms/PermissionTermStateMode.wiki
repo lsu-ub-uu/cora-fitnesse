@@ -23,11 +23,9 @@ Static
 !***> Update user. No granted permission
 !define currentAuthToken {$adminAuthToken}
 !define addFitnesseRole {!--!}
-!define recordType {user}
-!define recordId {121212}
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 
 !define currentAuthToken {$userAuthToken}
@@ -44,11 +42,9 @@ Static
 
 !define currentAuthToken {$adminAuthToken}
 !define addFitnesseRole {${addFitnessePermissionTerm}}
-!define recordType {user}
-!define recordId {121212}
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 
 !define currentAuthToken {$userAuthToken}
@@ -65,11 +61,9 @@ Static
 
 !define currentAuthToken {$adminAuthToken}
 !define addFitnesseRole {${addFitnessePermissionTerm}}
-!define recordType {user}
-!define recordId {121212}
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 
 !define currentAuthToken {$userAuthToken}
@@ -84,11 +78,9 @@ Static
 !***> Update user. No granted permission
 !define currentAuthToken {$adminAuthToken}
 !define addFitnesseRole {!--!}
-!define recordType {user}
-!define recordId {121212}
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 
 !define currentAuthToken {$userAuthToken}
@@ -105,11 +97,9 @@ Static
 
 !define currentAuthToken {$adminAuthToken}
 !define addFitnesseRole {${addFitnessePermissionTerm}}
-!define recordType {user}
-!define recordId {121212}
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 
 !define currentAuthToken {$userAuthToken}
@@ -126,11 +116,9 @@ Static
 
 !define currentAuthToken {$adminAuthToken}
 !define addFitnesseRole {${addFitnessePermissionTerm}}
-!define recordType {user}
-!define recordId {121212}
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 
 !define currentAuthToken {$userAuthToken}
@@ -145,11 +133,9 @@ Static
 !***> Update user. No granted permission
 !define currentAuthToken {$adminAuthToken}
 !define addFitnesseRole {!--!}
-!define recordType {user}
-!define recordId {121212}
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 
 !define currentAuthToken {$userAuthToken}
@@ -167,11 +153,9 @@ Static
 
 !define currentAuthToken {$adminAuthToken}
 !define addFitnesseRole {${addFitnessePermissionTerm}}
-!define recordType {user}
-!define recordId {121212}
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 
 !define currentAuthToken {$userAuthToken}
@@ -189,11 +173,9 @@ Static
 
 !define currentAuthToken {$adminAuthToken}
 !define addFitnesseRole {${addFitnessePermissionTerm}}
-!define recordType {user}
-!define recordId {121212}
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 
 !define currentAuthToken {$userAuthToken}
@@ -212,11 +194,9 @@ The record is updated to blue, which the user has not grant. Then we try to read
 
 !define currentAuthToken {$adminAuthToken}
 !define addFitnesseRole {${addFitnessePermissionTerm}}
-!define recordType {user}
-!define recordId {121212}
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 
 !define currentAuthToken {$userAuthToken}
@@ -241,11 +221,9 @@ The record is updated to blue, which the user has not grant. Then we try to read
 
 !define currentAuthToken {$adminAuthToken}
 !define addFitnesseRole {${addFitnessePermissionTerm}}
-!define recordType {user}
-!define recordId {121212}
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 
 !define currentAuthToken {$userAuthToken}
@@ -261,11 +239,9 @@ The record is updated to blue, which the user has not grant. Then we try to read
 !***> Update user. No granted permission
 !define currentAuthToken {$adminAuthToken}
 !define addFitnesseRole {!--!}
-!define recordType {user}
-!define recordId {121212}
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 
 !define currentAuthToken {$userAuthToken}
@@ -282,11 +258,9 @@ The record is updated to blue, which the user has not grant. Then we try to read
 
 !define currentAuthToken {$adminAuthToken}
 !define addFitnesseRole {${addFitnessePermissionTerm}}
-!define recordType {user}
-!define recordId {121212}
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 
 !define currentAuthToken {$userAuthToken}
@@ -303,11 +277,9 @@ The record is updated to blue, which the user has not grant. Then we try to read
 
 !define currentAuthToken {$adminAuthToken}
 !define addFitnesseRole {${addFitnessePermissionTerm}}
-!define recordType {user}
-!define recordId {121212}
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 
 !define currentAuthToken {$userAuthToken}
@@ -323,11 +295,9 @@ The record is updated to blue, which the user has not grant. Then we try to read
 
 !define currentAuthToken {$adminAuthToken}
 !define addFitnesseRole {${addFitnessePermissionTerm}}
-!define recordType {user}
-!define recordId {121212}
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 
 !***> Case 15
@@ -372,11 +342,9 @@ The record is updated to blue, which the user has not grant. Then we try to read
 
 !define currentAuthToken {$adminAuthToken}
 !define addFitnesseRole {${addFitnessePermissionTerm}}
-!define recordType {user}
-!define recordId {121212}
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
-!include -seamless .HelperPages.updateRecord
+!include -seamless .HelperPages.updateFitnesseUser
 *!
 
 !***> Case 19

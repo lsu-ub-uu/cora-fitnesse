@@ -46,3 +46,14 @@ Suite
 | setUserAuthToken  | $userAuthToken  |
 *!
 *!
+
+!***> Read apptokens for fitnesse users
+!| RecordEndpointFixture |
+| authToken | type | id | testReadRecord? | getStatusType? |
+| $adminAuthToken | user | 121212 | $read121212= | OK |
+| $adminAuthToken | user | 131313 | $read131313= | OK |
+
+!| script | ExtractSubstringUsingRegex |
+| $fitnesseUserApptokenSecretId= | get substring using text | $read121212 | and regex | \{"name":"linkedRecordType","value":"systemSecret"\},\{"name":"linkedRecordId","value":"(systemSecret:\d*)"\} | and group | 1 |
+| $fitnesseAdminApptokenSecretId= | get substring using text | $read131313 | and regex | \{"name":"linkedRecordType","value":"systemSecret"\},\{"name":"linkedRecordId","value":"(systemSecret:\d*)"\} | and group | 1 |
+*!
