@@ -10,3 +10,4 @@
 coraLog4j.log
 coraLog4j-*
 /tooling/
+/cp.txt
