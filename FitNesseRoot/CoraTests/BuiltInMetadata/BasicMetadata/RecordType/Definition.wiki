@@ -61,7 +61,7 @@ Static
 	filter (recordLink, 0-1, noConstraint)
 	filterPresentation (recordLink, 0-1, noConstraint)
 	public (collectionVariable, 1-1, noConstraint)
-	recordTypeCategory (collectionVariable, 0-X, noConstraint, I)
+	recordTypeCategory (collectionVariable, 0-X, noConstraint)
 	indexSettings (recordLink, 0-1, noConstraint)
 	storeInArchive (collectionVariable, 1-1, noConstraint)
 	usePermissionUnit (collectionVariable, 1-1, noConstraint)
