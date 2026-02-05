@@ -32,6 +32,7 @@ Static
 	usePermissionUnit (collectionVariable, 1-1, noConstraint)
 	useVisibility (collectionVariable, 1-1, noConstraint)
 	useTrashBin (collectionVariable, 1-1, noConstraint)-!}
+	
 !define recordTypeGroupDefinition {!-recordType (group)
 	recordInfo (group, 1-1, noConstraint)
 		id (textVariable, 1-1, noConstraint, I)
@@ -51,7 +52,7 @@ Static
 	menuPresentationViewId (recordLink, 1-1, noConstraint)
 	listPresentationViewId (recordLink, 1-1, noConstraint)
 	textId (recordLink, 1-1, noConstraint)
-	pluralTextId (recordLink, 0-1, noConstraint)
+	pluralTextId (recordLink, 1-1, noConstraint)
 	defTextId (recordLink, 1-1, noConstraint)
 	search (recordLink, 0-1, noConstraint)
 	idSource (collectionVariable, 1-1, noConstraint)

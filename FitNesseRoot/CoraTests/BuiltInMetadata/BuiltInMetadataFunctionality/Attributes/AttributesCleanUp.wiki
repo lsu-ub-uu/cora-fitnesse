@@ -11,7 +11,6 @@
 | $adminAuthToken | metadata | exampleAttributeNewGroup | | OK |
 | $adminAuthToken | metadata | exampleAttributeGroup | | OK |
 | $adminAuthToken | text | someFitnesseText | | OK |
-| $adminAuthToken | text | someFitnesseDefText | | OK |
 | $adminAuthToken | text | exampleAttributeGroupText | | OK |
 | $adminAuthToken | text | exampleAttributeGroupDefText | | OK |
 | $adminAuthToken | text | exampleAttributeNewGroupText | | OK |
