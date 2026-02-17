@@ -18,6 +18,7 @@ Static
 			tsUpdated (textVariable, 1-1, noConstraint)
 		visibility (collectionVariable, 1-1, noConstraint, P)
 		tsVisibility (textVariable, 0-1, write)
+		hostRecord (anyTypeRecordLink, 0-1, noConstraint)
 	master (group, 0-1, write)
 		originalFileName (textVariable, 1-1, noConstraint)
 		resourceId (textVariable, 1-1, readWrite)
