@@ -20,6 +20,12 @@ It should be possible to create new binary records that are either unpublished o
 !define createData {${unpublishedBinary}}
 !define expectedCreatedData {${expectedUnpublishedBinary}}
 !include -seamless .HelperPages.createCheckReadCheck
+!***> Clean up user (remove binaries)
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | binary | $createdRecordId | | OK |
+*!
 
 #!define expectedCreateResult {CREATED}
 #!define expectedAnswer {=~/!-"tsVisibility","value":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z"-!/}
@@ -29,7 +35,6 @@ It should be possible to create new binary records that are either unpublished o
 #!define createData {${unpublishedBinary}}
 #!define expectedCreatedData {${unpublishedBinary}}
 #!include -seamless .HelperPages.createCheckReadCheck
-
 *!
 !***> Case 2 (When testing CORA-2471 uncomment and replace the tests below)
 !define expectedCreateResult {CREATED}
@@ -41,7 +46,12 @@ It should be possible to create new binary records that are either unpublished o
 !define createData {${publishedBinary}}
 !define expectedCreatedData {${expectedPublishedBinary}}
 !include -seamless .HelperPages.createCheckReadCheck
+!***> Clean up user (remove binaries)
 
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | binary | $createdRecordId | | OK |
+*!
 #!define expectedCreateResult {CREATED}
 #!define expectedAnswer {=~/!-"tsVisibility","value":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z"-!/}
 #!define expectedCompareResult {Child with nameInData master and type group is missing. Child with nameInData thumbnail and type group is missing. Child with nameInData medium and type group is missing. Child with nameInData large and type group is missing. Child with nameInData jp2 and type group is missing.}
