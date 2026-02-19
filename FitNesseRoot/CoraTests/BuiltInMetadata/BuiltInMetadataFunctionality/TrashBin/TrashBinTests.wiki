@@ -225,6 +225,8 @@ We expect to be able to restore record B from the trash. After restoration, reco
 
 !***> CleanUp all data and restore metadata.
 !| DeleteRecord |
-| recordType |  deleteAllRecordsForRecordType?  |
-| fitnesseRecordType | =~/OK/ |
+| recordType            | recordId       | deleteRecord? |
+| fitnesseRecordType    | $recordAId     | OK            |
+| fitnesseRecordType    | $recordBId     | OK            |
+
 *!

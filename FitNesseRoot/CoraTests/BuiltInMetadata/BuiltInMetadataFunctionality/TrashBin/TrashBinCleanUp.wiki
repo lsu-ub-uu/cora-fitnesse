@@ -7,8 +7,8 @@ Static
 | user       | 121212                     | test     | OK               |
 
 !| DeleteRecord |
-| recordType |  deleteAllRecordsForRecordType?  |
-| fitnesseRecordType | =~/OK/ |
+| recordType            | recordId       | deleteRecord? |
+| fitnesseRecordType    | $createdRecordId     | OK            |
 
 !| RememberRecordState |
 | type       | id                         | version  | memoryToStorage? |

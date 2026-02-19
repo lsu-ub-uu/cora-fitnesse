@@ -48,9 +48,11 @@ We create new record with same vaule than record C, we should be able to create 
 *!
 
 !***> CleanUp
+
 !| DeleteRecord |
-| recordType |  deleteAllRecordsForRecordType?  |
-| fitnesseRecordType | =~/OK/ |
+| recordType            | recordId           | deleteRecord? |
+| fitnesseRecordType    | $recordCId         | OK            |
+| fitnesseRecordType    | $createdRecordId   | OK            |
 
 !| RememberRecordState |
 | type       | id                         | version  | memoryToStorage? |

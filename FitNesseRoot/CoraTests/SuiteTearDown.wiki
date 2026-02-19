@@ -21,6 +21,7 @@ Suite
 
 !| RecordEndpointFixture |
 |authToken|type|id|testDeleteRecord?|getStatusType?|
+|$adminAuthToken|$hostRecordRecordType|$hostRecordRecordId||OK|
 |$adminAuthToken|validationType|fitnesseValidationType||OK|
 |$adminAuthToken|validationType|bigCircuitTrainingLeafletValidation||OK|
 |$adminAuthToken|validationType|circuitTrainingLeafletValidation||OK|

@@ -215,6 +215,22 @@ OBS! Search is pointing to metadata, just in order to be able to create the sear
 *!
 *!
 
+!***> Creation of a fitnesse record to use as host record in binary records
+!define recordType {fitnesseRecordType}
+!define createDataeeeee {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"inTrashBin","value":"-!${fitnesseTrashBinValue}!-"},{"name":"visibility","value":"published"}]},{"name":"fitnesseTextVar","value":"someValue"}]}-!}
+!define createData {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]}]},{"name":"fitnesseTextVar","value":"someValue"}]}-!}
+!include -seamless .HelperPages.createRecord
+
+
+!| script | StringSupport |
+|note|store value from record created on case2|
+|$hostRecordRecordType=|getValueFromVariable;|fitnesseRecordType|
+|$hostRecordRecordId=|getValueFromVariable;|$createdRecordId|
+
+
+*!
+
+
 !include -seamless .HelperPages.Data.makeFitnesseUserTestReadyWithCommonTestData
 
 !***> Legacy test data '''training'''
