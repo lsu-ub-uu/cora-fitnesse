@@ -1,0 +1,8 @@
+---
+Static
+---
+!***> Reset fitnesseRecordType
+!| RememberRecordState |
+| type       | id                         | version  | memoryToStorage? |
+| recordType | fitnesseRecordType         | original | OK               |
+*!

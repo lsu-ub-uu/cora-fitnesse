@@ -4,12 +4,12 @@ Suite
 !***> SetUp 
 !include -seamless .HelperPages.defineAdminAuthToken 
 !define expectedUpdateResult {OK}
+
+!define FITNESSE_RECORD_TYPE_UPDATE_inArchive {!-{"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"fitnesseRecordType"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"recordType"}],"name":"validationType"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"recordType"}],"name":"type"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"pluralTextId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}],"name":"defTextId"},{"children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseGroup"}],"name":"metadataId"},{"children":[{"name":"linkedRecordType","value":"search"},{"name":"linkedRecordId","value":"fitnesseSearch"}],"name":"search"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"presentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"menuPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"listPresentationViewId"},{"children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnessePGroup"}],"name":"autocompletePresentationView"},{"name":"public","value":"false"},{"name":"idSource","value":"sequence"},{"name":"storeInArchive","value":"true"},{"repeatId":"0","name":"groupOfRecordType","value":"metadata"},{"name":"usePermissionUnit","value":"false"},{"name":"useTrashBin","value":"false"},{"name":"useVisibility","value":"false"},{"children":[{"name":"linkedRecordType","value":"sequence"},{"name":"linkedRecordId","value":"fitnesseSequence"}],"name":"sequence"}],"name":"recordType"}-!}
+!| RecordEndpointFixture |
+| authToken       | type       | id                 | json                                     | testUpdateRecord? | getStatusType? |
+| $adminAuthToken | recordType | fitnesseRecordType | ${FITNESSE_RECORD_TYPE_UPDATE_inArchive} |                   | OK             |
+
 *!
 
-#!***> Refresh the authTokens
-#!| AuthenticationFixture |
-#| renewAuthToken? | authTokenRenewUrl | existingAuthToken | getStatusType? | getAuthToken? |
-#| | $adminRenewUrl | $adminAuthToken | OK |  $adminAuthToken= | 
-#| | $userRenewUrl | $userAuthToken | OK |  $userAuthToken= | 
-#| | $guestRenewUrl | $guestAuthToken | OK |  $guestAuthToken= | 
-#*!
+
