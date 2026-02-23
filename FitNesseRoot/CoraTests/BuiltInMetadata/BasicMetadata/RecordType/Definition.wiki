@@ -31,7 +31,8 @@ Static
 	storeInArchive (collectionVariable, 1-1, noConstraint)
 	usePermissionUnit (collectionVariable, 1-1, noConstraint)
 	useVisibility (collectionVariable, 1-1, noConstraint)
-	useTrashBin (collectionVariable, 1-1, noConstraint)-!}
+	useTrashBin (collectionVariable, 1-1, noConstraint)
+	useHostRecordForPermissions (collectionVariable, 0-1, noConstraint)-!}
 	
 !define recordTypeGroupDefinition {!-recordType (group)
 	recordInfo (group, 1-1, noConstraint)
@@ -67,7 +68,8 @@ Static
 	storeInArchive (collectionVariable, 1-1, noConstraint)
 	usePermissionUnit (collectionVariable, 1-1, noConstraint)
 	useVisibility (collectionVariable, 1-1, noConstraint)
-	useTrashBin (collectionVariable, 1-1, noConstraint)-!}
+	useTrashBin (collectionVariable, 1-1, noConstraint)
+	useHostRecordForPermissions (collectionVariable, 0-1, noConstraint)-!}
 *!
 {{{
 ${recordTypeGroupDefinition}
