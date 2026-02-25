@@ -14,8 +14,8 @@ Static
 
 *!
 !| UpdateRecordType |
-| id                 | idSource | public | usePermissionUnit | useVisibility | useTrashBin | storeInArchive | update? |
-| fitnesseRecordType | sequence | false  | false             | true          | true        | false          | OK      |
+| id                 | idSource | public | usePermissionUnit | useVisibility | useTrashBin | storeInArchive | useHostRecordForPermissions | update? |
+| fitnesseRecordType | sequence | false  | false             | true          | true        | false          | false 									| OK      |
 
 !define currentAuthToken {$adminAuthToken}
 !***> Update recordInfo for new and update to use trash bin and visibility
