@@ -4,8 +4,8 @@ Static
 !***> Prepare the test:
 !***> Setup fitnesseRecordType to be '''public''' 
 !| UpdateRecordType |
-| id                 | idSource | public | usePermissionUnit | useVisibility | useTrashBin | storeInArchive | update? |
-| fitnesseRecordType | sequence | true  | false             | false          | false        | false          | OK      |
+| id                 | idSource | public | usePermissionUnit | useVisibility | useTrashBin | storeInArchive | useHostRecordForPermissions |update? |
+| fitnesseRecordType | sequence | true  | false             | false          | false        | false          | false 								   | OK     |
 *!
 !***> Add permission term statePermissionTerm on fitnesseOnlyOneMetadataTextVar (fitnesseGroup)
 !define fitnessePermissionTermName {standardPermissionTerm}

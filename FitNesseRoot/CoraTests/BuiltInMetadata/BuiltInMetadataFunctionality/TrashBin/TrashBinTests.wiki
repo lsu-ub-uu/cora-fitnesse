@@ -14,8 +14,8 @@ We expect not to be able to use the trash bin functionality, as it has not yet b
 
 !***> Prepare next following test: Set fitnesseRecordType to useTrashBin
 !| UpdateRecordType |
-| id | idSource | public | usePermissionUnit | useVisibility | useTrashBin | storeInArchive | update? |
-| fitnesseRecordType | sequence | false | false | false | true | false | OK |
+| id | idSource | public | usePermissionUnit | useVisibility | useTrashBin | storeInArchive | useHostRecordForPermissions |update? |
+| fitnesseRecordType | sequence | false | false | false | true | false | false | OK |
 *!
 
 We expect the system to default isInTrash to false when the field is not provided during record creation.
