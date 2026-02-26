@@ -3,7 +3,7 @@ Test
 ---
 ----
 !1 Metadata validation
-It is possible to validate a record prior to creating or updating it. A work order is used to validate the record, which is sent as payload using !style_pass(POST) to '''${systemUnderTestUrl}record/workOrder'''
+It is possible to validate a record prior to creating or updating it. A work order is used to validate the record, which is sent as payload using !style_pass(POST) to '''${systemUnderTestUrl}rest/record/workOrder''' using content type '''application/vnd.cora.workorder+json''' or '''application/vnd.cora.workorder+xml'''. 
 
 !3 Work order
 The work order contains two parts:
