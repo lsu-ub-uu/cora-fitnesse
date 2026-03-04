@@ -114,7 +114,7 @@ If persmission terms are used in metadata for a record type, the user must have 
 
 !| RecordEndpointFixture |
 | authToken | type | json | testReadRecordList? | getStatusType? |
-| $userAuthToken | testStudentThesis | {"name":"filter","children":[]} | {"dataList":{"fromNo":"0","data":[],"totalNo":"1","containDataOfType":"testStudentThesis","toNo":"0"}} | OK |
+| $userAuthToken | testStudentThesis | | {"dataList":{"fromNo":"0","data":[],"totalNo":"1","containDataOfType":"testStudentThesis","toNo":"0"}} | OK |
 
 *!
 !***> Search for testStudentThesis. There should be no results
@@ -157,7 +157,7 @@ If persmission terms are used in metadata for a record type, the user must have 
 
 !| RecordEndpointFixture |
 | authToken | type | json | testReadRecordList? | getStatusType? |
-| $adminAuthToken | testStudentThesis | {"name":"filter","children":[]} | | OK |
+| $adminAuthToken | testStudentThesis | | | OK |
 
 *!
 !***> Search for testStudentThesis.
