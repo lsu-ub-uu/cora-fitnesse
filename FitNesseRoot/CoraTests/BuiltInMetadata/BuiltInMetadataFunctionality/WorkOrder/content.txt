@@ -19,7 +19,7 @@ Test that recordId of record handled in workorder can be anything. Needed as rec
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | metadata | workOrderRecordIdTextVar | =~/"name":"regEx","value":"\.\+"/ | OK |
+| $adminAuthToken | metadata | workOrderRecordIdTextVar | =~/"name":"regEx","value":"\^\\\\S\.\*\$"/ | OK |
 
 *!
 !2 Test with new workOrder
