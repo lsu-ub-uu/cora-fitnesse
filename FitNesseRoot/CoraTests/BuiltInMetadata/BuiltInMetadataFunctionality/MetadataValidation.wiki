@@ -301,7 +301,7 @@ Using same valid data as case 3a but this time it is valid since the record exis
 | setHeader | Accept:application/vnd.cora.record+xml!-
 -!Content-Type:application/vnd.cora.workorder+xml!-
 -!authToken:$adminAuthToken|
-| setBody | <?xml version="1.0" encoding="UTF-8"?><workOrder><order></order><record><testStudentThesis><recordInfo><id>studentThesis1</id><type><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></type><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></validationType></recordInfo><testTitle>Entitel</testTitle><publishedStatus>notPublished</publishedStatus></testStudentThesis></record></workOrder> |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><workOrder><order>someOrder</order><record><testStudentThesis><recordInfo><id>studentThesis1</id><type><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></type><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></validationType></recordInfo><testTitle>Entitel</testTitle><publishedStatus>notPublished</publishedStatus></testStudentThesis></record></workOrder> |
 | POST | /record/workOrder | 400 | | Validation failed due to: WorkOrder part 'order' not found. |
 *!
 !***> '''Case 5b: ''' A record with a missing record should cause bad request, using '''xml'''.
@@ -309,7 +309,7 @@ Using same valid data as case 3a but this time it is valid since the record exis
 | setHeader | Accept:application/vnd.cora.record+xml!-
 -!Content-Type:application/vnd.cora.workorder+xml!-
 -!authToken:$adminAuthToken|
-| setBody | <?xml version="1.0" encoding="UTF-8"?><workOrder><order><validationOrder><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>validationOrder</linkedRecordId></validationType></recordInfo><recordType><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></recordType><validateLinks>false</validateLinks><metadataToValidate>new</metadataToValidate></validationOrder></order><record></record></workOrder> |
+| setBody | <?xml version="1.0" encoding="UTF-8"?><workOrder><order><validationOrder><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>validationOrder</linkedRecordId></validationType></recordInfo><recordType><linkedRecordType>recordType</linkedRecordType><linkedRecordId>testStudentThesis</linkedRecordId></recordType><validateLinks>false</validateLinks><metadataToValidate>new</metadataToValidate></validationOrder></order><record>someRecord</record></workOrder> |
 | POST | /record/workOrder | 400 | | Validation failed due to: WorkOrder part 'record' not found. |
 *!
 !***> '''Case 5c: ''' A record containing multiple validationOrders should cause bad request, using '''xml'''.

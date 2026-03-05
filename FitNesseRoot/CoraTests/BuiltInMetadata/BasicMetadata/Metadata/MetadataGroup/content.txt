@@ -95,7 +95,7 @@
 
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? |
-| $adminAuthToken | bike | {"children":[{"children":[{"name":"id","value":"skeppshult"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"bike"}],"name":"validationType"}],"name":"recordInfo"},{"children":[],"name":"someSubGroup"}],"name":"bike"} | Error creating new record for recordType: bike. Data is not valid: [DataGroup someSubGroup should have children, it does not.] | BAD_REQUEST |
+| $adminAuthToken | bike | {"children":[{"children":[{"name":"id","value":"skeppshult"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"bike"}],"name":"validationType"}],"name":"recordInfo"},{"children":[],"name":"someSubGroup"}],"name":"bike"} | Error creating new record for recordType: bike. Error parsing jsonObject: Error parsing jsonObject: Group data with nameInData: someSubGroup has no children. Groups must have at least one child. | BAD_REQUEST |
 
 *!
 !2 Clean up created data
