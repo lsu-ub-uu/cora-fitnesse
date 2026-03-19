@@ -273,9 +273,25 @@ The build uses `maven-shade-plugin` to package all dependencies into a single ub
 
 ### 7.1 Parallel Test Execution
 
-**Current state**: Tests appear to run sequentially within the suite.
+**Status**: ✅ Implemented
 
-**Suggestion**: Investigate FitNesse's suite-level parallelism options. Tests that don't share state (e.g., read-only tests, tests using different record types) could run in parallel to reduce overall execution time.
+All six test suites under `CoraTests` have been tagged with `independent` in their `Suites` property, enabling them to be run concurrently via FitNesse's suite filter feature:
+
+| Suite | Tag | Can Run in Parallel |
+|---|---|---|
+| AccessControl | `independent` | ✅ Yes |
+| BuiltInMetadata | `independent` | ✅ Yes |
+| CallThroughJavaCode | `independent` | ✅ Yes |
+| Data | `independent` | ✅ Yes |
+| REST | `independent` | ✅ Yes |
+| Storage | `independent` | ✅ Yes |
+
+**How to use:**
+- Run all independent suites: `?suite&suiteFilter=independent`
+- Run individual suites in parallel via separate processes or CI/CD jobs
+- See the `CoraTests.ParallelExecution` wiki page for full documentation
+
+**Constraint**: The global `SuiteSetUp.wiki` must complete before parallel execution begins, and `SuiteTearDown.wiki` should run after all suites complete.
 
 ### 7.2 Selective Test Execution with Tags
 

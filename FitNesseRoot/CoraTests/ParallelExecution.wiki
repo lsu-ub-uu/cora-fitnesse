@@ -1,0 +1,96 @@
+---
+Help: Guide for running independent test suites in parallel
+Static
+---
+!1 Parallel Test Execution
+
+This page documents how to run independent test suites in parallel to reduce overall test execution time.
+
+!2 Overview
+
+The Cora FitNesse test suites are organized into independent groups that can be executed concurrently. Each suite is tagged with '''independent''' in its ''Suites'' property, enabling parallel execution via FitNesse's suite filter feature.
+
+!3 Independent Test Suites
+
+The following test suites have been verified as independent and can safely run in parallel:
+
+| Suite | Description | Tag |
+| [[Access Control][.CoraTests.AccessControl]] | Authentication and authorization tests | independent |
+| [[Built-in Metadata][.CoraTests.BuiltInMetadata]] | Metadata validation and consistency tests | independent |
+| [[Call Through Java Code][.CoraTests.CallThroughJavaCode]] | Direct Java fixture execution tests | independent |
+| [[Data][.CoraTests.Data]] | Record CRUD operations and binary handling | independent |
+| [[REST][.CoraTests.REST]] | REST API tests for JSON and XML endpoints | independent |
+| [[Storage][.CoraTests.Storage]] | Archive storage operation tests | independent |
+
+!3 Prerequisites
+
+All suites depend on the global '''!-SuiteSetUp-!''' which:
+ * Authenticates three users (admin, regular, guest) and stores auth tokens
+ * Creates the shared test data pool via '''!-ExamplesPool-!'''
+ * Takes snapshots of key records for state restoration
+
+The global '''!-SuiteTearDown-!''' handles cleanup after all suites complete.
+
+!3 How to Run Suites in Parallel
+
+!4 Using Suite Filters
+
+FitNesse supports suite filters that allow running specific tagged test groups. Each independent suite can be run using its own suite filter URL:
+
+{{{
+# Run a specific suite directly:
+http://<host>:<port>/CoraTests.AccessControl?suite
+http://<host>:<port>/CoraTests.BuiltInMetadata?suite
+http://<host>:<port>/CoraTests.Data?suite
+http://<host>:<port>/CoraTests.REST?suite
+http://<host>:<port>/CoraTests.Storage?suite
+http://<host>:<port>/CoraTests.CallThroughJavaCode?suite
+
+# Run all suites tagged as 'independent':
+http://<host>:<port>/CoraTests?suite&suiteFilter=independent
+}}}
+
+!4 Parallel Execution via Command Line
+
+To run independent suites in parallel from the command line, use separate processes for each suite:
+
+{{{
+# Run each suite as a separate background process
+java -jar fitnesse-standalone.jar -c "CoraTests.AccessControl?suite&format=text" &
+java -jar fitnesse-standalone.jar -c "CoraTests.BuiltInMetadata?suite&format=text" &
+java -jar fitnesse-standalone.jar -c "CoraTests.Data?suite&format=text" &
+java -jar fitnesse-standalone.jar -c "CoraTests.REST?suite&format=text" &
+java -jar fitnesse-standalone.jar -c "CoraTests.Storage?suite&format=text" &
+java -jar fitnesse-standalone.jar -c "CoraTests.CallThroughJavaCode?suite&format=text" &
+
+# Wait for all background processes to complete
+wait
+}}}
+
+!4 Parallel Execution in CI/CD
+
+In a CI/CD pipeline, independent suites can be assigned to separate jobs or stages that execute concurrently:
+
+{{{
+# Example CI/CD parallel job configuration (conceptual):
+parallel:
+  - name: AccessControl
+    command: run-fitnesse-suite CoraTests.AccessControl
+  - name: BuiltInMetadata
+    command: run-fitnesse-suite CoraTests.BuiltInMetadata
+  - name: Data
+    command: run-fitnesse-suite CoraTests.Data
+  - name: REST
+    command: run-fitnesse-suite CoraTests.REST
+  - name: Storage
+    command: run-fitnesse-suite CoraTests.Storage
+  - name: CallThroughJavaCode
+    command: run-fitnesse-suite CoraTests.CallThroughJavaCode
+}}}
+
+!3 Important Notes
+
+ * '''Shared Setup:''' The global !-SuiteSetUp-! must complete before any parallel suites begin. When running suites individually, the !-SuiteSetUp-! runs automatically as part of each suite due to the '''!-ALL_UNCLE_SUITE_SETUPS-!''' configuration.
+ * '''Test Data Isolation:''' Each suite operates on its own set of test records or uses shared records in read-only mode, preventing conflicts during parallel execution.
+ * '''Cleanup:''' When running suites individually in parallel, each suite's local !-TearDown-! handles its own cleanup. The global !-SuiteTearDown-! should be run once after all parallel suites complete.
+ * '''Authentication Tokens:''' Auth tokens are created in the global !-SuiteSetUp-! and are shared across all suites. Each parallel process gets its own SLIM instance with its own copy of these tokens.
