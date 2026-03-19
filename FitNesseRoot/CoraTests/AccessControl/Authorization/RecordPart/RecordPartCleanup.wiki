@@ -7,12 +7,12 @@ Reset, the role everything to not use the new rule, everythingForTestWorkoutRule
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
 | $adminAuthToken | permissionRole | everything | {"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"everything"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"createdBy"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"name":"tsCreated","value":"2017-10-01T00:00:00.000000Z"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"12345"}],"name":"updatedBy"},{"name":"tsUpdated","value":"2017-11-01T17:51:52.000000Z"}],"name":"updated"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRole"}],"name":"validationType"}],"name":"recordInfo"},{"repeatId":"0","children":[{"name":"linkedRecordType","value":"permissionRule"},{"name":"linkedRecordId","value":"everything"}],"name":"permissionRuleLink"},{"name":"activeStatus","value":"active"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"everythingRoleText"}],"name":"textId"},{"children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"everythingRoleDefText"}],"name":"defTextId"}],"name":"permissionRole"} | | OK |
 
-Reset, the role fitnesseTextAdmin to not use the new rule, limitedForTestWorkoutRule.
+Reset, the role ${fitnesseTextAdminId} to not use the new rule, limitedForTestWorkoutRule.
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
-| $adminAuthToken | permissionRole | fitnesseTextAdmin | ${FITNESSE_TEXT_ADMIN_ROLE} | | OK |
-| $adminAuthToken | permissionRule | fitnesseTextAdminRule | ${FITNESSE_TEXT_ADMIN_RULE} | | OK |
+| $adminAuthToken | permissionRole | ${fitnesseTextAdminId} | ${FITNESSE_TEXT_ADMIN_ROLE} | | OK |
+| $adminAuthToken | permissionRule | ${fitnesseTextAdminRuleId} | ${FITNESSE_TEXT_ADMIN_RULE} | | OK |
 
 Delete newly created rules
 

@@ -22,7 +22,7 @@ All cases will make sure there is no IIIF protocol information when the binary r
 
 !define ignoreOverwriteProtectionReadOnAllVisibilitiesRule {!-{"name":"ignoreOverwriteProtection","value":"true"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"permissionRule"}]},-!}
 
-!define fitnesseBinaryReadOnAllVisibilitiesRuleMetaData {!-{"name":"permissionRule","children":[{"name":"recordInfo","children":[-!${ignoreOverwriteProtectionReadOnAllVisibilitiesRule}!-{"name":"id","value":"fitnesseBinaryReadOnAllVisibilitiesRule"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRule"}]}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","repeatId":"0","value":"system.read"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":-!${permissionRulePartReadOnAllVisibilitiesRule}!-,"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"visibilityPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]}]}-!}
+!define fitnesseBinaryReadOnAllVisibilitiesRuleMetaData {!-{"name":"permissionRule","children":[{"name":"recordInfo","children":[-!${ignoreOverwriteProtectionReadOnAllVisibilitiesRule}!-{"name":"id","value":"-!${fitnesseBinaryReadOnAllVisibilitiesRuleId}!-"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionRule"}]}]},{"name":"permissionRulePart","children":[{"name":"permissionRulePartValue","repeatId":"0","value":"system.read"}],"attributes":{"type":"action"}},{"name":"permissionRulePart","children":-!${permissionRulePartReadOnAllVisibilitiesRule}!-,"attributes":{"type":"recordType"}},{"name":"activeStatus","value":"active"},{"name":"permissionTermRulePart","repeatId":"0","children":[{"name":"rule","children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"visibilityPermissionTerm"}]},{"name":"value","repeatId":"0","value":"system.*"}]},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"-!${fitnesseTextId}!-"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"-!${fitnesseTextId}!-"}]}]}-!}
 *!
 !***> Create unpublished binary record and upload an image to it, to use in tests 1-3
 !define originalFileName {aTiff.tiff}
@@ -63,7 +63,7 @@ All cases will make sure there is no IIIF protocol information when the binary r
 !define permissionRulePartReadOnAllVisibilitiesRule {!-[{"name":"permissionRulePartValue","repeatId":"1","value":"system.binary"},{"name":"permissionRulePartValue","repeatId":"2","value":"system.binary.jp2"}]-!}
 !define currentAuthToken {$adminAuthToken}
 !define recordType {permissionRule}
-!define recordId {fitnesseBinaryReadOnAllVisibilitiesRule}
+!define recordId {${fitnesseBinaryReadOnAllVisibilitiesRuleId}}
 !define expectedAnswer {}
 !define expectedUpdateResult {OK}
 !define updateData {${fitnesseBinaryReadOnAllVisibilitiesRuleMetaData}}
@@ -90,7 +90,7 @@ All cases will make sure there is no IIIF protocol information when the binary r
 !include -seamless .HelperPages.deleteRecord
 !***> Clean up fitnesse user rule
 !define recordType {permissionRule}
-!define recordId {fitnesseBinaryReadOnAllVisibilitiesRule}
+!define recordId {${fitnesseBinaryReadOnAllVisibilitiesRuleId}}
 !define permissionRulePartReadOnAllVisibilitiesRule {!-[{"name":"permissionRulePartValue","repeatId":"1","value":"system.binary"}]-!}
 !define updateData {${fitnesseBinaryReadOnAllVisibilitiesRuleMetaData}}
 !include -seamless .HelperPages.updateRecord

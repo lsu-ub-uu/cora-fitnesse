@@ -10,8 +10,8 @@ Static
 !define recordType {permissionUnit}
 !define expectedCreateResult {CREATED}
 
-!define permissionUnitPayload {!-{"name":"permissionUnit","children":[{"name":"recordInfo","children":[{"name":"id","value":"somePermissionUnit"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionUnit"}]}]},{"name":"name","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"url","value":"someUrl"},{"name":"note","value":"someNote"}]}-!}
-!define expectedPermissionUnitResponse {=~/(?=.*"name":"id","value":"somePermissionUnit")(?=.*"name":"linkedRecordId","value":"fitnesseText")(?=.*"name":"url","value":"someUrl")/}
+!define permissionUnitPayload {!-{"name":"permissionUnit","children":[{"name":"recordInfo","children":[{"name":"id","value":"somePermissionUnit"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionUnit"}]}]},{"name":"name","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"-!${fitnesseTextId}!-"}]},{"name":"url","value":"someUrl"},{"name":"note","value":"someNote"}]}-!}
+!define expectedPermissionUnitResponse {=~/(?=.*"name":"id","value":"somePermissionUnit")(?=.*"name":"linkedRecordId","value":"${fitnesseTextId}")(?=.*"name":"url","value":"someUrl")/}
 
 !| ChildComparerFixture |
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
@@ -21,7 +21,7 @@ Static
 !***> Case 2: A guest must not be able to create a permission unit
 !define expectedCreateResult {FORBIDDEN}
 
-!define permissionUnitPayload2 {!-{"name":"permissionUnit","children":[{"name":"recordInfo","children":[{"name":"id","value":"someGuestPermissionUnit"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionUnit"}]}]},{"name":"name","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"url","value":"someUrl"},{"name":"note","value":"someNote"}]}-!}
+!define permissionUnitPayload2 {!-{"name":"permissionUnit","children":[{"name":"recordInfo","children":[{"name":"id","value":"someGuestPermissionUnit"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"permissionUnit"}]}]},{"name":"name","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"-!${fitnesseTextId}!-"}]},{"name":"url","value":"someUrl"},{"name":"note","value":"someNote"}]}-!}
 
 !| ChildComparerFixture |
 | authToken | type | json | testCreateAndStoreRecord? | getStatusType? |

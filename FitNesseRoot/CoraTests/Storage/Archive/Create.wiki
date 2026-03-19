@@ -12,14 +12,14 @@ Show file structure before storing a new record
 !define expectedRegexpArchive {}
 !include -seamless .HelperPages.readFileSystem
 
-!define createFitnesseRecord {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"name":"fitnesseTextVar","value":"myRecordInArchive"}]}-!}
+!define createFitnesseRecord {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"-!${fitnesseValidationTypeId}!-"}]}]},{"name":"fitnesseTextVar","value":"myRecordInArchive"}]}-!}
 
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define createData createFitnesseRecord
 !define expectedAnswer {}
 !define expectedUploadAnswer {}
 !define expectedCreateResult {CREATED}
-!define archiveFileName {testSystem:fitnesseRecordType:$tmpRecordId1}
+!define archiveFileName {testSystem:${fitnesseRecordTypeId}:$tmpRecordId1}
 !define archiveVersion1 {v1}
 !define archiveVersion2 {v1}
 
@@ -42,8 +42,8 @@ Show file structure after storing a new record
 
 show that file exists as v1 but not v2 after create
 !| script | FileReader |
-| ensure | file name | testSystem:fitnesseRecordType:$tmpRecordId1 | exists in archive as version | v1 | under path | ${archiveFileSystemPath} |
-| reject | file name | testSystem:fitnesseRecordType:$tmpRecordId1 | exists in archive as version | v2 | under path | ${archiveFileSystemPath} |
+| ensure | file name | testSystem:${fitnesseRecordTypeId}:$tmpRecordId1 | exists in archive as version | v1 | under path | ${archiveFileSystemPath} |
+| reject | file name | testSystem:${fitnesseRecordTypeId}:$tmpRecordId1 | exists in archive as version | v2 | under path | ${archiveFileSystemPath} |
 
 
 *!
