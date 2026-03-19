@@ -1,0 +1,99 @@
+---
+Static
+---
+!*****> Test Data ID Variables
+All shared test data record IDs are defined as variables to support parallel test execution.
+When '''testRunId''' is empty (default), IDs are identical to the original hardcoded values.
+When '''testRunId''' is set to a unique value (e.g., a timestamp suffix), each test run
+operates on its own isolated set of test data, preventing interference between parallel runs.
+
+!define testRunId {}
+
+!***> Text record IDs
+!define fitnesseTextId {fitnesseText${testRunId}}
+!define fitnesseBlueTextId {fitnesseBlueText${testRunId}}
+!define fitnesseRecordTypeSearchTextId {fitnesseRecordTypeSearchText${testRunId}}
+!define fitnesseRecordTypeSearchDefTextId {fitnesseRecordTypeSearchDefText${testRunId}}
+*!
+
+!***> Metadata IDs
+!define fitnesseMetadataTextVarId {fitnesseMetadataTextVar${testRunId}}
+!define fitnesseAnotherMetadataTextVarId {fitnesseAnotherMetadataTextVar${testRunId}}
+!define fitnesseOnlyOneMetadataTextVarId {fitnesseOnlyOneMetadataTextVar${testRunId}}
+!define fitnesseMetadataNumberVarId {fitnesseMetadataNumberVar${testRunId}}
+!define fitnesseBlueItemId {fitnesseBlueItem${testRunId}}
+!define fitnesseCollectionId {fitnesseCollection${testRunId}}
+!define fitnesseCollectionVarId {fitnesseCollectionVar${testRunId}}
+!define fitnesseLinkId {fitnesseLink${testRunId}}
+!define fitnesseBinaryLinkId {fitnesseBinaryLink${testRunId}}
+!define fitnesseRecordInfoGroupId {fitnesseRecordInfoGroup${testRunId}}
+!define fitnesseRecordInfoNewGroupId {fitnesseRecordInfoNewGroup${testRunId}}
+!define fitnesseGroupId {fitnesseGroup${testRunId}}
+!define fitnesseNewGroupId {fitnesseNewGroup${testRunId}}
+!define fitnesseCollectIndexTermId {fitnesseCollectIndexTerm${testRunId}}
+*!
+
+!***> Search IDs
+!define fitnesseSearchTermId {fitnesseSearchTerm${testRunId}}
+!define fitnesseSearchTextVarId {fitnesseSearchTextVar${testRunId}}
+!define fitnesseSearchIncludePartGroupId {fitnesseSearchIncludePartGroup${testRunId}}
+!define fitnesseSearchIncludeGroupId {fitnesseSearchIncludeGroup${testRunId}}
+!define fitnesseSearchGroupId {fitnesseSearchGroup${testRunId}}
+!define fitnesseSearchId {fitnesseSearch${testRunId}}
+!define fitnesseRecordTypeSearchId {fitnesseRecordTypeSearch${testRunId}}
+*!
+
+!***> Record type and validation IDs
+!define fitnesseRecordTypeId {fitnesseRecordType${testRunId}}
+!define fitnesseValidationTypeId {fitnesseValidationType${testRunId}}
+!define fitnesseSequenceId {fitnesseSequence${testRunId}}
+*!
+
+!***> Permission IDs
+!define fitnesseBinaryReadOnAllVisibilitiesRuleId {fitnesseBinaryReadOnAllVisibilitiesRule${testRunId}}
+!define fitnesseBinaryReadOnAllVisibilitiesRoleId {fitnesseBinaryReadOnAllVisibilitiesRole${testRunId}}
+!define fitnesseTextAdminId {fitnesseTextAdmin${testRunId}}
+!define fitnesseTextAdminRuleId {fitnesseTextAdminRule${testRunId}}
+*!
+
+!***> Auto-generated presentation IDs
+!define fitnessePGroupId {fitnessePGroup${testRunId}}
+!define fitnesseOutputPGroupId {fitnesseOutputPGroup${testRunId}}
+!define fitnesseNewPGroupId {fitnesseNewPGroup${testRunId}}
+!define fitnesseNewOutputPGroupId {fitnesseNewOutputPGroup${testRunId}}
+!define fitnesseMetadataPVarId {fitnesseMetadataPVar${testRunId}}
+!define fitnesseMetadataOutputPVarId {fitnesseMetadataOutputPVar${testRunId}}
+!define fitnesseAnotherMetadataPVarId {fitnesseAnotherMetadataPVar${testRunId}}
+!define fitnesseAnotherMetadataOutputPVarId {fitnesseAnotherMetadataOutputPVar${testRunId}}
+!define fitnesseOnlyOneMetadataPVarId {fitnesseOnlyOneMetadataPVar${testRunId}}
+!define fitnesseOnlyOneMetadataOutputPVarId {fitnesseOnlyOneMetadataOutputPVar${testRunId}}
+!define fitnesseMetadataPNumVarId {fitnesseMetadataPNumVar${testRunId}}
+!define fitnesseMetadataOutputPNumVarId {fitnesseMetadataOutputPNumVar${testRunId}}
+!define fitnessePLinkId {fitnessePLink${testRunId}}
+!define fitnesseOutputPLinkId {fitnesseOutputPLink${testRunId}}
+!define fitnessePCollVarId {fitnessePCollVar${testRunId}}
+!define fitnesseOutputPCollVarId {fitnesseOutputPCollVar${testRunId}}
+!define fitnesseBinaryPLinkId {fitnesseBinaryPLink${testRunId}}
+!define fitnesseBinaryOutputPLinkId {fitnesseBinaryOutputPLink${testRunId}}
+!define fitnesseRecordInfoNewPGroupId {fitnesseRecordInfoNewPGroup${testRunId}}
+!define fitnesseRecordInfoNewOutputPGroupId {fitnesseRecordInfoNewOutputPGroup${testRunId}}
+!define fitnesseRecordInfoPGroupId {fitnesseRecordInfoPGroup${testRunId}}
+!define fitnesseRecordInfoOutputPGroupId {fitnesseRecordInfoOutputPGroup${testRunId}}
+!define fitnesseSearchPGroupId {fitnesseSearchPGroup${testRunId}}
+!define fitnesseSearchOutputPGroupId {fitnesseSearchOutputPGroup${testRunId}}
+!define fitnesseSearchPVarId {fitnesseSearchPVar${testRunId}}
+!define fitnesseSearchOutputPVarId {fitnesseSearchOutputPVar${testRunId}}
+*!
+
+!***> Legacy training IDs
+!define trainingClassLeafletId {trainingClassLeaflet${testRunId}}
+!define trainingClassLeafletSearchId {trainingClassLeafletSearch${testRunId}}
+!define personalTrainingLeafletValidationId {personalTrainingLeafletValidation${testRunId}}
+!define circuitTrainingLeafletNewGroupId {circuitTrainingLeafletNewGroup${testRunId}}
+!define circuitTrainingLeafletGroupId {circuitTrainingLeafletGroup${testRunId}}
+!define circuitTrainingLeafletValidationId {circuitTrainingLeafletValidation${testRunId}}
+!define bigCircuitTrainingLeafletNewGroupId {bigCircuitTrainingLeafletNewGroup${testRunId}}
+!define bigCircuitTrainingLeafletGroupId {bigCircuitTrainingLeafletGroup${testRunId}}
+!define bigCircuitTrainingLeafletValidationId {bigCircuitTrainingLeafletValidation${testRunId}}
+*!
+*!

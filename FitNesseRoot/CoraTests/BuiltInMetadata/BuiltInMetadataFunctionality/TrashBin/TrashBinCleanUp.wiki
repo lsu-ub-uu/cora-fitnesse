@@ -8,14 +8,14 @@ Static
 
 !| DeleteRecord |
 | recordType            | recordId       | deleteRecord? |
-| fitnesseRecordType    | $createdRecordId     | OK            |
+| ${fitnesseRecordTypeId}    | $createdRecordId     | OK            |
 
 !| RememberRecordState |
 | type       | id                         | version  | memoryToStorage? |
-| recordType | fitnesseRecordType         | original | OK               |
-| metadata   | fitnesseGroup              | original | OK               |
-| metadata   | fitnesseRecordInfoGroup    | original | OK               |
-| metadata   | fitnesseRecordInfoNewGroup | original | OK               |
+| recordType | ${fitnesseRecordTypeId}         | original | OK               |
+| metadata   | ${fitnesseGroupId}              | original | OK               |
+| metadata   | ${fitnesseRecordInfoGroupId}    | original | OK               |
+| metadata   | ${fitnesseRecordInfoNewGroupId} | original | OK               |
 
 
 !| DeleteRecord |

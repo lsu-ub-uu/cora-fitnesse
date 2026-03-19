@@ -8,6 +8,7 @@
 <Refactor>true</Refactor>
 <Search>true</Search>
 <Suite>true</Suite>
+<Suites>independent</Suites>
 <Versions>true</Versions>
 <WhereUsed>true</WhereUsed>
 </properties>

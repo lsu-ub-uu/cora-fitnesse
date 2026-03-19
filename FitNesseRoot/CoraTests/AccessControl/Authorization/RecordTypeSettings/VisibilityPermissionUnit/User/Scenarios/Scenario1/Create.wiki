@@ -3,9 +3,9 @@ Static
 ---
 !4 Create
 #
- * '''Case 1''': User1 should be able to create a published record with a permission unit they have access to (fitnessePermissionUnit1), fitnesseText should be visible in response
+ * '''Case 1''': User1 should be able to create a published record with a permission unit they have access to (fitnessePermissionUnit1), ${fitnesseTextId} should be visible in response
  * '''Case 2''': User1 should not be able to create a published record with a permission unit they do not have access to (fitnessePermissionUnit3)
- * '''Case 3''': User2 should be able to create a published record with a permission unit they have access to (fitnessePermissionUnit2), fitnesseText should not be visibile in response
+ * '''Case 3''': User2 should be able to create a published record with a permission unit they have access to (fitnessePermissionUnit2), ${fitnesseTextId} should not be visibile in response
  * '''Case 4''': User2 should not be able to create a published record with a permission unit they do not have access to (fitnessePermissionUnit1)
  * '''Case 5''': A guest should be not able to create a published record with a permission unit they do not have access to (fitnessePermissionUnit1)
 #

@@ -92,7 +92,7 @@ To enable this option, set the '''Accept''' header in your request to one of the
 -!</dataDivider>!-
 -!<validationType>!-
 -!<linkedRecordType>validationType</linkedRecordType>!-
--!<linkedRecordId>fitnesseValidationType</linkedRecordId>!-
+-!<linkedRecordId>${fitnesseValidationTypeId}</linkedRecordId>!-
 -!</validationType>!-
 -!</recordInfo>!-
 -!<fitnesseTextVar>someText</fitnesseTextVar>!-
@@ -103,7 +103,7 @@ To enable this option, set the '''Accept''' header in your request to one of the
 -!</demo>!-
 -!<colour>blue</colour>!-
 -!</fitnesseExample> |
-| POST | /rest/record/fitnesseRecordType | 201 |Content-Type: application\/vnd\.cora\.record\+xml | |
+| POST | /rest/record/${fitnesseRecordTypeId} | 201 |Content-Type: application\/vnd\.cora\.record\+xml | |
 | let | recordId | js | response.body.match(/<id>(.*?)<\/id>/)[1] |  |
 *!
 *!
@@ -124,7 +124,7 @@ The tests validate:
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
 -!Accept: application/vnd.cora.record-decorated+xml |
-| GET | /rest/record/fitnesseRecordType/$recordId | 200 | Content-Type: application\/vnd\.cora\.record-decorated\+xml |  |
+| GET | /rest/record/${fitnesseRecordTypeId}/$recordId | 200 | Content-Type: application\/vnd\.cora\.record-decorated\+xml |  |
 | let | linkedRecordTitleEnglish | js | response.body.match(/fitnesseTextVar _en="([^"]*)" _sv="([^"]*)"/)[1] | a text |
 | let | linkedRecordTitleSwedish | js | response.body.match(/fitnesseTextVar _en="([^"]*)" _sv="([^"]*)"/)[2] | en text |
 | let | linkedRecordTitleEnglish | js | response.body.match(/bookTitle _en="([^"]*)" _sv="([^"]*)"/)[1] | Title for the book |
@@ -149,7 +149,7 @@ The tests validate:
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
 -!Accept: application/vnd.cora.record-decorated+json |
-| GET | /rest/record/fitnesseRecordType/$recordId | 200 | Content-Type: application\/vnd\.cora\.record-decorated\+json | |
+| GET | /rest/record/${fitnesseRecordTypeId}/$recordId | 200 | Content-Type: application\/vnd\.cora\.record-decorated\+json | |
 | let | linkedRecordTitleSwedish | js | response.body.match(/"fitnesseTextVar","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}/)[1] | en text |
 | let | linkedRecordTitleEnglish | js | response.body.match(/"fitnesseTextVar","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}/)[2] | a text |
 | let | linkedRecordTitleSwedish | js | response.body.match(/"bookTitle","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}/)[1] | Boktitel |
@@ -187,7 +187,7 @@ The tests validate:
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
 -!Accept: application/vnd.cora.recordList-decorated+xml |
-| GET | /rest/record/searchResult/fitnesseSearch?searchData=%7B%22name%22%3A%22fitnesseSearch%22%2C%22children%22%3A%5B%7B%22name%22%3A%22include%22%2C%22children%22%3A%5B%7B%22name%22%3A%22includePart%22%2C%22children%22%3A%5B%7B%22name%22%3A%22fitnesseSearchTerm%22%2C%22value%22%3A%22**%22%7D%5D%7D%5D%7D%5D%7D | 200 | Content-Type: application\/vnd\.cora\.recordList-decorated\+xml |  |
+| GET | /rest/record/searchResult/${fitnesseSearchId}?searchData=%7B%22name%22%3A%22fitnesseSearch%22%2C%22children%22%3A%5B%7B%22name%22%3A%22include%22%2C%22children%22%3A%5B%7B%22name%22%3A%22includePart%22%2C%22children%22%3A%5B%7B%22name%22%3A%22fitnesseSearchTerm%22%2C%22value%22%3A%22**%22%7D%5D%7D%5D%7D%5D%7D | 200 | Content-Type: application\/vnd\.cora\.recordList-decorated\+xml |  |
 | let | linkedRecordTitleEnglish | js | response.body.match(/fitnesseTextVar _en="([^"]*)" _sv="([^"]*)"/)[1] | a text |
 | let | linkedRecordTitleSwedish | js | response.body.match(/fitnesseTextVar _en="([^"]*)" _sv="([^"]*)"/)[2] | en text |
 | let | linkedRecordTitleEnglish | js | response.body.match(/bookTitle _en="([^"]*)" _sv="([^"]*)"/)[1] | Title for the book |
@@ -212,7 +212,7 @@ The tests validate:
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${systemUnderTestUrl} |
 | setHeaders | authToken:$adminAuthToken!-
 -!Accept: application/vnd.cora.recordList-decorated+json |
-| GET | /rest/record/searchResult/fitnesseSearch?searchData=%7B%22name%22%3A%22fitnesseSearch%22%2C%22children%22%3A%5B%7B%22name%22%3A%22include%22%2C%22children%22%3A%5B%7B%22name%22%3A%22includePart%22%2C%22children%22%3A%5B%7B%22name%22%3A%22fitnesseSearchTerm%22%2C%22value%22%3A%22**%22%7D%5D%7D%5D%7D%5D%7D | 200 | Content-Type: application\/vnd\.cora\.recordList-decorated\+json |  |
+| GET | /rest/record/searchResult/${fitnesseSearchId}?searchData=%7B%22name%22%3A%22fitnesseSearch%22%2C%22children%22%3A%5B%7B%22name%22%3A%22include%22%2C%22children%22%3A%5B%7B%22name%22%3A%22includePart%22%2C%22children%22%3A%5B%7B%22name%22%3A%22fitnesseSearchTerm%22%2C%22value%22%3A%22**%22%7D%5D%7D%5D%7D%5D%7D | 200 | Content-Type: application\/vnd\.cora\.recordList-decorated\+json |  |
 | let | linkedRecordTitleSwedish | js | response.body.match(/"fitnesseTextVar","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}/)[1] | en text |
 | let | linkedRecordTitleEnglish | js | response.body.match(/"fitnesseTextVar","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}/)[2] | a text |
 | let | linkedRecordTitleSwedish | js | response.body.match(/"bookTitle","attributes":{"_sv":"([^"]*)","_en":"([^"]*)"}/)[1] | Boktitel |
@@ -238,7 +238,7 @@ The tests validate:
 !***> Clean up
 !| RecordEndpointFixture |
 |authToken|type|id|testDeleteRecord?|getStatusType?|
-|$adminAuthToken|fitnesseRecordType|$recordId||OK|
+|$adminAuthToken|${fitnesseRecordTypeId}|$recordId||OK|
 |$adminAuthToken|demo|demoForFitnesse||OK|
 |$adminAuthToken|binary|$binaryRecordId||OK|
 *!

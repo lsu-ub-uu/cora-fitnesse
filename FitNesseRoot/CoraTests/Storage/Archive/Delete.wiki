@@ -10,7 +10,7 @@ Static
 !define expectedAnswer {}
 !define expectedCreateResult {OK}
 
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define recordId {$tmpRecordId1}
 
 !include -seamless .HelperPages.deleteRecord
@@ -21,7 +21,7 @@ Show file structure after deleting a record
 
 Show that record is deleted from archive
 !| script | FileReader |
-| reject | file name | testSystem:fitnesseRecordType:$tmpRecordId1 | exists in archive as version | v1 | under path | ${archiveFileSystemPath} |
+| reject | file name | testSystem:${fitnesseRecordTypeId}:$tmpRecordId1 | exists in archive as version | v1 | under path | ${archiveFileSystemPath} |
 
 *!
 !***> '''Case 2'''

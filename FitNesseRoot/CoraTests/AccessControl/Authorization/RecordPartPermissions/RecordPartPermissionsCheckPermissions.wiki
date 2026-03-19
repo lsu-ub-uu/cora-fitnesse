@@ -132,7 +132,7 @@ När man söker efter poster så ska varje post i resultatet bara innehålla de 
 
 *!
 !2 Clean up created data
-!***> Återställ regel everything, fitnesseTextAdminRule
+!***> Återställ regel everything, ${fitnesseTextAdminRuleId}
 
 !| RecordEndpointFixture |
 | authToken | type | id | json | testUpdateRecord? | getStatusType? |
