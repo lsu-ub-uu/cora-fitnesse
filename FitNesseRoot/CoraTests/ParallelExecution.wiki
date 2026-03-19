@@ -10,6 +10,22 @@ This page documents how to run independent test suites in parallel to reduce ove
 
 The Cora FitNesse test suites are organized into independent groups that can be executed concurrently. Each suite is tagged with '''independent''' in its ''Suites'' property, enabling parallel execution via FitNesse's suite filter feature.
 
+All shared test data record IDs are parameterized through a '''testRunId''' variable. When multiple test runs execute in parallel against the same server, each run can use a unique '''testRunId''' to create isolated test data, preventing interference between parallel runs.
+
+!3 Test Data Isolation via testRunId
+
+All shared test data record IDs (68 IDs total) are defined as FitNesse variables in '''!-.HelperPages.Data.TestDataVariables-!'''. Each variable incorporates a '''testRunId''' suffix:
+
+{{{
+!define testRunId {}           # Empty by default (backward compatible)
+!define fitnesseTextId {fitnesseText${testRunId}}
+!define fitnesseGroupId {fitnesseGroup${testRunId}}
+# ... 68 variables total
+}}}
+
+ * '''Default (empty testRunId):''' All IDs resolve to their original values (e.g., ''fitnesseText''), ensuring full backward compatibility with sequential execution.
+ * '''Parallel runs:''' Set '''testRunId''' to a unique value (e.g., ''_run1'', ''_run2'') so each run creates isolated test data (e.g., ''fitnesseText_run1'', ''fitnesseText_run2'').
+
 !3 Independent Test Suites
 
 The following test suites have been verified as independent and can safely run in parallel:
@@ -52,16 +68,22 @@ http://<host>:<port>/CoraTests?suite&suiteFilter=independent
 
 !4 Parallel Execution via Command Line
 
-To run independent suites in parallel from the command line, use separate processes for each suite:
+To run independent suites in parallel from the command line, set '''testRunId''' per process to isolate test data:
 
 {{{
-# Run each suite as a separate background process
-java -jar fitnesse-standalone.jar -c "CoraTests.AccessControl?suite&format=text" &
-java -jar fitnesse-standalone.jar -c "CoraTests.BuiltInMetadata?suite&format=text" &
-java -jar fitnesse-standalone.jar -c "CoraTests.Data?suite&format=text" &
-java -jar fitnesse-standalone.jar -c "CoraTests.REST?suite&format=text" &
-java -jar fitnesse-standalone.jar -c "CoraTests.Storage?suite&format=text" &
-java -jar fitnesse-standalone.jar -c "CoraTests.CallThroughJavaCode?suite&format=text" &
+# Run each suite with a unique testRunId as a separate background process
+java -jar fitnesse-standalone.jar -c "CoraTests.AccessControl?suite&format=text" \
+  -DtestRunId=_run1 &
+java -jar fitnesse-standalone.jar -c "CoraTests.BuiltInMetadata?suite&format=text" \
+  -DtestRunId=_run2 &
+java -jar fitnesse-standalone.jar -c "CoraTests.Data?suite&format=text" \
+  -DtestRunId=_run3 &
+java -jar fitnesse-standalone.jar -c "CoraTests.REST?suite&format=text" \
+  -DtestRunId=_run4 &
+java -jar fitnesse-standalone.jar -c "CoraTests.Storage?suite&format=text" \
+  -DtestRunId=_run5 &
+java -jar fitnesse-standalone.jar -c "CoraTests.CallThroughJavaCode?suite&format=text" \
+  -DtestRunId=_run6 &
 
 # Wait for all background processes to complete
 wait
@@ -69,28 +91,30 @@ wait
 
 !4 Parallel Execution in CI/CD
 
-In a CI/CD pipeline, independent suites can be assigned to separate jobs or stages that execute concurrently:
+In a CI/CD pipeline, independent suites can be assigned to separate jobs or stages that execute concurrently. Each job should define its own '''testRunId''':
 
 {{{
 # Example CI/CD parallel job configuration (conceptual):
 parallel:
   - name: AccessControl
-    command: run-fitnesse-suite CoraTests.AccessControl
+    command: run-fitnesse-suite CoraTests.AccessControl -DtestRunId=_ac
   - name: BuiltInMetadata
-    command: run-fitnesse-suite CoraTests.BuiltInMetadata
+    command: run-fitnesse-suite CoraTests.BuiltInMetadata -DtestRunId=_bm
   - name: Data
-    command: run-fitnesse-suite CoraTests.Data
+    command: run-fitnesse-suite CoraTests.Data -DtestRunId=_data
   - name: REST
-    command: run-fitnesse-suite CoraTests.REST
+    command: run-fitnesse-suite CoraTests.REST -DtestRunId=_rest
   - name: Storage
-    command: run-fitnesse-suite CoraTests.Storage
+    command: run-fitnesse-suite CoraTests.Storage -DtestRunId=_stor
   - name: CallThroughJavaCode
-    command: run-fitnesse-suite CoraTests.CallThroughJavaCode
+    command: run-fitnesse-suite CoraTests.CallThroughJavaCode -DtestRunId=_java
 }}}
 
 !3 Important Notes
 
+ * '''Test Data Isolation:''' When '''testRunId''' is set, each parallel run creates its own complete set of test data with unique record IDs. This ensures no interference between runs, even when they modify shared metadata definitions.
+ * '''Backward Compatibility:''' When '''testRunId''' is empty (default), all record IDs resolve to their original values, ensuring existing sequential test execution works unchanged.
  * '''Shared Setup:''' The global !-SuiteSetUp-! must complete before any parallel suites begin. When running suites individually, the !-SuiteSetUp-! runs automatically as part of each suite due to the '''!-ALL_UNCLE_SUITE_SETUPS-!''' configuration.
- * '''Test Data Isolation:''' Each suite operates on its own set of test records or uses shared records in read-only mode, preventing conflicts during parallel execution.
  * '''Cleanup:''' When running suites individually in parallel, each suite's local !-TearDown-! handles its own cleanup. The global !-SuiteTearDown-! should be run once after all parallel suites complete.
  * '''Authentication Tokens:''' Auth tokens are created in the global !-SuiteSetUp-! and are shared across all suites. Each parallel process gets its own SLIM instance with its own copy of these tokens.
+ * '''nameInData values:''' Element names in data structures (nameInData) are NOT parameterized because they define the data schema, not record identifiers. They remain constant across all parallel runs.
