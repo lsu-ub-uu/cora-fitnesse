@@ -7,7 +7,7 @@ Static
  
 !***> '''Case 1''' User 1 search should get hits on all records with any visibility with a permission unit they have access to (permissionUnit1) and fitnesseTextVar should be visible in the response
 !define currentAuthToken {$adminAuthToken}
-!define searchQueryData {!-{"name":"textSearch","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"fitnesseRecordIdSearchTerm","value":"-!$commonUnpublishedRecordId!- OR -!$commonPublishedRecordId!-"}]}]}]}-!}
+!define searchQueryData {!-{"name":"textSearch","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"fitnesseRecordIdSearchTerm","value":"-!$commonUnpublishedRecordId $commonPublishedRecordId!-"}]}]}]}-!}
 !define expectedResponseRegex {$commonUnpublishedRecordId AND $commonPublishedRecordId AND "name":"fitnesseTextVar","value":"entext"}
 
 !include -seamless <User.ActionHelpers.SearchRecordAndEnsureResponse
@@ -15,7 +15,7 @@ Static
 *!
 !***> '''Case 2''' Guest search should get hits on published records and fitnesseTextVar should not be visible in the response
 !define currentAuthToken {$guestAuthToken}
-!define searchQueryData {!-{"name":"textSearch","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"fitnesseRecordIdSearchTerm","value":"-!$commonUnpublishedRecordId!- OR -!$commonPublishedRecordId!-"}]}]}]}-!}
+!define searchQueryData {!-{"name":"textSearch","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"fitnesseRecordIdSearchTerm","value":"-!$commonUnpublishedRecordId $commonPublishedRecordId!-"}]}]}]}-!}
 !define expectedResponseRegex {$commonPublishedRecordId AND NOT $commonUnpublishedRecordId AND NOT "name":"fitnesseTextVar","value":"entext"}
 
 !include -seamless <User.ActionHelpers.SearchRecordAndEnsureResponse
