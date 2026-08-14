@@ -9,7 +9,8 @@ It provides metadata describing the current deployment, including:
  *'''applicationName''' – The name of the application. Example: systemOne, alvin, diva.
  *'''deploymentName''' – The name of the deployment environment. Examples: dev-dator, utveckling, preview, …
  *'''coraVersion''' – The version of Cora used in the deployment (semver).
- *'''applicationVersion''' – The version of the application (semver).
+ *'''helmChartVersion''' – The helm chart version of the application (semver).
+ *'''applicationVersion''' – The external release version of the application.
  
  URL information:
  *'''REST''' – The API REST endpoint.
@@ -58,6 +59,7 @@ These headers determine whether the response is JSON or XML.
 | let | match | js | response.body.match(/"applicationName":\s*"(.*)"/)[1] | systemOne |
 | let | match | js | response.body.match(/"deploymentName":\s*"(.*)"/)[1] | |
 | let | match | js | response.body.match(/"coraVersion":\s*"(.*)"/)[1] |  |
+| let | match | js | response.body.match(/"helmChartVersion":\s*"(.*)"/)[1] | |
 | let | match | js | response.body.match(/"applicationVersion":\s*"(.*)"/)[1] | |
 | let | match | js | response.body.match(/"REST":\s*"http.*(rest\/)"/)[1] | rest/ |
 | let | match | js | response.body.match(/"appTokenLogin":\s*"http.*(login\/rest\/apptoken)"/)[1] | login/rest/apptoken |
@@ -79,6 +81,7 @@ These headers determine whether the response is JSON or XML.
 | let | match | js | response.body.match(/<applicationName>(.*)<\/applicationName>/)[1]                      | systemOne |
 | let | match | js | response.body.match(/<deploymentName>(.*)<\/deploymentName>/)[1]                        | |
 | let | match | js | response.body.match(/<coraVersion>(.*)<\/coraVersion>/)[1]                              | |
+| let | match | js | response.body.match(/<helmChartVersion>(.*)<\/helmChartVersion>/)[1]                | |
 | let | match | js | response.body.match(/<applicationVersion>(.*)<\/applicationVersion>/)[1]                | |
 | let | match | js | response.body.match(/<REST>http.*(rest\/)<\/REST>/)[1]                                  | rest/ |
 | let | match | js | response.body.match(/<appTokenLogin>http.*(login\/rest\/apptoken)<\/appTokenLogin>/)[1] | login/rest/apptoken |
