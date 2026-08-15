@@ -11,7 +11,7 @@ Suite
 | type           | id                | version    | remember? |
 | user           | 121212            | beforeTest | OK        |
 | user           | 131313            | beforeTest | OK        |
-| permissionRole | fitnesseTextAdmin | beforeTest | OK        |
+| permissionRole | ${fitnesseTextAdminId} | beforeTest | OK        |
 
 !include -seamless .HelperPages.Data.ExamplesPool
 
@@ -19,9 +19,9 @@ Suite
 | type       | id                         | version  | remember? |
 | user       | 121212                     | test     | OK        |
 | user       | 131313                     | test     | OK        |
-| recordType | fitnesseRecordType         | original | OK        |
-| metadata   | fitnesseGroup              | original | OK        |
-| metadata   | fitnesseRecordInfoGroup    | original | OK        |
-| metadata   | fitnesseRecordInfoNewGroup | original | OK        |
+| recordType | ${fitnesseRecordTypeId}         | original | OK        |
+| metadata   | ${fitnesseGroupId}              | original | OK        |
+| metadata   | ${fitnesseRecordInfoGroupId}    | original | OK        |
+| metadata   | ${fitnesseRecordInfoNewGroupId} | original | OK        |
 *!
 

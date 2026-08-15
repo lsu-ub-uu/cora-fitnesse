@@ -2,7 +2,7 @@
 <properties>
     <Edit>true</Edit>
     <Files>true</Files>
-    <Help>Test that the metadata needed by the system is present, and correct</Help>
+    <Help>Storage and archive operation tests</Help>
     <Properties>true</Properties>
     <RecentChanges>true</RecentChanges>
     <Refactor>true</Refactor>

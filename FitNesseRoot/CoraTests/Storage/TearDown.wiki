@@ -1,8 +1,8 @@
 ---
 Static
 ---
-!***> Reset fitnesseRecordType
+!***> Reset ${fitnesseRecordTypeId}
 !| RememberRecordState |
 | type       | id                         | version  | memoryToStorage? |
-| recordType | fitnesseRecordType         | original | OK               |
+| recordType | ${fitnesseRecordTypeId}         | original | OK               |
 *!

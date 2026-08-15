@@ -13,15 +13,15 @@ Show file structure before storing a new record
 !define expectedRegexpArchive {}
 !include -seamless .HelperPages.readFileSystem
 
-!define updateDemoRecord {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"id","value":"$tmpRecordId1"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"fitnesseRecordType"}],"name":"type"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"fitnesseValidationType"}]}]},{"repeatId":"0","name":"fitnesseTextVar","value":"myUpdatedRecordInArchive"}]}-!}
+!define updateDemoRecord {!-{"name":"fitnesseExample","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]},{"name":"id","value":"$tmpRecordId1"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"-!${fitnesseRecordTypeId}!-"}],"name":"type"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"-!${fitnesseValidationTypeId}!-"}]}]},{"repeatId":"0","name":"fitnesseTextVar","value":"myUpdatedRecordInArchive"}]}-!}
 
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define recordId {$tmpRecordId1}
 !define updateData updateDemoRecord
 
 !include -seamless .HelperPages.updateRecord
 
-!define archiveFileName {testSystem:fitnesseRecordType:$tmpRecordId1}
+!define archiveFileName {testSystem:${fitnesseRecordTypeId}:$tmpRecordId1}
 !define archiveVersion1 {v1}
 !define archiveVersion2 {v2}
 
@@ -32,13 +32,13 @@ Show file structure after storing a new record
 
 show that file exists as v1, v2 but not v3 after one update
 !| script | FileReader |
-| ensure | file name | testSystem:fitnesseRecordType:$tmpRecordId1 | exists in archive as version | v1 | under path | ${archiveFileSystemPath} |
-| ensure | file name | testSystem:fitnesseRecordType:$tmpRecordId1 | exists in archive as version | v2 | under path | ${archiveFileSystemPath} |
-| reject | file name | testSystem:fitnesseRecordType:$tmpRecordId1 | exists in archive as version | v3 | under path | ${archiveFileSystemPath} |
+| ensure | file name | testSystem:${fitnesseRecordTypeId}:$tmpRecordId1 | exists in archive as version | v1 | under path | ${archiveFileSystemPath} |
+| ensure | file name | testSystem:${fitnesseRecordTypeId}:$tmpRecordId1 | exists in archive as version | v2 | under path | ${archiveFileSystemPath} |
+| reject | file name | testSystem:${fitnesseRecordTypeId}:$tmpRecordId1 | exists in archive as version | v3 | under path | ${archiveFileSystemPath} |
 
 
-!define xmlFilev1 {!-<?xml version="1.0" encoding="UTF-8"?><fitnesseExample><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><id>$tmpRecordId1</id><type><linkedRecordType>recordType</linkedRecordType><linkedRecordId>fitnesseRecordType</linkedRecordId></type><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>fitnesseValidationType</linkedRecordId></validationType><createdBy><linkedRecordType>user</linkedRecordType><linkedRecordId>131313</linkedRecordId></createdBy></recordInfo><fitnesseTextVar repeatId="0">myRecordInArchive</fitnesseTextVar></fitnesseExample>-!}
-!define xmlFilev2 {!-<?xml version="1.0" encoding="UTF-8"?><fitnesseExample><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><id>$tmpRecordId1</id><type><linkedRecordType>recordType</linkedRecordType><linkedRecordId>fitnesseRecordType</linkedRecordId></type><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>fitnesseValidationType</linkedRecordId></validationType><createdBy><linkedRecordType>user</linkedRecordType><linkedRecordId>131313</linkedRecordId></createdBy></recordInfo><fitnesseTextVar repeatId="0">myUpdatedRecordInArchive</fitnesseTextVar></fitnesseExample>-!}
+!define xmlFilev1 {!-<?xml version="1.0" encoding="UTF-8"?><fitnesseExample><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><id>$tmpRecordId1</id><type><linkedRecordType>recordType</linkedRecordType><linkedRecordId>-!${fitnesseRecordTypeId}!-</linkedRecordId></type><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>-!${fitnesseValidationTypeId}!-</linkedRecordId></validationType><createdBy><linkedRecordType>user</linkedRecordType><linkedRecordId>131313</linkedRecordId></createdBy></recordInfo><fitnesseTextVar repeatId="0">myRecordInArchive</fitnesseTextVar></fitnesseExample>-!}
+!define xmlFilev2 {!-<?xml version="1.0" encoding="UTF-8"?><fitnesseExample><recordInfo><dataDivider><linkedRecordType>system</linkedRecordType><linkedRecordId>testSystem</linkedRecordId></dataDivider><id>$tmpRecordId1</id><type><linkedRecordType>recordType</linkedRecordType><linkedRecordId>-!${fitnesseRecordTypeId}!-</linkedRecordId></type><validationType><linkedRecordType>validationType</linkedRecordType><linkedRecordId>-!${fitnesseValidationTypeId}!-</linkedRecordId></validationType><createdBy><linkedRecordType>user</linkedRecordType><linkedRecordId>131313</linkedRecordId></createdBy></recordInfo><fitnesseTextVar repeatId="0">myUpdatedRecordInArchive</fitnesseTextVar></fitnesseExample>-!}
 !| ArchiveFileComparer |
 | basePath | version | fileName | xmlCompareWith | getXmlComparerWith? | compare? |
 | ${archiveFileSystemPath} | v1 | ${archiveFileName}|${xmlFilev1}||OK|

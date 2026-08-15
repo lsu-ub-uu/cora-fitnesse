@@ -9,11 +9,11 @@ Static
 !include -seamless .HelperPages.createRecord
 *!
 
-!***> Prepare next tests: Add permission term standardPermissionTerm on fitnesseOnlyOneMetadataTextVar (fitnesseGroup)
+!***> Prepare next tests: Add permission term standardPermissionTerm on ${fitnesseOnlyOneMetadataTextVarId} (${fitnesseGroupId})
 !define fitnessePermissionTermName {standardPermissionTerm}
 !define currentAuthToken {$adminAuthToken}
 !define recordType {metadata}
-!define recordId {fitnesseGroup}
+!define recordId {${fitnesseGroupId}}
 !define updateData {${fitnesseGroupPermissionTerm}}
 !define expectedUpdateResult {OK}
 !include -seamless .HelperPages.updateRecord
@@ -29,7 +29,7 @@ Static
 *!
 
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define createData {${fitnessePermissionTermCreateRecord}}
 !define expectedCreateResult {FORBIDDEN}
 !define expectedAnswer {}
@@ -48,7 +48,7 @@ Static
 *!
 
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define createData {${fitnessePermissionTermCreateRecord}}
 !define expectedCreateResult {FORBIDDEN}
 !define expectedAnswer {}
@@ -67,7 +67,7 @@ Static
 *!
 
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define createData {${fitnessePermissionTermCreateRecord}}
 !define expectedCreateResult {CREATED}
 !define expectedAnswer {}
@@ -84,7 +84,7 @@ Static
 *!
 
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define recordId {$createdRecordId}
 !define expectedReadResult {FORBIDDEN}
 !define expectedAnswer {}
@@ -103,7 +103,7 @@ Static
 *!
 
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define recordId {$createdRecordId}
 !define expectedReadResult {FORBIDDEN}
 !define expectedAnswer {}
@@ -122,7 +122,7 @@ Static
 *!
 
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define recordId {$createdRecordId}
 !define expectedReadResult {OK}
 !define expectedAnswer {}
@@ -139,7 +139,7 @@ Static
 *!
 
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define recordId {$createdRecordId}
 !define updateData {${fitnessePermissionTermUpdateeRecord}}
 !define expectedUpdateResult {FORBIDDEN}
@@ -159,7 +159,7 @@ Static
 *!
 
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define recordId {$createdRecordId}
 !define updateData {${fitnessePermissionTermUpdateeRecord}}
 !define expectedUpdateResult {FORBIDDEN}
@@ -179,7 +179,7 @@ Static
 *!
 
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define recordId {$createdRecordId}
 !define updateData {${fitnessePermissionTermUpdateeRecord}}
 !define expectedUpdateResult {OK}
@@ -199,7 +199,7 @@ Static
 *!
 
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define recordId {$createdRecordId}
 !define updateData {${fitnessePermissionTermUpdateToBlueRecord}}
 !define expectedUpdateResult {FORBIDDEN}
@@ -217,7 +217,7 @@ Static
 *!
 
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define recordId {$createdRecordId}
 !define expectedDeleteResult {FORBIDDEN}
 !define expectedAnswer {}
@@ -236,7 +236,7 @@ Static
 *!
 
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define recordId {$createdRecordId}
 !define expectedDeleteResult {FORBIDDEN}
 !define expectedAnswer {}
@@ -255,7 +255,7 @@ Static
 *!
 
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define recordId {$createdRecordId}
 !define expectedDeleteResult {OK}
 !define expectedAnswer {}
@@ -274,7 +274,7 @@ Static
 
 !***> Case 15
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define createData {${fitnessePermissionTermCreateRecord}}
 !define expectedCreateResult {CREATED}
 !define expectedAnswer {}
@@ -283,7 +283,7 @@ Static
 
 !***> Case 16
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define recordId {$createdRecordId}
 !define expectedReadResult {OK}
 !define expectedAnswer {}
@@ -292,7 +292,7 @@ Static
 
 !***> Case 17
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define recordId {$createdRecordId}
 !define updateData {${fitnessePermissionTermUpdateeRecord}}
 !define expectedUpdateResult {OK}
@@ -302,7 +302,7 @@ Static
 
 !***> Case 18
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define recordId {$createdRecordId}
 !define expectedDeleteResult {OK}
 !define expectedAnswer {}
@@ -321,7 +321,7 @@ Static
 
 !***> Case 19
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define createData {${fitnessePermissionTermCreateRecord}}
 !define expectedCreateResult {CREATED}
 !define expectedAnswer {}
@@ -330,7 +330,7 @@ Static
 
 !***> Case 20
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define recordId {$createdRecordId}
 !define expectedReadResult {OK}
 !define expectedAnswer {}
@@ -339,7 +339,7 @@ Static
 
 !***> Case 21
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define recordId {$createdRecordId}
 !define updateData {${fitnessePermissionTermUpdateeRecord}}
 !define expectedUpdateResult {OK}
@@ -349,7 +349,7 @@ Static
 
 !***> Case 22
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define recordId {$createdRecordId}
 !define expectedDeleteResult {OK}
 !define expectedAnswer {}

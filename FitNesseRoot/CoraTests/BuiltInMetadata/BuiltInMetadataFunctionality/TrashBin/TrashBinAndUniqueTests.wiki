@@ -5,7 +5,7 @@ We expecet that unique works normally. We create record C and the another record
 !***> Case 8
 Create record C
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define fitnesseTrashBinValue {false}
 !define createData {${fitnessePermissionTermCreateRecordWithTrashBin}}
 !define expectedCreateResult {CREATED}
@@ -20,7 +20,7 @@ Create record C
 
 We create new record with same vaule than record C, we should get CONFLICT
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define fitnesseTrashBinValue {false}
 !define createData {${fitnessePermissionTermCreateRecordWithTrashBin}}
 !define expectedCreateResult {CONFLICT}
@@ -29,7 +29,7 @@ We create new record with same vaule than record C, we should get CONFLICT
 
 We move record C to '''in trash bin'''
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define fitnesseTrashBinValue {true}
 !define updateData {${fitnessePermissionTermUpdateRecordWithTrashBin}}
 !define recordId {$recordCId}
@@ -39,7 +39,7 @@ We move record C to '''in trash bin'''
 
 We create new record with same vaule than record C, we should be able to create the record now.
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define fitnesseTrashBinValue {false}
 !define createData {${fitnessePermissionTermCreateRecordWithTrashBin}}
 !define expectedCreateResult {CREATED}
@@ -51,10 +51,10 @@ We create new record with same vaule than record C, we should be able to create 
 
 !| DeleteRecord |
 | recordType            | recordId           | deleteRecord? |
-| fitnesseRecordType    | $recordCId         | OK            |
-| fitnesseRecordType    | $createdRecordId   | OK            |
+| ${fitnesseRecordTypeId}    | $recordCId         | OK            |
+| ${fitnesseRecordTypeId}    | $createdRecordId   | OK            |
 
 !| RememberRecordState |
 | type       | id                         | version  | memoryToStorage? |
-| recordType | fitnesseRecordType         | original | OK               |
+| recordType | ${fitnesseRecordTypeId}         | original | OK               |
 *!

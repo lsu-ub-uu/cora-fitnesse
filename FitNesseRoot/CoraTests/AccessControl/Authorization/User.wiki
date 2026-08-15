@@ -15,7 +15,7 @@ The system has two user used by fitnesse, they are called fitnesseUser(121212) a
 | $adminAuthToken | user | 121212 | | OK |
 
 *!
-The user fitnesseUser has one role fitnesseTextAdmin.
+The user fitnesseUser has one role ${fitnesseTextAdminId}.
 
 To show that changes to roles changes what is allowed, will we use texts as an example:
 
@@ -33,7 +33,7 @@ Update user, set status to inactive
 
 !***> Update user, fitnesseUser, setting status to inactive (this will also log out the user)
 
-!define fitnesseUserInactive {!-{"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"121212"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}],"name":"validationType"}],"name":"recordInfo"},{"name":"loginId","value":"fitnesseUser@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"User"},{"repeatId":"7175775086411621","children":[{"children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"fitnesseTextAdmin"}],"name":"userRole"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}],"name":"rule"},{"repeatId":"0","name":"value","value":"system.*"}],"name":"permissionTermRulePart"}],"name":"userRole"},{"name":"activeStatus","value":"inactive"},{"name":"usePassword","value":"false"},{"name":"appTokens","children":[{"name":"appToken","children":[{"name":"appTokenNote","value":"Token for development"},{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"systemSecret"},{"name":"linkedRecordId","value":"FITNESSE_USER_APPTOKEN_SECRET_ID"}]}],"repeatId":"0"}]}],"name":"user","attributes":{"type":"systemOneUser"}}-!}
+!define fitnesseUserInactive {!-{"children":[{"children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"121212"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"user"}],"name":"type"},{"children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"131313"}],"name":"createdBy"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"systemOne"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"systemOneUser"}],"name":"validationType"}],"name":"recordInfo"},{"name":"loginId","value":"fitnesseUser@system.cora.uu.se"},{"name":"userFirstname","value":"Fitnesse"},{"name":"userLastname","value":"User"},{"repeatId":"7175775086411621","children":[{"children":[{"name":"linkedRecordType","value":"permissionRole"},{"name":"linkedRecordId","value":"-!${fitnesseTextAdminId}!-"}],"name":"userRole"},{"repeatId":"0","children":[{"children":[{"name":"linkedRecordType","value":"collectTerm"},{"name":"linkedRecordId","value":"systemPermissionTerm"}],"name":"rule"},{"repeatId":"0","name":"value","value":"system.*"}],"name":"permissionTermRulePart"}],"name":"userRole"},{"name":"activeStatus","value":"inactive"},{"name":"usePassword","value":"false"},{"name":"appTokens","children":[{"name":"appToken","children":[{"name":"appTokenNote","value":"Token for development"},{"name":"appTokenLink","children":[{"name":"linkedRecordType","value":"systemSecret"},{"name":"linkedRecordId","value":"FITNESSE_USER_APPTOKEN_SECRET_ID"}]}],"repeatId":"0"}]}],"name":"user","attributes":{"type":"systemOneUser"}}-!}
 
 !define updateData {${fitnesseUserInactive}}
 !include -seamless .HelperPages.updateFitnesseUser
@@ -79,9 +79,9 @@ Create a new text to show that it is '''NOT''' allowed:
 
 *!
 !2 User change rule part(organisation) when connecting role to user (currently not active)
-Update users, connected rule fitnesseTextAdminRule to have a specific userId (system.aUserIdThatHasNotCreatedAnything)
+Update users, connected rule ${fitnesseTextAdminRuleId} to have a specific userId (system.aUserIdThatHasNotCreatedAnything)
 
-!***> Update user, fitnesse, setting userId for connected role fitnesseTextAdmin (system.aUserIdThatHasNotCreatedAnything)
+!***> Update user, fitnesse, setting userId for connected role ${fitnesseTextAdminId} (system.aUserIdThatHasNotCreatedAnything)
 
 !| comment |
 | Should be updated to a test that uses organisation in the connection to a role |

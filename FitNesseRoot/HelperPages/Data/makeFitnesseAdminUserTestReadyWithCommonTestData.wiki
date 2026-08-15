@@ -1,4 +1,4 @@
-!***> Update fitnesse user. Add fitnesseBinaryReadOnAllVisibilitiesRole role.
+!***> Update fitnesse user. Add ${fitnesseBinaryReadOnAllVisibilitiesRoleId} role.
 
 !define currentAuthToken {$adminAuthToken}
 !define updateData {${FITNESSE_ADMIN_USER_ORIGINAL_DATA}}

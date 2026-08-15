@@ -4,14 +4,14 @@ Static
 We expect that a '''published''' record when is moved to in trash is set to '''unpublished'''
 !***> Case 9
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define createData {${fitnessePermissionTermCreateRecordWithTrashBinAndVisibility}}
 !define expectedCreateResult {CREATED}
 !define expectedAnswer {}
 !include -seamless .HelperPages.createRecord
 
 !define currentAuthToken {$userAuthToken}
-!define recordType {fitnesseRecordType}
+!define recordType {${fitnesseRecordTypeId}}
 !define fitnesseTrashBinValue {true}
 !define updateData {${fitnessePermissionTermUpdateRecordWithTrashBinAndVisibility}}
 !define expectedUpdateResult {OK}

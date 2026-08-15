@@ -10,83 +10,83 @@ Suite
 
 !define currentAuthToken {$adminAuthToken}
 
-!***> Update fitnesseSearch to point metadata in order to be able to delete it
+!***> Update ${fitnesseSearchId} to point metadata in order to be able to delete it
 !define recordType {search}
-!define recordId {fitnesseSearch}
+!define recordId {${fitnesseSearchId}}
 !define expectedAnswer {}
 !define expectedUpdateResult {OK}
-!define updateData {!-{"name":"search","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"fitnesseSearch"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"search"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"search"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"fitnesseSearchGroup"}]},{"name":"presentationId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"fitnesseSearchPGroup"}]},{"name":"recordTypeToSearchIn","repeatId":"7","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadata"}]},{"name":"searchGroup","value":"publicSearch"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"fitnesseText"}]}]}-!}
+!define updateData {!-{"name":"search","children":[{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"-!${fitnesseSearchId}!-"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"search"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"search"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}]}]},{"name":"metadataId","children":[{"name":"linkedRecordType","value":"metadata"},{"name":"linkedRecordId","value":"-!${fitnesseSearchGroupId}!-"}]},{"name":"presentationId","children":[{"name":"linkedRecordType","value":"presentation"},{"name":"linkedRecordId","value":"-!${fitnesseSearchPGroupId}!-"}]},{"name":"recordTypeToSearchIn","repeatId":"7","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"metadata"}]},{"name":"searchGroup","value":"publicSearch"},{"name":"textId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"-!${fitnesseTextId}!-"}]},{"name":"defTextId","children":[{"name":"linkedRecordType","value":"text"},{"name":"linkedRecordId","value":"-!${fitnesseTextId}!-"}]}]}-!}
 !include -seamless .HelperPages.updateRecord
 *!
 
 !| RecordEndpointFixture |
 |authToken|type|id|testDeleteRecord?|getStatusType?|
 |$adminAuthToken|$hostRecordRecordType|$hostRecordRecordId||OK|
-|$adminAuthToken|validationType|fitnesseValidationType||OK|
-|$adminAuthToken|validationType|bigCircuitTrainingLeafletValidation||OK|
-|$adminAuthToken|validationType|circuitTrainingLeafletValidation||OK|
-|$adminAuthToken|validationType|personalTrainingLeafletValidation||OK|
-|$adminAuthToken|search|trainingClassLeafletSearch||OK|
-|$adminAuthToken|search|fitnesseRecordTypeSearch||OK|
-|$adminAuthToken|recordType|trainingClassLeaflet||OK|
-|$adminAuthToken|recordType|fitnesseRecordType||OK|
-|$adminAuthToken|sequence|fitnesseSequence||OK|
-|$adminAuthToken|metadata|circuitTrainingLeafletGroup||OK|
-|$adminAuthToken|metadata|circuitTrainingLeafletNewGroup||OK|
-|$adminAuthToken|metadata|bigCircuitTrainingLeafletGroup||OK|
-|$adminAuthToken|metadata|bigCircuitTrainingLeafletNewGroup||OK|
-|$adminAuthToken|presentation|fitnessePGroup||OK|
-|$adminAuthToken|presentation|fitnesseOutputPGroup||OK|
-|$adminAuthToken|presentation|fitnesseNewPGroup||OK|
-|$adminAuthToken|presentation|fitnesseNewOutputPGroup||OK|
-|$adminAuthToken|presentation|fitnesseMetadataPVar||OK|
-|$adminAuthToken|presentation|fitnesseMetadataOutputPVar||OK|
-|$adminAuthToken|presentation|fitnesseAnotherMetadataPVar||OK|
-|$adminAuthToken|presentation|fitnesseAnotherMetadataOutputPVar||OK|
-|$adminAuthToken|presentation|fitnesseOnlyOneMetadataPVar||OK|
-|$adminAuthToken|presentation|fitnesseOnlyOneMetadataOutputPVar||OK|
-|$adminAuthToken|presentation|fitnesseMetadataPNumVar||OK|
-|$adminAuthToken|presentation|fitnesseMetadataOutputPNumVar||OK|
-|$adminAuthToken|presentation|fitnessePLink||OK|
-|$adminAuthToken|presentation|fitnesseOutputPLink||OK|
-|$adminAuthToken|presentation|fitnessePCollVar||OK|
-|$adminAuthToken|presentation|fitnesseOutputPCollVar||OK|
-|$adminAuthToken|presentation|fitnesseBinaryPLink||OK|
-|$adminAuthToken|presentation|fitnesseBinaryOutputPLink||OK|
-|$adminAuthToken|presentation|fitnesseRecordInfoNewPGroup||OK|
-|$adminAuthToken|presentation|fitnesseRecordInfoNewOutputPGroup||OK|
-|$adminAuthToken|presentation|fitnesseRecordInfoPGroup||OK|
-|$adminAuthToken|presentation|fitnesseRecordInfoOutputPGroup||OK|
-|$adminAuthToken|search|fitnesseSearch||OK|
-|$adminAuthToken|presentation|fitnesseSearchPGroup||OK|
-|$adminAuthToken|presentation|fitnesseSearchOutputPGroup||OK|
-|$adminAuthToken|metadata|fitnesseSearchGroup||OK|
-|$adminAuthToken|metadata|fitnesseSearchIncludeGroup||OK|
-|$adminAuthToken|metadata|fitnesseSearchIncludePartGroup||OK|
-|$adminAuthToken|searchTerm|fitnesseSearchTerm||OK|
-|$adminAuthToken|presentation|fitnesseSearchOutputPVar||OK|
-|$adminAuthToken|presentation|fitnesseSearchPVar||OK|
-|$adminAuthToken|metadata|fitnesseSearchTextVar||OK|
-|$adminAuthToken|metadata|fitnesseGroup||OK|
-|$adminAuthToken|metadata|fitnesseRecordInfoGroup||OK|
-|$adminAuthToken|metadata|fitnesseNewGroup||OK|
-|$adminAuthToken|collectTerm|fitnesseCollectIndexTerm||OK|
-|$adminAuthToken|metadata|fitnesseRecordInfoNewGroup||OK|
-|$adminAuthToken|metadata|fitnesseMetadataTextVar||OK|
-|$adminAuthToken|metadata|fitnesseAnotherMetadataTextVar||OK|
-|$adminAuthToken|metadata|fitnesseOnlyOneMetadataTextVar||OK|
-|$adminAuthToken|metadata|fitnesseMetadataNumberVar||OK|
-|$adminAuthToken|metadata|fitnesseCollectionVar||OK|
-|$adminAuthToken|metadata|fitnesseCollection||OK|
-|$adminAuthToken|metadata|fitnesseBlueItem||OK|
-|$adminAuthToken|metadata|fitnesseLink||OK|
-|$adminAuthToken|metadata|fitnesseBinaryLink||OK|
-|$adminAuthToken|text|fitnesseBlueText||OK|
-|$adminAuthToken|text|fitnesseRecordTypeSearchDefText||OK|
-|$adminAuthToken|text|fitnesseRecordTypeSearchText||OK|
-|$adminAuthToken|permissionRole|fitnesseBinaryReadOnAllVisibilitiesRole||OK|
-|$adminAuthToken|permissionRule|fitnesseBinaryReadOnAllVisibilitiesRule||OK|
-|$adminAuthToken|text|fitnesseText||OK|
+|$adminAuthToken|validationType|${fitnesseValidationTypeId}||OK|
+|$adminAuthToken|validationType|${bigCircuitTrainingLeafletValidationId}||OK|
+|$adminAuthToken|validationType|${circuitTrainingLeafletValidationId}||OK|
+|$adminAuthToken|validationType|${personalTrainingLeafletValidationId}||OK|
+|$adminAuthToken|search|${trainingClassLeafletSearchId}||OK|
+|$adminAuthToken|search|${fitnesseRecordTypeSearchId}||OK|
+|$adminAuthToken|recordType|${trainingClassLeafletId}||OK|
+|$adminAuthToken|recordType|${fitnesseRecordTypeId}||OK|
+|$adminAuthToken|sequence|${fitnesseSequenceId}||OK|
+|$adminAuthToken|metadata|${circuitTrainingLeafletGroupId}||OK|
+|$adminAuthToken|metadata|${circuitTrainingLeafletNewGroupId}||OK|
+|$adminAuthToken|metadata|${bigCircuitTrainingLeafletGroupId}||OK|
+|$adminAuthToken|metadata|${bigCircuitTrainingLeafletNewGroupId}||OK|
+|$adminAuthToken|presentation|${fitnessePGroupId}||OK|
+|$adminAuthToken|presentation|${fitnesseOutputPGroupId}||OK|
+|$adminAuthToken|presentation|${fitnesseNewPGroupId}||OK|
+|$adminAuthToken|presentation|${fitnesseNewOutputPGroupId}||OK|
+|$adminAuthToken|presentation|${fitnesseMetadataPVarId}||OK|
+|$adminAuthToken|presentation|${fitnesseMetadataOutputPVarId}||OK|
+|$adminAuthToken|presentation|${fitnesseAnotherMetadataPVarId}||OK|
+|$adminAuthToken|presentation|${fitnesseAnotherMetadataOutputPVarId}||OK|
+|$adminAuthToken|presentation|${fitnesseOnlyOneMetadataPVarId}||OK|
+|$adminAuthToken|presentation|${fitnesseOnlyOneMetadataOutputPVarId}||OK|
+|$adminAuthToken|presentation|${fitnesseMetadataPNumVarId}||OK|
+|$adminAuthToken|presentation|${fitnesseMetadataOutputPNumVarId}||OK|
+|$adminAuthToken|presentation|${fitnessePLinkId}||OK|
+|$adminAuthToken|presentation|${fitnesseOutputPLinkId}||OK|
+|$adminAuthToken|presentation|${fitnessePCollVarId}||OK|
+|$adminAuthToken|presentation|${fitnesseOutputPCollVarId}||OK|
+|$adminAuthToken|presentation|${fitnesseBinaryPLinkId}||OK|
+|$adminAuthToken|presentation|${fitnesseBinaryOutputPLinkId}||OK|
+|$adminAuthToken|presentation|${fitnesseRecordInfoNewPGroupId}||OK|
+|$adminAuthToken|presentation|${fitnesseRecordInfoNewOutputPGroupId}||OK|
+|$adminAuthToken|presentation|${fitnesseRecordInfoPGroupId}||OK|
+|$adminAuthToken|presentation|${fitnesseRecordInfoOutputPGroupId}||OK|
+|$adminAuthToken|search|${fitnesseSearchId}||OK|
+|$adminAuthToken|presentation|${fitnesseSearchPGroupId}||OK|
+|$adminAuthToken|presentation|${fitnesseSearchOutputPGroupId}||OK|
+|$adminAuthToken|metadata|${fitnesseSearchGroupId}||OK|
+|$adminAuthToken|metadata|${fitnesseSearchIncludeGroupId}||OK|
+|$adminAuthToken|metadata|${fitnesseSearchIncludePartGroupId}||OK|
+|$adminAuthToken|searchTerm|${fitnesseSearchTermId}||OK|
+|$adminAuthToken|presentation|${fitnesseSearchOutputPVarId}||OK|
+|$adminAuthToken|presentation|${fitnesseSearchPVarId}||OK|
+|$adminAuthToken|metadata|${fitnesseSearchTextVarId}||OK|
+|$adminAuthToken|metadata|${fitnesseGroupId}||OK|
+|$adminAuthToken|metadata|${fitnesseRecordInfoGroupId}||OK|
+|$adminAuthToken|metadata|${fitnesseNewGroupId}||OK|
+|$adminAuthToken|collectTerm|${fitnesseCollectIndexTermId}||OK|
+|$adminAuthToken|metadata|${fitnesseRecordInfoNewGroupId}||OK|
+|$adminAuthToken|metadata|${fitnesseMetadataTextVarId}||OK|
+|$adminAuthToken|metadata|${fitnesseAnotherMetadataTextVarId}||OK|
+|$adminAuthToken|metadata|${fitnesseOnlyOneMetadataTextVarId}||OK|
+|$adminAuthToken|metadata|${fitnesseMetadataNumberVarId}||OK|
+|$adminAuthToken|metadata|${fitnesseCollectionVarId}||OK|
+|$adminAuthToken|metadata|${fitnesseCollectionId}||OK|
+|$adminAuthToken|metadata|${fitnesseBlueItemId}||OK|
+|$adminAuthToken|metadata|${fitnesseLinkId}||OK|
+|$adminAuthToken|metadata|${fitnesseBinaryLinkId}||OK|
+|$adminAuthToken|text|${fitnesseBlueTextId}||OK|
+|$adminAuthToken|text|${fitnesseRecordTypeSearchDefTextId}||OK|
+|$adminAuthToken|text|${fitnesseRecordTypeSearchTextId}||OK|
+|$adminAuthToken|permissionRole|${fitnesseBinaryReadOnAllVisibilitiesRoleId}||OK|
+|$adminAuthToken|permissionRule|${fitnesseBinaryReadOnAllVisibilitiesRuleId}||OK|
+|$adminAuthToken|text|${fitnesseTextId}||OK|
 
 
  #Not needed presentations because we are using excludePGroupCreation flag
