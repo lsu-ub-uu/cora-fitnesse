@@ -93,7 +93,7 @@ The only existing validationType for binary.
 		visibility (collectionVariable, 1-1, noConstraint, P)
 		tsVisibility (textVariable, 0-1, write)
 		hostRecord (anyTypeRecordLink, 1-1, noConstraint)
-		status (collectionVariable, 0-1, write)
+		status {created} (collectionVariable, 0-1, write)
 		processingMessage (textVariable, 0-X, write)
 	originalFileName (textVariable, 1-1, noConstraint)
 	expectedFileSize (numberVariable, 0-1, noConstraint)
