@@ -119,7 +119,7 @@ The formats of the images are :
 *!
 !***> '''Case 3''' Make sure PDF with bigger only one small logo can keep the sizes.
 
-!define originalFileName {aPDFWithWitheFitsPage.pdf}
+!define originalFileName {aPdfWithAlmostEmptyFirstPage.pdf}
 !define expectedChecksumSha512 {89dfdb4a89e2b631e2d13de6d763a13f71417cc6b642da31b6b22397e9f0014406bd617325861894c81c1303b655387f404e23952180f8623f44e040916c71bd}
 !define expectedMimeType {application/pdf}
 !define expectedFileSize {419385}
