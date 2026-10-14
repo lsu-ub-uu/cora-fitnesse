@@ -1,5 +1,5 @@
 ---
-Static
+Test
 ---
 !2 PDF
 Binary's PDF first page is converted to different image sizes. 
@@ -12,6 +12,7 @@ The formats of the images are :
  * '''Case 1:''' It must be possible to upload and convert a PDF
  * '''Case 2:''' Some PDFs contain content that is larger than what is visible on the page. In these cases, the system must use the PDF CropBox so that only the visible part of the first page is converted.
  * '''Case 3:''' Because Case 2 is implemented, the system must also handle PDFs where the first page contains only a logo or other content on a white page. In these cases, the visible page area must be preserved and must not be cropped too aggressively.
+ * '''Case 4:''' If a PDF can not be converted due to a problem in the file, the binary status is set to failed and a processing message is set. 
 
 !***> '''Case 1''' PDF
 !define originalFileName {aPdf.pdf}
@@ -57,7 +58,8 @@ The formats of the images are :
 !include -seamless .HelperPages.downloadResource
 
 !define expectedDownloadStatus {OK}
-!define expectedXpath {//master/master/mimeType[text()='${expectedMimeType}']
+!define expectedXpath {//recordInfo/status[text()='done']
+//master/master/mimeType[text()='${expectedMimeType}']
 //master/master/actionLinks/read/accept[text()='${expectedMimeType}']
 //master/master/actionLinks/read/rel[text()='read']}
 !include -seamless .HelperPages.readRecordInXML
@@ -110,7 +112,8 @@ The formats of the images are :
 !include -seamless .HelperPages.downloadResource
 
 !define expectedDownloadStatus {OK}
-!define expectedXpath {//master/master/mimeType[text()='${expectedMimeType}']
+!define expectedXpath {//recordInfo/status[text()='done']
+//master/master/mimeType[text()='${expectedMimeType}']
 //master/master/actionLinks/read/accept[text()='${expectedMimeType}']
 //master/master/actionLinks/read/rel[text()='read']}
 !include -seamless .HelperPages.readRecordInXML
@@ -163,11 +166,58 @@ The formats of the images are :
 !include -seamless .HelperPages.downloadResource
 
 !define expectedDownloadStatus {OK}
-!define expectedXpath {//master/master/mimeType[text()='${expectedMimeType}']
+!define expectedXpath {//recordInfo/status[text()='done']
+//master/master/mimeType[text()='${expectedMimeType}']
 //master/master/actionLinks/read/accept[text()='${expectedMimeType}']
 //master/master/actionLinks/read/rel[text()='read']}
 !include -seamless .HelperPages.readRecordInXML
 
 !include -seamless .HelperPages.deleteRecord
+*!
+!***> '''Case 4''' Not working pdf, sets binary to failed status.
+
+!define originalFileName {pdfNotWorking.pdf}
+!define expectedChecksumSha512 {611d85d39b23a2d259084be7299086d6c2ab5e38e1525b7980e0263698cc2a64049e662dd32c4327994cbf7fbf293b9c9b65abe79bf575a9ab59cbfd6a546d7f}
+!define expectedMimeType {application/pdf}
+!define expectedFileSize {423170}
+!define expectedDownloadAnswer {}
+
+!define waitStatusRegex {\"name\":\"status\",\"value\":\"failed\"}
+!define expectedCompareResult {Child with nameInData thumbnail and type group is missing. Child with nameInData medium and type group is missing. Child with nameInData large and type group is missing.}
+!include -seamless .CoraTests.Data.Binary.UploadPdfValidateAnalysisAndConvertion
+
+
+!*< definition
+!define downloadRecordId {$tmpRecordId1}
+!define expectedDownloadStatus {OK}
+*!
+
+!define representation {master}
+!include -seamless .HelperPages.downloadResource
+
+!define expectedDownloadStatus {NOT_FOUND}
+!define representation {thumbnail}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {medium}
+!include -seamless .HelperPages.downloadResource
+
+!define representation {large}
+!include -seamless .HelperPages.downloadResource
+
+
+!define expectedXpath {//recordInfo/status[text()='failed']
+//recordInfo/processingMessage[text()='Failed to convert PDF to thumbnails.']
+//master/master/mimeType[text()='${expectedMimeType}']
+//master/master/actionLinks/read/accept[text()='${expectedMimeType}']
+//master/master/actionLinks/read/rel[text()='read']}
+!include -seamless .HelperPages.readRecordInXML
+
+!***> Clean up
+!define expectedCompareResult {OK}
+!define expectedDownloadStatus {OK}
+!include -seamless .HelperPages.deleteRecord
+!define waitStatusRegex {\"name\":\"status\",\"value\":\"done\"}
+*!
 *!
 

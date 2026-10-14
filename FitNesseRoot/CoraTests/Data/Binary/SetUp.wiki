@@ -16,6 +16,9 @@ Static
 !define originalFileName {aTiff.tiff}
 !define expectedFileSize {1938386}
 
+!define waitStatusRegex {\"name\":\"status\",\"value\":\"done\"}
+!define expectedCompareResult {OK}
+
 It creates two binaries examples. One of them has visibilty set to published and the other one to unpublished.
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
@@ -28,5 +31,6 @@ It creates two binaries examples. One of them has visibilty set to published and
 !define updateData {${FITNESSE_USER_FOR_TEST_DATA}}
 !define expectedUpdateResult {OK}
 !include -seamless .HelperPages.updateFitnesseUser
+
 
 *!
