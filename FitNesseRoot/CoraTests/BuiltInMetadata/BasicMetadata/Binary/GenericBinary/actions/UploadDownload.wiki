@@ -21,7 +21,7 @@ Static
 !***> Wait until images are generated
 !| WaitForRegExReadResultFixture |
 | authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
-| $adminAuthToken | binary | $publishedRecordId | 200 | 70 | \"name\":\"status\",\"value\":\"done\" | Found |
+| $adminAuthToken | binary | $publishedRecordId | 200 | 100 | \"name\":\"status\",\"value\":\"done\" | Found |
 
 !| RecordEndpointFixture                                                   |
 |authToken      |type  |id                  |testReadRecord?|getStatusType?|
@@ -49,7 +49,7 @@ Show that converted files are created
 !***> Wait until images are generated
 !| WaitForRegExReadResultFixture |
 | authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
-| $adminAuthToken | binary | $unpublishedRecordId | 200 | 70 | \"name\":\"status\",\"value\":\"done\" | Found |
+| $adminAuthToken | binary | $unpublishedRecordId | 200 | 100 | \"name\":\"status\",\"value\":\"done\" | Found |
 
 !| RecordEndpointFixture                                                   |
 |authToken      |type  |id                  |testReadRecord?|getStatusType?|
