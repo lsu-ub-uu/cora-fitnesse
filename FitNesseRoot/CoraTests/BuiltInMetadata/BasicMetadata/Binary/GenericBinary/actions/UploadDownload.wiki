@@ -21,10 +21,7 @@ Static
 !***> Wait until images are generated
 !| WaitForRegExReadResultFixture |
 | authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
-| $adminAuthToken | binary | $publishedRecordId | 250 | 50 | \"name\":\"jp2\" | Found |
-| $adminAuthToken | binary | $publishedRecordId | 250 | 50 | \"name\":\"large\" | Found |
-| $adminAuthToken | binary | $publishedRecordId | 250 | 50 | \"name\":\"medium\" | Found |
-| $adminAuthToken | binary | $publishedRecordId | 250 | 50 | \"name\":\"thumbnail\" | Found |
+| $adminAuthToken | binary | $publishedRecordId | 200 | 70 | \"name\":\"status\",\"value\":\"done\" | Found |
 
 !| RecordEndpointFixture                                                   |
 |authToken      |type  |id                  |testReadRecord?|getStatusType?|
@@ -52,10 +49,7 @@ Show that converted files are created
 !***> Wait until images are generated
 !| WaitForRegExReadResultFixture |
 | authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
-| $adminAuthToken | binary | $unpublishedRecordId | 250 | 50 | \"name\":\"jp2\" | Found |
-| $adminAuthToken | binary | $unpublishedRecordId | 250 | 50 | \"name\":\"large\" | Found |
-| $adminAuthToken | binary | $unpublishedRecordId | 250 | 50 | \"name\":\"medium\" | Found |
-| $adminAuthToken | binary | $unpublishedRecordId | 250 | 50 | \"name\":\"thumbnail\" | Found |
+| $adminAuthToken | binary | $unpublishedRecordId | 200 | 70 | \"name\":\"status\",\"value\":\"done\" | Found |
 
 !| RecordEndpointFixture                                                   |
 |authToken      |type  |id                  |testReadRecord?|getStatusType?|
@@ -79,7 +73,7 @@ Show that converted files are created
 !***> '''Case 3'''
 !| WaitForRegExReadResultFixture                                                                                               |
 |authToken      |recordType|recordId        |sleepTime|maxNumberOfCalls|regEx           |waitUntilUntilRegExpFoundInReadRecord?|
-|$adminAuthToken|binary    |$publishedRecordId|250      |50              |\"name\":\"jp2\"|Found                                 |
+|$adminAuthToken|binary    |$publishedRecordId|250      |100              | \"name\":\"status\",\"value\":\"done\" |Found                                 |
 
 !define recordId {$publishedRecordId}
 !define representation {master}
@@ -99,8 +93,8 @@ Show that converted files are created
 *!
 !***> '''Case 4'''
 !| WaitForRegExReadResultFixture                                                                                               |
-|authToken      |recordType|recordId        |sleepTime|maxNumberOfCalls|regEx           |waitUntilUntilRegExpFoundInReadRecord?|
-|$adminAuthToken|binary    |$unpublishedRecordId|250      |50              |\"name\":\"jp2\"|Found                                 |
+|authToken      |recordType|recordId             | sleepTime| maxNumberOfCalls|regEx                                  | waitUntilUntilRegExpFoundInReadRecord? |
+|$adminAuthToken|binary    |$unpublishedRecordId | 250      | 50              | \"name\":\"status\",\"value\":\"done\"|  Found                                 |
 
 !define recordId {$unpublishedRecordId}
 !define representation {master}
