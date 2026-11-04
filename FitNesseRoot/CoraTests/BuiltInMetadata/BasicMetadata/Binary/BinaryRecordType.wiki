@@ -73,7 +73,7 @@ The only existing validationType for binary.
 	originalFileName (textVariable, 0-1, noConstraint)-!}
 
 #idSource (userSupplied/timestamp/sequence) others true/false
-!define recordTypeIdSource {timestamp}
+!define recordTypeIdSource {sequence}
 !define recordTypeIsPublic {false}
 !define recordTypeUsePermissionUnit {false}
 !define recordTypeUseVisibility {true}
