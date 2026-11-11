@@ -104,7 +104,7 @@ Three calls are made:
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/                                                                                         |
 | GET |/$unpublishedRecordId/info.json|200|Content-Type : application/ld\+json;profile="http://iiif.io/api/image/3/context.json"||
 | GET |/$unpublishedRecordId/full/244,/0/default.jpg|200|Content-Type: image/jpeg||
-| GET |/$unpublishedRecordId/2048,2048,2048,2048/!256,256/0/default.jpg|200|Content-Type: image/jpeg||
+| GET |/$unpublishedRecordId/148,148,148,148/!56,56/0/default.jpg|200|Content-Type: image/jpeg||
 *!
 !***> '''Case 7'''
 It reads a published image using Guest as user. Guest must be able to read published images.
@@ -120,7 +120,7 @@ Three calls are made:
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/ |
 | GET |/$publishedRecordId/info.json|200|Content-Type : application/ld\+json;profile="http://iiif.io/api/image/3/context.json"||
 | GET |/$publishedRecordId/full/244,/0/default.jpg|200|Content-Type: image/jpeg||
-| GET |/$publishedRecordId/2048,2048,2048,2048/!256,256/0/default.jpg|200|Content-Type: image/jpeg||
+| GET |/$publishedRecordId/148,148,148,148/!56,56/0/default.jpg|200|Content-Type: image/jpeg||
 *!
 !***> '''Case 8'''
 It tries to read a restricted image without using a token. 
@@ -137,7 +137,7 @@ Remove authToken as header.
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/    |
 | GET |/$unpublishedRecordId/info.json|401|||
 | GET |/$unpublishedRecordId/full/244,/0/default.jpg|401|||
-| GET |/$unpublishedRecordId/2048,2048,2048,2048/!256,256/0/default.jpg|401|||
+| GET |/$unpublishedRecordId/148,148,148,148/!56,56/0/default.jpg|401|||
 *!
 !***> '''Case 9'''
 It reads an unpublished image using Guest as user. Guest must not be able to read unpublished images.
@@ -153,5 +153,5 @@ Three calls are made:
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}iiif/ |
 | GET | /$unpublishedRecordId/info.json | 403 | Content-Type : text/html;charset=utf-8 | |
 | GET | /$unpublishedRecordId/full/244,/0/default.jpg | 403 | Content-Type : text/html;charset=utf-8 | |
-| GET | /$unpublishedRecordId/2048,2048,2048,2048/!256,256/0/default.jpg | 403 | Content-Type : text/html;charset=utf-8 | |
+| GET | /$unpublishedRecordId/148,148,148,148/!56,56/0/default.jpg | 403 | Content-Type : text/html;charset=utf-8 | |
 *!
