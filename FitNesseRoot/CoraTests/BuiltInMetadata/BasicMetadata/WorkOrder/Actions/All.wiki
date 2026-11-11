@@ -1,0 +1,27 @@
+Create a workOrder with recordInfo, this is ok as the work order can have a recordInfo.
+!***> Create data of recordType workOrder
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | workOrder | {"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"workOrder"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"text"}],"name":"recordType"},{"name":"recordId","value":"testForWorkOrderText"},{"name":"type","value":"index"}],"name":"workOrder"} | | CREATED | $createdId= |
+*!
+
+WorkOrders are deleted after create, since they only are intended to be used to perform a task. Reading and listing workOrders will therefore give no result.
+!***> Read workOrder
+
+!| RecordEndpointFixture |
+| authToken | type | id | testReadRecord? | getStatusType? |
+| $adminAuthToken | workOrder | $createdId | | NOT_FOUND |
+*!
+
+!***> List recordType workOrder - no result since they are deleted after create
+!| RecordEndpointFixture |
+| authToken | type | testReadRecordList? | getStatusType? |
+| $adminAuthToken | workOrder | {"dataList":{"fromNo":"0","data":[],"totalNo":"0","containDataOfType":"workOrder","toNo":"0"}} | OK |
+*!
+
+Create a workOrder without recordInfo. It is ok, since it is autocreated using extended functionality
+!***> Create data of recordType workOrder
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
+| $adminAuthToken | workOrder | {"name":"workOrder","children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"workOrder"}],"name":"validationType"}],"name":"recordInfo"},{"name":"recordType","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"text"}]},{"name":"recordId","value":"testForWorkOrderText"},{"name":"type","value":"index"}]} | | CREATED | $createdId2= |
+*!

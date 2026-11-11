@@ -1,0 +1,17 @@
+---
+Test
+---
+!1 WorkOrder
+WorkOrder is a record type used to issue a work order for a specific record in a Cora system.
+
+WorkOrders are used to:
+
+ * (Re)index the record in the index.
+ * (Re)populate the collected terms for the record.
+ * If the record being handled is a binary, (re)convert the generated subformats for that binary.
+
+When a WorkOrder is created on the server, an extended functionality called WorkOrderExecutor runs to carry out the work described above. Another extended functionality then runs to remove the created record, so that old WorkOrders do not accumulate.
+
+!include -seamless WorkOrder.Definition
+!3 WorkOrder tests
+!include -seamless WorkOrder.Actions

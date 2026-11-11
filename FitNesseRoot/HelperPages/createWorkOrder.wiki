@@ -1,0 +1,13 @@
+---
+Help: Create a workOrder according to variables
+---
+!***> Create workOrder
+
+!define workOrderCreateData {!-{"children":[{"children":[{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"workOrder"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"-!${workOrderForRecordType}!-"}],"name":"recordType"},{"name":"recordId","value":"-!${workOrderForRecordId}!-"},{"name":"type","value":"index"}],"name":"workOrder"}-!}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| ${currentAuthToken} | workOrder | ${workOrderCreateData} | ${workOrderExpectedAnswer} | ${workOrderExpectedCreateResult} | $createdWorkOrderId= |
+
+!define expectedAnswer {}
+*!
