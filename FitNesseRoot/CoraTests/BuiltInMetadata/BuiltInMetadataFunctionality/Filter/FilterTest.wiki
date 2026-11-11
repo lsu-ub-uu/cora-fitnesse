@@ -10,6 +10,11 @@ Test
 | $adminAuthToken | testMovie | {"children":[{"children":[{"name":"id","value":"someMovie"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"testMovie"}],"name":"validationType"}],"name":"recordInfo"},{"name":"movieTitle","value":"The rock"}],"name":"testMovie"} | testMovie | CREATED |
 | $adminAuthToken | testMovie | {"children":[{"children":[{"name":"id","value":"someOldMovie"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"testSystem"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"testMovie"}],"name":"validationType"}],"name":"recordInfo"},{"name":"movieTitle","value":"Gone with the wind"}],"name":"testMovie"} | testMovie | CREATED |
 
+
+!| RememberRecordState |
+| type           | id           | version         | remember? |
+| testMovie      | someMovie    | stored          | OK        |
+| testMovie      | someOldMovie | stored          | OK        |
 *!
 
 If no filter is defined for the recordType, it is not possible to use a filter when listing that recordType
@@ -87,3 +92,42 @@ If no filter is defined for the recordType, it is not possible to use a filter w
 | $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"include","children":[{"name":"part","children":[{"name":"wrongFilterMovieTitle","value":"The rock"}],"repeatId":"0"}]}]} | Error reading records with recordType: testMovie. Data is not valid: [Did not find enough data children with referenceId: testFilterMovieTitleTextVar(with nameInData:movieTitle)., Could not find metadata for child with nameInData: wrongFilterMovieTitle] | BAD_REQUEST |
 
 *!
+
+!2 Test recollect terms with workOrder
+These tests are to make sure than an "index" work order recollects storage terms for the record
+!***> Set testMovieGroup NOT to have collect term on title, and update movie to remove its collected terms
+!| RememberRecordState |
+| type     | id             | version            | memoryToStorage? |
+| metadata | testMovieGroup | withOutCollectTerm | OK               |
+
+!| RememberRecordState |
+| type           | id           | version         | memoryToStorage? |
+| testMovie      | someOldMovie | stored          | OK               |
+*!
+!***> List testMovie with a filter that matches the created testMovie, but it will not be found as we have no collect term for title
+!| RecordEndpointFixture |
+| authToken | type | json | testReadRecordList? | getStatusType? |
+| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"include","children":[{"name":"part","children":[{"name":"movieTitle","value":"Gone with the wind"}],"repeatId":"0"}]}]} | =~/"toNo":"0"/ | OK |
+*!
+
+!***> Set testMovieGroup to have collect term on title
+!| RememberRecordState |
+| type     | id             | version            | memoryToStorage? |
+| metadata | testMovieGroup | withCollectTerm    | OK               |
+*!
+
+"Index" work order to recollect storage terms for move
+!***> Create and send workOrder to recollect storage terms for the movie
+!define currentAuthToken {$adminAuthToken}
+!define workOrderForRecordType {testMovie}
+!define workOrderForRecordId {someOldMovie}
+!define workOrderExpectedAnswer {}
+!define workOrderExpectedCreateResult {CREATED}
+!include -seamless .HelperPages.createWorkOrder
+*!
+!***> List testMovie with filter that matches the created testMovie, this time will it be found as we have added the collect term for title 
+!| RecordEndpointFixture |
+| authToken | type | json | testReadRecordList? | getStatusType? |
+| $adminAuthToken | testMovie | {"name":"filter","children":[{"name":"include","children":[{"name":"part","children":[{"name":"movieTitle","value":"Gone with the wind"}],"repeatId":"0"}]}]} | =~/"toNo":"1"/ | OK |
+*!
+

@@ -12,6 +12,10 @@ WorkOrders are used to:
 
 When a WorkOrder is created on the server, an extended functionality called WorkOrderExecutor runs to carry out the work described above. Another extended functionality then runs to remove the created record, so that old WorkOrders do not accumulate.
 
+For tests of workOrder serverside actions see:
+ * [[Search][.CoraTests.Data.Record.Search]] for more information about reindex. (Perform reindex to make the title searchable (using work order))
+ * [[Filter][<BuiltInMetadata.BuiltInMetadataFunctionality.Filter]] for more information about repopulating collected terms. (Test recollect terms with workOrder)
+ * [[Binaries][.CoraTests.Data.Binary]] for more information about reconverting images. (Reconvert for image and PDF)
 !include -seamless WorkOrder.Definition
 !3 WorkOrder tests
 !include -seamless WorkOrder.Actions

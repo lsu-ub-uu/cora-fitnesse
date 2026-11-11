@@ -2,15 +2,7 @@
 Test
 ---
 !1 Work order
-It is a generic record which can be used to order specific jobs to the system. 
-At this moment it is only used to "index" records.
-
-However "index" records does several things. 
-
-!2 
- * '''Index''' bla
- * '''Storage terms''' bla
- * '''Reconvert''' Bla
+See [[workOrder][<BuiltInMetadata.BasicMetadata.WorkOrder]] for more information.
 
 !2 Tests
 The following tests demonstrate the behavior of the built-in:
