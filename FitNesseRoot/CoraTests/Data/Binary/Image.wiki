@@ -16,7 +16,8 @@ The formats that images are converted to are:
 
  * '''Case 1:''' It must be possible to upload and download TIFF image. The image must be analyzed and converted to all described formats.
  * '''Case 2:''' It must be possible to upload and download JPEG image. The image must be analyzed and converted to all described formats.
- * '''Case 3:''' If an image can not be converted due to a problem in the file, the binary status is set to failed and a processing message is set.
+ * '''Case 3:''' It must be possible to reconvert an existing binary.
+ * '''Case 4:''' If an image can not be converted due to a problem in the file, the binary status is set to failed and a processing message is set.
 
 !***> '''Case 1''' Tiff
 
@@ -128,9 +129,43 @@ The formats that images are converted to are:
 //master/master/actionLinks/read/rel[text()='read']}
 !include -seamless .HelperPages.readRecordInXML
 
+
+*!
+!***> '''Case 3''' It must be possible to reconvert an existing binary.
+!***> Store last modified time for all converted files
+!| script | FileReader |
+|  $pathToFileLarge= | find file | !-binary:-!$tmpRecordId1!--large-! |in basepath | /tmp/sharedFileStorage/systemOne/streams/systemOne/ |
+| store last modified time | $pathToFileLarge | |
+|  $pathToFileMedium= | find file | !-binary:-!$tmpRecordId1!--medium-! |in basepath | /tmp/sharedFileStorage/systemOne/streams/systemOne/ |
+| store last modified time | $pathToFileMedium | |
+|  $pathToFileThumbnail= | find file | !-binary:-!$tmpRecordId1!--thumbnail-! |in basepath | /tmp/sharedFileStorage/systemOne/streams/systemOne/ |
+| store last modified time | $pathToFileThumbnail | |
+|  $pathToFileJp2= | find file | !-binary:-!$tmpRecordId1!--jp2-! |in basepath | /tmp/sharedFileStorage/systemOne/streams/systemOne/ |
+| store last modified time | $pathToFileJp2 | |
+*!
+!***> Create and send workOrder to reconvert the binary
+!define workOrderForRecordType {binary}
+!define workOrderForRecordId {$tmpRecordId1}
+!define workOrderExpectedAnswer {}
+!define workOrderExpectedCreateResult {CREATED}
+!include -seamless .HelperPages.createWorkOrder
+
+!| WaitForRegExReadResultFixture |
+| authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
+| $adminAuthToken | binary | $tmpRecordId1 | 200 | 60 | ${waitStatusRegex} | Found |
+*!
+
+!***> Check all converted files has been reconverted using last modified time. 
+!| script | FileReader |
+| ensure | check file has been modified | $pathToFileLarge |
+| ensure | check file has been modified | $pathToFileMedium |
+| ensure | check file has been modified | $pathToFileThumbnail |
+| ensure | check file has been modified | $pathToFileJp2 |
+*!
+
 !include -seamless .HelperPages.deleteRecord
 *!
-!***> '''Case 3''' Image not able to convert
+!***> '''Case 4''' Image not able to convert
 
 !define originalFileName {imageNotWorking.jpg}
 !define expectedChecksumSha512 {cc236885b3459c7f5a0e42ef44fd0a06cd8e62573736cee1d6949539475df41c5cb5a55e03a577be92fa5c41dc8e2d5d7f94dee2cf1a580d6c9ff6bae78af7b7}
@@ -172,6 +207,8 @@ The formats that images are converted to are:
 //master/master/actionLinks/read/accept[text()='${expectedMimeType}']
 //master/master/actionLinks/read/rel[text()='read']}
 !include -seamless .HelperPages.readRecordInXML
+
+
 
 !***> Clean up
 !define expectedCompareResult {OK}

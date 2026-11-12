@@ -1,0 +1,6 @@
+!***> Clean up
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | text | testForWorkOrderText | | OK |
+| $adminAuthToken | text | an:Id_with-okCharactersText | | OK |
+*!

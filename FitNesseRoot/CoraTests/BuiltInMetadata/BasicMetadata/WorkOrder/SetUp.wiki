@@ -1,0 +1,17 @@
+
+!***> Create text to use as target for workorder
+!define currentAuthToken {$adminAuthToken}
+
+!define recordType {text}
+!define createData {!-{"children":[{"children":[{"name":"id","value":"testForWorkOrderText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Testtext"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"Test  text"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"}-!}
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {}
+!include -seamless .HelperPages.createRecord
+
+!define recordType {text}
+!define createData {!-{"children":[{"children":[{"name":"id","value":"an:Id_with-okCharactersText"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"coraText"}],"name":"validationType"}],"name":"recordInfo"},{"children":[{"name":"text","value":"Testtext"}],"name":"textPart","attributes":{"type":"default","lang":"sv"}},{"children":[{"name":"text","value":"Test  text"}],"name":"textPart","attributes":{"type":"alternative","lang":"en"}}],"name":"text"}-!}
+!define expectedCreateResult {CREATED}
+!define expectedAnswer {}
+!include -seamless .HelperPages.createRecord
+
+*!

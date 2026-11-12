@@ -10,9 +10,10 @@ The formats of the images are :
  * '''preview''': medium-sized image in jpg format. Fixed width 1200px, height relative to the original.
  
  * '''Case 1:''' It must be possible to upload and convert a PDF
- * '''Case 2:''' Some PDFs contain content that is larger than what is visible on the page. In these cases, the system must use the PDF CropBox so that only the visible part of the first page is converted.
- * '''Case 3:''' Because Case 2 is implemented, the system must also handle PDFs where the first page contains only a logo or other content on a white page. In these cases, the visible page area must be preserved and must not be cropped too aggressively.
- * '''Case 4:''' If a PDF can not be converted due to a problem in the file, the binary status is set to failed and a processing message is set. 
+ * '''Case 2:''' It must be possible to upload and convert a PDF
+ * '''Case 3:''' Some PDFs contain content that is larger than what is visible on the page. In these cases, the system must use the PDF CropBox so that only the visible part of the first page is converted.
+ * '''Case 4:''' Because Case 2 is implemented, the system must also handle PDFs where the first page contains only a logo or other content on a white page. In these cases, the visible page area must be preserved and must not be cropped too aggressively.
+ * '''Case 5:''' If a PDF can not be converted due to a problem in the file, the binary status is set to failed and a processing message is set. 
 
 !***> '''Case 1''' PDF
 !define originalFileName {aPdf.pdf}
@@ -64,9 +65,39 @@ The formats of the images are :
 //master/master/actionLinks/read/rel[text()='read']}
 !include -seamless .HelperPages.readRecordInXML
 
+*!
+!***> '''Case 2''' It must be possible to reconvert an existing binary.
+!***> Store last modified time for all converted files
+!| script | FileReader |
+|  $pathToFileLarge= | find file | !-binary:-!$tmpRecordId1!--large-! |in basepath | /tmp/sharedFileStorage/systemOne/streams/systemOne/ |
+| store last modified time | $pathToFileLarge | |
+|  $pathToFileMedium= | find file | !-binary:-!$tmpRecordId1!--medium-! |in basepath | /tmp/sharedFileStorage/systemOne/streams/systemOne/ |
+| store last modified time | $pathToFileMedium | |
+|  $pathToFileThumbnail= | find file | !-binary:-!$tmpRecordId1!--thumbnail-! |in basepath | /tmp/sharedFileStorage/systemOne/streams/systemOne/ |
+| store last modified time | $pathToFileThumbnail | |
+*!
+!***> Create and send workOrder to reconvert the binary
+!define workOrderForRecordType {binary}
+!define workOrderForRecordId {$tmpRecordId1}
+!define workOrderExpectedAnswer {}
+!define workOrderExpectedCreateResult {CREATED}
+!include -seamless .HelperPages.createWorkOrder
+
+!| WaitForRegExReadResultFixture |
+| authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
+| $adminAuthToken | binary | $tmpRecordId1 | 200 | 60 | ${waitStatusRegex} | Found |
+*!
+
+!***> Check all converted files has been reconverted using last modified time. 
+!| script | FileReader |
+| ensure | check file has been modified | $pathToFileLarge |
+| ensure | check file has been modified | $pathToFileMedium |
+| ensure | check file has been modified | $pathToFileThumbnail |
+*!
+
 !include -seamless .HelperPages.deleteRecord
 *!
-!***> '''Case 2''' PDF with bigger image than it is visible in the PDF. The PDF sizes must be kept.
+!***> '''Case 3''' PDF with bigger image than it is visible in the PDF. The PDF sizes must be kept.
 
 !define originalFileName {aPdfCropbox.pdf}
 !define expectedChecksumSha512 {c9daa4a05b829c3152531bbb217a69cf6b389a31a546669daa1ee93784dc878834d6d8bd921cff94c1c648b0a152ccbbd0f30af9ad5bb79a597e70235b9dfdd4}
@@ -120,7 +151,7 @@ The formats of the images are :
 
 !include -seamless .HelperPages.deleteRecord
 *!
-!***> '''Case 3''' Make sure PDF with bigger only one small logo can keep the sizes.
+!***> '''Case 4''' Make sure PDF with bigger only one small logo can keep the sizes.
 
 !define originalFileName {aPdfWithAlmostEmptyFirstPage.pdf}
 !define expectedChecksumSha512 {89dfdb4a89e2b631e2d13de6d763a13f71417cc6b642da31b6b22397e9f0014406bd617325861894c81c1303b655387f404e23952180f8623f44e040916c71bd}
@@ -174,7 +205,7 @@ The formats of the images are :
 
 !include -seamless .HelperPages.deleteRecord
 *!
-!***> '''Case 4''' Not working pdf, sets binary to failed status.
+!***> '''Case 5''' Not working pdf, sets binary to failed status.
 
 !define originalFileName {pdfNotWorking.pdf}
 !define expectedChecksumSha512 {611d85d39b23a2d259084be7299086d6c2ab5e38e1525b7980e0263698cc2a64049e662dd32c4327994cbf7fbf293b9c9b65abe79bf575a9ab59cbfd6a546d7f}

@@ -1,0 +1,10 @@
+---
+Static
+---
+!1 Work order
+See [[workOrder][<BuiltInMetadata.BasicMetadata.WorkOrder]] for more information.
+
+!2 Tests
+The following tests demonstrate the behavior of the built-in:
+
+!include -seamless .CoraTests.BuiltInMetadata.BuiltInMetadataFunctionality.WorkOrder.old

@@ -1,0 +1,75 @@
+---
+Test
+---
+!1 workOrder
+The recordType for workOrders.
+
+There are a total of 1 validation types for this record type.
+
+!2 workOrder
+There is only one validationType for workOrders
+
+!*< Setup record type definition
+
+!define recordTypeId {workOrder}
+!define recordTypeDefinition {!-workOrder (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 1-1, noConstraint)
+		createdBy (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint)
+		permissionUnit (recordLink, 0-X, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+	recordType (recordLink, 1-1, noConstraint)
+	recordId (textVariable, 1-1, noConstraint)
+	type (collectionVariable, 1-1, noConstraint)
+	performCommit (collectionVariable, 0-1, noConstraint)-!}
+
+#idSource (userSupplied/timestamp/sequence) others true/false
+!define recordTypeIdSource {timestamp}
+!define recordTypeIsPublic {false}
+!define recordTypeUsePermissionUnit {false}
+!define recordTypeUseVisibility {false}
+!define recordTypeUseTrashBin {false}
+!define recordTypeStoreInArchive {false}
+*!
+!include -seamless .HelperPages.checkRecordType
+
+!*< Setup validation type definition
+
+!define validationTypeId {workOrder}
+!define recordTypeId {workOrder}
+!define createValidationTypeDefinition {!-workOrder (group)
+	recordInfo (group, 0-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+	recordType (recordLink, 1-1, noConstraint)
+	recordId (textVariable, 1-1, noConstraint)
+	type (collectionVariable, 1-1, noConstraint)
+	performCommit (collectionVariable, 0-1, noConstraint)-!}
+
+!define updateValidationTypeDefinition {!-workOrder (group)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 1-1, noConstraint)
+		createdBy (recordLink, 1-1, noConstraint)
+		dataDivider (recordLink, 1-1, noConstraint)
+		permissionUnit (recordLink, 0-X, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+	recordType (recordLink, 1-1, noConstraint)
+	recordId (textVariable, 1-1, noConstraint)
+	type (collectionVariable, 1-1, noConstraint)
+	performCommit (collectionVariable, 0-1, noConstraint)-!}
+
+*!
+!include -seamless .HelperPages.checkValidationType
+
+----
