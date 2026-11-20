@@ -1,6 +1,8 @@
 ---
 Test
 ---
+!include -seamless .CoraTests.BuiltInMetadata.BasicMetadata.IndexBatchJob.IndexBatchJob
+
 !2 !-IndexBatchJob-!
 
 It '''should''' be possible to create, read, update, delete, index, and search an !-IndexBatchJob-!. The user '''should not''' create an !-IndexBatchJob-! via the create endpoint, but they still need to have the permission to do so, otherwise it will not be possible to create an !-IndexBatchJob-! via the indexRecordList endpoint.
