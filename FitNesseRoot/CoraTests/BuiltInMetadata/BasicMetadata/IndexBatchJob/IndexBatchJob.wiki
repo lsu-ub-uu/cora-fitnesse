@@ -64,7 +64,10 @@ Some text about the validation type.
 				metadata (recordLink, 0-1, noConstraint)
 		fromNo (numberVariable, 0-1, noConstraint)
 		toNo (numberVariable, 0-1, noConstraint)
-	recordTypeToIndex (textVariable, 1-1, noConstraint)-!}
+	recordTypeToIndex (textVariable, 1-1, noConstraint)
+	status (collectionVariable, 0-1, noConstraint)
+	numberOfProcessedRecords (numberVariable, 0-1, noConstraint)
+	totalNumberToIndex (numberVariable, 0-1, noConstraint)-!}
 
 !define updateValidationTypeDefinition {!-indexBatchJob (group)
 	recordInfo (group, 1-1, noConstraint)
